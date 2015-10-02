@@ -16,7 +16,7 @@ Aidan O'Grady
 
 Jenna Page
 
-Pateon Kevin
+Kevin Paton
 
 Stewart Pollock
 

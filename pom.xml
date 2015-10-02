@@ -8,5 +8,30 @@
     <artifactId>CS412-Project</artifactId>
     <version>1.0-SNAPSHOT</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>5.3.1</version>
+        </dependency>
+    </dependencies>
+
+    <developers>
+        <developer>
+            <name>Liam O'Donnell</name>
+        </developer>
+        <developer>
+            <name>Aidan O'Grady</name>
+        </developer>
+        <developer>
+            <name>Jenna Page</name>
+        </developer>
+        <developer>
+            <name>Kevin Paton</name>
+        </developer>
+        <developer>
+            <name>Stewart Pollock</name>
+        </developer>
+    </developers>
 
 </project>
