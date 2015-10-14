@@ -14,8 +14,8 @@ public class Driver {
 
     public static void main(String[] args) throws Exception
     {
-        String[] indexArgs = {"-index", "index", "-docs", "files"};
-        IndexFiles.main(indexArgs);
+//        String[] indexArgs = {"-index", "index", "-docs", "files"};
+//        IndexFiles.main(indexArgs);
         SearchFiles.main(args);
     }
 
