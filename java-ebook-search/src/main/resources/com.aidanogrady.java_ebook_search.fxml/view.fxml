@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.BorderPane?>
+
+<BorderPane fx:id="root"
+        fx:controller="com.aidanogrady.java_ebook_search.controller.Controller"
+        xmlns:fx="http://javafx.com/fxml"
+        prefHeight="720"
+        prefWidth="1280">
+    <top>
+        <MenuBar fx:id="menubar">
+            <Menu text="File">
+                <MenuItem text="Exit" onAction="#exit"/>
+            </Menu>
+            <Menu text="Help">
+                <MenuItem text="About" onAction="#about"/>
+            </Menu>
+        </MenuBar>
+    </top>
+    <center>
+
+    </center>
+    <bottom>
+
+    </bottom>
+</BorderPane>
