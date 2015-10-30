@@ -1,4 +1,4 @@
-package com.aidanogrady.java_ebook_search;
+package com.group15.java_ebook_search;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
