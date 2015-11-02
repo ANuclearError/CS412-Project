@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.BorderPane?>
 
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.web.WebView?>
 <BorderPane fx:id="root"
         fx:controller="com.group15.java_ebook_search.controller.Controller"
         xmlns:fx="http://javafx.com/fxml"
@@ -18,10 +21,29 @@
             </Menu>
         </MenuBar>
     </top>
+
     <center>
+        <BorderPane>
+            <top>
+                <GridPane>
+                    <TextField fx:id="query" text="Enter search here..."
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <Button text="Search"
+                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                    <Button text="Filters"
+                            GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                </GridPane>
+            </top>
 
+            <left>
+
+            </left>
+
+            <right>
+                <WebView>
+
+                </WebView>
+            </right>
+        </BorderPane>
     </center>
-    <bottom>
-
-    </bottom>
 </BorderPane>
