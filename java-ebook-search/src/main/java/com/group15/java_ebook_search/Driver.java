@@ -20,7 +20,7 @@ public class Driver extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        String fxml = "/com.aidanogrady.java_ebook_search.fxml/view.fxml";
+        String fxml = "/com/group15/java_ebook_search/fxml/view.fxml";
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Scene scene = new Scene(root);
 
