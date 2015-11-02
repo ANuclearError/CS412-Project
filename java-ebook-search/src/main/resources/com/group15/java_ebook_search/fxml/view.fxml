@@ -1,23 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.scene.control.*?>
 
-<?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.geometry.Insets?>
-<?import javafx.scene.web.WebView?>
-<BorderPane fx:id="root"
-        fx:controller="com.group15.java_ebook_search.controller.Controller"
-        xmlns:fx="http://javafx.com/fxml"
-        prefHeight="720"
-        prefWidth="1280">
+<BorderPane fx:id="root" prefHeight="720" prefWidth="1280"
+            xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/null"
+            fx:controller="com.group15.java_ebook_search.controller.Controller">
     <top>
-        <MenuBar fx:id="menubar">
+        <MenuBar>
             <Menu text="File">
-                <MenuItem text="Exit" onAction="#exit"/>
+                <MenuItem onAction="#exit" text="Exit" />
             </Menu>
             <Menu text="Help">
-                <MenuItem text="About" onAction="#about"/>
+                <MenuItem onAction="#about" text="About" />
             </Menu>
         </MenuBar>
     </top>
@@ -26,12 +23,14 @@
         <BorderPane>
             <top>
                 <GridPane>
-                    <TextField fx:id="query" text="Enter search here..."
-                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                    <TextField fx:id="query" GridPane.hgrow="ALWAYS"
+                               GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Button text="Search"
-                            GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+                            GridPane.columnIndex="1" GridPane.rowIndex="0"
+                            onAction="#search"/>
                     <Button text="Filters"
-                            GridPane.columnIndex="2" GridPane.rowIndex="0"/>
+                            GridPane.columnIndex="2" GridPane.rowIndex="0"
+                            onAction="#filters"/>
                 </GridPane>
             </top>
 
@@ -40,9 +39,7 @@
             </left>
 
             <right>
-                <WebView>
-
-                </WebView>
+                <WebView fx:id="webView" />
             </right>
         </BorderPane>
     </center>

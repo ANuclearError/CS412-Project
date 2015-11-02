@@ -7,7 +7,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * TODO: Talk here
+ * The Driver class starts the application, loading the GUI and sets up the
+ * system.
  *
  * @author Aidan O'Grady
  * @since 0.0
