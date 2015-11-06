@@ -31,10 +31,12 @@ public class Controller implements Initializable {
 
     public void initialize(URL location, ResourceBundle resources) {
         String home = "/com/group15/java_ebook_search/files/index.htm";
+        String css =  "/com/group15/java_ebook_search/css/style.css";
 
         try {
             webEngine = webView.getEngine();
             webEngine.load(getClass().getResource(home).toString());
+            webEngine.setUserStyleSheetLocation(getClass().getResource(css).toString());
         } catch (Exception e) {
             e.printStackTrace();
         }
