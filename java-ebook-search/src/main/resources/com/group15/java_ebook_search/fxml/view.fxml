@@ -9,7 +9,7 @@
             xmlns="http://javafx.com/javafx/null"
             fx:controller="com.group15.java_ebook_search.controller.Controller">
     <top>
-        <MenuBar>
+        <MenuBar GridPane.columnIndex="0" GridPane.fillWidth="true">
             <Menu text="File">
                 <MenuItem onAction="#exit" text="Exit" />
             </Menu>
@@ -20,27 +20,20 @@
     </top>
 
     <center>
-        <BorderPane>
-            <top>
-                <GridPane>
-                    <TextField fx:id="query" GridPane.hgrow="ALWAYS"
-                               GridPane.columnIndex="0" GridPane.rowIndex="0" />
-                    <Button text="Search"
-                            GridPane.columnIndex="1" GridPane.rowIndex="0"
-                            onAction="#search"/>
-                    <Button text="Filters"
-                            GridPane.columnIndex="2" GridPane.rowIndex="0"
-                            onAction="#filters"/>
-                </GridPane>
-            </top>
-
-            <left>
-
-            </left>
-
-            <right>
-                <WebView fx:id="webView" />
-            </right>
-        </BorderPane>
+        <VBox>
+            <children>
+                <HBox>
+                    <TextField fx:id="query" HBox.hgrow="ALWAYS"/>
+                    <Button text="Search" onAction="#search"/>
+                    <Button text="Filters" onAction="#filters"/>
+                </HBox>
+                <SplitPane VBox.vgrow="ALWAYS" dividerPositions="0.25">
+                    <items>
+                        <ListView fx:id="results"/>
+                        <WebView fx:id="webView"/>
+                    </items>
+                </SplitPane>
+            </children>
+        </VBox>
     </center>
 </BorderPane>
