@@ -24,7 +24,6 @@ public class Driver extends Application {
         String fxml = "/com/group15/java_ebook_search/fxml/view.fxml";
         Parent root = FXMLLoader.load(getClass().getResource(fxml));
         Scene scene = new Scene(root);
-
         primaryStage.setTitle("Java eBook Search");
         primaryStage.setScene(scene);
         primaryStage.show();
