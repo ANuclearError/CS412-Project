@@ -1,12 +1,15 @@
 package com.group15.java_ebook_search.controller;
 
+import com.group15.java_ebook_search.model.SpellCheck;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
+import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -24,12 +27,17 @@ public class Controller implements Initializable {
     @FXML
     private WebView webView;
 
+    private SpellCheck spellCheck;
+
     /**
      * Web Engine that renders the web pages.
      */
     private WebEngine webEngine;
 
     public void initialize(URL location, ResourceBundle resources) {
+
+        spellCheck = new SpellCheck();
+
         String home = "/com/group15/java_ebook_search/files/index.htm";
         String css = "/com/group15/java_ebook_search/style/html/style.css";
 
@@ -73,7 +81,8 @@ public class Controller implements Initializable {
      *
      * TODO: Implement search.
      */
-    public void search() {
+    public void search() throws IOException {
         System.out.println("Search: " + query.getText());
+        System.out.println(spellCheck.getSuggestions(query.getText()));
     }
 }

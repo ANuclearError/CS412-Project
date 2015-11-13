@@ -72,5 +72,11 @@
 			<version>${apacheCommonsVersion}</version>
 			<classifier>javadoc</classifier>
 		</dependency>
+
+		<dependency>
+			<groupId>org.languagetool</groupId>
+			<artifactId>language-en</artifactId>
+			<version>3.1</version>
+		</dependency>
 	</dependencies>
 </project>
