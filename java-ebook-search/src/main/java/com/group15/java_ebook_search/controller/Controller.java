@@ -82,7 +82,8 @@ public class Controller implements Initializable {
      * TODO: Implement search.
      */
     public void search() throws IOException {
-        System.out.println("Search: " + query.getText());
-        System.out.println(spellCheck.getSuggestions(query.getText()));
+        String term = query.getText();
+        System.out.println("Search: " + term);
+        System.out.println(spellCheck.getSuggestions(term));
     }
 }
