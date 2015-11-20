@@ -1,14 +1,19 @@
 package java_ebook_search.controller;
 
 import java_ebook_search.model.SpellCheck;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Arrays;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -19,6 +24,9 @@ import java.util.ResourceBundle;
  * @since 0.1
  */
 public class SearchController implements Initializable {
+
+    @FXML
+    private ListView<String> results;
 
     @FXML
     private TextField query;
@@ -51,6 +59,18 @@ public class SearchController implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        List<String> test = Arrays.asList("google.com", "stackoverflow.com");
+
+        results.setItems(FXCollections.observableList(test));
+
+        results.getSelectionModel().selectedItemProperty().addListener(
+            (observable, oldValue, newValue) -> loadResult(newValue)
+        );
+    }
+
+    public void loadResult(String result) {
+        System.out.println(result);
     }
 
     /**
