@@ -14,7 +14,7 @@ import java.util.List;
  * suggestions for the system.
  *
  * @author Aidan O'Grady
- * @since 0.1
+ * @since 0.2
  */
 public class SpellCheck {
 

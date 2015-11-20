@@ -16,7 +16,7 @@ import java.util.ResourceBundle;
  * the search view.
  *
  * @author Aidan O'Grady
- * @since 0.0
+ * @since 0.1
  */
 public class SearchController implements Initializable {
 
