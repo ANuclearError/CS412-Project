@@ -24,11 +24,10 @@ public class SpellCheck {
     private JLanguageTool tool;
 
     /**
-     * Constructor
+     * Constructor.
      */
     public SpellCheck() {
         tool = new JLanguageTool(new BritishEnglish());
-
     }
 
     /**

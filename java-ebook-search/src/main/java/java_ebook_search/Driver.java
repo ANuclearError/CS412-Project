@@ -18,7 +18,14 @@ import java.io.IOException;
  */
 public class Driver extends Application {
 
+    /**
+     * The primary stage of the GUI, containing everything.
+     */
     private Stage primaryStage;
+
+    /**
+     * The rootLayout which acts as the skeleton of the GUI.
+     */
     private BorderPane rootLayout;
 
     public static void main(String[] args) {
