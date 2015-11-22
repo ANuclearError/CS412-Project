@@ -7,12 +7,13 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 
-<VBox   fx:id="searchView"
-        xmlns:fx="http://javafx.com/fxml/1"
-        fx:controller="java_ebook_search.controller.SearchController">
+<VBox fx:id="searchView"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_ebook_search.controller.SearchController">
     <children>
         <HBox>
-            <TextField fx:id="query" HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="query" HBox.hgrow="ALWAYS"
+                       promptText="Search here..."/>
             <Button text="Search" onAction="#search"/>
             <Button text="Filters" onAction="#filters"/>
         </HBox>
