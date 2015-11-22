@@ -10,6 +10,8 @@ import javafx.scene.web.WebView;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 /**
@@ -35,12 +37,16 @@ public class SearchController implements Initializable {
      */
     private SpellCheck spellCheck;
 
+    private List<String> suggestions;
+
     /**
      * Web Engine that renders the web pages.
      */
     private WebEngine webEngine;
 
     public void initialize(URL location, ResourceBundle resources) {
+
+        suggestions = new ArrayList<String>();
 
         spellCheck = new SpellCheck();
 
@@ -82,7 +88,6 @@ public class SearchController implements Initializable {
     public void search() throws IOException {
         String term = query.getText();
         System.out.println("Search: " + term);
-        System.out.println(spellCheck.getSuggestions(term));
     }
 
 }
