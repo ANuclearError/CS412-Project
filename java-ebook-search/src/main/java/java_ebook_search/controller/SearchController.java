@@ -1,5 +1,6 @@
 package java_ebook_search.controller;
 
+import java_ebook_search.model.Search;
 import java_ebook_search.model.SpellCheck;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -7,6 +8,8 @@ import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import org.apache.lucene.index.IndexNotFoundException;
+import org.apache.lucene.queryparser.classic.ParseException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,27 +36,29 @@ public class SearchController implements Initializable {
     private WebView webView;
 
     /**
-     * Handles spell checking of search queries.
-     */
-    private SpellCheck spellCheck;
-
-    private List<String> suggestions;
-
-    /**
      * Web Engine that renders the web pages.
      */
     private WebEngine webEngine;
 
+    /**
+     * Handles spell checking of search queries.
+     */
+    private SpellCheck spellCheck;
+
+    /**
+     * The search engine that will handle queries.
+     */
+    private Search search;
+
     public void initialize(URL location, ResourceBundle resources) {
-
-        suggestions = new ArrayList<String>();
-
         spellCheck = new SpellCheck();
 
-        String home = "/java_ebook_search/files/index.htm";
+        String index = "index";
+        String home = "/java_ebook_search/html/index.html";
         String css = "/java_ebook_search/html/style.css";
 
         try {
+            search = new Search(index);
             webEngine = webView.getEngine();
             webEngine.load(getClass().getResource(home).toString());
             String cssLoc = getClass().getResource(css).toString();
@@ -63,7 +68,7 @@ public class SearchController implements Initializable {
         }
 
         results.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> loadResult(newValue)
+                (observable, oldValue, newValue) -> loadResult(newValue)
         );
     }
 
@@ -85,9 +90,9 @@ public class SearchController implements Initializable {
      *
      * TODO: Implement search.
      */
-    public void search() throws IOException {
+    public void search() throws IOException, ParseException {
         String term = query.getText();
-        System.out.println("Search: " + term);
+        search.search(term);
     }
 
 }
