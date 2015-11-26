@@ -54,7 +54,7 @@ public class SearchController implements Initializable {
         spellCheck = new SpellCheck();
 
         String index = "index";
-        String home = "/java_ebook_search/files/index.htm";
+        String home = "/java_ebook_search/html/index.html";
         String css = "/java_ebook_search/html/style.css";
 
         try {
