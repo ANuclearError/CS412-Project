@@ -7,10 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 
-import java_ebook_search.MyFile;
+import java_ebook_search.model.MyFile;
 import java_ebook_search.model.Search;
 import java_ebook_search.model.SpellCheck;
 import javafx.collections.FXCollections;
@@ -79,27 +78,32 @@ public class SearchController implements Initializable {
 			e.printStackTrace();
 		}
 
-		results.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//		results.setOnMouseClicked(new EventHandler<MouseEvent>() {
+//
+//			@Override
+//			public void handle(MouseEvent event) {
+//				File clickedOn = results.getSelectionModel().getSelectedItem();
+//
+//				//if not clicked on null
+//				if (null != clickedOn ) {
+//					System.out.println("clicked on " + clickedOn);
+//
+//					String url = "file://" + clickedOn.getAbsolutePath();
+//					webEngine.load(url);
+//
+//				}
+//			}
+//		});
 
-			@Override
-			public void handle(MouseEvent event) {
-				File clickedOn = results.getSelectionModel().getSelectedItem();
-				
-				//if not clicked on null
-				if (null != clickedOn ) {
-					System.out.println("clicked on " + clickedOn);
-					
-					String url = "file://" + clickedOn.getAbsolutePath();
-					webEngine.load(url);
-
-				}
-			}
-		});
+		results.getSelectionModel().selectedItemProperty().addListener(
+				(observable, oldValue, newValue) -> loadResult(newValue)
+		);
 
 	}
 
-	public void loadResult(String result) {
-		webEngine.load(result);
+	public void loadResult(File result) {
+		System.out.println("Loading " + result.getPath());
+		webEngine.load(result.getAbsolutePath());
 	}
 
 	/**
