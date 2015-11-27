@@ -75,13 +75,18 @@ public class SearchController implements Initializable {
 			webEngine.load(getClass().getResource(home).toString());
 			String cssLoc = getClass().getResource(css).toString();
 			webEngine.setUserStyleSheetLocation(cssLoc);
+
+			results.getSelectionModel().selectedItemProperty().addListener(
+					(observable, oldValue, newValue) -> loadResult(newValue)
+			);
+
+		} catch (NullPointerException e) {
+			System.out.println("It's happened again, ignore it");
+			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
-		results.getSelectionModel().selectedItemProperty().addListener(
-				(observable, oldValue, newValue) -> loadResult(newValue)
-		);
 
 	}
 
