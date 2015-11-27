@@ -1,7 +1,4 @@
-package java_ebook_search;
-
-import java_ebook_search.model.MyIndexFiles;
-import java_ebook_search.model.Stopwords;
+package java_ebook_search.model;
 
 import java.io.IOException;
 
@@ -14,12 +11,13 @@ import java.io.IOException;
 
 public class Indexer {
 
-//	public static void main(String args[]) throws IOException{
-//		
-//		Indexer.index("/Users/kp_one/Desktop/java", "/Users/kp_one/Documents/sandbox/CS412-Project/java-ebook-search/src/main/resources/index");
-//	}
+	public static void main(String args[]) throws IOException{
 
-	public static void index(String documentsSrc, String indexDest) throws IOException {
+		Indexer index = new Indexer();
+		index.index("src/main/resources/java_ebook_search/files", "src/main/resources/java_ebook_search/index");
+	}
+
+	public void index(String documentsSrc, String indexDest) throws IOException {
 
 		// TODO remove
 		// -index

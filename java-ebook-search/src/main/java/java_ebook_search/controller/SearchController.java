@@ -47,22 +47,23 @@ public class SearchController implements Initializable {
 	private WebEngine webEngine;
 
 	/**
-	 * Handles spell checking of search queries.
+	 * The search engine the user interacts with.
 	 */
-	private SpellCheck spellCheck;
-
-	private List<String> suggestions;
-
 	private Search search;
 
+	/**
+	 * The results obtained from the search.
+	 */
 	final ObservableList<File> listItems = FXCollections.observableArrayList();
 
+	/**
+	 * Sets up the GUI, ensuring that everything is loaded nicely.
+	 *
+	 * @param location
+	 * @param resources
+	 */
 	public void initialize(URL location, ResourceBundle resources) {
-
 		results.setItems(listItems);
-
-		suggestions = new ArrayList<>();
-		spellCheck = new SpellCheck();
 
 		String index = "index";
 		String home = "/java_ebook_search/html/index.html";
@@ -78,32 +79,21 @@ public class SearchController implements Initializable {
 			e.printStackTrace();
 		}
 
-//		results.setOnMouseClicked(new EventHandler<MouseEvent>() {
-//
-//			@Override
-//			public void handle(MouseEvent event) {
-//				File clickedOn = results.getSelectionModel().getSelectedItem();
-//
-//				//if not clicked on null
-//				if (null != clickedOn ) {
-//					System.out.println("clicked on " + clickedOn);
-//
-//					String url = "file://" + clickedOn.getAbsolutePath();
-//					webEngine.load(url);
-//
-//				}
-//			}
-//		});
-
 		results.getSelectionModel().selectedItemProperty().addListener(
 				(observable, oldValue, newValue) -> loadResult(newValue)
 		);
 
 	}
 
-	public void loadResult(File result) {
-		System.out.println("Loading " + result.getPath());
-		webEngine.load(result.getAbsolutePath());
+	/**
+	 * Given a file, it loads the web page into the web engine.
+	 * @param result - the file loaded.
+	 */
+	private void loadResult(File result) {
+		String path = result.getPath();
+		path = path.replace("src/main/resources", "");
+		System.out.println(path);
+		webEngine.load(getClass().getResource(path).toString());
 	}
 
 	/**
@@ -117,8 +107,6 @@ public class SearchController implements Initializable {
 
 	/**
 	 * Executes search.
-	 *
-	 * TODO: Implement search.
 	 */
 	public void search() throws IOException, ParseException {
 
@@ -136,8 +124,5 @@ public class SearchController implements Initializable {
 			listItems.add(file);
 			i++;
 		}
-
 	}
-
-
 }
