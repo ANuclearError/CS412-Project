@@ -47,7 +47,7 @@ public class Search {
 	public Search(String index) throws IOException {
 
 		ClassLoader classLoader = getClass().getClassLoader();
-		File file = new File(classLoader.getResource("java_ebook_search/index").getFile());
+		File file = new File(classLoader.getResource(index).getFile());
 
 		Directory indexDir = FSDirectory.open(Paths.get(file.getAbsolutePath()));
 		IndexReader reader = DirectoryReader.open(indexDir);

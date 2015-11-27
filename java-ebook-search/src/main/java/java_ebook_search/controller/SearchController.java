@@ -65,7 +65,7 @@ public class SearchController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		results.setItems(listItems);
 
-		String index = "index";
+		String index = "java_ebook_search/index";
 		String home = "/java_ebook_search/html/index.html";
 		String css = "/java_ebook_search/html/style.css";
 
