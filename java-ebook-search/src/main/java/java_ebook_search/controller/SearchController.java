@@ -33,7 +33,6 @@ import javafx.scene.web.WebView;
  */
 public class SearchController implements Initializable {
 
-<<<<<<< HEAD
 	@FXML
 	private ListView<File> results;
 
@@ -135,75 +134,6 @@ public class SearchController implements Initializable {
 		}
 
 	}
-=======
-    @FXML
-    private ListView<String> results;
 
-    @FXML
-    private TextField query;
-
-    @FXML
-    private WebView webView;
-
-    /**
-     * Web Engine that renders the web pages.
-     */
-    private WebEngine webEngine;
-
-    /**
-     * Handles spell checking of search queries.
-     */
-    private SpellCheck spellCheck;
-
-    /**
-     * The search engine that will handle queries.
-     */
-    private Search search;
-
-    public void initialize(URL location, ResourceBundle resources) {
-        spellCheck = new SpellCheck();
-
-        String index = "index";
-        String home = "/java_ebook_search/html/index.html";
-        String css = "/java_ebook_search/html/style.css";
-
-        try {
-            search = new Search(index);
-            webEngine = webView.getEngine();
-            webEngine.load(getClass().getResource(home).toString());
-            String cssLoc = getClass().getResource(css).toString();
-            webEngine.setUserStyleSheetLocation(cssLoc);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        results.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue) -> loadResult(newValue)
-        );
-    }
-
-    public void loadResult(String result) {
-        webEngine.load(result);
-    }
-
-    /**
-     * Opens the filter window to enable filters.
-     *
-     * TODO: Create filters window.
-     */
-    public void filters() {
-        System.out.println("Filters");
-    }
-
-    /**
-     * Executes search.
-     *
-     * TODO: Implement search.
-     */
-    public void search() throws IOException, ParseException {
-        String term = query.getText();
-        search.search(term);
-    }
->>>>>>> origin/master
 
 }
