@@ -1,9 +1,6 @@
 package java_ebook_search;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-
+import org.apache.lucene.analysis.core.StopAnalyzer;
 import org.apache.lucene.analysis.util.CharArraySet;
 
 /**
@@ -15,25 +12,15 @@ import org.apache.lucene.analysis.util.CharArraySet;
 
 public class Stopwords {
 
-	private Stopwords() {
-		// No instances
-	}
-
 	public static CharArraySet getWords() {
+		CharArraySet stopWords =
+				new CharArraySet(StopAnalyzer.ENGLISH_STOP_WORDS_SET, true);
 
-		Collection<String> stopWordCollection = new ArrayList<String>(Arrays.asList("a", "an", "and", "are", "as", "at",
-				"be", "but", "by", "for", "if", "in", "into", "is", "it", "no", "not", "of", "on", "or", "such", "that",
-				"the", "their", "then", "there", "these", "they", "this", "to", "was", "will", "with"));
-
-		stopWordCollection.remove("and");
-		stopWordCollection.remove("or");
-		stopWordCollection.remove("not");
-		stopWordCollection.remove("if");
-		stopWordCollection.remove("for");
-		stopWordCollection.remove("this");
-
-		return new CharArraySet(stopWordCollection, true);
-
+        // Remove words that are associated with Java.
+        String[] javaWords = {"and", "or", "not", "if", "for", "this"};
+        for(String word : javaWords)
+		    stopWords.remove(word);
+		return stopWords;
 	}
 
 }
