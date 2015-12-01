@@ -45,7 +45,7 @@ public class Driver extends Application {
      * Loads the root layout containing the menu bar and the general structure.
      */
     private void initRootLayout() {
-        String fxml = "/java_ebook_search/fxml/RootLayout.fxml";
+        String fxml = "/java_ebook_search/view/RootLayout.fxml";
         try {
             rootLayout = FXMLLoader.load(getClass().getResource(fxml));
             Scene scene = new Scene(rootLayout);
@@ -60,7 +60,7 @@ public class Driver extends Application {
      * Loads the search view and injects it into the root layout.
      */
     private void showSearchView() {
-        String fxml = "/java_ebook_search/fxml/SearchView.fxml";
+        String fxml = "/java_ebook_search/view/SearchView.fxml";
         try {
             VBox searchView;
             searchView = FXMLLoader.load(getClass().getResource(fxml));

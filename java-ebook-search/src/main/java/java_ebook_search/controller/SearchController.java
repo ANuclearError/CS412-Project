@@ -3,7 +3,6 @@ package java_ebook_search.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -11,15 +10,12 @@ import org.apache.lucene.queryparser.classic.ParseException;
 
 import java_ebook_search.model.MyFile;
 import java_ebook_search.model.Search;
-import java_ebook_search.model.SpellCheck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 
@@ -66,7 +62,7 @@ public class SearchController implements Initializable {
 		results.setItems(listItems);
 
 		String index = "java_ebook_search/index";
-		String home = "/java_ebook_search/html/index.html";
+		String home = "/java_ebook_search/view/index.html";
 		String css = "/java_ebook_search/html/style.css";
 
 		try {
