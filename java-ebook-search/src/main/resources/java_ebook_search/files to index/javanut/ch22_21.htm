@@ -1,0 +1,26 @@
+
+[Chapter 22] 22.21 java.awt.peer.ScrollPanePeer (JDK 1.1)
+Chapter 22The java.awt.peer Package
+22.21 java.awt.peer.ScrollPanePeer (JDK 1.1)
+public abstract interface ScrollPanePeer extends ContainerPeer {
+    // Public Instance Methods
+            public abstract void childResized(int w, int h);
+            public abstract int getHScrollbarHeight();
+            public abstract int getVScrollbarWidth();
+            public abstract void setScrollPosition(int x, int y);
+            public abstract void setUnitIncrement(Adjustable adj, int u);
+            public abstract void setValue(Adjustable adj, int v);
+}
+Hierarchy:
+(ScrollPanePeer(ContainerPeer(ComponentPeer)))
+Returned By:
+Toolkit.createScrollPane()
+java.awt.peer.PopupMenuPeer (JDK 1.1)
+java.awt.peer.ScrollbarPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

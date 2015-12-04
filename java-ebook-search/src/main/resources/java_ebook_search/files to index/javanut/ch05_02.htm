@@ -1,0 +1,104 @@
+
+[Chapter 5] 5.2 Nested Top-Level Classes and Interfaces
+Chapter 5Inner Classes and Other New Language Features
+5.2 Nested Top-Level Classes and Interfaces
+As explained above, a nested top-level class or interface is
+just like a regular package-member class or interface,
+except that, for convenience, it has been nested within
+another class or interface.  Note that nested top-level
+classes and interfaces must be declared static.
+They can only be nested within other top-level classes and
+interfaces (i.e., they cannot be declared within inner
+classes), but they can be nested to any depth.
+Example 5.1 
+shows how you might define a nested top-level "helper" interface.
+Note the use of the static
+keyword in the declaration of the interface.  The example
+also shows how this interface is used both within the class
+that contains it and by external classes.  Note the use of
+its hierarchical name in the external class.
+Example 5.1: Defining and Using a Nested Top-Level Interface
+public class LinkedList {
+  // This nested top-level helper interface is defined as a static member.
+  public interface Linkable {
+    public Linkable getNext();
+    public void setNext(Linkable node);
+  }
+  // The head of the list is a Linkable object.
+  Linkable head;  
+  // Method bodies omitted.
+  public void insert(Linkable node) { ... } 
+  public remove(Linkable node) { ... } 
+}
+// This class defines a type of node that we'd like to use in
+// a linked list.  Note the nested interface name in the implements clause.
+class LinkableInteger implements LinkedList.Linkable
+{
+  // Here's the node's data and constructor.
+  int i;
+  public LinkableInteger(int i) { this.i = i; }
+  // Here are the data and methods required to implement the interface.
+  LinkedList.Linkable next;
+  public LinkedList.Linkable getNext() { return next; }
+  public void setNext(LinkedList.Linkable node) { next = node; }
+}
+The import statement can be used to import nested
+top-level classes and interfaces from the class that defines
+them, just as it can be used to import package member
+top-level classes and interfaces from the package that
+defines them.
+Example 5.2
+shows a new definition of the LinkableInteger class
+from
+Example 5.1
+that uses an import statement to allow it to refer
+to the Linkable interface by its simple, unqualified
+name (i.e., the name of the enclosing class is no longer needed).
+Example 5.2: Importing a Static Member Class
+import LinkedList.*;     // Or use import LinkedList.Linkable;
+// Since we use an import statement, we can just type
+// "Linkable" instead of "LinkedList.Linkable".
+class LinkableInteger2 implements Linkable
+{
+  int i;
+  public LinkableInteger2(int i) { this.i = i; }
+  Linkable next;
+  public Linkable getNext() { return next; }
+  public void setNext(Linkable node) { next = node; }
+}
+Nested Top-Level Classes and .class Files
+When you compile the LinkedList.java file shown in
+Example 5.1, 
+you'll find that two class files are generated.  The first
+is named LinkedList.class, as expected.  The second,
+however, is named LinkedList$Linkable.class.  The
+$ in this name is automatically inserted by the Java
+1.1 compiler.  
+The Java Virtual Machine knows nothing about
+nested top-level classes and interfaces or the various
+types of inner classes. 
+Therefore, the Java compiler must convert these new types
+into standard, non-nested class files that the Java
+interpreter can understand.  This is done through
+source-code transformations that insert $ characters
+into nested class names. These source-code transformations
+may also insert hidden fields,
+methods, and constructor arguments into the affected
+classes.  Unless you are writing a Java 1.1 compiler,
+however, you do not need to know the details 
+of these source-code transformations, and you will typically
+not even notice them, except in the names of class files.
+[2]
+[2] 
+See the Java Language Specification if you want
+complete details on the source-code transformations
+performed by the Java 1.1 compiler to support inner classes.
+An Overview of Inner Classes
+Member Classes
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,573 @@
+
+[Chapter 11] ObjectOutputStream
+Chapter 11The java.io Package
+ObjectOutputStream
+Name
+ObjectOutputStream
+Synopsis
+Class Name:
+java.io.ObjectOutputStream
+Superclass:
+java.io.OutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.ObjectOutput
+Availability:
+New as of JDK 1.1 
+Description
+The ObjectOutputStream class 
+can write both primitive types and object instances to an underlying OutputStream. 
+The objects and other data can then be read by an ObjectInputStream. 
+These two classes provide persistent storage of objects when they are 
+used in conjunction with FileInputStream 
+and FileOutputStream. The classes 
+can also be used with socket streams to pass objects across the network. 
+Only objects that are instances of classes that implement the Serializable 
+or Externalizable interfaces 
+can be serialized to an output stream. The default serialization mechanism 
+is implemented by writeObject(). 
+When an object is serialized, the class of the object is encoded, along 
+with the class name, the signature of the class, the values of the non-static 
+and non-transient fields of 
+the object, including any other objects referenced by the object (except 
+those that do not implement the Serializable 
+interface themselves). Multiple references to the same object are encoded 
+using a reference sharing mechanism, so that a graph of the object can be restored 
+appropriately. Strings and arrays are objects in Java, so they are treated 
+as objects during serialization. 
+For example, the following code opens a file called color.ser 
+and writes out a Color object: 
+FileOutputStream fileOut;
+ObjectOutputStream out;
+try {
+    fileOut = new FileOutputStream("color.ser");
+    out = new ObjectOutputStream(fileOut);
+    out.writeObject(Color.blue);
+    out.close();
+}
+catch (IOException e) {
+    System.out.println("Error writing: " + e);
+}
+Classes that require special handling during serialization and deserialization 
+must implement the following methods (with these exact signatures): 
+private void readObject(ObjectOutputStream stream) 
+             throws IOException, ClassNotFoundException
+private void writeObject(ObjectOutputStream stream) throws IOException
+The writeObject() method is 
+responsible for writing the state of the object for the particular class 
+so that it can be restored by readObject(). 
+The writeObject() method does 
+not need to handle writing the state for the object's superclass 
+or any of its subclasses except in the case where the superclass does not 
+itself implement the Serializable 
+interface. In this case, the nonserializable class must have a no-argument 
+constructor that can be called to initialize its fields, and it is the responsibility 
+of the subclass to save the state of its superclass. 
+A class that inherits the implementation of Serializable 
+prevents itself from being serialized by defining readObject() 
+and writeObject() methods that 
+throw NotSerializableException 
+objects. 
+If a class needs complete control over the contents and formatting of the 
+serialized form of its objects, it should implement the Externalizable 
+interface. 
+Class Summary
+public class java.io.ObjectOutputStream extends java.io.OutputStream
+             implements java.io.ObjectOutput {
+  // Constructors
+  public ObjectOutputStream(OutputStream out);
+  // Instance Methods
+  public void close();
+  public final void defaultWriteObject();
+  public void flush();
+  public void reset();
+  public void write(int data);
+  public void write(byte[] b);
+  public void write(byte[] b, int off, int len);
+  public void writeBoolean(boolean data);
+  public void writeByte(int data);
+  public void writeBytes(String data);
+  public void writeChar(int data);
+  public void writeChars(String data);
+  public void writeDouble(double data);
+  public void writeFloat(float data);
+  public void writeInt(int data);
+  public void writeLong(long data);
+  public final void writeObject(Object obj);
+  public void writeShort(int data);
+  public void writeUTF(String data);
+  // Protected Instance Methods
+  protected void annotateClass(Class cl);
+  protected void drain();
+  protected final boolean enableReplaceObject(boolean enable);
+  protected Object replaceObject(Object obj);
+  protected void writeStreamHeader();
+}
+Constructors
+ObjectOutputStream
+public ObjectOutputStream(OutputStream out) throws IOException
+Parameters
+out
+The underlying output 
+stream. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This constructor creates an ObjectOutputStream 
+that writes to the given output stream. The constructor writes the stream 
+header, which consists of a magic number and version number, in preparation 
+for serialization. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectOutput.close() 
+Overrides
+OutputStream.close() 
+Description
+This method closes the stream and releases any system resources that are 
+associated with it. 
+defaultWriteObject
+public final void defaultWriteObject() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+NotActiveException
+If serialization is not active. 
+Description
+This method writes the fields of the object that are not static 
+or transient. The method 
+can only be called from the private 
+writeObject() method of an 
+object that is being serialized; it throws a NotActiveException 
+if it is called at any other time. This method implements the default serialization 
+mechanism. 
+flush
+public void flush() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectOutput.flush() 
+Overrides
+OutputStream.flush() 
+Description
+This method takes any buffered output and forces it to be written to the 
+underlying stream. 
+reset
+public void reset() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method sets the state of the ObjectOutputStream 
+to the same state as when it was created. As objects are serialized to 
+the stream, the ObjectOutputStream 
+remembers which ones are already serialized. If the program requests that 
+already serialized objects be written again, the ObjectOutputStream 
+just writes out a reference to the previous object. Calling reset() 
+causes the ObjectOutputStream 
+to forget what it has done before, so all subsequent objects are fully 
+serialized. 
+write
+public void write(int data) throws IOException
+Parameters
+data
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectOutput.write(int) 
+Overrides
+OutputStream.write(int) 
+Description
+This method writes the lowest eight bits of b 
+to the underlying stream as a byte. 
+public void write(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectOutput.write(byte[]) 
+Overrides
+OutputStream.write(byte[]) 
+Description
+This method writes the given array of bytes to the underlying stream. 
+public void write(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to 
+write to the stream.
+off
+An offset into the 
+byte array.
+len
+The number of bytes 
+to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectOutput.write(byte[], int, int) 
+Overrides
+OutputStream.write(byte[], int, int) 
+Description
+This method writes len bytes 
+from the given array, starting off 
+elements from the beginning of the array, to the underlying stream. 
+writeBoolean
+public void writeBoolean(boolean data) throws IOException
+Parameters
+data
+The boolean 
+value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeBoolean() 
+Description
+If data is true, 
+this method writes a byte that contains the value 1 
+to the underlying stream. If data 
+is false, the method writes 
+a byte that contains the value 0. 
+writeByte
+public void writeByte(int data) throws IOException
+Parameters
+data
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeByte() 
+Description
+This method writes an 8-bit byte 
+to the underlying stream, using the lowest eight bits of the given integer 
+data. 
+writeBytes
+public void writeBytes(String data) throws IOException
+Parameters
+data
+The String to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeBytes() 
+Description
+This method writes the characters in the given String 
+to the underlying stream as a sequence of 8-bit bytes. The high-order 
+bytes of the characters in the string are ignored. 
+writeChar
+public void writeChar(int data) throws IOException
+Parameters
+data
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeChar() 
+Description
+This method writes a 16-bit char 
+to the underlying stream, using the lowest two bytes of the given integer 
+data. 
+writeChars
+public void writeChars(String data) throws IOException
+Parameters
+data
+The String to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeChars() 
+Description
+This method writes the characters in the given String 
+object to the underlying stream as a sequence of 16-bit characters. 
+writeDouble
+public void writeDouble(double data) throws IOException
+Parameters
+data
+The double 
+value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeDouble() 
+Description
+This method writes a 64-bit double 
+to the underlying stream. The double 
+value is converted to a long 
+using doubleToLongBits() of 
+Double; the long 
+value is then written to the underlying stream as eight bytes with the 
+highest byte first. 
+writeFloat
+public void writeFloat(float data) throws IOException
+Parameters
+data
+The float 
+value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeFloat() 
+Description
+This method writes a 32-bit float 
+to the underlying stream. The float 
+value is converted to a int 
+using floatToIntBits() of Float; 
+the int value is then written 
+to the underlying stream as four bytes with the highest byte first. 
+writeInt
+public void writeInt(int data) throws IOException
+Parameters
+data
+The int 
+value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeInt() 
+Description
+This method writes a 32-bit int 
+to the underlying stream. The value is written as four bytes with the highest 
+byte first. 
+writeLong
+public void writeLong(long data) throws IOException
+Parameters
+data
+The long 
+value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeLong() 
+Description
+This method writes a 64-bit long 
+to the underlying stream. The value is written as eight bytes with the 
+highest byte first. 
+writeObject
+   public final void writeObject(Object obj) throws IOException, InvalidClassException, NotSerializableException  
+Parameters
+obj
+The object to be serialized. 
+Throws
+InvalidClassException
+If there is a problem with the class of the object.
+NotSerializableException
+If the object does not implement Serializable 
+or Externalizable.
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectOutput.writeObject() 
+Description
+This method serializes the given object to the stream. The class of the 
+object is encoded, along with the class name, the signature of the class, 
+the values of the non-static 
+and non-transient fields of 
+the object, including any other objects referenced by the object (except 
+those that do not implement the Serializable 
+interface themselves). Multiple references to the same object are encoded 
+using a reference sharing mechanism, so that a graph of object can be restored 
+appropriately. 
+writeShort
+public void writeShort(int data) throws IOException
+Parameters
+data
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeShort() 
+Description
+This method writes a 16-bit short 
+to the underlying stream, using the lowest two bytes of the given integer 
+data. 
+writeUTF
+public void writeUTF(String data) throws IOException
+Parameters
+data
+The String 
+to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+DataOutput.writeUTF() 
+Description
+This method writes the given String 
+to the underlying stream using the UTF-8 encoding. See the description 
+of DataOutputStream.writeUTF(String) 
+for more information. 
+Protected Instance Methods
+annotateClass
+protected void annotateClass(Class cl) throws IOException
+Parameters
+cl
+The class to be serialized. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method is called once for each unique class during serialization. 
+The implementation in ObjectOutputStream 
+does nothing; subclasses can override this method to write out more information 
+about a class. A corresponding subclass of ObjectInputStream 
+should override the resolveClass() 
+method to read the extra class information. 
+drain
+protected void drain() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method is a helper method for flush(). 
+It forces a write of any buffered data in the ObjectOutputStream, 
+but does not call flush() on 
+the underlying stream. 
+enableReplaceObject
+   protected final boolean enableReplaceObject(boolean enable) throws SecurityException  
+Parameters
+enable
+A boolean 
+value that specifies whether or not object replacement is enabled. 
+Returns
+true if object replacement 
+was previously enabled; false otherwise. 
+Throws
+SecurityException
+If enable is true 
+and getClassLoader()called 
+on the class of the stream does not return null. 
+Description
+This method determines if a trusted subclass of ObjectOutputStream 
+is allowed to replace serialized objects. If the method is called with 
+true, replacement is enabled. 
+Each time an object is serialized, replaceObject() 
+is called to give the ObjectOutputStream 
+a chance to replace the object. A trusted stream is one whose class has 
+no ClassLoader. 
+replaceObject
+protected Object replaceObject(Object obj) throws IOException
+Parameters
+obj
+The object to be replaced. 
+Returns
+A replacement for the given object. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+If object replacement is enabled for this ObjectOutputStream 
+(see enableReplaceObject()), 
+this method is called with each object to be serialized to give the stream 
+a chance to replace the object. In ObjectOutputStream, 
+this method simply returns the object that was passed to it. Subclasses 
+can override this method to provide more useful functionality. 
+writeStreamHeader
+protected void writeStreamHeader() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method writes the serialization stream header, which consists of a 
+magic number and a version number. This method is called by the constructor 
+for ObjectOutputStream. If 
+you subclass ObjectOutputStream, 
+you can override this method to provide your own stream header. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+DataOutput, 
+Double, 
+Externalizable, 
+Float, 
+InvalidClassException, 
+IOException, 
+NotActiveException, 
+NotSerializableException, 
+ObjectInputStream, 
+ObjectOutput, 
+OutputStream, 
+SecurityException, 
+Serializable, 
+String 
+ObjectOutput
+ObjectStreamClass
+ 
+ 
+ 
+ 
+ 
+ 
+ 

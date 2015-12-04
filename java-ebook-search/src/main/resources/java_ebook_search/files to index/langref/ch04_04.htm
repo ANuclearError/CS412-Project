@@ -1,0 +1,330 @@
+
+[Chapter 4] 4.4 Unary Operators
+Chapter 4Expressions
+4.4 Unary Operators
+Unary operators are operators that take exactly one argument. Unary
+operators may appear in a unary expression:
+The unary plus and minus operators, a Boolean negation operator
+(!),
+a bitwise negation operator (~), and the cast
+construct comprise the unary operators in Java. The unary operators
+are equal in precedence and are evaluated from right to left.
+References
+Order of Operations;
+Postfix Increment/Decrement Operators;
+Prefix Increment/Decrement Operators;
+Primary Expressions;
+Type 3
+Unary Plus Operator +
+The unary plus operator (+)
+can appear as part of a unary expression. The operator does no explicit
+computation; it produces the same pure value that is produced by
+its operand. However, the unary + operator may perform a type conversion
+on its operand. The type of the operand must be an arithmetic data
+type, or a compile-time error occurs. If the type of the operand
+is byte, short, or char,
+the unary + operator produces an int
+value; otherwise the operator produces a value of the same type
+as its operand.
+References
+Arithmetic Types
+Unary Minus Operator -
+The unary minus
+operator (-)
+can appear as part of a unary expression. The type of the operand
+of the unary - operator must be an arithmetic
+data type, or a compile-time error occurs. The operator produces
+a pure value that is the arithmetic negation (i.e., additive inverse)
+of the value of its operand.
+The unary -
+operator may perform a type conversion. If the type of the operand
+is byte, short, or char,
+the operation converts the operand to an int
+before computing the value's arithmetic negation and producing an
+int value. Otherwise, unary -
+produces a value of the same type as its operand.
+For integer data types, the unary - operator produces
+a value equivalent to subtracting its operand from zero.
+There are, however, negative values for which the unary - operator
+cannot produce a positive value; in these cases it produces the
+same negative value as its operand. This behavior results from the
+two's complement representation Java uses for integer values. The
+magnitude of the most negative number that can be represented using
+two's complement notation cannot be represented as a positive number.
+No exception is thrown when the unary - operator
+is given a value that cannot be negated. However, you can detect
+this situation by explicitly testing for these special values. The
+most negative int value is available as the predefined
+constant Integer.MIN_VALUE and the most negative
+long value is available as the predefined constant
+Long.MIN_VALUE.
+For floating-point
+data types, the unary - operator changes the
+sign of its operand from + to -
+or from - to +, for both regular
+values, positive and negative zero, and positive and negative infinity.
+The only case where this is not true occurs when the operand is
+not-a-number (NaN).
+Given the value NaN, the unary - operator produces
+NaN.
+References
+Arithmetic Types;
+Integer;
+Long
+Boolean Negation Operator !
+The Boolean negation operator (!)
+may appear as part of a unary expression. The type of the operand
+of the ! operator must be boolean,
+or a compile-time error occurs. If the value of its operand is false,
+the ! operator produces the pure boolean
+value true. If the value of its operand is true,
+the operator produces the pure boolean value
+false.
+Here is an example that uses
+the Boolean negation operator:
+public void paint(Graphics g) {
+    if (!loaded) {
+        //The next 2 lines are executed if loaded is false
+        g.drawString("Loading data", 25, 25);
+        return;
+    }
+    g.drawImage(img, 25, 25, this);
+}
+References
+Boolean Type
+Bitwise Negation Operator ~
+The bitwise negation operator (~)
+may appear as part of a unary expression. The type of the operand
+of the ~ operator must be an integer data type,
+or a compile-time error occurs. The ~ operator
+may perform a type conversion before it performs its computation.
+If the type of the operand is byte, short,
+or char, the operator converts its operand to
+int before producing a value. Otherwise the ~
+operator produces a value of the same type as its operand.
+After
+type conversion, the bitwise negation operator produces a pure value
+that is the bitwise complement of its operand. In other words, if
+a bit in the converted operand contains a one, the corresponding
+bit in the result contains a zero. If a bit in the converted operand
+contains a zero, the corresponding bit in the result contains a
+one.
+Here's an example that shows the use of the bitwise
+negation operator:
+// zero low order four bits
+int getNibble(int x) {
+    return x &amp; ~0xf;
+}
+References
+Integer types
+Casts
+A Type enclosed
+in parentheses specifies a type cast operation.
+A cast may appear as part of a unary expression. A cast operation
+always produces a pure value of the specified type, by converting
+its operand to that type if necessary. This is different from a
+type cast in C/C++, which can produce garbage if it is given a pointer
+to a data type different than that implied by the pointer's declaration.
+If the actual data type of the operand of a cast cannot be guaranteed
+at compile-time, the Java compiler must produce code to check the
+type of the operand at runtime. In Java, any value that gets past
+all of the type-checking done on a cast is guaranteed to be compatible
+with the type specified by the cast.
+A cast can convert
+between certain primitive types. A cast between object reference
+types never alters the type or content of the object, but may alter
+the type of the reference to the object.
+Because it
+is not possible to convert between all types, some cast operations
+are permitted and others are not. Here are the rules governing casts:
+A value of any data type can be cast to its own type.
+A value of any arithmetic data type can be cast to any other
+arithmetic data type. Casting a floating-point value to an integer
+data type rounds toward zero.
+A value of the boolean data type cannot be cast to
+any other data type, nor can
+a value of any other data type be cast to boolean.
+A value of any primitive data type cannot be cast to a reference
+data type, nor can a reference be cast to any primitive data type.
+A reference to a class type can be cast to the type of the
+superclass of that class.
+A reference to a class type can be cast to the type of a subclass
+of that class if the reference actually refers to an object of the
+specified class or any of its subclasses. Unless the Java compiler
+can prove that the object actually referenced is of the specified
+class or any of its subclasses, the compiler must generate a runtime
+test to verify that the object is of an appropriate type. At runtime,
+if the object actually referenced is not of an appropriate type,
+a ClassCastException is thrown. Consider the
+following example:
+Object o = "ABC";
+String s = (String)o;   // This is okay
+Double d = (Double)o;   // Throws an exception
+The cast of o to String
+is fine because o is really a reference to a String object. The cast of o to
+Double throws an exception at runtime because
+the object that o references is not an instance
+of Double.
+A reference to a class type can be cast to an interface type
+if the reference actually refers to an object of a class that implements
+the specified interface. If the class of the reference being cast
+is a final class, the compiler can determine
+if the reference actually refers to an object of a class that implements
+the specified interface, because a final class
+cannot have any subclasses. Otherwise, the compiler must generate
+a runtime test to determine if the reference actually refers to
+an object of a class that implements the specified interface. At
+runtime, if the object actually referenced is not of a class that
+implements the interface, a ClassCastException is
+thrown. Here is an example that illustrates the rules governing casts to
+interface types:
+interface Weber { double flux(double x); }
+class B {}
+final class C {}
+class D implements Weber {
+    public double flux(double x) {
+        return Math.PI*x*x;
+    }
+}
+class Intercast {
+    public void main(String[] argv) {
+        B b = new B();
+        C c = new C();
+        D d = new D();
+        Weber w;
+        w = (Weber)b;   // Throws an exception
+        w = (Weber)c;   // Compiler complains
+        w = (Weber)d;   // Okay, D implements Weber
+    }
+}
+The cast of b to Weber
+is fine with the compiler because the class B
+might have a subclass that implements Weber.
+At runtime, however, this cast throws an exception because B
+does not implement Weber. The cast of c
+to Weber produces an error message from the compiler,
+as the C class does not implement Weber.
+Because C is final, it will
+not have any subclasses and therefore there is no possibility of
+c containing a reference to an object that implements
+the Weber interface. The cast of d
+to Weber is fine because the D
+class implements the Weber interface.
+A reference to the class Object can be cast to
+an array type if the reference actually refers to an array object
+of the specified type. The compiler generates a runtime test to
+determine if the reference actually refers to the specified type
+of array object. At runtime, if the object actually referenced is
+not the specified type of array, a ClassCastException
+is thrown.
+A reference to an interface type can be cast
+to a class type if the reference actually refers to an instance
+of the specified class or any of its subclasses. If the specified
+class is a final class that does not implement
+the referenced interface, the compiler can reject the cast because
+a final class cannot have any subclasses. Otherwise,
+the compiler generates a runtime test to determine if the reference
+actually refers to an object of the appropriate type. At runtime,
+if the object actually referenced is not of the appropriate type,
+a ClassCastException is thrown.
+Here is an example to illustrate these points:
+interface Weber { double flux(double x); }
+class B {}
+final class C {}
+class D implements Weber {
+    public double flux(double x) {
+        return Math.PI*x*x;
+    }
+}
+class Intercast {
+    public void doit(Weber w) {
+        B b = (B)w;   // May throw an exception
+        C c = (C)w;   // Compiler complains
+        D d = (D)w;   // Okay
+    }
+}
+The cast of w to class B
+is fine with the compiler even though B does
+not implement Weber. The compiler lets it pass
+because B might have a subclass that implements
+Weber and w could contain
+a reference to that class. However, at runtime, the cast will throw
+an exception if the object actually referenced is not an instance
+of B or a subclass of B. The
+cast of w to class C produces
+an error message from the compiler. C does not
+implement Weber and C
+cannot have any subclasses
+because it is final; any object
+that implements Weber cannot be an instance of
+C. The cast of w to class
+D is fine at compile-time because D
+implements Weber. At runtime, if 
+w references an object that is
+not an instance of D, a 
+ClassCastException is thrown.
+A reference to an interface type can be cast to another interface
+type if the reference actually refers to an object of a class that
+implements the specified interface. If the referenced interface extends
+the specified interface, the compiler knows that the cast is legal.
+Otherwise, the compiler generates a runtime test to determine if
+the reference actually refers to an object that implements the specified
+interface. At runtime, if the object actually referenced does not
+implement the specified interface, a ClassCastException
+is thrown.
+Here is an example to illustrate these points:
+interface Weber { double flux(double x); }
+interface Dyn { double squeeze(); }
+interface Press extends Dyn {
+    double squeeze(double theta);
+}
+class D implements Press {
+    public double squeeze() { return Math.PI; }
+    public double squeeze(double theta) {
+        return Math.PI*Math.sin(theta);
+    }
+}
+class Interinter {
+    public static void doit(D d) {
+        Dyn dyn = d;          // Okay
+        Weber w = (Weber)d;   // May throw exception
+    }
+}
+The assignment of d to dyn
+works because d is of class D,
+D implements Press, and Press
+extends Dyn. Therefore, d
+refers to an object that implements Dyn and we
+have assignment compatibility. The compiler lets the cast of d
+to Weber pass because there may be a subclass
+of D that implements Weber.
+At runtime, the cast will throw an exception if D
+does not implement Weber.
+A reference
+to an array object can be cast to the class type Object.
+A reference to an array object can be cast to another array
+type if either of the following is true:
+The elements
+of the referenced array and the elements of the specified array
+type are of the same primitive type.
+The elements of
+the referenced array are of a type that can be cast to the type
+of the elements of the specified array type.
+Any cast operation not covered by the preceding rules is not
+allowed and the Java compiler issues an error message.
+References
+Arithmetic Types;
+Array Types;
+Boolean Type;
+Class Types;
+Interface Types;
+Runtime exceptions
+Increment/Decrement Operators
+Multiplicative Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

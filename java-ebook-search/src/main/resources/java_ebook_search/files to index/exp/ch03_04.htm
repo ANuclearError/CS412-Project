@@ -1,0 +1,50 @@
+
+[Chapter 3] 3.4 The Netscape Alternative
+Chapter 3Tools of the Trade
+3.4 The Netscape Alternative
+If the JDK is not available for your platform, but you have
+access to a Java-enabled version of Netscape Navigator, you can take
+advantage of a special Netscape switch to compile and run Java
+applications. The -java switch provides direct
+access to Netscape's implementation of the Java run-time system
+and supports the same command-line options as Sun's
+java interpreter.  Here's the general syntax for
+using the -java switch:
+% netscape -java [interpreter options] class name [program arguments]
+Before you can use Netscape's -java switch,
+you have to download the JDK; you need the
+classes.zip file that is part of the
+JDK distribution.  After you have unpacked the
+distribution, set the CLASSPATH environment
+variable to point to both Netscape's class archive and the
+classes.zip file from the JDK:
+CLASSPATH=/usr/lib/java/classes.zip:/home/vicky/.netscape/moz2_0.zip:.
+Now you can compile a .java file using
+Netscape's -java switch as follows:
+% netscape -java sun.tools.javac.Main source file
+In this case, you are actually using the -java
+switch to run the Java compiler, javac, and
+supplying the source file as an argument to the compiler.
+Recall that javac is itself a Java program,
+which is why you can run it using the -java
+switch.  The above command produces a class file and stores it
+in the same directory as the source file.
+After you have compiled a Java application with Netscape, you can
+use Netscape to run it.  You can use the -java
+switch to run nongraphical Java applications.  In other words, you can
+run any application that doesn't use AWT.  You
+can't use the -java switch to run applications
+that use AWT because Netscape has its own toolkit
+that employs Netscape native components.  However, you can use the
+-java switch to compile applets (and applications)
+that use AWT.  As always, you can display these
+applets using Netscape as a Web browser.
+The Java Compiler
+The Applet Tag
+ 
+ 
+ 
+ 
+ 
+ 
+ 

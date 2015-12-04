@@ -1,0 +1,132 @@
+
+[Chapter 19] Button
+Chapter 19java.awt Reference
+Button
+Name
+Button
+Description
+The Button is the familiar 
+labeled button object. It inherits most of its functionality from Component. 
+For example, to change the font of the Button, 
+you would use Component's 
+setFont() method. The Button 
+sends java.awt.event.ActionEvent 
+objects to its listeners when it is pressed. 
+Class Definition
+public class java.awt.Button
+    extends java.awt.Component {
+  
+  // Constructors
+  public Button();
+  public Button (String label);
+  
+  // Instance Methods
+  public void addActionListener (ActionListener l); 
+  public void addNotify();
+  public String getActionCommand(); 
+  public String getLabel();
+  public void removeActionListener (ActionListener l); 
+  public void setActionCommand (String command); 
+  public synchronized void setLabel (String label);
+  
+  // Protected Instance Methods
+  protected String paramString();
+  protected void processActionEvent (ActionEvent e); 
+  protected void processEvent (AWTEvent e); 
+}
+Constructors
+Button
+public Button()
+Description
+Constructs a Button object with no label. 
+public Button (String label)
+Parameters
+label
+The text for the label on the button 
+Description
+Constructs a Button object 
+with text of label. 
+Instance Methods
+addActionListener
+public void addActionListener (ActionListener l) 
+Parameters
+l
+An object that implements the ActionListener interface. 
+Description
+Add a listener for the action event. 
+addNotify
+public void addNotify()
+Overrides 
+Component.addNotify() 
+Description
+Creates Button's peer. 
+getActionCommand
+public String getActionCommand() 
+Returns
+Current action command string. 
+Description
+Returns the string used for the action command. 
+getLabel
+public String getLabel()
+Returns
+Text of the Button's label. 
+removeActionListener
+public void removeActionListener (ActionListener l) 
+Parameters
+l
+One of this Button's ActionListeners. 
+Description
+Remove an action event listener. 
+setActionCommand
+public void setActionCommand (String command) 
+Parameters
+command
+New action command string. 
+Description
+Specify the string used for the action command. 
+setLabel
+public synchronized void setLabel (String label)
+Parameters
+label
+New text for label of Button. 
+Description
+Changes the Button's 
+label to label. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of Button. 
+Overrides
+Component.paramString() 
+Description
+Helper method for toString() 
+used to generate a string of current settings. 
+processActionEvent
+protected void processActionEvent (ActionEvent e) 
+Parameters
+e
+The action event to process. 
+Description
+Action events are passed to this method for processing. Normally, this 
+method is called by processEvent(). 
+processEvent
+protected void processEvent (AWTEvent e) 
+Parameters
+e
+The event to process. 
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+See Also
+ActionListener, Component, 
+String 
+BorderLayout
+Canvas
+ 
+ 
+ 
+ 
+ 
+ 
+ 

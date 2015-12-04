@@ -1,0 +1,38 @@
+
+[Chapter 20] 20.7 java.awt.event.ComponentListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.7 java.awt.event.ComponentListener (JDK 1.1)
+This interface defines the methods that an object must
+implement to "listen" for component events on AWT components.
+When a ComponentEvent occurs, an AWT component
+notifies its registered ComponentListener objects by
+invoking one of their methods.
+An easy way to implement this interface is by subclassing
+the ComponentAdapter class.
+public abstract interface ComponentListener extends EventListener {
+    // Public Instance Methods
+            public abstract void componentHidden(ComponentEvent e);
+            public abstract void componentMoved(ComponentEvent e);
+            public abstract void componentResized(ComponentEvent e);
+            public abstract void componentShown(ComponentEvent e);
+}
+Implemented By:
+AWTEventMulticaster, 
+ComponentAdapter
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Component.addComponentListener(), 
+Component.removeComponentListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.ComponentEvent (JDK 1.1)
+java.awt.event.ContainerAdapter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,169 @@
+
+[Chapter 11] FileWriter
+Chapter 11The java.io Package
+FileWriter
+Name
+FileWriter
+Synopsis
+Class Name:
+java.io.FileWriter
+Superclass:
+java.io.OutputStreamWriter
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The FileWriter class represents 
+a character stream that writes data to a file. It is a subclass of OutputStreamWriter 
+that uses a default buffer size (8192 bytes) to write bytes to a file and 
+the default character encoding scheme to convert characters to bytes. If 
+you need to specify the character 
+encoding or the buffer size, wrap an OutputStreamWriter 
+around a FileOutputStream. 
+The file can be specified using a FileDescriptor, 
+a File object, or a String 
+that represents a pathname. All of the constructors can throw a SecurityException 
+if the application does not have permission to write to the specified file. 
+FileWriter provides a low-level 
+interface for writing character data to a file. You should think about 
+wrapping a FileWriter with 
+a BufferedWriter to increase 
+writing efficiency. 
+If you need to write binary data to a file, you should use a FileOutputStream 
+wrapped by a DataOutputStream 
+or a PrintStream instead. 
+Class Summary
+public class java.io.FileWriter extends java.io.OutputStreamWriter {
+  // Constructors
+  public FileWriter(String fileName);
+  public FileWriter(String fileName, boolean append);
+  public FileWriter(File file);
+  public FileWriter(FileDescriptor fd);
+}
+Constructors
+FileWriter
+public FileWriter(String fileName) throws IOException
+Parameters
+fileName
+The pathname of 
+the file to use as output. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to write to the named file. 
+Description
+This constructor creates a FileWriter 
+that sends its output to the file named by the specified String. 
+   public FileWriter(String fileName, boolean append) throws IOException  
+Parameters
+fileName
+The pathname of the file to use as output.
+append
+Specifies whether or not data is appended to the output stream. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to write to the named file. 
+Description
+This constructor creates a FileWriter 
+that sends its output to the named file. If append 
+is true, the stream is positioned 
+at the end of the file, and data is appended to the end of the file. Otherwise, 
+if append is false, 
+the stream is positioned at the beginning of the file, and any previous 
+data is overwritten. 
+public FileWriter(File file) throws IOException
+Parameters
+file
+The File 
+to use as output. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to write to the named file. 
+Description
+This constructor creates a FileWriter 
+that sends its output to the file represented by the specified File 
+object. 
+public FileWriter(FileDescriptor fdObj)
+Parameters
+fdObj
+The FileDescriptor of the file to use as output. 
+Throws
+SecurityException
+If the application does not have permission to write to the specified file.
+NullPointerException
+If FileDescriptor is null. 
+Description
+This constructor creates a FileWriter 
+that sends its output to the file identified by the given FileDescriptor. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+OutputStreamWriter
+equals(Object)
+Object
+finalize()
+Object
+flush()
+OutputStreamWriter
+getClass()
+Object
+getEncoding()
+OutputStreamWriter
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(int)
+OutputStreamWriter
+write(char[])
+Writer
+write(char[], int, int)
+OutputStreamWriter
+write(String)
+Writer
+write(String, int, int)
+OutputStreamWriter
+See Also
+BufferedWriter, 
+DataOutputStream, 
+File, 
+FileDescriptor, 
+FileNotFoundException, 
+FileOutputStream, 
+IOException, 
+NullPointerException, 
+OutputStreamWriter, 
+SecurityException, 
+Writer 
+FileReader
+FilterInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

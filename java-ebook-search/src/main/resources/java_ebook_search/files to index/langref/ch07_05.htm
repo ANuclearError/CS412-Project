@@ -1,0 +1,62 @@
+
+[Chapter 7] 7.5 Applications
+Chapter 7Program Structure
+7.5 Applications
+For a Java program to run
+as an application, it must have at least one public
+class that contains a public static
+method called main() that takes exactly one parameter,
+an array of String objects.
+Here is a very simple
+sample application that outputs "Hello World!" and then exits:
+class DoIt {
+    public static void main  (String argv[]){
+         System.out.println ("Hello World!");
+    }
+}
+The main() method must be public
+so that the Java virtual machine can find it. If the method
+is not public, its name is not included in the
+compiler's output. The system does not create any objects prior
+to the start of the application's main() method,
+so the main() method must be static
+because it cannot be associated with an object.
+If an application has a graphical user interface, then it typically creates
+a java.awt.Frame object in main().
+The Frame object acts as the top-level window
+for the application.
+In Sun's implementation of Java,
+you run a Java application by running the Java interpreter with
+a command-line argument that specifies the name of the class that
+contains the main(). The name of the Java interpreter
+is java. Here's the command-line for our sample
+application:
+C:\&gt; java DoIt
+The capitalization
+of the class name on the command line must match the capitalization
+of the class name within the program. If the class is part of a
+named package, the name of the class must be qualified with the
+package name. For example, if you have a package
+called COM.geomaker
+and it contains the class called DoIt, you would
+use the following command to run the application:
+C:\&gt; java COM.geomaker.DoIt
+Any additional information that you provide on the command line is passed
+to the application as command line arguments. These arguments are
+passed to the application using the String array
+passed to main(). The number of elements in the
+array is equal to the number of arguments passed to the application.
+If there are no arguments to the application, the length of the
+array passed to main() is zero.
+References
+Methods;
+Packages
+Documentation Comments
+Applets
+ 
+ 
+ 
+ 
+ 
+ 
+ 

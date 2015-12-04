@@ -1,0 +1,88 @@
+
+[Chapter 24] 24.28 java.io.InputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.28 java.io.InputStream (JDK 1.0)
+This abstract class is the superclass of all input streams.
+It defines the basic input methods that all input stream
+classes provide.
+read() reads a single byte or an array or subarray
+of bytes. It returns the byte read, or the number of bytes
+read, or -1 if the end-of-file has been reached.
+skip() skips a specified number of bytes
+of input. available() returns the number of bytes
+that can be read without blocking. close() closes
+the input stream and frees up any system resources
+associated with it. The stream should not be used after
+close() has been called.
+If markSupported() returns true for a given
+InputStream, that stream supports
+mark() and reset() methods. mark()
+marks the current position in the input stream so that
+reset() can return to that position as long as no
+more than the specified number of bytes have been read
+between the mark() and reset().
+See also Reader.
+public abstract class InputStream extends Object {
+    // Default Constructor: public InputStream()
+    // Public Instance Methods
+            public int available() throws IOException;
+            public void close() throws IOException;
+            public synchronized void mark(int readlimit);
+            public boolean markSupported();
+            public abstract int read() throws IOException;
+            public int read(byte[] b) throws IOException;
+            public int read(byte[] b, int off, int len) throws IOException;
+            public synchronized void reset() throws IOException;
+            public long skip(long n) throws IOException;
+}
+Extended By:
+ByteArrayInputStream, 
+FileInputStream, 
+FilterInputStream, 
+ObjectInputStream, 
+PipedInputStream, 
+SequenceInputStream, 
+StringBufferInputStream
+Passed To:
+BufferedInputStream(), 
+CheckedInputStream(), 
+DataInputStream(), 
+FilterInputStream(), 
+GZIPInputStream(), 
+InflaterInputStream(), 
+InputStreamReader(), 
+LineNumberInputStream(), 
+ObjectInputStream(), 
+Properties.load(), 
+PropertyResourceBundle(), 
+PushbackInputStream(), 
+Runtime.getLocalizedInputStream(), 
+SequenceInputStream(), 
+StreamTokenizer(), 
+System.setIn(), 
+URLConnection.guessContentTypeFromStream(), 
+ZipInputStream()
+Returned By:
+Class.getResourceAsStream(), 
+ClassLoader.getResourceAsStream(), 
+ClassLoader.getSystemResourceAsStream(), 
+Process.getErrorStream(), 
+Process.getInputStream(), 
+Runtime.getLocalizedInputStream(), 
+Socket.getInputStream(), 
+SocketImpl.getInputStream(), 
+URL.openStream(), 
+URLConnection.getInputStream(), 
+ZipFile.getInputStream()
+Type Of:
+FilterInputStream.in, 
+System.in
+java.io.FilterWriter (JDK 1.1)
+java.io.InputStreamReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

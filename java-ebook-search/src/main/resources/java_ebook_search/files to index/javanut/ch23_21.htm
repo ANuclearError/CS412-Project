@@ -1,0 +1,29 @@
+
+[Chapter 23] 23.21 java.beans.VetoableChangeListener (JDK 1.1)
+Chapter 23The java.beans Package
+23.21 java.beans.VetoableChangeListener (JDK 1.1)
+This interface is an extension of
+java.util.EventListener and defines the method that
+a class must implement in order to be notified when a Java
+bean makes a change to a "constrained" property.  A
+PropertyChangeEvent is passed to the
+vetoableChange() method when such a change occurs,
+and if the VetoableChangeListener wants to prevent
+the change from occurring, this method should throw a
+PropertyVetoException.
+public abstract interface VetoableChangeListener extends EventListener {
+    // Public Instance Methods
+            public abstract void vetoableChange(PropertyChangeEvent evt) throws PropertyVetoException;
+}
+Passed To:
+VetoableChangeSupport.addVetoableChangeListener(), 
+VetoableChangeSupport.removeVetoableChangeListener()
+java.beans.SimpleBeanInfo (JDK 1.1)
+java.beans.VetoableChangeSupport (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,112 @@
+
+[Chapter 19] Dimension
+Chapter 19java.awt Reference
+Dimension
+Name
+Dimension
+Description
+The Dimension class encapsulates 
+width and height in a single object. 
+Class Definition
+public class java.awt.Dimension
+    extends java.lang.Object
+    implements java.io.Serializable {
+  
+  // Variables
+  public int height;
+  public int width;
+  
+  // Constructors
+  public Dimension();
+  public Dimension (int width, int height);
+  public Dimension (Dimension d);
+  
+  // Instance Methods
+  public boolean equals (Object obj); 
+  public Dimension getSize(); 
+  public void setSize (Dimension d); 
+  public void setSize (int width, int height); 
+  public String toString();
+}
+Variables
+height
+public int height
+The height of the Dimension. 
+width
+public int width
+The width of the Dimension. 
+Constructors
+Dimension
+public Dimension()
+Description
+Constructs an empty Dimension 
+object. 
+public Dimension (int width, int height)
+Parameters
+width
+Initial width of the object 
+height
+Initial height of the object 
+Description
+Constructs a Dimension object 
+with an initial dimension of width 
+x height. 
+public Dimension (Dimension d)
+Parameters
+d
+Initial dimensions of the object 
+Description
+Constructs a Dimension object 
+that is a clone of d. 
+Instance Methods
+equals
+public boolean equals (Object obj) 
+Parameters
+obj
+The object to compare. 
+Returns
+true if this Dimension 
+is equivalent to obj; false 
+otherwise. 
+Overrides 
+Object.equals(Object) 
+Description
+Compares two Dimension instances. 
+getSize
+public Dimension getSize() 
+Returns
+The size of the Dimension. 
+setSize
+public void setSize (Dimension d) 
+Parameters
+d
+The new size. 
+Description
+Changes the size of the Dimension. 
+public void setSize (int width, int height) 
+Parameters
+width
+The new width. 
+height
+The new height. 
+Description
+Changes the size of the Dimension. 
+toString
+public String toString()
+Returns
+A string representation of the Dimension 
+object. 
+Overrides
+Object.toString() 
+See Also
+Object, String, 
+Serializable 
+Dialog
+Event
+ 
+ 
+ 
+ 
+ 
+ 
+ 

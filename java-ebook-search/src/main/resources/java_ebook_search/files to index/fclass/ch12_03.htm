@@ -1,0 +1,104 @@
+
+[Chapter 12] ArrayIndexOutOfBoundsException
+Chapter 12The java.lang Package
+ArrayIndexOutOfBoundsException
+Name
+ArrayIndexOutOfBoundsException
+Synopsis
+Class Name:
+java.lang.ArrayIndexOutOfBoundsException 
+Superclass:
+java.lang.IndexOutOfBoundsException 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+An ArrayIndexOutOfBoundsException 
+is thrown when an out-of-range index is detected by an array object. An 
+out-of-range index occurs when the index is less than zero or greater than 
+or equal to the size of the array. 
+Class Summary
+public class java.lang.ArrayIndexOutOfBoundsException
+             extends java.lang.IndexOutOfBoundsException {
+  // Constructors
+  public ArrayIndexOutOfBoundsException();
+  public ArrayIndexOutOfBoundsException(int index);
+  public ArrayIndexOutOfBoundsException(String s);
+}
+Constructors
+ArrayIndexOutOfBoundsException
+public ArrayIndexOutOfBoundsException()
+Description
+This constructor creates an ArrayIndexOutOfBoundsException 
+with no associated detail message. 
+public ArrayIndexOutOfBoundsException(int index)
+Parameters
+index
+The index value that 
+was out-of-bounds 
+Description
+This constructor creates an ArrayIndexOutOfBoundsException 
+with an associated message that mentions the specified index. 
+public ArrayIndexOutOfBoundsException(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an ArrayIndexOutOfBoundsException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+IndexOutOfBoundsException, 
+RuntimeException, 
+Throwable 
+ArithmeticException
+ArrayStoreException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

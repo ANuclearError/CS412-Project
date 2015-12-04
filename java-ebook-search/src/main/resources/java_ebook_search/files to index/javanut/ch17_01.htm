@@ -1,0 +1,103 @@
+
+[Chapter 17] The java.applet Package
+Chapter 17
+17. The java.applet Package
+Contents:
+java.applet.Applet (JDK 1.0)
+java.applet.AppletContext (JDK 1.0)
+java.applet.AppletStub (JDK 1.0)
+java.applet.AudioClip (JDK 1.0)
+An applet is a
+small, embeddable Java program.
+The java.applet package is a small one.  It contains
+the Applet class, which is the superclass of all
+applets, and three related interfaces. 
+Figure 17.1
+shows the class hierarchy of this package.  See Chapter 6, Applets,
+for more information about this package.
+Figure 17.1: The java.applet package
+17.1 java.applet.Applet (JDK 1.0)
+This class implements an applet.  To create your own applet,
+you should create a subclass of this class and override some
+or all of the following methods.  Note that you never need
+to call these methods--they are called when appropriate
+by a Web browser or other applet viewer.
+init() should perform any initialization for the
+applet; it is called when the applet first starts.
+destroy() should free up any resources that the
+applet is holding; it is called when the applet is about to be
+permanently stopped. start() is called to make the applet start doing
+whatever it is that it does.  Often, it starts a thread to
+perform an animation or similar task.  stop() should
+temporarily stop the applet from executing.  It is called
+when the applet temporarily becomes hidden or non-visible.
+getAppletInfo()
+should return text suitable for display in an About
+dialog posted by the Web browser or applet viewer.
+getParameterInfo()
+should return an arbitrary-length array of three-element arrays
+of strings where each element
+describes one of the parameters that this applet
+understands.  The three elements of each parameter
+description are strings that specify, respectively, the
+parameter's name, type, and description.
+In addition to these methods, an applet also typically
+overrides several of the methods of
+java.awt.Component, notably the paint()
+method to draw the applet on the screen.  There are also
+several Applet methods that you do not override but
+may call from applet code: showStatus()
+displays text in the Web browser or applet viewer's status
+line.  getImage()
+and getAudioClip()
+read image (GIF and JPEG formats) and audio files (AU
+format) over the network and return corresponding Java
+objects.  getParameter()
+looks up the value of a parameter specified with a
+&lt;PARAM&gt; tag within an &lt;APPLET&gt;...&lt;/APPLET&gt;
+pair.  getCodeBase()
+returns the base URL from which the applet's code was
+loaded, and getDocumentBase()
+returns the base URL from which the HTML document containing
+the applet was loaded.  getAppletContext()
+returns an AppletContext object, which also has
+useful methods.
+public class Applet extends Panel {
+    // Default Constructor: public Applet()
+    // Public Instance Methods
+            public void destroy();
+            public AppletContext getAppletContext();
+            public String getAppletInfo();
+            public AudioClip getAudioClip(URL url);
+            public AudioClip getAudioClip(URL url, String name);
+            public URL getCodeBase();
+            public URL getDocumentBase();
+            public Image getImage(URL url);
+            public Image getImage(URL url, String name);
+            public Locale getLocale();  // Overrides Component
+            public String getParameter(String name);
+            public String[][] getParameterInfo();
+            public void init();
+            public boolean isActive();
+            public void play(URL url);
+            public void play(URL url, String name);
+            public void resize(int width, int height);  // Overrides Component
+            public void resize(Dimension d);  // Overrides Component
+            public final void setStub(AppletStub stub);
+            public void showStatus(String msg);
+            public void start();
+            public void stop();
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Container->Panel->Applet
+Returned By:
+AppletContext.getApplet()
+Reading a Quick Reference Entry
+java.applet.AppletContext (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

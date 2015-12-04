@@ -1,0 +1,85 @@
+
+[Chapter 1] 1.3 The java.io Package
+Chapter 1Introduction
+1.3 The java.io Package
+The java.io package contains the 
+classes that handle fundamental input and output operations
+in Java. Almost all fundamental I/O in Java is based on streams. 
+A stream represents
+a flow of data, or a channel of communication, with a reading
+process at one end of the stream and a writing process at the other end,
+at least conceptually. 
+As of Java 1.1, the java.io
+package is the largest of the fundamental packages.
+See Chapter 6, I/O, for a more in-depth description
+of the basic I/O capabilities provided by this package.
+Java 1.0 supports only
+byte streams. The InputStream class is
+the superclass of all of the Java 1.0 byte input streams, while 
+OutputStream is the superclass of all 
+the byte output streams. A number of other byte stream classes
+extend the functionality of these basic streams. For example, the
+FileInputStream and FileOutputStream
+classes read from and write to files, respectively, while
+DataInputStream and DataOutputStream
+read and write binary representations of the primitive Java data
+types. The main problem with these byte streams is
+that they do not handle the conversion between the Unicode character
+set used internally by Java and other character sets used when reading
+or writing data. 
+As of Java 1.1, java.io contains classes 
+that represent character streams. These character stream classes
+convert other character encodings that appear in I/O streams to and
+from Unicode characters. The 
+Reader class is the superclass of all the Java
+1.1 character input streams, while Writer
+is the superclass of all character output streams.
+Many of the reader and writer classes have analogous behavior to
+corresponding byte stream classes. For instance, 
+FileReader and FileWriter
+are character streams that read from and write to files, respectively.
+The InputStreamReader and 
+OutputStreamWriter classes provide a bridge
+between byte streams and character streams. If you wrap an
+InputStreamReader around an
+InputStream object, the bytes in the byte
+stream are read and converted to characters using the character
+encoding scheme specified by the InputStreamReader.
+Likewise, you can wrap an OutputStreamWriter
+around any OutputStream object, which allows you to
+write characters and have them converted to bytes.
+As of Java 1.1, java.io also contains
+classes to support object serialization. Object
+serialization is the ability to write the complete state of
+an object to an output stream, and then later recreate that
+object by reading in the serialized state from an input stream.
+The ObjectOutputStream and
+ObjectInputStream classes handle serializing
+and deserializing objects, respectively. These classes
+provide basic serialization capabilities for all objects
+that implement the Serializable interface.
+Chapter 7, Object Serialization, provides a more detailed explanation of the new
+object serialization functionality in Java 1.1.
+The RandomAccessFile class is the only
+class in java.io 
+that does not use a stream for reading or writing data.
+As its name implies, RandomAccessFile
+provides nonsequential access to a file, so you can use
+it to read from or write to specific locations in a file.
+The File class represents a file on the
+local filesystem. The class provides methods to identify
+a file, both in terms of its path and its filename.
+There are also methods that retrieve information about a file,
+such as its status as a directory or a file, its length, and
+its last modification time.
+See Chapter 11, The java.io Package, for complete reference material on all of the
+classes in the java.io package.
+The java.lang.reflect Package
+The java.net Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

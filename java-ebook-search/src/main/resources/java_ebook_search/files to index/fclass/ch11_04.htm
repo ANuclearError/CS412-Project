@@ -1,0 +1,217 @@
+
+[Chapter 11] BufferedWriter
+Chapter 11The java.io Package
+BufferedWriter
+Name
+BufferedWriter
+Synopsis
+Class Name:
+java.io.BufferedWriter
+Superclass:
+java.io.Writer
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+A BufferedWriter object provides a more
+efficient way to write just a few characters at a time to a
+Writer.
+BufferedWriter objects
+use a buffer to store output for an associated Writer. 
+In other words, a large number of characters are stored in an internal 
+buffer and only written when the buffer fills up or is explicitly flushed. 
+A BufferedWriter is more efficient 
+than a regular Writer because 
+the data is written to memory, rather than a disk or a network. 
+Minimizing the number of write operations to a disk or the network 
+minimizes the cumulative overhead for these operations.
+You should wrap a BufferedWriter 
+around any Writer whose write() 
+operations may be time consuming or costly, such as a FileWriter 
+or a OutputStreamWriter. 
+This class is very similar to BufferedOutputStream, 
+but it operates on a stream of Java characters instead of a byte stream; 
+this makes it easier to support internationalization. 
+Class Summary
+public class java.io.BufferedWriter extends java.io.Writer {
+  // Constructors
+  public BufferedWriter(Writer out);
+  public BufferedWriter(Writer out, int size);
+  // Instance Methods
+  public void close();
+  public void flush();
+  public void newLine();
+  public void write(int c);
+  public void write(char[] cbuf, int off, int len);
+  public void write(String s, int off, int len);
+}
+Constructors
+BufferedWriter
+public BufferedWriter (Writer out)
+Parameters
+out
+The output stream to 
+buffer. 
+Description
+This constructor creates a BufferedWriter 
+that acts on the specified Writer, 
+using a buffer with the default size of 8192 characters. 
+public BufferedWriter (Writer out, int size)
+Parameters
+out
+The output stream to buffer.
+size
+The size of buffer 
+to use. 
+Throws
+IllegalArgumentException
+If the specified size is less than 0. 
+Description
+This constructor creates a BufferedWriter 
+that acts on the specified Writer, 
+using a buffer that is size 
+bytes long. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Overrides
+Writer.close() 
+Description
+This method closes this BufferedWriter and its
+underlying Writer.
+flush
+public void flush() throws IOException
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.flush() 
+Description
+This method writes the contents of the buffer to the underlying Writer 
+and calls flush() on the underlying Writer. 
+It is called automatically when the buffer fills up. You can also call 
+it before the buffer is full. This is known as "flushing" the 
+buffer. This method blocks until the underlying write() 
+is complete. 
+newLine
+public void newLine() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method writes the newline character or characters to the stream. It 
+uses System.getProperty('line.separator') 
+to choose the newline appropriate for the run-time system. Calling this
+method is preferable to explicitly writing a newline character.
+write
+public void write(int c) throws IOException
+Parameters
+c
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(int) 
+Description
+This method places the low-order 16 bits of the 
+specified value into the buffer. If the buffer is 
+full, it is flushed, and the value c 
+is placed in the newly empty buffer. If the buffer is flushed, this method 
+blocks while the data is written; otherwise this method returns immediately. 
+   public void write(char[] cbuf, int off, int len) throws IOException  
+Parameters
+cbuf
+An array of characters to write.
+off
+An offset into the character array.
+len
+The number of characters to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+Writer.write(char[], int, int) 
+Description
+This method copies len characters
+from cbuf, starting at off, 
+into the buffer. If there is enough space left in the buffer for the new 
+data, it is copied into the buffer, and the method returns immediately. 
+Otherwise, the buffer is filled and flushed repeatedly until all the new 
+data has been copied into the buffer. 
+public void write(String s, int off, int len) throws IOException
+Parameters
+s
+The string to be written.
+off
+An offset into the 
+string.
+len
+The number of characters 
+to write. 
+Throws
+IOException
+If 
+an I/O error occurs. 
+Overrides
+Writer.write(String, int, int) 
+Description
+This method copies len characters
+from s, starting at off, 
+into the buffer. If there is enough space left in the buffer for the new 
+data, it is copied into the buffer and the method returns immediately. 
+Otherwise, the buffer is filled and flushed repeatedly until all the new 
+data has been copied into the buffer. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(char[])
+Writer
+write(String)
+Writer
+See Also
+IllegalArgumentException, 
+IOException, 
+String, 
+Writer 
+BufferedReader
+ByteArrayInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

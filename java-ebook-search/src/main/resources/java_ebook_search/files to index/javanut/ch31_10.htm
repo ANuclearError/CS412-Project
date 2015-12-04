@@ -1,0 +1,34 @@
+
+[Chapter 31] 31.10 java.util.zip.GZIPOutputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.10 java.util.zip.GZIPOutputStream (JDK 1.1)
+This class is a subclass of DeflaterOutputStream
+that compresses and writes data using the gzip file format.
+To create a GZIPOutputStream, you must specify the
+OutputStream that it is to write to, and may
+optionally specify a size for the internal compression
+buffer.  Once the GZIPOutputStream is created, you
+can use the write() and close() methods as
+you would any other output stream.
+public class GZIPOutputStream extends DeflaterOutputStream {
+    // Public Constructors
+            public GZIPOutputStream(OutputStream out, int size) throws IOException;
+            public GZIPOutputStream(OutputStream out) throws IOException;
+    // Protected Instance Variables
+            protected CRC32 crc;
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides DeflaterOutputStream
+            public void finish() throws IOException;  // Overrides DeflaterOutputStream
+            public synchronized void write(byte[] buf, int off, int len) throws IOException;  // Overrides DeflaterOutputStream
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->DeflaterOutputStream->GZIPOutputStream
+java.util.zip.GZIPInputStream (JDK 1.1)
+java.util.zip.Inflater (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

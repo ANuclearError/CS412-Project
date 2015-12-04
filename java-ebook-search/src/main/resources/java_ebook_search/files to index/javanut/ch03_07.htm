@@ -1,0 +1,221 @@
+
+[Chapter 3] 3.7 Overriding Methods
+Chapter 3Classes and Objects in Java
+3.7 Overriding Methods
+When a class defines a method using the same name, return
+type, and arguments as a method in its superclass, the method
+in the class overrides the method in the superclass.
+When the method is invoked for an object of the class, it is
+the new definition of the method that is called, not the
+superclass' old definition.
+Method overriding is an important and useful technique in
+object-oriented programming.  Suppose we define a subclass
+Ellipse of our Circle class.
+[9]
+Then it would
+be important for Ellipse to override the
+area() and circumference() methods of
+Circle.  Ellipse would have to implement new
+versions of these functions because the formulas that apply
+to circles don't work for ellipses.
+[9] 
+This is admittedly a strange thing to do, since,
+mathematically, a circle is a kind of ellipse, and it is
+customary to derive a more specific class from a more
+general one.  Nevertheless, it is a useful example here.
+Before we go any further with the discussion of method
+overriding, be sure that you understand the difference
+between method overriding and method overloading, which we
+discussed earlier.  As you
+probably recall, method overloading refers to the practice
+of defining multiple methods (in the same class) with the
+same name but with differing argument lists.
+This is very different from method overriding, and it is
+important not to get them confused!
+Overriding Is Not Shadowing
+Although Java treats the variables and methods of a class
+analogously in many ways, method overriding is not like
+variable shadowing at all: You can refer to shadowed variables
+simply by casting an object to the appropriate type.  You
+cannot invoke overridden methods with this technique,
+however.
+Example 3.12
+illustrates this crucial difference.
+Example 3.12: Method Overriding versus Variable Shadowing
+class A {
+    int i = 1;
+    int f() { return i; }
+}
+class B extends A {
+    int i = 2;                          // Shadows variable i in class A.
+    int f() { return -i; }              // Overrides method f in class A.
+}
+public class override_test {
+    public static void main(String args[]) {
+        B b = new B();
+        System.out.println(b.i);     // Refers to B.i; prints 2.
+        System.out.println(b.f());   // Refers to B.f(); prints -2.
+        A a = (A) b;                 // Cast b to an instance of class A.
+        System.out.println(a.i);     // Now refers to A.i; prints 1;
+        System.out.println(a.f());   // Still refers to B.f(); prints -2;
+    }
+}
+While this difference between method overriding and variable
+shadowing may seem surprising at first, a little thought makes
+the purpose clear.  Suppose we have a bunch of
+Circle and Ellipse (a subclass of
+Circle) objects that we are manipulating.  To keep
+track of the circles and ellipses, we store them in an array
+of type Circle[], casting all the Ellipse
+objects to Circle objects before we store them.
+Then, when we loop through the elements of this array, we
+don't have to know or care whether the element is actually a
+Circle or an Ellipse.  What we do care
+very much about, however, is that the correct value is
+computed when we invoke the area() method of any
+element of the array.  That is, we don't want to use the
+formula for the area of a circle when the object is actually
+an ellipse!
+Seen in this context, it is not surprising at all that method
+overriding is handled differently by Java than variable
+shadowing.
+final Methods
+If a method is declared final, it means that the
+method declaration is the "final" one--that it cannot be
+overridden.  static methods and private
+methods (which we haven't learned about yet) cannot be
+overridden either, nor can the methods of a final
+class.  If a method cannot be overridden, the compiler may
+perform certain optimizations on it, as we'll see below.
+Dynamic Method Lookup
+If we have an array of Circle and Ellipse
+objects, how does the compiler know to call the Circle area()
+method or the Ellipse area() method for
+any given item in the array?  The compiler does not know
+this; it can't.  The compiler knows that it does not know,
+however, and produces code that uses "dynamic method lookup"
+at run-time.  
+When the interpreter runs the code, it looks
+up the appropriate area() method to call for each of
+the objects.  That is, when the interpreter interprets
+the expression s.area(), it dynamically looks for an
+area() method associated with the particular object
+referred to by the variable s.  It does not simply
+use the area() method that is statically associated
+with the type of the variable s.
+[10]
+[10] 
+C++ programmers should note that dynamic method lookup is
+what C++ does for virtual functions.  An
+important difference between Java and C++ is that Java does
+not have a virtual keyword; methods in Java
+are "virtual" by default.
+Dynamic method lookup is fast, but it is not as fast as
+invoking a method directly.  Fortunately, there are a number
+of cases in which Java does not need to use dynamic method
+lookup.  static methods cannot be overridden, so
+they are always invoked directly.  private methods
+(which we haven't learned about yet) are not inherited by
+subclasses and so cannot be overridden by subclasses; this
+means the Java compiler can safely invoke them without
+dynamic method lookup as well.  final methods are
+invoked directly for the same reason: they cannot be
+overridden.  Finally, when a method of a final class
+is invoked through an instance of the class or a subclass
+of it, then it, too, can be invoked without the overhead
+of dynamic lookup.  These static, final, and
+private methods that can be invoked directly are
+also candidates for inlining--i.e., if the methods are
+short, the compiler may simply insert the method body into
+the code rather than inserting a call to the method.
+Invoking an Overridden Method
+We've seen the important differences between method
+overriding and variable shadowing.  Nevertheless, the Java syntax for
+invoking an overridden method is very similar to the syntax
+for accessing a shadowed variable: both use the
+super keyword.
+Example 3.13
+illustrates this.
+Example 3.13: Invoking an Overridden Method
+class A {
+    int i = 1;
+    int f() { return i; }        // A very simple method.
+}
+class B extends A {
+    int i;                       // This variable shadows i in A.
+    int f() {                    // This method overrides f() in A.
+        i = super.i + 1;         // It retrieves A.i this way.
+        return super.f() + i;    // And it invokes A.f() this way.
+    }
+}
+Recall that when you use super to refer to a shadowed
+variable, it is the same as casting this to the
+superclass type and accessing the variable through that.  On
+the other hand, using super to invoke an overridden
+method is not the same as casting this.  In this
+case, super has the special purpose of turning off
+dynamic method lookup and invoking the specific method that
+the superclass defines or inherits.
+In
+Example 3.13
+we use super to invoke an overridden method that is
+actually defined in the immediate superclass.  super
+also works perfectly well to invoke overridden methods that
+are defined further up the class hierarchy.  This is because
+the overridden method is inherited by the immediate
+superclass, and so the super syntax does in fact
+refer to the correct method.
+To make this more concrete,
+suppose class A defines method f, and that B
+is a subclass of A, and that C is a subclass 
+of B that overrides method f.  Then you can still use:
+super.f()
+to invoke the overridden method from within class C.  This
+is because class B inherits method f from 
+class A. If classes A, B, and C
+all define method f, however, then
+calling super.f() in class C invokes class B's
+definition of the method.  In this case, there is no way to
+invoke A.f() from within class C.  super.super.f()
+is not legal Java syntax!
+It is important to note that super can only be used
+to invoke overridden methods from within the class that does
+the overriding.  With our Circle and Ellipse 
+classes, for example, there is no way to write a program (with or 
+without super) that invokes the Circle
+area() method on an object of type Ellipse.
+The only way to do this is to use super in a method
+within the Ellipse class.
+Finally, note that this form of super does not have to occur
+in the first statement in a method, as it does when used to
+invoke a superclass constructor method.
+Finalizer Chaining Revisited
+Now that we've discussed method overriding and how to invoke
+an overridden method, we can return to the issue of the
+finalizer method that we left dangling earlier on.
+In Java, constructor methods are automatically chained, but
+finalizer methods are not.  If you define a
+finalize() method to free resources allocated by
+your class, you may be overriding a finalize()
+method in a superclass that frees resources allocated by
+that class.  If your finalizer method does not invoke the
+superclass finalizer, the superclass finalizer never gets called, and
+resources are not deallocated when they should be.
+To prevent this, you should be sure to invoke the superclass
+finalize() method.  The best time to do this is
+usually after your finalize() method has done all of
+its deallocation.  It is a good idea to add the following call:
+super.finalize();
+as the last line of all your finalizer methods.  You should
+do this even if you know that none of your class's
+superclasses have finalizer methods, because future
+implementations of the class may include one.
+Subclasses and Inheritance
+Data Hiding and Encapsulation
+ 
+ 
+ 
+ 
+ 
+ 
+ 

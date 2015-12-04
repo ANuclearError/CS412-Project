@@ -1,0 +1,44 @@
+
+[Chapter 21] 21.11 java.awt.image.MemoryImageSource (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.11 java.awt.image.MemoryImageSource (JDK 1.0)
+This class is an ImageProducer that produces an
+image from data stored in memory. The various constructors
+specify image data, color model, array offset, scan line
+length, and properties in slightly different ways. The
+instance methods implement the standard
+ImageProducer interface that
+allows an
+ImageConsumer object to register interest in the
+image.  
+public class MemoryImageSource extends Object implements ImageProducer {
+    // Public Constructors
+            public MemoryImageSource(int w, int h, ColorModel cm, byte[] pix, int off, int scan);
+            public MemoryImageSource(int w, int h, ColorModel cm, byte[] pix, int off, int scan, Hashtable props);
+            public MemoryImageSource(int w, int h, ColorModel cm, int[] pix, int off, int scan);
+            public MemoryImageSource(int w, int h, ColorModel cm, int[] pix, int off, int scan, Hashtable props);
+            public MemoryImageSource(int w, int h, int[] pix, int off, int scan);
+            public MemoryImageSource(int w, int h, int[] pix, int off, int scan, Hashtable props);
+    // Public Instance Methods
+            public synchronized void addConsumer(ImageConsumer ic);  // From ImageProducer
+            public synchronized boolean isConsumer(ImageConsumer ic);  // From ImageProducer
+        1.1  public void newPixels();
+        1.1  public synchronized void newPixels(int x, int y, int w, int h);
+        1.1  public synchronized void newPixels(int x, int y, int w, int h, boolean framenotify);
+        1.1  public synchronized void newPixels(byte[] newpix, ColorModel newmodel, int offset, int scansize);
+        1.1  public synchronized void newPixels(int[] newpix, ColorModel newmodel, int offset, int scansize);
+            public synchronized void removeConsumer(ImageConsumer ic);  // From ImageProducer
+            public void requestTopDownLeftRightResend(ImageConsumer ic);  // From ImageProducer
+        1.1  public synchronized void setAnimated(boolean animated);
+        1.1  public synchronized void setFullBufferUpdates(boolean fullbuffers);
+            public void startProduction(ImageConsumer ic);  // From ImageProducer
+}
+java.awt.image.IndexColorModel (JDK 1.0)
+java.awt.image.PixelGrabber (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

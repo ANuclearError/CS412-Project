@@ -1,0 +1,43 @@
+
+[Chapter 1] 1.3 Compiling a Java Source File
+Chapter 1Introduction
+1.3 Compiling a Java Source File
+The interface for the Java compiler in Sun's Java Development
+Kit (JDK) is the command line. To compile a Java program, run the
+program javac
+with the name of the source file specified as a command-line argument.
+For example, to compile the "Hello World" program, issue
+the following command:
+C:\&gt; javac HelloWorld.java
+The Java compiler, javac, requires that
+the name of a Java source file end with a .java
+extension. If the source file contains a class or interface that
+is declared with the keyword public, the filename
+must be the name of that class or interface. There can be at
+most one such class or interface in a source file.
+In an environment such as Windows 95 that does not distinguish between
+uppercase and lowercase letters in a filename, you still need to be sure
+that the case of the filename exactly matches the case used in the
+public class or interface declaration. If you use
+a filename with the incorrect case, the compiler will be able to compile
+the file but it will complain about an incorrect filename.
+The compiler produces a compiled class file with the same
+name as the public class or interface declaration;
+the file extension used for a compiled
+Java file is .class.
+If the javac compiler complains that
+it is unable to find some classes, it may mean that an environment
+variable named CLASSPATH has not been set properly.
+The exact setting needed for CLASSPATH varies
+depending on the operating system and its directory structure. However,
+the value of CLASSPATH always specifies a list
+of directories in which the compiler should search for Java classes.
+New Language Features in Java 1.1
+Running a Java Application
+ 
+ 
+ 
+ 
+ 
+ 
+ 

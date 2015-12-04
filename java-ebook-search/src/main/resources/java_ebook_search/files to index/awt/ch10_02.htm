@@ -1,0 +1,41 @@
+
+[Chapter 10] 10.2 MenuContainer
+Chapter 10Would You Like to Choose from the Menu?
+10.2 MenuContainer
+MenuContainer is an interface 
+implemented by the three menu containers: Frame, 
+Menu, and MenuBar; 
+Java 1.1 adds a fourth, Component. 
+You should never need to worry about the interface since it does all its 
+work behind the scenes for you. You will notice that the interface 
+does not define an add() method. 
+Each type of MenuContainer 
+defines its own add() method 
+to add menus to itself. 
+MenuContainer Methods
+public abstract Font getFont () 
+The getFont() method should 
+provide an object's font. MenuItem 
+implements this method, so all of its subclasses inherit it. MenuBar 
+implements it, too, while Frame 
+gets the method from Component. 
+public abstract boolean postEvent (Event e) 
+The postEvent() method should 
+post Event e 
+to the object. MenuComponent 
+implements this method, so all of its subclasses inherit it. (Frame 
+gets the method from Component.) 
+public abstract void remove (MenuComponent component) 
+The remove() method should 
+remove the MenuComponent component 
+from the object. If component 
+was not contained within the object, nothing should happen. 
+MenuComponent
+MenuShortcut
+ 
+ 
+ 
+ 
+ 
+ 
+ 

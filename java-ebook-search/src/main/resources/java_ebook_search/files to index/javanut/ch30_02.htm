@@ -1,0 +1,134 @@
+
+[Chapter 30] 30.2 java.util.Calendar (JDK 1.1)
+Chapter 30The java.util Package
+30.2 java.util.Calendar (JDK 1.1)
+This abstract class defines methods used to perform date and
+time arithmetic. It also includes methods that
+convert dates and times to and from
+the machine-usable millisecond format used by the
+Date class and units like minutes, hours, days,
+weeks, months, and years that are more useful to humans.
+As an abstract class, Calendar cannot be directly
+instantiated.  Instead, it provides static
+getInstance() methods that return instances of a
+Calendar subclass suitable for use in a specified or default
+locale with a specified or default time zone.  
+Calendar defines a number of useful constants.  Some
+of these are values that represent days of the week and
+months of the year.  Other constants, such as
+HOUR and DAY_OF_WEEK, represent various
+fields of date and time information.  These field constants
+are passed to a number of Calendar methods, such as
+get() and set(), in order to indicate what
+particular date or time field is of interest.
+setTime() and the various set() methods set
+the date represented by a Calendar object.
+The add() method adds (or subtracts) values to a
+calendar field, incrementing the next larger field when the
+field "rolls over."  roll() does the same, without
+modifying any but the specified field.  before() and
+after() compare two Calendar objects.
+Many of the methods of the Calendar class are
+replacements for methods of Date that have been deprecated
+in Java 1.1.  While the Calendar class is used to
+convert a time value into its various hour, day, month, and
+other fields, it is not intended to present those fields
+into a form suitable for display to the end user.  That
+function is performed by the DateFormat class in the
+java.text package, which handles
+internationalization issues.
+See also Date, DateFormat, and TimeZone.
+public abstract class Calendar extends Object implements Serializable, Cloneable {
+    // Protected Constructors
+            protected Calendar();
+            protected Calendar(TimeZone zone, Locale aLocale);
+    // Constants
+            public static final int FIELD_COUNT;
+    // Date and Time Field Constants
+            public static final int ERA;
+            public static final int YEAR;
+            public static final int MONTH;
+            public static final int WEEK_OF_YEAR, WEEK_OF_MONTH;
+            public static final int DATE, DAY_OF_MONTH;
+            public static final int DAY_OF_YEAR, DAY_OF_WEEK, DAY_OF_WEEK_IN_MONTH;
+            public static final int ZONE_OFFSET, DST_OFFSET;
+            public static final int AM_PM;
+            public static final int HOUR, HOUR_OF_DAY;
+            public static final int MINUTE;
+            public static final int SECOND;
+            public static final int MILLISECOND;
+    // Field Value Constants
+            public static final int JANUARY, FEBRUARY, MARCH, APRIL;
+            public static final int MAY, JUNE, JULY, AUGUST;
+            public static final int SEPTEMBER, OCTOBER, NOVEMBER, DECEMBER;
+            public static final int UNDECIMBER;
+            public static final int SUNDAY, MONDAY, TUESDAY, WEDNESDAY;
+            public static final int THURSDAY, FRIDAY, SATURDAY;
+            public static final int AM, PM;
+    // Protected Instance Variables
+            protected boolean areFieldsSet;
+            protected int[] fields;
+            protected boolean[] isSet;
+            protected boolean isTimeSet;
+            protected long time;
+    // Class Methods
+            public static synchronized Locale[] getAvailableLocales();
+            public static synchronized Calendar getInstance();
+            public static synchronized Calendar getInstance(TimeZone zone);
+            public static synchronized Calendar getInstance(Locale aLocale);
+            public static synchronized Calendar getInstance(TimeZone zone, Locale aLocale);
+    // Public Instance Methods
+            public abstract void add(int field, int amount);
+            public abstract boolean after(Object when);
+            public abstract boolean before(Object when);
+            public final void clear();
+            public final void clear(int field);
+            public Object clone();  // Overrides Object
+            public abstract boolean equals(Object when);  // Overrides Object
+            public final int get(int field);
+            public int getFirstDayOfWeek();
+            public abstract int getGreatestMinimum(int field);
+            public abstract int getLeastMaximum(int field);
+            public abstract int getMaximum(int field);
+            public int getMinimalDaysInFirstWeek();
+            public abstract int getMinimum(int field);
+            public final Date getTime();
+            public TimeZone getTimeZone();
+            public boolean isLenient();
+            public final boolean isSet(int field);
+            public abstract void roll(int field, boolean up);
+            public final void set(int field, int value);
+            public final void set(int year, int month, int date);
+            public final void set(int year, int month, int date, int hour, int minute);
+            public final void set(int year, int month, int date, int hour, int minute, int second);
+            public void setFirstDayOfWeek(int value);
+            public void setLenient(boolean lenient);
+            public void setMinimalDaysInFirstWeek(int value);
+            public final void setTime(Date date);
+            public void setTimeZone(TimeZone value);
+    // Protected Instance Methods
+            protected void complete();
+            protected abstract void computeFields();
+            protected abstract void computeTime();
+            protected long getTimeInMillis();
+            protected final int internalGet(int field);
+            protected void setTimeInMillis(long millis);
+}
+Extended By:
+GregorianCalendar
+Passed To:
+DateFormat.setCalendar()
+Returned By:
+Calendar.getInstance(), 
+DateFormat.getCalendar()
+Type Of:
+DateFormat.calendar
+java.util.BitSet (JDK 1.0)
+java.util.Date (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

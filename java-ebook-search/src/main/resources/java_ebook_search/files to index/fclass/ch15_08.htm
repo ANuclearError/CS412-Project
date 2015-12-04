@@ -1,0 +1,52 @@
+
+[Chapter 15] FileNameMap
+Chapter 15The java.net Package
+FileNameMap
+Name
+FileNameMap
+Synopsis
+Interface Name:
+java.net.FileNameMap
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The FileNameMap interface defines 
+a method that maps filenames to MIME types. The interface is implemented 
+by classes that provide this mapping. The mapping is typically done by 
+examining the file extension of the filename, or in other words, the part 
+of the filename that follows the final period. 
+Interface Declaration
+public abstract interface java.net.FileNameMap {
+  // Methods
+  public abstract String getContentTypeFor(String fileName);
+}
+Methods
+getContentTypeFor
+public abstract String getContentTypeFor(String fileName)
+Parameters
+fileName
+A String that contains a filename. 
+Returns
+The String that contains the 
+MIME type that corresponds to the filename. 
+Description
+This method attempts to determine the MIME type of a file by examining 
+its filename. 
+See Also
+ContentHandler, 
+ContentHandlerFactory 
+DatagramSocketImpl
+HttpURLConnection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

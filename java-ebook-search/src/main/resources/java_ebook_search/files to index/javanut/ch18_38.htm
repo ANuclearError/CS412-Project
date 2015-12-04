@@ -1,0 +1,81 @@
+
+[Chapter 18] 18.38 java.awt.List (JDK 1.0)
+Chapter 18The java.awt Package
+18.38 java.awt.List (JDK 1.0)
+This class is a Component that graphically displays a list of
+strings.  The list is scrollable if necessary.  The
+constructor takes optional arguments that specify the number
+of visible rows in the list and whether selection of more
+than one item is allowed.  The various instance methods allow strings
+to be added and removed from the List, and allow the
+selected item or items to be queried.
+public class List extends Component implements ItemSelectable {
+    // Public Constructors
+            public List();
+        1.1  public List(int rows);
+            public List(int rows, boolean multipleMode);
+    // Public Instance Methods
+        1.1  public void add(String item);
+        1.1  public synchronized void add(String item, int index);
+        1.1  public synchronized void addActionListener(ActionListener l);
+            public void addItem(String item);
+            public synchronized void addItem(String item, int index);
+        1.1  public synchronized void addItemListener(ItemListener l);  // From ItemSelectable
+            public void addNotify();  // Overrides Component
+        #   public boolean allowsMultipleSelections();
+        #   public synchronized void clear();
+        #   public int countItems();
+            public synchronized void delItem(int position);
+        #   public synchronized void delItems(int start, int end);
+            public synchronized void deselect(int index);
+            public String getItem(int index);
+        1.1  public int getItemCount();
+        1.1  public synchronized String[] getItems();
+        1.1  public Dimension getMinimumSize(int rows);
+        1.1  public Dimension getMinimumSize();  // Overrides Component
+        1.1  public Dimension getPreferredSize(int rows);
+        1.1  public Dimension getPreferredSize();  // Overrides Component
+            public int getRows();
+            public synchronized int getSelectedIndex();
+            public synchronized int[] getSelectedIndexes();
+            public synchronized String getSelectedItem();
+            public synchronized String[] getSelectedItems();
+        1.1  public Object[] getSelectedObjects();  // From ItemSelectable
+            public int getVisibleIndex();
+        1.1  public boolean isIndexSelected(int index);
+        1.1  public boolean isMultipleMode();
+        #   public boolean isSelected(int index);
+            public synchronized void makeVisible(int index);
+        #   public Dimension minimumSize(int rows);
+        #   public Dimension minimumSize();  // Overrides Component
+        #   public Dimension preferredSize(int rows);
+        #   public Dimension preferredSize();  // Overrides Component
+        1.1  public synchronized void remove(String item);
+        1.1  public synchronized void remove(int position);
+        1.1  public synchronized void removeActionListener(ActionListener l);
+        1.1  public synchronized void removeAll();
+        1.1  public synchronized void removeItemListener(ItemListener l);  // From ItemSelectable
+            public void removeNotify();  // Overrides Component
+            public synchronized void replaceItem(String newValue, int index);
+            public synchronized void select(int index);
+        1.1  public synchronized void setMultipleMode(boolean b);
+        #   public synchronized void setMultipleSelections(boolean b);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Component
+        1.1  protected void processActionEvent(ActionEvent e);
+        1.1  protected void processEvent(AWTEvent e);  // Overrides Component
+        1.1  protected void processItemEvent(ItemEvent e);
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->List(ItemSelectable)
+Passed To:
+Toolkit.createList()
+java.awt.LayoutManager2 (JDK 1.1)
+java.awt.MediaTracker (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

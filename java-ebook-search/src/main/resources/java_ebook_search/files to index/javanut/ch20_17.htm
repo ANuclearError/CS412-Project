@@ -1,0 +1,28 @@
+
+[Chapter 20] 20.17 java.awt.event.KeyAdapter (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.17 java.awt.event.KeyAdapter (JDK 1.1)
+This class is a trivial implementation of
+KeyListener; it provides empty bodies for each
+of the methods of that interface.  When you are not
+interested in all of these methods, it is often easier to
+subclass KeyAdapter than it is to implement
+KeyListener from scratch.
+public abstract class KeyAdapter extends Object implements KeyListener {
+    // Default Constructor: public KeyAdapter()
+    // Public Instance Methods
+            public void keyPressed(KeyEvent e);  // From KeyListener
+            public void keyReleased(KeyEvent e);  // From KeyListener
+            public void keyTyped(KeyEvent e);  // From KeyListener
+}
+Hierarchy:
+Object->KeyAdapter(KeyListener(EventListener))
+java.awt.event.ItemListener (JDK 1.1)
+java.awt.event.KeyEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

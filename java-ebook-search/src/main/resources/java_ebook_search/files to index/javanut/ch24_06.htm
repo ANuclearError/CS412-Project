@@ -1,0 +1,42 @@
+
+[Chapter 24] 24.6 java.io.ByteArrayOutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.6 java.io.ByteArrayOutputStream (JDK 1.0)
+This class is a subclass of OutputStream in
+which data that are written are stored in an internal
+byte array. The internal array grows as
+necessary, and can be retrieved with
+toByteArray() or toString(). The
+reset() method discards any data currently
+stored in the internal array and begins storing data
+from the beginning again.
+See also CharArrayWriter.
+public class ByteArrayOutputStream extends OutputStream {
+    // Public Constructors
+            public ByteArrayOutputStream();
+            public ByteArrayOutputStream(int size);
+    // Protected Instance Variables
+            protected byte[] buf;
+            protected int count;
+    // Public Instance Methods
+            public synchronized void reset();
+            public int size();
+            public synchronized byte[] toByteArray();
+            public String toString();  // Overrides Object
+        1.1  public String toString(String enc) throws UnsupportedEncodingException;
+        #   public String toString(int hibyte);
+            public synchronized void write(int b);  // Defines OutputStream
+            public synchronized void write(byte[] b, int off, int len);  // Overrides OutputStream
+            public synchronized void writeTo(OutputStream out) throws IOException;
+}
+Hierarchy:
+Object->OutputStream->ByteArrayOutputStream
+java.io.ByteArrayInputStream (JDK 1.0)
+java.io.CharArrayReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,33 @@
+
+[Chapter 22] 22.14 java.awt.peer.ListPeer (JDK 1.0)
+Chapter 22The java.awt.peer Package
+22.14 java.awt.peer.ListPeer (JDK 1.0)
+public abstract interface ListPeer extends ComponentPeer {
+    // Public Instance Methods
+        1.1  public abstract void add(String item, int index);
+            public abstract void addItem(String item, int index);
+            public abstract void clear();
+            public abstract void delItems(int start, int end);
+            public abstract void deselect(int index);
+        1.1  public abstract Dimension getMinimumSize(int rows);
+        1.1  public abstract Dimension getPreferredSize(int rows);
+            public abstract int[] getSelectedIndexes();
+            public abstract void makeVisible(int index);
+            public abstract Dimension minimumSize(int v);
+            public abstract Dimension preferredSize(int v);
+        1.1  public abstract void removeAll();
+            public abstract void select(int index);
+        1.1  public abstract void setMultipleMode(boolean b);
+            public abstract void setMultipleSelections(boolean v);
+}
+Returned By:
+Toolkit.createList()
+java.awt.peer.LightweightPeer (JDK 1.1)
+java.awt.peer.MenuBarPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

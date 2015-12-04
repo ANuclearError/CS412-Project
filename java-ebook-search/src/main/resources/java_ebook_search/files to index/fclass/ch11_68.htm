@@ -1,0 +1,113 @@
+
+[Chapter 11] WriteAbortedException
+Chapter 11The java.io Package
+WriteAbortedException
+Name
+WriteAbortedException
+Synopsis
+Class Name:
+java.io.WriteAbortedException
+Superclass:
+java.io.ObjectStreamException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+A WriteAbortedException is 
+thrown during object deserialization when the stream of data is incomplete 
+because an exception was thrown while it was being written. Thus, WriteAbortedException 
+represents an exception that was thrown during object serialization and 
+serialized into the stream. 
+Class Summary
+public class java.io.WriteAbortedException
+             extends java.io.ObjectStreamException {
+  // Variables
+  public Exception detail;
+  // Constructors
+  public WriteAbortedException(String s, Exception ex);
+  // Instance Methods
+  public String getMessage();
+}
+Variables
+detail
+public Exception detail
+Description
+The exception that was thrown during serialization; it is a subclass of 
+ObjectStreamException. 
+Constructors
+WriteAbortedException
+public WriteAbortedException(String s, Exception ex)
+Parameters
+s
+A description of the reason this exception was thrown.
+ex
+The exception that was thrown during serialization. 
+Description
+This constructor creates a WriteAbortedException 
+with the specified reason string. The created exception wraps the given 
+exception thrown during serialization. 
+Instance Methods
+getMessage
+public String getMessage()
+Returns
+The detail message for this exception. 
+Overrides
+Throwable.getMessage() 
+Description
+This method returns the detail message of this exception, as well the detail 
+message of the nested exception if it exists. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+ObjectStreamException, 
+Throwable 
+UTFDataFormatException
+Writer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

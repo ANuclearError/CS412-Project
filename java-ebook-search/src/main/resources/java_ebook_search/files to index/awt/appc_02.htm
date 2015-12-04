@@ -1,0 +1,160 @@
+
+[Appendix C] C.2 Test Program
+Appendix CPlatform-Specific Event Handling
+C.2 Test Program
+The test program, compList, listed in Source Code 
+shows the events peers pass along to the Java run-time system. You can 
+then examine the output to see how the run-time system reacts to the different 
+events. When you run compList, 
+the screen looks something like the one in Figure C.1. 
+Figure C.1: Test program
+How to Use the Program
+Java does not have an automated record and playback feature, so the work 
+is left for you to do. The program displays 10 components: Label, 
+Button, Scrollbar, 
+List, multiselection List, 
+Choice, Checkbox, 
+TextField, TextArea, 
+and Canvas (the black box in Figure C.1). 
+Basically, you must manually trigger every event for every component. 
+For every component on the screen (except Done), do the following:
+With the mouse
+Move the cursor over the object, press the mouse button 
+and release, and drag the cursor over the object. 
+With the keyboard
+Press and release an alphabetic key, press and release 
+the Home and End keys, arrow keys, and function keys. Do this for every 
+component, even for components like Button 
+and Label that have no logical 
+reason for using keyboard events. 
+For items with choices
+Select and deselect a few choices; double-click and single-click selections. 
+For the scrollbar
+Click on each arrow, drag the slider, and click in the paging area (the 
+space between each arrow and the slider). 
+For the text field
+Press Enter. 
+When finished
+Press the Done button, and analyze the results. Run the program 
+again (without exiting), and check the results again. Try to trigger any 
+specific events that you expect but didn't appear in the output 
+from the first pass. Generating some events requires a little work. For 
+example, on a Macintosh, in order to get the MOUSE_UP 
+and MOUSE_DRAG events, you 
+must do a MOUSE_DOWN off the 
+component; otherwise, the MOUSE_DOWN/MOUSE_UP 
+combination turns into an ACTION_EVENT, 
+if that component can generate it. 
+NOTE: 
+The SunTest business unit of Sun Microsystems has an early version 
+of a record and playback Java GUI testing tool called JavaSTAR. Information 
+about it is available at 
+http://www.suntest.com/JavaSTAR/JavaSTAR.html. 
+In the future, it may be possible to use JavaSTAR to help automate this 
+process. 
+Source Code
+The following is the source code for the test program:
+import java.awt.*;
+import java.util.*;
+import java.applet.*;
+public class compList extends Applet {
+    Button done = new Button ("Done");
+    Hashtable values = new Hashtable();
+    public void init () {
+        add (new Label ("Label"));
+        add (new Button ("Button"));
+        add (new Scrollbar (Scrollbar.HORIZONTAL, 50, 25, 0, 255));
+        List l1 = new List (3, false);
+        l1.addItem ("List 1");
+        l1.addItem ("List 2");
+        l1.addItem ("List 3");
+        l1.addItem ("List 4");
+        l1.addItem ("List 5");
+        add (l1);
+        List l2 = new List (3, true);
+        l2.addItem ("Multi 1");
+        l2.addItem ("Multi 2");
+        l2.addItem ("Multi 3");
+        l2.addItem ("Multi 4");
+        l2.addItem ("Multi 5");
+        add (l2);
+        Choice c = new Choice ();
+        c.addItem ("Choice 1");
+        c.addItem ("Choice 2");
+        c.addItem ("Choice 3");
+        c.addItem ("Choice 4");
+        c.addItem ("Choice 5");
+        add (c);
+        add (new Checkbox ("Checkbox"));
+        add (new TextField ("TextField", 10));
+        add (new TextArea ("TextArea", 3, 20));
+        Canvas c1 = new Canvas ();
+        c1.resize (50, 50);
+        c1.setBackground (Color.blue);
+        add (c1);
+        add (done);
+    }
+    public boolean handleEvent (Event e) {
+        if (e.target == done) {
+            if (e.id == Event.ACTION_EVENT) {
+                System.out.println (System.getProperty ("java.vendor"));
+                System.out.println (System.getProperty ("java.version"));
+                System.out.println (System.getProperty ("java.class.version"));
+                System.out.println (System.getProperty ("os.name"));
+                System.out.println (values);
+            }
+        }else {
+            Vector v;
+            Class c = e.target.getClass();
+            v = (Vector)values.get(c);
+            if (v == null)
+                v = new Vector();
+            Integer i = new Integer (e.id);
+            if (!v.contains (i)) {
+                v.addElement (i);
+                values.put (c, v);
+            }
+        }
+        return super.handleEvent (e);
+    }
+}
+An HTML document to display the applet in a browser should look something 
+like the following: 
+&lt;APPLET code="compList.class" height=300 width=300&gt;
+&lt;/APPLET&gt;
+Examining Results
+The results of the program are sent to standard output when you click on 
+the Done button. What happens to the output depends on the 
+platform. It may be sent to a log file (Internet Explorer), the Java Console 
+(Netscape Navigator), or the command line (appletviewer). The following 
+is sample output from Internet Explorer 3.0 on a Windows 95 platform. 
+Microsoft Corp.
+1.0.2
+45.3
+Windows 95
+{class java.awt.Canvas=[504, 503, 1004, 501, 506, 502, 505, 1005,
+401, 402, 403, 404], class java.awt.Choice=[1001, 401, 402, 403,
+404], class java.awt.Checkbox=[1001, 402, 401, 403, 404], class 
+compList=[504, 503, 501, 506, 502, 505, 1004, 1005], class java.
+awt.TextField=[401, 402, 403, 404], class java.awt.List=[701, 
+1001, 401, 402, 403, 404, 702], class java.awt.Scrollbar=[602, 
+605, 604, 603, 601], class java.awt.TextArea=[401, 402, 403, 404],
+class java.awt.Button=[1001, 401, 402, 403, 404]}
+In addition to some identifying information about the run-time environment, 
+the program displays a list of classes and the events they passed. The 
+integers represent the event constants of the Event 
+class; for example, Canvas 
+received events with identifiers 504, 503, etc. The events are not sorted, 
+so you can see the order in which they were sent. Unfortunately, you have 
+to look up these constants in the source code yourself. The class listed as compList 
+is the applet itself and shows you the events that the Applet 
+class receives. 
+The Results
+Image Loading
+ 
+ 
+ 
+ 
+ 
+ 
+ 

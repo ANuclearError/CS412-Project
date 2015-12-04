@@ -1,0 +1,27 @@
+
+[Chapter 16] 16.3 ClipboardOwner Interface
+Chapter 16Data Transfer
+16.3 ClipboardOwner Interface
+Classes that need to place objects on a clipboard must implement the ClipboardOwner 
+interface. An object becomes the clipboard owner by placing something on 
+a Clipboard and remains owner 
+as long as that object stays on the clipboard; it loses ownership when 
+someone else writes to the clipboard. The ClipboardOwner 
+interface provides a way to receive notification when you lose ownership--that 
+is, when the object you placed on the clipboard is replaced by something 
+else. Methods
+public abstract void lostOwnership(Clipboard clipboard, Transferable contents)  
+The lostOwnership() method 
+tells the owner of contents 
+that it is no longer on the given clipboard. 
+It is usually implemented as an empty stub but is available for situations in which 
+you have to know. 
+Transferable Interface
+Clipboard
+ 
+ 
+ 
+ 
+ 
+ 
+ 

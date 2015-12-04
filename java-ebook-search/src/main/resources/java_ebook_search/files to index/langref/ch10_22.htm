@@ -1,0 +1,584 @@
+
+[Chapter 10] System
+Chapter 10The java.lang Package
+System
+Name
+System
+Synopsis
+Class Name:
+java.lang.System
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The System
+class provides access to various information about the operating
+system environment in which a program is running. For example, the
+System class defines variables that allow access
+to the standard I/O streams and methods that allow a program to
+run the garbage collector and stop the Java virtual machine.
+All of the variables and methods in the System
+class are static. In other words, it is not necessary
+to create an instance of the System class in
+order to use its variables and methods. In fact, the System
+class does not define any public constructors,
+so it cannot be instantiated.
+The System
+class supports the concept of system properties
+that can be queried and set. The following properties are guaranteed
+always to be defined:
+Property Name
+Description
+file.encoding
+The character encoding for the default locale (Java 1.1 only)
+file.encoding.pkg
+The package that contains converters between local encodings and Unicode (Java 1.1 only)
+file.separator
+File separator ('/' on UNIX, ' \' on Windows)
+java.class.path
+The class path
+java.class.version
+Java class version number
+java.compiler
+The just-in-time compiler to use, if any (Java 1.1 only)
+java.home
+Java installation directory
+java.vendor
+Java vendor-specific string
+java.vendor.url
+Java vendor URL
+java.version
+Java version number
+line.separator
+Line separator(' \n' on UNIX, ' \r\n' on Windows)
+os.arch
+Operating system architecture
+os.name
+Operating system name
+os.version
+Operating system version
+path.separator
+Path separator (':' on UNIX, ',' on Windows)
+user.dir
+User's current working directory when the properties were initialized
+user.home
+User's home directory
+user.language
+The two-letter language code of the default locale (Java 1.1 only)
+user.name
+User's account name
+user.region
+The two-letter country code of the default locale (Java 1.1 only)
+user.timezone
+The default time zone (Java 1.1 only)
+Additional properties may be defined by the run-time environment.
+The -D command-line option can be used to define
+system properties when a program is run.
+The Runtime class is related to the System
+class; it provides access to information about the environment in
+which a program is running.
+Class Summary
+public final class java.lang.System extends java.lang.Object {
+    // Constants
+    public static final PrintStream err;
+    public static final InputStream in;
+    public static final PrintStream out;
+    // Class Methods
+    public static void arraycopy(Object src, int srcOffset,
+                                 Object dst, int dstOffset, int length);
+    public static long currentTimeMillis();
+    public static void exit(int status);
+    public static void gc();
+    public static Properties getProperties();
+    public static String getProperty(String key);
+    public static String getProperty(String key, String default); 
+    public static SecurityManager getSecurityManager();
+    public static String getenv(String name);           // Deprecated in 1.1
+    public static native int identityHashCode(Object x);   // New in 1.1
+    public static void load(String filename);
+    public static void loadLibrary(String libname);
+    public static void runFinalization();
+    public static void runFinalizersOnExit(boolean value); // New in 1.1
+    public static void setErr(PrintStream err);            // New in 1.1
+    public static void setIn(InputStream in);              // New in 1.1
+    public static void setOut(PrintStream out);            // New in 1.1
+    public static void setProperties(Properties props);
+    public static void setSecurityManager(SecurityManager s);
+}
+Variables
+err
+public static final PrintStream err
+Description
+  
+  
+The standard error stream. In an application environment,
+this variable refers to a java.io.PrintStream
+object that is associated with the standard error output for the
+process running the Java virtual machine. In an applet environment,
+the PrintStream is likely to be associated with
+a separate window, although this is not guaranteed.
+The value of err can be set using the 
+setErr() method.  The value of err
+can only be set if the currenly installed SecurityManager
+does not throw a SecurityException when the
+request is made.
+Prior to to Java 1.1, err was not 
+final. It has been made final
+as of Java 1.1 because the unchecked ability to set err 
+is a security hole.
+in
+public static final InputStream in 
+Description
+  
+  
+The standard input stream. In an application environment,
+this variable refers to a java.io.InputStream
+object that is associated with the standard input for the process
+running the Java virtual machine.
+The value of in can be set using the 
+setIn() method.  The value of in
+can only be set if the currenly installed SecurityManager
+does not throw a SecurityException when the
+request is made.
+Prior to to Java 1.1, in was not 
+final. It has been made final
+as of Java 1.1 because the unchecked ability to set in 
+is a security hole.
+out
+public static final PrintStream out 
+Description
+  
+  
+The standard output stream. In an application environment,
+this variable refers to a java.io.PrintStream
+object that is associated with the standard output for the process
+running the Java virtual machine. In an applet environment, the
+PrintStream is likely to be associated with a
+separate window, although this is not guaranteed.
+out
+is the most commonly used of the three I/O streams provided
+by the System class. Even in GUI-based applications,
+sending output to this stream can be useful for debugging. The usual
+idiom for sending output to this stream is:
+System.out.println("Some text");
+The value of out can be set using the 
+setOut() method.  The value of out
+can only be set if the currenly installed SecurityManager
+does not throw a SecurityException when the
+request is made.
+Prior to to Java 1.1, out was not 
+final. It has been made final
+as of Java 1.1 because the unchecked ability to set out 
+is a security hole.
+Class Methods
+arraycopy
+   public static void arraycopy(Object src, int src_position, Object dst, int dst_position, int length)  
+Parameters
+src
+The source array.
+src_position
+An index into the source array.
+dst
+The destination array.
+dst_position
+An index into the destination array.
+length
+The number of elements to be copied.
+Throws
+ArrayIndexOutOfBoundsException
+If the values of the src_position,
+dst_position, and length arguments
+imply accessing either array with an index that is less than zero
+or an index greater than or equal to the number of elements in the
+array.
+ArrayStoreException
+If the type of value stored in the src
+array cannot be stored in the dst array.
+NullPointerException
+If src or dst
+is null.
+Description
+This method copies a range of array elements from the src
+array to the dst array. The number of elements
+that are copied is specified by length. The elements
+at positions src_position through src_position+length-1
+in src are copied to the positions dst_position
+through dst_position+length-1 in dst,
+respectively.
+If src and dst refer
+to the same array, the copying is done as if the array elements
+were first copied to a temporary array and then copied to the destination
+array.
+Before this method does any copying, it performs a number
+of checks. If either src or dst
+are null, the method throws a NullPointerException
+and dst is not modified.
+If any of the following conditions are true, the method throws
+an ArrayStoreException, and dst
+is not modified:
+Either src or dst
+refers to an object that is not an array.
+src and dst refer
+to arrays whose element types are different primitive types.
+src refers to an array that has
+elements that contain a primitive type, while dst
+refers to an array that has elements that contain a reference type,
+or vice versa.
+If any of the following conditions are true, the method throws
+an ArrayIndexOutOfBoundsException, and dst
+is not modified:
+srcOffset, dstOffset,
+or length is negative.
+srcOffset+length is greater than
+src.length().
+dstOffset+length is greater than
+dst.length().
+Otherwise, if an element in the source array being
+copied cannot be converted to the type of the destination array
+using the rules of the assignment operator, the method throws an
+ArrayStoreException when the problem occurs.
+Since the problem is discovered during the copy operation, the state
+of the dst array reflects the incomplete copy
+operation.
+currentTimeMillis
+public static native long currentTimeMillis()
+Returns
+The current time as the number of milliseconds since 00:00:00
+UTC, January 1, 1970.
+Description
+This method returns the current time as the number of milliseconds
+since 00:00:00 UTC, January 1, 1970. It will not overflow until
+the year 292280995.
+The java.util.Date class provides more
+extensive facilities for dealing with times and dates.
+exit
+public static void exit(int status)
+Parameters
+status
+The exit status code to use.
+Throws
+SecurityException
+If the checkExit() method of
+the SecurityManager throws a SecurityException.
+Description
+This method causes the Java virtual machine
+ to exit with the given status code. This method
+works by calling the exit() method of the current
+Runtime object. By convention, a nonzero status
+code indicates abnormal termination. This method never returns.
+gc
+public static void gc()
+Description
+This method causes the Java virtual machine to run the garbage
+collector in the current thread. This method works by calling the
+gc() method of the current Runtime object.
+The garbage collector finds objects that will never be used
+again because there are no live references to them. After it finds
+these objects, the garbage collector frees the storage occupied
+by these objects.
+The garbage collector is normally run continuously in a thread
+with the lowest possible priority, so that it works intermittently
+to reclaim storage. The gc() method allows a
+program to invoke the garbage collector explicitly when necessary.
+getProperties
+public static Properties getProperties()
+Returns
+A Properties object that contains the values
+of all the system properies.
+Throws
+SecurityException
+If the checkPropertiesAccess()
+method of the SecurityManager throws a SecurityException.
+Description
+This method returns all of the defined system properties encapsulated
+in a java.util.Properties
+object. If there are no system properties currently defined, a set
+of default system properties is created and initialized. As discussed
+in the description of the System class, some
+system properties are guaranteed always to be defined.
+getProperty
+public static String getProperty(String key)
+Parameters
+key
+The name of a system property.
+Returns
+The value of the named system property or null if
+the named property is not defined.
+Throws
+SecurityException
+If the checkPropertyAccess()
+method of the SecurityManager throws a SecurityException.
+Description
+This method returns the value of the named system property. 
+If there is no definition for the named property,
+the method returns null. If there are no system
+properties currently defined, a set of default system properties
+is created and initialized. As discussed in the description of the
+System class, some system properties are guaranteed
+always to be defined.
+public static String getProperty(String key, String def)
+Parameters
+key
+The name of a system property.
+def
+A default value for the property.
+Returns
+The value of the named system property, or the default value
+if the named property is not defined.
+Throws
+SecurityException
+If the checkPropertyAccess()
+method of the SecurityManager throws a SecurityException.
+Description
+This method returns the value of the named system property.
+If there is no definition for the named property,
+the method returns the default value as specified by the def
+parameter. If there are no system properties currently defined,
+a set of default system properties is created and initialized. As
+discussed earlier in the description of the System class,
+some system properties are guaranteed to always be defined.
+getSecurityManager
+public static SecurityManager getSecurityManager()
+Returns
+A reference to the installed SecurityManager
+object or null if there is no SecurityManager
+object installed.
+Description
+This method returns a reference to the installed SecurityManager
+object. If there is no SecurityManager object
+installed, the method returns null.
+getenv
+public static String getenv(String name)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+name
+The name of a system-dependent environment variable.
+Returns
+The value of the environment variable or null
+if the variable is not defined.
+Description
+This method is obsolete; it always throws an error.  Use 
+getProperties() and the -D
+option instead.
+identityHashCode
+public static native int identityHashCode(Object x)
+Availability
+New as of JDK 1.1
+Parameters
+x
+An object.
+Returns
+The identity hashcode value for the specified object.
+Description
+This method returns the same hashcode value for the specified
+object as would be returned by the default hashCode()
+method of Object, regardless of whether or not
+the object's class overrides hashCode().
+load
+public void load(String filename)
+Parameters
+filename
+A string that specifies the complete path of the
+file to be loaded.
+Throws
+SecurityException
+If the checkLink() method of
+the SecurityManager throws a SecurityException.
+UnsatisfiedLinkError
+If the method is unsuccessful in loading the specified
+dynamically linked library.
+Description
+This method loads the specified dynamically linked library.
+This method works by calling the load() method
+of the current Runtime object.
+loadLibrary
+public void loadLibrary(String libname)
+Parameters
+libname
+A string that specifies the name of a dynamically linked
+library.
+Throws
+SecurityException
+If the checkLink() method of
+the SecurityManager throws a SecurityException.
+UnsatisfiedLinkError
+If the method is unsuccessful in loading the specified
+dynamically linked library.
+Description
+This method loads the specified dynamically linked library.
+It looks for the specified library in a platform-specific way. This
+method works by calling the loadLibrary() method
+of the current Runtime object.
+runFinalization
+public static void runFinalization()
+Description
+This method causes the Java virtual machine to run the finalize()
+methods of any objects in the finalization queue in the current
+thread. This method works by calling the runFinalization()
+method of the current Runtime object.
+When the garbage collector discovers that there are no references
+to an object, it checks to see if the object has a finalize()
+method that has never been called. If the object has such a finalize()
+method, the object is placed in the finalization queue. While there
+is a reference to the object in the finalization queue, the object
+is no longer considered garbage collectable.
+Normally, the objects in the finalization queue are handled
+by a separate finalization thread that runs continuously at a very
+low priority. The finalization thread removes an object from the
+queue and calls its finalize() method. As long
+as the finalize() method does not generate a
+reference to the object, the object again becomes available for
+garbage collection.
+Because the finalization thread runs at a very low priority,
+there may be a long delay from the time that an object is put on
+the finalization queue until the time that its finalize()
+method is called. The runFinalization() method
+allows a program to run the finalize() methods
+explicitly. This can be useful when there is a shortage of some
+resource that is released by a finalize() method.
+runFinalizersOnExit
+public static void runFinalizersOnExit(boolean value)
+Availability
+New as of JDK 1.1
+Parameters
+value
+A boolean value that specifies whether or not
+finalization occurs on exit.
+Throws
+SecurityException
+If the checkExit() method of
+the SecurityManager throws a SecurityException.
+Description
+This method specifies whether or not the finalize() 
+methods of all objects that have finalize() methods
+are run before the Java virtual machine exits.  By default, the
+finalizers are not run on exit.  This method works by calling
+the runFinalizersOnExit() method of the current
+Runtime object.
+setErr
+public static void setErr(PrintStream err)
+Availability
+New as of JDK 1.1
+Parameters
+err
+A PrintStream object to use for the standard error
+stream.
+Throws
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the standard error stream to be this 
+PrintStream object.
+setIn
+public static void setIn(InputStream in)
+Availability
+New as of JDK 1.1
+Parameters
+in
+A InputStream object to use for the standard input
+stream.
+Throws
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the standard input stream to be this 
+InputStream object.
+setOut
+public static void setOut(PrintStream out)
+Availability
+New as of JDK 1.1
+Parameters
+out
+A PrintStream object to use for the standard output
+stream.
+Throws
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the standard output stream to be this 
+PrintStream object.
+setProperties
+public static void setProperties(Properties props)
+Parameters
+props
+A reference to a Properties object.
+Throws
+SecurityException
+If the checkPropertiesAccess()
+method of the SecurityManager throws a SecurityException.
+Description
+This method replaces the current set of system property definitions
+with a new set of system property definitions that are encapsulated
+by the given Properties object. As discussed
+in the description of the System class, some
+system properties are guaranteed to always be defined.
+setSecurityManager
+public static void setSecurityManager(SecurityManager s)
+Parameters
+s
+A reference to a SecurityManager
+object.
+Throws
+SecurityException
+If a SecurityManager object has
+already been installed.
+Description
+This method installs the given SecurityManager
+object. If s is null, then
+no SecurityManager object is installed. Once
+a SecurityManager object is installed, any subsequent
+calls to this method throw a SecurityException.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Assignment Compatibility;
+Errors;
+Exceptions;
+Object;
+Object Destruction;
+Process;
+Runtime;
+SecurityManager
+StringBuffer
+Thread
+ 
+ 
+ 
+ 
+ 
+ 
+ 

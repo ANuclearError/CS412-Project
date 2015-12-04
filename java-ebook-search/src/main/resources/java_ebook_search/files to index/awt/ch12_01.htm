@@ -1,0 +1,257 @@
+
+[Chapter 12] Image Processing
+Chapter 12
+12. Image Processing
+Contents:
+ImageObserver
+ColorModel
+ImageProducer
+ImageConsumer
+ImageFilter
+The image processing parts of Java are buried within the java.awt.image 
+package. The package consists of three interfaces and eleven classes, two 
+of which are abstract. They are as follows: 
+ The ImageObserver interface
+provides the single method necessary to support the asynchronous
+loading of images. The interface implementers watch the production of
+an image and can react when certain conditions arise. We briefly
+touched on ImageObserver when we discussed the
+Component class (in Chapter 5, Components),
+because Component implements the interface.
+The ImageConsumer and ImageProducer 
+interfaces provide the means for low level image creation. The ImageProducer 
+provides the source of the pixel data that is used by the ImageConsumer 
+to create an Image. 
+The PixelGrabber and ImageFilter 
+classes, along with the AreaAveragingScaleFilter, 
+CropImageFilter, RGBImageFilter, 
+and ReplicateScaleFilter subclasses, 
+provide the tools for working with images. PixelGrabber 
+consumes pixels from an Image 
+into an array. The ImageFilter 
+classes modify an existing image to produce another Image 
+instance. CropImageFilter makes 
+smaller images; RGBImageFilter 
+alters pixel colors, while AreaAveragingScaleFilter 
+and ReplicateScaleFilter scale 
+images up and down using different algorithms. All of these classes implement 
+ImageConsumer because they 
+take pixel data as input. 
+MemoryImageSource and FilteredImageSource 
+produce new images. MemoryImageSource 
+takes an array and creates an image from it. FilteredImageSource 
+uses an ImageFilter to read 
+and modify data from another image and produces the new image based on 
+the original. Both MemoryImageSource 
+and FilteredImageSource implement 
+ImageProducer because they 
+produce new pixel data. 
+ColorModel and its subclasses, 
+DirectColorModel and IndexColorModel, 
+provide the palette of colors available when creating an image or tell 
+you the palette used when using PixelGrabber. 
+The classes in the java.awt.image 
+package let you create Image 
+objects at run-time. These classes can be used to rotate images, make images 
+transparent, create image viewers for unsupported graphics formats, and 
+more. 
+12.1 ImageObserver
+As you may recall from Chapter 2, Simple Graphics, the last parameter to the drawImage() 
+method is the image's ImageObserver. 
+However, in Chapter 2, Simple Graphics I also said that you can use this 
+as the image observer and forget about it. Now it's time to ask the 
+obvious questions: what is an image observer, and what is it for? 
+Because getImage() acquires 
+an image asynchronously, the entire Image 
+object might not be fully loaded when drawImage() 
+is called. The ImageObserver 
+interface provides the means for a component to be told asynchronously 
+when additional information about the image is available. The Component 
+class implements the imageUpdate() 
+method (the sole method of the ImageObserver 
+interface), so that method is inherited by any component that renders an 
+image. Therefore, when you call drawImage(), 
+you can pass this as the final 
+argument; the component on which you are drawing serves as the ImageObserver 
+for the drawing process. The communication between the image observer and 
+the image consumer happens behind the scenes; you never have to worry about 
+it, unless you want to write your own imageUpdate() 
+method that does something special as the image is being loaded. 
+If you call drawImage() to 
+display an image created in local memory (either for double buffering or 
+from a MemoryImageSource), 
+you can set the ImageObserver 
+parameter of drawImage() to 
+null because no asynchrony is involved; the entire image is available 
+immediately, so an ImageObserver 
+isn't needed. 
+ImageObserver InterfaceConstants
+The various flags associated with the ImageObserver 
+are used for the infoflags 
+argument to imageUpdate(). 
+The flags indicate what kind of information is available and how to interpret 
+the other arguments to imageUpdate(). 
+Two or more flags are often combined (by an OR operation) to show that several kinds of information are available. 
+public static final int WIDTH 
+When the WIDTH flag is set, 
+the width argument to imageUpdate() 
+correctly indicates the image's width. Subsequent calls to getWidth() 
+for the Image return the valid 
+image width. If you call getWidth() 
+before this flag is set, expect it to return -1. 
+public static final int HEIGHT 
+When the HEIGHT flag is set, 
+the height argument to imageUpdate() 
+correctly indicates the image's height. Subsequent calls to getHeight() 
+for the Image return the valid 
+image height. If you call getHeight() 
+before this flag is set, expect it to return -1. 
+public static final int PROPERTIES 
+When the PROPERTIES flag is 
+set, the image's properties are available. Subsequent calls to 
+getProperty() return valid 
+image properties. 
+public static final int SOMEBITS 
+When the SOMEBITS flag of infoflags 
+(from imageUpdate()) is set, 
+the image has started loading and at least some of its content are available 
+for display. When this flag is set, the x, y, width, and height arguments 
+to imageUpdate() indicate the 
+bounding rectangle for the portion of the image that has been delivered 
+so far. 
+public static final int FRAMEBITS 
+When the FRAMEBITS flag of 
+infoflags is set, a complete 
+frame of a multiframe image has been loaded and can be drawn. The remaining 
+parameters to imageUpdate() 
+should be ignored (x, y, 
+width, height). 
+public static final int ALLBITS 
+When the ALLBITS flag of infoflags 
+is set, the image has been completely loaded and can be drawn. The remaining 
+parameters to imageUpdate() 
+should be ignored (x, y, 
+width, height). 
+public static final int ERROR 
+When the ERROR flag is set, 
+the production of the image has stopped prior to completion because of 
+a severe problem. ABORT may 
+or may not be set when ERROR 
+is set. Attempts to reload the image will fail. You might get an ERROR because the URL 
+of the Image is invalid (file 
+not found) or the image file itself is invalid (invalid size/content). 
+public static final int ABORT 
+When the ABORT flag is set, 
+the production of the image has aborted prior to completion. If ERROR 
+is not set, a subsequent attempt to draw the image may succeed. For example, 
+an image would abort without an error if a network error occurred (e.g., 
+a timeout on the HTTP connection). 
+Method
+public boolean imageUpdate (Image image, int infoflags, int x, int y, int 
+width, int height) 
+The imageUpdate() method is 
+the sole method in the ImageObserver 
+interface. It is called whenever information about an image becomes available. 
+To register an image observer for an image, pass an object that implements 
+the ImageObserver interface 
+to getWidth(), getHeight(), 
+getProperty(), prepareImage(), 
+or drawImage(). 
+The image parameter to imageUpdate() 
+is the image being rendered on the observer. The infoflags 
+parameter is a set of ImageObserver 
+flags ORed together to signify the current information available 
+about image. The meaning of 
+the x, y, 
+width, and height 
+parameters depends on the current infoflags 
+settings. 
+Implementations of imageUpdate() 
+should return true if additional information about the image is desired; 
+returning false means that you don't want any additional information, 
+and consequently, imageUpdate() 
+should not be called in the future for this image. The default imageUpdate() 
+method returns true if neither ABORT 
+nor ALLBITS are set in the 
+infoflags--that is, the method imageUpdate() 
+is interested in further information if no errors have occurred and the 
+image is not complete. If either flag is set, imageUpdate() 
+returns false. 
+You should not call imageUpdate() 
+directly--unless you are developing an ImageConsumer, 
+in which case you may find it worthwhile to override the default imageUpdate() 
+method, which all components inherit from the Component 
+class. 
+Overriding imageUpdate
+Instead of bothering with the MediaTracker 
+class, you can override the imageUpdate() 
+method and use it to notify you when an image is completely loaded. 
+Example 12.1 demonstrates the use of imageUpdate(), 
+along with a way to force your images to load immediately. Here's 
+how it works: the init() method 
+calls getImage() to request 
+image loading at some time in the future. Instead of waiting for drawImage() 
+to trigger the loading process, init() 
+forces loading to start by calling prepareImage(), 
+which also registers an image observer. prepareImage() 
+is a method of the Component 
+class discussed in Chapter 5, Components. 
+The paint() method doesn't 
+attempt to draw the image until the variable loaded 
+is set to true. The imageUpdate() 
+method checks the infoflags 
+argument to see whether ALLBITS 
+is set; when it is set, imageUpdate() 
+sets loaded to true, and schedules 
+a call to paint(). Thus, paint() 
+doesn't call drawImage() 
+until the method imageUpdate() has discovered 
+that the image is fully loaded. 
+Example 12.1: imageUpdate Override.
+import java.applet.*;
+import java.awt.*;
+import java.awt.image.ImageObserver;
+public class imageUpdateOver extends Applet {
+    Image image;
+    boolean loaded = false;
+    public void init () {
+        image = getImage (getDocumentBase(), "rosey.jpg");
+        prepareImage (image, -1, -1, this);
+    }
+    public void paint (Graphics g) {
+        if (loaded)
+            g.drawImage (image, 0, 0, this);
+    }
+    public void update (Graphics g) {
+        paint (g);
+    }
+    public synchronized boolean imageUpdate (Image image, int infoFlags,
+                        int x, int y, int width, int height) {
+        if ((infoFlags &amp; ImageObserver.ALLBITS) != 0) {
+            loaded = true;
+            repaint();
+            return false;
+        } else {
+            return true;
+        }
+    }
+}
+Note that the call to prepareImage() 
+is absolutely crucial. It is needed both to start image loading and to 
+register the image observer. If prepareImage() 
+were omitted, imageUpdate() 
+would never be called, loaded 
+would not be set, and paint() 
+would never attempt to draw the image. As an alternative, you could use 
+the MediaTracker class to force 
+loading to start and monitor the loading process; that approach might give 
+you some additional flexibility. 
+ScrollPane
+ColorModel
+ 
+ 
+ 
+ 
+ 
+ 
+ 

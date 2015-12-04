@@ -1,0 +1,158 @@
+
+[Chapter 18] GZIPOutputStream
+Chapter 18The java.util.zip Package
+GZIPOutputStream
+Name
+GZIPOutputStream
+Synopsis
+Class Name:
+java.util.zip.GZIPOutputStream
+Superclass:
+java.util.zip.DeflaterOutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The GZIPOutputStream class 
+compresses data using the GZIP format. To use it, simply construct a GZIPOutputStream 
+that wraps a regular output stream and use the write() 
+methods to write compressed data. 
+Class Summary
+public class java.util.zip.GZIPOutputStream
+             extends java.util.zip.DeflaterOutputStream {
+  // Variables
+  protected CRC32 crc;
+  // Constructors
+  public GZIPOutputStream(OutputStream out);
+  public GZIPOutputStream(OutputStream out, int size);
+  // Instance Methods
+  public void close();
+  public void finish();
+  public synchronized void write(byte[] buf, int off, int len);
+}
+Variables
+crc
+protected CRC32 crc
+Description
+A checksum that is updated with the uncompressed stream data. The checksum 
+value is written into the GZIP trailer. 
+Constructors
+GZIPOutputStream
+public GZIPOutputStream(OutputStream out) throws IOException
+Parameters
+out
+The underlying output stream. 
+Throws
+IOException
+If an error occurs while writing the GZIP header. 
+Description
+This constructor creates a GZIPOutputStream 
+that writes compressed data to the given OutputStream. 
+The GZIPOutputStream uses a 
+compression buffer with the default size of 512 bytes. 
+   public GZIPOutputStream(OutputStream out, int size) throws IOException  
+Parameters
+out
+The underlying output stream.
+size
+The size of the output buffer. 
+Throws
+IOException
+If an error occurs while writing the GZIP header. 
+Description
+This constructor creates a GZIPOutputStream 
+that writes compressed data to the given OutputStream. 
+The GZIPOutputStream uses a 
+compression buffer of the given size. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Overrides
+DeflaterOutputStream.close() 
+Description
+This method closes the stream and releases any system resources that are associated with it. 
+finish
+public void finish() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Overrides
+DeflaterOutputStream.finish() 
+Description
+This method finishes writing compressed data to the underlying stream without 
+closing it. 
+write
+public void write(byte[] buf, int off, int len) throws IOException
+Parameters
+buf
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+DeflaterOutputStream.write(byte[], int, int) 
+Description
+This method takes len bytes 
+from the given buffer, starting at off, 
+and compresses them. The method then writes the compressed data to the 
+underlying OutputStream. The 
+method blocks until all of the bytes have been written. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+flush()
+FilterOutputStream
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+write(int)
+DeflaterOutputStream
+write(byte[])
+FilterOutputStream
+See Also
+Deflater, 
+DeflaterOutputStream, 
+FilterOutputStream, 
+IOException, 
+OutputStream 
+GZIPInputStream
+Inflater
+ 
+ 
+ 
+ 
+ 
+ 
+ 

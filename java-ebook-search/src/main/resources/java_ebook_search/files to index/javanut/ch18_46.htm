@@ -1,0 +1,37 @@
+
+[Chapter 18] 18.46 java.awt.Panel (JDK 1.0)
+Chapter 18The java.awt Package
+18.46 java.awt.Panel (JDK 1.0)
+This class is a Container that is itself contained
+within a container.  Unlike Frame and
+Dialog, Panel is a container that does not
+create a separate window of its own.  Panel is
+suitable for holding portions of a larger interface within a
+parent Frame or Dialog or within another
+Panel.  (Note that Applet is a subclass of
+Panel, and thus applets are displayed in a
+Panel that is contained within a Web browser or
+applet viewer.)  The default LayoutManager for a
+Panel is FlowLayout.
+public class Panel extends Container {
+    // Public Constructors
+            public Panel();
+        1.1  public Panel(LayoutManager layout);
+    // Public Instance Methods
+            public void addNotify();  // Overrides Container
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Container->Panel
+Extended By:
+Applet
+Passed To:
+Toolkit.createPanel()
+java.awt.MenuShortcut (JDK 1.1)
+java.awt.Point (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

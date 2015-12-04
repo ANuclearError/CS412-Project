@@ -1,0 +1,57 @@
+
+[Chapter 23] 23.16 java.beans.PropertyEditor (JDK 1.1)
+Chapter 23The java.beans Package
+23.16 java.beans.PropertyEditor (JDK 1.1)
+The PropertyEditor interface defines the methods
+that must be implemented by a Java beans property editor
+intended for use within an application builder or similar
+tool.  PropertyEditor is a complex interface because
+it defines methods to support several different ways of
+displaying property values to the user, and it also defines
+methods to support several different ways of allowing the
+user to edit the property value.
+For a property of type x, the author of a Java bean
+typically implements a property editor of class
+xEditor.  While the editor is implemented by
+the bean author, it is usually only instantiated or used
+by application builders or similar tools (or by a
+Customizer class for a Bean).
+In addition to implementing the PropertyEditor
+interface, a property editor must have a constructor that
+expects no arguments, so that it can be easily instantiated by an application builder.  Also, it must
+accept registration and deregistration of
+PropertyChangeListener objects, and it must send a
+PropertyChangeEvent to all registered listeners when
+it changes the value of the property being edited.
+The PropertyEditorSupport class is a trivial
+implementation of PropertyEditor, suitable for
+subclassing, or for supporting a list of
+PropertyChangeListener objects.
+public abstract interface PropertyEditor {
+    // Public Instance Methods
+            public abstract void addPropertyChangeListener(PropertyChangeListener listener);
+            public abstract String getAsText();
+            public abstract Component getCustomEditor();
+            public abstract String getJavaInitializationString();
+            public abstract String[] getTags();
+            public abstract Object getValue();
+            public abstract boolean isPaintable();
+            public abstract void paintValue(Graphics gfx, Rectangle box);
+            public abstract void removePropertyChangeListener(PropertyChangeListener listener);
+            public abstract void setAsText(String text) throws IllegalArgumentException;
+            public abstract void setValue(Object value);
+            public abstract boolean supportsCustomEditor();
+}
+Implemented By:
+PropertyEditorSupport
+Returned By:
+PropertyEditorManager.findEditor()
+java.beans.PropertyDescriptor (JDK 1.1)
+java.beans.PropertyEditorManager (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

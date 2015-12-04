@@ -1,0 +1,295 @@
+
+[Chapter 16] DecimalFormatSymbols
+Chapter 16The java.text Package
+DecimalFormatSymbols
+Name
+DecimalFormatSymbols
+Synopsis
+Class Name:
+java.text.DecimalFormatSymbols
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The DecimalFormatSymbols class 
+encapsulates number-formatting data that is locale-specific, like grouping 
+separators and decimal separators. Typically, you do not need to instantiate 
+DecimalFormatSymbols yourself. 
+Instead, an instance is automatically created for you, behind the scenes, 
+when you use one of the factory methods in NumberFormat 
+to create a DecimalFormat object. 
+You can retrieve a DecimalFormatSymbols 
+object by calling the getDecimalFormatSymbols() 
+method of DecimalFormat. Once 
+you have a DecimalFormatSymbols 
+object, you can modify the strings it uses if you want to change them. 
+Class Summary
+public final class java.text.DecimalFormatSymbols extends java.lang.Object
+                   implements java.io.Serializable, java.lang.Cloneable {
+  // Constructors
+  public DecimalFormatSymbols();
+  public DecimalFormatSymbols(Locale locale);
+  // Instance Methods
+  public Object clone();
+  public boolean equals(Object obj); 
+  public char getDecimalSeparator();
+  public char getDigit();
+  public char getGroupingSeparator();
+  public String getInfinity();
+  public char getMinusSign();
+  public String getNaN();
+  public char getPatternSeparator();
+  public char getPerMill();
+  public char getPercent();
+  public char getZeroDigit();
+  public int hashCode();
+  public void setDecimalSeparator(char decimalSeparator);
+  public void setDigit(char digit);
+  public void setGroupingSeparator(char groupingSeparator);
+  public void setInfinity(String infinity);
+  public void setMinusSign(char minusSign);
+  public void setNaN(String NaN);
+  public void setPatternSeparator(char patternSeparator);
+  public void setPerMill(char perMill);
+  public void setPercent(char percent);
+  public void setZeroDigit(char zeroDigit);
+}
+Constructors
+DecimalFormatSymbols
+public DecimalFormatSymbols()
+Description
+This constructor creates a DecimalFormatSymbols 
+object for the default locale. 
+public DecimalFormatSymbols(Locale locale)
+Parameters
+locale
+The Locale to use. 
+Description
+This constructor creates a DecimalFormatSymbols 
+object for the given locale. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this DecimalFormatSymbols. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this DecimalFormatSymbols 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of DateFormatSymbols 
+and is equivalent to this DecimalFormatSymbols. 
+getDecimalSeparator
+public char getDecimalSeparator()
+Returns
+The character used to separate the integer and 
+fractional parts of a number for this DecimalFormatSymbols. 
+Description
+This method returns the decimal separator character (e.g., ".", 
+","). 
+getDigit
+public char getDigit()
+Returns
+The character used to represent a digit in a 
+pattern string for this DecimalFormatSymbols. 
+Description
+This method returns the digit pattern character, which represents a digit 
+that is not shown if it is zero. 
+getGroupingSeparator
+public char getGroupingSeparator()
+Returns
+The character used to separate long numbers for 
+this DecimalFormatSymbols. 
+Description
+This method returns the grouping separator character (e.g., ",", 
+"."). 
+getInfinity
+public String getInfinity()
+Returns
+The string used to represent infinity for this 
+DecimalFormatSymbols. 
+Description
+This method returns the string that represents infinity. 
+getMinusSign
+public char getMinusSign()
+Returns
+The character used to signify negative numbers 
+for this DecimalFormatSymbols. 
+Description
+This method returns the character that signifies negative numbers. 
+getNaN
+public String getNaN()
+Returns
+The string used to represent the value not-a-number 
+for this DecimalFormatSymbols. 
+Description
+This method returns the string that represents not-a-number. 
+getPatternSeparator
+public char getPatternSeparator()
+Returns
+The pattern separator character for this DecimalFormatSymbols. 
+Description
+This method returns the character used in pattern strings to separate 
+the positive subpattern and negative subpattern. 
+getPerMill
+public char getPerMill()
+Returns
+The character used to represent the per mille sign 
+for this DecimalFormatSymbols. 
+Description
+This method returns the character that represents a per mille value. 
+getPercent
+public char getPercent()
+Returns
+The character used to represent the percent sign 
+for this DecimalFormatSymbols. 
+Description
+This method returns the character that represents a percent value 
+(e.g., %). 
+getZeroDigit
+public char getZeroDigit()
+Returns
+The character used to represent a digit in a 
+pattern string for this DecimalFormatSymbols. 
+Description
+This method returns the zero-digit pattern character, which represents 
+a digit that is shown even if it is zero. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this DecimalFormatSymbols 
+object. 
+setDecimalSeparator
+public void setDecimalSeparator(char decimalSeparator)
+Parameters
+decimalSeparator
+The new decimal separator. 
+Description
+This method sets the decimal separator character for this DecimalFormatSymbols. 
+setDigit
+public void setDigit(char digit)
+Parameters
+digit
+The new digit pattern character. 
+Description
+This method sets the digit pattern character, which represents a digit 
+that is not shown if it is zero, for this DecimalFormatSymbols. 
+setGroupingSeparator
+public void setGroupingSeparator(char groupingSeparator)
+Parameters
+groupingSeparator
+The new grouping separator. 
+Description
+This method sets the grouping separator character for this DecimalFormatSymbols. 
+setInfinity
+public Void setInfinity(String infinity)
+Parameters
+infinity
+The new infinity string. 
+Description
+This method sets the string that represents infinity for this 
+DecimalFormatSymbols. 
+setMinusSign
+public void setMinusSign(char minusSign)
+Parameters
+minusSign
+The new minus sign. 
+Description
+This method sets the character that signifies negative numbers 
+for this DecimalFormatSymbols. 
+setNaN
+public Void setNaN(String NaN)
+Parameters
+NaN
+The new non-a-number string. 
+Description
+This method sets the string that represents not-a-number for 
+this DecimalFormatSymbols. 
+setPatternSeparator
+public void setPatternSeparator(char patternSeparator)
+Parameters
+patternSeparator
+The new pattern separator. 
+Description
+This method sets the character that is used in pattern strings to separate 
+the positive subpattern and negative subpattern for this DecimalFormatSymbols. 
+setPerMill
+public void setPerMill(char perMill)
+Parameters
+perMill
+The new per mille sign. 
+Description
+This method sets the character that represents the per mille sign 
+for this DecimalFormatSymbols. 
+setPercent
+public void setPercent(char percent)
+Parameters
+percent
+The new percent sign. 
+Description
+This method sets the character that represents the percent sign 
+for this DecimalFormatSymbols. 
+setZeroDigit
+public void setZeroDigit(char zeroDigit)
+Parameters
+zeroDigit
+The new zero-digit pattern character. 
+Description
+This method sets the zero-digit pattern character, which represents a digit 
+that is shown even if it is zero, for this DecimalFormatSymbols. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DecimalFormat, 
+NumberFormat, 
+Locale 
+DecimalFormat
+FieldPosition
+ 
+ 
+ 
+ 
+ 
+ 
+ 

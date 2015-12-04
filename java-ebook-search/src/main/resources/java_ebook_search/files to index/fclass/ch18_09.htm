@@ -1,0 +1,179 @@
+
+[Chapter 18] GZIPInputStream
+Chapter 18The java.util.zip Package
+GZIPInputStream
+Name
+GZIPInputStream
+Synopsis
+Class Name:
+java.util.zip.GZIPInputStream
+Superclass:
+java.util.zip.InflaterInputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The GZIPInputStream class decompresses 
+data that has been compressed using the GZIP format. To use it, simply 
+construct a GZIPInputStream 
+that wraps regular input stream and use the read() 
+methods to read the compressed data. 
+Class Summary
+public class java.util.zip.GZIPInputStream 
+             extends java.util.zip.InflaterInputStream {
+  // Constants
+  public static final int GZIP_MAGIC;
+  // Variables
+  protected CRC32 crc;
+  protected boolean eos;
+  // Constructors
+  public GZIPInputStream(InputStream in);
+  public GZIPInputStream(InputStream in, int size);
+  // Instance Methods
+  public void close();
+  public int read(byte[] buf, int off, int len);
+}
+Constants
+GZIP_MAGIC
+public static final int GZIP_MAGIC
+Description
+A constant that contains the "magic number" that appears in 
+the header of GZIP files. 
+Variables
+crc
+protected CRC32 crc
+Description
+A checksum value of the uncompressed data. When an entire file has been 
+read, this checksum is compared to a value stored in the GZIP trailer. 
+If the values do not match, an exception is thrown from read(). 
+eos
+protected boolean eos
+Description
+A flag that indicates whether or not the end of the compressed stream has 
+been reached. It is set to true 
+when the compressed data and the GZIP trailer have been read. 
+Constructors
+GZIPInputStream
+public GZIPInputStream(InputStream in) throws IOException
+Parameters
+in
+The underlying input stream. 
+Throws
+IOException
+If an error occurs while reading the GZIP header. 
+Description
+This constructor creates a GZIPInputStream 
+that inflates data from the given InputStream. 
+The GZIPInputStream uses a 
+decompression buffer with the default size of 512 bytes. The GZIP header 
+is read immediately. 
+   public GZIPInputStream(InputStream in, int size) throws IOException  
+Parameters
+in
+The underlying input stream.
+size
+The size of the input buffer. 
+Throws
+IOException
+If an error occurs while reading the GZIP header. 
+Description
+This constructor creates a GZIPInputStream 
+that inflates data from the given InputStream. 
+The GZIPInputStream uses a 
+decompression buffer of the given size. The GZIP header is read immediately. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.close() 
+Description
+This method closes this stream and releases any system resources that are 
+associated with it. 
+read
+public int read(byte[] buf, int off, int len) throws IOException
+Parameters
+buf
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs or the checksum of the uncompressed data does 
+not match that in the GZIP trailer. 
+Overrides
+InflaterInputStream.read(byte[], int, int) 
+Description
+This method reads enough data from the underlying InputStream 
+to return len bytes of uncompressed 
+data. The uncompressed data is placed into the given array starting at 
+off. The method blocks until 
+some data is available for decompression. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+available()
+FilterInputStream
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+FilterInputStream
+markSupported()
+FilterInputStream
+notify()
+Object
+notifyAll()
+Object
+read()
+InflaterInputStream
+read(byte[])
+FilterInputStream
+reset()
+FilterInputStream
+skip(long)
+InflaterInputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+FilterInputStream, 
+Inflater, 
+InflaterInputStream, 
+InputStream, 
+IOException 
+DeflaterOutputStream
+GZIPOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

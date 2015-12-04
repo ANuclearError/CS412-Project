@@ -1,0 +1,32 @@
+
+[Chapter 26] 26.5 java.lang.reflect.Member (JDK 1.1)
+Chapter 26The java.lang.reflect Package
+26.5 java.lang.reflect.Member (JDK 1.1)
+This interface defines the methods shared by all members
+(fields, methods, and constructors) of a class.
+getName() returns the name of the member,
+getModifiers() returns its modifiers, and
+getDeclaringClass() returns the Class object
+that represents the class of which the member is a part.
+public abstract interface Member {
+    // Constants
+            public static final int DECLARED;
+            public static final int PUBLIC;
+    // Public Instance Methods
+            public abstract Class getDeclaringClass();
+            public abstract int getModifiers();
+            public abstract String getName();
+}
+Implemented By:
+Constructor, 
+Field, 
+Method
+java.lang.reflect.InvocationTargetException (JDK 1.1)
+java.lang.reflect.Method (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,58 @@
+
+[Chapter 18] 18.39 java.awt.MediaTracker (JDK 1.0)
+Chapter 18The java.awt Package
+18.39 java.awt.MediaTracker (JDK 1.0)
+This class provides a very convenient way to asynchronously
+load and keep track of the status of any number of
+Image objects.  You can use it to load one or more
+images and to wait until those images have been completely
+loaded and are ready to be used.  
+The addImage() method registers an image to be
+loaded and tracked and assigns it a specified identifier
+value.  waitForID() loads all images that have been
+assigned the specified identifier and returns when they have
+all finished loading or it has received an error.
+isErrorAny() and isErrorID() check whether
+any errors have occurred while loading images.
+statusAll() and statusID() return the status
+of all images or of all images with the specified
+identifier.  The return value of these two methods is one of
+the defined constants.
+public class MediaTracker extends Object implements Serializable {
+    // Public Constructor
+            public MediaTracker(Component comp);
+    // Constants
+            public static final int ABORTED;
+            public static final int COMPLETE;
+            public static final int ERRORED;
+            public static final int LOADING;
+    // Public Instance Methods
+            public void addImage(Image image, int id);
+            public synchronized void addImage(Image image, int id, int w, int h);
+            public boolean checkAll();
+            public boolean checkAll(boolean load);
+            public boolean checkID(int id);
+            public boolean checkID(int id, boolean load);
+            public synchronized Object[] getErrorsAny();
+            public synchronized Object[] getErrorsID(int id);
+            public synchronized boolean isErrorAny();
+            public synchronized boolean isErrorID(int id);
+        1.1  public synchronized void removeImage(Image image);
+        1.1  public synchronized void removeImage(Image image, int id);
+        1.1  public synchronized void removeImage(Image image, int id, int width, int height);
+            public int statusAll(boolean load);
+            public int statusID(int id, boolean load);
+            public void waitForAll() throws InterruptedException;
+            public synchronized boolean waitForAll(long ms) throws InterruptedException;
+            public void waitForID(int id) throws InterruptedException;
+            public synchronized boolean waitForID(int id, long ms) throws InterruptedException;
+}
+java.awt.List (JDK 1.0)
+java.awt.Menu (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

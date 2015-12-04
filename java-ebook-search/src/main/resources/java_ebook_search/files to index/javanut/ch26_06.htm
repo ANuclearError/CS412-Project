@@ -1,0 +1,70 @@
+
+[Chapter 26] 26.6 java.lang.reflect.Method (JDK 1.1)
+Chapter 26The java.lang.reflect Package
+26.6 java.lang.reflect.Method (JDK 1.1)
+This class represents a method.  Instances of Method
+are obtained by calling the getMethod() and related
+methods of java.lang.Class.  Method
+implements the Member interface, so you can use the
+methods of that interface to obtain the method name,
+modifiers, and declaring class.  In addition,
+getReturnType(), getParameterTypes(), and
+getExceptionTypes() also return important
+information about the represented method.
+Perhaps most important, the invoke() method allows
+the method represented by the Method object to be
+invoked with a specified array of argument values.  If any
+of the arguments are of primitive types, they must be
+converted to their corresponding wrapper object types in
+order to be passed to invoke().  If the represented
+method is an instance method (i.e., if it is not
+static), the instance on which it should be invoked
+must also be passed to invoke().  The return value
+of the represented method is returned by invoke().
+If the return value is a primitive value, it is first
+converted to the corresponding wrapper type.  If the invoked
+method causes an exception, the Throwable object it
+throws is wrapped within the
+InvocationTargetException that is thrown by
+invoke().
+public final class Method extends Object implements Member {
+    // No Constructor
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+            public Class getDeclaringClass();  // From Member
+            public Class[] getExceptionTypes();
+            public native int getModifiers();  // From Member
+            public String getName();  // From Member
+            public Class[] getParameterTypes();
+            public Class getReturnType();
+            public int hashCode();  // Overrides Object
+            public native Object invoke(Object obj, Object[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException;
+            public String toString();  // Overrides Object
+}
+Passed To:
+EventSetDescriptor(), 
+IndexedPropertyDescriptor(), 
+MethodDescriptor(), 
+PropertyDescriptor()
+Returned By:
+Class.getDeclaredMethod(), 
+Class.getDeclaredMethods(), 
+Class.getMethod(), 
+Class.getMethods(), 
+EventSetDescriptor.getAddListenerMethod(), 
+EventSetDescriptor.getListenerMethods(), 
+EventSetDescriptor.getRemoveListenerMethod(), 
+IndexedPropertyDescriptor.getIndexedReadMethod(), 
+IndexedPropertyDescriptor.getIndexedWriteMethod(), 
+MethodDescriptor.getMethod(), 
+PropertyDescriptor.getReadMethod(), 
+PropertyDescriptor.getWriteMethod()
+java.lang.reflect.Member (JDK 1.1)
+java.lang.reflect.Modifier (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,26 @@
+
+[Chapter 6] 6.3 The Empty Statement
+Chapter 6Statements and Control Structures
+6.3 The Empty Statement
+The empty statement does nothing:
+The empty statement can be useful as a place holder. For example, if
+a for statement contains all of the necessary
+functionality in its header, the body of the for
+statement can be the empty statement. Here's an example:
+// Find the first element of array nx that equals 5
+int x;
+for (x = 0; x &lt; nx.length &amp;&amp; nx[x] != 5; x++)
+// for requires a statement here: use an empty statement
+    ;
+if (x &lt; nx.length) {
+// The for statement found a 5 at nx[x]
+}
+Labeled Statements
+Expression Statements
+ 
+ 
+ 
+ 
+ 
+ 
+ 

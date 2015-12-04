@@ -1,0 +1,57 @@
+
+[Chapter 12] 12.4 CardLayout
+Chapter 12Layout Managers
+12.4 CardLayout
+ 
+CardLayout is a special layout manager for creating
+the effect of a stack of cards. Instead of arranging all of the
+container's components, it displays only one at a time.  You would use
+this kind of layout to implement a hypercard stack or a Windows-style
+set of configuration screens. When you add a component to the layout,
+you use the two-argument version of add(); the
+extra argument is an arbitrary string that serves as the card's
+name:
+add("netconfigscreen", myComponent); 
+To bring a particular card to the top of the stack, call the
+CardLayout's show()
+method with two arguments: the parent Container
+and the name of the card you want to show. There are also methods like
+first(), last(),
+next(), and previous() for
+working with the stack of cards. These methods take a single argument:
+the parent Container. Here's a simple
+example:
+import java.awt.*; 
+      
+public class main extends java.applet.Applet { 
+    CardLayout cards = new CardLayout(); 
+      
+    public void init() { 
+        setLayout( cards ); 
+        add( new Button("one"), "one" ); 
+        add( new Button("two"), "two" ); 
+        add( new Button("three"), "three" ); 
+    } 
+      
+    public boolean action( Event e, Object arg) { 
+        cards.next( this ); 
+        return true; 
+    } 
+} 
+We add three buttons to the layout and cycle through them as they are
+pressed. In a more realistic example, we would build a group of
+panels, each of which might implement some part of a complex user
+interface, and add those panels to the layout. Each panel would have
+its own layout manager. The panels would be resized to fill the entire
+area available (i.e., the area of the Container
+they are in), and their individual layout managers would arrange their
+internal components.
+BorderLayout
+GridBagLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

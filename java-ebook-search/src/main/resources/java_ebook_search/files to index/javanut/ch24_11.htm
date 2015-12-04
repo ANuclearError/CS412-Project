@@ -1,0 +1,68 @@
+
+[Chapter 24] 24.11 java.io.DataInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.11 java.io.DataInputStream (JDK 1.0)
+This class is a type of FilterInputStream that
+allows you to read binary representations of Java primitive data
+types in a portable way.  Create a DataInputStream
+by specifying the InputStream that is to be filtered
+in the call to the constructor.
+Many of this class's methods read and return a single Java
+primitive type, in binary format, from the stream.
+readUnsignedByte() and readUnsignedShort()
+read unsigned values and return them as int values,
+since unsigned byte and short types are not
+supported in Java. read() reads data into an array
+of bytes, blocking until at least some data are available.
+By contrast, readFully() reads data into an array of
+bytes, but blocks until all of the requested data become
+available. skipBytes() blocks until the specified number of
+bytes have been read and discarded.
+readLine() reads characters from the stream until
+it encounters a newline, a carriage return, or a newline
+carriage return pair. The returned string is not terminated
+with a newline or carriage return.  This method is
+deprecated in Java 1.1; see BufferedReader for an
+alternative.  readUTF() reads a string of Unicode
+text encoded in a slightly modified version of the UTF-8
+"transformation format." UTF-8 is an ASCII-compatible
+encoding of Unicode characters that is often used for the
+transmission and storage of Unicode text.  This class uses a
+modified UTF-8 encoding that never contains embedded null characters.
+DataInputStream only reads primitive Java types.  Use
+ObjectInputStream to read object values.
+public class DataInputStream extends FilterInputStream implements DataInput {
+    // Public Constructor
+            public DataInputStream(InputStream in);
+    // Class Methods
+            public static final String readUTF(DataInput in) throws IOException;
+    // Public Instance Methods
+            public final int read(byte[] b) throws IOException;  // Overrides FilterInputStream
+            public final int read(byte[] b, int off, int len) throws IOException;  // Overrides FilterInputStream
+            public final boolean readBoolean() throws IOException;  // From DataInput
+            public final byte readByte() throws IOException;  // From DataInput
+            public final char readChar() throws IOException;  // From DataInput
+            public final double readDouble() throws IOException;  // From DataInput
+            public final float readFloat() throws IOException;  // From DataInput
+            public final void readFully(byte[] b) throws IOException;  // From DataInput
+            public final void readFully(byte[] b, int off, int len) throws IOException;  // From DataInput
+            public final int readInt() throws IOException;  // From DataInput
+        #   public final String readLine() throws IOException;  // From DataInput
+            public final long readLong() throws IOException;  // From DataInput
+            public final short readShort() throws IOException;  // From DataInput
+            public final String readUTF() throws IOException;  // From DataInput
+            public final int readUnsignedByte() throws IOException;  // From DataInput
+            public final int readUnsignedShort() throws IOException;  // From DataInput
+            public final int skipBytes(int n) throws IOException;  // From DataInput
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->DataInputStream(DataInput)
+java.io.DataInput (JDK 1.0)
+java.io.DataOutput (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

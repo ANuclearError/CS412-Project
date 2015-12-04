@@ -1,0 +1,69 @@
+
+[Chapter 25] 25.21 java.lang.Float (JDK 1.0)
+Chapter 25The java.lang Package
+25.21 java.lang.Float (JDK 1.0)
+This class provides an immutable object wrapper around the
+float primitive data type.
+valueOf() converts a string to a Float,
+floatValue() returns the primitive float
+value of a Float object, 
+and there are methods for returning a Float
+value as a variety of other primitive types.
+This class also provides some useful constants and static
+methods for testing float values. MIN_VALUE
+and MAX_VALUE are the smallest (closest to zero) and
+largest representable double values.
+isInfinite() in class method and instance method
+forms tests whether a float or a Float has
+an infinite value. Similarly, isNaN() tests whether
+a float or Float is not-a-number--this is a
+comparison that cannot be done directly because the
+NaN constant never tests equal to any other value,
+including itself. floatToIntBits() and
+intBitsToFloat() allow you to manipulate the bit
+representation of a float directly.
+public final class Float extends Number {
+    // Public Constructors
+            public Float(float value);
+            public Float(double value);
+            public Float(String s) throws NumberFormatException;
+    // Constants
+            public static final float MAX_VALUE;
+            public static final float MIN_VALUE;
+            public static final float NEGATIVE_INFINITY;
+            public static final float NaN;
+            public static final float POSITIVE_INFINITY;
+        1.1public static final Class TYPE;
+    // Class Methods
+            public static native int floatToIntBits(float value);
+            public static native float intBitsToFloat(int bits);
+            public static boolean isInfinite(float v);
+            public static boolean isNaN(float v);
+            public static String toString(float f);
+            public static Float valueOf(String s) throws NumberFormatException;
+    // Public Instance Methods
+        1.1public byte byteValue();  // Overrides Number
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object obj);  // Overrides Object
+            public float floatValue();  // Defines Number
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public boolean isInfinite();
+            public boolean isNaN();
+            public long longValue();  // Defines Number
+        1.1public short shortValue();  // Overrides Number
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->Number(Serializable)->Float
+Returned By:
+Float.valueOf()
+java.lang.ExceptionInInitializerError (JDK 1.1)
+java.lang.IllegalAccessError (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

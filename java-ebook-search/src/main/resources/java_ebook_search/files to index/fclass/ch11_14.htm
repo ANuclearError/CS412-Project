@@ -1,0 +1,110 @@
+
+[Chapter 11] EOFException
+Chapter 11The java.io Package
+EOFException
+Name
+EOFException
+Synopsis
+Class Name:
+java.io.EOFException
+Superclass:
+java.io.IOException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+An EOFException is thrown in 
+response to an attempt to read past the end of a file. 
+Many file-handling routines indicate the end of a file with 
+a special return code. For example, many read() 
+methods return -1 to indicate 
+that the end of file has been reached. However, in some cases, the program 
+clearly expects a certain format of data in a file. If it's not all 
+there, throwing an exception is an appropriate way to flag the unusual 
+condition of the file. So, for example, a DataInputStream 
+throws an EOFException if it 
+comes to the end of file in the middle of readFloat(). 
+In the java.io package, EOFException 
+is used in the classes that implement the DataInput 
+and ObjectInput interfaces, 
+namely DataInputStream, ObjectInputStream, 
+and RandomAccessFile. 
+Class Summary
+public class java.io.EOFException extends java.io.IOException {
+  // Constructors
+  public EOFException();
+  public EOFException(String s);
+}
+Constructors
+EOFException
+public EOFException()
+Description
+This constructor creates an EOFException 
+with no detail message. 
+public EOFException(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an EOFException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DataInput, 
+DataInputStream, 
+Exception, 
+IOException, 
+ObjectInput, 
+ObjectInputStream, 
+RandomAccessFile, 
+Throwable 
+DataOutputStream
+Externalizable
+ 
+ 
+ 
+ 
+ 
+ 
+ 

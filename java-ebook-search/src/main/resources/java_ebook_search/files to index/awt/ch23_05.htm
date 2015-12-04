@@ -1,0 +1,68 @@
+
+[Chapter 23] ChoicePeer
+Chapter 23java.awt.peer Reference
+ChoicePeer
+Name
+ChoicePeer
+Description
+ChoicePeer is an interface 
+that defines the basis for choice components. 
+Interface Definition
+public abstract interface java.awt.peer.ChoicePeer
+   extends java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract void add (String item, int index); 
+  public abstract void addItem (String item, int position); 
+  public abstract void remove (int index); 
+  public abstract void select (int position);
+}
+Interface Methods
+add
+public abstract void add (String item, int index) 
+Parameters
+item
+Text of the entry 
+to add.
+index
+Position in which 
+to add the entry; position 0 is the first entry in the list. 
+Description
+Adds a new entry to the available choices at the designated position. 
+addItem
+public abstract void addItem (String item, int position) 
+Parameters
+item
+Text of the entry 
+to add.
+position
+Position in which 
+to add the entry; position 0 is the first entry in the list. 
+Description
+Adds a new entry to the available choices at the designated position. 
+remove
+public abstract void remove (int index) 
+Parameters
+index
+Position of the item 
+to remove. 
+Description
+Removes an entry at the given position. 
+select
+public abstract void select (int position)
+Parameters
+position
+Position to make 
+selected entry. 
+Description
+Makes the given entry the selected one for the choice's peer. 
+See Also
+ComponentPeer, String 
+CheckboxPeer
+ComponentPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

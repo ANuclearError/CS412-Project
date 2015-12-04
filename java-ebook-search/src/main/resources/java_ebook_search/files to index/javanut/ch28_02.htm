@@ -1,0 +1,25 @@
+
+[Chapter 28] 28.2 java.net.ConnectException (JDK 1.1)
+Chapter 28The java.net Package
+28.2 java.net.ConnectException (JDK 1.1)
+This exception signals that a socket could not be connected
+to a remote address and port.  This means that the remote
+host could be reached, but is not responding, perhaps
+because there is no process on that host that is listening
+on the specified port.
+public class ConnectException extends SocketException {
+    // Public Constructors
+            public ConnectException(String msg);
+            public ConnectException();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->SocketException->ConnectException
+java.net.BindException (JDK 1.1)
+java.net.ContentHandler (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

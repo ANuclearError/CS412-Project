@@ -1,0 +1,264 @@
+
+[Chapter 11] FileInputStream
+Chapter 11The java.io Package
+FileInputStream
+Name
+FileInputStream
+Synopsis
+Class Name:
+java.io.FileInputStream
+Superclass:
+java.io.InputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The FileInputStream class represents 
+a byte stream that reads data from a file. The file can be specified using 
+a FileDescriptor, a File 
+object, or a String that represents 
+a pathname. All of the constructors can throw a SecurityException 
+if the application does not have permission to read from the specified 
+file. 
+FileInputStream provides a 
+low-level interface for reading data from a file. You should wrap a FileInputStream 
+with a DataInputStream if you 
+need a higher-level interface that can handle reading strings and binary 
+data. You should also think about wrapping a FileInputStream 
+with a BufferedInputStream 
+to increase reading efficiency. 
+Data must be read sequentially from a FileInputStream; 
+you can skip forward, but you cannot move back. If you need random access 
+to file data, use the RandomAccessFile 
+class instead. 
+Class Summary
+public class java.io.FileInputStream extends java.io.InputStream {
+  // Constructors
+  public FileInputStream(String name);
+  public FileInputStream(File file);
+  public FileInputStream(FileDescriptor fdObj);
+  // Public Instance Methods
+  public native int available();
+  public native void close();
+  public final FileDescriptor getFD();
+  public native int read();
+  public int read(byte[] b);
+  public int read(byte[] b, int off, int len);
+  public native long skip(long n);
+  // Protected Instance Methods
+  protected void finalize();
+}
+Constructors
+FileInputStream
+public FileInputStream(String name) throws FileNotFoundException
+Parameters
+name
+A String 
+that contains the pathname of the file to be accessed. The path must conform 
+to the requirements of the native operating system. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to read the named file. 
+Description
+This constructor creates a FileInputStream 
+that gets its input from the file named by the specified String. 
+public FileInputStream(File file) throws FileNotFoundException
+Parameters
+file
+The File to use as input. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to read the named file. 
+Description
+This constructor creates a FileInputStream 
+that gets its input from the file represented by the specified File. 
+public FileInputStream(FileDescriptor fdObj)
+Parameters
+fdObj
+The FileDescriptor of the file to use as input. 
+Throws
+SecurityException
+If the application does not have permission to read the specified file.
+NullPointerException
+If FileDescriptor is null. 
+Description
+This constructor creates a FileInputStream 
+that gets its input from the file identified by the given FileDescriptor. 
+Public Instance Methods
+available
+public native int available() throws IOException
+Returns
+The number of bytes that can be read from the file without blocking. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.available() 
+Description
+This method returns the number of available bytes of data. Initially, this 
+is the length of the file. 
+close
+public native void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.close() 
+Description
+This method closes this file input stream and releases any resources used 
+by it. 
+getFD
+public final FileDescriptor getFD() throws IOException
+Returns
+The file descriptor for the file that supplies data for this stream. 
+Throws
+IOException
+If 
+there is no FileDescriptor 
+associated with this object. 
+Description
+This method returns the file descriptor associated with the data source 
+of this FileInputStream. 
+read
+public native int read() throws IOException
+Returns
+The next byte of data or -1 
+if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read() 
+Description
+This method reads the next byte of data from the file. The method blocks 
+if no input is available. 
+public int read(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+be filled from the stream. 
+Returns
+The actual number of bytes read or -1 
+if the end of the stream is encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read(byte[]) 
+Description
+This method reads data into the given array. The method fills the array 
+if enough bytes are available. The method blocks until some input is available. 
+public int read(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 
+if the end of the stream is encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+This method reads len bytes 
+of data into the given array, starting at element off. 
+The method blocks until some input is available. 
+skip
+public native long skip(long n) throws IOException
+Parameters
+n
+The number of bytes to 
+skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.skip() 
+Description
+This method skips n bytes of 
+input in the stream. 
+Protected Instance Methods
+finalize
+protected void finalize() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Object.finalize() 
+Description
+This method is called when the FileInputStream 
+is garbage collected to ensure that close() 
+is called. If the stream has a valid file descriptor, the close() 
+method is called to free the system resources used by this stream. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+InputStream
+markSupported()
+InputStream
+notify()
+Object
+notifyAll()
+Object
+reset()
+InputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedInputStream, 
+DataInputStream, 
+File, 
+FileDescriptor, 
+FileNotFoundException, 
+InputStream, 
+IOException, 
+NullPointerException, 
+RandomAccessFile, 
+SecurityException 
+FileDescriptor
+FilenameFilter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

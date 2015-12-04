@@ -1,0 +1,166 @@
+
+[Chapter 23] ListPeer
+Chapter 23java.awt.peer Reference
+ListPeer
+Name
+ListPeer
+Description
+ListPeer is an interface that 
+defines the basis for list components. 
+Interface Definition
+public abstract interface java.awt.peer.ListPeer
+   extends java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract void add (String item, int index); 
+  public abstract void addItem (String item, int index); 
+  public abstract void clear(); 
+  public abstract void delItems (int start, int end);
+  public abstract void deselect (int index);
+  public abstract Dimension getMinimumSize (int rows); 
+  public abstract Dimension getPreferredSize (int rows); 
+  public abstract int[] getSelectedIndexes();
+  public abstract void makeVisible (int index);
+  public abstract Dimension minimumSize (int rows); 
+  public abstract Dimension preferredSize (int rows); 
+  public abstract void removeAll(); 
+  public abstract void select (int position);
+  public abstract void setMultipleMode (boolean b); 
+  public abstract void setMultipleSelections (boolean value); 
+}
+Interface Methods
+add
+public abstract void add (String item, int index) 
+Parameters
+item
+Text of an entry to 
+add to the list.
+index
+Position in which 
+to add the entry; position 0 is the first entry in the list. 
+Description
+Adds a new entry to the available choices of the list's peer at the 
+designated position. 
+addItem
+public abstract void addItem (String item, int index) 
+Parameters
+item
+Text of an entry to 
+add to the list.
+index
+Position in which 
+to add the entry; position 0 is the first entry in the list. 
+Description
+Adds a new entry to the available choices of the list's peer at the 
+designated position. Replaced by add(String, int). 
+clear
+public abstract void clear() 
+Description
+Clears all the entries out of the list's peer. Replaced by removeAll(). 
+delItems
+public abstract void delItems (int start, int end)
+Parameters
+start
+Starting position 
+of entries to delete.
+end
+Ending position of 
+entries to delete. 
+Description
+Removes a set of entries from the list's peer. 
+deselect
+public abstract void deselect (int index)
+Parameters
+index
+Position to deselect. 
+Description
+Deselects entry at designated position, if selected. 
+getMinimumSize
+public abstract Dimension getMinimumSize (int rows) 
+Parameters
+rows
+Number of rows within 
+list's peer to size. 
+Returns
+The minimum dimensions of a list's peer of the given size. 
+getPreferredSize
+public abstract Dimension getPreferredSize (int rows) 
+Parameters
+rows
+Number of rows within 
+list's peer to size. 
+Returns
+The preferred dimensions of a list's peer of the given size. 
+getSelectedIndexes
+public abstract int[] getSelectedIndexes()
+Returns
+Array of positions of currently selected entries in list's peer. 
+makeVisible
+public abstract void makeVisible (int index)
+Parameters
+index
+Position to make 
+visible on screen. 
+Description
+Ensures an item is displayed on the screen in the list's peer. 
+minimumSize
+public abstract Dimension minimumSize (int rows) 
+Parameters
+rows
+Number of rows within 
+list's peer to size. 
+Returns
+The minimum dimensions of a list's peer of the given size. Replaced 
+by getMinimumSize(int). 
+preferredSize
+public abstract Dimension preferredSize (int rows) 
+Parameters
+rows
+Number of rows within 
+list's peer to size. 
+Returns
+The preferred dimensions of a list's peer of the given size. Replaced 
+by getPreferredSize(int). 
+removeAll
+public abstract void removeAll() 
+Description
+Clears all the entries out of the list's peer. 
+select
+public abstract void select (int position)
+Parameters
+position
+Position to select; 
+0 indicates the first item in the list. 
+Description
+Makes the given entry the selected item for the list's peer; deselects 
+other selected entries if multiple selections are not enabled. 
+setMultipleMode
+public abstract void setMultipleMode (boolean value) 
+Parameters
+value
+true 
+to allow multiple selections within the list's peer; false 
+to disallow multiple selections. 
+Description
+Changes list peer's selection mode. 
+setMultipleSelections
+public abstract void setMultipleSelections (boolean value) 
+Parameters
+value
+true 
+to allow multiple selections within the list's peer; false 
+to disallow multiple selections. 
+Description
+Changes list peer's selection mode. Replaced by 
+setMultipleMode(boolean). 
+See Also
+ComponentPeer, Dimension, 
+String 
+LightweightPeer 
+MenuBarPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

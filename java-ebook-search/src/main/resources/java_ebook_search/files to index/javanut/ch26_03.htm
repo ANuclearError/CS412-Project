@@ -1,0 +1,69 @@
+
+[Chapter 26] 26.3 java.lang.reflect.Field (JDK 1.1)
+Chapter 26The java.lang.reflect Package
+26.3 java.lang.reflect.Field (JDK 1.1)
+This class represents a field of a class.  Instances of
+Field are obtained by calling the getField()
+and related methods of java.lang.Class.
+Field implements the Member interface, so
+once you have obtained a Field object, you can use
+getName(), getModifiers(), and
+getDeclaringClass() to determine the name,
+modifiers, and class of the field.  Additionally,
+getType() returns the type of the field.
+The set() method sets the value of the represented
+field for a specified object to a given value.
+(If the represented field is static, then no object
+need be specified for it to be set upon, of course.)  If the
+field is of a primitive type, its value can be specified
+using a wrapper object of type Boolean,
+Integer, and so on, or it can be set using the
+setBoolean(), setInt(), and related
+methods.
+Similarly, the get() method queries the value of the
+represented field for a specified object and returns the
+field value as an Object.  Various other methods
+query the field value and return it as various primitive types.
+public final class Field extends Object implements Member {
+    // No Constructor
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+            public native Object get(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native boolean getBoolean(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native byte getByte(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native char getChar(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public Class getDeclaringClass();  // From Member
+            public native double getDouble(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native float getFloat(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native int getInt(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native long getLong(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public native int getModifiers();  // From Member
+            public String getName();  // From Member
+            public native short getShort(Object obj) throws IllegalArgumentException, IllegalAccessException;
+            public Class getType();
+            public int hashCode();  // Overrides Object
+            public native void set(Object obj, Object value) throws IllegalArgumentException, IllegalAccessException;
+            public native void setBoolean(Object obj, boolean z) throws IllegalArgumentException, IllegalAccessException;
+            public native void setByte(Object obj, byte b) throws IllegalArgumentException, IllegalAccessException;
+            public native void setChar(Object obj, char c) throws IllegalArgumentException, IllegalAccessException;
+            public native void setDouble(Object obj, double d) throws IllegalArgumentException, IllegalAccessException;
+            public native void setFloat(Object obj, float f) throws IllegalArgumentException, IllegalAccessException;
+            public native void setInt(Object obj, int i) throws IllegalArgumentException, IllegalAccessException;
+            public native void setLong(Object obj, long l) throws IllegalArgumentException, IllegalAccessException;
+            public native void setShort(Object obj, short s) throws IllegalArgumentException, IllegalAccessException;
+            public String toString();  // Overrides Object
+}
+Returned By:
+Class.getDeclaredField(), 
+Class.getDeclaredFields(), 
+Class.getField(), 
+Class.getFields()
+java.lang.reflect.Constructor (JDK 1.1)
+java.lang.reflect.InvocationTargetException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

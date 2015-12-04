@@ -1,0 +1,79 @@
+
+[Chapter 22] ImageProducer
+Chapter 22java.awt.image Reference
+ImageProducer
+Name
+ImageProducer
+Description
+ImageProducer is an interface 
+that provides the methods necessary for the production of images and the 
+communication with classes that implement the ImageConsumer 
+interface. 
+Interface Definition
+public abstract interface java.awt.image.ImageProducer {
+  // Interface Methods
+  public abstract void addConsumer (ImageConsumer ic);
+  public abstract boolean isConsumer (ImageConsumer ic);
+  public abstract void removeConsumer (ImageConsumer ic);
+  public abstract void requestTopDownLeftRightResend (ImageConsumer ic);
+  public abstract void startProduction (ImageConsumer ic);
+}
+Interface Methods
+addConsumer
+public abstract void addConsumer (ImageConsumer ic)
+Parameters
+ic
+An ImageConsumer 
+that wants to receive image data. 
+Description
+Registers an ImageConsumer 
+as interested in image information. 
+isConsumer
+public abstract boolean isConsumer (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+to check. 
+Returns
+true if ImageConsumer 
+has registered with the ImageProducer, 
+false otherwise. 
+removeConsumer
+public abstract void removeConsumer (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+to remove. 
+Description
+Removes an ImageConsumer from 
+registered consumers for this ImageProducer. 
+requestTopDownLeftRightResend
+public abstract void requestTopDownLeftRightResend (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+to communicate with. 
+Description
+Requests the retransmission of the image data in top-down, left-to-right 
+order. 
+startProduction
+public abstract void startProduction (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer to communicate with. 
+Description
+Registers ImageConsumer as 
+interested in image information and tells ImageProducer 
+to start sending the image data immediately. 
+See Also
+FilteredImageSource, Image, ImageConsumer, ImageFilter, MemoryImageSource, 
+Object 
+ImageObserver
+IndexColorModel
+ 
+ 
+ 
+ 
+ 
+ 
+ 

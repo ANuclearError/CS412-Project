@@ -1,0 +1,437 @@
+
+[Chapter 5] 5.3 Member Classes
+Chapter 5Inner Classes and Other New Language Features
+5.3 Member Classes
+While nested top-level classes are nested within a
+containing class, we've seen that they are still top-level
+classes, and that the nesting is purely a matter of
+organizational convenience.  The same is not true of member
+classes, however.  These classes are also nested, but they
+are not declared static, and in this case, the
+nesting is significant.  The main features of member classes
+are:
+Every instance of a member class is internally associated
+with an instance of the class that defines or contains the member
+class.
+The methods of a member class can implicitly
+refer to the fields defined within the member class, as well
+as those defined by any enclosing class, including
+private fields of the enclosing class.
+Like nested top-level classes, member classes are commonly used
+for helper classes required by the enclosing class.  You
+use a member class instead of a nested top-level class
+when the member class requires access to the instance fields of the
+enclosing class, or when every instance of the helper class
+must refer to an instance of the enclosing class.  When you use
+a member class, this
+reference from member class to enclosing class is
+implemented automatically for you.
+Let's return to the LinkedList example that we saw above.
+Suppose we want to add the ability to loop through the
+elements in the linked list using the
+java.util.Enumeration interface.  To do this, we
+define a separate class that implements this
+interface, and then add a method to the LinkedList
+class that returns an instance of the separate
+Enumeration class.
+Example 5.3
+shows a typical Java 1.0-style implementation.
+[3]
+[3] 
+For simplicity, this example implements a very simple
+Enumeration class that is not thread-safe and that
+may return incorrect results if items are added to or
+removed from the list while an Enumeration object is
+in use.
+Example 5.3: A LinkedList Enumerator, as a Separate Top-Level Class
+import java.util.*;
+public class LinkedList {
+  // Our nested top-level interface.  Body omitted here...
+  public interface Linkable { ... } 
+  // The head of the list.
+  Linkable head;  
+  // Method bodies omitted here.
+  public void addToHead(Linkable node) { ... }
+  public Linkable removeHead() { ...  }
+  // This method returns an Enumeration object for this LinkedList.
+  public Enumeration enumerate() { 
+    return new LinkedListEnumerator(this); 
+  }
+}
+// This class defines the Enumeration type we use to list the elements in
+// a LinkedList.  Note that each LinkedListEnumerator object is associated
+// with a particular LinkedList object which is passed to the constructor.
+class LinkedListEnumerator implements Enumeration {
+  private LinkedList container;
+  private LinkedList.Linkable current;
+  public LinkedListEnumerator(LinkedList l) { 
+    container = l;
+    current = container.head; 
+  }
+  public boolean hasMoreElements() { return (current != null); }
+  public Object nextElement() {
+    if (current == null) throw new NoSuchElementException("LinkedList");
+    Object value = current;
+    current = current.getNext();
+    return value;
+  }
+}
+The point to notice about the LinkedListEnumerator
+class in
+Example 5.3
+is that we must explicitly pass a LinkedList object
+to its constructor.
+The problem with
+Example 5.3
+is that LinkedListEnumerator is defined as a
+separate top-level class, when it really would be more
+elegant to define it as part of the LinkedList class
+itself.  In Java 1.1, this is easily done using a member
+class, as shown in
+Example 5.4.
+Example 5.4: A LinkedList Enumerator, as a Member Class
+import java.util.*;
+public class LinkedList 
+{
+  // Our nested top-level interface.  Body omitted here...
+  public interface Linkable { ... } 
+  // The head of the list.  
+  // This field could be private except for inner class-related compiler bugs.
+  /* private */ Linkable head;  
+  // Method bodies omitted here.
+  public void addToHead(Linkable node) { ... }
+  public Linkable removeHead() { ...  }
+  // This method returns an Enumeration object for this LinkedList.
+  // Note: no LinkedList object is explicitly passed to the constructor.
+  public Enumeration enumerate() { return new Enumerator(); }
+  // And here is the implementation of the Enumeration interface,
+  // defined as a private member class.
+  private class Enumerator implements Enumeration {
+    Linkable current;
+    // Note: the constructor implicitly refers to 'head' in containing class.
+    public Enumerator() { current = head; }
+    public boolean hasMoreElements() {  return (current != null); }
+    public Object nextElement() {
+      if (current == null) throw new NoSuchElementException("LinkedList");
+      Object value = current;
+      current = current.getNext();
+      return value;
+    }
+  }
+}
+In this version of the example, notice how the
+Enumerator class is nested within the LinkedList
+class.  There is a real elegance to defining the helper
+class so close to where it is used by the containing class.
+[4]
+Of course, if you compiled this example you'd find that the
+Enumerator member class is compiled to a file named
+LinkedList$Enumerator.class--while one class is nested
+within the other in source code form, the same is not true
+of their compiled byte-code forms.
+[4] 
+John Rose, the author of Sun's inner class specification,
+points out that
+the advantages of inner classes are not only their elegance,
+but also their "conciseness, expressiveness, and
+modularity."  He says, "Even prosy-minded programmers who
+don't care a fig for prissy elegance...will appreciate the
+fact that they can define their adapter classes right next
+to the code that needs them, and that they won't have to
+manually wire the adapter to the main object...and that
+they won't have to pollute the name space of the package..."
+Notice that no instance of the containing
+LinkedList class is passed to the
+Enumerator() constructor of the member class.  A
+member class can refer to the members of its enclosing class
+implicitly; no explicit reference is necessary.
+Also note that the Enumerator class makes use of the
+head field of the enclosing class, even though
+head is declared private.  Because the
+member class is defined within the enclosing class, it is
+"inside" the class as far as the definition of
+private fields and methods is concerned.  In
+general, member classes, as well as local and anonymous
+classes can use the private fields and methods (and
+classes!) of their containing class.  Similarly, a
+containing class can use the private fields, methods, and
+classes of the classes it contains.  And any two classes
+that are enclosed by the same third class can access each
+other's private members.
+[5]
+[5] 
+As noted earlier, however, bugs in javac in current
+versions of JDK 1.1 prevent this kind of access to
+private members.  Until these bugs are fixed, you
+should use use package visibility instead of private
+visibility.
+How Member Classes Work
+The Enumerator member class of LinkedList
+can refer to the head field of LinkedList
+because every instance of a member class implicitly refers
+to an instance of the class that contains it--this is one of
+the fundamental features of member classes.  It works
+because the compiler automatically inserts a private field
+in the member class to hold the required reference to the
+containing object.  The compiler also automatically inserts
+a hidden argument to all constructors of a member class and
+passes the containing object as the value of this argument.
+[6]
+Once the compiler automatically adds this private field and
+constructor argument to the code in
+Example 5.4,
+you can see that we end up with code very much like what we
+saw in 
+Example 5.3!
+[6] 
+If you're curious about this, use javap -p to
+disassemble the class file of a member class.  It shows
+you both the inserted private field and the extra
+constructor argument.
+Because the Java Virtual Machine has no notion of inner
+classes, the Java 1.1 compiler also must take special action
+to allow member classes (and local and anonymous classes) to
+use the private fields and methods in their
+enclosing classes (and vice versa).  When a private
+field or method is used in a way that is allowed in Java
+1.1, but is not allowed by the Java interpreter, the
+compiler automatically inserts a special accessor method to
+allow the access.
+New Syntax for Member Classes
+The most important feature of a member class is that it can
+implicitly refer to fields in its containing object.  We
+saw this in the following constructor from
+Example 5.4:
+public Enumerator() { current = head; }
+In this example, head is a field of the
+LinkedList class, and we assign it to the
+current field of the Enumerator class.  What
+if we want to make these references explicit?  We
+could try code like this:
+public Enumerator() { this.current = this.head; }
+This code does not compile, however.  this.current
+is fine; it is an explicit reference to the current
+field in the newly created Enumerator object.  It is
+the this.head expression that causes the problem--it
+refers to a field named head in the
+Enumerator object.  There is no such field, so
+the compiler generates an error.  To prevent this problem,
+Java 1.1 defines new syntax for explicitly referring to the
+containing instance of the current instance of a member
+class.  If we wanted to be explicit in our constructor, we'd
+use the new syntax like this:
+public Enumerator() { this.current = LinkedList.this.head; }
+Similarly, we can use LinkedList.this to refer to
+the containing LinkedList object itself.  In general, the
+syntax is classname.this, where
+classname is the name of a containing class.  Note
+that member classes can themselves contain member classes,
+nested to any depth, and no member class can have the same
+name as any containing class.  Thus, the use of the class
+name prepended to this is a perfectly general way to
+refer to any containing instance, as the following nested
+class example demonstrates:
+public class A {
+  public String name = "a";
+  public class B {
+    public String name = "b";
+    public class C {
+      public String name = "c";
+      public void print_names() {
+        System.out.println(name);        // "c": name field of class C
+        System.out.println(this.name);   // "c": name field of class C
+        System.out.println(C.this.name); // "c": name field of class C
+        System.out.println(B.this.name); // "b": name field of class B
+        System.out.println(A.this.name); // "a": name field of class A
+      }
+    }
+  }
+}
+Another new piece of Java 1.1 syntax has to do with the way
+member classes are created.  As we've seen, member classes
+work the way they do because the compiler automatically
+adds an argument to each member class constructor.  This
+argument passes a reference to the containing instance to
+the newly created member instance.  Now look again at our
+definition of the enumerate() method in
+Example 5.4:
+public Enumeration enumerate() { return new Enumerator(); }
+Nowhere in this new expression do we specify what
+the containing instance of the new Enumerator
+instance should be.  In this case, the this object is
+used as the containing instance, which is what you would
+expect to happen.  It is also what you want to occur in most
+cases.  Nevertheless, Java 1.1 supports a new syntax that
+lets you
+explicitly specify the containing instance when creating an
+instance of a member class.  We can make our method more
+explicit by using the following code:
+public Enumeration enumerate() { return this.new Enumerator(); }
+The syntax is containing_instance
+.new, where
+containing_instance is an expression that evaluates
+to an instance of the class that defines the desired member
+class.  
+Let's look at another example of this syntax.  Recall that we declared the
+Enumerator member class to be private in
+Example 5.4.
+We did this for reasons of modularity and encapsulation.
+Suppose, however, that we had given Enumerator
+package visibility.  In that case, it would be accessible
+outside of the LinkedList class, and we could
+instantiate our own copy of it.  In order to create an
+instance of the member class LinkedList.Enumerator,
+however, we must specify the instance of LinkedList
+that contains it (and is implicitly passed to its
+constructor).  Our code might look like the following:
+// First create a linked list, and add elements to it (omitted).
+LinkedList list = new LinkedList();
+// Create an enumerator for the linked list.  Note the syntax of the
+// 'new' expression.
+Enumerator e = list.new Enumerator();
+As a more complex example, consider the following lines of
+code used to create an instance of class C nested within an
+instance of class B nested within an instance of class A:
+A a = new A();        // Create an instance of A.
+A.B b = a.new B();    // Create an instance of B within the instance of A.
+A.B.C c = b.new C();  // Create an instance of C within the instance of B.
+c.print_names();      // Invoke a method of the instance of c.
+Note that in the new expressions we name the class
+to be created relative to the instance that will contain
+it.  That is, we say b.new C(), not b.new A.B.C()
+.  
+There is one final piece of new Java 1.1 syntax related to
+member class instantiation and initialization.  Before we
+consider it, however, let me point out that you should
+rarely, if ever,
+need to use this syntax.  It represents one of the
+pathological cases that snuck into the language along with
+all the elegant features of inner classes.
+The new syntax for the new operator described above
+allows us to specify the containing instance that is passed
+to the constructor of a member class.  There is one
+circumstance in which a constructor is invoked without the
+use of the new operator--when it is invoked with the
+super keyword from a subclass constructor.  As
+strange as it may seem, it is possible for a top-level
+class to extend a member class.  This means that the
+subclass does not have a containing instance, but that its
+superclass does.  When the subclass constructor invokes the
+superclass constructor, it must specify the containing
+instance.  It does this by prepending the containing
+instance and a period to the super keyword.  If we
+had not declared our Enumerator class to be a
+private member of LinkedList, then we could
+subclass it.  Although it is not clear why we would want to
+do so, we could write code like the following:
+// A top-level class that extends a member class
+class SpecialEnumerator extends LinkedList.Enumerator {
+  // The constructor must take the LinkedList argument explicitly, 
+  // and then must pass it implicitly to the superclass constructor 
+  // using the new 'super' syntax.
+  public SpecialEnumerator(LinkedList l) { l.super(); }
+  // Here we override one or the other of the LinkedList.Enumerator
+  // methods to have some kind of special behavior.
+     . . .
+}
+Scope Versus Inheritance
+Having noted that a top-level class can extend a member
+class, it is important to point out that with the
+introduction of member classes there are two entirely
+separate hierarchies that must be considered for any class.
+The first is the class hierarchy, from superclass to
+subclass, that defines the fields that a member class
+inherits.  The second is the containment hierarchy, from
+containing class to contained class, that defines the fields
+that are in the scope of (and are therefore accessible to)
+the member class.
+The two hierarchies are entirely distinct from each other,
+and it is important that you do not confuse them.  This
+should not be a problem if you refrain from creating name
+conflicts where a field or method in a superclass has the
+same name as a field or method in a containing class.  If
+such a name conflict does arise, however, the inherited
+field or method hides (i.e., takes precedence over) the field or
+method of the same name in the containing class or classes.
+This behavior is logical because when a class inherits a field or
+method, that field or method effectively becomes part of
+that class.  Therefore, inherited fields and methods are in
+the scope of the class that inherits them, and take
+precedence over fields and methods by the same name in
+enclosing scopes.
+Because this can be quite confusing, Java does not leave it
+to chance that you get it right!  Whenever there is a
+name conflict between an inherited field or method and a
+field or method in a containing class, Java 1.1 requires
+that you explicitly specify which one you mean.  For
+example, if a member class B inherits a field named
+x and is contained within a class A that also
+defines a field named x, you must use
+this.x to specify the inherited field, or
+A.this.x to specify the field in the containing
+class.  An attempt to use the field x without an
+explicit specification of the desired instance causes a
+compilation error.
+A good way to prevent confusion between the class hierarchy
+and the containment hierarchy is to avoid deep containment
+hierarchies.  If a class is nested more than two levels
+deep, it is probably going to cause more confusion than it
+is worth.  Furthermore, if a class has a deep class
+hierarchy (i.e.,
+if it has many superclass ancestors),
+consider defining it as a top-level class rather than as a
+member class.
+Restrictions on Member Classes
+There are two important restrictions on member classes.
+First, they cannot have the same name as any containing
+class or package.  This is an important rule, and one that
+is not shared by fields and methods.
+Second, member classes, like all inner classes, cannot
+contain any static members 
+(fields, methods, or classes).  The justification for this
+restriction is that static fields, methods, and
+classes are "top level" constructs, and it is therefore
+reasonable that they only be defined at the "top
+level"--i.e., within top-level classes.  Defining a static,
+top-level member within a non-top-level member class would
+simply promote confusion and bad programming style.  It is
+clearer (and therefore required) to define all static
+members within a top-level class.  (Which may be a nested
+top-level class, of course.)
+Member Classes and Visibility Modifiers
+A member class, like any member of a class, may be
+assigned one of three visibility levels: public,
+[7]
+protected, or private.  If none of these
+visibility modifiers is specified, the default "package"
+visibility is used.  However, as mentioned earlier, there
+have been no changes to the Java Virtual Machine to support
+member classes, and member classes are compiled to class
+files just like top-level classes are.  As far as the Java
+interpreter is concerned, therefore, member classes, like
+top-level classes, can only have public or package
+visibility.  Thus, a member class declared protected
+is actually treated as a public class, and a member class
+declared private actually has package visibility.
+While this is unfortunate, and is something you should be
+aware of, it does not constitute a major security flaw.
+[7] 
+Because member classes are nested, and because of their
+nature as "helper" classes, it is unusual to ever declare a
+member class public.
+Note that this does not mean that you should never declare a
+member class as protected or private.
+Although the interpreter cannot enforce these visibility
+attributes, the desired attributes are noted in the class
+file.  This means that any conforming Java 1.1 compiler can
+enforce the visibility attributes and prevent the member
+classes from being accessed in unintended ways.
+Nested Top-Level Classes and Interfaces
+Local Classes
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,63 @@
+
+[Chapter 16] 16.5 StringSelection
+Chapter 16Data Transfer
+16.5 StringSelection
+StringSelection is a convenience 
+class that can be used for copy and paste operations on Unicode text strings 
+(String). It implements both 
+the ClipboardOwner and Transferable 
+interfaces, so it can be used both as the contents of the clipboard and 
+as its owner. For example, if s 
+is a StringSelection, you can 
+call Clipboard.setContents(s,s). 
+StringSelection supports both 
+stringFlavor and plainTextFlavor 
+and doesn't do anything when it loses clipboard ownership. 
+StringSelection MethodsConstructors
+public StringSelection(String data)  
+The constructor creates an instance of StringSelection 
+containing data. You can use 
+this object to place the data on a clipboard. 
+Miscellaneous methods
+public DataFlavor[] getTransferDataFlavors()  
+The getTransferDataFlavors() 
+method returns a two-element DataFlavor 
+array consisting of DataFlavor.stringFlavor 
+and DataFlavor.plainTextFlavor. 
+This means that you can paste a StringSelection 
+as either a Java String or 
+as plain text (i.e., the MIME type plain/text). 
+public boolean isDataFlavorSupported(DataFlavor flavor)  
+The isDataFlavorSupported() 
+method is returns true if flavor 
+is either DataFlavor.stringFlavor 
+or DataFlavor.plainTextFlavor; 
+it returns false for any other 
+flavor. 
+public Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException  
+The getTransferData() method 
+returns an object from which you can get the data on the clipboard; the 
+object's type is determined by the flavor 
+parameter. This method returns a String 
+containing the data on the clipboard if flavor 
+is DataFlavor.stringFlavor; 
+it returns a StringBufferInputStream 
+from which you can read the data on the clipboard if you ask for DataFlavor.plainTextFlavor. 
+Otherwise, getTransferData() 
+throws an UnsupportedFlavorException. 
+public void lostOwnership(Clipboard clipboard, Transferable contents)  
+The lostOwnership() method 
+of StringSelection is an empty 
+stub; it does nothing when you lose ownership. If you want to know when 
+you've lost ownership of string data placed on the clipboard, write 
+a subclass of StringSelection 
+and override this method. 
+Clipboard
+UnsupportedFlavorException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

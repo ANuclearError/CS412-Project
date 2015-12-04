@@ -1,0 +1,126 @@
+
+[Chapter 30] 30.12 java.util.Locale (JDK 1.1)
+Chapter 30The java.util Package
+30.12 java.util.Locale (JDK 1.1)
+The Locale class represents a locale: a political,
+geographical, or cultural region that typically has a
+distinct language and distinct customs and conventions for
+such things as formatting dates, times, and numbers.
+The Locale class defines a number of constants that
+represent commonly used locales.  Locale also
+defines a static getDefault() method that returns
+the default Locale object, which represents a locale
+value inherited from the host system.  Furthermore, many
+locale-sensitive classes, such as DateFormat,
+provide getAvailableLocales() methods that return a
+list of supported Locale objects.  If none of these
+methods for obtaining a Locale object is suitable,
+you can also explicitly create your own Locale
+object.  To do this, you must specify a language code, a
+country code, and an optional variant string.
+The Locale class does not implement any
+internationalization behavior itself; it merely serves as a
+locale identifier for those classes that can localize their
+behavior.  Given a Locale object, you can invoke the
+various getDisplay methods to obtain a
+description of the locale suitable for display to a user.
+Note that these methods may themselves take a Locale
+argument so that the names of languages and countries can be
+localized as appropriate.
+public final class Locale extends Object implements Cloneable, Serializable {
+    // Public Constructors
+            public Locale(String language, String country, String variant);
+            public Locale(String language, String country);
+    // Constants
+            public static final Locale CANADA;
+            public static final Locale CANADA_FRENCH;
+            public static final Locale CHINA;
+            public static final Locale CHINESE;
+            public static final Locale ENGLISH;
+            public static final Locale FRANCE;
+            public static final Locale FRENCH;
+            public static final Locale GERMAN;
+            public static final Locale GERMANY;
+            public static final Locale ITALIAN;
+            public static final Locale ITALY;
+            public static final Locale JAPAN;
+            public static final Locale JAPANESE;
+            public static final Locale KOREA;
+            public static final Locale KOREAN;
+            public static final Locale PRC;
+            public static final Locale SIMPLIFIED_CHINESE;
+            public static final Locale TAIWAN;
+            public static final Locale TRADITIONAL_CHINESE;
+            public static final Locale UK;
+            public static final Locale US;
+    // Class Methods
+            public static synchronized Locale getDefault();
+            public static synchronized void setDefault(Locale newLocale);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public boolean equals(Object obj);  // Overrides Object
+            public String getCountry();
+            public final String getDisplayCountry();
+            public String getDisplayCountry(Locale inLocale);
+            public final String getDisplayLanguage();
+            public String getDisplayLanguage(Locale inLocale);
+            public final String getDisplayName();
+            public String getDisplayName(Locale inLocale);
+            public final String getDisplayVariant();
+            public String getDisplayVariant(Locale inLocale);
+            public String getISO3Country() throws MissingResourceException;
+            public String getISO3Language() throws MissingResourceException;
+            public String getLanguage();
+            public String getVariant();
+            public synchronized int hashCode();  // Overrides Object
+            public final String toString();  // Overrides Object
+}
+Passed To:
+BreakIterator.getCharacterInstance(), 
+BreakIterator.getLineInstance(), 
+BreakIterator.getSentenceInstance(), 
+BreakIterator.getWordInstance(), 
+Calendar(), 
+Calendar.getInstance(), 
+Collator.getInstance(), 
+Component.setLocale(), 
+DateFormat.getDateInstance(), 
+DateFormat.getDateTimeInstance(), 
+DateFormat.getTimeInstance(), 
+DateFormatSymbols(), 
+DecimalFormatSymbols(), 
+GregorianCalendar(), 
+Locale.getDisplayCountry(), 
+Locale.getDisplayLanguage(), 
+Locale.getDisplayName(), 
+Locale.getDisplayVariant(), 
+Locale.setDefault(), 
+MessageFormat.setLocale(), 
+NumberFormat.getCurrencyInstance(), 
+NumberFormat.getInstance(), 
+NumberFormat.getNumberInstance(), 
+NumberFormat.getPercentInstance(), 
+ResourceBundle.getBundle(), 
+SimpleDateFormat(), 
+String.toLowerCase(), 
+String.toUpperCase()
+Returned By:
+Applet.getLocale(), 
+BreakIterator.getAvailableLocales(), 
+Calendar.getAvailableLocales(), 
+Collator.getAvailableLocales(), 
+Component.getLocale(), 
+DateFormat.getAvailableLocales(), 
+Locale.getDefault(), 
+MessageFormat.getLocale(), 
+NumberFormat.getAvailableLocales(), 
+Window.getLocale()
+java.util.ListResourceBundle (JDK 1.1)
+java.util.MissingResourceException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

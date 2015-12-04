@@ -1,0 +1,164 @@
+
+[Chapter 10] 10.6 Defining a Simple Property Editor
+Chapter 10Java Beans
+10.6 Defining a Simple Property Editor
+A bean can also provide an auxiliary PropertyEditor for use
+by a beanbox tool.  PropertyEditor is a flexible interface
+that allows a bean to tell a beanbox how to display and edit
+the values of certain types of properties.
+A beanbox tool always provides simple property editors for
+common property types, such as strings, numbers, fonts, and colors.
+If your bean has properties of a non-standard type, you should
+register a property editor for that type.  The
+ 
+easiest way to "register" a property
+editor is through a simple naming convention.  If your type is defined
+by the class X, the editor for it should be defined
+in the class XEditor.
+Alternately, you can register a property editor by calling the 
+PropertyEditorManager.registerEditor() method,
+probably from the constructor of your BeanInfo
+class.  If you call this method from the bean itself, the bean then
+depends on the property editor class, so the editor has to be bundled
+with the bean in applications.
+In our YesNoDialog example, we don't define any new
+data types, but we still have two individual properties that
+need custom editors.  In this case, we register the
+property editors for individual properties by specifying
+them in the PropertyDescriptor
+objects returned by the getPropertyDescriptors()
+method of our BeanInfo class.
+The PropertyEditor interface can seem confusing at
+first.  Its methods allow you to define three techniques for
+displaying the value of a property and two
+techniques for allowing the user to edit the value of a
+property.  The value of a property can be displayed:
+As a string.  If you define the getAsText() method,
+a beanbox can convert a property to a string and display
+that string to the user.
+As an enumerated value.  If a property can only take on a value
+from a fixed set of values, you can define the getTags()
+method to allow a beanbox to display a dropdown menu of allowed
+values for the property.
+In a graphical display.  If you define paintValue(),
+a beanbox can ask the property editor to
+display the value using some natural graphical format, such
+as a color swatch for colors.  You also need to
+define isPaintable() to specify that a graphical
+format is supported.
+The two editing techniques are:
+String editing.  If you define the setAsText()
+method, a beanbox knows it can simply have the user
+type a value into a text field and pass that value to
+setAsText().  If your property editor defines
+getTags(), it should also define setAsText()
+so that a beanbox can set the property value using the
+individual tag values.
+Custom editing.  If your property editor defines
+getCustomEditor(), a beanbox can call
+it to obtain some kind of AWT
+component that can be displayed in a dialog box and serve as
+a custom editor for the property.  You also need to
+define supportsCustomEditor() to specify that custom editing
+is supported.
+The setValue() method of a PropertyEditor
+is called to specify the current value of the property.  It is this
+value that should be converted to a string or graphical
+representation by getAsText() or
+paintValue().
+A property editor is required to maintain a list of event
+listeners that are interested in changes to the value of the
+property.  The addPropertyChangeListener() and
+removePropertyChangeListener() methods are standard
+event listener registration and removal methods.
+When a property editor changes the value of a property,
+either through setAsText() or through a custom
+editor, it must send a PropertyChangeEvent to all
+registered listeners.
+PropertyEditor defines the
+getJavaInitializationString()
+for use by beanbox tools that generate Java code.
+This method should return a
+fragment of Java code that can be used to initialize a
+variable to the current property value.
+Finally, a class that implements the
+PropertyEditor interface must have a
+no-argument constructor, so that it can be dynamically loaded
+and instantiated by a beanbox.
+Most property editors can be much simpler than this detailed
+description would suggest.  In many cases, you can subclass
+PropertyEditorSupport instead of implementing the
+PropertyEditor interface directly.  This useful
+class provides no-op implementations of most
+PropertyEditor methods.  It also implements the methods
+for adding and removing event listeners.
+A property that has an enumerated value requires a simple property
+editor.  The alignment property of the YesNoDialog bean
+is an example of this common type of property.
+The property is defined as an int,
+but it has only three legal values, defined by the constants
+LEFT, CENTER, and RIGHT.  By default,
+a beanbox only knows that the property is an int,
+so it displays the property as a number and allows the
+user to enter any integer as a property value.  Instead, we
+would like the beanbox to display one
+of the strings "left," "center," or "right" as the value,
+and allow the user to choose from these values when
+setting the property.  This can be
+done with the getTags() and setAsText()
+methods of a property editor, as shown in
+Example 10.6.
+This example creates the YesNoDialogAlignmentEditor
+class, which is registered as a PropertyEditor for the
+alignment property by the
+YesNoDialogBeanInfo class shown in
+Example 10.5 . 
+The property editor subclasses PropertyEditorSupport,
+so it is relatively short.  Notice that it passes
+Integer objects in the calls to setValue() that are
+made from the setAsText() method.  You need to use
+wrapper objects for any primitive-type properties.  The use
+of the Integer class is also apparent in the definition of
+getJavaInitializationString().
+The setValue() method of
+ProperyEditorSupport handles notifying
+registered PropertyChangeListener objects about changes
+in the value of the property, so this
+simple property editor does not need to be aware of the
+existence of such listeners.
+Example 10.6: The YesNoDialogAlignmentEditor Class
+package oreilly.beans.yesno;
+import java.beans.*;
+import java.awt.*;
+public class YesNoDialogAlignmentEditor extends PropertyEditorSupport {
+  // These two methods allow the property to be edited in a dropdown list.
+  // Return the list of value names for the enumerated type.
+  public String[] getTags() {
+    return new String[] { "left", "center", "right" };
+  }
+  // Convert each of those value names into the actual value.
+  public void setAsText(String s) {
+    if (s.equals("left")) setValue(new Integer(YesNoDialog.LEFT));
+    else if (s.equals("center")) setValue(new Integer(YesNoDialog.CENTER));
+    else if (s.equals("right")) setValue(new Integer(YesNoDialog.RIGHT));
+    else throw new IllegalArgumentException(s);
+  }
+  // This is an important method for code generation.
+  public String getJavaInitializationString() {
+    switch(((Number)getValue()).intValue()) {
+    default:
+    case YesNoDialog.LEFT:   return "oreilly.beans.yesno.YesNoDialog.LEFT";
+    case YesNoDialog.CENTER: return "oreilly.beans.yesno.YesNoDialog.CENTER";
+    case YesNoDialog.RIGHT:  return "oreilly.beans.yesno.YesNoDialog.RIGHT";
+    }
+  }
+}
+Specifying Bean Information
+Defining a Complex Property Editor
+ 
+ 
+ 
+ 
+ 
+ 
+ 

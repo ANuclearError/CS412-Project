@@ -1,0 +1,72 @@
+
+[Chapter 8] New AWT Features
+Chapter 8
+8. New AWT Features
+Contents:
+The ScrollPane Container
+Popup Menus and Menu Shortcuts
+Printing
+Data Transfer with Cut-and-Paste
+New Feature Demo
+In addition to the new AWT event model that we saw in 
+Chapter 7, Events, there are a number of important new AWT features
+in Java 1.1.  These new features were outlined in 
+Chapter 4, What's New in Java 1.1.  This chapter details many of those new features and
+demonstrates them in a single extended example application at the end
+of the chapter.  The major features of the example are:
+The new ScrollPane component
+Popup menus and menu shortcuts
+Printing
+Data transfer through cut-and-paste
+In addition, the example also demonstrates the use of object
+serialization to save and load application state.  This
+functionality is described in Chapter 9, Object Serialization.
+8.1 The ScrollPane Container
+The new ScrollPane container holds a single child
+component that is usually larger than the ScrollPane
+itself.  The ScrollPane displays a fixed-size area
+of the child and provides horizontal and vertical
+scrollbars so the user can scroll the child component within
+the "viewport" of the ScrollPane.
+Figure 8.1
+shows a top-level window created by the application listed
+in Example 8.1 at the end of this chapter.
+As you can see, the application creates a ScrollPane
+container to hold the larger Scribble component that
+supports free-hand drawing.
+Figure 8.1: New AWT features demo application
+The ScrollPane is quite easy to use.  Simply
+create it and add a child component as you would with any
+other container.  Note, however, that ScrollPane only
+supports a single child and it cannot have a
+LayoutManager specified.  The ScrollPane is
+created in the ScribbleFrame() constructor of the
+example.  The important thing to note is that the
+ScrollPane does not have any preferred or natural
+size of its own, so you should use setSize() to
+specify the size you want it to be.  The ScrollPane class
+defines three constants that are legal values of its
+"scrollbar display policy."  Because the example does not
+specify one of these constants, the policy defaults to
+SCROLLBARS_AS_NEEDED, which indicates that
+scrollbars are displayed for any dimension in which the
+contained child is larger than the available "viewport"
+space of the ScrollPane container.
+Here is an
+excerpt of the ScribbleFrame() constructor that
+shows the creation of the ScrollPane:
+ScrollPane pane = new ScrollPane();      // Create a ScrollPane.
+pane.setSize(300, 300);                  // Specify its size.
+this.add(pane, "Center");                // Add it to the frame.
+Scribble scribble;
+scribble = new Scribble(this, 500, 500); // Create a bigger scribble area.
+pane.add(scribble);                      // Add it to the ScrollPane.
+Inside the Java 1.1 Event Model
+Popup Menus and Menu Shortcuts
+ 
+ 
+ 
+ 
+ 
+ 
+ 

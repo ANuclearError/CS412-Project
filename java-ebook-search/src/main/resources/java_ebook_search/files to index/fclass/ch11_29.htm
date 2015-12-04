@@ -1,0 +1,208 @@
+
+[Chapter 11] InputStreamReader
+Chapter 11The java.io Package
+InputStreamReader
+Name
+InputStreamReader
+Synopsis
+Class Name:
+java.io.InputStreamReader
+Superclass:
+java.io.Reader
+Immediate Subclasses:
+java.io.FileReader
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The InputStreamReader class 
+is a bridge between the byte-oriented world of the InputStream 
+class and the character-oriented world of the Reader 
+class. The InputStreamReader 
+represents a character stream, but it gets its input from an underlying 
+byte stream. An encoding scheme is responsible for translating the bytes 
+to Unicode characters. An InputStreamReader 
+can be created using an explicit encoding scheme or a default encoding 
+scheme. 
+For example, to read an ISO-8859-5 byte stream as a Unicode character stream, 
+you can construct an InputStreamReader 
+with the encoding "8859_5" as follows: 
+InputStreamReader inr = new InputStreamReader(in, "8859_5");
+Each time you read from an InputStreamReader 
+object, bytes may be read from the underlying byte stream. To improve efficiency, 
+you may want to wrap the InputStreamReader 
+in a BufferedReader. 
+Class Summary
+public class java.io.InputStreamReader extends java.io.Reader {
+  // Constructors
+  public InputStreamReader(InputStream in);
+  public InputStreamReader(InputStream in, String enc);
+  // Instance Methods
+  public void close();
+  public String getEncoding();
+  public int read();
+  public int read(char[] cbuf, int off, int len);
+  public boolean ready();
+}
+Constructors
+InputStreamReader
+public InputStreamReader(InputStream in)
+Parameters
+in
+The input stream to 
+use. 
+Description
+This constructor creates an InputStreamReader 
+that gets its data from in 
+and translates bytes to characters using the system's default encoding 
+scheme. 
+   public InputStreamReader(InputStream in, String enc) throws UnsupportedEncodingException  
+Parameters
+in
+The input stream to use.
+enc
+The name of an encoding scheme. 
+Throws
+UnsupportedEncodingException
+If enc is not a supported encoding scheme. 
+Description
+This constructor creates an InputStreamReader 
+that gets its data from in 
+and translates bytes to characters using the given encoding scheme. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.close() 
+Description
+This method calls the close() 
+method of the underlying input stream, which releases any system resources 
+associated with this object. 
+getEncoding
+public String getEncoding()
+Returns
+A String that contains the 
+name of the character encoding scheme of this reader. 
+Description
+This method returns the name of the character encoding scheme this InputStreamReader 
+is currently using. 
+read
+public int read() throws IOException
+Returns
+The next character of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.read() 
+Description
+This method reads a character of input. The method returns the next
+character that has been read and converted from the underlying
+byte-oriented InputStream. The
+InputStreamReader class uses buffering internally,
+so this method returns immediately unless the buffer is empty. If the
+buffer is empty, a new block of bytes is read from the
+InputStream and converted to characters. The method
+blocks until the character is read, the end of stream is encountered,
+or an exception is thrown.
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+An offset into the array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.read(char[], int, int) 
+Description
+This method reads up to len 
+characters of input into the given array starting at index off. 
+The InputStreamReader class 
+uses buffering internally, so this method returns immediately if there 
+is enough data in the buffer. If there is not enough data, a new block 
+of bytes is read from the InputStream 
+and converted to characters. The method blocks until some data is available. 
+ready
+public boolean ready() throws IOException
+Returns
+true if the reader is ready 
+to be read; false otherwise. 
+Throws
+IOException
+If the reader 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.ready() 
+Description
+This method returns a boolean 
+value that indicates whether or not the reader is ready to be read. If 
+there is data available in the internal buffer or if there are bytes available 
+to be read from the underlying byte stream, the method returns true. 
+Otherwise it returns false. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+mark()
+Reader
+markSupported()
+Reader
+read(char[])
+Reader
+reset()
+Reader
+skip(long)
+Reader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedReader, 
+FileReader, 
+InputStream, 
+IOException, 
+, Reader, 
+UnsupportedEncodingException 
+InputStream
+InterruptedIOException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

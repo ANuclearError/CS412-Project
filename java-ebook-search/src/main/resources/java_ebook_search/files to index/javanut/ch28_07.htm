@@ -1,0 +1,40 @@
+
+[Chapter 28] 28.7 java.net.DatagramSocketImpl (JDK 1.1)
+Chapter 28The java.net Package
+28.7 java.net.DatagramSocketImpl (JDK 1.1)
+This abstract class defines the methods necessary to
+implement communication through datagram and multicast
+sockets.  System programmers may create subclasses of this
+class when they need to implement datagram or multicast
+sockets in a nonstandard network environment, such as
+behind a firewall or on a network that uses a nonstandard
+transport protocol.
+Normal applications never need to use or subclass this class.
+public abstract class DatagramSocketImpl extends Object {
+    // Default Constructor: public DatagramSocketImpl()
+    // Protected Instance Variables
+            protected FileDescriptor fd;
+            protected int localPort;
+    // Protected Instance Methods
+            protected abstract void bind(int lport, InetAddress laddr) throws SocketException;
+            protected abstract void close();
+            protected abstract void create() throws SocketException;
+            protected FileDescriptor getFileDescriptor();
+            protected int getLocalPort();
+            protected abstract byte getTTL() throws IOException;
+            protected abstract void join(InetAddress inetaddr) throws IOException;
+            protected abstract void leave(InetAddress inetaddr) throws IOException;
+            protected abstract int peek(InetAddress i) throws IOException;
+            protected abstract void receive(DatagramPacket p) throws IOException;
+            protected abstract void send(DatagramPacket p) throws IOException;
+            protected abstract void setTTL(byte ttl) throws IOException;
+}
+java.net.DatagramSocket (JDK 1.0)
+java.net.FileNameMap (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

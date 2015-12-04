@@ -1,0 +1,75 @@
+
+[Chapter 1] 1.5 And the Rest
+Chapter 1Abstract Window Toolkit Overview
+1.5 And the Rest
+Several of the remaining classes within java.awt 
+are important to mention here but did not fit well into a general category. 
+The following sections are a grab bag that summarize the remaining classes. 
+Drawing and Graphics
+Java provides numerous primitives for drawing lines, squares, circles, 
+polygons, and images. Figure 1.21 shows a simple drawing. 
+The drawing components of AWT are discussed in 
+Chapter 2, Simple Graphics. 
+The Font, FontMetrics, 
+Color, and SystemColor 
+classes provide the ability to alter the displayed output. With the Font 
+class, you adjust how displayed text will appear. With FontMetrics, 
+you can find out how large the output will be, for the specific system 
+the user is using. You can use the Color 
+class to set the color of text and graphics. SystemColor 
+is new to Java 1.1; it lets you take advantage of desktop color schemes. 
+These classes are discussed in Chapter 3, Fonts and Colors. 
+Figure 1.21: A simple drawing
+AWT also includes a number of classes that support more complex graphics 
+manipulations: displaying images, generating images in memory, and transforming 
+images. These classes make up the package java.awt.image, 
+which is covered in Chapter 12, Image Processing. 
+Events
+Like most windows programming environments, AWT is event driven. When an 
+event occurs (for example, the user presses a key or moves the mouse), 
+the environment generates an event and passes it along to a handler to 
+process the event. If nobody wants to handle the event, the system ignores 
+it. Unlike some windowing environments, you do not have to provide a main 
+loop to catch and process all the events, or an infinite busy-wait loop. 
+AWT does all the event management and passing for you. 
+Probably the most significant difference between versions 1.0.2 and 1.1 
+of AWT is the way events work. In older versions of Java, an event is distributed 
+to every component that might conceivably be interested in it, until some 
+component declares that it has handled the event. This event model can 
+still be used in 1.1, but there is also a new event model in which objects 
+listen for particular events. This new model is arguably a little more 
+work for the programmer but promises to be much more efficient, because events 
+are distributed only to objects that want to hear about them. It is also 
+how JavaBeans works. 
+In this book, examples that are using the older (1.0.2) components use 
+the old event model, unless otherwise indicated. Examples using new components 
+use the new event model. Don't let this mislead you; all components 
+in Java 1.1 support the new event model. The details of Event 
+for both version 1.0.2 and 1.1 can be found in Chapter 4, Events. 
+Applets
+Although it is not a part of the java.awt 
+package, the Core Java API provides a framework for applet development. 
+This includes support for getting parameters from HTML files, changing 
+the web page a browser is displaying, and playing audio files. Chapter 14, And Then There Were Applets, describes all the details of the java.applet 
+package. Because audio support is part of java.applet, 
+portable audio playing is limited to applets. Chapter 14, And Then There Were Applets 
+also shows a nonportable way to play audio in applications. Additional 
+audio capabilities are coming to the Java Core API in the announced extensions. 
+Clipboards
+In Java 1.1, programs can access the system clipboard. This process makes 
+it easier to transfer (cut, copy, and paste) data between various other 
+sources and your Java programs and introduces developers to the concepts 
+involved with JavaBeans. Chapter 16, Data Transfer, describes the java.awt.datatransfer package. 
+Printing
+Java 1.1 adds the ability to print. Adding printing to an 
+existing program is fairly simple: you don't have to do much beside adding 
+a Print menu button. Chapter 17, Printing, describes these capabilities. 
+Containers
+Summary
+ 
+ 
+ 
+ 
+ 
+ 
+ 

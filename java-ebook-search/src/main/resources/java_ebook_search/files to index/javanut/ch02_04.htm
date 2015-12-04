@@ -1,0 +1,106 @@
+
+[Chapter 2] 2.4 No Preprocessor
+Chapter 2How Java Differs from C
+2.4 No Preprocessor
+Java does not include any kind of preprocessor like the C
+cpp preprocessor.  It may seem hard to imagine
+programming without #define, #include, and
+#ifdef, but in fact, Java really does not require
+these constructs.
+Defining Constants
+Any variable declared final in Java is a
+constant--its value must be specified with an initializer
+when it is declared, and that value may never be changed.
+The Java equivalent of a C #define'ed constant is a
+static final variable declared within a class
+definition.  If the compiler can compute the value of such a
+static final variable at compile-time, it
+uses the computed value to pre-compute other compile-time
+constants that refer to the value.  The variable
+java.lang.Math.PI is an example of such a constant.
+It is declared like this:
+public final class Math {
+    ...
+    public static final double PI = 3.14159.....;
+    ...
+}
+Note two things about this example.  First, the C convention
+of using CAPITAL letters for constants is also a Java
+convention.  Second, note the advantage Java constants have
+over C preprocessor constants: Java constants have globally
+unique hierarchic names, while constants defined with the C
+preprocessor always run the risk of a name collision.  Also,
+Java constants are strongly typed and allow better
+type-checking by the compiler than C preprocessor constants.
+Defining Macros
+The C preprocessor allows you to define macros--a construct
+that looks like a function invocation but that is actually
+replaced directly with C code, saving the overhead of a
+function call.  Java has no equivalent to this sort of
+macro, but compiler technology has advanced to a point where
+macros are rarely necessary any more. A good Java compiler
+should automatically be able to "inline" short Java methods
+where appropriate.
+Including Files
+Java does not have a #include directive, but it does
+not need one.  Java defines a mapping of fully qualified
+class names (like java.lang.Math) to a directory and
+file structure (like java/lang/Math.class).  This
+means that when the Java compiler needs to read in a
+specified class file, it knows exactly where to find it and
+does not need a special directive to tell it where to look.
+Furthermore, Java does not make the distinction between
+declaring a variable or procedure and defining
+it that C does.  This means that there is no need for
+C-style header files or function prototypes--a single Java
+object file serves as the interface definition and
+implementation for a class.
+Java does have an import statement, which is
+superficially similar to the C preprocessor #include
+directive.  What this statement does, however, is 
+tell the compiler that the current file is using the
+specified classes, or classes from the specified package,
+and allows us to refer to those classes with abbreviated
+names.  For example, since the compiler implicitly
+imports all the classes of the java.lang
+package, we can refer to the constant
+java.lang.Math.PI by the shorter name
+Math.PI.  
+Conditional Compilation
+Java does not have any form of the C #ifdef or
+#if directives to perform conditional compilation.
+In theory, conditional compilation is not necessary in Java
+since it is a platform-independent language, and thus there
+are no platform dependencies that require the technique.  In
+practice, however, conditional compilation is still often
+useful in Java--to provide slightly different user
+interfaces on different platforms, for example, or to
+support optional inclusion of debugging code in programs.
+While Java does not define explicit constructs for
+conditional compilation, a good Java compiler (such as Sun's
+javac) performs conditional compilation
+implicitly--that is, it does not compile code if it can prove that
+the code will never be executed.  Generally, this means
+that code within an if statement testing an
+expression that is always false is not included. 
+Thus, placing code within an if (false)
+block is equivalent to surrounding it with #if 0 and
+#endif in C.
+Conditional compilation also works with constants, which, as
+we saw above, are static final variables.  A
+class might define the constant like this:
+private static final boolean DEBUG = false;
+With such a constant defined, any code within an if (DEBUG)
+block is not actually  compiled into the
+class file.  To activate debugging for the class, it is
+only necessary to change the value of the constant to
+true and recompile the class.
+Comments
+Unicode and Character Escapes
+ 
+ 
+ 
+ 
+ 
+ 
+ 

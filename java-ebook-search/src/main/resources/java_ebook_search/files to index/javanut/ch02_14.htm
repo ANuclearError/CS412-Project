@@ -1,0 +1,176 @@
+
+[Chapter 2] 2.14 Miscellaneous Differences
+Chapter 2How Java Differs from C
+2.14 Miscellaneous Differences
+A number of miscellaneous differences between Java and C are
+described in the sections that follow.  Miscellaneous
+differences that were mentioned elsewhere, such as the lack
+of the goto statement and the sizeof
+operator, are not repeated here.
+Local Variable Declarations
+A feature that Java has borrowed from C++ is the
+ability to declare and initialize local variables anywhere
+in a method body or other block of code.  Declarations and
+their initializers no longer have to be the first statements
+in any block--you can declare them where it is convenient
+and fits well with the structure of your code.
+Don't let this freedom make you sloppy, however!  For
+someone reading your program, it is nice to have variable
+declarations grouped together in one place.  As a rule of
+thumb, put your declarations at the top of the block, unless
+you have some good organizational reason for putting them
+elsewhere.
+Forward References
+For compiler efficiency, C requires that variables and
+functions must be defined, or at least declared, before they
+can be used or called.  That is, forward references are not
+allowed in C.  Java does not make this restriction, and by
+lifting it, it also does away with the whole concept of a
+variable or function declaration that is separate from the
+definition.
+Java allows very flexible forward references.  A method may
+refer to a variable or another method of its class,
+regardless of where in the current class the variable or
+method is defined.  Similarly, it may refer to any class,
+regardless of where in the current file (or outside of the
+file) that class is defined.  The only place that forward
+references are not allowed is in variable initialization. A
+variable initializer (for local variables, class variables,
+or instance variables) may not refer to other variables that have
+not yet been declared and initialized.
+Method Overloading
+A technique that Java borrows from C++ is called method
+overloading.
+Overloaded methods are methods that have the same name, but
+have different signatures. In other words,  they take different
+types of arguments, a
+different number of arguments, or the same type of arguments
+in different positions in the argument list.
+You cannot overload a method by changing only its return
+type.  Two methods with the same name may have different
+return types, but only if the method arguments also differ.
+Similarly, two overloaded methods may throw different
+exceptions, but only if their arguments differ as well.
+Method overloading is commonly used in Java to define a number of
+related functions with the same name, but different
+arguments.  Overloaded methods usually perform the same
+basic operation, but allow the programmer to specify
+arguments in different ways depending on what is convenient
+in a given situation. Method overloading is discussed in more 
+detail in the next chapter.
+The void Keyword
+The void keyword is used in Java, as in C, to
+indicate that a function returns no value.  (As we will see
+in the next section, constructor methods are an exception to
+this rule.)
+Java differs from C (and is similar to C++) in that methods
+that take no arguments are declared with empty parentheses,
+not with the void keyword.
+Java does not have any void * type, nor does it
+use a (void) cast in order to ignore the
+result returned by a call to a non-void method.
+Modifiers
+Java defines a number of modifier keywords that may be
+applied to variable and/or method declarations to provide
+additional information or place restrictions on the variable
+or method:
+final
+The final keyword is a modifier that may be applied
+to classes, methods, and variables.  It has a similar, but
+not identical, meaning in each case.  A final class
+may never be subclassed.  A final method may never
+be overridden.  A final variable may never have its
+value set.  In Java 1.1, this modifier may also be applied to
+local variables and method parameters. This modifier is discussed 
+in more detail in the next chapter.
+native
+native is a modifier that may be applied to method
+declarations.  It indicates that the method is implemented
+elsewhere in C, or in some other platform-dependent
+fashion.  A native method should have a semicolon
+in place of its body.  
+synchronized
+We saw the synchronized keyword in a previous
+section where it was a statement that marked a critical
+section of code.  The same keyword can also be used as a
+modifier for class or instance methods.
+It indicates that the method modifies the internal state of
+the class or the internal state of an instance of the class
+in a way that is not thread-safe.  Before running a
+synchronized class method, Java obtains a lock
+on the class, to ensure that no other threads can 
+modif the class concurrently.  Before running a
+synchronized instance method, Java obtains a
+lock on the instance that invoked the method, ensuring that
+no other thread can modify the object at the same
+time.
+transient
+The transient keyword is a modifier that may be
+applied to instance fields in a class. This modifier is legal
+but unused in Java 1.0. In Java 1.1, it indicates a field that
+is not part of an object's persistent state and thus does not need to 
+be serialized with the object.
+volatile
+The volatile keyword is a modifier that may be
+applied to fields.  It specifies that the field is used by
+synchronized threads and that the
+compiler should not attempt to perform optimizations with it.
+For example, it should read the variable's value from memory every
+time and not attempt to save a copy of it on the stack.
+No Structures or Unions
+Java does not support C struct or union
+types.  Note, however, that a class is essentially
+the same thing as a struct, but with more features.
+And you can simulate the important features of a
+union by subclassing.
+No Enumerated Types
+Java does not support the C enum keyword for
+defining types that consist of one of a specified number of
+named values. This is somewhat surprising for a
+strongly-typed language like Java. Enumerated types can be partially
+simulated with the use of static final
+constant values.
+No Method Types
+C allows you to store the address of a function in a
+variable and to pass function addresses to other functions.
+You cannot do this in Java: methods are not data, and cannot
+be manipulated by Java programs.  Note, however, that
+objects are data, and that objects can define methods.
+[9]
+So, when you need to pass a method to another method, you
+declare a class that defines the desired method and pass an
+instance of that class.  See, for example, the
+FilenameFilter interface in the java.io
+package.
+[9] 
+An interesting way to think about objects in Java is as a
+kind of method that defines multiple entry points.
+No Bitfields
+Java does not support the C ability to define variables
+that occupy particular bits within struct and
+union types.  This feature of C is usually only used
+to interface directly to hardware devices, which is never
+necessary with Java's platform-independent programming
+model.
+No typedef
+Java does not support the C typedef keyword to
+define aliases for type names.  Java has a much simpler type
+naming scheme than C does, however, and so there is no need for
+something like typedef.
+No Variable-Length Argument Lists
+Java does not allow you to define methods that take a
+variable number of arguments, as C does.  This is because
+Java is a strongly typed language and there is no way to do
+appropriate type checking for a method with variable
+arguments.  Method overloading allows you to simulate C
+"varargs" functions for simple cases, but there is no
+general replacement for this C feature.
+Exceptions and Exception Handling
+Classes and Objects in Java
+ 
+ 
+ 
+ 
+ 
+ 
+ 

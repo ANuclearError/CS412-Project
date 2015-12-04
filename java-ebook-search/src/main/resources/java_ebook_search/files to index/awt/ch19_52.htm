@@ -1,0 +1,435 @@
+
+[Chapter 19] Rectangle
+Chapter 19java.awt Reference
+Rectangle
+Name
+Rectangle
+Description
+The Rectangle class represents 
+a rectangle by combining its origin (a pair of x and y coordinates) with 
+its size (a width and a height). 
+Class Definition
+public class java.awt.Rectangle
+    extends java.lang.Object
+    implements java.awt.Shape, java.io.Serializable {
+  
+  // Variables
+  pubic int height;
+  public int width;
+  public int x;
+  public int y;
+  
+  // Constructors
+  public Rectangle();
+  public Rectangle (int width, int height);
+  public Rectangle (int x, int y, int width, int height);
+  public Rectangle (Dimension d);
+  public Rectangle (Point p);
+  public Rectangle (Point p, Dimension d);
+  public Rectangle (Rectangle r); 
+  
+  // Instance Methods
+  public void add (int newX, int newY);
+  public void add (Point p);
+  public void add (Rectangle r);
+  public boolean contains (int x, int y); 
+  public boolean contains (Point p); 
+  public boolean equals (Object object);
+  public Rectangle getBounds(); 
+  public Point getLocation(); 
+  public Dimension getSize(); 
+  public void grow (int horizontal, int vertical);
+  public int hashCode();
+  public boolean inside (int x, int y); 
+  public Rectangle intersection (Rectangle r);
+  public boolean intersects (Rectangle r);
+  public boolean isEmpty();
+  public void move (int x, int y); 
+  public void reshape (int x, int y, int width, int height); 
+  public void resize (int width, int height); 
+  public void setBounds (Rectangle r); 
+  public void setBounds (int x, int y, int width, int height); 
+  public void setLocation (int x, int y); 
+  public void setLocation (Point p); 
+  public void setSize (int width, int height); 
+  public void setSize (Dimension d); 
+  public String toString();
+  public void translate (int x, int y);
+  public Rectangle union (Rectangle r);
+}
+Variables
+height
+public int height
+The height of the Rectangle. 
+width
+public int width
+The width of the Rectangle. 
+x
+public int x
+The x coordinate of the Rectangle's 
+upper left corner (its origin). 
+y
+public int y
+The y coordinate of the Rectangle's 
+upper left corner (its origin). 
+Constructors
+Rectangle
+public Rectangle()
+Description
+Constructs an empty Rectangle 
+object with an origin of (0, 0) and dimensions of 0 x 0. 
+public Rectangle (int width, int height)
+Parameters
+width
+width of Rectangle 
+height
+height of Rectangle 
+Description
+Constructs a Rectangle object 
+with an origin of (0, 0) and dimensions of width 
+x height. 
+public Rectangle (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of the Rectangle's 
+origin 
+y
+y coordinate of the Rectangle's 
+origin 
+width
+width of Rectangle 
+height
+height of Rectangle 
+Description
+Constructs a Rectangle object 
+with an origin of (x, y) 
+and dimensions of width x height. 
+public Rectangle (Dimension d)
+Parameters
+d
+dimensions of Rectangle 
+Description
+Constructs a Rectangle object 
+with an origin of (0, 0) and dimensions of d.width 
+x d.height. 
+public Rectangle (Point p)
+Parameters
+p
+origin of Rectangle 
+Description
+Constructs an empty Rectangle 
+object with an origin of (p.x, 
+p.y) and dimensions of 0 x 
+0. 
+public Rectangle (Point p, Dimension d)
+Parameters
+p
+origin of Rectangle 
+d
+dimensions of Rectangle 
+Description
+Constructs a Rectangle object 
+with an origin of (p.x, p.y) 
+and dimensions of d.width x 
+d.height. 
+public Rectangle (Rectangle r) 
+Parameters
+r
+original Rectangle 
+Description
+Constructs copy of the given Rectangle. 
+Instance Methods
+add
+public void add (int newX, int newY)
+Parameters
+newX
+The x-coordinate of 
+a point to incorporate within the Rectangle. 
+newY
+The y-coordinate of 
+a point to incorporate within the Rectangle. 
+Description
+Extends the Rectangle so that 
+the point (newX, newY) 
+is within it. 
+public void add (Point p)
+Parameters
+p
+The new Point 
+to add to the Rectangle. 
+Description
+Extends the Rectangle so that 
+the point p is within it. 
+public void add (Rectangle r)
+Parameters
+r
+The Rectangle 
+being added to the current Rectangle. 
+Description
+Extends the Rectangle to include 
+the Rectangle r. 
+contains
+public boolean contains (int x, int y) 
+Parameters
+x
+The x coordinate to test. 
+y
+The y coordinate to test. 
+Returns
+true if the Rectangle 
+contains the point; false otherwise. 
+public boolean contains (Point p) 
+Parameters
+p
+The point to be tested. 
+Returns
+true if the Rectangle 
+contains the point; false otherwise. 
+equals
+public boolean equals (Object object)
+Parameters
+object
+The object to compare. 
+Returns
+true if both Rectangles 
+have the same origin, width, and height; false 
+otherwise. 
+Overrides 
+Object.equals(Object) 
+Description
+Compares two different Rectangle 
+instances for equivalence. 
+getBounds
+public Rectangle getBounds() 
+Implements 
+Shape.getBounds() 
+Returns
+Bounding Rectangle. 
+getLocation
+public Point getLocation() 
+Returns
+Position of the rectangle. 
+Description
+Gets the current position of this Rectangle. 
+getSize
+public Dimension getSize() 
+Returns
+Dimensions of the rectangle. 
+Description
+Gets width and height of the rectangle. 
+grow
+public void grow (int horizontal, int vertical)
+Parameters
+horizontal
+Amount to extend 
+Rectangle in horizontal direction 
+on both the left and right sides. 
+vertical
+Amount to extend 
+Rectangle in vertical direction 
+on both the top and the bottom. 
+Description 
+Increases the rectangle's dimensions. 
+hashCode
+public int hashCode()
+Returns
+A hashcode to use when using the Rectangle 
+as a key in a Hashtable. 
+Overrides 
+Object.hashCode() 
+Description
+Generates a hashcode for the Rectangle. 
+inside
+public boolean inside (int x, int y) 
+Parameters 
+x
+The x coordinate to check. 
+y
+The y coordinate to check. 
+Returns
+true if (x, 
+y) falls within the Rectangle, 
+false otherwise. 
+Description
+Checks to see if the point (x, 
+y) is within the Rectangle. 
+Replaced by contains(int, int). 
+intersection
+public Rectangle intersection (Rectangle r)
+Parameters 
+r
+Rectangle 
+to add to the current Rectangle. 
+Returns
+A new Rectangle consisting 
+of all points in both the current Rectangle 
+and r. 
+Description
+Generates a new Rectangle that 
+is the intersection of r and 
+the current Rectangle. 
+intersects
+public boolean intersects (Rectangle r)
+Parameters 
+r
+Rectangle 
+to check. 
+Returns
+true if any points in r
+are also in the current Rectangle, 
+false otherwise. 
+Description
+Checks to see if r crosses 
+the Rectangle. 
+isEmpty
+public boolean isEmpty()
+Returns
+true if the Rectangle 
+is empty, false otherwise. 
+Description
+Determines if the rectangle is dimensionless (i.e., width or height are 
+less than or equal to 0). 
+move
+public void move (int x, int y) 
+Parameters 
+x
+The new x coordinate of 
+the Rectangle's upper 
+left corner. 
+y
+The new y coordinate of 
+the Rectangle's upper 
+left corner. 
+Description
+Changes the Rectangle's 
+origin to (x, y). 
+Replaced by setLocation(int, int). 
+reshape
+public void reshape (int x, int y, int width, int height) 
+Parameters 
+x
+The new x coordinate of 
+the Rectangle's upper 
+left corner. 
+y
+The new y coordinate of 
+the Rectangle's upper 
+left corner. 
+width
+The new width. 
+height
+The new height. 
+Description
+Changes Rectangle's origin 
+and dimensions. Replaced by setBounds(int, int, int, 
+int). 
+resize
+public void resize (int width, int height) 
+Parameters 
+width
+The new width. 
+height
+The new height. 
+Description
+Changes Rectangle's dimensions. 
+Replaced by setSize(int, int). 
+setBounds
+public void setBounds (Rectangle r) 
+Parameters 
+r
+A Rectangle 
+describing the new bounds. 
+Description
+Changes Rectangle's location 
+and size. 
+public void setBounds (int x, int y, int width, int height) [New in 1.1]
+Parameters 
+x
+The new x coordinate of 
+the Rectangle's upper 
+left corner. 
+y
+The new y coordinate of 
+the Rectangle's upper 
+left corner. 
+width
+The new width. 
+height
+The new height. 
+Description
+Changes Rectangle's location 
+and size. 
+setLocation
+public void setLocation (int x, int y) 
+Parameters 
+x
+New horizontal position. 
+y
+New vertical position. 
+Description
+Relocates the rectangle. 
+public void setLocation (Point p) 
+Parameters 
+p
+New position for component. 
+Description
+Relocates the rectangle. 
+setSize
+public void setSize (int width, int height) 
+Parameters 
+width
+New width. 
+height
+New height. 
+Description
+Resizes the rectangle. 
+public void setSize (Dimension d) 
+Parameters 
+d
+New dimensions. 
+Description
+Resizes the rectangle. 
+toString
+public String toString()
+Returns
+A string representation of the Rectangle 
+object. 
+Overrides
+Object.toString() 
+translate
+public void translate (int deltax, int deltay)
+Parameters 
+deltax
+Amount to move Rectangle 
+horizontally. 
+deltay
+Amount to move Rectangle 
+vertically. 
+Description
+Moves the Rectangle's 
+origin to (x+deltax, y+deltay). 
+union
+public Rectangle union (Rectangle r)
+Parameters
+r
+Rectangle to determine 
+union with. 
+Returns
+The smallest Rectangle containing 
+both r and the current Rectangle. 
+Description
+Generates a new Rectangle by 
+combining r and the current 
+Rectangle. 
+See Also
+Dimension, Object, 
+Point, String 
+PrintJob 
+ScrollPane 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

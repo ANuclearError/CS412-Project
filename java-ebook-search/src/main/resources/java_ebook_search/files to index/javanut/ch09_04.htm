@@ -1,0 +1,54 @@
+
+[Chapter 9] 9.4 Serialized Applets
+Chapter 9Object Serialization
+9.4 Serialized Applets
+One of the uses of object serialization in Java 1.1 is for
+serialized applets.  As discussed in Chapter 15, Java-Related HTML Tags,
+the &lt;APPLET&gt; 
+tag has a
+new attribute, OBJECT, that can be used in place of
+the CODE attribute to specify a serialized object file instead
+of a class file.  When such an &lt;APPLET&gt;
+tag is encountered, the applet viewer or Web browser
+creates the applet by deserializing it.
+The reason that this is an interesting thing to do is that
+it allows an applet to be shipped in a pre-initialized
+state.  The code for the applet need not even include the
+code that performed the initialization.  For example,
+imagine a GUI builder tool that allows a programmer to build
+a GUI using a point-and-click interface.  Such a tool could
+create a tree of AWT components within an Applet panel, and
+then serialize the applet, including all of the GUI
+components it contains.  When deserialized, the applet would
+have a complete GUI, despite the fact that the applet's
+class file does not contain any code to create the GUI.
+You can experiment with applet serialization with the JDK
+1.1 appletviewer program.  Start an applet running in
+appletviewer in the usual way.  This loads the
+applet and runs its init() and start()
+methods.  Next, select the Stop item from the menu to
+stop the applet.  Now use the Save menu item to
+serialize the applet to a file.  By convention, your
+serialized applet file should be given a .ser
+extension.  If the applet refers to any non-serializable
+objects, you may not be able to serialize it.  For example,
+you may encounter problems serializing applets that use
+threads or images.
+Once you have serialized an applet, create an HTML file with
+an &lt;APPLET&gt; tag something like this:
+&lt;APPLET OBJECT="MyApplet.ser" WIDTH=400 HEIGHT=200&gt;&lt;/APPLET &gt;
+Finally, you can use appletviewer with this new HTML file.  It
+should deserialize and display the applet.  When created in
+this way, the applet's init() method is not called
+(since it was called before serialization), but its
+start() method is called (because the applet should
+have been stopped before serialization).
+Serialization and Class Versioning
+Advanced Serialization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

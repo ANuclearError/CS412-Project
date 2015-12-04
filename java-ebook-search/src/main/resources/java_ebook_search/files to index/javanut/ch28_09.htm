@@ -1,0 +1,66 @@
+
+[Chapter 28] 28.9 java.net.HttpURLConnection (JDK 1.1)
+Chapter 28The java.net Package
+28.9 java.net.HttpURLConnection (JDK 1.1)
+This class is a specialization of URLConnection.  An
+instance of this class is returned when the
+openConnection() method is called for a URL
+object that uses the HTTP protocol.
+The many constants defined by this class are the status
+codes returned by HTTP servers.  setRequestMethod()
+specifies what kind of HTTP request is made.  The
+contents of this request must be sent through the
+OutputStream returned by the
+getOutputStream() method of the superclass.  Once an
+HTTP request has been sent, getResponseCode()
+returns the HTTP server's response code as an integer, and
+getResponseMessage() returns the server's response
+message.  The disconnect() method closes the
+connection, and the static setFollowRedirects()
+specifies whether URL connections that use the HTTP protocol
+should automatically follow redirect responses sent by HTTP
+servers.
+In order to successfully use this class, you need to
+understand the details of the HTTP protocol.
+public abstract class HttpURLConnection extends URLConnection {
+    // Protected Constructor
+            protected HttpURLConnection(URL u);
+    // Response Code Constants
+            public static final int HTTP_ACCEPTED, HTTP_BAD_GATEWAY, HTTP_BAD_METHOD;
+            public static final int HTTP_BAD_REQUEST, HTTP_CLIENT_TIMEOUT, HTTP_CONFLICT;
+            public static final int HTTP_CREATED, HTTP_ENTITY_TOO_LARGE, HTTP_FORBIDDEN;
+            public static final int HTTP_GATEWAY_TIMEOUT, HTTP_GONE, HTTP_INTERNAL_ERROR;
+            public static final int HTTP_LENGTH_REQUIRED, HTTP_MOVED_PERM, HTTP_MOVED_TEMP;
+            public static final int HTTP_MULT_CHOICE, HTTP_NOT_ACCEPTABLE, HTTP_NOT_AUTHORITATIVE;
+            public static final int HTTP_NOT_FOUND, HTTP_NOT_MODIFIED, HTTP_NO_CONTENT;
+            public static final int HTTP_OK, HTTP_PARTIAL, HTTP_PAYMENT_REQUIRED;
+            public static final int HTTP_PRECON_FAILED, HTTP_PROXY_AUTH, HTTP_REQ_TOO_LONG;
+            public static final int HTTP_RESET, HTTP_SEE_OTHER, HTTP_SERVER_ERROR;
+            public static final int HTTP_UNAUTHORIZED, HTTP_UNAVAILABLE, HTTP_UNSUPPORTED_TYPE;
+            public static final int HTTP_USE_PROXY, HTTP_VERSION;
+    // Protected Instance Variables
+            protected String method;
+            protected int responseCode;
+            protected String responseMessage;
+    // Class Methods
+            public static boolean getFollowRedirects();
+            public static void setFollowRedirects(boolean set);
+    // Public Instance Methods
+            public abstract void disconnect();
+            public String getRequestMethod();
+            public int getResponseCode() throws IOException;
+            public String getResponseMessage() throws IOException;
+            public void setRequestMethod(String method) throws ProtocolException;
+            public abstract boolean usingProxy();
+}
+Hierarchy:
+Object->URLConnection->HttpURLConnection
+java.net.FileNameMap (JDK 1.1)
+java.net.InetAddress (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

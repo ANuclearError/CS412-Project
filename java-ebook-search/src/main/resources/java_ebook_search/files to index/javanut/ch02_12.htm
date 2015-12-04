@@ -1,0 +1,231 @@
+
+[Chapter 2] 2.12 Statements
+Chapter 2How Java Differs from C
+2.12 Statements
+Many of Java's control statements are similar or identical
+to C statements.  This section lists and, where necessary,
+explains Java's statements.  Note that the topic of
+exceptions and the try/catch/finally
+statement is substantial enough that it is covered later
+in a section of its own.
+The if/else, while, and do/while Statements
+The if, else, do, and while
+statements are exactly the same in Java as they are in C.
+The only substantial difference arises because the Java
+boolean type cannot be cast to other types.  In
+Java, the values 0 and null are not the same
+as false, and non-zero and non-null values
+are not the same as true.
+The conditional expression that is expected by the
+if, the while, and the
+do/while statements must be of
+boolean type in Java.  Specifying an integer type or
+a reference type won't do.  Thus, the following C code is
+not legal in Java:
+int i = 10;
+while(i--) {
+    Object o = get_object();
+    if (o) {
+        do { ... } while(j);
+    }
+}
+In Java, you must make the condition you are testing for
+clear by explictly testing your value against 0 or 
+null.  Use code like the following:
+int i = 10;
+while(i-- &gt; 0) {
+    Object o = get_object();
+    if (o != null) {
+        do { ... } while(j != 0);
+    }
+}
+The switch Statement
+The switch statement is the same in Java as it is in
+C.  You may use byte, char, short,
+int, or long types as the values of the
+case labels, and you may also specify a
+default label just as you do in C.
+The for Loop
+The for statement is perhaps the most useful looping
+construct available in Java.  There are only two differences
+between the Java for loop and the C for
+loop.  
+The first difference is that although Java does not
+support the C comma operator (which allows multiple
+expressions to be joined into a single expression), the Java
+for loop simulates it by allowing multiple comma-separated
+expressions to appear in the initialization and increment
+sections, but not the test section, of the loop.  For
+example:
+int i;
+String s;
+for(i=0, s = "testing";             // Initialize variables.
+    (i &lt; 10) &amp;&amp; (s.length() &gt;= 1);  // Test for continuation.
+    i++, s = s.substring(1))        // Increment variables.
+{    
+    System.out.println(s);          // Loop body.
+}
+As you can see, this "difference" between the Java and C
+for loops is really a similarity.
+The second difference is the addition of the C++ ability to
+declare local loop variables in the initialization section
+of the loop:
+for(int i = 0; i &lt; my_array.length; i++) 
+    System.out.println("a[" + i + "] = " + my_array[i]);
+Variables declared in this way have the for loop as
+their scope. In other words, they are only valid within the body of
+the for loop and within the initialization, test,
+and increment expressions of the loop. Although variables
+declared in for loops have their own scope, the Java
+compiler won't let you declare a loop variable that has the
+same name as an already existing variable or parameter.
+Note that because variable declaration syntax also uses the
+comma, the Java syntax allows you to either specify multiple
+comma-separated initialization expressions or to declare and
+initialize multiple comma-separated variables of the same
+type.  You may not mix variable declarations with other,
+non-declaration expressions.  For example, the following
+for loop declares and initializes two variables that
+are valid only within the for loop.
+for(int i=0, j=10; i &lt; j; i++, j--) System.out.println("k = " + i*j);
+Labelled break and continue Statements
+The break and continue statements, used
+alone, behave the same in Java as they do in C.  However, in
+Java, they may optionally be followed by a label that
+specifies an enclosing loop (for continue) or any
+enclosing statement (for break).  The labelled forms
+of these statements allow you to "break" and "continue" any
+specified statement or loop within a method definition, not
+only the nearest enclosing statements or loop.
+The break statement, without a label, transfers
+control out of ("breaks out of" or terminates) the nearest
+enclosing for, while, do or
+switch statement, exactly as in C.  If the
+break keyword is followed by an identifier that is
+the label of an arbitrary enclosing statement,
+execution transfers out of that enclosing statement.  After
+the break statement is executed, any required
+finally clauses are executed, and control
+resumes at the statement following the terminated statement.
+(The finally clause and the try statement
+it is associated with are exception handling constructs and
+are explained in the next section.) For example:
+test: if (check(i)) {
+    try {
+        for(int j=0; j &lt; 10; j++) {
+            if (j &gt; i) break;           // Terminate just this loop.
+            if (a[i][j] == null) 
+                break test;             // Do the finally clause and
+        }                               // terminate the if statement.
+    }
+    finally { cleanup(a, i, j); }
+}
+Without a label, the continue statement works
+exactly as in C: It stops the iteration in progress and
+causes execution to resume after the last statement in the
+while, do, or for loop, just before
+the loop iteration is to begin again.  If the
+continue keyword is followed by an identifier that
+is the label of an enclosing loop, execution skips to
+the end of that loop instead.  If there are any
+finally clauses between the continue
+statement and the end of
+the appropriate loop, these
+clauses are executed before control is transferred to the
+end of the loop.
+The following code fragment illustrates how the
+continue statement works in its labelled and
+unlabelled forms.
+big_loop: while(!done) {
+    if (test(a,b) == 0) continue;       // Control goes to point 2.
+    try {
+        for(int i=0; i &lt; 10; i++) {
+            if (a[i] == null) 
+                continue;               // Control goes to point 1.
+            else if (b[i] == null)
+                continue big_loop;      // Control goes to point 2,
+                                        // after executing the finally block.
+            doit(a[i],b[i]);
+           // Point 1.  Increment and start loop again with the test.
+        }
+    }
+    finally { cleanup(a,b); }
+    // Point 2.  Start loop again with the (!done) test.
+}
+Note the non-intuitive feature of the labelled
+continue statement: The loop label must appear at
+the top of the loop, but continue causes execution
+to transfer to the very bottom of the loop.
+No goto Statement
+goto is a reserved word in Java, but the
+goto statement is not currently part of the language.
+Labelled break and continue statements
+replace some important and legitimate uses of
+goto, and the
+try/catch/finally statement replaces
+the others.
+The synchronized Statement
+Since Java is a multithreaded system, care must often be
+taken to prevent multiple threads from modifying objects
+simultaneously in a way that might leave the object's state
+corrupted.  Sections of code that must not be executed
+simultaneously are known as "critical sections."  Java
+provides the synchronized statement to protect these
+critical sections.  The syntax is:
+synchronized (expression) statement
+expression is an expression that must resolve to an
+object or an array.  The statement
+ is the code of
+the critical section, which is usually a block of statements
+(within { and }).  
+The synchronized
+statement attempts to acquire an exclusive lock for the
+object or array specified by expression.  It does
+not execute the critical section of code until it can obtain
+this lock, and in this way, ensures that no other threads
+can be executing the section at the same time.
+Note that you do not have to use the synchronized
+statement unless your program creates multiple threads that
+share data.   If only one thread ever accesses a data
+structure, there is no need to protect it with
+synchronized.  When you do have to use it, it might
+be in code like the following:
+public static void SortIntArray(int[] a) {
+    // Sort the array a. This is synchronized so that some other
+    // thread can't change elements of the array while we're sorting it.
+    // At least not other threads that protect their changes to the
+    // array with synchronized.
+    synchronized (a) {
+        // Do the array sort here. 
+    }
+}
+The synchronized keyword is more often used as a method
+modifier in Java.  When applied to a method, it indicates
+that the entire method is a critical section.  For a
+synchronized class method (a static method), Java
+obtains an exclusive lock on the class before executing the
+method.  For a synchronized instance method, Java
+obtains an exclusive lock on the class instance.  (Class
+methods and instance methods are discussed in the next
+chapter.) 
+The package and import Statements
+The package statement, as we saw earlier in the
+chapter, specifies the package that the classes in a file of
+Java source code are part of.  If it appears, it must be the
+first statement of a Java file.  The import
+statement, which we also saw earlier, allows us to refer to
+classes by abbreviated names.  import statements
+must appear after the package statement, if any, and
+before any other statements in a Java file.  For example:
+package games.tetris;
+import java.applet.*;
+import java.awt.*;
+Operators
+Exceptions and Exception Handling
+ 
+ 
+ 
+ 
+ 
+ 
+ 

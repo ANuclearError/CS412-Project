@@ -1,0 +1,338 @@
+
+[Chapter 9] 9.3 Checkbox
+Chapter 9Pick Me
+9.3 Checkbox
+The Checkbox is a general purpose 
+way to record a true or false state. When several checkboxes are associated 
+in a CheckboxGroup (CheckboxGroup), 
+only one can be selected at a time; selecting each Checkbox 
+causes the previous selection to become deselected. The CheckboxGroup 
+is Java's way of offering the interface element known as radio 
+buttons or a radio box. When you create a Checkbox, 
+you decide whether to place it into a CheckboxGroup 
+by setting the proper argument in its constructor. 
+Every Checkbox has both a label 
+and a state, although the label could be empty. You can change the label 
+based on the state of the Checkbox. 
+Figure 9.4 shows what several Checkbox 
+components might look like. The two on the left are independent, while 
+the five on the right are in a CheckboxGroup. 
+Note that the appearance of a Checkbox 
+varies quite a bit from platform to platform. However, the appearance of 
+a CheckboxGroup is always different 
+from the appearance of an ungrouped Checkbox, 
+and the appearance of a checked Checkbox 
+is different from an unchecked Checkbox. 
+Figure 9.4: Two separate checkboxes and a CheckboxGroup
+Checkbox MethodsConstructors
+public Checkbox () 
+This constructor for Checkbox 
+creates a new instance with no label or grouping. The initial state of 
+the item is false. A checkbox 
+doesn't necessarily need a label; however, a checkbox without a label 
+might be confusing, unless it is being used as a column in a table or a 
+spreadsheet. 
+public Checkbox (String label) 
+The second constructor creates a new Checkbox 
+with a label of label and no 
+grouping. The initial state of the item is false. 
+If you want a simple yes/no choice and plan to make no 
+the default, use this constructor. If the Checkbox 
+will be in a group or you want its initial value to be true, 
+use the next constructor. 
+public Checkbox (String label, boolean state)  
+This constructor allows you to specify the Checkbox's 
+initial state. With it you create a Checkbox 
+with a label of label and an 
+initial state of state. 
+public Checkbox (String label, boolean state, CheckboxGroup group)  public Checkbox (String label, CheckboxGroup group, boolean state)
+The final constructor for Checkbox 
+is the most flexible. With this constructor you create a Checkbox 
+with a label of label, a CheckboxGroup 
+of group, and an initial state 
+of state. If group 
+is null, the Checkbox 
+is independent. 
+In Java 1.0, you created an independent Checkbox 
+with an initial value of true 
+by using null as the group: 
+Checkbox cb = new Checkbox ("Help", null, true)
+The shape of the Checkbox reflects 
+whether it's in a CheckboxGroup 
+or independent. On Microsoft Windows, grouped checkboxes are represented 
+as circles. On a UNIX system, they are diamonds. On both systems, independent 
+checkboxes are squares. 
+Label
+public String getLabel () 
+The getLabel() method retrieves 
+the current label on the Checkbox 
+and returns it as a String 
+object. 
+public synchronized void setLabel (String label) 
+The setLabel() method changes 
+the label of the Checkbox to 
+label. If the new label is 
+a different size than the old one, you have to validate() 
+the container after the change to ensure the entire label will be seen. 
+State
+A state of true means the Checkbox 
+is selected. A state of false 
+means that the Checkbox is 
+not selected. 
+public boolean getState () 
+The getState() method retrieves 
+the current state of the Checkbox 
+and returns it as a boolean. 
+public void setState (boolean state) 
+The setState() method changes 
+the state of the Checkbox to 
+state. If the Checkbox 
+is in a CheckboxGroup and state 
+is true, the other items in the group become false. 
+ItemSelectable method
+public Objects[] getSelectedObjects ()  
+The getSelectedObjects() method 
+returns the Checkbox label 
+as a one-element Object array 
+if it is currently selected, or null 
+if the Checkbox is not selected. 
+Because this method is part of the ItemSelectable 
+interface, you can use it to look at the selected items in a Choice, 
+List, or Checkbox. 
+CheckboxGroup
+This section lists methods that you issue to Checkbox 
+to affect its relationship to a CheckboxGroup. 
+Methods provided by the CheckboxGroup 
+itself can be found later in this chapter. 
+public CheckboxGroup getCheckboxGroup () 
+The getCheckboxGroup() method 
+returns the current CheckboxGroup 
+for the Checkbox. If the Checkbox 
+is not in a group, this method returns null. 
+public void setCheckboxGroup (CheckboxGroup group) 
+The setCheckboxGroup() method 
+allows you to insert a Checkbox 
+into a different CheckboxGroup. 
+To make the Checkbox independent, 
+pass a group argument of null. 
+The method sets every Checkbox 
+in the original CheckboxGroup 
+to false (cb.getCheckboxGroup().setCurrent(null)), 
+then the Checkbox is added 
+to the new group without changing any values in the new group. 
+Checkbox components take on 
+a different shape when they are in a CheckboxGroup. 
+If the checkbox was originally not in a CheckboxGroup, 
+the shape of the checkbox does not change automatically when you put it 
+in one with setCheckboxGroup(). 
+(This also holds when you remove a Checkbox 
+from a CheckboxGroup and make 
+it independent or vice versa.) In order for the Checkbox 
+to look right once added to group, 
+you need to destroy and create (removeNotify() and addNotify(), respectively) the 
+Checkbox peer to correct the 
+shape. Also, it is possible to get multiple true Checkbox 
+components in group this way, 
+since the new CheckboxGroup's 
+current selection does not get adjusted. To avoid this problem, make sure 
+it is grouped properly the first time, or be sure to clear the selections 
+with a call to getCheckboxGroup().setCurrent(null). 
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method will 
+create the Checkbox 
+peer in the appropriate shape. If you override this method, call super.addNotify() 
+first, then add your customizations for the new class. You will then be 
+able to do everything you need with the information about the newly created 
+peer. 
+protected String paramString ()  
+When you call the toString() 
+method of Checkbox, the default 
+toString() method of Component 
+is called. This in turn calls paramString() 
+which builds up the string to display. At the Checkbox 
+level, the label (if non-null) and the state of the item are appended. 
+Assuming the Dialog Checkbox 
+in Figure 9.4 was selected, the results would be: 
+java.awt.Checkbox[85,34,344x32,label=Dialog,state=true]
+Checkbox Events
+The primary event for a Checkbox 
+occurs when the user selects it. With the 1.0 event model, this generates 
+an ACTION_EVENT and triggers 
+the action() method. Once the 
+Checkbox has the input focus, 
+the various keyboard events can be generated, but they do not serve any 
+useful purpose because the Checkbox 
+doesn't change. The sole key of value for a Checkbox 
+is the spacebar. This may generate the ACTION_EVENT 
+after KEY_PRESS and KEY_RELEASE; 
+thus the sequence of method calls would be keyDown(), 
+keyUp(), and then action(). 
+With the version 1.1 event model, you register an ItemListener 
+with the method addItemListener(). Then when the user selects the Checkbox, 
+the method ItemListener.itemStateChanged() 
+is called through the protected Checkbox.processItemEvent() 
+method. Key, mouse, and focus listeners are registered through the Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. Action
+public boolean action (Event e, Object o)
+The action() method for a Checkbox 
+is called when the user selects it. e 
+is the Event instance for the 
+specific event, while o 
+is the opposite of the old state of the toggle. If the Checkbox 
+was true when it was selected, o 
+will be false. Likewise, if it was false, o will be true. This incantation 
+sounds unnecessarily complex, and for a single Checkbox, 
+it is: o is just the new state 
+of the Checkbox. The following 
+code uses action() with a single 
+Checkbox. 
+public boolean action (Event e, Object o) {
+    if (e.target instanceof Checkbox) {
+        System.out.println ("Checkbox is now " + o);
+    }
+    return false;
+}
+On the other hand, if the Checkbox 
+is in a CheckboxGroup, o 
+is still the opposite of the old state of the toggle, which may or may 
+not be the new state of the Checkbox. 
+If the Checkbox is initially 
+false, o 
+will be true, and the Checkbox's 
+new state will be true. However, 
+if the Checkbox is initially 
+true, selecting the Checkbox 
+doesn't change anything because one Checkbox 
+in the group must always be true. 
+In this case, o is false 
+(the opposite of the old state), though the Checkbox's 
+state remains true. 
+Therefore, if you're working with a CheckboxGroup 
+and need to do something once when the selection changes, perform 
+your action only when o is true. 
+To find out which Checkbox 
+was actually chosen, you need to call the getLabel() 
+method for the target of event e. 
+(It would be nice if o gave 
+us the label of the Checkbox 
+that was selected, but it doesn't.) An example of this follows: 
+public boolean action (Event e, Object o) {
+    if (e.target instanceof Checkbox) {
+        System.out.println (((Checkbox)(e.target)).getLabel() +
+            " was selected.");
+        if (new Boolean (o.toString()).booleanValue()) {
+            System.out.println ("New option chosen");
+        } else {
+            System.out.println ("Use re-selected option");
+        }
+    }
+    return false;
+}
+One other unfortunate twist of CheckboxGroup: 
+it would be nice if there was some easy way to find out about checkboxes 
+that change state without selection--for example, if you could find 
+out which Checkbox was deselected 
+when a new Checkbox was selected. 
+Unfortunately, you can't, except by keeping track of the state of 
+all your checkboxes at all times. When a Checkbox 
+state becomes false because another Checkbox 
+was selected, no additional event is generated, in either Java 1.0 or 1.1. Keyboard
+Checkboxes are able to capture 
+keyboard-related events once the Checkbox 
+has the input focus, which happens when it is selected. If you can find 
+a use for this, you can use keyDown() 
+and keyUp(). For most interface 
+designs I can think of, action() 
+is sufficient. A possible use for keyboard events is to jump to other Checkbox 
+options in a CheckboxGroup, 
+but I think that is more apt to confuse users than help. 
+public boolean keyDown (Event e, int key)
+The keyDown() method is called 
+whenever the user presses a key while the Checkbox 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) 
+for keyDown() could be either 
+KEY_PRESS for a regular key 
+or KEY_ACTION for an action-oriented key (i.e., arrow or function key). There is no visible indication 
+that the user has pressed a key over the checkbox. 
+public boolean keyUp (Event e, int key)
+The keyUp() method is called 
+whenever the user releases a key while the Checkbox 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key is 
+the integer representation of the character pressed. The identifier for 
+the event (e.id) 
+for keyUp() could be either 
+KEY_RELEASE for a regular key 
+or KEY_ACTION_RELEASE for an 
+action-oriented key (i.e., arrow or function key). keyUp() 
+may be used to determine how long key 
+has been pressed. 
+Mouse
+Ordinarily, the Checkbox component 
+does not reliably trigger any mouse events. Focus
+Ordinarily, the Checkbox component 
+does not reliably trigger any focus events. Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners, and they are told when 
+the event happens. 
+public void addItemListener(ItemListener listener)  
+The addItemListener() method 
+registers listener as an object 
+interested in being notified when an ItemEvent 
+passes through the EventQueue 
+with this Checkbox as its target. 
+Then, the listener.itemStateChanged() 
+method will be called. Multiple listeners can be registered. 
+public void removeItemListener(ItemListener listener)  
+The removeItemListener() method 
+removes listener as a interested 
+listener. If listener is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+every AWTEvent with this Checkbox 
+as its target. processEvent() 
+then passes it along to any listeners for processing. When you subclass 
+Checkbox, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processItemEvent(ItemEvent e)  
+The processItemEvent() method 
+receives every ItemEvent with 
+this Checkbox as its target. 
+processItemEvent() then passes 
+it along to any listeners for processing. When you subclass Checkbox, 
+overriding processItemEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processItemEvent() 
+is like overriding action() using 
+the 1.0 event model. 
+If you override processItemEvent(), 
+remember to call the method super.processItemEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+Lists
+CheckboxGroup
+ 
+ 
+ 
+ 
+ 
+ 
+ 

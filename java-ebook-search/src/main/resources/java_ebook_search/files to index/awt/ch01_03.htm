@@ -1,0 +1,107 @@
+
+[Chapter 1] 1.3 Layouts
+Chapter 1Abstract Window Toolkit Overview
+1.3 Layouts
+Layouts allow you to format components on the screen in a platform-independent 
+way. Without layouts, you would be forced to place components at explicit 
+locations on the screen, creating obvious problems for programs that need 
+to run on multiple platforms. There's no guarantee that a TextArea 
+or a Scrollbar or any other 
+component will be the same size on each platform; in fact, you can bet 
+they won't be. In an effort to make your Java creations portable 
+across multiple platforms, Sun created a LayoutManager 
+interface that defines methods to reformat the screen based on the current 
+layout and component sizes. Layout managers try to give programs a consistent 
+and reasonable appearance, regardless of the platform, the screen size, 
+or actions the user might take. 
+The standard JDK provides five classes that implement 
+the LayoutManager interface. 
+They are FlowLayout, GridLayout, 
+BorderLayout, CardLayout, 
+and GridBagLayout. All of these 
+layouts are covered in much greater detail in Chapter 7, Layouts. This chapter 
+also discusses how to create complex layouts by combining layout managers 
+and how to write your own LayoutManager. 
+The Java 1.1 JDK includes the LayoutManager2 
+interface. This interface extends the LayoutManager 
+interface for managers that provide constraint-based layouts. 
+FlowLayout
+The FlowLayout is the default 
+layout for the Panel class, 
+which includes its most famous subclass, Applet. 
+When you add components to the screen, they flow left to right (centered 
+within the applet) based upon the order added and the width of the applet. 
+When there are too many components to fit, they "wrap" to a 
+new row, similar to a word processor with word wrap enabled. If you resize 
+an applet, the components' flow will change based upon the new width 
+and height. Figure 1.11 shows an example both before 
+and after resizing. FlowLayout
+contains all the FlowLayout 
+details. 
+Figure 1.11: A FlowLayout before and after resizing
+GridLayout
+The GridLayout is widely used 
+for arranging components in rows and columns. As with FlowLayout, 
+the order in which you add components is relevant. You start at row one, 
+column one, move across the row until it's full, then continue on 
+to the next row. However, unlike FlowLayout, 
+the underlying components are resized to fill the row-column area, if possible. 
+GridLayout can reposition or 
+resize objects after adding or removing components. Whenever the area is 
+resized, the components within it are resized. Figure 1.12 
+shows an example before and after resizing. GridLayout
+contains all the details about GridLayout. 
+Figure 1.12: A GridLayout before and after resizing
+BorderLayout
+BorderLayout is one of the 
+more unusual layouts provided. It is the default layout for Window, 
+along with its children, Frame 
+and Dialog. BorderLayout 
+provides five areas to hold components. These areas are named after the 
+four different borders of the screen, North, 
+South, East, 
+and West, with 
+any remaining space going into the Center 
+area. When you add a component to the layout, you must specify which area 
+to place it in. The order in which components are added to the screen is 
+not important, although you can have only one component in each area. 
+Figure 1.13 shows a BorderLayout that has one button 
+in each area, before and after resizing. BorderLayout
+covers the details of the BorderLayout. 
+Figure 1.13: A BorderLayout
+CardLayout
+The CardLayout is a bit on 
+the strange side. A CardLayout 
+usually manages several components, displaying one of them at a time and 
+hiding the rest. All the components are given the same size. Usually, the 
+CardLayout manages a group 
+of Panels (or some other container), 
+and each Panel contains several 
+components of its own. With a little work, you can use the CardLayout 
+to create tabbed dialog boxes or property sheets, which are not currently 
+part of AWT. CardLayout lets 
+you assign names to the components it is managing and lets you jump to 
+a component by name. You can also cycle through components in order. Figure 1.11, Figure 1.12, and Figure 1.13 show multiple cards controlled by a single CardLayout. 
+Selecting the Choice button 
+displays a different card. CardLayout 
+discusses the details of CardLayout. 
+GridBagLayout
+GridBagLayout is the most sophisticated 
+and complex of the layouts provided in the development kit. With the GridBagLayout, 
+you can organize components in multiple rows and columns, stretch specific 
+rows or columns when space is available, and anchor objects in different 
+corners. You provide all the details of each component through instances 
+of the GridBagConstraints class. 
+Figure 1.14 shows an example of a GridBagLayout. 
+GridBagLayout and GridBagConstraints 
+are discussed in GridBagLayout and GridBagConstraints. 
+Figure 1.14: A GridBagLayout
+Peers
+Containers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

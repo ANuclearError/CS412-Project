@@ -1,0 +1,41 @@
+
+[Chapter 24] 24.51 java.io.PipedWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.51 java.io.PipedWriter (JDK 1.1)
+PipedWriter is a character output stream that writes
+characters to the PipedReader character input stream
+to which it is connected.  PipedWriter implements
+one half of a pipe, and is useful for communication between
+two threads of an application.
+A PipedWriter cannot be used until it is connected
+to a PipedReader object, which may be passed to the
+PipedWriter() constructor, or to the
+connect() method.
+PipedWriter inherits most of the methods of its
+superclass.  See Writer for more information.
+PipedWriter is the character stream analog of
+PipedOutputStream. 
+public class PipedWriter extends Writer {
+    // Public Constructors
+            public PipedWriter();
+            public PipedWriter(PipedReader sink) throws IOException;
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Writer
+            public void connect(PipedReader sink) throws IOException;
+            public void flush() throws IOException;  // Defines Writer
+            public void write(char[] cbuf, int off, int len) throws IOException;  // Defines Writer
+}
+Hierarchy:
+Object->Writer->PipedWriter
+Passed To:
+PipedReader(), 
+PipedReader.connect()
+java.io.PipedReader (JDK 1.1)
+java.io.PrintStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

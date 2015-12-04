@@ -1,0 +1,45 @@
+
+[Chapter 28] 28.12 java.net.MulticastSocket (JDK 1.1)
+Chapter 28The java.net Package
+28.12 java.net.MulticastSocket (JDK 1.1)
+This subclass of DatagramSocket is used to send and
+receive multicast UDP packets.  It extends
+DatagramSocket by adding joinGroup() and
+leaveGroup() methods to join and leave multicast
+groups.  The IP address specified to these methods should be
+a valid multicast address in the range of 224.0.0.1 to
+239.255.255.255.  Note that you do not have to join a group
+to send a packet to a multicast address, but you must join
+the group to receive packets sent to that address.
+MulticastSocket defines a variant send()
+method that allows you to specify a time-to-live (TTL) value for
+the packet you send.  This value specifies the number of
+network "hops" the packet may travel before it expires.
+You can also set a default TTL for all packets sent though a
+MulticastSocket with setTTL().
+Note that untrusted applets are not allowed to use multicast
+sockets.
+public class MulticastSocket extends DatagramSocket {
+    // Public Constructors
+            public MulticastSocket() throws IOException;
+            public MulticastSocket(int port) throws IOException;
+    // Public Instance Methods
+            public InetAddress getInterface() throws SocketException;
+            public byte getTTL() throws IOException;
+            public void joinGroup(InetAddress mcastaddr) throws IOException;
+            public void leaveGroup(InetAddress mcastaddr) throws IOException;
+            public synchronized void send(DatagramPacket p, byte ttl) throws IOException;
+            public void setInterface(InetAddress inf) throws SocketException;
+            public void setTTL(byte ttl) throws IOException;
+}
+Hierarchy:
+Object->DatagramSocket->MulticastSocket
+java.net.MalformedURLException (JDK 1.0)
+java.net.NoRouteToHostException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

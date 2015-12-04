@@ -1,0 +1,428 @@
+
+[Chapter 12] Object
+Chapter 12The java.lang Package
+Object
+Name
+Object
+Synopsis
+Class Name:
+java.lang.Object
+Superclass:
+None
+Immediate Subclasses:
+Too many to be listed here
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Object class is the ultimate superclass
+of all other classes in Java. Because every other class is a subclass
+of Object, all of the methods accessible from
+Object are inherited by every other class. In
+other words, all objects in Java, including arrays, have access
+to implementations of the methods in Object.
+The methods of Object provide some basic
+object functionality. The equals() method compares
+two objects for equality, while the hashCode()
+method returns a hashcode for an object. The getClass()
+method returns the Class object associated with
+an object. The wait(), notify(),
+and notifyAll() methods support thread synchronization
+for an object. The toString() method provides
+a string representation of an object.
+Some of these methods should be overridden by subclasses of
+Object. For example, every class should provide
+its own implementation of the toString() method,
+so that it can provide an appropriate string representation.
+Although it is possible to create an instance of the Object
+class, this is rarely done because it is more useful to create specialized
+objects. However, it is often useful to declare a variable that contains
+a reference to an Object because such a variable
+can contain a reference to an object of any other class.
+Class Summary
+public class java.lang.Object {
+    // Constructors
+    public Object();
+    // Public Instance Methods
+    public boolean equals(Object obj);
+    public final native Class getClass();
+    public native int hashCode();
+    public final native void notify();
+    public final native void notifyAll();
+    public String toString();
+    public final native void wait();
+    public final native void wait(long millis);
+    public final native void wait(long millis, int nanos);
+    // Protected Instance Methods
+    protected native Object clone();
+    protected void finalize() throws Throwable;
+}
+Constructors
+Object
+public Object()
+Description
+Creates an instance of the Object class.
+Public Instance Methods
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object.
+Returns
+true if the objects are equal; false
+if they are not.
+Description
+The equals() method of Object
+returns true if the obj parameter
+refers to the same object as the object this method is associated
+with. This is equivalent to using the == operator
+to compare two objects.
+Some classes, such as String, override
+the equals() method to provide a comparison based
+on the contents of the two objects, rather than on the strict equality
+of the references. Any subclass can override the equals()
+method to implement an appropriate comparison, as long as the overriding
+method satisfies the following rules for an equivalence relation:
+The method is reflexive :
+given a reference x, x.equals(x)
+returns true.
+The method is symmetric : given
+references x and y, x.equals(y)
+returns true if and only if y.equals(x)
+returns true.
+The method is transitive : given
+references x, y, and z,
+if x.equals(y) returns true
+and y.equals(z) returns true,
+then x.equals(z) returns true.
+The method is consistent : given
+references x and y, multiple
+invocations of x.equals(y) consistently return
+true or consistently return false,
+provided that no information contained by the objects referenced
+by x or y changes.
+A comparison with null returns
+false: given a reference x
+that is non-null, x.equals(null)
+returns false.
+getClass
+public final native Class getClass()
+Returns
+A reference to the Class object that describes
+the class of this object.
+Description
+The getClass() method of Object
+returns the Class object that describes the class
+of this object. This method is final, so it cannot
+be overridden by subclasses.
+hashCode
+public native int hashCode()
+Returns
+A relatively unique value that should be the same for all objects that
+are considered equal.
+Description
+The hashCode() method of Object
+calculates a hashcode value for this object. The method returns
+an integer value that should be relatively unique to the object.
+If the equals() method for the object bases its
+result on the contents of the object, the
+hashcode() method should also base its result on the
+contents.
+The hashCode()
+method is provided for the benefit of hashtables, which store and
+retrieve elements using key values called hashcodes.
+The internal placement of a particular piece of data is determined
+by its hashcode; hashtables are designed to use hashcodes to provide
+efficient retrieval.
+The java.util.Hashtable class provides
+an implementation of a hashtable that stores values of
+type Object.
+Each object is stored in the hashtable based on the hash code of
+its key object. It is important that each object have the most unique
+hash code possible. If two objects have the same hash code but they
+are not equal (as determined by equals()), a
+Hashtable that stores these two objects may need to
+spend additional time searching when it is trying to retrieve objects.
+The implementation of hashCode() in
+Object tries to make sure that every object has
+a distinct hash code by basing its result on the internal
+representation of a reference to the object.
+Some classes, such as String, override
+the hashCode() method to produce values based
+on the contents of individual objects, instead of the objects themselves.
+In other words, two String objects that contain
+the exact same strings have the same hash code. If String
+did not override the hashCode() method inherited
+from Object, these two String
+objects would have different hash code values and it would be impossible
+to use String objects as keys for hashtables.
+Any subclass can override the hashCode()
+method to implement an appropriate way of producing hash code values,
+as long as the overriding method satisfies the following rules:
+If the hashCode()
+method is called on the same object more than once during the execution
+of a Java application, it must consistently return the same integer
+value. The integer does not, however, need to be consistent between
+Java applications, or from one execution of an application to another
+execution of the same application.
+If two objects compare as equal according to their
+equals() methods, calls to the hashCode()
+methods for the objects must produce the same result.
+If two objects compare as not equal according to
+their equals() methods, calls to the hashCode()
+methods for the two objects are not required to produce distinct
+results. However, implementations of hashCode()
+that produce distinct results for unequal objects may improve the
+performance of hashtables.
+In general, if a subclass overrides the equals()
+method of Object, it should also override
+the hashCode() method.
+notify
+public final native void notify()
+Throws
+IllegalMonitorStateException
+If the method is called from a thread that does
+not hold this object's lock.
+Description
+The notify() method wakes up a thread that
+is waiting to return from a call to this object's wait()
+method. The awakened thread can resume executing as soon as it regains
+this object's lock. If more than one thread is waiting, the
+notify() method arbitrarily awakens just one
+of the threads.
+The notify() method can be called only by a thread
+that is the current owner of this object's lock. A thread holds the
+lock on this object while it is executing a
+synchronized instance method of the object or
+executing the body of a synchronized statement that
+synchronizes on the object. A thread can also hold the lock for a
+Class object if it is executing a
+synchronized static method of
+that class.
+This method is final, so it cannot be overridden
+by subclasses.
+notifyAll
+public final native void notifyAll()
+Throws
+IllegalMonitorStateException
+If the method is called from a thread that does
+not hold this object's lock.
+Description
+The notifyAll() method wakes up all the
+threads that are waiting to return from a call to this object's
+wait() method. Each awakened thread can resume
+executing as soon as it regains this object's lock.
+The notifyAll() method can be called only by a
+thread that is the current owner of this object's lock. A thread holds
+the lock on this object while it is executing a
+synchronized instance method of the object or
+executing the body of a synchronized statement that
+synchronizes on the object. A thread can also hold the lock for a
+Class object if it is executing a
+synchronized static method of
+that class.
+This method is final, so it cannot be overridden
+by subclasses.
+toString
+public String toString()
+Returns
+The string representation of this object.
+Description
+The toString() method of Object returns a generic string representation of this object.
+The method returns a String that consists of
+the object's class name, an "at" sign, and the unsigned hexadecimal
+representation of the value returned by the object's hashCode()
+method.
+Many classes override the toString() method
+to provide a string representation that is specific to that type
+of object. Any subclass can override the toString() method; the
+overriding method should simply return a String that represents
+the contents of the object with which it is associated.
+wait
+public final native void wait() throws InterruptedException
+Throws
+IllegalMonitorStateException
+If the method is called from a thread that does
+not hold this object's lock.
+InterruptedException
+If another thread interrupted this thread.
+Description
+The wait() method causes a thread to wait
+until it is notified by another thread to stop waiting.
+When wait() is called, the thread releases its
+lock on this object and waits until another thread notifies it to
+wake up through a call to either notify() or
+notifyAll(). After the thread is awakened, it
+has to regain the lock on this object before it can resume executing.
+The wait() method can be called only by
+a thread that is the current owner of this object's lock. A thread
+holds the lock on this object while it is executing a synchronized
+instance method of the object or executing the body of a synchronized
+statement that synchronizes on the object. A thread can also hold
+the lock for a Class object if it is executing
+a synchronized static method
+of that class.
+This method is final, so it cannot be overridden
+by subclasses.
+   public final native void wait(long timeout) throws InterruptedException  
+Parameters
+timeout
+The maximum number of milliseconds to wait.
+Throws
+IllegalMonitorStateException
+If the method is called from a thread that does
+not hold this object's lock.
+InterruptedException
+If another thread interrupted this thread.
+Description
+The wait() method causes a thread to wait
+until it is notified by another thread to stop waiting
+or until the specified amount of time has elapsed, whichever comes
+first. When wait() is called, the thread releases
+its lock on this object and waits until another thread notifies
+it to wake up through a call to either notify()
+or notifyAll(). If the thread is not notified
+within the specified timeout period, it is automatically
+awakened when that amount of time has elapsed. If timeout
+is zero, the thread waits indefinitely, just as if wait()
+had been called without a timeout argument. After
+the thread is awakened, it has to regain the lock on this object
+before it can resume executing.
+The wait() method can be called only by
+a thread that is the current owner of this object's lock. A thread
+holds the lock on this object while it is executing a synchronized
+instance method of the object or executing the body of a synchronized
+statement that synchronizes on the object. A thread can also hold
+the lock for a Class object if it is executing
+a synchronized static method
+of that class.
+This method is final, so it cannot be overridden
+by subclasses.
+   public final native void wait(long timeout, int nanos) throws InterruptedException  
+Parameters
+timeout
+The maximum number of milliseconds to wait.
+nanos
+An additional number of nanoseconds to wait.
+Throws
+IllegalMonitorStateException
+If the method is called from a thread that does
+not hold this object's lock.
+InterruptedException
+If another thread interrupted this thread.
+Description
+The wait() method causes a thread to wait
+until it is notified by another thread to stop waiting
+or until the specified amount of time has elapsed, whichever comes
+first. When wait() is called, the thread releases
+its lock on this object and waits until another thread notifies
+it to wake up through a call to either notify()
+or notifyAll(). If the thread is not notified
+within the specified time period, it is automatically awakened when
+that amount of time has elapsed. If timeout and
+nanos are zero, the thread waits indefinitely,
+just as if wait() had been called without any
+arguments. After the thread is awakened, it has to regain the lock
+on this object before it can resume executing.
+The wait() method can be called only by
+a thread that is the current owner of this object's lock. A thread
+holds the lock on this object while it is executing a synchronized
+instance method of the object or executing the body of a synchronized
+statement that synchronizes on the object. A thread can also hold
+the lock for a Class object if it is executing
+a synchronized static method
+of that class.
+Note that Sun's reference implementation
+of Java does not attempt to implement the precision implied by this
+method. Instead, it rounds to the nearest millisecond (unless timeout
+is 0, in which case it rounds up to 1 millisecond)
+and calls wait(long).
+This method is final, so it cannot be overridden
+by subclasses.
+Protected Instance Methods
+clone
+protected native Object clone() throws CloneNotSupportedException
+Returns
+A clone of this object.
+Throws
+OutOfMemoryError
+If there is not enough memory to create the new
+object.
+CloneNotSupportedException
+If the object is of a class that does not support
+clone().
+Description
+A clone
+of an object is another object of the same type that
+has all of its instance variables set to the same values as the
+object being cloned. In other words, a clone is an exact copy of
+the original object.
+The clone() method of Object
+creates a new object that is a clone of this object. No constructor
+is used in creating the clone. The clone() method
+only clones an object if the class of that object indicates that
+its instances can be cloned. A class indicates that its objects
+can be cloned by implementing the Cloneable interface.
+Although array objects do not implement the
+Cloneable interface, the clone()
+method works for arrays. The clone of an array is an array that has
+the same number of elements as the original array, and each element in
+the clone array has the same value as the corresponding element in the
+original array. Note that if an array element contains an object
+reference, the clone array contains a reference to the same object,
+not a copy of the object.
+A subclass of Object can override the clone()
+method in Object to provide any additional functionality
+that is needed. For example, if an object contains references to
+other objects, the clone() method should recursively
+call the clone() methods of all the referenced
+objects. An overriding clone() method can throw
+a CloneNotSupportedException to indicate that
+particular objects cannot be cloned.
+finalize
+protected void finalize() throws Throwable
+Throws
+Throwable
+For any reason that suits an overriding implementation
+of this method.
+Description
+The finalize() method is called by the
+garbage collector when it decides that an object can never be referenced
+again. The method gives an object a chance to perform any cleanup
+operations that are necessary before it is destroyed by the garbage
+collector.
+The finalize() method of Object
+does nothing. A subclass overrides the finalize()
+method to perform any necessary cleanup operations. The overriding
+method should call super.finalize() as the very
+last thing it does, so that any finalize() method
+in the superclass is called.
+When the garbage collector calls an object's finalize()
+method, the garbage collector does not immediately destroy the object
+because the finalize() method might do something
+that results in a reference to the object. Thus the garbage collector
+waits to destroy the object until it can again prove it is safe
+to do so. The next time the garbage collector decides it is safe
+to destroy the object, it does so without calling finalize()
+again. In other words, the garbage collector never calls the
+finalize() method more than once for a particular object.
+A finalize() method can throw any kind
+of exception. An exception causes the finalize()
+method to stop running. The garbage collector then catches and ignores
+the exception, so it has no further effect on a program.
+See Also
+CloneNotSupportedException, 
+IllegalMonitorStateException, 
+InterruptedException, 
+OutOfMemoryError, 
+Throwable
+NumberFormatException
+OutOfMemoryError
+ 
+ 
+ 
+ 
+ 
+ 
+ 

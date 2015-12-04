@@ -1,0 +1,318 @@
+
+[Chapter 17] The java.util Package
+Chapter 17
+17. The java.util Package
+Contents:
+Calendar
+Date
+Dictionary
+EmptyStackException
+Enumeration
+EventListener
+EventObject
+GregorianCalendar
+Hashtable
+ListResourceBundle
+Locale
+MissingResourceException
+NoSuchElementException
+Observable
+Observer
+Properties
+PropertyResourceBundle
+Random
+ResourceBundle
+SimpleTimeZone
+Stack
+StringTokenizer
+TimeZone
+TooManyListenersException
+Vector
+The package java.util contains 
+a number of useful classes and interfaces.  Although the name
+of the package might imply that these are utility classes, they
+are really more important than that.  In fact, Java depends 
+directly on several of the classes in this package, and many programs 
+will find these classes indispensable.  The classes and interfaces in
+java.util include:
+The Hashtable class for implementing hashtables, 
+or associative arrays.
+The Vector class, which supports
+variable-length arrays.
+The Enumeration interface for iterating through
+a collection of elements.
+The StringTokenizer class for 
+parsing strings into distinct tokens separated by
+delimiter characters.
+The EventObject class and the
+EventListener interface, which form the basis of the
+new AWT event model in Java 1.1.
+The Locale class in Java 1.1, which represents
+a particular locale for internationalization purposes.
+The Calendar and TimeZone 
+classes in Java.  These classes interpret 
+the value of a Date
+object in the context of a particular calendar system.
+The ResourceBundle class and its subclasses,
+ListResourceBundle and
+PropertyResourceBundle, which represent
+sets of localized data in Java 1.1.
+Figure 17.1 shows the class hierarchy for
+the java.util package.
+Figure 17.1: The java.util package
+BitSet
+Name
+BitSet
+Synopsis
+Class Name:
+java.util.BitSet
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+JDK 1.0 or later 
+Description
+The BitSet class implements 
+a set of bits. The set grows in size as needed. Each element of a BitSet 
+has a boolean value. When a BitSet 
+object is created, all of the bits are set to false 
+by default. The bits in a BitSet 
+are indexed by nonnegative integers, starting at 0. The size of a BitSet 
+is the number of bits that it currently contains. The BitSet 
+class provides methods to set, clear, and retrieve the values of the individual 
+bits in a BitSet. There are 
+also methods to perform logical AND, OR, and XOR operations. 
+Class Summary
+public final class java.util.BitSet extends java.lang.Object
+                   implements java.lang.Cloneable, java.io.Serializable {
+  // Constructors
+  public BitSet();
+  public BitSet(int nbits);
+  // Instance Methods
+  public void and(BitSet set);
+  public void clear(int bit);
+  public Object clone();
+  public boolean equals(Object obj);
+  public boolean get(int bit);
+  public int hashCode();
+  public void or(BitSet set);
+  public void set(int bit);
+  public int size();
+  public String toString();
+  public void xor(BitSet set);
+}
+Constructors
+BitSet
+public BitSet()
+Description
+This constructor creates a BitSet 
+with a default size of 64 bits. All of the bits in the BitSet 
+are initially set to false. 
+public BitSet(int nbits)
+Parameters
+nbits
+The initial number of bits. 
+Description
+This constructor creates a BitSet 
+with a size of nbits. All of 
+the bits in the BitSet are 
+initially set to false. 
+Instance Methods
+and
+public void and(BitSet set)
+Parameters
+set
+The BitSet 
+to AND with this BitSet. 
+Description
+This method computes the logical AND of this BitSet 
+and the specified BitSet and 
+stores the result in this BitSet. 
+In other words, for each bit in this BitSet, 
+the value is set to only true 
+if the bit is already true 
+in this BitSet and the corresponding 
+bit in set is true.
+If the size of set is greater 
+than the size of this BitSet, 
+the extra bits in set are ignored. 
+If the size of set is less 
+than the size of this BitSet, 
+the extra bits in this BitSet 
+are set to false. 
+clear
+public void clear(int bit)
+Parameters
+bit
+The index of the bit 
+to clear. 
+Description
+This method sets the bit at the given index to false. 
+If bit is greater than or equal 
+to the number of bits in the BitSet, 
+the size of the BitSet is increased 
+so that it contains bit values. 
+All of the additional bits are set to false. 
+clone
+public Object clone()
+Returns
+A copy of this BitSet. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this BitSet 
+and returns it. In other words, the returned BitSet 
+has the same size as this BitSet, 
+and it has the same bits set to true. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of BitSet 
+and it contains the same bit values as the object this method is associated 
+with. In other words, this method compares each bit of this BitSet 
+with the corresponding bit of obj. 
+If any bits do not match, the method returns false. 
+If the size of this BitSet 
+is different than obj, the 
+extra bits in either this BitSet 
+or in obj must be false 
+for this method to return true. 
+get
+public boolean get(int bit)
+Parameters
+bit
+The index of the bit 
+to retrieve. 
+Returns
+The boolean value of the bit 
+at the given index. 
+Description
+This method returns the value of the given bit. If bit 
+is greater than or equal to the number of bits in the BitSet, 
+the method returns false. 
+hashCode
+public int hashCode()
+Returns
+The hashcode for this BitSet. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object. 
+or
+public void or(BitSet set)
+Parameters
+set
+The BitSet 
+to OR with this BitSet. 
+Description
+This method computes the logical OR of this BitSet 
+and the specified BitSet, and 
+stores the result in this BitSet. 
+In other words, for each bit in this BitSet, 
+the value is set to true if 
+the bit is already true in 
+this BitSet or the corresponding 
+bit in set is true.
+If the size of set is greater 
+than the size of this BitSet, 
+this BitSet is first increased 
+in size to accommodate the additional bits. All of the additional bits 
+are initially set to false. 
+set
+public void set(int bit)
+Parameters
+bit
+The index of the bit 
+to set. 
+Description
+This method sets the bit at the given index to true. 
+If bit is greater than or equal 
+to the number of bits in the BitSet, 
+the size of the BitSet is increased 
+so that it contains bit values. 
+All of the additional bits except the last one are set to false. 
+size
+public int size()
+Returns
+The size of this BitSet. 
+Description
+This method returns the size of this BitSet, 
+which is the number of bits currently in the set. 
+toString
+public String toString()
+Returns
+A string representation of this BitSet. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this BitSet. 
+The string lists the indexes of all the bits in the BitSet 
+that are true. 
+xor
+public void xor(BitSet set)
+Parameters
+set
+The BitSet 
+to XOR with this BitSet. 
+Description
+This method computes the logical XOR (exclusive OR) of this BitSet 
+and the specified BitSet and 
+stores the result in this BitSet. 
+In other words, for each bit in this BitSet, 
+the value is set to true only 
+if the bit is already true 
+in this BitSet, and the corresponding 
+bit in set is false, 
+or if the bit is false in this 
+BitSet and the corresponding 
+bit in set is true.
+If the size of set is greater 
+than the size of this BitSet, 
+this BitSet is first increased 
+in size to accommodate the additional bits. All of the additional bits 
+are initially set to false. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Cloneable, 
+Serializable 
+Vector
+Calendar
+ 
+ 
+ 
+ 
+ 
+ 
+ 

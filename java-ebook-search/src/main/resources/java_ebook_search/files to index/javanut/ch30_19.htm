@@ -1,0 +1,43 @@
+
+[Chapter 30] 30.19 java.util.Random (JDK 1.0)
+Chapter 30The java.util Package
+30.19 java.util.Random (JDK 1.0)
+This class implements a pseudo-random number generator.
+nextDouble() and
+nextFloat() return a value between 0.0 and 1.0.
+nextLong() and nextInt() return long
+and int values distributed across the range of those
+data types. nextGaussian() returns pseudo-random
+values with a Gaussian distribution--the mean of the values
+is 0.0, and the standard deviation is 1.0. You can use the
+setSeed() method or the optional constructor
+argument to initialize the pseudo-random number generator
+with some variable seed value other than the current time
+(the default), or with a constant to ensure a repeatable
+sequence of pseudo-randomness.
+public class Random extends Object implements Serializable {
+    // Public Constructors
+            public Random();
+            public Random(long seed);
+    // Public Instance Methods
+        1.1public void nextBytes(byte[] bytes);
+            public double nextDouble();
+            public float nextFloat();
+            public synchronized double nextGaussian();
+            public int nextInt();
+            public long nextLong();
+            public synchronized void setSeed(long seed);
+    // Protected Instance Methods
+        1.1protected synchronized int next(int bits);
+}
+Passed To:
+BigInteger()
+java.util.PropertyResourceBundle (JDK 1.1)
+java.util.ResourceBundle (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

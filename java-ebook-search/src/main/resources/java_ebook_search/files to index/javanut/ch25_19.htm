@@ -1,0 +1,51 @@
+
+[Chapter 25] 25.19 java.lang.Exception (JDK 1.0)
+Chapter 25The java.lang Package
+25.19 java.lang.Exception (JDK 1.0)
+This class forms the root of the exception hierarchy in Java. An
+Exception signals an abnormal condition that must be
+specially handled to prevent program termination.
+Exceptions may be caught and handled.  Exceptions that are
+not subclasses of RuntimeException must be
+declared in the throws clause of any method that can
+throw them.
+getMessage() returns a message associated with the
+exception. See Throwable for other methods.
+public class Exception extends Throwable {
+    // Public Constructors
+            public Exception();
+            public Exception(String s);
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception
+Extended By:
+AWTException, 
+ClassNotFoundException, 
+CloneNotSupportedException, 
+DataFormatException, 
+IllegalAccessException, 
+InstantiationException, 
+InterruptedException, 
+IntrospectionException, 
+InvocationTargetException, 
+IOException, 
+NoSuchFieldException, 
+NoSuchMethodException, 
+ParseException, 
+PropertyVetoException, 
+RuntimeException, 
+TooManyListenersException, 
+UnsupportedFlavorException
+Passed To:
+WriteAbortedException()
+Type Of:
+WriteAbortedException.detail
+java.lang.Error (JDK 1.0)
+java.lang.ExceptionInInitializerError (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

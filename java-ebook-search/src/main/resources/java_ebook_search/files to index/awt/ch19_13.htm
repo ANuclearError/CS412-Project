@@ -1,0 +1,227 @@
+
+[Chapter 19] Choice
+Chapter 19java.awt Reference
+Choice
+Name
+Choice
+Description
+The Choice is a Component 
+that provides a drop-down list of choices to choose from. 
+Class Definition
+public class java.awt.Choice
+    extends java.awt.Component
+    implements java.awt.ItemSelectable {
+  
+  // Constructors
+  public Choice();
+  
+  // Instance Methods
+  public synchronized void add (String item); 
+  public synchronized void addItem (String item); 
+  public void addItemListener (ItemListener l); 
+  public void addNotify();
+  public int countItems();  
+  public String getItem (int index);
+  public int getItemCount(); 
+  public int getSelectedIndex();
+  public synchronized String getSelectedItem();
+  public synchronized Object[] getSelectedObjects(); 
+  public synchronized void insert (String item, int index); 
+  public synchronized void remove (int position); 
+  public synchronized void remove (String item); 
+  public synchronized void removeAll(); 
+  public void removeItemListener (ItemListener l); 
+  public synchronized void select (int pos);
+  public synchronized void select (String str);
+  
+  // Protected Instance Methods
+  protected String paramString();
+  protected void processEvent (AWTEvent e);  
+  protected void processItemEvent (ItemEvent e); 
+}
+Constructors
+Choice
+public Choice()
+Description
+Constructs a Choice object. 
+Instance Methods
+add
+public synchronized void add (String item) 
+Parameters
+item
+Text for new entry. 
+Throws
+NullPointerException
+If 
+item is null. 
+Description
+Adds a new entry to the available choices. 
+addItem
+public synchronized void addItem (String item) 
+Parameters
+item
+Text for new entry. 
+Throws
+NullPointerException
+If item is null. 
+Description
+Replaced by add(String). 
+addItemListener
+public void addItemListener (ItemListener l) 
+Parameters
+l
+The listener to be added. 
+Implements 
+ItemSelectable.addItemListener(ItemListener 
+l) 
+Description
+Adds a listener for the ItemEvent 
+objects this Choice generates. 
+addNotify
+public void addNotify()
+Overrides
+Component.addNotify() 
+Description
+Creates Choice's peer. 
+countItems
+public int countItems() 
+Returns
+Number of items in the Choice. 
+Description
+Replaced by getItemCount(). 
+getItem
+public String getItem (int index)
+Parameters
+index
+Position of entry. 
+Returns
+A string for an entry at a given position. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+index is invalid; indices start at zero.
+getItemCount
+public int getItemCount() 
+Returns
+Number of items in the Choice. 
+getSelectedIndex
+public int getSelectedIndex()
+Returns
+Position of currently selected entry. 
+getSelectedItem
+public synchronized String getSelectedItem()
+Returns
+Currently selected entry as a String. 
+getSelectedObjects
+public synchronized Object[] getSelectedObjects() 
+Implements
+ItemSelectable.getSelectedObjects() 
+Description
+A single-item array containing the current selection. 
+insert
+public synchronized void insert (String item, int index) 
+Parameters
+item
+The string to add. 
+index
+The position for the 
+new string. 
+Throws
+IllegalArgumentException
+If 
+index is less than zero. 
+Description
+Inserts item in the given position. 
+remove
+public synchronized void remove (int position) 
+Parameters
+position
+The index of an 
+entry in the Choice component. 
+Description
+Removes the entry in the given position. 
+public synchronized void remove (String string) 
+Parameters
+string
+Text of an entry within 
+the Choice component. 
+Throws
+IllegalArgumentException
+If 
+string is not in the Choice. 
+Description
+Makes the first entry that matches string 
+the selected item. 
+removeAll
+public synchronized void removeAll() 
+Description
+Removes all the entries from the Choice. 
+removeItemListener
+public void removeItemListener (ItemListener l) 
+Parameters
+l
+The listener to be removed. 
+Implements
+ItemSelectable.removeItemListener (ItemListener l) 
+Description
+Removes the specified ItemListener 
+so it will not receive ItemEvent 
+objects from this Choice. 
+select
+public synchronized void select (int pos)
+Parameters
+pos
+The index of an entry 
+in the Choice component. 
+Throws
+IllegalArgumentException
+If 
+the position is not valid. 
+Description
+Makes the entry in the given position. 
+public synchronized void select (String str)
+Parameters
+str
+Text of an entry within 
+the Choice component. 
+Description
+Makes the first entry that matches str 
+the selected item for the Choice. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+A string with current settings of Choice. 
+Overrides
+Component.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+processEvent
+protected void processEvent (AWTEvent e) 
+Parameters
+e
+The event to process. 
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+processItemEvent
+protected void processItemEvent (ItemEvent e) 
+Parameters
+e
+The item event to process. 
+Description
+Item events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+See Also
+Component, ItemSelectable, 
+String 
+CheckboxMenuItem
+Color
+ 
+ 
+ 
+ 
+ 
+ 
+ 

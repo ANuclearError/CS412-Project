@@ -1,0 +1,89 @@
+
+[Chapter 24] 24.61 java.io.StreamTokenizer (JDK 1.0)
+Chapter 24The java.io Package
+24.61 java.io.StreamTokenizer (JDK 1.0)
+This class performs lexical analysis of a
+specified input stream and breaks the input up into tokens.
+It can be extremely useful when writing simple parsers.
+nextToken() returns the next token in the
+stream--this is either one of the constants defined by
+the class (which represent end-of-file, end-of-line, a
+parsed floating-point number, and a parsed word) or a
+character value. pushBack() "pushes" the token back
+onto the stream, so that it is returned by the next
+call to nextToken(). The public variables
+sval and nval contain the string and numeric
+values (if applicable) of the most recently read token. They
+are applicable when the returned token is TT_WORD
+and TT_NUMBER. lineno() returns the current
+line number.
+The remaining methods allow you to specify how tokens are
+recognized.  wordChars()
+specifies a range of characters that should be treated as
+parts of words. whitespaceChars() specifies a range
+of characters that serve to delimit tokens.
+ordinaryChars() and ordinaryChar() specify
+characters that are never part of tokens and should be
+returned as-is. resetSyntax() makes all characters
+"ordinary."  
+eolIsSignificant() specifies whether end-of-line is
+significant. If so, the TT_EOL constant is
+returned for end-of-lines. Otherwise they are treated
+as whitespace.
+commentChar() specifies a character that begins a
+comment that lasts until the end of the line. No characters
+in the comment are returned.
+slashStarComments() and slashSlashComments()
+specify whether the StreamTokenizer should recognize
+C and C++-style comments. If so, no parts of the comments
+are returned as tokens.
+quoteChar() specifies a character used to delimit
+strings. When a string token is parsed, the quote character
+is returned as the token value, and the body of the
+string is stored in the sval variable.
+lowerCaseMode() specifies whether TT_WORD
+tokens should be converted to all lowercase characters
+before being stored in sval.
+parseNumbers() specifies
+that the StreamTokenizer should recognize and return
+double-precision floating-point number tokens.
+public class StreamTokenizer extends Object {
+    // Public Constructors
+        #   public StreamTokenizer(InputStream is);
+        1.1  public StreamTokenizer(Reader r);
+    // Constants
+            public static final int TT_EOF;
+            public static final int TT_EOL;
+            public static final int TT_NUMBER;
+            public static final int TT_WORD;
+    // Public Instance Variables
+            public double nval;
+            public String sval;
+            public int ttype;
+    // Public Instance Methods
+            public void commentChar(int ch);
+            public void eolIsSignificant(boolean flag);
+            public int lineno();
+            public void lowerCaseMode(boolean fl);
+            public int nextToken() throws IOException;
+            public void ordinaryChar(int ch);
+            public void ordinaryChars(int low, int hi);
+            public void parseNumbers();
+            public void pushBack();
+            public void quoteChar(int ch);
+            public void resetSyntax();
+            public void slashSlashComments(boolean flag);
+            public void slashStarComments(boolean flag);
+            public String toString();  // Overrides Object
+            public void whitespaceChars(int low, int hi);
+            public void wordChars(int low, int hi);
+}
+java.io.StreamCorruptedException (JDK 1.1)
+java.io.StringBufferInputStream (JDK 1.0; Deprecated.)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

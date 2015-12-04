@@ -1,0 +1,695 @@
+
+[Chapter 12] Thread
+Chapter 12The java.lang Package
+Thread
+Name
+Thread
+Synopsis
+Class Name:
+java.lang.Thread
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Runnable
+Availability:
+JDK 1.0 or later
+Description
+The Thread class encapsulates all of the
+information about a single thread of control running in a Java environment.
+Thread objects are used to control threads in
+a multithreaded program.
+The execution of Java code is always under the control of
+a Thread object. The Thread
+class provides a static method called currentThread()
+that can be used to get a reference to the Thread
+object that controls the current thread of execution.
+In order for a Thread object to be useful,
+it must be associated with a method that it is supposed to run.
+Java provides two ways of associating a Thread
+object with a method:
+Declare a subclass of Thread
+that defines a run() method. When such a class
+is instantiated and the object's start() method
+is called, the thread invokes this run() method.
+Pass a reference to an object that implements the
+Runnable interface to a Thread constructor.
+When the start() method of such a
+Thread object is called, the thread
+invokes the run()
+method of the Runnable object.
+After a thread is started, it dies when one of the following
+things happens:
+The run()
+method called by the Thread returns.
+An exception is thrown that causes the run()
+method to be exited.
+The stop() method of the
+Thread is called.
+Class Summary
+public class java.lang.Thread extends java.lang.Object
+                              implements java.lang.Runnable {
+    // Constants
+    public final static int MAX_PRIORITY;
+    public final static int MIN_PRIORITY;
+    public final static int NORM_PRIORITY;
+    // Constructors
+    public Thread();
+    public Thread(Runnable target);
+    public Thread(Runnable target, String name);
+    public Thread(String name);
+    public Thread(ThreadGroup group, Runnable target);
+    public Thread(ThreadGroup group, Runnable target, String name);
+    public Thread(ThreadGroup group, String name);
+    // Class Methods
+    public static int activeCount();
+    public static native Thread currentThread();
+    public static void dumpStack();
+    public static int enumerate(Thread tarray[]);
+    public static boolean interrupted();
+    public static native void sleep(long millis);
+    public static void sleep(long millis, int nanos);
+    public static native void yield();
+    // Instance Methods
+    public void checkAccess();
+    public native int countStackFrames();
+    public void destroy();
+    public final String getName();
+    public final int getPriority();
+    public final ThreadGroup getThreadGroup();
+    public void interrupt();
+    public final native boolean isAlive();
+    public final boolean isDaemon();
+    public boolean isInterrupted();
+    public final void join();
+    public final synchronized void join(long millis);
+    public final synchronized void join(long millis, int nanos);
+    public final void resume();
+    public void run();
+    public final void setDaemon(boolean on);
+    public final void setName(String name);
+    public final void setPriority(int newPriority);
+    public synchronized native void start();
+    public final void stop();
+    public final synchronized void stop(Throwable o);
+    public final void suspend();
+    public String toString();
+}
+Constants
+MAX_PRIORITY
+public final static int MAX_PRIORITY = 10
+Description
+The highest priority a thread can have.
+MIN_PRIORITY
+public final static int MIN_PRIORITY = 1
+Description
+The lowest priority a thread can have.
+NORM_PRIORITY
+public final static int NORM_PRIORITY = 5
+Description
+The default priority assigned to a thread.
+Constructors
+Thread
+public Thread()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a Thread object that belongs to
+the same ThreadGroup object as the current thread,
+has the same daemon attribute as the current thread, has the same
+priority as the current thread, and has a default name.
+A Thread object created with this constructor
+invokes its own run() method when the Thread
+object's start() method is called. This is not
+useful unless the object belongs to a subclass of the Thread
+class that overrides the run() method.
+Calling this constructor is equivalent to:
+Thread(null, null, genName)
+genName is an automatically generated name
+of the form "Thread-"+n, where n
+is an integer incremented each time a Thread
+object is created.
+public Thread(String name)
+Parameters
+name
+The name of this Thread object.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a Thread object that belongs to
+the same ThreadGroup object as the current thread,
+has the same daemon attribute as the current thread, has the same
+priority as the current thread, and has the specified name.
+A Thread object created with this constructor
+invokes its own run() method when the Thread
+object's start() method is called. This is not
+useful unless the object belongs to a subclass of the Thread
+class that overrides the run() method.
+Calling this constructor is equivalent to:
+Thread(null, null, name)
+The uniqueness of the specified Thread
+object's name is not checked, which may be a problem for programs
+that attempt to identify Thread objects by their
+name.
+public Thread(ThreadGroup group, Runnable target)
+Parameters
+group
+The ThreadGroup object that this
+Thread object is to be added to.
+target
+A reference to an object that implements the Runnable
+interface.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a Thread object that belongs to
+the specified ThreadGroup object, has the same
+daemon attribute as the current thread, has the same priority as
+the current thread, and has a default name.
+A Thread object created with this constructor
+invokes the run() method of the specified Runnable
+object when the Thread object's start()
+method is called.
+Calling this constructor is equivalent to:
+Thread(group, target, genName)
+genName is an automatically generated name
+of the form "Thread-"+n, where n
+is an integer that is incremented each time a Thread
+object is created.
+public Thread(ThreadGroup group, Runnable target, String name)
+Parameters
+group
+The ThreadGroup object that this
+Thread object is to be added to.
+target
+A reference to an object that implements the Runnable
+interface.
+name
+The name of this Thread object.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a Thread object that belongs to
+the specified ThreadGroup object, has the same
+daemon attribute as the current thread, has the same priority as
+the current thread, and has the specified name.
+A Thread object created with this constructor
+invokes the run() method of the specified Runnable
+object when the Thread object's start()
+method is called.
+The uniqueness of the specified Thread
+object's name is not checked, which may be a problem for programs
+that attempt to identify Thread objects by their
+names.
+public Thread(ThreadGroup group, String name)
+Parameters
+group
+The ThreadGroup object that this
+Thread object is to be added to.
+name
+The name of this Thread object.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a Thread object that belongs to
+the specified ThreadGroup object, has the same
+daemon attribute as the current thread, has the same priority as
+the current thread, and has the specified name.
+A Thread object created with this constructor
+invokes its own run() method when the Thread
+object's start() method is called. This is not
+useful unless the object belongs to a subclass of the Thread
+class that overrides the run() method.
+Calling this constructor is equivalent to:
+Thread(group, null, name)
+The uniqueness of the specified Thread
+object's name is not checked, which may be a problem for programs
+that attempt to identify Thread objects by their
+name.
+Class Methods
+activeCount
+public static int activeCount()
+Returns
+The current number of threads in the ThreadGroup
+of the currently running thread.
+Description
+This method returns the number of threads in the ThreadGroup
+of the currently running thread for which the isAlive()
+method returns true.
+currentThread
+public static native Thread currentThread()
+Returns
+A reference to the Thread object that controls
+the currently executing thread.
+Description
+This method returns a reference to the Thread
+object that controls the currently executing thread.
+dumpStack
+public static void dumpStack()
+Description
+This method outputs a stack trace of the currently running
+thread.
+enumerate
+public static int enumerate(Thread tarray[])
+Parameters
+tarray
+A reference to an array of Thread
+objects.
+Returns
+The number of Thread objects stored in
+the array.
+Description
+This method stores a reference in the array for each of the
+Thread objects in the ThreadGroup
+of the currently running thread for which the isAlive()
+method returns true.
+Calling this method is equivalent to:
+currentThread().getThreadGroup().enumerate(tarray)
+If the array is not big enough to contain references to all
+the Thread objects, only as many references as
+will fit are put into the array. No indication is given that some
+Thread objects were left out, so it is a good
+idea to call activeCount() before calling this
+method, to get an idea of how large to make the array.
+interrupted
+public static boolean interrupted()
+Returns
+true if the currently running thread has
+been interrupted; otherwise false.
+Description
+This method determines whether or not the currently running
+thread has been interrupted.
+sleep
+public static native void sleep(long millis)
+Parameters
+millis
+The number of milliseconds that the currently running
+thread should sleep.
+Throws
+InterruptedException
+If another thread interrupts the currently running
+thread.
+Description
+This method causes the currently running thread to sleep.
+The method does not return until at least the specified number of
+milliseconds have elapsed.
+While a thread is sleeping, it retains ownership of all locks.
+The Object class defines a method called wait()
+that is similar to sleep() but causes the currently
+running thread to temporarily relinquish its locks.
+public static void sleep(long millis, int nanos)
+Parameters
+millis
+The number of milliseconds that the currently running
+thread should sleep.
+nanos
+An additional number of nanoseconds to sleep.
+Throws
+InterruptedException
+If another thread interrupts the currently running
+thread.
+Description
+This method causes the currently running thread to sleep.
+The method does not return until at least the specified number of
+milliseconds have elapsed.
+While a thread is sleeping, it retains ownership of all locks.
+The Object class defines a method called wait()
+that is similar to sleep() but causes the currently
+running thread to temporarily relinquish its locks.
+Note that Sun's reference implementation
+of Java does not attempt to implement the precision implied by this
+method. Instead, it rounds to the nearest millisecond (unless millis
+is 0, in 
+which case it rounds up to 1 millisecond)
+and calls sleep(long).
+yield
+public static native void yield()
+Description
+This method causes the currently running thread to yield control
+of the processor so that another thread can be scheduled.
+Instance Methods
+checkAccess
+public void checkAccess()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method determines if the currently running thread has
+permission to modify this Thread object.
+countStackFrames
+public native int countStackFrames()
+Returns
+The number of pending method invocations on this thread's
+stack.
+Description
+This method returns the number of pending method invocations
+on this thread's stack.
+destroy
+public void destroy()
+Description
+This method is meant to terminate this thread without any
+of the usual cleanup (i.e., any locks held by the thread are not
+released). This method provides a last-resort way to terminate
+a thread. While a thread can defeat its stop()
+method by catching objects thrown from it, there is nothing that
+a thread can do to stop itself from being destroyed.
+Note that Sun's reference implementation
+of Java does not implement the documented functionality of this
+method. Instead, the implementation of this method just throws a
+NoSuchMethodError.
+getName
+public final String getName()
+Returns
+The name of this thread.
+Description
+This method returns the name of this Thread
+object.
+getPriority
+public final int getPriority()
+Returns
+The priority of this thread.
+Description
+This method returns the priority of this Thread
+object.
+getThreadGroup
+public final ThreadGroup getThreadGroup()
+Returns
+The ThreadGroup of this thread.
+Description
+This method returns a reference to the ThreadGroup
+that this Thread object belongs to.
+interrupt
+public void interrupt()
+Description
+This method interrupts this Thread object.
+Note that prior to version 1.1, Sun's reference implementation
+of Java does not implement the documented functionality of this method.
+Instead, the method just sets a private flag
+that indicates that an interrupt has been requested. None of the
+methods that should throw an InterruptedException
+currently do. However, the interrupted() and
+isInterrupted() methods do return true
+after this method has been called.
+isAlive
+public final native boolean isAlive()
+Returns
+true if this thread is alive; otherwise
+false.
+Description
+This method determines whether or not this Thread
+object is alive. A Thread object is alive if
+it has been started and has not yet died. In other words, it has
+been scheduled to run before and can still be scheduled to run again.
+A thread is generally alive after its start() method
+is called and until its stop() method is called.
+isDaemon
+public final boolean isDaemon()
+Returns
+true if the thread is a daemon thread;
+otherwise false.
+Description
+This method determines whether or not this thread is a daemon
+thread, based on the value of the daemon
+attribute of this Thread object.
+isInterrupted
+public boolean isInterrupted()
+Returns
+true if this thread has been interrupted;
+otherwise false.
+Description
+This method determines whether or not this Thread
+object has been interrupted.
+join
+public final void join()
+Throws
+InterruptedException
+If another thread interrupts this thread.
+Description
+This method allows the thread that calls it to wait for the
+Thread associated with this method to die. The
+method returns when the Thread dies. If this thread
+is already dead, then this method returns immediately.
+public final synchronized void join(long millis)
+Parameters
+millis
+The maximum number of milliseconds to wait for this
+thread to die.
+Throws
+InterruptedException
+If another thread interrupts this thread.
+Description
+This method causes a thread to wait to die. The method returns
+when this Thread object dies or after the specified
+number of milliseconds has elapsed, whichever comes first. However,
+if the specified number of milliseconds is zero, the method will
+wait forever for this thread to die. If this thread is already dead,
+the method returns immediately.
+public final synchronized void join(long millis, int nanos)
+Parameters
+millis
+The maximum number of milliseconds to wait for this
+thread to die.
+nanos
+An additional number of nanoseconds to wait.
+Throws
+InterruptedException
+If another thread interrupts this thread.
+Description
+This method causes a thread to wait to die. The method returns
+when this Thread object dies or after the specified
+amount of time has elapsed, whichever comes first. However, if millis
+and nanos are zero, the method will wait forever
+for this thread to die. If this thread is already dead, the method
+returns immediately.
+Note that Sun's reference implementation
+of Java does not attempt to implement the precision implied by this
+method. Instead, it rounds to the nearest millisecond (unless millis
+is 0, in which case it rounds up to 1 millisecond)
+and calls join(long).
+resume
+public final void resume()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method resumes a suspended thread. The method causes
+this Thread object to once again be eligible
+to be run. Calling this method for a thread that is not suspended
+has no effect.
+run
+public void run()
+Implements
+Runnable.run()
+Description
+A Thread object's start()
+method causes the thread to invoke a run() method.
+If this Thread object was created without a specified
+Runnable object, the Thread object's
+own run() method is executed. This behavior is
+only useful in a subclass of Thread that overrides
+this run() method, since the run()
+method of the Thread class does not do anything.
+setDaemon
+public final void setDaemon(boolean on)
+Parameters
+on
+The new value for this thread's daemon attribute.
+Throws
+IllegalThreadStateException
+If this method is called after this thread has been
+started and while it is still alive.
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the daemon attribute
+of this Thread object to the given value. This
+method must be called before the thread is started. If a thread
+dies and there are no other threads except daemon threads alive,
+the Java virtual machine stops.
+setName
+public final void setName(String name)
+Parameters
+name
+The new name for this thread.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the name of this Thread
+object to the given value. The uniqueness of the specified Thread
+object's name is not checked, which may be a problem for programs
+that attempt to identify Thread objects by their
+name.
+setPriority
+public final void setPriority(int newPriority)
+Parameters
+newPriority
+The new priority for this thread.
+Throws
+IllegalArgumentException
+If the given priority is less than MIN_PRIORITY
+or greater than MAX_PRIORITY.
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the priority
+of this Thread to the given value.
+start
+public synchronized native void start()
+Throws
+IllegalThreadStateException
+If this Thread object's start()
+method has been called before.
+Description
+This method starts this Thread object,
+allowing it to be scheduled for execution. The top-level code that
+is executed by the thread is the run() method
+of the Runnable object specified in the constructor
+that was used to create this object. If no such object was specified,
+the top-level code executed by the thread is this object's run()
+method.
+It is not permitted to start a thread more than once.
+stop
+public final void stop()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method causes this Thread object to
+stop executing by throwing a ThreadDeath object.
+The object is thrown in this thread, even if the method is called
+from a different thread. This thread is forced to stop whatever
+it is doing and throw a newly created ThreadDeath
+object. If this thread was suspended, it is resumed; if it was sleeping,
+it is awakened.
+Normally, you should not catch ThreadDeath
+objects in a try statement. If you need to catch
+ThreadDeath objects to detect a Thread
+is about to die, the try statement that
+catches ThreadDeath objects should rethrow them.
+When an object is thrown out of the run()
+method associated with a Thread, the uncaughtException()
+method of the ThreadGroup for that Thread
+is called.
+The uncaughtException() method normally outputs a
+stack trace. However, uncaughtException() treats a
+ThreadDeath object as a special case by not
+outputting a stack trace. When the
+uncaughtException() method returns, the thread is dead.
+The thread is never scheduled to run again.
+If this Thread object's stop()
+method is called before this thread is started, the ThreadDeath
+object is thrown as soon as the thread is started.
+public final synchronized void stop(Throwable o)
+Parameters
+o
+The object to be thrown.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method causes this Thread object to
+stop executing by throwing the given object.
+Normally, the stop()
+method that takes no arguments and throws a
+ThreadDeath
+object should be called instead of this method. However, if it is
+necessary to stop a thread by throwing some other type of object,
+this method can be used.
+The object is thrown in this thread, even if the method is
+called from a different thread. This thread is forced to stop whatever
+it is doing and throw the Throwable object o.
+If this thread was suspended, it is resumed; if it was sleeping,
+it is awakened.
+When an object is thrown out of the run()
+method associated with a Thread, the uncaughtException()
+method of the ThreadGroup for that Thread
+is called. If the thrown object is not an instance of
+the ThreadDeath class, uncaughtException()
+calls the thrown object's printStackTrace() method
+and then the thread dies. The thread
+is never scheduled to run again.
+If this Thread object's stop()
+method is called before this thread is started, the ThreadDeath
+object is thrown as soon as the thread is started.
+suspend
+public final void suspend()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method suspends a thread. The method causes this Thread
+object to temporarily be ineligible to be run. The thread becomes
+eligible to be run again after its resume() method
+is called. Calling this method for a thread that is already suspended
+has no effect.
+toString
+public String toString()
+Returns
+A string representation of this Thread object.
+Overrides
+Object.toString()
+Description
+This method returns a string representation of this Thread
+object.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+IllegalThreadStateException, 
+InterruptedException, 
+Object,
+Runnable, 
+SecurityException, 
+SecurityManager, 
+ThreadGroup
+System
+ThreadDeath
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,240 @@
+
+[Chapter 3] 3.8 Data Hiding and Encapsulation
+Chapter 3Classes and Objects in Java
+3.8 Data Hiding and Encapsulation
+We started this chapter by describing a class as "a
+collection of data and methods." One of the important object-oriented 
+techniques that we haven't discussed so far is
+hiding the data within the class, and making it available
+only through the methods.  This technique is often known as
+encapsulation, because it seals the class's data (and
+internal methods)
+safely inside the "capsule" of the class, where it can be
+accessed only by trusted users--i.e., by the methods of the class. 
+Why would you want to do this?  The most important reason is
+to hide the internal implementation details of your class.
+If you prevent programmers from relying on those details,
+then you can safely modify the implementation without
+worrying that you will break existing code that uses the
+class.
+Another reason for encapsulation is to protect
+your class against accidental or willful stupidity.  A class
+often contains a number of variables that are interdependent
+and must be in a consistent state.  If you allow a
+programmer (this may be you yourself) to manipulate those
+variables directly, she may change one variable without changing 
+important related variables, thus leaving the class in an 
+inconsistent state. If, instead, she had to call a method 
+to change the variable, that method can be sure to do everything
+necessary to keep the state consistent.
+Here's another way to think about encapsulation:  
+When all of a class's variables are hidden, the
+class's methods define the only possible operations that can
+be performed on objects of that class.  Once you have
+carefully tested and debugged your methods, you can be
+confident that the class will work as expected.  On the
+other hand, if all the variables can be directly
+manipulated, the number of possibilities you have to test
+becomes unmanageable.
+There are other reasons to hide data, too:
+Internal variables that are visible externally to the class
+just clutter up your class's API. Keeping visible variables
+to a minimum keeps your class tidy and elegant.
+If a variable is visible in your class, you have to document
+it.  Save time by hiding it instead!
+Visibility Modifiers
+In most of our examples so far, you've probably noticed the
+public keyword being used.  When applied to a class,
+it means that the class is visible everywhere.  When applied
+to a method or variable, it means that the method or
+variable is visible everywhere.
+To hide variables (or methods, for that matter) you just
+have to declare them private:
+public class Laundromat {       // People can use this class.
+    private Laundry[] dirty;    // They can't see this internal variable,
+    public void wash() { ... }  // but they can use these public methods
+    public void dry() { ... }   // to manipulate the internal variable.
+}
+A private field of a class is visible only in
+methods defined within that class.  (Or, in Java 1.1, in
+classes defined within the class.)  Similarly, a
+private method may only be invoked by methods within
+the class (or methods of classes within the class).  Private
+members are not visible within subclasses, and are not
+inherited by subclasses as other members are.
+[11]
+Of course, non-private methods that invoke
+private methods internally are inherited and may be
+invoked by subclasses.
+[11] 
+Every object does, of course, have its own copy of all
+fields of all superclasses, including the private
+fields.  The methods defined by the object can never refer
+to or use the private fields of superclasses,
+however, and so we say that those fields are not inherited.
+Besides public and private, Java has two
+other visibility levels: protected and the default
+visibility level, "package visibility," which applies if
+none of the public, private, and
+protected keywords are used.
+A protected member of a class is visible within the
+class where it is defined, of course, and within all
+subclasses of the class, and also within all classes that
+are in the same package as that class.  You should use
+protected visibility when you want to hide fields
+and methods from code that uses your class, but want those
+fields and methods to be fully accessible to code that
+extends your class.
+The default package visibility is more restrictive than
+protected, but less restrictive than
+private.  If a class member is not declared with any
+of the public, private, or protected
+keywords, then it is visible only within the class that
+defines it and within classes that are part of the same
+package.  It is not visible to subclasses unless those
+subclasses are part of the same package.
+A note about packages: A package is a group of related and
+possibly cooperating classes.  All non-private
+members of all classes in the package are
+visible to all other classes in the package.  This is okay
+because the classes are assumed to know about, and trust,
+each other.
+[12]
+The only time difficulty arises is when you write programs
+without a package statement.  These classes are
+thrown into a default package with other
+package-less classes, and all their
+non-private members are visible throughout the
+package.  (The default package usually consists of all
+classes in the current working directory.)
+[12] 
+If you're a C++ programmer, you can say that classes
+within the same package are friend-ly to each other.
+There is an important point to make about subclass access to
+protected members.  A subclass inherits the
+protected members of its superclass, but it can only
+access those members through instances of itself, not
+directly in instances of the superclass.  Suppose, for
+example, that A, B, and C are
+public classes, each defined in a different package,
+and that a, b, and c are instances
+of those classes.  Let B be a subclass of A,
+and C be a subclass of B.  Now, if A
+has a protected field x, then the class B
+inherits that field, and its methods can use this.x,
+b.x and c.x.  But it cannot access
+a.x.  Similarly, if A has a
+protected method f(), then the methods of
+class B can invoke this.f(), b.f(),
+and c.f(), but they cannot invoke a.f().
+Table 3.1
+shows the circumstances under which class members of the
+various visibility types are accessible to other classes.
+Table 3.1: Class Member Accessibility
+Accessible to:
+public
+protected
+package
+private
+Same class
+yes
+yes
+yes
+yes
+Class in same package
+yes
+yes
+yes
+no
+Subclass in different package
+yes
+yes
+no
+no
+Non-subclass, different package
+yes
+no
+no
+no
+The details of member visibility in Java can become quite
+confusing.  Here are some simple rules of thumb for using
+visibility modifiers:
+Use public only for methods and constants that form
+part of the public API of the class.  Certain very important
+or very frequently used fields may also be public,
+but it is common practice to make fields non-public
+and encapsulate them with public accessor methods.
+Use protected for fields and methods that aren't
+necessary to use the class, but that may be of interest to
+anyone creating a subclass as part of a different package.
+Use the default package visibility for fields and methods
+that you want to be hidden outside of the package, but which
+you want cooperating classes within the same package to have
+access to.
+Use private for fields and methods that are only
+used inside the class and should be hidden everywhere else.
+Note that you can't take advantage of package visibility
+unless you use the package statement to group your
+related classes into packages.  See Chapter 13, Java Syntax, Java
+Syntax, for a table that summarizes the Java visibility
+modifiers and other modifiers.
+Data Access Methods
+In the Circle example we've been using, we've
+declared the circle position and radius to be public
+fields.  In fact, the Circle class is one where it
+may well make sense to keep those visible--it is a simple
+enough class, with no dependencies between the variables.
+On the other hand, suppose we wanted to impose a maximum
+radius on objects of the Circle class.  Then it
+would be better to hide the r variable so that it
+could not be set directly.  Instead of a visible r
+variable, we'd implement a setRadius() method that
+verifies that the specified radius isn't too large and then
+sets the r variable internally.
+Example 3.14
+shows how we might implement Circle with
+encapsulated data and a restriction on radius size.  For
+convenience, we use protected fields for the radius
+and position variables.  This means that subclasses of
+Circle, or cooperating classes within the
+shapes package are able to access these
+variables directly.  To any other classes, however, the
+variables are hidden.  Also, note the private
+constant and method used to check whether a specified radius
+is legal.  And finally, notice the public methods
+that allow you to set and query the values of the instance
+variables.
+Example 3.14: Hiding Variables in the Circle Class
+package shapes;             // Specify a package for the class.
+public class Circle {       // Note that the class is still public!
+    protected double x, y;  // Position is hidden, but visible to subclasses.
+    protected double r;     // Radius is hidden, but visible to subclasses.
+    private static final double MAXR = 100.0;    // Maximum radius (constant).
+    private boolean check_radius(double r) { return (r &lt;= MAXR); }
+    // Public constructors
+    public Circle(double x, double y, double r) {
+        this.x = x; this.y = y; 
+        if (check_radius(r)) this.r = r;
+        else this.r = MAXR;
+    }
+    public Circle(double r) { this(0.0, 0.0, r); }
+    public Circle() { this(0.0, 0.0, 1.0); }
+    // Public data access methods
+    public void moveto(double x, double y) { this.x = x; this.y = y;}
+    public void move(double dx, double dy) { x += dx;  y += dy; }
+    public void setRadius(double r) { this.r = (check_radius(r))?r:MAXR; }
+    // Declare these trivial methods final so we don't get dynamic
+    // method lookup and so that they can be inlined by the compiler.
+    public final double getX() { return x; };
+    public final double getY() { return y; };
+    public final double getRadius() { return r; };
+}
+Overriding Methods
+Abstract Classes and Interfaces
+ 
+ 
+ 
+ 
+ 
+ 
+ 

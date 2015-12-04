@@ -1,0 +1,136 @@
+
+[Chapter 25] The java.lang Package
+Chapter 25
+25. The java.lang Package
+Contents:
+java.lang.ArithmeticException (JDK 1.0)
+java.lang.ArrayIndexOutOfBoundsException (JDK 1.0)
+java.lang.ArrayStoreException (JDK 1.0)
+java.lang.Boolean (JDK 1.0)
+java.lang.Byte (JDK 1.1)
+java.lang.Character (JDK 1.0)
+java.lang.Class (JDK 1.0)
+java.lang.ClassCastException (JDK 1.0)
+java.lang.ClassCircularityError (JDK 1.0)
+java.lang.ClassFormatError (JDK 1.0)
+java.lang.ClassLoader (JDK 1.0)
+java.lang.ClassNotFoundException (JDK 1.0)
+java.lang.CloneNotSupportedException (JDK 1.0)
+java.lang.Cloneable (JDK 1.0)
+java.lang.Compiler (JDK 1.0)
+java.lang.Double (JDK 1.0)
+java.lang.Error (JDK 1.0)
+java.lang.Exception (JDK 1.0)
+java.lang.ExceptionInInitializerError (JDK 1.1)
+java.lang.Float (JDK 1.0)
+java.lang.IllegalAccessError (JDK 1.0)
+java.lang.IllegalAccessException (JDK 1.0)
+java.lang.IllegalArgumentException (JDK 1.0)
+java.lang.IllegalMonitorStateException (JDK 1.0)
+java.lang.IllegalStateException (JDK 1.1)
+java.lang.IllegalThreadStateException (JDK 1.0)
+java.lang.IncompatibleClassChangeError (JDK 1.0)
+java.lang.IndexOutOfBoundsException (JDK 1.0)
+java.lang.InstantiationError (JDK 1.0)
+java.lang.InstantiationException (JDK 1.0)
+java.lang.Integer (JDK 1.0)
+java.lang.InternalError (JDK 1.0)
+java.lang.InterruptedException (JDK 1.0)
+java.lang.LinkageError (JDK 1.0)
+java.lang.Long (JDK 1.0)
+java.lang.Math (JDK 1.0)
+java.lang.NegativeArraySizeException (JDK 1.0)
+java.lang.NoClassDefFoundError (JDK 1.0)
+java.lang.NoSuchFieldError (JDK 1.0)
+java.lang.NoSuchFieldException (JDK 1.1)
+java.lang.NoSuchMethodError (JDK 1.0)
+java.lang.NoSuchMethodException (JDK 1.0)
+java.lang.NullPointerException (JDK 1.0)
+java.lang.Number (JDK 1.0)
+java.lang.NumberFormatException (JDK 1.0)
+java.lang.Object (JDK 1.0)
+java.lang.OutOfMemoryError (JDK 1.0)
+java.lang.Process (JDK 1.0)
+java.lang.Runnable (JDK 1.0)
+java.lang.Runtime (JDK 1.0)
+java.lang.RuntimeException (JDK 1.0)
+java.lang.SecurityException (JDK 1.0)
+java.lang.SecurityManager (JDK 1.0)
+java.lang.Short (JDK 1.1)
+java.lang.StackOverflowError (JDK 1.0)
+java.lang.String (JDK 1.0)
+java.lang.StringBuffer (JDK 1.0)
+java.lang.StringIndexOutOfBoundsException (JDK 1.0)
+java.lang.System (JDK 1.0)
+java.lang.Thread (JDK 1.0)
+java.lang.ThreadDeath (JDK 1.0)
+java.lang.ThreadGroup (JDK 1.0)
+java.lang.Throwable (JDK 1.0)
+java.lang.UnknownError (JDK 1.0)
+java.lang.UnsatisfiedLinkError (JDK 1.0)
+java.lang.VerifyError (JDK 1.0)
+java.lang.VirtualMachineError (JDK 1.0)
+java.lang.Void (JDK 1.1)
+The java.lang package contains the classes that are
+most central to the Java language. As you can see from
+Figure 25.1,
+the class hierarchy is broad rather than deep, which means
+that the classes are independent of each other.
+Figure 25.1: The java.lang package
+Object is the ultimate superclass of all Java
+classes and is therefore at the top of all class
+hierarchies. Class is a class that describes a Java
+class. There is one Class object for each class
+that is loaded into Java.
+Boolean, Character, Byte,
+Short, Integer, Long, Float,
+and Double are immutable class wrappers around each
+of the primitive Java data types. These classes are useful
+when you need to manipulate primitive types as objects.
+They also contain useful conversion and utility methods.
+String and StringBuffer are objects that
+represent strings. String is an immutable type;
+StringBuffer may have its string changed in place.
+Runtime provides a number of low-level methods
+associated with the Java run-time system. System
+provides similar low-level system methods. All the
+System methods are class methods, and this class may
+not be instantiated. Math is a similar class that
+supports only class methods--its methods provide
+floating-point math support.
+The Thread class provides support for multiple
+threads of control running within the same Java interpreter.
+Process defines a platform-independent interface to
+platform-dependent processes running externally to the Java
+interpreter.
+Throwable is the root class of the exception and
+error hierarchy. Throwable objects are used with the
+Java throw and catch statements.
+java.lang defines quite a few subclasses of
+Throwable.  Exception and Error are
+the superclasses of all exceptions and errors.
+Figure 25.2
+and
+Figure 25.3
+show the class hierarchies for these core Java exceptions
+and errors.
+Figure 25.2: The exception classes in the java.lang package
+Figure 25.3: The error classes in the java.lang package
+25.1 java.lang.AbstractMethodError (JDK 1.0)
+Signals an attempt to invoke an abstract method.
+public class AbstractMethodError extends IncompatibleClassChangeError {
+    // Public Constructors
+            public AbstractMethodError();
+            public AbstractMethodError(String s);
+}
+Hierarchy:
+Object->Throwable(Serializable)->Error->LinkageError->IncompatibleClassChangeError->AbstractMethodError
+java.io.Writer (JDK 1.1)
+java.lang.ArithmeticException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

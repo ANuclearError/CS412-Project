@@ -1,0 +1,358 @@
+
+[Chapter 19] GridBagLayout
+Chapter 19java.awt Reference
+GridBagLayout
+Name
+GridBagLayout
+Description
+The GridBagLayout LayoutManager 
+provides the means to layout components in a flexible grid-based display 
+model. 
+Class Definition
+public class java.awt.GridBagLayout
+    extends java.lang.Object
+    implements java.awt.LayoutManager2, java.io.Serializable {
+  
+  // Protected Constants
+  protected static final MAXGRIDSIZE;
+  protected static final MINSIZE;
+  protected static final PREFERREDSIZE;
+  
+  // Variables
+  public double columnWeights[];
+  public int columnWidths[];
+  public int rowHeights[];
+  public double rowWeights[];
+  
+  // Protected Variables
+  protected Hashtable comptable;
+  protected GridBagConstraints defaultConstraints;
+  protected GridBagLayoutInfo layoutInfo;
+  
+  // Constructors
+  public GridBagLayout();
+  
+  // Instance Methods
+  public void addLayoutComponent (Component comp, Object constraints); 
+  public void addLayoutComponent (String name, Component component);
+  public GridBagConstraints getConstraints (Component component);
+  public abstract float getLayoutAlignmentX(Container target); 
+  public abstract float getLayoutAlignmentY(Container target); 
+  public int[][] getLayoutDimensions();
+  public Point getLayoutOrigin();
+  public double[][] getLayoutWeights();
+  public abstract void invalidateLayout(Container target); 
+  public void layoutContainer (Container target);
+  public Point location (int x, int y);
+  public abstract Dimension maximumLayoutSize(Container target); 
+  public Dimension minimumLayoutSize (Container target);
+  public Dimension preferredLayoutSize (Container target);
+  public void removeLayoutComponent (Component component);
+  public void setConstraints (Component component, 
+      GridBagConstraints constraints);
+  public String toString();
+  
+  // Protected Instance Methods
+  protected void AdjustForGravity (GridBagConstraints constraints, 
+      Rectangle r);
+  protected void ArrangeGrid (Container target);
+  protected GridBagLayoutInfo GetLayoutInfo (Container target, 
+      int sizeFlag);
+  protected Dimension GetMinSize (Container target, 
+      GridBagLayoutInfo info);
+  protected GridBagConstraints lookupConstraints (Component comp); 
+}
+Protected Constants
+MAXGRIDSIZE
+protected static final MAXGRIDSIZE
+Maximum number of rows and columns within container managed by GridBagLayout. 
+MINSIZE
+protected static final MINSIZE
+Used for internal sizing purposes. 
+PREFERREDSIZE
+protected static final PREFERREDSIZE
+Used for internal sizing purposes. 
+Variables
+columnWeights
+public double[] columnWeights
+The weightx values of the components 
+in the row with the most elements. 
+columnWidths
+public int[] columnWidths
+The width values of the components 
+in the row with the most elements. 
+rowHeights
+public int[] rowHeights
+The height values of the components 
+in the column with the most elements. 
+rowWeights
+public double[] rowWeights
+The weighty values of the components 
+in the column with the most elements. 
+Protected Variables
+comptable
+protected Hashtable comptable
+Internal table to manage components. 
+defaultConstraints
+protected GridBagConstraints defaultConstraints
+Constraints to use for Components 
+that have none. 
+layoutInfo
+protected GridBagLayoutInfo layoutInfo
+Internal information about the GridBagLayout. 
+Constructors
+GridBagLayout
+public GridBagLayout()
+Description
+Constructs a GridBagLayout 
+object. 
+Instance Methods
+addLayoutComponent
+public void addLayoutComponent (Component comp, Object constraints) 
+Parameters
+comp
+The component being 
+added. 
+constraints
+An object describing 
+the constraints on this component. 
+Implements 
+LayoutManager2.addLayoutComponent() 
+Description
+Adds the component comp to 
+container subject to the given constraints. 
+This is a more generalized version of addLayoutComponent(String, 
+Component). It corresponds to java.awt.Container's 
+add(Component, Object). 
+public void addLayoutComponent (String name, Component component)
+Parameters
+name
+Name of component to 
+add. 
+component
+Actual component 
+being added. 
+Implements 
+LayoutManager.addLayoutComponent() 
+Description
+Does nothing. 
+getConstraints
+public GridBagConstraints getConstraints (Component component)
+Parameters
+component
+Component whose 
+constraints are desired 
+Returns
+GridBagConstraints for component 
+requested. 
+getLayoutAlignmentX
+public abstract float getLayoutAlignmentX (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+The value .5 for all containers. 
+Description
+This method returns the preferred alignment of the given container target. 
+A return value of 0 is left aligned, .5 is centered, and 1 is right aligned. 
+getLayoutAlignmentY
+public abstract float getLayoutAlignmentY (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+The value .5 for all containers. 
+Description
+This method returns the preferred alignment of the given container target. 
+A return value of 0 is top aligned, .5 is centered, and 1 is bottom aligned. 
+getLayoutDimensions
+public int[][] getLayoutDimensions()
+Returns
+Returns two single dimension arrays as a multi-dimensional array. Index 
+0 is an array of widths (columnWidths 
+instance variable), while index 1 is an array of heights (rowHeights 
+instance variable). 
+getLayoutOrigin
+public Point getLayoutOrigin()
+Returns
+Returns the origin of the components within the Container 
+whose LayoutManager is GridBagLayout. 
+getLayoutWeights
+public double[][] getLayoutWeights()
+Returns
+Returns two single dimension arrays as a multi-dimensional array. Index 
+0 is an array of columns weights (columnWeights 
+instance variable), while index 1 is an array of row weights (rowWeights 
+instance variable). 
+invalidateLayout
+public abstract void invalidateLayout (Container target) 
+Parameters
+target
+The container to invalidate. 
+Description
+Does nothing. 
+layoutContainer
+public void layoutContainer (Container target)
+Parameters
+target
+The container that needs to be redrawn. 
+Implements 
+LayoutManager.layoutContainer() 
+Description
+Draws components contained within target. 
+location
+public Point location (int x, int y)
+Parameters
+x
+The x coordinate of the 
+grid position to find. 
+y
+The y coordinate of the 
+grid position to find. 
+Returns
+Returns the grid element under the location provided at position (x, 
+y) in pixels. Note that the 
+returned Point uses the GridBagLayout's 
+grid for its coordinate space. 
+Description
+Locates the grid position in the Container 
+under the given location. 
+maximumLayoutSize
+public abstract Dimension maximumLayoutSize (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+A Dimension whose horizontal 
+and vertical components are Integer.MAX_VALUE. 
+Description
+For GridBagLayout, a maximal 
+Dimension is always returned. 
+minimumLayoutSize
+public Dimension minimumLayoutSize (Container target)
+Parameters
+target
+The container whose 
+size needs to be calculated. 
+Returns
+Minimum Dimension of container 
+target. 
+Implements 
+LayoutManager.minimumLayoutSize() 
+Description
+Calculates minimum size of target 
+container. 
+preferredLayoutSize
+public Dimension preferredLayoutSize (Container target)
+Parameters
+target
+The container whose 
+size needs to be calculated. 
+Returns
+Preferred Dimension of container 
+target 
+Implements 
+LayoutManager.preferredLayoutSize() 
+Description
+Calculates preferred size of target 
+container. 
+removeLayoutComponent
+public void removeLayoutComponent (Component component)
+Parameters
+component
+Component to stop tracking. 
+Implements 
+LayoutManager.removeLayoutComponent() 
+Description
+Does nothing. 
+setConstraints
+public void setConstraints (Component component, GridBagConstraints constraints)
+Parameters
+component
+Component to set constraints for 
+constraints
+Constraints for component 
+Description
+Changes the GridBagConstraints 
+on component to those provided. 
+toString
+public String toString()
+Returns
+A string representation of the GridBagLayout 
+object. 
+Overrides 
+Object.toString() 
+Protected Instance Methods
+AdjustForGravity
+protected void AdjustForGravity (GridBagConstraints constraints, Rectangle r)
+Parameters
+constraints
+Constraints to 
+use for adjustment of Rectangle. 
+r
+Rectangular area that needs 
+to be adjusted. 
+Description
+Helper routine for laying out a cell of the grid. The routine adjusts the 
+values for r based upon the 
+constraints. 
+ArrangeGrid
+protected void ArrangeGrid (Container target)
+Parameters
+target
+Container 
+to layout. 
+Description
+Helper routine that does the actual arrangement of components in target. 
+GetLayoutInfo
+protected GridBagLayoutInfo GetLayoutInfo (Container target, int sizeFlag)
+Parameters
+target
+Container 
+to get information about. 
+sizeFlag
+One of the constants 
+MINSIZE or PREFERREDSIZE. 
+Returns
+Returns an internal class used to help size the container. 
+GetMinSize
+protected Dimension GetMinSize (Container target, GridBagLayoutInfo info)
+Parameters
+target
+Container 
+to calculate size. 
+info
+Specifics about the 
+container's constraints. 
+Returns
+Minimum Dimension of container 
+target based on info. 
+Description
+Helper routine for calculating size of container. 
+lookupConstraints
+protected GridBagConstraints lookupConstraints (Component comp)
+Parameters
+comp
+Component 
+in question. 
+Returns
+A reference to the GridBagConstraints 
+object for this component. 
+Description
+Helper routine for calculating size of container. 
+See Also
+Component, Container, 
+Dimension, GridBagConstraints, 
+Hashtable, LayoutManager, 
+LayoutManager2, Object, 
+Point, Rectangle, 
+String 
+GridBagConstraints
+GridLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

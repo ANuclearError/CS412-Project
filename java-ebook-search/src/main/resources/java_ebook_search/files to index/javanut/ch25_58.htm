@@ -1,0 +1,84 @@
+
+[Chapter 25] 25.58 java.lang.StringBuffer (JDK 1.0)
+Chapter 25The java.lang Package
+25.58 java.lang.StringBuffer (JDK 1.0)
+This class represents a string of characters. It
+differs from the String class in that its
+contents may be modified. A
+StringBuffer object grows in length as necessary. 
+The string stored in a StringBuffer object may be
+modified in place with the setCharAt(),
+append(), and insert() methods.
+After a string is processed in a StringBuffer
+object, it may be efficiently converted to a
+String object for subsequent use. The
+StringBuffer.toString() method does not copy
+the internal array of characters; instead it shares that array
+with the new String object, and makes a new
+copy for itself only when further modifications are made to
+the StringBuffer object.
+public final class StringBuffer extends Object implements Serializable {
+    // Public Constructors
+            public StringBuffer();
+            public StringBuffer(int length);
+            public StringBuffer(String str);
+    // Public Instance Methods
+            public synchronized StringBuffer append(Object obj);
+            public synchronized StringBuffer append(String str);
+            public synchronized StringBuffer append(char[] str);
+            public synchronized StringBuffer append(char[] str, int offset, int len);
+            public StringBuffer append(boolean b);
+            public synchronized StringBuffer append(char c);
+            public StringBuffer append(int i);
+            public StringBuffer append(long l);
+            public StringBuffer append(float f);
+            public StringBuffer append(double d);
+            public int capacity();
+            public synchronized char charAt(int index);
+            public synchronized void ensureCapacity(int minimumCapacity);
+            public synchronized void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin);
+            public synchronized StringBuffer insert(int offset, Object obj);
+            public synchronized StringBuffer insert(int offset, String str);
+            public synchronized StringBuffer insert(int offset, char[] str);
+            public StringBuffer insert(int offset, boolean b);
+            public synchronized StringBuffer insert(int offset, char c);
+            public StringBuffer insert(int offset, int i);
+            public StringBuffer insert(int offset, long l);
+            public StringBuffer insert(int offset, float f);
+            public StringBuffer insert(int offset, double d);
+            public int length();
+            public synchronized StringBuffer reverse();
+            public synchronized void setCharAt(int index, char ch);
+            public synchronized void setLength(int newLength);
+            public String toString();  // Overrides Object
+}
+Passed To:
+ChoiceFormat.format(), 
+DateFormat.format(), 
+DecimalFormat.format(), 
+Format.format(), 
+MessageFormat.format(), 
+NumberFormat.format(), 
+SimpleDateFormat.format(), 
+String()
+Returned By:
+ChoiceFormat.format(), 
+DateFormat.format(), 
+DecimalFormat.format(), 
+Format.format(), 
+MessageFormat.format(), 
+NumberFormat.format(), 
+SimpleDateFormat.format(), 
+StringBuffer.append(), 
+StringBuffer.insert(), 
+StringBuffer.reverse(), 
+StringWriter.getBuffer()
+java.lang.String (JDK 1.0)
+java.lang.StringIndexOutOfBoundsException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,153 @@
+
+[Chapter 10] 10.5 Menu
+Chapter 10Would You Like to Choose from the Menu?
+10.5 Menu
+Menus are the pull-down objects 
+that appear on the MenuBar 
+of a Frame or within other 
+menus. They contain MenuItems 
+or CheckboxMenuItems for the 
+user to select. The Menu class 
+subclasses MenuItem (so it 
+can appear on a Menu, too) 
+and implements MenuContainer. 
+Tear-off menus are menus that can be dragged, placed elsewhere on the 
+screen, and remain on the screen when the input focus moves to something 
+else. Java supports tear-off menus if the underlying platform does. Motif 
+(UNIX) supports tear-off menus; Microsoft Windows platforms do not. 
+Menu MethodsConstructors
+public Menu ()  
+The first constructor for Menu 
+creates a menu that has no label and cannot be torn off. To set the label 
+at a later time, use setLabel(). 
+public Menu (String label) 
+This constructor for Menu creates 
+a Menu with label 
+displayed on it. The Menu cannot be torn off. 
+public Menu (String label, boolean tearOff) 
+This constructor for Menu creates 
+a Menu with label 
+displayed on it. The handling of tearOff 
+is platform dependent. 
+Figure 10.3 shows a tear-off menu for Windows NT/95 and Motif. Since Windows does not 
+support tear-off menus, the Windows menu looks and acts like a regular 
+menu. 
+Figure 10.3: Tear-off menu
+Items
+public int getItemCount()  public int countItems () 
+The getItemCount() method returns 
+the number of items within the Menu. 
+Only top-level items are counted: if an item is a submenu, this method 
+doesn't include the items on it. 
+countItems() is the Java 1.0 
+name for this method. 
+public MenuItem getItem (int index) 
+The getItem() method returns 
+the MenuItem at position index. 
+If index is invalid, getItem() 
+throws the ArrayIndexOutOfBoundsException run-time exception. 
+public synchronized MenuItem add (MenuItem item) 
+The add() method puts item 
+on the menu. The label assigned to item 
+when it was created is displayed on the menu. If item 
+is already in another menu, it is removed from that menu. If item 
+is a Menu, it creates a submenu. 
+(Remember that Menu subclasses 
+MenuItem.) 
+public void add (String label) 
+This version of add() creates 
+a MenuItem with label 
+as the text and adds that to the menu. If label 
+is the String "-", 
+a separator bar is added to the Menu. 
+public synchronized void insert(MenuItem item, int index)  
+The insert() method puts item 
+on the menu at position index. 
+The label assigned to item 
+when it was created is displayed on the menu. Positions are zero based, 
+and if index &lt; 0, insert() 
+throws the IllegalArgumentException run-time exception. 
+public synchronized void insert(String label, int index)  
+This version of insert() method 
+creates a MenuItem with label 
+as the text and adds that to the menu at position index. 
+If label is the String "--", 
+a separator bar is added to the Menu. 
+Positions are zero based, and if index 
+&lt; 0, this method throws the IllegalArgumentException run-time exception. 
+public void addSeparator () 
+The addSeparator() method creates 
+a separator MenuItem and adds 
+that to the menu. Separator menu items are strictly cosmetic and do not generate events when selected. 
+public void insertSeparator(int index)  
+The insertSeparator() method 
+creates a separator MenuItem 
+and adds that to the menu at position index. 
+Separator menu items are strictly cosmetic and do not generate events when selected. Positions are zero based. If index 
+&lt; 0, insertSeparator() throws 
+the IllegalArgumentException run-time exception. 
+public synchronized void remove (int index) 
+The remove() method removes 
+the MenuItem at position index 
+from the Menu. If index 
+is invalid, remove() throws 
+the ArrayIndexOutOfBoundsException run-time exception. 
+index is zero based, so it 
+can range from 0 to getItemCount()-1. 
+public synchronized void remove (MenuComponent component) 
+This version of remove() removes 
+the menu item component from 
+the Menu. If component is not in the Menu, 
+nothing happens. 
+public synchronized void removeAll() 
+The removeAll() removes all 
+MenuItems from the Menu. 
+Peers
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the Menu peer with 
+all the MenuItems on it. 
+public synchronized void removeNotify ()  
+The removeNotify() method destroys 
+the peer of the MenuComponent 
+and removes it from the screen. The peers of the items on the menu are 
+also destroyed. 
+Miscellaneous methods
+public boolean isTearOff () 
+The isTearOff() method returns 
+true if this Menu 
+is a tear-off menu, and false 
+otherwise. Once a menu is created, there is no way to change the tear-off 
+setting. This method can return true 
+even on platforms that do not support tear-off menus. 
+public String paramString ()  
+The paramString() method of 
+Menu should be protected like 
+other paramString() methods. 
+However, it is public so you have access to it. When you call the toString() 
+method of a Menu, the default 
+toString() method of MenuComponent 
+is called. This in turn calls paramString(), 
+which builds up the string to display. At the Menu 
+level, the setting for TearOff 
+(from constructor) and whether or not it is the help menu (from MenuBar.setHelpMenu()) 
+for the menu bar are added. If the constructor for the Menu 
+was new Menu (`File`), the 
+results of toString() would 
+be: 
+java.awt.Menu [menu0,label=File,tearOff=false,isHelpMenu=false]
+Menu Events
+A Menu does not generate any 
+event when it is selected. An event is generated when a MenuItem 
+on the menu is selected, as long as it is not another Menu. 
+You can capture all the events that happen on a Menu 
+by overriding postEvent(). 
+MenuItem
+CheckboxMenuItem
+ 
+ 
+ 
+ 
+ 
+ 
+ 

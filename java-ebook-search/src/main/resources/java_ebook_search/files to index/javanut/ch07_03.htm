@@ -1,0 +1,218 @@
+
+[Chapter 7] 7.3 The Java 1.1 Event Model
+Chapter 7Events
+7.3 The Java 1.1 Event Model
+The Java 1.1 event model is used by both the AWT and by Java
+Beans.  In this model, different classes of events are
+represented by different Java classes.  Every event is a
+subclass of java.util.EventObject.  AWT events,
+which is what we are concerned with here, are subclasses of
+java.awt.AWTEvent.  For convenience, the various
+types of AWT events, such as MouseEvent and
+ActionEvent, are placed in the new
+java.awt.event package.
+Every event has a source object, which can be obtained with
+getSource(), and every AWT event has a type value,
+which can be obtained with getID().  This value is
+used to distinguish the various types of events that are
+represented by the same event class.  For example, the
+FocusEvent has two possible types:
+FocusEvent.FOCUS_GAINED and
+FocusEvent.FOCUS_LOST.  Event subclasses contain
+whatever data values are pertinent to the particular
+event type.  For example, MouseEvent has
+getX(), getY(), and getClickCount()
+methods; it also inherits the getModifiers() and
+getWhen() methods, among others.
+The 1.1 event handling model is based on the concept of an
+"event listener."  An object interested in receiving events
+is an event listener.  An object that generates events (an event
+source) maintains a list of listeners that are interested
+in being notified when events occur, and provides methods
+that allow listeners to add themselves and remove themselves
+from this list of interested objects.  When the event source
+object generates an event (or when a user input event occurs
+on the event source object), the event source notifies
+all the listener objects that the event has occurred.
+An event source notifies an event listener object by
+invoking a method on it and passing it an event object (an
+instance of a subclass of EventObject).  In
+order for a source to invoke a method on a listener, all
+listeners must implement the required method.  This is
+ensured by requiring that all event listeners for a particular
+type of event implement a corresponding interface.  For
+example, event listener objects for ActionEvent
+events must implement the ActionListener interface.
+The java.awt.event package defines an event
+listener interface for each of the event types it defines.
+(Actually, for MouseEvent events, it defines two
+listener interfaces: MouseListener and
+MouseMotionListener.)  All event listener interfaces
+themselves extend java.util.EventListener.  This
+interface does not define any methods, but instead acts as a marker
+interface, clearly identifying all event listeners as such.
+An event listener interface may define more than one method.
+For example, an event class like MouseEvent represents several
+different types of mouse events, such as a button press
+event and a button release event, and these different event
+types cause different methods in the corresponding event
+listener to be invoked.  By convention, the methods of an
+event listener are passed a single argument, which is an
+event object of the type that corresponds to the listener.
+This event object should contain all the information a
+program needs to respond to the event.
+Table 7.6
+lists the event types defined in java.awt.event, the
+corresponding listener (or listeners), and the methods
+defined by each listener interface.
+Table 7.6: Java 1.1 Event Types, Listeners, and Listener Methods
+Event Class
+Listener Interface
+Listener Methods
+ActionEvent
+ActionListener
+actionPerformed()
+AdjustmentEvent
+AdjustmentListener
+adjustmentValueChanged()
+ComponentEvent
+ComponentListener
+componentHidden()
+componentMoved()
+componentResized()
+componentShown()
+ContainerEvent
+ContainerListener
+componentAdded()
+componentRemoved()
+FocusEvent
+FocusListener
+focusGained()
+focusLost()
+ItemEvent
+ItemListener
+itemStateChanged()
+KeyEvent
+KeyListener
+keyPressed()
+keyReleased()
+keyTyped()
+MouseEvent
+MouseListener
+mouseClicked()
+mouseEntered()
+mouseExited()
+mousePressed()
+mouseReleased()
+_
+_
+MouseMotionListener
+mouseDragged()
+mouseMoved()
+TextEvent
+TextListener
+textValueChanged()
+WindowEvent
+WindowListener
+windowActivated()
+windowClosed()
+windowClosing()
+windowDeactivated()
+windowDeiconified()
+windowIconified()
+windowOpened()
+For each of the event listener interfaces that contains more
+than one method, java.awt.event defines a simple
+"adapter" class that provides an empty body for each of the
+methods in the interface.  When you are only interested in
+one or two of the defined methods, it is sometimes easier to
+subclass the adapter class than it is to implement the
+interface.  If you subclass the adapter, you only have to override
+the methods of interest, but if you implement the interface
+directly you have to define all of the methods, which means
+you must provide empty bodies for all the methods
+that are not of interest.  These pre-defined no-op
+adapter classes bear the same name as the interfaces they
+implement, with "Listener" changed to "Adapter":
+MouseAdapter, WindowAdapter, etc.
+Once you have implemented a listener interface, or
+subclassed a adapter class, you must instantiate your new
+class to define an individual event listener object.
+You then register that listener with the appropriate event source.
+In AWT programs, an event
+source is always some sort of AWT component.  Event listener
+registration methods follow a standard naming convention: if
+an event source generates events of type X, it
+has a method named addXListener()
+to add an event listener, and a method
+removeXListener()
+to remove a listener. One of the nice features of the 1.1
+event model is that it
+is easy to determine the types of events a component can
+generate--just look for the event listener registration
+methods.  For example, by inspecting the API of the
+Button object, you can determine that it generates
+ActionEvent events.
+Table 7.7
+lists AWT components and the events they generate.
+Table 7.7: AWT Components and the Java 1.1 Events They Generate
+Component
+Events Generated
+Meaning
+Button
+ActionEvent
+User clicked on the button
+Checkbox
+ItemEvent
+User selected or deselected an item
+CheckboxMenuItem
+ItemEvent
+User selected or deselected an item
+Choice
+ItemEvent
+User selected or deselected an item
+Component
+ComponentEvent
+Component moved, resized, hidden, or shown
+FocusEvent
+Component gained or lost focus
+KeyEvent
+User pressed or released a key
+MouseEvent
+User pressed or released mouse button, mouse entered or exited component,
+or user moved or dragged mouse.
+Note: MouseEvent has two corresponding listeners,
+MouseListener and MouseMotionListener.
+Container
+ContainerEvent
+Component added to or removed from container
+List
+ActionEvent
+User double-clicked on list item
+ItemEvent
+User selected or deselected an item
+MenuItem
+ActionEvent
+User selected a menu item
+Scrollbar
+AdjustmentEvent
+User moved the scrollbar
+TextComponent
+TextEvent
+User changed text
+TextField
+ActionEvent
+User finished editing text
+Window
+WindowEvent
+Window opened, closed, iconified, deiconified, or
+close requested
+Scribbling in Java 1.0
+Scribbling in Java 1.1
+ 
+ 
+ 
+ 
+ 
+ 
+ 

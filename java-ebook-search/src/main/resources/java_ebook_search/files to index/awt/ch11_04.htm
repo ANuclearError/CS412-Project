@@ -1,0 +1,247 @@
+
+[Chapter 11] 11.4 ScrollPane
+Chapter 11Scrolling
+11.4 ScrollPane
+A ScrollPane is a Container 
+with built-in scrollbars that can be used to scroll its contents. In the 
+current implementation, a ScrollPane 
+can hold only one Component 
+and has no layout manager. The component within a ScrollPane 
+is always given its preferred size. While the scrollpane's 
+inability to hold multiple components sounds like a deficiency, it isn't; 
+there's no reason you can't put a Panel 
+inside a ScrollPane, put as 
+many components as you like inside the Panel, 
+and give the Panel any layout 
+manager you wish. 
+Scrolling is handled by the ScrollPane 
+peer, so processing is extremely fast. In Example 11.1, 
+the user moves a Scrollbar 
+to trigger a scrolling event, and the peer sends the event to the Java 
+program to find someone to deal with it. Once it identifies the target, 
+it posts the event, then tries to find a handler. Eventually, the applet's 
+handleEvent() method is called 
+to reposition the ImageCanvas. 
+The new position is then given to the peer, which finally redisplays the 
+Canvas. Although most of the 
+real work is behind the scenes, it is still happening. With ScrollPane, 
+the peer generates and handles the event itself, which is much more efficient. 
+ScrollPane MethodsConstants
+The ScrollPane class contains 
+three constants that can be used to control its scrollbar display policy. 
+The constants are fairly self-explanatory. The constants are used in the 
+constructor for a ScrollPane 
+instance. 
+public static final int SCROLLBARS_AS_NEEDED  
+SCROLLBARS_AS_NEEDED is the 
+default scrollbar display policy. With this policy, the ScrollPane 
+displays each scrollbar only if the Component 
+is too 
+large in the scrollbar's direction. 
+public static final int SCROLLBARS_ ALWAYS  
+With the SCROLLBARS_ALWAYS 
+display policy, the ScrollPane 
+should always display both scrollbars, whether or not they are needed. 
+public static final int SCROLLBARS_ NEVER  
+With the SCROLLBARS_NEVER display 
+policy, the ScrollPane should 
+never display scrollbars, even when the object is bigger than the ScrollPane's 
+area. When using this mode, you should provide some means for the user 
+to scroll, either through a button outside the container or by listening 
+for events happening within the container. 
+Constructors
+public ScrollPane ()  
+The first constructor creates an instance of ScrollPane 
+with the default scrollbar display policy setting, SCROLLBARS_AS_NEEDED. 
+public ScrollPane (int scrollbarDisplayPolicy)  
+The other constructor creates an instance of ScrollPane 
+with a scrollbar setting of scrollbarDisplayPolicy. 
+If scrollbarDisplayPolicy is 
+not one of the class constants, this constructor throws the IllegalArgumentException run-time exception. 
+Layout methods
+public final void setLayout(LayoutManager mgr) 
+The setLayout() method of ScrollPane 
+throws an AWTError. It overrides the setLayout() method of Container to prevent you from changing a ScrollPane's layout manager.
+public void doLayout ()  public void layout ()  
+The doLayout() method of ScrollPane 
+shapes the contained object to its preferred size. 
+layout() is another name 
+for this method. 
+public final void addImpl(Component comp, Object constraints, int index) 
+The addImpl() method of ScrollPane 
+permits only one object to be added to the ScrollPane. It overides the addImpl() method of Container to enforce the ScrollPane's limitations on adding components. If index &gt; 0, addImpl() throws the run-time exception 
+IllegalArgumentException. If a component is already within the ScrollPane, it is removed before comp is added. The constraints parameter is ignored.
+Scrolling methods
+public int getScrollbarDisplayPolicy()  
+The getScrollbarDisplayPolicy() 
+method retrieves the current display policy, as set by the constructor. 
+You cannot change the policy once it has been set. The return value is 
+one of the class constants: SCROLLBARS_AS_NEEDED, 
+SCROLLBARS_ALWAYS, or SCROLLBARS_NEVER. 
+public Dimension getViewportSize()  
+The getViewportSize() method 
+returns the current size of the ScrollPane, 
+less any Insets, as a Dimension 
+object. The size is given in pixels and has an initial value of 100 x 100. 
+public int getHScrollbarHeight()  
+The getHScrollbarHeight() method 
+retrieves the height in pixels of a horizontal scrollbar. The value returned 
+is without regard to the display policy; that is, you may be given a height 
+even if the scrollbar is not displayed. This method may return 0 if the 
+scrollbar's height cannot be calculated at this time (no peer) or 
+if you are using the SCROLLBARS_NEVER 
+display policy. 
+The width of a horizontal scrollbar is just getViewportSize().width. 
+public int getVScrollbarWidth()  
+The getVScrollbarWidth() method 
+retrieves the width in pixels of a vertical scrollbar. The value returned 
+is without regard to the display policy; that is, you may be given a width 
+even if the scrollbar is not displayed. This method may return 0 if the 
+scrollbar's width cannot be calculated at this time (no peer) or 
+if you are using the SCROLLBARS_NEVER 
+display policy. 
+The height of a vertical scrollbar is just getViewportSize().height. 
+public Adjustable getHAdjustable()  
+The getHAdjustable() method 
+returns the adjustable object representing the horizontal scrollbar (or 
+null if it is not present). Through the methods of Adjustable, 
+you can get the different settings of the scrollbar. 
+The object that this method returns is an instance of the package private class ScrollPaneAdjustable, which implements the Adjustable interface. this class allows you to register listeners for the scrollpane's events and inquire about various properties of the pane's scrollbars. It does not let you set some scrollbar properties; the setMinimum(), setMaximum(), and setVisibleAmount() methods throw an AWTError when called.
+public Adjustable getVAdjustable()  
+The getVAdjustable() method 
+returns the adjustable object representing the vertical scrollbar (or null if it is not present). Through the methods of Adjustable, 
+you can get the different settings of the scrollbar. 
+The object that this method returns is an instance of the package private class ScrollPaneAdjustable, which implements the Adjustable interface. this class allows you to register listeners for the scrollpane's events and inquire about various properties of the pane's scrollbars. It does not let you set some scrollbar properties; the setMinimum(), setMaximum(), and setVisibleAmount() methods throw an AWTError when called.
+public void setScrollPosition(int x, int y)  
+This setScrollPosition() method 
+moves the ScrollPane to the 
+designated location if possible. The x 
+and y arguments are scrollbar 
+settings, which should be interpreted in terms of the minimum and maximum 
+values given to you by the horizontal and vertical Adjustable 
+objects (returned by the previous two methods). If the ScrollPane 
+does not have a child component, this method throws the run-time exception NullPointerException. 
+You can also move the ScrollPane 
+by calling the Adjustable.setValue() 
+method of one of the scrollpane's Adjustable 
+objects. 
+public void setScrollPosition(Point p)  
+This setScrollPosition() method 
+calls the previous with parameters of p.x, 
+and p.y. 
+public Point getScrollPosition()  
+The getScrollPosition() method 
+returns the current position of both the scrollpane's 
+Adjustable objects as a Point. 
+If there is no component within the ScrollPane, 
+getScrollPosition() throws 
+the NullPointerException run-time exception. 
+Another way to get this information is by calling the Adjustable.getValue() 
+method of each Adjustable object. 
+Miscellaneous methods
+public void printComponents (Graphics g)  
+The printComponents() method 
+of ScrollPane prints the single 
+component it contains. This is done by clipping the context g 
+to the size of the display area and calling the contained component's 
+printAll() method. 
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the ScrollPane peer. 
+If you override this method, call super.addNotify() 
+first, then add your customizations for the new class. You will then be 
+able to do everything you need with the information about the newly created 
+peer. 
+protected String paramString ()  
+ScrollPane doesn't have 
+its own toString() method; 
+so when you call the toString() 
+method of a ScrollPane, you 
+are actually calling the Component.toString() 
+method. This in turn calls paramString(), 
+which builds the string to display. For a ScrollPane, 
+paramString() adds the current 
+scroll position, insets, and scrollbar display policy. For example: 
+java.awt.ScrollPane[scrollpane0,0,0,0x0,invalid,ScrollPosition=(0,0),
+         Insets=(0,0,0,0),ScrollbarDisplayPolicy=always]
+ScrollPane Events
+The ScrollPane peer 
+deals with the scrolling events for you. It is not necessary to catch or 
+listen for these events. As with any other Container, 
+you can handle the 1.0 events of the object you contain or listen for 1.1 
+events that happen within you. 
+Using a ScrollPane
+The following applet demonstrates one way to use a ScrollPane. 
+Basically, you place the object you want to scroll in the ScrollPane 
+by calling the add() method. 
+This can be a Panel with many 
+objects on it or a Canvas with 
+an image drawn on it. You then add as many objects as you want to the Panel 
+or scribble on the Canvas to 
+your heart's delight. No scrolling event handling is necessary. That 
+is all there is to it. To make this example a little more interesting, 
+whenever you select a button, the ScrollPane 
+scrolls to a randomly selected position. Figure 11.4 
+displays the screen. 
+Figure 11.4: A ScrollPane containing many buttons
+Here's the code: 
+// Java 1.1 only
+import java.awt.*;
+import java.awt.event.*;
+import java.applet.*;
+public class scroll extends Applet implements ActionListener, ContainerListener {
+    ScrollPane sp = new ScrollPane (ScrollPane.SCROLLBARS_ALWAYS);
+    public void init () {
+        setLayout (new BorderLayout ());
+        Panel p = new Panel(new GridLayout (7, 8));
+        p.addContainerListener (this);
+        for (int j=0;j&lt;50;j++)
+            p.add (new Button ("Button-" + j));
+        sp.add (p);
+        add (sp, "Center");
+    }
+    public void componentAdded(ContainerEvent e) {
+        if (e.getID() == ContainerEvent.COMPONENT_ADDED) {
+            if (e.getChild() instanceof Button) {
+                Button b = (Button)e.getChild();
+                b.addActionListener(this);
+            }
+        }
+    }
+    public void componentRemoved(ContainerEvent e) {
+    }
+    public void actionPerformed (ActionEvent e) {
+        Component c = sp.getComponent();
+            Dimension d = c.getSize();
+            sp.setScrollPosition ((int)(Math.random()*d.width),
+                (int)(Math.random()*d.height));
+    }
+}
+Working with the ScrollPane 
+itself is easy; we just create one, add a Panel 
+to it, set the Panel's 
+layout manager to GridLayout, 
+and add a lot of buttons to the Panel. 
+The applet itself is the action listener for all the buttons; when anybody 
+clicks a button, actionPerformed() 
+is called, which generates a new random position based on the viewport 
+size and sets the new scrolling position accordingly by calling setScrollPosition().
+The more interesting part of this applet is the way it works with buttons. 
+Instead of directly adding a listener for each button, we add a ContainerListener 
+to the containing panel and let it add listeners. Although this may seem 
+like extra work here, it demonstrates how you can use container events to take actions whenever someone adds or removes a component. At first glance, you might ask why I didn't just call 
+enableEvents(AWTEvent.CONTAINER_EVENT_MASK) 
+and override the applet's processContainerEvent() 
+to attach the listeners. If we were only adding our components to the applet, 
+that would work great. Unfortunately, the applet is not notified when buttons 
+are added to an unrelated panel. It would be notified only when the panel 
+was added to the applet. 
+The Adjustable Interface
+Image Processing
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,64 @@
+
+[Chapter 16] 16.2 Transferable Interface
+Chapter 16Data Transfer
+16.2 Transferable Interface
+Objects that can be placed on a clipboard 
+must implement the Transferable 
+interface. This interface defines a number of methods that let an object 
+describe how it presents itself to clipboard 
+readers. That sounds complex, but it isn't really; these methods 
+let a clipboard reader find out what data flavors are available and what 
+Java types they represent. 
+The significance of the Transferable 
+interface is that it provides a way to get information about the object 
+on the clipboard without knowing what the object actually is. When you 
+read the clipboard, you don't necessarily know what kind of object 
+is there. It might be some kind of text string, but it could just as likely 
+be something bizarre. However, you shouldn't have to care. If you're 
+looking for a String, you care only that the object exists in a stringFlavor 
+representation. These methods let you ask the object 
+what flavors it supports. 
+For text strings, the data transfer package provides a StringSelection 
+class that implements Transferable. 
+At this point, if you want to transfer other kinds of objects, you'll 
+have to create a class that implements Transferable 
+yourself. It wouldn't be unreasonable for JavaSoft to provide other 
+"selection" classes (for example, ImageSelection) 
+in the future. Methods
+public abstract DataFlavor[] getTransferDataFlavors()  
+The getTransferDataFlavors() 
+method should return a sorted array of DataFlavors 
+that you support. The most descriptive flavor should be the first element 
+in the array and the least descriptive, last. For example, a textual object 
+would place DataFlavor.plainTextFlavor 
+last, because it has less information than DataFlavor.stringFlavor 
+(which includes information like the length of the string) and much less 
+information than a hypothetical flavor like DataFlavor.richTextFlavor. 
+public abstract boolean isDataFlavorSupported(DataFlavor flavor)  
+The isDataFlavorSupported() 
+method should return true if 
+the object supports the given flavor 
+and false otherwise. 
+public abstract Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException  
+The getTransferData() method 
+is the most complicated to implement. It should return an instance of the 
+class representing the data in the given flavor. 
+If flavor is not supported 
+by this object, getTransferData() 
+must throw the UnsupportedFlavorException. 
+However, this method must be able to return a class for each flavor the 
+object supports (i.e., each data flavor listed by getTransferDataFlavors()). 
+The method could throw an IOException 
+when returning with a Reader 
+as the representation class. For example, if some data flavor required 
+you to return a FileReader 
+and the file doesn't exist, this method might throw an IOException. 
+DataFlavor
+ClipboardOwner Interface
+ 
+ 
+ 
+ 
+ 
+ 
+ 

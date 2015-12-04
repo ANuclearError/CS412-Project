@@ -1,0 +1,106 @@
+
+[Chapter 9] Object Serialization
+Chapter 9
+9. Object Serialization
+Contents:
+Simple Serialization
+Custom Serialization
+Serialization and Class Versioning
+Serialized Applets
+Advanced Serialization
+Object serialization is one of the important new features of
+Java 1.1.  Despite its importance, however, serialization is
+done with a very simple API.  This chapter demonstrates
+several uses of serialization.
+9.1 Simple Serialization
+Objects are serialized with the ObjectOutputStream
+and they are deserialized with the
+ObjectInputStream.  Both of these classes are part
+of the java.io package, and they function, in many
+ways, like DataOutputStream and
+DataInputStream because they define the same methods for
+writing and reading binary representations of Java primitive types to
+and from streams.  What ObjectOutputStream and
+ObjectInputStream add, however, is the ability to
+write and read non-primitive object and array values to and
+from a stream.
+An object is serialized by passing it to the
+writeObject() method of an
+ObjectOutputStream.  This writes out the values of
+all of its fields, including private fields and fields
+inherited from superclasses.  The values of primitive fields
+are simply written to the stream as they would be with a
+DataOutputStream.  When a field in an object
+refers to another object, an array, or a string, however,
+the writeObject() method is invoked recursively to
+serialize that object as well.  If that object (or an array element)
+refers to another object, writeObject() is again
+invoked recursively.  Thus, a single call to
+writeObject() may result in an entire
+"object graph" being serialized.  When two or more
+objects each refer to the other, the serialization algorithm
+is careful to only output each object
+once--writeObject() cannot enter infinite
+recursion.
+Deserializing an object simply follows the reverse of this
+process.  An object is read from a stream of data by calling
+the readObject() method of an
+ObjectInputStream.  This re-creates the object in
+the state it was in when serialized.  If the object refers
+to other objects, they are recursively deserialized as well.
+This ability to serialize an entire graph of objects and read those
+objects back in later is a very powerful feature that hides itself in
+two simple looking methods.  We used object serialization in 
+Example 8.1, but unless you were paying attention, you
+might have missed those crucial writeObject() and
+readObject() calls.  Serialization is used in that
+Scribble example to give the program an automatic
+file format for saving the user's scribbles.
+To refresh your memory,
+Example 9.1
+shows the save() method of that application.  Note
+the creation of the ObjectOutputStream and the use
+of the writeObject() method.  The corresponding
+load() method simply reverses the streams to read
+the scribble back in.  You may want to refer to the complete
+example in Chapter 8, New AWT Features to examine the save() and
+load() methods in context.  Also note the use of a
+GZIPOutputStream (from java.util.zip) to
+compress the serialized object data before writing it to
+disk.
+Example 9.1: Using Serialized Objects as an Application File Format
+/**
+ * Prompt the user for a filename, and save the scribble in that file.
+ * Serialize the vector of lines with an ObjectOutputStream.
+ * Compress the serialized objects with a GZIPOutputStream.
+ * Write the compressed, serialized data to a file with a FileOutputStream.
+ * Don't forget to flush and close the stream.
+ */
+public void save() {
+  // Create a file dialog to query the user for a filename.
+  FileDialog f = new FileDialog(frame, "Save Scribble", FileDialog.SAVE);
+  f.show();                        // Display the dialog and block.
+  String filename = f.getFile();   // Get the user's response
+  if (filename != null) {          // If user didn't click "Cancel."
+    try {
+      // Create the necessary output streams to save the scribble.
+      FileOutputStream fos = new FileOutputStream(filename);  // Save to file.
+      GZIPOutputStream gzos = new GZIPOutputStream(fos);      // Compress.
+      ObjectOutputStream out = new ObjectOutputStream(gzos);  // Save objects
+      out.writeObject(lines);      // Write the entire Vector of scribbles.
+      out.flush();                 // Always flush the output.
+      out.close();                 // And close the stream.
+    }
+    // Print out exceptions.  We should really display them in a dialog...
+    catch (IOException e) { System.out.println(e); }
+  }
+}
+New Feature Demo
+Custom Serialization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

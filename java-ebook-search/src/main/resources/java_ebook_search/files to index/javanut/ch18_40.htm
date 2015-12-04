@@ -1,0 +1,56 @@
+
+[Chapter 18] 18.40 java.awt.Menu (JDK 1.0)
+Chapter 18The java.awt Package
+18.40 java.awt.Menu (JDK 1.0)
+This class represents a pulldown menu
+pane that appears within a MenuBar.  Each
+Menu has a label that appears in the MenuBar
+and may optionally be a tear-off menu.  The add()
+and addSeparator() methods add individual items to a
+Menu.
+public class Menu extends MenuItem implements MenuContainer {
+    // Public Constructors
+        1.1  public Menu();
+            public Menu(String label);
+            public Menu(String label, boolean tearOff);
+    // Public Instance Methods
+            public synchronized MenuItem add(MenuItem mi);
+            public void add(String label);
+            public void addNotify();  // Overrides MenuItem
+            public void addSeparator();
+        #   public int countItems();
+            public MenuItem getItem(int index);
+        1.1  public int getItemCount();
+        1.1  public synchronized void insert(MenuItem menuitem, int index);
+        1.1  public void insert(String label, int index);
+        1.1  public void insertSeparator(int index);
+            public boolean isTearOff();
+        1.1  public String paramString();  // Overrides MenuItem
+            public synchronized void remove(int index);
+            public synchronized void remove(MenuComponent item);  // From MenuContainer
+        1.1  public synchronized void removeAll();
+            public void removeNotify();  // Overrides MenuComponent
+}
+Hierarchy:
+Object->MenuComponent(Serializable)->MenuItem->Menu(MenuContainer)
+Extended By:
+PopupMenu
+Passed To:
+MenuBar.add(), 
+MenuBar.setHelpMenu(), 
+MenuBarPeer.addHelpMenu(), 
+MenuBarPeer.addMenu(), 
+Toolkit.createMenu()
+Returned By:
+MenuBar.add(), 
+MenuBar.getHelpMenu(), 
+MenuBar.getMenu()
+java.awt.MediaTracker (JDK 1.0)
+java.awt.MenuBar (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,369 @@
+
+[Chapter 8] 8.2 TextField
+Chapter 8Input Fields
+8.2 TextField
+TextField is the TextComponent 
+for single-line input. Some constructors permit you to set the width of 
+the TextField on the screen, 
+but the current LayoutManager 
+may change it. The text in the TextField 
+is left justified, and the justification is not customizable. To change the font and size of text within the TextField, 
+call setFont() as shown in Chapter 3, Fonts and Colors. 
+The width of the field does not limit the number of characters that the 
+user can type into the field. It merely suggests how wide the field should 
+be. To limit the number of characters, it is necessary to override the 
+keyDown() method for the Component. 
+Extending TextField contains an example showing how to do 
+this. 
+TextField MethodsConstructors
+public TextField () 
+This constructor creates an empty TextField. 
+The width of the TextField 
+is zero columns, but it will be made wide enough to display just about 
+one character, depending on the current font and size. 
+public TextField (int columns)
+This constructor creates an empty TextField. 
+The TextField width is columns. 
+The TextField will try to be 
+wide enough to display columns 
+characters in the current font and size. As I mentioned previously, the layout 
+manager may change the size. 
+public TextField (String text) 
+This constructor creates a TextField 
+with text as its content. In 
+Java 1.0 systems, the TextField 
+is 0 columns wide (the getColumns() 
+result), but the system will size it to fit the length of text. With Java 
+1.1, getColumns() actually 
+returns text.length. 
+public TextField (String text, int columns) 
+This constructor creates a TextField 
+with text as its content and 
+a width of columns. 
+The following example uses all four constructors; the results are shown 
+in Figure 8.2. With the third constructor, you see 
+that the TextField is not quite wide enough for our text. The system uses 
+an average width per character to try to determine how wide the field should 
+be. If you want to be on the safe side, specify the field's length 
+explicitly, and add a few extra characters to ensure that there is enough 
+room on the screen for the entire text. 
+import java.awt.TextField;
+public class texts extends java.applet.Applet {
+   public void init () {
+        add (new TextField ());                   // A
+        add (new TextField (15));                 // B
+        add (new TextField ("Empty String"));     // C
+        add (new TextField ("Empty String", 20)); // D
+   }
+}
+Figure 8.2: Using the TextField constructors
+Sizing
+public int getColumns () 
+The getColumns() method returns 
+the number of columns set with the constructor or a later call to setColumns(). 
+This could be different from the displayed width of the TextField, 
+depending upon the current LayoutManager. 
+public void setColumns (int columns)  
+The setColumns() method changes 
+the preferred number of columns for the TextField 
+to display to columns. Because 
+the current LayoutManager will 
+do what it wants, the new setting may be completely ignored. If columns 
+&lt; 0, setColumns() throws 
+the run-time exception IllegalArgumentException. 
+public Dimension getPreferredSize (int columns)  public Dimension preferredSize (int columns) 
+The getPreferredSize() method 
+returns the Dimension (width 
+and height) for the preferred size of a TextField 
+with a width of columns. The 
+columns specified may be different 
+from the number of columns designated in the constructor. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getPreferredSize ()  public Dimension preferredSize ()  
+The getPreferredSize() method 
+returns the Dimension (width 
+and height) for the preferred size of the TextField. 
+Without the columns parameter, 
+this getPreferredSize() uses 
+the constructor's number of columns (or the value from a subsequent 
+call to setColumns()) to calculate 
+the TextField's preferred 
+size. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getMinimumSize (int columns)  public Dimension minimumSize (int columns)   
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of a TextField 
+with a width of columns. The 
+columns specified may be different 
+from the columns designated in the constructor. 
+minimumSize() is the Java 1.0 
+name for this method. 
+public Dimension getMinimumSize ()  public Dimension minimumSize () 
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of the TextField. 
+Without the columns parameter, this getMinimumSize() 
+uses the constructor's number of columns (or the value from a subsequent 
+call to setColumns()) to calculate 
+the TextField's minimum 
+size. 
+minimumSize() is the Java 1.0 
+name for this method. 
+Echoing character
+It is possible to change the character echoed back to the user when he 
+or she types. This is extremely useful for implementing password entry 
+fields. 
+public char getEchoChar () 
+The getEchoChar() method returns 
+the currently echoed character. If the TextField 
+is echoing normally, getEchoChar() 
+returns zero. 
+public void setEchoChar (char c)  public void setEchoCharacter (char c) 
+The setEchoChar() method changes 
+the character that is displayed to the user to c 
+for every character in the TextField. 
+It is possible to change the echo character on the fly so that existing 
+characters will be replaced. A c 
+of zero, (char)0, effectively 
+turns off any change and makes the TextField 
+behave normally. 
+setEchoCharacter() is the Java 
+1.0 name for this method. 
+public boolean echoCharIsSet () 
+The echoCharIsSet() method 
+returns true if the echo character 
+is set to a nonzero value. If the TextField 
+is displaying input normally, this method returns false. 
+Miscellaneous methods
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the TextField peer. 
+If you override this method, first call super.addNotify(), 
+then add your customizations for the new class. Then you will be able to 
+do everything you need with the information about the newly created peer. 
+protected String paramString ()  
+When you call the toString() 
+method of TextField, the default 
+toString() method of Component 
+is called. This in turn calls paramString(), 
+which builds up the string to display. The TextField 
+level can add only one item. If the echo character is nonzero, the current 
+echo character is added (the method getEchoChar()). 
+Using new TextField (`Empty String`, 20), 
+the results displayed could be: 
+java.awt.TextField[0,0,0x0,invalid,text="Empty String",editable,selection=0-0]
+TextField Events
+With the 1.0 event model, TextField 
+components can generate KEY_PRESS 
+and KEY_ACTION (which calls 
+keyDown()), KEY_RELEASE 
+and KEY_ACTION_RELEASE (which 
+calls keyUp()), and ACTION_EVENT 
+(which calls action()). 
+With the 1.1 event model, you register an ActionListener 
+with the method addActionListener(). Then when the user presses 
+Return within the TextField 
+the ActionListener.actionPerformed() 
+method is called through the protected TextField.processActionEvent() 
+method. Key, mouse, and focus listeners are registered through the three Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. Action
+public boolean action (Event e, Object o)
+The action() method for a TextField 
+is called when the input focus is in the TextField 
+and the user presses the Return key. e 
+is the Event instance for the 
+specific event, while o is 
+a String representing the current contents (the getText() method). 
+Keyboard
+public boolean keyDown (Event e, int key)   
+The keyDown() method is called 
+whenever the user presses a key. keyDown() 
+may be called many times in succession if the key remains 
+pressed. e is the Event 
+instance for the specific event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyDown() 
+could be either Event.KEY_PRESS 
+for a regular key or Event.KEY_ACTION 
+for an action-oriented key (i.e., an arrow or function key). Some of the 
+things you can do through this method are validate input, convert each 
+character to uppercase, and limit the number or type of characters entered. 
+The technique is simple: you just need to remember that the user's 
+keystroke is actually displayed by the TextField 
+peer, which receives the event after the TextField 
+itself. Therefore, a TextField 
+subclass can modify the character displayed by modifying the key 
+field (e.key) of the Event 
+and returning false, which 
+passes the Event on down the 
+chain; remember that returning false 
+indicates that the Event has 
+not been completely processed. The following method uses this technique 
+to convert all input to uppercase. 
+public boolean keyDown (Event e, int key) {
+    e.key = Character.toUppercase (char(key));
+    return false;
+}
+If keyDown() returns true, 
+it indicates that the Event 
+has been completely processed. In this case, the Event 
+never propagates to the peer, and the keystroke is never displayed. 
+public boolean keyUp (Event e, int key) 
+The keyUp() method is called 
+whenever the user releases a key. e 
+is the Event instance for the 
+specific event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyUp() 
+could be either Event.KEY_RELEASE 
+for a regular key or Event.KEY_ACTION_RELEASE 
+for an action-oriented key (i.e., an arrow or function key). Among other 
+things, keyUp() may be used 
+to determine how long the key has been pressed. 
+Mouse
+Ordinarily, the TextField component 
+does not trigger any mouse events. 
+NOTE: 
+Mouse events are not generated for TextField 
+with JDK 1.0.2. Your run-time environment may behave differently. See Appendix 
+C for more information about platform dependencies. 
+Focus
+The TextField component does 
+not reliably generate focus events. 
+NOTE: 
+The GOT_FOCUS and LOST_FOCUS 
+events can be generated by TextFields, 
+but these events are not reliable across platforms. With Java 1.0, they 
+are generated on most UNIX platforms but not on Windows NT/95 platforms. They 
+are generated on all platforms under Java 1.1. See Appendix C for more 
+information about platform dependencies. 
+public boolean gotFocus (Event e, Object o)   
+The gotFocus() method is triggered 
+when the TextField gets the 
+input focus. e is the Event 
+instance for the specific event, while o 
+is a String representation 
+of the current contents (getText()). 
+public boolean lostFocus (Event e, Object o)   
+The lostFocus() method is 
+triggered when the input focus leaves the TextField. e 
+is the Event instance for the 
+specific event, while o 
+is a String representation 
+of the current contents (getText()). 
+Listeners and 1.1 event handling
+With the 1.1 event model, you register event listeners that are told when 
+an event occurs. You can register text event listeners by calling the method TextComponent.addTextListener(). 
+public void addActionListener(ActionListener listener)  
+The addActionListener() method 
+registers listener as an object 
+interested in receiving notifications when an ActionEvent 
+passes through the EventQueue 
+with this TextField as its 
+target. The listener.actionPerformed() 
+method is called when these events occur. Multiple listeners can be registered. 
+The following code demonstrates how to use an ActionListener 
+to reverse the text in the TextField. 
+// Java 1.1 only 
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+class MyAL implements ActionListener {
+    public void actionPerformed(ActionEvent e) {
+        System.out.println ("The current text is: " +
+            e.getActionCommand());
+        if (e.getSource() instanceof TextField) {
+            TextField tf = (TextField)e.getSource();
+            StringBuffer sb = new StringBuffer (e.getActionCommand());
+            tf.setText (sb.reverse().toString());
+        }
+    }
+}
+public class text11 extends Applet {
+    public void init () {
+        TextField tf = new TextField ("Help Text", 20);
+        add (tf);
+        tf.addActionListener (new MyAL());
+   }
+}
+public void removeActionListener(ActionListener listener)  
+The removeActionListener() 
+method removes listener as 
+a interested listener. If listener 
+is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+all AWTEvents with this TextField 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+TextField, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processActionEvent(ActionEvent e)  
+The processActionEvent() method 
+receives all ActionEvents with 
+this TextField as its target. 
+processActionEvent() then passes 
+them along to any listeners for processing. When you subclass TextField, 
+overriding the method processActionEvent() 
+allows you to process all action events yourself, before sending them to 
+any listeners. In a way, overriding processActionEvent() 
+is like overriding action() using 
+the 1.0 event model. 
+If you override the processActionEvent() method, 
+remember to call super.processActionEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+The following applet is equivalent to the previous example, except that it 
+overrides processActionEvent() 
+to receive events, eliminating the need for an ActionListener. 
+The constructor calls enableEvents() 
+to make sure that events are delivered, even if no listeners are registered. 
+// Java 1.1 only
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+class MyTextField extends TextField {
+    public MyTextField (String s, int len) {
+        super (s, len);
+        enableEvents (AWTEvent.ACTION_EVENT_MASK);
+    }
+    protected void processActionEvent(ActionEvent e) {
+        System.out.println ("The current text is: " +
+            e.getActionCommand());
+        TextField tf = (TextField)e.getSource();
+        StringBuffer sb = new StringBuffer (e.getActionCommand());
+        tf.setText (sb.reverse().toString());
+        super.processActionEvent(e)
+    }
+}
+public class text12 extends Applet {
+   public void init () {
+        TextField tf = new MyTextField ("Help Text", 20);
+        add (tf);
+   }
+}
+Text Component
+TextArea
+ 
+ 
+ 
+ 
+ 
+ 
+ 

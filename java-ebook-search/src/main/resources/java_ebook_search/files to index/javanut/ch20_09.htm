@@ -1,0 +1,49 @@
+
+[Chapter 20] 20.9 java.awt.event.ContainerEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.9 java.awt.event.ContainerEvent (JDK 1.1)
+An event of this type serves as notification that the source
+Container has had a child added to it or removed from
+it.  Note that this event is a notification only; the AWT
+adds or removes the child internally, and the recipient of
+this event need take no action itself.
+getChild() returns the child Component that
+was added or removed, and getContainer() returns the
+Container that it was added to or removed from.
+getContainer() is simply a convenient alternative to
+getSource().
+getID() returns the constant COMPONENT_ADDED
+or COMPONENT_REMOVED to indicate whether the
+specified child was added or removed.
+public class ContainerEvent extends ComponentEvent {
+    // Public Constructor
+            public ContainerEvent(Component source, int id, Component child);
+    // Constants
+            public static final int COMPONENT_ADDED;
+            public static final int COMPONENT_REMOVED;
+            public static final int CONTAINER_FIRST;
+            public static final int CONTAINER_LAST;
+    // Public Instance Methods
+            public Component getChild();
+            public Container getContainer();
+            public String paramString();  // Overrides ComponentEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->ContainerEvent
+Passed To:
+AWTEventMulticaster.componentAdded(), 
+AWTEventMulticaster.componentRemoved(), 
+Container.processContainerEvent(), 
+ContainerAdapter.componentAdded(), 
+ContainerAdapter.componentRemoved(), 
+ContainerListener.componentAdded(), 
+ContainerListener.componentRemoved()
+java.awt.event.ContainerAdapter (JDK 1.1)
+java.awt.event.ContainerListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,249 @@
+
+[Chapter 16] StringCharacterIterator
+Chapter 16The java.text Package
+StringCharacterIterator
+Name
+StringCharacterIterator
+Synopsis
+Class Name:
+java.text.StringCharacterIterator
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.text.CharacterIterator
+Availability:
+New as of JDK 1.1 
+Description
+The StringCharacterIterator 
+class can move bidirectionally through a character string. 
+In other words, the class iterates through the characters in a String. 
+The class implements the CharacterIterator 
+interface. The class is used by BreakIterator 
+to find boundaries in text strings. 
+Class Summary
+public final class java.text.StringCharacterIterator
+                    extends java.lang.Object 
+                    implements java.text.CharacterIterator {
+  // Constructors
+  public StringCharacterIterator(String text);
+  public StringCharacterIterator(String text, int pos);
+  public StringCharacterIterator(String text, int begin, int end, int pos);
+  // Instance Methods
+  public Object clone();
+  public char current();
+  public boolean equals(Object obj); 
+  public char first();
+  public int getBeginIndex();
+  public int getEndIndex();
+  public int getIndex();
+  public int hashCode();
+  public char last();
+  public char next();
+  public char previous();
+  public char setIndex(int p);
+}
+Constructors
+StringCharacterIterator
+public StringCharacterIterator(String text)
+Parameters
+text
+The String to use. 
+Description
+This constructor creates a StringCharacterIterator 
+that uses the given string. The initial index of the iterator is at the 
+beginning of the string, or in other words, at index 0. 
+public StringCharacterIterator(String text, int pos)
+Parameters
+text
+The String to use.
+pos
+The initial position. 
+Description
+This constructor creates a StringCharacterIterator 
+that uses the given string. The initial index of the iterator is set to 
+the given initial position. 
+   public StringCharacterIterator(String text, int begin, int end, int pos)  
+Parameters
+text
+The String to use.
+begin
+The beginning index.
+end
+The ending index.
+pos
+The initial position. 
+Description
+This constructor creates a StringCharacterIterator 
+that uses the specified range of the given string. In other words, the 
+iterator uses the sequence of text from the specified beginning index to 
+the specified ending index. The initial index of the iterator is set to 
+the given initial position. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this StringCharacterIterator. 
+Implements
+CharacterIterator.clone() 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this StringCharacterIterator 
+and returns it. 
+current
+public char current()
+Returns
+The character at the current position of this 
+StringCharacterIterator or 
+DONE if the current position 
+is not within the text sequence. 
+Implements
+CharacterIterator.current() 
+Description
+This method returns the character at the current position of this CharacterIterator. 
+The current position is returned by getIndex(). 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of StringCharacterIterator 
+and is equivalent to this StringCharacterIterator. 
+first
+public char first()
+Returns
+The first character in this StringCharacterIterator. 
+Implements
+CharacterIterator.first() 
+Description
+This method returns the character at the first position in this StringCharacterIterator. 
+The first position is returned by getBeginIndex(). 
+The current position of the iterator is set to this position. 
+getBeginIndex
+public int getBeginIndex()
+Returns
+The index of the first character in this StringCharacterIterator. 
+Implements
+CharacterIterator.getBeginIndex() 
+Description
+This method returns the index of the beginning of the text for this StringCharacterIterator. 
+getEndIndex
+public int getEndIndex()
+Returns
+The index after the last character in this StringCharacterIterator. 
+Implements
+CharacterIterator.getEndIndex() 
+Description
+This method returns the index of the character following the end of the 
+text for this StringCharacterIterator. 
+getIndex
+public int getIndex()
+Returns
+The index of the current character in this StringCharacterIterator. 
+Description
+This method returns the current position, or index, of this StringCharacterIterator. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this StringCharacterIterator. 
+last
+public char last()
+Returns
+The last character in this StringCharacterIterator. 
+Implements
+CharacterIterator.last() 
+Description
+This method returns the character at the ending position of this StringCharacterIterator. 
+The last position is the value of getEndIndex()-1. 
+The current position of the iterator is set to this position. 
+next
+public char next()
+Returns
+The next character in this StringCharacterIterator 
+or DONE if the current position 
+is already at the end of the text. 
+Implements
+CharacterIterator.next() 
+Description
+This method increments the current position of this StringCharacterIterator 
+by 1 and returns the character at the new position. If the current position 
+is already at getEndIndex(), 
+the position is not changed and DONE 
+is returned. 
+previous
+public char previous()
+Returns
+The previous character in this StringCharacterIterator 
+or DONE if the current position 
+is already at the beginning of the text. 
+Implements
+CharacterIterator.previous() 
+Description
+This method decrements the current position of this StringCharacterIterator 
+by 1 and returns the character at the new position. If the current position 
+is already at getBeginIndex(), 
+the position is not changed and DONE 
+is returned. 
+setIndex
+public char setIndex(int p)
+Parameters
+p
+The new position. 
+Returns
+The character at the specified position in this StringCharacterIterator. 
+Throws
+IllegalArgumentException
+If the given position is not between getBeginIndex() 
+and getEndIndex()-1. 
+Implements
+CharacterIterator.setIndex() 
+Description
+This method sets the current position, or index, of this StringCharacterIterator 
+to the given position. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BreakIterator, 
+CharacterIterator, 
+String 
+SimpleDateFormat
+BitSet
+ 
+ 
+ 
+ 
+ 
+ 
+ 

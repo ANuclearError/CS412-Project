@@ -1,0 +1,45 @@
+
+[Chapter 23] 23.4 java.beans.Customizer (JDK 1.1)
+Chapter 23The java.beans Package
+23.4 java.beans.Customizer (JDK 1.1)
+The Customizer interface specifies the methods that
+must be defined by any class designed to customize a Java
+bean.  In addition to implementing this interface,
+a customizer class must be a subclass of
+java.awt.Component, and it must have a constructor
+that takes no arguments, so that it can be instantiated by
+an application builder.
+Customizer classes are typically used by a complex Java bean
+to allow the user to easily configure the bean, and to provide
+an alternative to a simple list of properties and their
+values.  If a customizer class is defined for a Java bean,
+it must be associated with the bean through a
+BeanDescriptor object returned by a BeanInfo
+class for the bean.  Note that while a Customizer
+class is created by the author of a bean, that class is only
+instantiated and used by application builders and similar
+tools. 
+After a Customizer class is instantiated, its
+setObject() method is invoked once to specify
+the bean object that it is to customize.  The
+addPropertyChangeListener() and
+removePropertyChangeListener() methods may be called
+to register and de-register PropertyChangeListener objects.
+The Customizer should send a
+PropertyChangeEvent to all registered listeners any
+time it changes a property of the bean it is customizing.
+public abstract interface Customizer {
+    // Public Instance Methods
+            public abstract void addPropertyChangeListener(PropertyChangeListener listener);
+            public abstract void removePropertyChangeListener(PropertyChangeListener listener);
+            public abstract void setObject(Object bean);
+}
+java.beans.Beans (JDK 1.1)
+java.beans.EventSetDescriptor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

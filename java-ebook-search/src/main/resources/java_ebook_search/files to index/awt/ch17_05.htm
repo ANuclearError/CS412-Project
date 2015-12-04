@@ -1,0 +1,33 @@
+
+[Chapter 17] 17.5 Printing Arbitrary Content
+Chapter 17Printing
+17.5 Printing Arbitrary Content
+Of course, in many situations, you want to do more than print the appearance of a component. You often want to print the contents of some component, rather than the component itself. For example, you may want to print the text the user has typed into a text area, rather than the text area itself. Or you may want to print the contents of a spreadsheet, rather than the collection of components that compose the spreadsheet. 
+Java 1.1 lets you print arbitrary content, which may include multipage documents. You aren't restricted to printing your components' appearance. In many ways, the steps required to print arbitrary content are similar to those we outlined previously. However, a few tricks are involved:
+Get the PrintJob:
+PrintJob pjob = getToolkit().getPrintJob(this, "Job Title", (Properties)null);
+Get the graphics context from the PrintJob:
+Graphics pg = pjob.getGraphics();
+Don't call printAll() or print(). These methods will try to draw your component on the page, which you don't want. Instead, get the dimensions of the page by calling getPageDimension():
+pjob.getPageDimension();
+Set the font for your graphics context; then get the font metrics from your graphics context.
+Font times = new Font ("SansSerif", Font.PLAIN, 12);
+pg.setFont(times); 
+FontMetrics tm = pg.getFontMetrics(times);
+Draw whatever you want into the graphics context, using the methods of the Graphics class. If you are drawing text, it's your responsibility to do all the positioning, making sure that your text falls within the page boundaries. By the time you're through with this, you'll have the FontMetrics class memorized.
+When you've finished drawing the current page, call dispose(); this sends the page to the printer and releases the resources tied up by the PrintGraphics object.
+pg.dispose(); // This is like sending a form feed
+If you want to print more pages, return to step 2.
+Clean up after yourself:
+pjob.end();
+Remember to set a font for the PrintGraphics object explicitly! It doesn't have a default font.
+An example that loads and prints a text file is available from this book's Web page.
+Printing Example
+java.applet Reference
+ 
+ 
+ 
+ 
+ 
+ 
+ 

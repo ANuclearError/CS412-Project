@@ -1,0 +1,85 @@
+
+[Chapter 14] 14.2 AudioClip Interface
+Chapter 14And Then There Were Applets
+14.2 AudioClip Interface
+Once an audio file is loaded into memory with getAudioClip(), 
+you use the AudioClip interface 
+to work with it. Methods
+Three methods define the AudioClip 
+interface. The class that implements these methods depends on the run-time 
+environment; the class is probably sun.applet.AppletAudioClip 
+or netscape.applet.AppletAudioClip. 
+If you play an audio clip anywhere within your Applet, 
+you should call the AudioClip 
+stop() method within the stop() 
+method of the applet. This ensures that the audio file will stop playing 
+when the user leaves your web page. Stopping audio clips is a must if you 
+call loop() to play the sound 
+continuously; if you don't stop an audio clip, the user will have to exit the browser 
+to get the sound to stop playing. 
+Applets can play audio clips simultaneously. Based upon the user's actions, you may want to play a sound 
+file in the background continuously, while playing other files.
+void play () 
+The play() method plays the 
+audio clip once from the beginning. 
+void loop () 
+The loop() method plays the 
+audio clip continuously. When it gets to the end-of-file marker, it resets 
+itself to the beginning. 
+void stop () 
+The stop() method stops the 
+applet from playing the audio clip. 
+Using an AudioClip
+The applet in Example 14.2 loads three audio files in the init() 
+method. The start() method 
+plays Dino barking in the background as a continuous loop. Whenever the 
+browser calls paint(), Fred 
+yells "Wilma," and when you click the mouse anywhere, the call 
+to mouseDown() plays Fred yelling, 
+"Yabba-Dabba-Doo." If you try real hard, all three can play 
+at once. Before playing any audio clip, the applet makes sure that the 
+clip is not null--that is, that the clip loaded correctly. stop() 
+stops all clips from playing; you should make sure that applets stop all 
+audio clips before the viewer leaves the web page. 
+Example 14.2: AudioClip Usage
+import java.net.*;
+import java.awt.*;
+import java.applet.*;
+public class AudioTestExample extends Applet{
+    AudioClip audio1, audio2, audio3;
+    public void init () {
+        audio1 = getAudioClip (getCodeBase(), "audio/flintstones.au");
+        audio2 = getAudioClip (getCodeBase(), "audio/dino.au");
+        audio3 = getAudioClip (getCodeBase(), "audio/wilma.au");
+    }
+    public boolean mouseDown (Event e, int x, int y) {
+        if (audio1 != null)
+            audio1.play();
+        return true;
+    }
+    public void start () {
+        if (audio2 != null)
+            audio2.loop();
+    }
+    public void paint (Graphics g) {
+        if (audio3 != null)
+            audio3.play();
+    }
+    public void stop () {
+        if (audio1 != null)
+            audio1.stop();
+        if (audio2 != null)
+            audio2.stop();
+        if (audio3 != null)
+            audio3.stop();
+    }
+}
+What's a Java Applet?
+AppletContext Interface
+ 
+ 
+ 
+ 
+ 
+ 
+ 

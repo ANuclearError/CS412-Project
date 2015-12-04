@@ -1,0 +1,108 @@
+
+[Chapter 20] 20.21 java.awt.event.MouseEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.21 java.awt.event.MouseEvent (JDK 1.1)
+An event of this type indicates that the user has moved the
+mouse or pressed one of the mouse buttons.
+Call getID() to determine the specific type of mouse
+event that has occurred.  This method returns one of the
+following seven constants, which corresponds to a method in
+either the MouseListener or
+MouseMotionListener interface.
+MOUSE_PRESSED
+The user has pressed a mouse button.
+MOUSE_RELEASED
+The user has released a mouse button.
+MOUSE_CLICKED
+The user has pressed and released
+a mouse button without any intervening mouse drag.
+MOUSE_DRAGGED
+The user has moved the mouse while
+holding a button down
+MOUSE_MOVED
+The user has moved the mouse without holding any buttons
+down.
+MOUSE_ENTERED
+The mouse pointer has entered the component.
+MOUSE_EXITED
+The mouse pointer has left the component
+Use getX() and getY() or getPoint()
+to obtain the coordinates of the mouse event.  Use
+translatePoint() to modify these coordinates by a
+specified amount.
+Use getModifiers() and other methods and constants
+inherited from InputEvent to determine the mouse
+button or keyboard modifiers that were down when the event
+occurred.  See InputEvent for details.  Note
+that mouse button modifiers are not reported for
+MOUSE_RELEASED events, since, technically, the mouse
+button in question is no longer pressed.  This can be
+surprising. 
+Use getComponent(), inherited from
+ComponentEvent, to determine over which component the event
+occurred.
+For mouse events of type MOUSE_CLICKED,
+MOUSE_PRESSED, or MOUSE_RELEASED, call
+getClickCount() to determine how many consecutive
+clicks have occurred.
+If you are using popup menus, use isPopupTrigger()
+to test whether the current event represents the standard
+platform-dependent popup menu trigger event.  
+public class MouseEvent extends InputEvent {
+    // Public Constructor
+            public MouseEvent(Component source, int id, long when, int modifiers, int x, int y, 
+            public MouseEvent'u'int clickCount, boolean popupTrigger);
+    // Constants
+            public static final int MOUSE_CLICKED;
+            public static final int MOUSE_DRAGGED;
+            public static final int MOUSE_ENTERED;
+            public static final int MOUSE_EXITED;
+            public static final int MOUSE_FIRST;
+            public static final int MOUSE_LAST;
+            public static final int MOUSE_MOVED;
+            public static final int MOUSE_PRESSED;
+            public static final int MOUSE_RELEASED;
+    // Public Instance Methods
+            public int getClickCount();
+            public Point getPoint();
+            public int getX();
+            public int getY();
+            public boolean isPopupTrigger();
+            public String paramString();  // Overrides ComponentEvent
+            public synchronized void translatePoint(int x, int y);
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->InputEvent->MouseEvent
+Passed To:
+AWTEventMulticaster.mouseClicked(), 
+AWTEventMulticaster.mouseDragged(), 
+AWTEventMulticaster.mouseEntered(), 
+AWTEventMulticaster.mouseExited(), 
+AWTEventMulticaster.mouseMoved(), 
+AWTEventMulticaster.mousePressed(), 
+AWTEventMulticaster.mouseReleased(), 
+Component.processMouseEvent(), 
+Component.processMouseMotionEvent(), 
+MouseAdapter.mouseClicked(), 
+MouseAdapter.mouseEntered(), 
+MouseAdapter.mouseExited(), 
+MouseAdapter.mousePressed(), 
+MouseAdapter.mouseReleased(), 
+MouseListener.mouseClicked(), 
+MouseListener.mouseEntered(), 
+MouseListener.mouseExited(), 
+MouseListener.mousePressed(), 
+MouseListener.mouseReleased(), 
+MouseMotionAdapter.mouseDragged(), 
+MouseMotionAdapter.mouseMoved(), 
+MouseMotionListener.mouseDragged(), 
+MouseMotionListener.mouseMoved()
+java.awt.event.MouseAdapter (JDK 1.1)
+java.awt.event.MouseListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

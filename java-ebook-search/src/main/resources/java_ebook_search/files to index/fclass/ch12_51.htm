@@ -1,0 +1,424 @@
+
+[Chapter 12] Runtime
+Chapter 12The java.lang Package
+Runtime
+Name
+Runtime
+Synopsis
+Class Name:
+java.lang.Runtime
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Runtime class provides access to various
+information about the environment in which a program is running.
+The Java run-time environment creates a single instance of this class
+that is associated with a program. The Runtime
+class does not have any public constructors, so a program cannot
+create its own instances of the class. A program must call the getRuntime()
+method to get a reference to the current Runtime object.
+Information about operating system features is accessible
+through the System class.
+Class Summary
+public class java.lang.Runtime extends java.lang.Object {
+    // Class Methods
+    public static Runtime getRuntime();
+    public static void runFinalizersOnExit(boolean value);  // New in 1.1
+    // Instance Methods
+    public Process exec(String command);
+    public Process exec(String command, String envp[]);
+    public Process exec(String cmdarray[]);
+    public Process exec(String cmdarray[], String envp[]);
+    public void exit(int status);
+    public native long freeMemory();
+    public native void gc();
+    public InputStream 
+           getLocalizedInputStream(InputStream in);      // Deprecated in 1.1
+    public OutputStream 
+           getLocalizedOutputStream(OutputStream out);   // Deprecated in 1.1
+    public synchronized void load(String filename);
+    public synchronized void loadLibrary(String libname);
+    public native void runFinalization();
+    public native long totalMemory();
+    public native void traceInstructions(boolean on);
+    public native void traceMethodCalls(boolean on);
+}
+Class Methods
+getRuntime
+public static Runtime getRuntime()
+Returns
+A reference to the current Runtime object.
+Description
+This method returns a reference to the current Runtime
+object. Because the other methods of the Runtime
+class are not static, a program must call this
+method first in order to get a reference to a Runtime
+object that can be used in calling the other methods.
+runFinalizersOnExit
+public static void runFinalizersOnExit(boolean value)
+Availability
+New as of JDK 1.1
+Parameters
+value
+A boolean value that specifies whether or not
+finalization occurs on exit.
+Throws
+SecurityException
+If the checkExit() method of
+the SecurityManager throws a SecurityException.
+Description
+This method specifies whether or not the finalize() 
+methods of all objects that have finalize() methods
+are run before the Java virtual machine exits.  By default, the
+finalizers are not run on exit.  
+Instance Methods
+exec
+public Process exec(String command) throws IOException
+Parameters
+command
+A string that contains the name of an external command
+and any arguments to be passed to it.
+Returns
+A Process object that controls the process
+started by this method.
+Throws
+IOException
+If there is a problem finding or accessing the specified
+external command.
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method starts a new process to execute the given external
+command. The standard input, standard output, and standard error
+streams from the process are redirected to
+OutputStream and
+InputStream objects that are accessible
+through the Process object returned by this method.
+Calling this method is equivalent to:
+exec(command, null)
+   public Process exec(String command, String[] envp) throws IOException  
+Parameters
+command
+A string that contains the name of an external command
+and any arguments to be passed to it.
+envp
+An array of strings that specifies the values for
+the environment variables of the new process.
+Each String in the array
+should be of the form variableName =value.
+If envp is null, the values
+of the environment variables in the current process are copied to
+the new process.
+Returns
+A Process object that controls the process
+started by this method.
+Throws
+IOException
+If there is a problem finding or accessing the specified
+external command.
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method starts a new process to execute the given external
+command. The standard input, standard output, and standard error
+streams from the process are redirected to
+OutputStream
+and InputStream objects that are accessible
+through the Process object returned by this method.
+The method parses the command string into
+words that are separated by whitespace. It creates a String
+object for each word and places word String objects
+into an array. If that array is called commandArray,
+calling this method is equivalent to:
+exec(commmandArray, envp)
+   public Process exec(String[] commandArray) throws IOException  
+Parameters
+commandArray
+An array of strings that contains separate strings
+for the name of an external command and any arguments to be passed
+to it. The first string in the array must be the command name.
+Returns
+A Process object that controls the process
+started by this method.
+Throws
+IOException
+If there is a problem finding or accessing the specified
+external command.
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method starts a new process to execute the given external
+command. The standard input, standard output, and standard error
+streams from the process are redirected to OutputStream
+and InputStream objects that are accessible
+through the Process object returned by this method.
+Calling this method is equivalent to:
+exec(commandArray, null)
+   public Process exec(String[] commandArray, String[] envp) throws IOException  
+Parameters
+commandArray
+An array of strings that contains separate strings
+for the name of an external command and any arguments to be passed
+to it. The first string in the array must be the command name.
+envp
+An array of strings that specifies the values for
+the environment variables of the new process.
+Each String in the array
+should be of the form variableName =value.
+If envp is null, the values
+of the environment variables in the current process are copied to
+the new process.
+Returns
+A Process object that controls the process
+started by this method.
+Throws
+IOException
+If there is a problem finding or accessing the specified
+external command.
+SecurityException
+If the checkExec() method of
+the SecurityManager throws a SecurityException.
+Description
+This method starts a new process to execute the given external
+command. The standard input, standard output, and standard error
+streams from the process are redirected to OutputStream
+and InputStream objects that are accessible
+through the Process object returned by this method.
+exit
+public void exit(int status)
+Parameters
+status
+The exit status code to use.
+Throws
+SecurityException
+If the checkExit() method of
+the SecurityManager throws a SecurityException.
+Description
+This method causes the Java virtual machine
+to exit with the given status code. By convention,
+a nonzero status code indicates abnormal termination. This method
+never returns.
+freeMemory
+public native long freeMemory()
+Returns
+An estimate of the number of free bytes in system memory.
+Description
+This method returns an estimate of the number of free bytes
+in system memory. The value returned by this method is always less
+than the value returned by totalMemory(). Additional
+memory may be freed by calling the gc() method.
+gc
+public native void gc()
+Description
+This method causes the Java virtual machine to run the garbage
+collector in the current thread.
+The garbage collector finds objects that will never be used
+again because there are no live references to them. After it finds
+these objects, the garbage collector frees the storage occupied
+by these objects.
+The garbage collector is normally run continuously in a thread
+with the lowest possible priority, so that it works intermittently
+to reclaim storage. The gc() method allows a
+program to invoke the garbage collector explicitly when necessary.
+getLocalizedInputStream
+public InputStream getLocalizedInputStream(InputStream in)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+in
+An InputStream object that is
+to be localized.
+Returns
+The localized InputStream.
+Description
+This method returns an InputStream object
+that converts characters from the local character set to Unicode.
+For example, if the InputStream uses an 8-bit
+character set with values less than 128 representing Cyrillic letters,
+this method maps those characters to the corresponding 
+Unicode characters
+in the range '\u0400' to '\u04FF'.
+This method is deprecated as of JDK 1.1.  You should instead use the
+new InputStreamReader and 
+BufferedReader classes to convert characters from
+the local character set to Unicode.
+getLocalizedOutputStream
+public OutputStream getLocalizedOutputStream(OutputStream out)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+out
+An OutputStream object that is
+to be localized.
+Returns
+The localized OutputStream.
+Description
+This method returns an OutputStream object
+that converts characters from Unicode to the local character set.
+For example, if the local character set is an 8-bit character set
+with values less than 128 representing Cyrillic letters, this method
+maps Unicode characters in the range '\u0400'
+to '\u04FF' to the appropriate characters in
+the local character set.
+This method is deprecated as of JDK 1.1.  You should instead use the
+new OutputStreamWriter and 
+BufferedWriter classes to convert characters from
+Unicode to the local character set.
+load
+public synchronized void load(String filename)
+Parameters
+filename
+A string that specifies the complete path of the
+file to be loaded.
+Throws
+SecurityException
+If the checkLink() method of
+the SecurityManager throws a SecurityException.
+UnsatisfiedLinkError
+If the method is unsuccessful in loading the specified
+dynamically linked library.
+Description
+This method loads the specified dynamically linked library.
+It is often more convenient to call the load()
+method of the System class because it does not
+require getting a Runtime object.
+loadLibrary
+public synchronized void loadLibrary(String libname)
+Parameters
+libname
+A string that specifies the name of a dynamically linked
+library.
+Throws
+SecurityException
+If the checkLink() method of
+the SecurityManager throws a SecurityException.
+UnsatisfiedLinkError
+If the method is unsuccessful in loading the specified
+dynamically linked library.
+Description
+This method loads the specified dynamically linked library.
+It looks for the specified library in a platform-specific way.
+It is often more convenient to call the loadLibrary()
+method of the System class because it does not
+require getting a Runtime object.
+runFinalization
+public native void runFinalization()
+Description
+  
+This method causes the Java virtual machine to run the finalize()
+methods of any objects in the finalization queue in the current
+thread.
+When the garbage collector discovers that there are no references
+to an object, it checks to see if the object has a finalize()
+method that has never been called. If the object has such a finalize()
+method, the object is placed in the finalization queue. While there
+is a reference to the object in the finalization queue, the object
+is no longer considered garbage-collectable.
+Normally, the objects in the finalization queue are handled
+by a separate finalization thread that runs continuously at a very
+low priority. The finalization thread removes an object from the
+queue and calls its finalize() method. As long
+as the finalize() method does not generate a
+reference to the object, the object again becomes available for
+garbage collection.
+Because the finalization thread runs at a very low priority,
+there may be a long delay from the time that an object is put on
+the finalization queue until the time that its finalize()
+method is called. The runFinalization() method
+allows a program to run the finalize() methods
+explicitly. This can be useful when there is a shortage of some
+resource that is released by a finalize() method.
+totalMemory
+public native long totalMemory()
+Returns
+The total number of bytes in system memory.
+Description
+This method returns the total number of bytes in system memory
+in the Java virtual machine. The total includes the number of bytes
+of memory being used by allocated objects, as well as the number
+of free bytes available for allocating additional objects. An estimate
+of the number of free bytes in system memory is available through
+the freeMemory() method.
+traceInstructions
+public native void traceInstructions(boolean on)
+Parameters
+on
+A boolean value that specifies
+if instructions are to be traced. true if instructions
+are to be traced; otherwise false.
+Description
+This method controls whether or not the Java virtual machine
+outputs a detailed trace of each instruction that is executed. The
+boolean parameter causes tracing to be turned
+on or off. The tracing of instructions is only possible in a Java
+virtual machine that was compiled with the tracing option enabled.
+Production releases of the Java virtual machine are generally not
+compiled with tracing enabled.
+traceMethodCalls
+public native void traceMethodCalls(boolean on)
+Parameters
+on
+A boolean value that specifies
+if method calls are to be traced. true if instructions
+are to be traced; otherwise false.
+Description
+This method controls whether or not the Java virtual machine
+outputs a detailed trace of each method that is invoked. The boolean
+parameter causes tracing to be turned on or off. The tracing of
+instructions is only possible in a Java virtual machine that was
+compiled with the tracing option enabled. Production releases of
+the Java virtual machine are generally not compiled with tracing
+enabled.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+IOException, 
+Object, 
+Process, 
+SecurityException, 
+SecurityManager, 
+System,
+UnsatisfiedLinkError
+Runnable
+RuntimeException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

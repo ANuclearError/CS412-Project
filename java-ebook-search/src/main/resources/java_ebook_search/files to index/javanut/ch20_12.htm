@@ -1,0 +1,50 @@
+
+[Chapter 20] 20.12 java.awt.event.FocusEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.12 java.awt.event.FocusEvent (JDK 1.1)
+An event of this type indicates that a Component has
+gained or lost focus on a temporary or permanent basis.
+Use the inherited getComponent() method to determine
+which component has gained or lost focus.  Use
+getID() to determine the type of focus event; it
+returns FOCUS_GAINED or FOCUS_LOST.
+When focus is lost, you can call isTemporary() to
+determine whether it is a temporary loss of focus.
+Temporary focus loss occurs when the window that contains
+the component loses focus, for example, or when focus is
+temporarily diverted to a popup menu or a scrollbar.
+Similarly, you can also use isTemporary() to
+determine whether focus is being granted to a component on
+a temporary basis.  
+public class FocusEvent extends ComponentEvent {
+    // Public Constructors
+            public FocusEvent(Component source, int id, boolean temporary);
+            public FocusEvent(Component source, int id);
+    // Constants
+            public static final int FOCUS_FIRST;
+            public static final int FOCUS_GAINED;
+            public static final int FOCUS_LAST;
+            public static final int FOCUS_LOST;
+    // Public Instance Methods
+            public boolean isTemporary();
+            public String paramString();  // Overrides ComponentEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->FocusEvent
+Passed To:
+AWTEventMulticaster.focusGained(), 
+AWTEventMulticaster.focusLost(), 
+Component.processFocusEvent(), 
+FocusAdapter.focusGained(), 
+FocusAdapter.focusLost(), 
+FocusListener.focusGained(), 
+FocusListener.focusLost()
+java.awt.event.FocusAdapter (JDK 1.1)
+java.awt.event.FocusListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

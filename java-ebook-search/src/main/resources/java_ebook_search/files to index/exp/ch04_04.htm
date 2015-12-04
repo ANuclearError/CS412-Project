@@ -1,0 +1,448 @@
+
+[Chapter 4] 4.4 Statements and Expressions
+Chapter 4The Java Language
+4.4 Statements and Expressions
+Although the method declaration syntax of Java is quite different from
+that of C++, Java statement and expression syntax is very much like that of
+C. Again, the design intention was to make the low-level details of
+Java easily accessible to C programmers, so that they can concentrate
+on learning the parts of the language that are really different. Java
+statements appear inside of methods and 
+class and variable initializers; they describe all activities of a Java
+program. Variable declarations and initializations like those in the
+previous section are statements, as are the basic language structures
+like conditionals and loops. Expressions are
+statements that produce a result that can be used as part of another
+statement. Method calls, object allocations, and, of course,
+mathematical expressions are examples of expressions.
+One of the tenets of Java is to keep things simple and consistent. To
+that end, when there are no other constraints, evaluations and
+initializations in Java always occur in the order in which they appear
+in the code--from left to right. We'll see this rule used
+in the evaluation of assignment expressions, method calls, and array
+indexes, to name a few cases. In some other languages, the order of
+evaluation is more complicated or even implementation dependent. Java
+removes this element of danger by precisely and simply defining how
+the code is evaluated. This doesn't, however, mean you should start
+writing obscure and convoluted statements. Relying on the order of
+evaluation of expressions is a bad programming habit, even when
+it works. It produces code that is hard to read and harder to
+modify. Real programmers, however, are not made of stone, and you may
+catch me doing this once or twice when I can't resist the urge to
+write terse code.
+Statements
+As in C or C++, statements and expressions in Java appear within a
+code block. A code block is syntactically just a
+number of statements surrounded by an open curly brace
+({) and a close curly brace (}). The
+statements in a code block can contain variable declarations:
+{ 
+    int size = 5; 
+    setName("Max"); 
+    ... 
+} 
+Methods, which look like C functions, are in a sense code blocks that
+take parameters and can be called by name.
+setupDog( String name ) { 
+    int size = 5; 
+    setName( name ); 
+    ... 
+} 
+Variable declarations are limited in scope to their enclosing code block. 
+That is, they can't be seen outside of the nearest set of braces: 
+{ 
+    int i = 5; 
+} 
+ 
+i = 6;           // compile time error, no such variable i 
+In this way, code blocks can be used to arbitrarily group other
+statements and variables. The most common use of code blocks, however,
+is to define a group of statements for use in a conditional or
+iterative statement.
+Since a code block is itself collectively treated as a
+statement, we define a conditional like an
+if/else clause as follows:
+if ( condition ) 
+    statement; 
+[ else 
+    statement; ] 
+Thus, if/else in Java has the familiar
+functionality of taking either of the forms:
+if ( condition ) 
+    statement; 
+or: 
+if ( condition )  { 
+    [ statement; ] 
+    [ statement; ] 
+    [ ... ] 
+} 
+Here the condition is a
+boolean expression. In the second form, the
+statement is a code block, and all of its enclosed statements are
+executed if the conditional succeeds. Any variables declared within
+that block are visible only to the statements within the successful
+branch of the condition. Like the if/else
+conditional, most of the remaining Java statements are concerned with
+controlling the flow of execution. They act for the most part like
+their namesakes in C or C++.
+ The
+do and while iterative
+statements have the familiar functionality, except that their
+conditional test is also a boolean expression.  You
+can't use an integer expression or a reference type; in other words
+you must explicitly test your value. In other words, while
+i==0 is legitimate, i is not,
+unless i is boolean. Here are
+the forms of these two statements:
+while ( conditional ) 
+    statement; 
+ 
+do 
+    statement; 
+while ( conditional ); 
+The for statement also looks like it does in 
+C: 
+for ( initialization; conditional; incrementor ) 
+    statement; 
+The variable initialization expression can declare a new variable; this 
+variable is limited to the scope of the for statement: 
+for (int i = 0; i &lt; 100; i++ ) { 
+    System.out.println( i ) 
+    int j = i; 
+    ... 
+} 
+Java doesn't support the C comma operator, which groups multiple
+expressions into a single expression. However, you can use multiple,
+comma-separated expressions in the initialization and increment
+sections of the for loop. For example:
+for (int i = 0, j = 10; i &lt; j; i++, j-- ) { 
+   ... } 
+The Java switch statement takes an integer type 
+(or an argument that can be promoted to an integer type) and selects among 
+a number of alternative case branches[2]
+: 
+[2] 
+An object-based switch statement is desirable
+and could find its way into the language someday.
+switch ( int expression ) { 
+    case int expression : 
+        statement; 
+    [ case int expression 
+        statement; 
+    ... 
+    default : 
+        statement;  ] 
+} 
+No two of the case expressions can evaluate to the
+same value. As in C, an optional default case can
+be specified to catch unmatched conditions. Normally, the special
+statement break is used to terminate a branch of
+the switch:
+switch ( retVal ) { 
+    case myClass.GOOD : 
+        // something good 
+        break; 
+    case myClass.BAD : 
+        // something bad 
+        break; 
+    default :
+        // neither one 
+        break; 
+} 
+The Java break statement and its friend
+continue perform unconditional jumps out of a
+loop or conditional statement. They differ from the corresponding
+statements in C by taking an optional label as an argument. Enclosing
+statements, like code blocks and iterators, can be labeled with
+identifier statements:
+one: 
+    while ( condition ) { 
+        ... 
+        two: 
+            while ( condition ) { 
+                ... 
+                // break or continue point 
+            } 
+        // after two 
+    } 
+// after one 
+In the above example, a break or
+continue without argument at the indicated position
+would have the normal, C-style effect.  A break
+would cause processing to resume at the point labeled "after
+two"; a continue would immediately cause the
+two loop to return to its condition test.
+The statement break two
+at the indicated point would have the same effect as an ordinary
+break, but break
+one would break two levels and resume at the point
+labeled "after one." Similarly,
+continue two would serve as a
+normal continue, but continue
+one would return to the test of the
+one loop. Multilevel break and
+continue statements remove much of the need for the
+evil goto statement in C and C++.
+There are a few Java statements we aren't going to discuss right
+now. The try, catch, and
+finally statements are used in exception handling,
+as we'll discuss later in this chapter. The
+synchronized statement in Java is used to
+coordinate access to statements among multiple threads of execution;
+see Chapter 6, Threads for a discussion of thread
+synchronization.
+On a final note, I should mention that the Java compiler flags
+"unreachable" statements as compile-time errors. Of
+course, when I say unreachable, I mean those statements the
+compiler determines won't be called by a static look at
+compile-time.
+Expressions
+As I said earlier, expressions are statements that produce a result
+when they are evaluated. The value of an expression can be a numeric
+type, as in an arithmetic expression; a reference type, as in an
+object allocation; or the special type void, which
+results from a call to a method that doesn't return a value. In the
+last case, the expression is evaluated only for its side effects
+(i.e., the work it does aside from producing a value). The type of an
+expression is known at compile-time.  The value produced at run-time
+is either of this type or, in the case of a reference type, a
+compatible (assignable) type.
+Operators
+Java supports almost all standard C operators. These operators
+also have the same precedence in Java as they do in C, as you can see
+in Table 4.3.
+Table 4.3: Java Operators
+Precedence
+Operator
+Operand Type
+Description
+1
+++, --
+Arithmetic
+Increment and decrement
+1
++, -
+Arithmetic
+Unary plus and minus
+1
+~
+Integral
+Bitwise complement
+1
+!
+Boolean
+Logical complement
+1
+( type )
+Any
+Cast
+2
+*, /, %
+Arithmetic
+Multiplication, division, remainder
+3
++, -
+Arithmetic
+Addition and subtraction
+3
++
+String
+String concatenation
+4
+&lt;&lt;
+Integral
+Left shift
+4
+&gt;&gt;
+Integral
+Right shift with sign extension
+4
+&gt;&gt;&gt;
+Integral
+Right shift with no extension
+5
+&lt;, &lt;=, &gt;, &gt;=
+Arithmetic
+Numeric comparison
+5
+instanceof
+Object
+Type comparison
+6
+==, !=
+Primitive
+Equality and inequality of value
+6
+==, !=
+Object
+Equality and inequality of reference
+7
+&amp;
+Integral
+Bitwise AND
+7
+&amp;
+Boolean
+Boolean AND
+8
+^
+Integral
+Bitwise XOR
+8
+^
+Boolean
+Boolean XOR
+9
+|
+Integral
+Bitwise OR
+9
+|
+Boolean
+Boolean OR
+10
+&amp;&amp;
+Boolean
+Conditional AND
+11
+||
+Boolean
+Conditional OR
+12
+?:
+NA
+Conditional ternary operator
+13
+=
+Any
+Assignment
+13
+*=, /=, %=, +=, -=, &lt;&lt;=, &gt;&gt;=, 
+&gt;&gt;&gt;=, &amp;=, ^=, |=
+Any
+Assignment with operation
+There are a few operators missing from the standard C
+collection. For example, Java doesn't support the comma operator for
+combining expressions, although the for statement
+allows you to use it in the initialization and increment
+sections. Java doesn't allow direct pointer manipulation, so it does
+not support the reference (*), dereference
+(&amp;), and sizeof operators.
+Java also adds some new operators. As we've seen,
+the + operator can be used with
+String values to perform string
+concatenation. Because all integral types in Java are signed values,
+the &gt;&gt; operator performs a right-shift operation
+with sign extension. The &gt;&gt;&gt; operator treats
+the operand as an unsigned number and performs a right shift with no
+extension. The new operator is used to create objects; we will discuss
+it in detail shortly.
+Assignment
+While variable initialization (i.e., declaration and assignment together) 
+is considered a statement, variable assignment alone is an expression: 
+int i, j; 
+i = 5;                           // expression 
+Normally, we rely on assignment for its side effects alone, but, as in 
+C, an assignment can be used as a value in another part of an expression: 
+j = ( i = 5 ); 
+Again, relying on order of evaluation extensively (in this case, using
+compound assignments in complex expressions) can make code very
+obscure and hard to read. Do so at your own peril.
+null
+The expression null can be assigned to any
+reference type. It has the meaning of "no reference." A
+null reference can't be used to select a method or
+variable and attempting to do so generates a
+NullPointerException at run-time.
+Variable access
+Using the dot (.) to access a variable in an object
+is a type of expression that results in the value of the variable
+accessed. This can be either a numeric type or a reference type:
+int i; 
+String s; 
+i = myObject.length; 
+s = myObject.name; 
+A reference type expression can be used in further evaluations, by
+selecting variables or calling methods within it:
+int len = myObject.name.length(); 
+int initialLen = myObject.name.substring(5, 10).length(); 
+Here we have found the length of our name variable
+by invoking the length() method of the
+String object.  In the second case, we took an
+intermediate step and asked for a substring of the
+name string. The substring
+method of the String class also returns a
+String reference, for which we ask the
+length. (Chapter 7, Basic Utility Classes describes all of these
+String methods in detail.)
+Method invocation
+A method invocation is basically a function call, or in other words, an 
+expression that results in a value, the type of which is the return type 
+of the method. Thus far, we have seen methods invoked via their name in 
+simple cases: 
+System.out.println( "Hello World..." ); 
+int myLength = myString.length();  
+When we talk about Java's object-oriented features in Chapter 5, Objects in Java, we'll look at some rules that govern the
+selection of methods.
+Like the result of any expression, the result of a method
+invocation can be used in further evaluations, as we saw
+above. Whether to allocate intermediate variables and make it
+absolutely clear what your code is doing or to opt for brevity where
+it's appropriate is a matter of coding style.
+Object creation
+Objects in Java are allocated with the new operator: 
+Object o = new Object(); 
+The argument to new is a
+constructor that specifies the type of object and
+any required parameters to create it. The return type of the
+expression is a reference type for the created object.
+We'll look at object creation in detail in Chapter 5, Objects in Java.  For now, I just want to point out that object
+creation is a type of expression, and that the resulting object
+reference can be used in general expressions.  In fact, because the
+binding of new is "tighter" than that
+of the dot-field selector, you can easily allocate a new object and
+invoke a method in it for the resulting expression:
+int hours = new Date().getHours(); 
+The Date class is a utility class that represents
+the current time. Here we create a new instance of
+Date with the new operator and
+call its getHours() method to retrieve the current
+hour as an integer value. The Date object reference
+lives long enough to service the method call and is then cut loose and
+garbage collected at some point in the future.
+Calling methods in object references in this way is, again, a matter of 
+style. It would certainly be clearer to allocate an intermediate variable 
+of type Date to hold the new object and then 
+call its getHours() method. However, some of 
+us still find the need to be terse in our code. 
+instanceof
+The instanceof operator can be used to
+determine the type of an object at
+run-time. instanceof returns a
+boolean value that indicates whether an object is
+an instance of a particular class or a subclass of that class:
+Boolean b; 
+String str = "foo"; 
+b = ( str instanceof String );     // true 
+b = ( str instanceof Object );     // also true 
+b = ( str instanceof Date );       // false--not a Date or subclass 
+instanceof also correctly reports if an object 
+is of the type of an arry or a specified interface.
+        if ( foo instanceof byte[] )
+            ...
+(See Chapter 5, Objects in Java for a full discussion of interfaces.)
+It is also important to note that the value null is not considered
+an instance of any object.  So the following test will return false,
+no matter what the declared type of the variable:
+String s = null;
+if ( s istanceof String )
+    // won't happen
+Types
+Exceptions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

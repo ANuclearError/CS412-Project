@@ -1,0 +1,466 @@
+
+[Chapter 19] Event
+Chapter 19java.awt Reference
+Event
+Name
+Event
+Description
+The Event class represents 
+events that happen within the Java environment in a platform independent 
+way. Events typically represent user actions, like typing a key or clicking 
+the mouse. Although this class has been updated for the 1.1 release, it 
+is only used for the 1.0 event model. When using the 1.1 event model, all 
+events are represented by subclasses of java.awt.AWTEvent. 
+Class Definition
+public class java.awt.Event
+    extends java.lang.Object
+    implements java.io.Serializable {
+  
+  // Constants
+  public static final int ACTION_EVENT; 
+  public static final int ALT_MASK;
+  public static final int BACK_SPACE; 
+  public static final int CAPS_LOCK; 
+  public static final int CTRL_MASK;
+  public static final int DELETE; 
+  public static final int DOWN;
+  public static final int END;
+  public static final int ENTER; 
+  public static final int ESCAPE; 
+  public static final int F1;
+  public static final int F2;
+  public static final int F3;
+  public static final int F4;
+  public static final int F5;
+  public static final int F6;
+  public static final int F7;
+  public static final int F8;
+  public static final int F9;
+  public static final int F10;
+  public static final int F11;
+  public static final int F12;
+  public static final int GOT_FOCUS;
+  public static final int HOME;
+  public static final int INSERT; 
+  public static final int KEY_ACTION;
+  public static final int KEY_ACTION_RELEASE;
+  public static final int KEY_PRESS;
+  public static final int KEY_RELEASE;
+  public static final int LEFT;
+  public static final int LIST_DESELECT;
+  public static final int LIST_SELECT;
+  public static final int LOAD_FILE;
+  public static final int LOST_FOCUS;
+  public static final int META_MASK;
+  public static final int MOUSE_DOWN;
+  public static final int MOUSE_DRAG;
+  public static final int MOUSE_ENTER;
+  public static final int MOUSE_EXIT;
+  public static final int MOUSE_MOVE;
+  public static final int MOUSE_UP;
+  public static final int NUM_LOCK; 
+  public static final int PAUSE; 
+  public static final int PGDN;
+  public static final int PGUP;
+  public static final int PRINT_SCREEN; 
+  public static final int RIGHT;
+  public static final int SAVE_FILE;
+  public static final int SCROLL_ABSOLUTE;
+  public static final int SCROLL_BEGIN; 
+  public static final int SCROLL_END; 
+  public static final int SCROLL_LINE_DOWN;
+  public static final int SCROLL_LINE_UP;
+  public static final int SCROLL_LOCK; 
+  public static final int SCROLL_PAGE_DOWN;
+  public static final int SCROLL_PAGE_UP;
+  public static final int SHIFT_MASK;
+  public static final int TAB; 
+  public static final int UP;
+  public static final int WINDOW_DEICONIFY;
+  public static final int WINDOW_DESTROY;
+  public static final int WINDOW_EXPOSE;
+  public static final int WINDOW_ICONIFY;
+  public static final int WINDOW_MOVED;
+  
+  // Variables
+  public Object arg;
+  public int clickCount;
+  public Event evt;
+  public int id;
+  public int key;
+  public int modifiers;
+  public Object target;
+  public long when;
+  public int x;
+  public int y;
+  
+  // Constructors
+  public Event (Object target, int id, Object arg);
+  public Event (Object target, long when, int id, int x, int y, 
+      int key, int modifiers);
+  public Event (Object target, long when, int id, int x, int y, 
+      int key, int modifiers, Object arg);
+  
+  // Instance Methods
+  public boolean controlDown();
+  public boolean metaDown();
+  public boolean shiftDown();
+  public String toString();
+  public void translate (int x, int y);
+  
+  // Protected Instance Methods
+  protected String paramString();
+}
+Constants
+ACTION_EVENT
+public static final int ACTION_EVENT
+ID constant for Action Event. 
+ALT_MASK
+public static final int ALT_MASK
+Mask for ALT key. 
+BACK_SPACE
+public static final int BACK_SPACE 
+ID constant for Backspace. 
+CAPS_LOCK
+public static final int CAPS_LOCK 
+ID constant for Caps Lock key. 
+CTRL_MASK
+public static final int CTRL_MASK
+Mask for Control key. 
+DELETE
+public static final int DELETE 
+ID constant for Delete. 
+DOWN
+public static final int DOWN
+ID constant for the down arrow key. 
+END
+public static final int END
+ID constant for End key. 
+ENTER
+public static final int ENTER 
+ID constant for Enter key. 
+ESCAPE
+public static final int ESCAPE 
+ID constant for Escape key. 
+F1
+public static final int F1
+ID constant for F1 key. 
+F2
+public static final int F2
+ID constant for F2 key. 
+F3
+public static final int F3
+ID constant for F3 key. 
+F4
+public static final int F4
+ID constant for F4 key. 
+F5
+public static final int F5
+ID constant for F5 key. 
+F6
+public static final int F6
+ID constant for F6 key. 
+F7
+public static final int F7
+ID constant for F7 key. 
+F8
+public static final int F8
+ID constant for F8 key. 
+F9
+public static final int F9
+ID constant for F9 key. 
+F10
+public static final int F10
+ID constant for F10 key. 
+F11
+public static final int F11
+ID constant for F11 key. 
+F12
+public static final int F12
+ID constant for F12 key. 
+GOT_FOCUS
+public static final int GOT_FOCUS
+ID constant for getting input focus Event. 
+HOME
+public static final int HOME
+ID constant for Home key. 
+INSERT
+public static final int INSERT 
+ID constant for Insert key. 
+KEY_ACTION
+public static final int KEY_ACTION
+ID constant for Special Key Down Event. 
+KEY_ACTION_RELEASE
+public static final int KEY_ACTION_RELEASE
+ID constant for Special Key Up Event. 
+KEY_PRESS
+public static final int KEY_PRESS
+ID constant for Key Down Event. 
+KEY_RELEASE
+public static final int KEY_RELEASE
+ID constant for Key Up Event. 
+LEFT
+public static final int LEFT
+ID constant for the left arrow key. 
+LIST_DESELECT
+public static final int LIST_DESELECT
+ID constant for List DeSelect Event. 
+LIST_SELECT
+public static final int LIST_SELECT
+ID constant for List Select Event. 
+LOAD_FILE
+public static final int LOAD_FILE
+ID constant for File Load Event. 
+LOST_FOCUS
+public static final int LOST_FOCUS
+ID constant for losing input focus Event. 
+META_MASK
+public static final int META_MASK
+Mask for ALT key. 
+MOUSE_DOWN
+public static final int MOUSE_DOWN
+ID constant for Mouse Down Event. 
+MOUSE_DRAG
+public static final int MOUSE_DRAG
+ID constant for Mouse Drag Event. 
+MOUSE_ENTER
+public static final int MOUSE_ENTER
+ID constant for Mouse Enter Event. 
+MOUSE_EXIT
+public static final int MOUSE_EXIT
+ID constant for Mouse Exit Event. 
+MOUSE_MOVE
+public static final int MOUSE_MOVE
+ID constant for Mouse Move Event. 
+MOUSE_UP
+public static final int MOUSE_UP
+ID constant for Mouse Up Event. 
+NUM_LOCK
+public static final int NUM_LOCK 
+ID constant for Num Lock key. 
+PAUSE
+public static final int PAUSE 
+ID constant for Pause key. 
+PGDN
+public static final int PGDN
+ID constant for PageDown key. 
+PGUP
+public static final int PGUP
+ID constant for PageUp key. 
+PRINT_SCREEN
+public static final int PRINT_SCREEN 
+ID constant for Print Screen key. 
+RIGHT
+public static final int RIGHT
+ID constant for the right arrow key. 
+SAVE_FILE
+public static final int SAVE_FILE
+ID constant for File Save Event. 
+SCROLL_ABSOLUTE
+public static final int SCROLL_ABSOLUTE
+ID constant for Absolute Scroll Event. 
+SCROLL_BEGIN
+public static final int SCROLL_ BEGIN 
+ID constant for Begin Scroll Event. 
+SCROLL_END
+public static final int SCROLL_ END 
+ID constant for End Scroll Event. 
+SCROLL_LINE_DOWN
+public static final int SCROLL_LINE_DOWN
+ID constant for Line Down Scroll Event. 
+SCROLL_LINE_UP
+public static final int SCROLL_LINE_UP
+ID constant for Line Up Scroll Event. 
+SCROLL_LOCK
+public static final int SCROLL_LOCK 
+Mask for Scroll Lock key. 
+SCROLL_PAGE_DOWN
+public static final int SCROLL_PAGE_DOWN
+ID constant for Page Down Scroll Event. 
+SCROLL_PAGE_UP
+public static final int SCROLL_PAGE_UP
+ID constant for Page Up Scroll Event. 
+SHIFT_MASK
+public static final int SHIFT_MASK
+Mask for SHIFT key. 
+TAB
+public static final int TAB 
+ID constant for Tab key. 
+UP
+public static final int UP
+ID constant for the up arrow key. 
+WINDOW_DEICONIFY
+public static final int WINDOW_DEICONIFY
+ID constant for Window DeIconify Event. 
+WINDOW_DESTROY
+public static final int WINDOW_DESTROY
+ID constant for Window Destroy Event. 
+WINDOW_EXPOSE
+public static final int WINDOW_EXPOSE
+ID constant for Window Expose Event. 
+WINDOW_ICONIFY
+public static final int WINDOW_ICONIFY
+ID constant for Window Iconify Event. 
+WINDOW_MOVED
+public static final int WINDOW_MOVED
+ID constant for Window Move Event. 
+Variables
+arg
+public Object arg
+A variable argument that is specific to the event type. 
+clickCount
+public int clickCount
+The number of consecutive MOUSE_DOWN events. 
+evt
+public Event evt
+A means of passing a linked list of events as one. 
+id
+public int id
+The ID constant that identifies the Event 
+type. 
+key
+public int key
+Integer value of key pressed, or ID constant identifying a special key. 
+modifiers
+public int modifiers
+The state of the shift/alt/control/meta keys, formed 
+by ORing the masks for the appropriate keys. 
+target
+public Object target
+The Object that generated the 
+event. 
+when
+public long when
+The time the event happened. 
+x
+public int x
+The x position at which the event happened. 
+y
+public int y
+The y position at which the event happened. 
+Constructors
+Event
+public Event (Object target, int id, Object arg)
+Parameters
+target
+The component to which the Event 
+should be delivered 
+id
+The identifier of Event 
+arg
+The Object 
+that is the cause of the event 
+Description
+Constructs an Event object 
+with the given values. 
+public Event (Object target, long when, int id, int x, int y, int key, int modifiers)
+Parameters
+target
+The component to which the Event 
+should be delivered 
+when
+The time the event happened 
+id
+The identifier of Event 
+x
+The x position at which the event happened 
+y
+The y position at which the event happened 
+key
+Integer value of key pressed, or a constant identifying 
+a special key
+modifiers
+The state of the shift/alt/control/meta 
+keys
+Description
+Constructs an Event object 
+with the given values. 
+public Event (Object target, long when, int id, int x, int y, int key, int modifiers, Object arg)
+Parameters
+target
+The component to which the Event 
+should be delivered 
+when
+The time the event happened 
+id
+The identifier of Event 
+x
+The x position at which the event happened 
+y
+The y position at which the event happened 
+key
+Integer value of key pressed, or a constant identifying 
+a special key
+modifiers
+The state of the shift/alt/control/meta 
+keys
+arg
+The Object 
+that is the cause of the event 
+Description
+Constructs an Event object 
+with the given values. 
+Instance Methods
+controlDown
+public boolean controlDown()
+Returns
+true if the control key was 
+down when the event was triggered, false 
+otherwise. 
+Description
+Checks current settings for modifiers of the Event. 
+metaDown
+public boolean metaDown()
+Returns
+true if the meta key was down 
+when the event was triggered, false 
+otherwise. 
+Description
+Checks current settings for modifiers of the Event. 
+shiftDown
+public boolean shiftDown()
+Returns
+true if the shift key was down 
+when the event was triggered, false 
+otherwise. 
+Description
+Checks current settings for modifiers of the Event. 
+toString
+public String toString()
+Returns
+A string representation of the Event 
+object. 
+Overrides
+Object.toString() 
+translate
+public void translate (int x, int y)
+Parameters
+x
+Amount to move Event 
+in horizontal direction. 
+y
+Amount to move Event 
+in vertical direction. 
+Description
+Translates x and y coordinates of Event 
+instance by x and y. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of Event. 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+AWTEvent, Component, 
+Object, String 
+Dimension
+EventQueue 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

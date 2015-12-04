@@ -1,0 +1,93 @@
+
+[Chapter 18] 18.28 java.awt.GridBagConstraints (JDK 1.0)
+Chapter 18The java.awt Package
+18.28 java.awt.GridBagConstraints (JDK 1.0)
+This class encapsulates the instance variables that tell a
+GridBagLayout how to position a given
+Component within its Container.  
+gridx, gridy
+These fields specify the grid position of the component.
+The RELATIVE constant specifies a position to the
+right or below the previous component.
+gridwidth, gridheight
+These fields specify the height and width of the component
+in grid cells.  The constant REMAINDER specifies
+that the component is the last one and should get all
+remaining cells.
+fill
+This field specifies which dimensions of a component should
+grow when the space available for it is larger than its
+default size.  Legal values are the constants NONE,
+BOTH, HORIZONTAL, and VERTICAL.
+ipadx, ipady
+These fields specify internal padding to add on each side
+of the component in each dimension.  They increase the size
+of the component beyond its default minimum size.
+insets
+This Insets object specifies margins to appear on
+all sides of the component.
+anchor
+This field specifies how the component should be displayed
+within its grid cells when it is smaller than those cells.
+The CENTER constant and the compass-point constants
+are legal values.
+weightx, weighty
+These fields specify how extra space in the container should
+be distributed among its components in the X and Y
+dimensions.  Larger weights specify that a component should
+receive a proportionally larger amount of extra space.  A
+zero weight specifies that the component should not receive
+any extra space.  These weights specify the resizing
+behavior of the component and its container.
+See also GridBagLayout.
+public class GridBagConstraints extends Object implements Cloneable, Serializable {
+    // Public Constructor
+            public GridBagConstraints();
+    // Constants
+            public static final int BOTH;
+            public static final int CENTER;
+            public static final int EAST;
+            public static final int HORIZONTAL;
+            public static final int NONE;
+            public static final int NORTH;
+            public static final int NORTHEAST;
+            public static final int NORTHWEST;
+            public static final int RELATIVE;
+            public static final int REMAINDER;
+            public static final int SOUTH;
+            public static final int SOUTHEAST;
+            public static final int SOUTHWEST;
+            public static final int VERTICAL;
+            public static final int WEST;
+    // Public Instance Variables
+            public int anchor;
+            public int fill;
+            public int gridheight;
+            public int gridwidth;
+            public int gridx;
+            public int gridy;
+            public Insets insets;
+            public int ipadx;
+            public int ipady;
+            public double weightx;
+            public double weighty;
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+}
+Passed To:
+GridBagLayout.AdjustForGravity(), 
+GridBagLayout.setConstraints()
+Returned By:
+GridBagLayout.getConstraints(), 
+GridBagLayout.lookupConstraints()
+Type Of:
+GridBagLayout.defaultConstraints
+java.awt.Graphics (JDK 1.0)
+java.awt.GridBagLayout (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

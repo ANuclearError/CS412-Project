@@ -1,0 +1,102 @@
+
+[Chapter 16] ParsePosition
+Chapter 16The java.text Package
+ParsePosition
+Name
+ParsePosition
+Synopsis
+Class Name:
+java.text.ParsePosition
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ParsePosition class encapsulates 
+information about the current position in a text string. A ParsePosition 
+can be passed to the parse() 
+method of a Format subclass 
+to cause parsing to start at the index of the ParsePosition. 
+After an object has been parsed from the string, the index of the ParsePosition 
+is updated to point to just after the text that was parsed. Thus, the same 
+ParsePosition can be passed 
+to multiple Format objects 
+to parse through a complex string. 
+Class Summary
+public class java.text.ParsePosition extends java.lang.Object {
+  // Constructors
+  public ParsePosition(int index);
+  // Instance Methods
+  public int getIndex();
+  public void setIndex(int index);
+}
+Constructors
+ParsePosition
+public ParsePosition(int index)
+Parameters
+index
+The initial position. 
+Description
+This constructor creates a ParsePosition 
+object that is initialized to the given position. 
+Instance Methods
+getIndex
+public int getIndex()
+Returns
+The current position of this ParsePosition. 
+Description
+This method returns the current position of this ParsePosition. 
+setIndex
+public void setIndex(int index)
+Parameters
+index
+The new position of this ParsePosition. 
+Description
+This method sets the current position of this ParsePosition. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DateFormat, 
+FieldPosition, 
+Format, 
+MessageFormat, 
+NumberFormat, 
+String 
+ParseException
+RuleBasedCollator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

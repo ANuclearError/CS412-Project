@@ -1,0 +1,193 @@
+
+[Chapter 19] FlowLayout
+Chapter 19java.awt Reference
+FlowLayout
+Name
+FlowLayout
+Description
+The FlowLayout LayoutManager 
+provides the means to lay out components in a row by row fashion. As each 
+row fills up, the components continue on the next row. 
+Class Definition
+public class java.awt.FlowLayout
+    extends java.lang.Object
+    implements java.awt.LayoutManager, java.io.Serializable {
+  
+  // Constants
+  public static final int CENTER;
+  public static final int LEFT;
+  public static final int RIGHT;
+  
+  // Constructors
+  public FlowLayout();
+  public FlowLayout (int alignment);
+  public FlowLayout (int alignment, int hgap, int vgap);
+  
+  // Instance Methods
+  public void addLayoutComponent (String name, Component component); 
+  public int getAlignment(); 
+  public int getHgap(); 
+  public int getVgap(); 
+  public void layoutContainer (Container target); 
+  public Dimension minimumLayoutSize (Container target); 
+  public Dimension preferredLayoutSize (Container target); 
+  public void removeLayoutComponent (Component component); 
+  public void setAlignment (int align); 
+  public void setHgap (int hgap); 
+  public void setVgap (int vgap); 
+  public String toString();
+}
+Constants
+CENTER
+public static final int CENTER
+The default alignment for a FlowLayout 
+object; rows of components are centered within the container. 
+LEFT
+public static final int LEFT
+An alignment for a FlowLayout 
+object; rows of components start on the left side of the container. 
+RIGHT
+public static final int RIGHT
+An alignment for a FlowLayout 
+object; rows of components start on the right side of the container. 
+Constructors
+FlowLayout
+public FlowLayout()
+Description
+Constructs a FlowLayout object 
+with CENTER alignment. 
+public FlowLayout (int alignment)
+Parameters
+alignment
+Alignment of components within the container.
+Description
+Constructs a FlowLayout object 
+with the given alignment. 
+public FlowLayout (int alignment, int hgap, int vgap)
+Parameters
+alignment
+Alignment of components within container 
+hgap
+Horizontal space between each component in a row 
+vgap
+Vertical space between each row 
+Description
+Constructs a FlowLayout object 
+with the given alignment and 
+the values specified as the gaps between each component in the container 
+managed by this instance of FlowLayout. 
+Instance Methods
+addLayoutComponent
+public void addLayoutComponent (String name, Component component)
+Parameters
+name
+Name of component to 
+add. 
+component
+Actual component 
+being added. 
+Implements
+LayoutManager.addLayoutComponent() 
+Description
+Does nothing. 
+getAlignment
+public int getAlignment() 
+Returns
+The alignment constant for this FlowLayout. 
+getHgap
+public int getHgap() 
+Returns
+The horizontal gap between components. 
+getVgap
+public int getVgap() 
+Returns
+The vertical gap between components. 
+layoutContainer
+public void layoutContainer (Container target)
+Parameters
+target
+The container that needs to be redrawn. 
+Implements
+LayoutManager.layoutContainer() 
+Description
+Draws the components contained within the target 
+container. 
+minimumLayoutSize
+public Dimension minimumLayoutSize (Container target)
+Parameters
+target
+The container whose 
+size needs to be calculated. 
+Returns
+Minimum Dimension of container 
+target 
+Implements
+LayoutManager.minimumLayoutSize() 
+Description
+Calculates minimum size of target 
+container. 
+preferredLayoutSize
+public Dimension preferredLayoutSize (Container target)
+Parameters
+target
+The container whose 
+size needs to be calculated. 
+Returns
+Preferred Dimension of container 
+target 
+Implements 
+LayoutManager.preferredLayoutSize() 
+Description
+Calculates preferred size of target 
+container. 
+removeLayoutComponent
+public void removeLayoutComponent (Component component)
+Parameters
+component
+Component to stop tracking. 
+Implements 
+LayoutManager.removeLayoutComponent() 
+Description
+Does nothing. 
+setAlignment
+public void setAlignment(int align) 
+Parameters
+alignment
+Alignment of components within container 
+Description
+Sets the alignment for the FlowLayout. 
+setHgap
+public void setHgap(int hgap) 
+Parameters
+hgap
+The horizontal gap value. 
+Description
+Sets the horizontal gap between components. 
+setVgap
+public void setVgap(int vgap) 
+Parameters
+vgap
+The vertical gap value. 
+Description
+Sets the vertical gap between components. 
+toString
+public String toString()
+Returns
+A string representation of the FlowLayout 
+object. 
+Overrides 
+Object.toString() 
+See Also
+Component, Container, 
+Dimension, LayoutManager, 
+Object, Serializable, 
+String 
+FileDialog
+Font
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,240 @@
+
+[Chapter 19] BorderLayout
+Chapter 19java.awt Reference
+BorderLayout
+Name
+BorderLayout
+Description
+BorderLayout is a LayoutManager 
+that provides the means to lay out components along the edges of a container. 
+It divides the container into five regions, named North, East, South, West, 
+and Center. Normally you won't call the LayoutManager's 
+methods yourself. When you add() 
+a Component to a Container, 
+the Container calls the addLayoutComponent() 
+method of its LayoutManager. 
+Class Definition
+public class java.awt.BorderLayout
+    extends java.lang.Object
+    implements java.awt.LayoutManager2, java.io.Serializable {
+  // Constants
+  public final static String CENTER; 
+  public final static String EAST; 
+  public final static String NORTH; 
+  public final static String SOUTH; 
+  public final static String WEST; 
+  
+  // Constructors
+  public BorderLayout();
+  public BorderLayout (int hgap, int vgap);
+  
+  // Instance Methods
+  public void addLayoutComponent (Component comp, Object constraints); 
+  public void addLayoutComponent (String name, Component component); 
+  public int getHgap(); 
+  public abstract float getLayoutAlignmentX(Container target); 
+  public abstract float getLayoutAlignmentY(Container target); 
+  public int getVgap(); 
+  public abstract void invalidateLayout(Container target); 
+  
+  public void layoutContainer (Container target); 
+  public abstract Dimension maximumLayoutSize(Container target); 
+  public Dimension minimumLayoutSize (Container target); 
+  public Dimension preferredLayoutSize (Container target); 
+  public void removeLayoutComponent (Component component); 
+  public void setHgap (int hgap); 
+  public void setVgap (int vgap); 
+  public String toString();
+}
+Constants
+CENTER
+public final static String CENTER
+A constant representing center orientation. 
+EAST
+public final static String EAST
+A constant representing east orientation. 
+NORTH
+public final static String NORTH
+A constant representing north orientation. 
+SOUTH
+public final static String SOUTH
+A constant representing south orientation. 
+WEST
+public final static String WEST
+A constant representing west orientation. 
+Constructors
+BorderLayout
+public BorderLayout()
+Description
+Constructs a BorderLayout object. 
+public BorderLayout (int hgap, int vgap)
+Parameters
+hgap
+Horizontal space between each component in the container. 
+vgap
+Vertical space between each component in the container. 
+Description
+Constructs a BorderLayout object 
+with the values specified as the gaps between each component in the container 
+managed by this instance of BorderLayout. 
+Instance Methods
+addLayoutComponent
+public void addLayoutComponent (Component comp, Object constraints) 
+Parameters
+comp
+The component being added. 
+constraints
+An object describing the constraints on this component. 
+Implements
+LayoutManager2.addLayoutComponent()
+Description
+Adds the component comp to 
+a container subject to the given constraints. 
+This is a more general version of addLayoutComponent(String, 
+Component) method. It corresponds to java.awt.Container's 
+add(Component, Object) method. In 
+practice, it is used the same in version 1.1 as in Java 1.0.2, except 
+with the parameters swapped: 
+Panel p = new Panel(new BorderLayout());
+p.add(new Button("OK"), BorderLayout.SOUTH);
+addLayoutComponent
+public void addLayoutComponent (String name, Component component) 
+Parameters
+name
+Name of region to add component to. 
+component
+Actual component being added. 
+Implements 
+LayoutManager.addLayoutComponent() 
+Description
+Adds a component to a container 
+in region name. This has been 
+replaced in version 1.1 with the more general addLayoutComponent(Component, 
+Object). 
+getHgap
+public int getHgap() 
+Returns
+The horizontal gap for this BorderLayout 
+instance. 
+getLayoutAlignmentX
+public abstract float getLayoutAlignmentX (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+The value .5 for all containers. 
+Description
+This method returns the preferred alignment of the given container target. 
+A return value of 0 is left aligned, .5 is centered, and 1 is right aligned. 
+getLayoutAlignmentY
+public abstract float getLayoutAlignmentY (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+The value .5 for all containers. 
+Description
+This method returns the preferred alignment of the given container target. 
+A return value of 0 is top aligned, .5 is centered, and 1 is bottom aligned. 
+getVgap
+public int getVgap() 
+Returns
+The vertical gap for this BorderLayout 
+instance. 
+invalidateLayout
+public abstract void invalidateLayout (Container target) 
+Parameters
+target
+The container to invalidate. 
+Description
+Does nothing. 
+layoutContainer
+public void layoutContainer (Container target)
+Parameters
+target
+The container that needs to be redrawn. 
+Implements 
+LayoutManager.layoutContainer() 
+Description
+Draws components contained within target. 
+maximumLayoutSize
+public abstract Dimension maximumLayoutSize (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+A Dimension whose horizontal 
+and vertical components are Integer.MAX_VALUE. 
+Description
+For BorderLayout, a maximal 
+Dimension is always returned. 
+minimumLayoutSize
+public Dimension minimumLayoutSize (Container target)
+Parameters
+target
+The container whose size needs to be calculated. 
+Returns
+Minimum Dimension of the container 
+target. 
+Implements
+LayoutManager.minimumLayoutSize() 
+Description
+Calculates minimum size of target. 
+container. 
+preferredLayoutSize
+public Dimension preferredLayoutSize (Container target)
+Parameters
+target
+The container whose size needs to be calculated. 
+Returns
+Preferred Dimension of the 
+container target. 
+Implements
+LayoutManager.preferredLayoutSize() 
+Description
+Calculates preferred size of target 
+container. 
+removeLayoutComponent
+public void removeLayoutComponent (Component component)
+Parameters
+component
+Component to stop tracking. 
+Implements
+LayoutManager.removeLayoutComponent() 
+Description
+Removes component from any 
+internal tracking systems. 
+setHgap
+public void setHgap (int hgap) 
+Parameters
+hgap
+The horizontal gap value. 
+Description
+Sets the horizontal gap between components. 
+setVgap
+public void setVgap (int vgap) 
+Parameters
+vgap
+The vertical gap value. 
+Description
+Sets the vertical gap between components. 
+toString
+public String toString()
+Returns
+A string representation of the BorderLayout object. 
+Overrides
+Object.toString() 
+See Also
+Component, Container, 
+Dimension, LayoutManager, 
+LayoutManager2, 
+Object, String 
+Adjustable 
+Button
+ 
+ 
+ 
+ 
+ 
+ 
+ 

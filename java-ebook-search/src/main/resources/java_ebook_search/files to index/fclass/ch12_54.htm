@@ -1,0 +1,885 @@
+
+[Chapter 12] SecurityManager
+Chapter 12The java.lang Package
+SecurityManager
+Name
+SecurityManager
+Synopsis
+Class Name:
+java.lang.SecurityManager
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The SecurityManager class provides a way
+of implementing a comprehensive security policy for a Java program.
+As of this writing, SecurityManager objects are
+used primarily by Web browsers to establish security policies for
+applets. However, the use of a SecurityManager object
+is appropriate in any situation where a hosting environment wants
+to limit the actions of hosted programs.
+The SecurityManager class contains methods
+that are called by methods in other classes to ask for permission
+to do something that can affect the security of the system. These
+permission methods all have names that begin with check.
+If a check method does not permit an action,
+it throws a SecurityException or returns a value
+that indicates the lack of permission.
+The SecurityManager
+class provides default implementations of all of the check
+methods. These default implementations are the most restrictive
+possible implementations; they simply deny permission to do anything
+that can affect the security of the system.
+The SecurityManager class is an
+abstract
+class. A hosting environment should define a subclass
+of SecurityManager that implements an appropriate
+security policy. To give the subclass of
+SecurityManager
+control over security, the hosting environment creates
+an instance of the class and installs it by passing it to the
+setSecurityManager()
+method of the System class.
+Once a SecurityManager object is installed,
+it cannot be changed. If the setSecurityManager()
+method is called any additional times, it throws a
+SecurityException.
+The methods in other classes that want to ask the
+SecurityManager for permission to do
+something are able to access the SecurityManager
+object by calling the getSecurityManager()
+method of the System class. This method returns
+the SecurityManager object, or
+null to indicate that there is no
+SecurityManager installed.
+Class Summary
+public abstract class java.lang.SecurityManager extends java.lang.Object {
+    // Constructors
+    protected SecurityManager();
+    // Variables
+    protected boolean inCheck;
+    // Instance Methods
+    public void checkAccept(String host, int port);
+    public void checkAccess(Thread t);
+    public void checkAccess(ThreadGroup g);
+    public void checkAwtEventQueueAccess();                  // New in 1.1
+    public void checkConnect(String host, int port);
+    public void checkConnect(String host, int port, Object context);
+    public void checkCreateClassLoader();
+    public void checkDelete(String file);
+    public void checkExec(String cmd);
+    public void checkExit(int status);
+    public void checkLink(String libname);
+    public void checkListen(int port);
+    public void checkMemberAccess(Class clazz, int which);   // New in 1.1
+    public void checkMulticast(InetAddress maddr);           // New in 1.1
+    public void checkMulticast(InetAddress maddr, byte ttl); // New in 1.1
+    public void checkPackageAccess();
+    public void checkPackageDefinition();
+    public void checkPrintJobAccess();                       // New in 1.1
+    public void checkPropertiesAccess();
+    public void checkPropertyAccess(String key);
+    public void checkRead(int fd);
+    public void checkRead(String file);
+    public void checkRead(String file, Object context);
+    public void checkSecurityAccess(String action);          // New in 1.1
+    public void checkSetFactory();
+    public void checkSystemClipboardAccess();                // New in 1.1
+    public boolean checkTopLevelWindow();
+    public void checkWrite(int fd);
+    public void checkWrite(String file);
+    public boolean getInCheck();
+    public Object getSecurityContext();                     
+    public ThreadGroup getThreadGroup();                     // New in 1.1
+    // Protected Instance Methods
+    protected int classDepth(String name);
+    protected int classLoaderDepth();
+    protected ClassLoader currentClassLoader();
+    protected Class currentLoadedClass();                    // New in 1.1
+    protected Class[] getClassContext();
+    protected boolean inClass(String name);
+    protected boolean inClassLoader();
+}
+Variables
+inCheck
+protected boolean inCheck = false
+Description
+This variable indicates whether or not a security check is
+in progress. A subclass of SecurityManager should
+set this variable to true while a security check
+is in progress.
+This variable can be useful for security checks that require access
+to resources that a hosted program may not be permitted to access.
+For example, a security policy might be based on the contents of a
+permissions file. This means that the various check
+methods need to read information from a file to decide what to
+do. Even though a hosted program may not be allowed to read files,
+the check methods can allow such reads when
+inCheck is true to support
+this style of security policy.
+Constructors
+SecurityManager
+protected SecurityManager()
+Throws
+SecurityException
+If a SecurityManager object already exists. In other
+words, if System.getSecurityManager() returns
+a value other than null.
+Description
+Creates a new SecurityManager object. This
+constructor cannot be called if there is already a current SecurityManager
+installed for the program.
+Public Instance Methods
+checkAccept
+public void checkAccept(String host, int port)
+Parameters
+host
+The name of the host machine.
+port
+A port number.
+Throws
+SecurityException
+If the caller does not have permission to accept
+the connection.
+Description
+This method decides whether or not to allow a connection from
+the given host on the given port to be accepted. An implementation
+of the method should throw a SecurityException
+to deny permission to accept the connection. The method is called
+by the accept() method of the java.net.ServerSocket
+class.
+The checkAccept() method of SecurityManager
+always throws a SecurityException.
+checkAccess
+public void checkAccess(Thread g)
+Parameters
+g
+A reference to a Thread object.
+Throws
+SecurityException
+If the current thread does not have permission to
+modify the specified thread.
+Description
+This method decides whether or not to allow the current thread
+to modify the specified Thread. An implementation
+of the method should throw a SecurityException
+to deny permission to modify the thread. Methods of the Thread
+class that call this method include stop(), suspend(),
+resume(), setPriority(), setName(),
+and setDaemon().
+The checkAccess() method of SecurityManager
+always throws a SecurityException.
+public void checkAccess(ThreadGroup g)
+Parameters
+g
+A reference to a ThreadGroup object.
+Throws
+SecurityException
+If the current thread does not have permission to
+modify the specified thread group.
+Description
+This method decides whether or not to allow the current thread
+to modify the specified ThreadGroup. An implementation
+of the method should throw a SecurityException
+to deny permission to modify the thread group. Methods of the ThreadGroup
+class that call this method include setDaemon(),
+setMaxPriority(), stop(),
+suspend(), resume(), and destroy().
+The checkAccess() method of SecurityManager
+always throws a SecurityException.
+checkAwtEventQueueAccess
+public void checkAwtEventQueueAccess()
+Availability
+New as of JDK 1.1
+Throws
+SecurityException
+If the caller does not have permission to access the AWT event queue.
+Description
+This method decides whether or not to allow access to the AWT event
+queue.  An implementation
+of the method should throw a SecurityException
+to deny permission to access the event queue.  The method is called
+by the getSystemEventQueue() method of the 
+java.awt.Toolkit class. 
+The checkAwtEventQueueAccess() method of 
+SecurityManager
+always throws a SecurityException.
+checkConnect
+public void checkConnect(String host, int port)
+Parameters
+host
+The name of the host.
+port
+A port number. A value of -1
+indicates an attempt to determine the IP address of given hostname.
+Throws
+SecurityException
+If the caller does not have permission to open the
+socket connection.
+Description
+This method decides whether or not to allow a socket connection
+to the given host on the given port to be opened. An implementation
+of the method should throw a SecurityException
+to deny permission to open the connection. The method is called
+by the constructors of the java.net.Socket class,
+the send() and receive() methods
+of the java.net.DatagramSocket class, and the
+getByName() and getAllByName()
+methods of the java.net.InetAddress class.
+The checkConnect() method of SecurityManager
+always throws a SecurityException.
+   public void checkConnect(String host, int port, Object context)  
+Parameters
+host
+The name of the host.
+port
+A port number. A value of -1
+indicates an attempt to determine the IP address of given host name.
+context
+A security context object returned by this object's
+getSecurityContext() method.
+Throws
+SecurityException
+If the specified security context does not have
+permission to open the socket connection.
+Description
+This method decides whether or not to allow a socket connection
+to the given host on the given port to be opened for the specified
+security context. An implementation of the method should throw a
+SecurityException to deny permission to open
+the connection.
+The checkConnect() method of SecurityManager
+always throws a SecurityException.
+checkCreateClassLoader
+public void checkCreateClassLoader()
+Throws
+SecurityException
+If the caller does not have permission to create
+a ClassLoader object.
+Description
+This method decides whether or not to allow a ClassLoader
+object to be created. An implementation of the method should throw
+a SecurityException to deny permission to create
+a ClassLoader. The method is called by the constructor
+of the ClassLoader class.
+The checkCreateClassLoader() method of
+SecurityManager always throws a SecurityException.
+checkDelete
+public void checkDelete(String file)
+Parameters
+file
+The name of a file.
+Throws
+SecurityException
+If the caller does not have permission to delete
+the specified file.
+Description
+This method decides whether or not to allow a file to be deleted.
+An implementation of the method should throw a SecurityException
+to deny permission to delete the specified file. The method is called
+by the delete() method of the java.io.File
+class.
+The checkDelete() method of SecurityManager
+always throws a SecurityException.
+checkExec
+public void checkExec(String cmd)
+Parameters
+cmd
+The name of an external command.
+Throws
+SecurityException
+If the caller does not have permission to execute
+the specified command.
+Description
+This method decides whether or not to allow an external command
+to be executed. An implementation of the method should throw a SecurityException
+to deny permission to execute the specified command. The method
+is called by the exec() methods of the Runtime
+and System classes.
+The checkExec() method of SecurityManager
+always throws a SecurityException.
+checkExit
+public void checkExit(int status)
+Parameters
+status
+An exit status code.
+Throws
+SecurityException
+If the caller does not have permission to exit the
+Java virtual machine with the given status code.
+Description
+This method decides whether or not to allow the Java virtual
+machine to exit with the given status code. An implementation of
+the method should throw a SecurityException to
+deny permission to exit with the specified status code. The method
+is called by the exit() methods of the Runtime
+and System classes.
+The checkExit() method of SecurityManager
+always throws a SecurityException.
+checkLink
+public void checkLink(String lib)
+Parameters
+lib
+The name of a library.
+Throws
+SecurityException
+If the caller does not have permission to load the
+specified library.
+Description
+This method decides whether to allow the specified
+library to be loaded. An implementation of the method should throw
+a SecurityException to deny permission to load
+the specified library. The method is called by the load()
+and loadLibrary() methods of the Runtime
+and System classes.
+The checkLink() method of SecurityManager
+always throws a SecurityException.
+checkListen
+public void checkListen(int port)
+Parameters
+port
+A port number.
+Throws
+SecurityException
+If the caller does not have permission to listen
+on the specified port.
+Description
+This method decides whether or not to allow the caller to
+listen on the specified port. An implementation of the method should
+throw a SecurityException to deny permission
+to listen on the specified port. The method is called by the constructors
+of the java.net.ServerSocket class and by the
+constructor of the java.net.DatagramSocket class
+that takes one argument.
+The checkListen() method of SecurityManager
+always throws a SecurityException.
+checkMemberAccess
+public void checkMemberAccess(Class clazz, int which)
+Availability
+New as of JDK 1.1
+Parameters
+clazz
+A Class object.
+which
+The value Member.PUBLIC for the set of all
+public members including inherited members or
+the value Member.DECLARED for the set of all
+declared members of the specified class or interface.
+Throws
+SecurityException
+If the caller does not have permission to access the members of
+the specified class or interface.
+Description
+This method decides whether or not to allow access to the 
+members of the specified Class object.  An implementation
+of the method should throw a SecurityException
+to deny permission to access the members.  Methods of the 
+Class class that call this method include
+getField(), getFields(), 
+getDeclaredField(), getDeclaredFields(), 
+getMethod(), getMethods(), 
+getDeclaredMethod(), 
+getDeclaredMethods(), 
+getConstructor(), getConstructors(), 
+getDeclaredConstructor(), 
+getDeclaredConstructors(), and 
+getDeclaredClasses().  
+The checkMemberAccess() method of 
+SecurityManager
+always throws a SecurityException.
+checkMulticast
+public void checkMulticast(InetAddress maddr)
+Availability
+New as of JDK 1.1
+Parameters
+maddr
+An InetAddress object that represents a multicast
+address.
+Throws
+SecurityException
+If the current thread does not have permission to use the
+specified multicast address.
+Description
+This method decides whether or not to allow the current thread
+to use the specified multicast InetAddress.
+An implementation
+of the method should throw a SecurityException
+to deny permission to use the multicast address.  The method is called
+by the send() method of 
+java.net.DatagramSocket if the packet is being
+sent to a multicast address.  The method is also called by
+the joinGroup() and leaveGroup()
+methods of java.net.MulticastSocket.
+The checkMulticast() method of 
+SecurityManager
+always throws a SecurityException.
+public void checkMulticast(InetAddress maddr, byte ttl)
+Availability
+New as of JDK 1.1
+Parameters
+maddr
+An InetAddress object that represents a multicast
+address.
+ttl
+The time-to-live (TTL) value.
+Throws
+SecurityException
+If the current thread does not have permission to use the
+specified multicast address and TTL value.
+Description
+This method decides whether or not to allow the current thread
+to use the specified multicast InetAddress and
+TTL value.  An implementation
+of the method should throw a SecurityException
+to deny permission to use the multicast address.  The method is called
+by the send() method of 
+java.net.MulticastSocket.
+The checkMulticast() method of 
+SecurityManager
+always throws a SecurityException.
+checkPackageAccess
+public void checkPackageAccess(String pkg)
+Parameters
+pkg
+The name of a package.
+Throws
+SecurityException
+If the caller does not have permission to access
+the specified package.
+Description
+This method decides whether or not to allow the specified
+package to be accessed. An implementation of the method should throw
+a SecurityException to deny permission to access
+the specified package. The method is intended to be called by implementations
+of the loadClass() method in subclasses of the
+ClassLoader class.
+The checkPackageAccess() method of SecurityManager
+always throws a SecurityException.
+checkPackageDefinition
+public void checkPackageDefinition(String pkg)
+Parameters
+pkg
+The name of a package.
+Throws
+SecurityException
+If the caller does not have permission to define
+classes in the specified package.
+Description
+This method decides whether or not to allow the caller to
+define classes in the specified package. An implementation of the
+method should throw a SecurityException to deny
+permission to create classes in the specified package. The method
+is intended to be called by implementations of the loadClass()
+method in subclasses of the ClassLoader class.
+The checkPackageDefinition() method of
+SecurityManager always throws a SecurityException.
+checkPrintJobAccess
+public void checkPrintJobAccess()
+Availability
+New as of JDK 1.1
+Throws
+SecurityException
+If the caller does not have permission to initiate a print job request.
+Description
+This method decides whether or not to allow the caller to initiate
+a print job request.  An implementation
+of the method should throw a SecurityException
+to deny permission to initiate the request.  
+The checkPrintJobAccess() method of 
+SecurityManager
+always throws a SecurityException.
+checkPropertiesAccess
+public void checkPropertiesAccess()
+Throws
+SecurityException
+If the caller does not have permission to access
+the system properties.
+Description
+This method decides whether or not to allow the caller to
+access and modify the system properties. An implementation of the
+method should throw a SecurityException to deny
+permission to access and modify the properties. Methods of the System
+class that call this method include getProperties()
+and setProperties().
+The checkPropertiesAccess() method of SecurityManager
+always throws a SecurityException.
+checkPropertyAccess
+public void checkPropertyAccess(String key)
+Parameters
+key
+The name of an individual system property.
+Throws
+SecurityException
+If the caller does not have permission to access
+the specified system property.
+Description
+This method decides whether or not to allow the caller to
+access the specified system property. An implementation of the method
+should throw a SecurityException to deny permission
+to access the property. The method is called by the getProperty()
+method of the System class.
+The checkPropertyAccess() method of SecurityManager
+always throws a SecurityException.
+checkRead
+public void checkRead(FileDescriptor fd)
+Parameters
+fd
+A reference to a FileDescriptor
+object.
+Throws
+SecurityException
+If the caller does not have permission to read from
+the given file descriptor.
+Description
+This method decides whether or not to allow the caller to
+read from the specified file descriptor. An implementation of the
+method should throw a SecurityException to deny
+permission to read from the file descriptor. The method is called
+by the constructor of the java.io.FileInputStream
+class that takes a FileDescriptor argument.
+The checkRead() method of SecurityManager
+always throws a SecurityException.
+public void checkRead(String file)
+Parameters
+file
+The name of a file.
+Throws
+SecurityException
+If the caller does not have permission to read from
+the named file.
+Description
+This method decides whether or not to allow the caller to
+read from the named file. An implementation of the method should
+throw a SecurityException to deny permission
+to read from the file. The method is called by constructors of the
+java.io.FileInputStream and java.io.RandomAccessFile
+classes, as well as by the canRead(), exists(),
+isDirectory(), isFile(), lastModified(),
+length(), and list() methods
+of the java.io.File class.
+The checkRead() method of SecurityManager
+always throws a SecurityException.
+public void checkRead(String file, Object context)
+Parameters
+file
+The name of a file.
+context
+A security context object returned by this object's
+getSecurityContext() method.
+Throws
+SecurityException
+If the specified security context does not have
+permission to read from the named file.
+Description
+This method decides whether or not to allow the specified
+security context to read from the named file. An implementation
+of the method should throw a SecurityException
+to deny permission to read from the file.
+The checkRead() method of SecurityManager
+always throws a SecurityException.
+checkSecurityAccess
+public void checkSecurityAccess(String action)
+Availability
+New as of JDK 1.1
+Parameters
+action
+A string that specifies a security action.
+Throws
+SecurityException
+If the caller does not have permission to perform the specified
+security action.
+Description
+This method decides whether to allow the caller to
+perform the specified security action.
+An implementation
+of the method should throw a SecurityException
+to deny permission to perform the action.
+The method is called
+by many of the methods in the java.security.Identity
+and java.security.Security classes.
+The checkSecurityAccess() method of SecurityManager
+always throws a SecurityException.
+checkSetFactory
+public void checkSetFactory()
+Throws
+SecurityException
+If the caller does not have permission to set the
+factory class to be used by another class.
+Description
+This method decides whether to allow the caller to
+set the factory class to be used by another class. An implementation
+of the method should throw a SecurityException
+to deny permission to set the factory class. The method is called
+by the setSocketFactory() method of the
+java.net.ServerSocket class, the
+setSocketImplFactory() method of the
+java.net.Socket class, the setURLStreamHandlerFactory()
+method of the java.net.URL class, and the setContentHandlerFactory()
+method of the java.net.URLConnection class.
+The checkSetFactory() method of SecurityManager
+always throws a SecurityException.
+checkSystemClipboardAccess
+public void checkSystemClipboardAccess()
+Availability
+New as of JDK 1.1
+Throws
+SecurityException
+If the caller does not have permission to access the system clipboard.
+Description
+This method decides whether or not to allow the caller to access the system
+clipboard. An implementation
+of the method should throw a SecurityException
+to deny permission to access the system clipboard.  
+The checkSystemClipboardAccess() method of 
+SecurityManager
+always throws a SecurityException.
+checkTopLevelWindow
+public boolean checkTopLevelWindow(Object window)
+Parameters
+window
+A window object.
+Returns
+true if the caller is trusted to put up
+the specified top-level window; otherwise false.
+Description
+This method decides whether or not to trust the caller to
+put up the specified top-level window. An implementation of the
+method should return false to indicate that the
+caller is not trusted. In this case, the hosting environment can
+still decide to display the window, but the window should include
+a visual indication that it is not trusted. If the caller is trusted,
+the method should return true, and the window
+can be displayed without any special indication.
+The checkTopLevelWindow() method of SecurityManager
+always returns false.
+checkWrite
+public void checkWrite(FileDescriptor fd)
+Parameters
+fd
+A FileDescriptor object.
+Throws
+SecurityException
+If the caller does not have permission to write
+to the given file descriptor.
+Description
+This method decides whether or not to allow the caller to
+write to the specified file descriptor. An implementation of the
+method should throw a SecurityException to deny
+permission to write to the file descriptor. The method is called
+by the constructor of the java.io.FileOutputStream
+class that takes a FileDescriptor argument.
+The checkWrite() method of SecurityManager
+always throws a SecurityException.
+public void checkWrite(String file)
+Parameters
+file
+The name of a file.
+Throws
+SecurityException
+If the caller does not have permission to read from
+the named file.
+Description
+This method decides whether or not to allow the caller to
+write to the named file. An implementation of the method should
+throw a SecurityException to deny permission
+to write to the file. The method is called by constructors of the
+java.io.FileOutputStream and java.io.RandomAccessFile
+classes, as well as by the canWrite(), mkdir(),
+and renameTo() methods of the java.io.File
+class.
+The checkWrite() method of SecurityManager
+always throws a SecurityException.
+getInCheck
+public boolean getInCheck()
+Returns
+true if a security check is in progress;
+otherwise false.
+Description
+This method returns the value of the SecurityManager
+object's inCheck variable, which is true
+if a security check is in progress and false
+otherwise.
+getSecurityContext
+public Object getSecurityContext()
+Returns
+An implementation-dependent object that contains enough information
+about the current execution environment to perform security checks
+at a later time.
+Description
+This method is meant to create an object that encapsulates
+information about the current execution environment. The resulting
+security context object is used by specific versions of the checkConnect()
+and checkRead() methods. The intent is that such
+a security context object can be used by a trusted method to determine
+whether or not another, untrusted method can perform a particular
+operation.
+The getSecurityContext() method of SecurityManager
+simply returns null. This method should be overridden
+to return an appropriate security context object for the security
+policy that is being implemented.
+getThreadGroup
+public ThreadGroup getThreadGroup()
+Availability
+New as of JDK 1.1
+Returns
+A ThreadGroup in which to place any threads that
+are created when this method is called.
+Description
+This method returns the appropriate parent ThreadGroup
+for any threads that are created when the method is called.
+The getThreadGroup() method of SecurityManager
+simply returns the ThreadGroup of the current
+thread.  This method should be overridden
+to return an appropriate ThreadGroup.
+Protected Instance Methods
+classDepth
+protected native int classDepth(String name)
+Parameters
+name
+The fully qualified name of a class.
+Returns
+The number of pending method invocations from the top of the
+stack to a call to a method of the given class; -1
+if no stack frame in the current thread is associated with a call
+to a method in the given class.
+Description
+This method returns the number of pending method invocations
+between this method invocation and an invocation of a method associated
+with the named class.
+classLoaderDepth
+protected native int classLoaderDepth()
+Returns
+The number of pending method invocations from the top of the
+stack to a call to a method that is associated with a class that
+was loaded by a ClassLoader object; -1
+if no stack frame in the current thread is associated with a call
+to such a method.
+Description
+This method returns the number of pending method invocations
+between this method invocation and an invocation of a method associated
+with a class that was loaded by a ClassLoader
+object.
+currentClassLoader
+protected native ClassLoader currentClassLoader()
+Returns
+The most recent ClassLoader object executing
+on the stack.
+Description
+This method finds the most recent pending invocation of a
+method associated with a class that was loaded by a ClassLoader
+object. The method then returns the ClassLoader
+object that loaded that class.
+currentLoadedClass
+protected Class currentLoadedClass()
+Availability
+New as of JDK 1.1
+Returns
+The most recent Class object loaded by a
+ClassLoader.
+Description
+This method finds the most recent pending invocation of a
+method associated with a class that was loaded by a ClassLoader
+object. The method then returns the Class
+object for that class.
+getClassContext
+protected native Class[] getClassContext()
+Returns
+An array of Class objects that represents
+the current execution stack.
+Description
+This method returns an array of Class objects
+that represents the current execution stack. The length of the array
+is the number of pending method calls on the current thread's stack,
+not including the call to getClassContext().
+Each element of the array references a Class object
+that describes the class associated with the corresponding method
+call. The first element of the array corresponds to the most recently
+called method, the second element is that method's caller, and so
+on.
+inClass
+protected boolean inClass(String name)
+Parameters
+name
+The fully qualified name of a class.
+Returns
+true if there is a pending method invocation
+on the stack for a method of the given class; otherwise false.
+Description
+This method determines whether or not there is a pending method
+invocation that is associated with the named class.
+inClassLoader
+protected boolean inClassLoader()
+Returns
+true if there is a pending method invocation
+on the stack for a method of a class that was loaded by a
+ClassLoader object; otherwise false.
+Description
+This method determines whether or not there is a pending method
+invocation that is associated with a class that was loaded by a
+ClassLoader object. The method returns
+true only if the
+currentClassLoader()
+method does not return null.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+ClassLoader, 
+DatagramSocket,
+File,  
+FileDescriptor, 
+FileInputStream, 
+FileOutputStream,
+InetAddress, 
+MulticastSocket,
+Object,
+RandomAccessFile,
+Runtime, 
+SecurityException,
+ServerSocket, 
+Socket, 
+System, 
+Thread, 
+ThreadGroup,
+Toolkit, 
+URL,
+URLConnection 
+SecurityException
+Short
+ 
+ 
+ 
+ 
+ 
+ 
+ 

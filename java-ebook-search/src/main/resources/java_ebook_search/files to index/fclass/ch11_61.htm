@@ -1,0 +1,436 @@
+
+[Chapter 11] StreamTokenizer
+Chapter 11The java.io Package
+StreamTokenizer
+Name
+StreamTokenizer
+Synopsis
+Class Name:
+java.io.StreamTokenizer
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The StreamTokenizer class performs 
+a lexical analysis on an InputStream 
+object and breaks the stream into tokens. Although StreamTokenizer 
+is not a general-purpose parser, it recognizes tokens that 
+are similar to those used in the Java language. A StreamTokenizer recognizes identifiers, numbers, quoted strings, and various comment 
+styles. 
+A StreamTokenizer object can be wrapped around an
+InputStream. In this case, when the
+StreamTokenizer reads bytes from the stream, the
+bytes are converted to Unicode characters by simply zero-extending the
+byte values to 16 bits. As of Java 1.1, a
+StreamTokenizer can be wrapped around a
+Reader to eliminate this problem.
+The nextToken() method returns 
+the next token from the stream. The rest of the methods in StreamTokenizer 
+control how the object interprets the characters that it reads and tokenizes 
+them. 
+The parsing functionality of StreamTokenizer is
+controlled by a table and a number of flags. Each character that is
+read from the InputStream is in the range
+'\u0000' to
+'\uFFFF'.  The character value
+looks up attributes of the character in the table. A character can
+have zero or more of the following attributes: whitespace, alphabetic,
+numeric, string quote, and comment character.
+By default, a StreamTokenizer 
+recognizes the following: 
+Whitespace characters between '\u0000' 
+and '\u0020' 
+Alphabetic characters from 'a' 
+through 'z', 'A' 
+through 'Z', and 
+'\u00A0' and 
+'\u00FF'. 
+Numeric characters '1', 
+'2', '3', 
+'4', '5', 
+'6', '7', 
+'8', '9', 
+'0', '.', 
+and '-' 
+String quote characters "'" 
+and "'" 
+Comment character "/" 
+Class Summary
+public class java.io.StreamTokenizer extends java.lang.Object {
+  // Variables
+  public double nval;
+  public String sval;
+  public int ttype;
+  public final static int TT_EOF;
+  public final static int TT_EOL;
+  public final static int TT_NUMBER;
+  public final static int TT_WORD;
+  // Constructors 
+  public StreamTokenizer(InputStream in);           // Deprecated in 1.1
+  public StreamTokenizer(Reader in);                // New in 1.1
+  // Instance Methods
+  public void commentChar(int ch);
+  public void eolIsSignificant(boolean flag);
+  public int lineno();
+  public void lowerCaseMode(boolean flag);
+  public int nextToken();
+  public void ordinaryChar(int ch);
+  public void ordinaryChars(int low, int hi);
+  public void parseNumbers();
+  public void pushBack();
+  public void quoteChar(int ch);
+  public void resetSyntax();
+  public void slashSlashComments(boolean flag);
+  public void slashStarComments(boolean flag);
+  public String toString();
+  public void whitespaceChars(int low, int hi);
+  public void wordChars(int low, int hi);
+}
+Variables
+nval
+public double nval
+Description
+This variable contains the value of a TT_NUMBER 
+token. 
+sval
+public String sval
+Description
+This variable contains the value of a TT_WORD 
+token. 
+ttype
+public int ttype
+Description
+This variable indicates the token type. The value is either one of the 
+TT_ constants defined below 
+or the character that has just been parsed from the input stream. 
+TT_EOF
+public final static int TT_EOF = -1
+Description
+This token type indicates that the end of the stream has been reached. 
+TT_EOL
+public final static int TT_EOL = '\n'
+Description
+This token type indicates that the end of a line has been reached. The 
+value is not returned by nextToken() 
+unless eolIsSignificant(true) 
+has been called. 
+TT_NUMBER
+public final static int TT_NUMBER = -2
+Description
+This token type indicates that a number has been parsed. The number is 
+placed in nval. 
+TT_WORD
+public final static int TT_WORD = -3
+Description
+This token type indicates that a word has been parsed. The word is placed 
+in sval. 
+Constructors
+StreamTokenizer
+public StreamTokenizer(InputStream in)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+in
+The input stream to 
+tokenize. 
+Description
+This constructor creates a StreamTokenizer 
+that reads from the given InputStream. 
+As of JDK 1.1, this method is deprecated and 
+StreamTokenizer(Reader) should be
+used instead.
+public StreamTokenizer(Reader in)
+Availability
+New as of JDK 1.1 
+Parameters
+in
+The reader to tokenize. 
+Description
+This constructor creates a StreamTokenizer 
+that reads from the given Reader. 
+Instance Methods
+commentChar
+public void commentChar(int ch)
+Parameters
+ch
+The character to use 
+to indicate comments. 
+Description
+This method tells this StreamTokenizer to 
+treat the given character as the beginning of a comment that ends at the 
+end of the line. The StreamTokenizer 
+ignores all of the characters from the comment character to the end of 
+the line. By default, a StreamTokenizer 
+treats the '/' 
+character as a comment character. This method may be called multiple times 
+if there are multiple characters that begin comment lines.
+To specify that a character is not a comment character, 
+use ordinaryChar(). 
+eolIsSignificant
+public void eolIsSignificant(boolean flag)
+Parameters
+flag
+A boolean 
+value that specifies whether or not this StreamTokenizer 
+returns TT_EOL 
+tokens. 
+Description
+A StreamTokenizer recognizes
+"\n", "\r", and
+"\r\n" as the end of a line. By default,
+end-of-line characters are treated as whitespace and thus, the
+StreamTokenizer does not return
+TT_EOL tokens from
+nextToken(). Call
+eolIsSignificant(true) to tell the
+StreamTokenizer to return TT_EOL
+tokens.
+lineo
+public int lineno()
+Returns
+The current line number. 
+Description
+This method returns the current line number. Line numbers begin at 1. 
+lowerCaseMode
+public void lowerCaseMode(boolean flag)
+Parameters
+flag
+A boolean value that specifies 
+whether or not this StreamTokenizer 
+returns TT_WORD 
+tokens in lowercase. 
+Description
+By default, a StreamTokenizer 
+does not change the case of the words that it parses. However if you call 
+lowerCaseMode(true), 
+whenever nextToken() returns 
+a TT_WORD token, the word in 
+sval is converted to lowercase. 
+nextToken
+public int nextToken() throws IOException
+Returns
+One of the token types (TT_EOF, 
+TT_EOL, TT_NUMBER, 
+or TT_WORD) or a character 
+code. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method reads the next token from the stream. The value returned is 
+the same as the value of the variable ttype. 
+The nextToken() method parses 
+the following tokens: 
+TT_EOF
+The end of the input stream has been reached. 
+TT_EOL
+The end of a line has been reached. The eolIsSignificant() 
+method controls whether end-of-line characters are treated as whitespace 
+or returned as TT_EOL tokens. 
+TT_NUMBER
+A number has been parsed. The value can be found in the variable nval. 
+The parseNumbers() method tells 
+the StreamTokenizer to recognize 
+numbers distinct from words. 
+TT_WORD
+A word has been parsed. The word can be found in the variable
+sval.
+Quoted string
+A quoted string has been parsed. The variable ttype
+is set to the quote character, and sval contains the
+string itself. You can tell the StreamTokenizer
+what characters to use as quote characters using
+quoteChar().
+Character
+A single character has been parsed. The variable ttype 
+is set to the character value. 
+ordinaryChar
+public void ordinaryChar(int ch)
+Parameters
+ch
+The character to treat 
+normally. 
+Description
+This method causes this StreamTokenizer to treat
+the given character as an ordinary
+character. This means that the character has no special significance
+as a comment, string quote, alphabetic, numeric, or whitespace
+character. For example, to tell the StreamTokenizer
+that the slash does not start a single-line comment, use
+ordinaryChar('/').
+ordinaryChars
+public void ordinaryChars(int low, int hi)
+Parameters
+low
+The beginning of a range of character values.
+hi
+The end of a range of character values. 
+Description
+This method tells this StreamTokenizer 
+to treat all of the characters in the given range as ordinary 
+characters. See the description of ordinaryChar() 
+above for more information. 
+parseNumbers
+public void parseNumbers()
+Description
+This method tells this StreamTokenizer 
+to recognize numbers. The StreamTokenizer 
+constructor calls this method, so the default behavior of a StreamTokenizer 
+is to recognize numbers. This method modifies the syntax table of the StreamTokenizer 
+so that the following characters have the numeric attribute:
+'1', 
+'2', '3', 
+'4', '5', 
+'6', '7', 
+'8', '9', 
+'0', '.', 
+and '-' 
+When the parser encounters a token that has the format of a double-precision 
+floating-point number, the token is treated as a number rather than a word. 
+The ttype variable is set to 
+TT_NUMBER, and nval 
+is set to the value of the number.
+To use a StreamTokenizer that does
+not parse numbers, make the above characters ordinary using
+ordinaryChar() or
+ordinaryChars():
+pushBack
+public void pushBack()
+Description
+This method has the effect of pushing the current token back onto the stream. 
+In other words, after a call to this method, the next call to the nextToken() 
+method returns the same result as the previous call to the nextToken()method 
+without reading any input. 
+quoteChar
+public void quoteChar(int ch)
+Parameters
+ch
+The character to use 
+as a delimiter for quoted strings. 
+Description
+This method tells this StreamTokenizer 
+to treat the given character as the beginning or end of a quoted string. 
+By default, the single-quote character and the double-quote character are 
+string-quote characters. When the parser encounters a string-quote character, 
+the ttype variable is set to 
+the quote character, and sval 
+is set to the actual string. The string consists of all the characters 
+after (but not including) the string-quote character up to (but not including) 
+the next occurrence of the same string-quote character, a line terminator, 
+or the end of the stream.
+To specify that a character is not a string-quote character, use ordinaryChar(). 
+resetSyntax
+public void resetSyntax()
+Description
+This method resets this StreamTokenizer, 
+which causes it to treat all characters as ordinary characters. 
+See the description of ordinaryChar() 
+above for more information. 
+slashSlashComments
+public void slashSlashComments(boolean flag)
+Parameters
+flag
+A boolean 
+value that specifies whether or not this StreamTokenizer 
+recognizes double-slash comments (//). 
+Description
+By default, a StreamTokenizer 
+does not recognize double-slash comments. However, if you call slashSlashComments(true), 
+the nextToken() method recognizes 
+and ignores double-slash comments. 
+slashStarComments
+public void slashStarComments(boolean flag)
+Parameters
+flag
+A boolean 
+value that specifies whether or not this StreamTokenizer 
+recognizes slash-star (/* ... */) comments. 
+Description
+By default, a StreamTokenizer 
+does not recognize slash-star comments. However, if you call slashStarComments(true), 
+the nextToken() method recognizes 
+and ignores slash-star comments. 
+toString
+public String toString()
+Returns
+A String representation of 
+the current token. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of the current token recognized 
+by the nextToken() method. This 
+string representation consists of the value of ttype, 
+the value of sval if the token 
+is a word or the value of nval 
+if the token is a number, and the current line number. 
+whitespaceChars
+public void whitespaceChars(int low, int hi)
+Parameters
+low
+The beginning of a range of character values.
+hi
+The end of a range of character values. 
+Description
+This method causes this StreamTokenizer 
+to treat characters in the specified range as whitespace. The only function 
+of whitespace characters is to separate tokens in the stream. 
+wordChars
+public void wordChars(int low, int hi)
+Parameters
+low
+The beginning of a range of character values.
+hi
+The end of a range of character values. 
+Description
+This method causes this StreamTokenizer 
+to treat characters in the specified range as characters that are part 
+of a word token, or, in other words, consider the characters to be alphabetic. 
+A word token consists of a sequence of characters that begins with 
+an alphabetic character and is followed by zero or more numeric or alphabetic 
+characters. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+InputStream, 
+IOException, 
+Reader, 
+StringTokenizer 
+StreamCorruptedException
+StringBufferInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

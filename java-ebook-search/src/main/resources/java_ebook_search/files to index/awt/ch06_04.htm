@@ -1,0 +1,246 @@
+
+[Chapter 6] 6.4 Window
+Chapter 6Containers
+6.4 Window
+A Window is a top-level display 
+area that exists outside the browser or applet area you are working in. 
+It has no adornments, such as the borders, window title, or menu bar that 
+a typical window manager might provide. A Frame 
+is a subclass of Window that 
+adds these parts (borders, window title). Normally you will work 
+with the children of Window 
+and not Window directly. However, 
+you might use a Window to create 
+your own pop-up menu or some other GUI component that requires its own 
+window and isn't provided by AWT. This technique isn't as necessary 
+in Java 1.1, which has a PopupMenu 
+component. 
+The default LayoutManager for 
+Window is BorderLayout, 
+which is described in BorderLayout. 
+Window MethodsConstructors
+public Window (Frame parent) 
+There is one public constructor for Window. 
+It has one parameter, which specifies the 
+parent of the Window. When the parent 
+is minimized, so is the Window. 
+In an application, you must therefore create a Frame 
+before you can create a Window; 
+this isn't much of an inconvenience since you usually need a Frame 
+in which to build your user interface. In an applet, you often do not have 
+access to a Frame to use as 
+the parent, so you can pass null 
+as the argument. 
+Figure 6.2 shows a simple Window on the left. 
+Notice that there are no borders or window management adornments present. 
+The Window on the right was 
+created by an applet loaded over the network. Notice the warning message 
+you get in the status bar at the bottom of the screen. This is to warn users that the Window 
+was created by an applet that comes from an untrusted source, and you can't 
+necessarily trust it to do what it says. The warning is particularly appropriate 
+for windows, since a user can't necessarily tell whether a window 
+was created by an applet or any other application. It is therefore possible 
+to write applets that mimic windows from well-known applications, to trick 
+the user into giving away passwords, credit card numbers, or other sensitive 
+information. 
+Figure 6.2: Two windows
+In some environments, you can get the browser's Frame 
+to use with the Window's 
+constructor. This is one way to create a Dialog, 
+as we shall see. By repeatedly calling getParent() 
+until there are no more parents, you can discover an applet's top-level 
+parent, which should be the browser's Frame. 
+Example 6.1 contains the code you would write to do this. You 
+should then check the return value to see if you got a Frame 
+or null. This code is completely 
+nonportable, but you may happen to be in an environment where it works. 
+Example 6.1: Finding a Parent Frame
+import java.awt.*;
+public class ComponentUtilities {
+    public static Frame getTopLevelParent (Component component) {
+        Component c = component;
+        while (c.getParent() != null)
+            c = c.getParent();
+        if (c instanceof Frame)
+            return (Frame)c;
+        else
+            return null;
+    }
+}
+Appearance methods
+A handful of methods assist with the appearance of the Window. 
+public void pack () 
+The pack() method resizes the 
+Window to the preferred size 
+of the components it contains and validates the Window. 
+public void show () 
+The show() method displays 
+the Window. When a Window 
+is initially created it is hidden. If the window is already showing when 
+this method is called, it calls toFront() 
+to bring the window to the foreground. To hide the window, just call 
+the hide() method of Component. After you show() 
+a window, it is validated for you. 
+The first call to show() for any Window generates a WindowEvent with the ID WINDOW_OPENED.
+public void dispose () 
+The dispose() method releases 
+the resources of the Window 
+by hiding it and removing its peer. Calling this method generates a WindowEvent with the ID WINDOW_CLOSED.
+public void toFront () 
+The toFront() method brings 
+the Window to the foreground 
+of the display. This is automatically called if you call show() 
+and the Window is already shown. 
+public void toBack () 
+The toBack() method puts the 
+Window in the background of 
+the display. 
+public boolean isShowing() 
+The isShowing() method returns true if the Window is visible on the screen.
+Miscellaneous methods
+public Toolkit getToolkit () 
+The getToolkit() method returns 
+the current Toolkit of the 
+window. The Toolkit provides 
+you with information about the native platform. This will allow you to 
+size the Window based upon 
+the current screen resolution and get images for an application. See Building a New Component from a Window for a usage example. 
+public Locale getLocale ()   
+The getLocale() method retrieves 
+the current Locale of the window, 
+if it has one. Using a Locale 
+allows you to write programs that can adapt themselves to different languages 
+and different regional variants. If no Locale 
+has been set, getLocale() returns 
+the default Locale. The default 
+Locale has a user language 
+of English and no region. To change the default Locale, 
+set the system properties user.language 
+and user.region or call Locale.setDefault() 
+(setDefault() verifies access 
+rights with the security manager).[1] 
+[1] 
+ 
+For more on the Locale class, 
+see the Java Fundamental Classes Reference 
+from O'Reilly &amp; Associates.
+public final String getWarningString () 
+The getWarningString() method 
+returns null or a string that 
+is displayed on the bottom of insecure Window 
+instances. If the SecurityManager 
+says that top-level windows do not get a warning message, this method returns 
+null. If a message is required, 
+the default text is "Warning: Applet Window". However, Java 
+allows the user to change the warning by setting the system property awt.appletWarning. 
+(Netscape Navigator and Internet Explorer do not allow the warning message 
+to be changed. Netscape Navigator's current (V3.0) warning string 
+is "Unsigned Java Applet Window.") The purpose of this string 
+is to warn users that the Window 
+was created by an untrusted source, as opposed to a standard application, 
+and should be used with caution. 
+public Component getFocusOwner ()  
+The getFocusOwner() method 
+allows you to ask the Window 
+which of its components currently has the input focus. This is useful if 
+you are cutting and pasting from the system clipboard; asking who has the 
+input focus tells you where to put the data you get from the clipboard. 
+The system clipboard is covered in Chapter 16, Data Transfer. If no component 
+in the Window has the focus, getFocusOwner() 
+returns null. 
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Window peer. This 
+is automatically done when you call the show() 
+method of the Window. If you override this method, first call super.addNotify(), 
+then add your customizations for the new class. Then you can do everything 
+you need to with the information about the newly created peer. 
+Window Events
+In Java 1.0, a Window peer generates all the events that are 
+generated by the Component 
+class; it does not generate events that are specific to a particular type 
+of component. That is, it generates key events, mouse events, and focus 
+events; it doesn't generate action events or list events. If an event 
+occurs within a child component of a Window, 
+the target of the event is the child component, not the Window. 
+In addition to the Component 
+events, five events are specific to windows, none of which are passed 
+on by the window's peer. These events happen at the Frame 
+and Dialog level. The events are 
+WINDOW_DESTROY, WINDOW_EXPOSE, 
+WINDOW_ICONIFY, WINDOW_DEICONIFY, 
+and WINDOW_MOVED. The default 
+event handler, handleEvent(), 
+doesn't call a convenience method to handle any of these events. 
+If you want to work with them, you must override handleEvent(). 
+See Frame Events for an example that catches the 
+WINDOW_DESTROY event. 
+public boolean postEvent (Event e)   
+The postEvent() method tells 
+the Window to deal with Event 
+e. It calls the handleEvent() method, 
+which returns true if somebody 
+handled e and false 
+if no one handles it. This method, which overrides Component.postEvent(), 
+is necessary because a Window 
+is, by definition, an outermost container, and therefore does not need 
+to post the event to its parent. 
+Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners for different event types; 
+the listeners are told when the event happens. These methods register listeners 
+and let the Window component 
+inspect its own events.
+public void addWindowListener(WindowListener listener)  
+The addWindowListener() method 
+registers listener as an object 
+interested in being notified when an WindowEvent 
+passes through the EventQueue 
+with this Window as its target. 
+When such an event occurs, one of the methods in the WindowListener 
+interface is called. Multiple listeners can be registered. 
+public void removeWindowListener(WindowListener listener)  
+The removeWindowListener() 
+method removes listener as 
+an interested listener. If listener 
+is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+every AWTEvent with this Window 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Window, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processWindowEvent(WindowEvent e)  
+The processWindowEvent() method 
+receives every WindowEvent with 
+this Window as its target. processWindowEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Window, overriding processWindowEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processWindowEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processWindowEvent(), 
+you must remember to call super.processWindowEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+Insets
+Frames
+ 
+ 
+ 
+ 
+ 
+ 
+ 

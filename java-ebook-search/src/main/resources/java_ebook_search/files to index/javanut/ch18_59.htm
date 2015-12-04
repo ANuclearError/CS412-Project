@@ -1,0 +1,52 @@
+
+[Chapter 18] 18.59 java.awt.TextField (JDK 1.0)
+Chapter 18The java.awt Package
+18.59 java.awt.TextField (JDK 1.0)
+This Component displays a line of optionally
+editable text.  Most of its interesting methods are defined
+by the TextComponent superclass.  Use
+setEchoCharacter() to specify a character to be
+echoed when requesting sensitive input such as a password.
+See also TextComponent and TextArea.
+public class TextField extends TextComponent {
+    // Public Constructors
+            public TextField();
+            public TextField(String text);
+            public TextField(int columns);
+            public TextField(String text, int columns);
+    // Public Instance Methods
+        1.1  public synchronized void addActionListener(ActionListener l);
+            public void addNotify();  // Overrides Component
+            public boolean echoCharIsSet();
+            public int getColumns();
+            public char getEchoChar();
+        1.1  public Dimension getMinimumSize(int columns);
+        1.1  public Dimension getMinimumSize();  // Overrides Component
+        1.1  public Dimension getPreferredSize(int columns);
+        1.1  public Dimension getPreferredSize();  // Overrides Component
+        #   public Dimension minimumSize(int columns);
+        #   public Dimension minimumSize();  // Overrides Component
+        #   public Dimension preferredSize(int columns);
+        #   public Dimension preferredSize();  // Overrides Component
+        1.1  public synchronized void removeActionListener(ActionListener l);
+        1.1  public void setColumns(int columns);
+        1.1  public void setEchoChar(char c);
+        #   public void setEchoCharacter(char c);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides TextComponent
+        1.1  protected void processActionEvent(ActionEvent e);
+        1.1  protected void processEvent(AWTEvent e);  // Overrides TextComponent
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->TextComponent->TextField
+Passed To:
+Toolkit.createTextField()
+java.awt.TextComponent (JDK 1.0)
+java.awt.Toolkit (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,205 @@
+
+[Chapter 2] 2.9 Arrays
+Chapter 2How Java Differs from C
+2.9 Arrays
+Most of what we learned in the previous sections about
+reference types and objects applies equally well to arrays
+in Java: 
+Arrays are manipulated by reference.
+They are dynamically created with new.
+They are automatically garbage collected when no longer
+referred to.
+The following subsections explain these and other details.
+Creating and Destroying Arrays
+There are two ways to create arrays in Java.  The first uses
+new, and specifies how large the array should be:
+byte octet_buffer[] = new byte[1024];
+Button buttons[] = new Button[10];
+Since creating an array does not create the objects that are
+stored in the array, there is no constructor to call, and
+the argument list is omitted with this form of the
+new keyword.  The elements of an array created in
+this way are initialized to the default value for their
+type.  The elements of an array of int are
+initialized to 0, for example, and the elements of
+an array of objects are initialized to null.  This
+last point is important to remember: creating an array of
+objects only allocates storage for object references, not
+objects themselves.  The objects that will be referred to by
+the elements of the array must be created separately.
+The second way to create an array is with an
+initializer, which looks just like it does in C:
+int lookup_table[] = {1, 2, 4, 8, 16, 32, 64, 128};
+This syntax dynamically creates an array and initializes its
+elements to the specified values.  The elements specified in
+an array initializer may be arbitrary expressions.  This is
+different than in C, where they must be constant
+expressions.
+In Java 1.1, arrays may also be created and initialized
+"anonymously" by combining the new syntax with the
+initializer syntax.  It looks like this:
+Menu m = createMenu("File", new String[] { "Open...", "Save", "Quit" });
+Arrays are automatically garbage collected, just like objects
+are.
+Multidimensional Arrays
+Java also supports multidimensional arrays.  These are
+implemented as arrays-of-arrays, as they are in C.
+You specify a variable
+as a multidimensional array type simply by appending the
+appropriate number of [] pairs after it.  You
+allocate a multidimensional array with new
+by specifying the appropriate number of elements (between
+square brackets) for each dimension.  For example:
+byte TwoDimArray[][] = new byte[256][16];
+This statement does three things:
+Declares a variable named TwoDimArray.  This
+variable has type byte[][]
+(array-of-array-of-byte).
+Dynamically allocates an array with 256 elements.  The type
+of this newly allocated array is byte[][], so it can
+be assigned to the variable we declared.  Each element of
+this new array is of type byte[]--a single-dimensional array of byte.
+Dynamically allocates 256 arrays of bytes, each of which
+holds 16 bytes, and stores a reference to these 256
+byte[] arrays into the 256 elements of the
+byte[][] array allocated in the second step. The 16 bytes in
+each of these 256 arrays are initialized to their default
+value of 0.
+When allocating a multidimensional array, you do not have
+to specify the number of elements that are contained in each
+dimension.  For example:
+int threeD[][][] = new int[10][][];
+This expression allocates an array that contains ten elements, each of type
+int[][].  It is a single-dimensional allocation,
+although when the array elements are properly initialized to
+meaningful values, the array will be multidimensional.
+The rule for this sort of array allocation is that the first
+n dimensions (where n is at least one) must have
+the number of elements specified, and these dimensions may be
+followed by m additional dimensions with no dimension
+size specified.  The following is legal:
+String lots_of_strings[][][][] = new String[5][3][][];
+This is not:
+double temperature_data[][][] = new double[100][][10];  // illegal
+Multidimensional arrays can also be allocated and
+initialized with nested initializers.  For example, you
+might declare the following multidimensional array of
+strings for use by the getParameterInfo() method of an
+applet:
+String param_info[][] = {
+    {"foreground", "Color",  "foreground color"},
+    {"background", "Color",  "background color"},
+    {"message",    "String", "the banner to display"}
+};
+Note that since Java implements multidimensional arrays as
+arrays-of-arrays, multidimensional arrays need not be
+"rectangular."  For example, this is how you could
+create and initialize a "triangular array":
+short triangle[][] = new short[10][];       // A single-dimensional array.
+for(int i = 0; i &lt; triangle.length; i++) {  // For each element of that array
+    triangle[i] = new short[i+1];           // Allocate a new array.
+    for(int j=0; j &lt; i+1; j++)              // For each element of new array
+        triangle[i][j] = (short) i + j;     // Initialize it to a value.
+}
+You can also declare and initialize non-rectangular arrays
+with nested initializers:
+static int[][] twodim = {{1, 2}, {3, 4, 5}, {5, 6, 7, 8}};
+To simulate multiple dimensions within a single-dimensional array, you'd
+use code just as you would in C:
+final int rows = 600;
+final int columns = 800;
+byte pixels[] = new byte[rows*columns];
+// access element [i,j] like this:
+byte b = pixels[i + j*columns];
+Accessing Array Elements
+Array access in Java is just like array access in C--you
+access an element of an array by putting an integer-valued
+expression between square brackets after the name of the
+array.
+int a[] = new int[100];
+a[0] = 0;
+for(int i = 1; i &lt; a.length; i++) a[i] = i + a[i-1];
+Notice how we computed the number of elements of the array
+in this example--by accessing the length field of
+the array.  This is the only field that arrays support.
+Note that it is a constant (final) field--any attempt to store a
+value into the length field of an array will fail.
+In all Java array references, the index is checked to make
+sure it is not too small (less than zero) or too big
+(greater than or equal to the array length).  If the index
+is out of bounds, an ArrayIndexOutOfBoundsException
+is thrown.
+[4]
+This is another way that Java works to prevent
+bugs (and security problems).
+[4] 
+The discussion of exceptions and exception handling is
+still to come.
+Are Arrays Objects?
+It is useful to consider arrays to be a separate kind of
+reference type from objects.  In some ways, though, arrays
+behave just like objects.  As we saw, arrays use the object
+syntax .length to refer to their length.  Arrays may
+also be assigned to variables of type Object, and
+the methods of the Object class may be invoked for
+arrays.  (Object is the root class in Java, which
+means that all objects can be assigned to a variable of type
+Object and all objects can invoke the methods of
+Object.)
+The evidence suggests that arrays are, in fact, objects.
+Java defines enough special syntax for arrays, however, that
+it is still most useful to consider them a different kind
+of reference type than objects.
+Declaring Array Variables and Arguments
+In C, you declare an array variable or array function
+argument by placing square brackets next to the variable name:
+void reverse(char strbuf[], int buffer_size)  {
+    char buffer[500];
+        ...
+}
+In Java, you would have to declare buffer as an
+array variable, and then allocate the array itself with
+new, but otherwise you could use the same syntax,
+with the array brackets after the variable or argument name.
+However, Java also allows you to put the array brackets
+after the type name instead.  So you could rewrite this code
+fragment to look something like this:
+void reverse(char[] strbuf, int buffer_size) {
+    char[] buffer = new char[500];
+        ...
+}
+In a lot of ways, this new array syntax is easier to read
+and easier to understand.  (It doesn't work in C, by the
+way, because pointers make C's type declaration syntax a
+real mess.)  The only problem with this new syntax is that
+if you get in the habit of using it, it will make it harder
+for you when you (hopefully only occasionally!) have to
+switch back and program in C.
+Java even allows you to mix the declaration styles, which is
+something you may find occasionally useful (or frequently
+confusing!) for certain data structures or algorithms.  For
+example:  
+// row and column are arrays of byte.
+// matrix is an array of an array of bytes.
+byte[] row, column, matrix[];
+// This method takes an array of bytes and an
+// array of arrays of bytes.
+public void dot_product(byte[] column, byte[] matrix[]) { ... }
+A final point to note about array declarations is that (as
+we've seen throughout this section) the size of an array is
+not part of its type as it is in C.  Thus, you can declare a
+variable to be of type String[], for example, and assign any array
+of String objects to it, regardless of the length of
+the array:
+String[] strings;           // this variable can refer to any String array
+strings = new String[10];   // one that contains 10 Strings
+strings = new String[20];   // or one that contains 20.
+Objects
+Strings
+ 
+ 
+ 
+ 
+ 
+ 
+ 

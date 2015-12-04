@@ -1,0 +1,73 @@
+
+[Chapter 22] The java.awt.peer Package
+Chapter 22
+22. The java.awt.peer Package
+Contents:
+java.awt.peer.CanvasPeer (JDK 1.0)
+java.awt.peer.CheckboxMenuItemPeer (JDK 1.0)
+java.awt.peer.CheckboxPeer (JDK 1.0)
+java.awt.peer.ChoicePeer (JDK 1.0)
+java.awt.peer.ComponentPeer (JDK 1.0)
+java.awt.peer.ContainerPeer (JDK 1.0)
+java.awt.peer.DialogPeer (JDK 1.0)
+java.awt.peer.FileDialogPeer (JDK 1.0)
+java.awt.peer.FontPeer (JDK 1.1)
+java.awt.peer.FramePeer (JDK 1.0)
+java.awt.peer.LabelPeer (JDK 1.0)
+java.awt.peer.LightweightPeer (JDK 1.1)
+java.awt.peer.ListPeer (JDK 1.0)
+java.awt.peer.MenuBarPeer (JDK 1.0)
+java.awt.peer.MenuComponentPeer (JDK 1.0)
+java.awt.peer.MenuItemPeer (JDK 1.0)
+java.awt.peer.MenuPeer (JDK 1.0)
+java.awt.peer.PanelPeer (JDK 1.0)
+java.awt.peer.PopupMenuPeer (JDK 1.1)
+java.awt.peer.ScrollPanePeer (JDK 1.1)
+java.awt.peer.ScrollbarPeer (JDK 1.0)
+java.awt.peer.TextAreaPeer (JDK 1.0)
+java.awt.peer.TextComponentPeer (JDK 1.0)
+java.awt.peer.TextFieldPeer (JDK 1.0)
+java.awt.peer.WindowPeer (JDK 1.0)
+The java.awt.peer package consists entirely of
+interface definitions. The hierarchy of these interfaces is
+shown in
+Figure 22.1.
+Each java.awt.peer interface corresponds to one of
+the java.awt Component or
+MenuComponent classes, and as you can see from the
+figure, the hierarchy of this package is identical to the
+hierarchy of those portions of the java.awt package.
+The interfaces in this package define the methods that must
+be supported by the GUI components on a specific platform.
+Porting the java.awt GUI components to a new platform 
+is a matter of implementing each of the methods in each of the
+interfaces in this package on top of the native GUI
+components of that platform. The Toolkit object in
+the java.awt package collects the implementations of
+these peer interfaces for a given platform. Toolkit
+contains methods that create instances of each of the
+interfaces in this package. Normal applications never need
+to instantiate these peers directly; instead they use the
+java.awt Component classes, which create
+peers as needed.
+Because these peer interfaces are rarely used, and because
+the methods are quite similar to those of the corresponding
+java.awt component, there is no additional
+commentary for the individual interface definitions below.
+Figure 22.1: The java.awt.peer package
+22.1 java.awt.peer.ButtonPeer (JDK 1.0)
+public abstract interface ButtonPeer extends ComponentPeer {
+    // Public Instance Methods
+            public abstract void setLabel(String label);
+}
+Returned By:
+Toolkit.createButton()
+java.awt.image.ReplicateScaleFilter (JDK 1.1)
+java.awt.peer.CanvasPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

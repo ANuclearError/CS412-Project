@@ -1,0 +1,48 @@
+
+[Chapter 23] 23.7 java.beans.IndexedPropertyDescriptor (JDK 1.1)
+Chapter 23The java.beans Package
+23.7 java.beans.IndexedPropertyDescriptor (JDK 1.1)
+An IndexedPropertyDescriptor object is a type of
+PropertyDescriptor that describes a Java bean property
+that is (or behaves like) an array.  The BeanInfo
+class for a Java bean optionally creates and initializes
+IndexedPropertyDescriptor objects to describe the
+indexed properties that the bean supports.  Typically, only
+application builders and similar tools use the
+descriptor objects to obtain indexed property description
+information.
+You create an IndexedPropertyDescriptor by
+specifying the name of the indexed property and the
+Class object for the bean.  If you have not followed
+the standard "design patterns" for accessor method naming,
+you may also specify the accessor methods for the
+property, either as method names or as
+java.lang.reflect.Method objects.  Once you have
+created an IndexedPropertyDescriptor object, you
+can use the methods of PropertyDescriptor and
+FeatureDescriptor to provide additional information
+about the indexed property.
+public class IndexedPropertyDescriptor extends PropertyDescriptor {
+    // Public Constructors
+            public IndexedPropertyDescriptor(String propertyName, Class beanClass) throws IntrospectionException;
+            public IndexedPropertyDescriptor(String propertyName, Class beanClass, String getterName,
+            public IndexedPropertyDescriptor'u'String setterName, String indexedGetterName,
+            public IndexedPropertyDescriptor'u'String indexedSetterName) throws IntrospectionException;
+            public IndexedPropertyDescriptor(String propertyName, Method getter, Method setter, Method indexedGetter,
+            public IndexedPropertyDescriptor'u'Method indexedSetter) throws IntrospectionException;
+    // Public Instance Methods
+            public Class getIndexedPropertyType();
+            public Method getIndexedReadMethod();
+            public Method getIndexedWriteMethod();
+}
+Hierarchy:
+Object->FeatureDescriptor->PropertyDescriptor->IndexedPropertyDescriptor
+java.beans.FeatureDescriptor (JDK 1.1)
+java.beans.IntrospectionException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

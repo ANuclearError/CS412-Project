@@ -1,0 +1,141 @@
+
+[Chapter 7] 7.5 Properties
+Chapter 7Basic Utility Classes
+7.5 Properties
+The java.util.Properties class is a specialized
+hashtable for strings. Java uses the Properties
+object to replace the environment variables used in
+other programming environments. You can use a
+Properties table to hold arbitrary configuration
+information for an application in an easily accessible format. The
+Properties object can also load and store
+information using streams (see Chapter 8, Input/Output Facilities for
+information on streams).
+Any string values can be stored as key/value pairs in a
+Properties table. However, the convention is to use
+a dot-separated naming hierarchy to group property names into logical
+structures, as is done with X resources on UNIX
+systems.[4]
+ The java.lang.System 
+class provides system-environment information in this way, through a system 
+Properties table I'll describe shortly. 
+[4] 
+Unfortunately, this is just a naming convention right now, so you
+can't access logical groups of properties as you can with X
+resources.
+Create an empty Properties table and 
+add String key/value pairs just as with 
+any Hashtable: 
+Properties props = new Properties(); 
+props.put("myApp.xsize", "52"); 
+props.put("myApp.ysize", "79"); 
+Thereafter, you can retrieve values with the
+getProperty()method:
+String xsize = props.getProperty( "myApp.xsize" ); 
+If the named property doesn't exist,
+getProperty() returns null. You
+can get an Enumeration of the property names with
+the propertyNames() method:
+for ( Enumeration e = props.propertyNames(); e.hasMoreElements; ) { 
+    String name = e.nextElement(); 
+    ... 
+} 
+Default Values
+When you create a Properties table, you can specify
+a second table for default property values:
+Properties defaults; 
+... 
+Properties props = new Properties( defaults ); 
+Now when you call getProperty(), the method
+searches the default table if it doesn't find the named property
+in the current table. An alternative version of
+getProperty() also accepts a default value; this
+value is returned if the property is not found in the current list or
+in the default list:
+String xsize = props.getProperty( "myApp.xsize", "50" ); 
+Loading and Storing
+You can save a Properties table to an
+OutputStream using the save()
+method. The property information is output in flat ASCII
+format. Continuing with the above example, output the property
+information to System.out as follows:
+props.save( System.out, "Application Parameters" ); 
+As we'll discuss in Chapter 8, Input/Output Facilities,
+System.out is a standard output stream similar to
+C's stdout. We could also save the
+information to a file by using a FileOutputStream as
+the first argument to save(). The second argument
+to save() is a String that is
+used as a header for the data. The above code outputs something like
+the following to System.out:
+#Application Parameters 
+#Mon Feb 12 09:24:23 CST 1997 
+myApp.ysize=79 
+myApp.xsize=52 
+The load() method reads the previously saved
+contents of a Properties object from an
+InputStream:
+FileInputStream fin; 
+... 
+Properties props = new Properties() 
+props.load( fin ); 
+The list() method is useful for debugging. It 
+prints the contents to an OutputStream in a format 
+that is more human-readable but not retrievable by load(). 
+System Properties
+The java.lang.System class provides access to basic
+system environment information through the
+static System.getProperty()
+method. This method returns a Properties table that
+contains system properties. System properties take the place of
+environment variables in other programming environments.
+Table 7.7 summarizes system
+properties that are guaranteed to be defined in any Java environment.
+Table 7.7: System Properties
+System Property
+Meaning
+java.vendor
+Vendor-specific string
+java.vendor.url
+URL of vendor
+java.version
+Java version
+java.home
+Java installation directory
+java.class.version
+Java class version
+java.class.path
+The class path
+os.name
+Operating-system name
+os.arch
+Operating-system architecture
+os.version
+Operating-system version
+file.separator
+File separator (such as "/" or "\")
+path.separator
+Path separator (such as ":" or ";")
+line.separator
+Line separator (such as "\n" or "\r\n")
+user.name
+User account name
+user.home
+User's home directory
+user.dir
+Current working directory
+Applets are, by current Web browser conventions, prevented from
+reading the following properties: java.home,
+java.class.path, user.name,
+user.home, and user.dir. As
+you'll see in the next section, these restrictions are
+implemented by a SecurityManager object.
+Vectors and Hashtables
+The Security Manager
+ 
+ 
+ 
+ 
+ 
+ 
+ 

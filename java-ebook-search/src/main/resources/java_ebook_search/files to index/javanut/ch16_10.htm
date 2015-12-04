@@ -1,0 +1,42 @@
+
+[Chapter 16] native2ascii
+Chapter 16JDK Tools
+native2ascii
+Name
+native2ascii---Convert Java source code to ASCII
+Availability
+JDK 1.1 and later.
+Synopsis
+native2ascii [ options ] [ inputfile [ outputfile ]]
+Description
+javac can only process files encoded in ASCII,
+with any other characters encoded using the
+\uxxxx Unicode notation.
+native2ascii is a simple program that reads a
+Java source file encoded using a local encoding and converts it to the
+ASCII-plus-encoded-Unicode form required by
+javac.
+The inputfile and outputfile are optional.
+If unspecified, standard input and standard output are
+used, making native2ascii suitable for use in
+pipes.
+Options
+-encoding encoding-name
+Specifies the encoding used by source files.  If this option
+is not specified, the encoding is taken from the
+file.encoding system property.
+-reverse
+Specifies that the conversion should be done in
+reverse--from encoded \uxxxx
+characters to characters in the native encoding.
+See Also
+java.io.InputStreamReader, java.io.OutputStreamWriter
+jdb
+serialver
+ 
+ 
+ 
+ 
+ 
+ 
+ 

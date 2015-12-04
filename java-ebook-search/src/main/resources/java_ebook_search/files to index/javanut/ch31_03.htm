@@ -1,0 +1,36 @@
+
+[Chapter 31] 31.3 java.util.zip.CheckedOutputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.3 java.util.zip.CheckedOutputStream (JDK 1.1)
+This class is a subclass of
+java.io.FilterOutputStream that allows data to be
+written to a stream and a checksum computed on that data at
+the same time.
+To create a CheckedOutputStream you must specify the
+output stream that it is to write its data to, and you must
+also specify a Checksum object, such as an instance of
+Adler32, that implements the particular checksum
+algorithm you desire.  The write() methods are
+similar to those of other OutputStream classes.  The
+getChecksum() method returns the Checksum
+object.  Note that you must call getValue() on this
+object in order to obtain the actual checksum value.
+public class CheckedOutputStream extends FilterOutputStream {
+    // Public Constructor
+            public CheckedOutputStream(OutputStream out, Checksum cksum);
+    // Public Instance Methods
+            public Checksum getChecksum();
+            public void write(int b) throws IOException;  // Overrides FilterOutputStream
+            public void write(byte[] b, int off, int len) throws IOException;  // Overrides FilterOutputStream
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->CheckedOutputStream
+java.util.zip.CheckedInputStream (JDK 1.1)
+java.util.zip.Checksum (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

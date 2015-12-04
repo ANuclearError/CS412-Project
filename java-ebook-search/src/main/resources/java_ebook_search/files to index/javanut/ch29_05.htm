@@ -1,0 +1,41 @@
+
+[Chapter 29] 29.5 java.text.CollationKey (JDK 1.1)
+Chapter 29The java.text Package
+29.5 java.text.CollationKey (JDK 1.1)
+CollationKey objects are used to compare strings
+more quickly than is possible with Collation.compare().  Objects of this class are
+returned by Collation.getCollationKey().  To compare
+two CollationKey objects, invoke the
+compareTo() method of key A, passing
+the key B as an
+argument (both CollationKey objects must be created
+through the same Collation object).  The return
+value of this method is less than zero if the key A is
+collated before the key B.  It is equal to zero if they are
+equivalent for the purposes of collation, and it is greater
+than zero if the key A is collated after the key B.
+Use getSourceString() to obtain the string
+represented by a CollationKey.
+public final class CollationKey extends Object {
+    // No Constructor
+    // Public Instance Methods
+            public int compareTo(CollationKey target);
+            public boolean equals(Object target);  // Overrides Object
+            public String getSourceString();
+            public int hashCode();  // Overrides Object
+            public byte[] toByteArray();
+}
+Passed To:
+CollationKey.compareTo()
+Returned By:
+Collator.getCollationKey(), 
+RuleBasedCollator.getCollationKey()
+java.text.CollationElementIterator (JDK 1.1)
+java.text.Collator (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

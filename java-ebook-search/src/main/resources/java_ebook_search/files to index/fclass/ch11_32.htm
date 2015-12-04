@@ -1,0 +1,88 @@
+
+[Chapter 11] InvalidObjectException
+Chapter 11The java.io Package
+InvalidObjectException
+Name
+InvalidObjectException
+Synopsis
+Class Name:
+java.io.InvalidObjectException
+Superclass:
+java.io.ObjectStreamException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+An InvalidObjectException is 
+thrown by an object to indicate that it cannot validate itself during object 
+deserialization. 
+Class Summary
+public class java.io.InvalidObjectException
+             extends java.io.ObjectStreamException {
+  // Constructors
+  public InvalidObjectException(String reason);
+}
+Constructors
+InvalidObjectException
+public InvalidObjectException(String reason)
+Parameters
+reason
+The detail message. 
+Description
+This constructor creates an InvalidObjectException 
+with the specified detail message, which should be the name of the class. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+ObjectStreamException, 
+Throwable 
+InvalidClassException
+IOException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

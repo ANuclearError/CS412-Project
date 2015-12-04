@@ -1,0 +1,57 @@
+
+[Chapter 28] 28.6 java.net.DatagramSocket (JDK 1.0)
+Chapter 28The java.net Package
+28.6 java.net.DatagramSocket (JDK 1.0)
+This class defines a socket that can receive and send
+unreliable datagram packets over the network using the UDP
+protocol. A datagram is
+a very low-level networking interface: it is simply an array
+of bytes sent over the network. A datagram does not
+implement any kind of stream-based communication protocol,
+and there is no connection established
+between the sender and the receiver. Datagram packets are
+called "unreliable" because the protocol does not make any
+attempt to ensure that they arrived or to resend them if
+they did not. Thus, packets sent through a
+DatagramSocket are not guaranteed to arrive in the
+order sent, or to arrive at all. On the other hand, this
+low-overhead protocol makes datagram transmission very fast.
+If a port is specified when the DatagramSocket is
+created, that port is used; otherwise, the system 
+assigns a port. getLocalPort() returns the port
+number in use. send() sends a
+DatagramPacket through the socket. The packet must
+contain the destination address to which it should be sent.
+receive() waits for data to arrive at the socket and
+stores it, along with the address of the sender, into the
+specified DatagramPacket. close() closes
+the socket and frees the port it used for reuse. Once
+close() has been called, the DatagramSocket
+should not be used again.
+See Socket and URL for higher-level
+interfaces to networking.
+public class DatagramSocket extends Object {
+    // Public Constructors
+            public DatagramSocket() throws SocketException;
+            public DatagramSocket(int port) throws SocketException;
+        1.1public DatagramSocket(int port, InetAddress laddr) throws SocketException;
+    // Public Instance Methods
+            public void close();
+        1.1public InetAddress getLocalAddress();
+            public int getLocalPort();
+        1.1public synchronized int getSoTimeout() throws SocketException;
+            public synchronized void receive(DatagramPacket p) throws IOException;
+            public void send(DatagramPacket p) throws IOException;
+        1.1public synchronized void setSoTimeout(int timeout) throws SocketException;
+}
+Extended By:
+MulticastSocket
+java.net.DatagramPacket (JDK 1.0)
+java.net.DatagramSocketImpl (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

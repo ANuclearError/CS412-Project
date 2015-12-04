@@ -1,0 +1,95 @@
+
+[Chapter 16] jar
+Chapter 16JDK Tools
+jar
+Name
+jar---Java Archive Tool
+Availability
+JDK 1.1 and later.
+Synopsis
+jar c|t|x[f][m][v] [jar-file] [manifest-file] [files]
+Description
+jar is a tool that can be used to create and manipulate
+Java Archive (JAR) files.  A JAR file is a compressed ZIP
+file with an additional "manifest" file.  The syntax of
+the jar command is reminiscent of the Unix tar
+(tape archive) command.
+Options to jar are specified as a block of
+concatenated letters passed as a single
+argument, rather than as individual command-line arguments.
+The first letter of this option argument specifies
+what action jar is to perform and is required.
+Other option letters are optional.  The various file
+arguments depend on which option letters are specified.
+Options
+The first argument to jar is a set of letters that
+specifies the operation it is to perform.  The first letter
+specifies the basic action and is required.  The three
+possible values are the following:
+c
+Create a new JAR archive.  A list of input files
+and/or directories must be specified as the
+final arguments to jar.
+t
+List the contents of a JAR archive.  If a JAR file is
+specified with the f option, its contents are
+listed.  Otherwise, the JAR file to be listed is read from
+standard input.
+x
+Extract the contents of a JAR archive.  If a JAR file is
+specified with the f option, its contents are
+extracted.  Otherwise, the JAR file to be extracted is
+read from standard input.
+If the command is followed by a list
+of files and/or directories, only those files or directories
+are extracted from the JAR archive.  Otherwise,
+all files in the archive are extracted.
+This action specifier can be followed by optional command letters:
+f
+This option indicates that the JAR file to create,
+list, or extract from is specified on the command line.
+When f is used with c, t, or
+x, the JAR filename must be the second command-line
+argument to jar (i.e., it must follow the block of option letters).
+If this option is not specified, jar writes the
+JAR file it creates to standard output, or reads a JAR
+file from standard input.
+m
+This option is only used with the c action.  It
+indicates that jar should read the manifest file
+(partial or complete) specified on the command line and use
+that file as the basis for the manifest it includes in the
+JAR file.  When this argument is specified after the
+f option, the manifest filename should follow the
+destination filename.  If m precedes the f
+option, the manifest filename should precede the
+destination filename.
+v
+Verbose.  If this letter is specified with a c
+action, jar lists each file it adds to the
+archive with compression statistics.  If it is used with a
+t action, jar lists the size
+and modification date for each file in the archive, instead
+of simply listing the filename.  If v is used with
+x, jar displays the name of each file it
+extracts from the archive.
+Examples
+To create a simple JAR file:
+% jar cvf my.jar *.java images
+To list the contents of a file:
+% jar tvf your.jar
+To extract the manifest file from a JAR file:
+% jar xf the.jar META-INF/MANIFEST.MF
+To create a JAR file with a partial manifest specified:
+% jar cfmv YesNoDialog.jar manifest.stub oreilly/beans/yesno
+See Also
+javakey
+appletviewer
+java
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,68 @@
+
+[Chapter 20] 20.3 java.awt.event.AdjustmentEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.3 java.awt.event.AdjustmentEvent (JDK 1.1)
+An event of this type indicates that an adjustment has been
+made to an Adjustable object--usually, this means
+that the user has interacted with a Scrollbar
+component.  
+The getValue() method returns the new value
+of the Adjustable object.  This is usually the most
+important piece of information stored in the event.
+getAdjustable() returns the Adjustable
+object that was the source of the event.  It is a convenient
+alternative to the inherited getSource() method.
+The getID() method returns the type of an
+AdjustmentEvent.  The standard AWT components only
+generate adjustment events of type
+AdjustmentEvent.ADJUSTMENT_VALUE_CHANGED.  
+There are
+several types of adjustments that can be made to an
+Adjustable object, however, and the
+getAdjustmentType() method returns one of five
+constants to indicate which type has occurred.
+UNIT_INCREMENT indicates that the Adjustable
+value has been incremented by one unit, as in a
+scroll-line-down operation.  UNIT_DECREMENT
+indicates the opposite: scroll-line-up.
+BLOCK_INCREMENT and BLOCK_DECREMENT indicate
+that the Adjustable object has been incremented or
+decremented by multiple units, as in a scroll-page-down or
+scroll-page-up operation.  Finally, the TRACK
+constant indicates that the Adjustable value has
+been set to an absolute value unrelated to its previous
+value, as when the user drags a scrollbar to a new
+position.
+public class AdjustmentEvent extends AWTEvent {
+    // Public Constructor
+            public AdjustmentEvent(Adjustable source, int id, int type, int value);
+    // Constants
+            public static final int ADJUSTMENT_FIRST;
+            public static final int ADJUSTMENT_LAST;
+            public static final int ADJUSTMENT_VALUE_CHANGED;
+            public static final int BLOCK_DECREMENT;
+            public static final int BLOCK_INCREMENT;
+            public static final int TRACK;
+            public static final int UNIT_DECREMENT;
+            public static final int UNIT_INCREMENT;
+    // Public Instance Methods
+            public Adjustable getAdjustable();
+            public int getAdjustmentType();
+            public int getValue();
+            public String paramString();  // Overrides AWTEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->AdjustmentEvent
+Passed To:
+AdjustmentListener.adjustmentValueChanged(), 
+AWTEventMulticaster.adjustmentValueChanged(), 
+Scrollbar.processAdjustmentEvent()
+java.awt.event.ActionListener (JDK 1.1)
+java.awt.event.AdjustmentListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

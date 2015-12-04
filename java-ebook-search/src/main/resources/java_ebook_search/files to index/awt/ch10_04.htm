@@ -1,0 +1,227 @@
+
+[Chapter 10] 10.4 MenuItem
+Chapter 10Would You Like to Choose from the Menu?
+10.4 MenuItem
+A MenuItem is the basic item 
+that goes on a Menu. Menus 
+themselves are menu items, allowing submenus to be nested inside of menus. 
+MenuItem is a subclass of MenuComponent. 
+MenuItem MethodsConstructors
+public MenuItem ()  
+The first MenuItem constructor 
+creates a MenuItem with an 
+empty label and no keyboard shortcut. To set the label at later time, use 
+setLabel(). 
+public MenuItem (String label) 
+This MenuItem constructor creates 
+a MenuItem with a label of 
+label and no keyboard shortcut. 
+A label of "-" represents a separator. 
+public MenuItem (String label, MenuShortcut shortcut)  
+The final MenuItem constructor 
+creates a MenuItem with a label 
+of label and a MenuShortcut 
+of shortcut. Pressing the shortcut 
+key is the same as selecting the menu item. 
+Menu labels
+Each MenuItem has a label. 
+This is the text that is displayed on the menu. 
+NOTE: 
+Prior to Java 1.1, there was no portable way to associate a hot key 
+with a MenuItem. However, in Java 1.0, if 
+you precede a character with an &amp; on a Windows platform, it will appear 
+underlined, and that key will act as the menu's mnemonic key (a different type of 
+shortcut from MenuShortcut). 
+Unfortunately, on a Motif platform, the user will see the &amp;. Because 
+the &amp; is part of the label, even if it is not displayed, you must include 
+it explicitly whenever you compare the label to a string. 
+public String getLabel () 
+The getLabel() method retrieves 
+the label associated with the MenuItem. 
+public void setLabel (String label) 
+The setLabel() method changes 
+the label of the MenuItem to 
+label. 
+Shortcuts
+public MenuShortcut getMenuShortcut ()  
+The getMenuShortcut() method 
+retrieves the shortcut associated with this MenuItem. 
+public void setShortcut (MenuShortcut shortcut)  
+The setShortcut() method allows 
+you to change the shortcut associated with a MenuItem 
+to shortcut after the MenuItem 
+has been created. 
+public void deleteMenuShortcut ()  
+The deleteMenuShortcut() method 
+removes any associated MenuShortcut 
+from the MenuItem. If there 
+was no shortcut, nothing happens. 
+Enabling
+public boolean isEnabled () 
+The isEnabled() method checks 
+to see if the MenuItem is currently 
+enabled. An enabled MenuItem 
+can be selected by the user. A disabled MenuItem, 
+by convention, appears grayed out on the Menu. 
+Initially, each MenuItem is 
+enabled. 
+public synchronized void setEnabled(boolean b)  public void enable (boolean condition) 
+The setEnabled() method either 
+enables or disables the MenuItem 
+based on the value of condition. 
+If condition is true, 
+the MenuItem is enabled. If 
+condition is false, 
+it is disabled. When enabled, the user can select it, generating ACTION_EVENT 
+or notifying the ActionListener. 
+When disabled, the peer does not generate an ACTION_EVENT 
+if the user tries to select the MenuItem. 
+A disabled MenuItem is usually 
+grayed out to signify its state. The way that disabling is signified is platform 
+specific. 
+enable() is the Java 1.0 name 
+for this method. 
+public synchronized void enable () 
+The enable() method enables 
+the MenuItem. In Java 1.1, 
+it is better to use setEnabled(). 
+public synchronized void disable () 
+The disable() method disables 
+the component so that the user cannot select it. In Java 1.1, it is better 
+to use setEnabled(). 
+Miscellaneous methods
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the MenuItem peer. 
+public String paramString ()
+The paramString() method of 
+MenuItem should be protected 
+like other paramString() methods. 
+However, it is public so you have access to it. When you call the toString() 
+method of a MenuItem, the default 
+toString() method of MenuComponent 
+is called. This in turn calls paramString() 
+which builds up the string to display. At the MenuItem 
+level, the current label of the object and the shortcut (if present) is 
+appended to the output. If the constructor for the MenuItem 
+was new MenuItem(`File`), 
+the results of toString() would 
+be: 
+java.awt.MenuItem[label=File]
+MenuItem Events Event handling
+With 1.0 event handing, a MenuItem 
+generates an ACTION_EVENT when 
+it is selected. The argument to action() 
+will be the label of the MenuItem. 
+But the target of the ACTION_EVENT 
+is the Frame containing the 
+menu. You cannot subclass MenuItem 
+and catch the Event within 
+it with action(), but you can 
+with postEvent(). No other 
+events are generated for MenuItem 
+instances. 
+public boolean action (Event e, Object o)--overridden by user, called by 
+system 
+The action() method for a MenuItem 
+signifies that the user selected it. e 
+is the Event instance for the 
+specific event, while o is 
+the label of the MenuItem. 
+Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners, and they are told when 
+the event happens. 
+public String getActionCommand()  
+The getActionCommand() method 
+retrieves the command associated with this MenuItem. 
+By default, it is the label. However, the default can be changed by using 
+the setActionCommand() method (described next). The command acts like the second parameter to the action() 
+method in the 1.0 event model. 
+public void setActionCommand(String command)  
+The setActionCommand() method 
+changes the command associated with a MenuItem. 
+When an ActionEvent happens, 
+the command is part of the 
+event. By default, this would be the label of the MenuItem. 
+However, you can change the action command by calling this method. Using 
+action commands is a good idea, particularly if you expect your code to 
+run in a multilingual environment. 
+public void addActionListener(ItemListener listener)  
+The addActionListener() method 
+registers listener as an object 
+interested in being notified when an ActionEvent 
+passes through the EventQueue 
+with this MenuItem as its target. 
+The listener.actionPerformed() 
+method is called whenever these events occur. Multiple listeners can be 
+registered. 
+public void removeActionListener(ItemListener listener)  
+The removeActionListener() 
+method removes listener as 
+an interested listener. If listener 
+is not registered, nothing happens. 
+protected final void enableEvents(long eventsToEnable)  
+Using the enableEvents() method 
+is usually not necessary. When you register an action listener, the MenuItem 
+listens for action events. However, if you wish to listen for events when 
+listeners are not registered, you must enable the events explicitly by 
+calling this method. The settings for the eventsToEnable 
+parameter are found in the AWTEvent 
+class; you can use any of the EVENT_MASK 
+constants like COMPONENT_EVENT_MASK, 
+MOUSE_EVENT_MASK, and WINDOW_EVENT_MASK 
+ORed together for the events you care about. For instance, to listen for 
+action events, call: 
+enableEvents (AWTEvent.ACTION_EVENT_MASK);
+protected final void disableEvents(long eventsToDisable)  
+Using the disableEvents() method 
+is usually not necessary. When you remove an action listener, the MenuItem 
+stops listening for action events if there are no more listeners. However, 
+if you need to, you can disable events explicitly by calling disableEvents(). 
+The settings for the eventsToDisable 
+parameter are found in the AWTEvent 
+class; you can use any of the EVENT_MASK 
+constants such as FOCUS_EVENT_MASK, 
+MOUSE_MOTION_EVENT_MASK, and 
+ACTION_EVENT_MASK ORed together 
+for the events you no longer care about. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+all AWTEvents with this MenuItem 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+MenuItem, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding postEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processActionEvent(ItemEvent e)  
+The processActionEvent() method 
+receives all ActionEvents with 
+this MenuItem as its target. 
+processActionEvent() then passes 
+them along to any listeners for processing. When you subclass MenuItem, 
+overriding processActionEvent() 
+allows you to process all action events yourself, before sending them to 
+any listeners. In a way, overriding processActionEvent() 
+is like overriding action() using 
+the 1.0 event model. 
+If you override processActionEvent(), 
+remember to call the method super.processActionEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+to ensure that events are delivered even in the absence of registered listeners. 
+MenuShortcut
+Menu
+ 
+ 
+ 
+ 
+ 
+ 
+ 

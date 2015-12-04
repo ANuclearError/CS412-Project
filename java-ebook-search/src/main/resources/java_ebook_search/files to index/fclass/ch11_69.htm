@@ -1,0 +1,249 @@
+
+[Chapter 11] Writer
+Chapter 11The java.io Package
+Writer
+Name
+Writer
+Synopsis
+Class Name:
+java.io.Writer
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.io.BufferedWriter, 
+java.io.CharArrayWriter,
+java.io.FilterWriter, 
+java.io.OutputStreamWriter,
+java.io.PipedWriter, 
+java.io.PrintWriter,
+java.io.StringWriter
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The Writer class is an abstract 
+class that is the superclass of all classes that represent output character 
+streams. Writer defines the 
+basic output methods that all character streams provide. A similar hierarchy 
+of classes, based around OutputStream, 
+deals with byte streams instead of character streams. 
+Writer is designed so that 
+write(int 
+b) 
+and write(char[]) 
+both call write(char[], 
+int, int). 
+Thus, a subclass can simply override write(char[], 
+int, int) 
+and all of the write methods 
+will work. Note that this is different from the design of OutputStream, 
+where the write(int b) 
+method is the catch-all method. The design of Writer 
+is cleaner and more efficient. 
+Some Writer subclasses may 
+implement buffering to increase efficiency. Writer 
+provides a method--flush()--that tells the Writer to write 
+any buffered output to the underlying device, which may be a disk drive 
+or a network. 
+Class Summary
+public abstract class java.io.Writer extends java.lang.Object {
+  // Variables
+  protected Object lock;
+  // Constructors
+  protected Writer();
+  protected Writer(Object lock);
+  // Instance Methods
+  public abstract void close();
+  public abstract void flush();
+  public void write(int c);
+  public void write(char[] cbuf);
+  public abstract void write(char[] cbuf, int off, int len);
+  public void write(String str);
+  public void write(String str, int off, int len);
+}
+Variables
+lock
+protected Object lock
+Description
+The object used to synchronize operations on this Writer 
+object. For efficiency's sake, a particular implementation of a character 
+stream can choose to synchronize its operations on something other than 
+instances of itself. Thus, any subclass should synchronize on the lock 
+object, instead of using a synchronized 
+method or the this object. 
+Constructors
+Writer
+protected Writer()
+Description
+This constructor creates a Writer 
+that synchronizes on the Writer 
+itself, or in other words, on the this 
+object. 
+protected Writer(Object lock)
+Parameters
+lock
+The object to use 
+for synchronization. 
+Description
+This constructor creates a Writer 
+that synchronizes on the given object. 
+Instance Methods
+close
+public abstract void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method flushes the writer and then closes it, releasing any system 
+resources associated with it.
+A subclass of Writer must implement 
+this method. 
+flush
+public void flush() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method forces any characters that may be buffered by this Writer 
+to be written to the underlying device.
+A subclass of Writer must implement 
+this method. 
+write
+public void write(int c) throws IOException
+Parameters
+c
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method writes a character containing the lowest sixteen bits of the 
+given integer value.
+The implementation of this method in Writer 
+writes the character by calling write(cb, 
+1) 
+where cb is a character array 
+that contains the given value in cb[0]. 
+Although it is not strictly necessary, a subclass that wants to provide 
+efficient single-character writes should override this method. 
+public void write(char[] cbuf) throws IOException
+Parameters
+cbuf
+An array of characters 
+to write to the stream. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes the given array of characters to the stream by calling 
+write(cbuf, 0, 
+cbuf.length).
+A subclass does not usually need to override this method, as it can override 
+write(char[], 
+int, int) 
+and have write(char[]) 
+work automatically. 
+   public abstract void write(char[] cbuf, int off, int len) throws IOException  
+Parameters
+cbuf
+An array of characters to write to the stream.
+off
+An offset into the array.
+len
+The number of characters to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes len characters 
+contained in the given array starting at index off.
+A subclass of Writer must implement 
+this method. 
+public void write(String str) throws IOException
+Parameters
+str
+A string to write to 
+the stream. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes the given string to the stream by calling
+write(str,str.length).
+A subclass does not usually need to override this method, as it can override 
+write(char[], 
+int, int) 
+and have it work automatically. 
+public void write(String str, int off, int len) throws IOException
+Parameters
+str
+A string to write to the stream.
+off
+An offset into the string.
+len
+The number of characters to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method writes len characters contained in the
+given string starting at index off. The method
+does this by creating an array of characters for the specified portion
+of the string and then calling write(cb, 0,
+cb.length) on the character array cb.
+A subclass does not usually need to override this method, as it can override 
+write(char[], 
+int, int) 
+and have it work automatically. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedWriter, 
+CharArrayWriter, 
+FilterWriter, 
+IOException, 
+OutputStreamWriter, 
+PipedWriter, 
+PrintWriter, 
+StringWriter 
+WriteAbortedException
+AbstractMethodError
+ 
+ 
+ 
+ 
+ 
+ 
+ 

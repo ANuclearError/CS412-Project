@@ -1,0 +1,45 @@
+
+[Chapter 24] 24.29 java.io.InputStreamReader (JDK 1.1)
+Chapter 24The java.io Package
+24.29 java.io.InputStreamReader (JDK 1.1)
+This class is a character input stream that uses a byte
+input stream as its data source: it reads bytes from a
+specified InputStream and translates them into
+Unicode characters according to a particular platform- and
+locale-dependent character encoding.  This is a very
+important internationalization feature in Java 1.1.
+When you create an InputStreamReader, you specify an
+InputStream from which the InputStreamReader
+is to read bytes, and you also optionally specify the name
+of the character encoding used by those bytes.  If you do
+not specify an encoding name, the InputStreamReader
+uses the default encoding for the default locale, which
+is usually the correct thing to do.
+The InputStreamReader supports the standard
+Reader methods.  It also has a getEncoding()
+method that returns the name of the encoding being used to
+convert bytes to characters.
+public class InputStreamReader extends Reader {
+    // Public Constructors
+            public InputStreamReader(InputStream in);
+            public InputStreamReader(InputStream in, String enc) throws UnsupportedEncodingException;
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Reader
+            public String getEncoding();
+            public int read() throws IOException;  // Overrides Reader
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Defines Reader
+            public boolean ready() throws IOException;  // Overrides Reader
+}
+Hierarchy:
+Object->Reader->InputStreamReader
+Extended By:
+FileReader
+java.io.InputStream (JDK 1.0)
+java.io.InterruptedIOException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,105 @@
+
+[Chapter 11] 11.3 Character Encodings
+Chapter 11Internationalization
+11.3 Character Encodings
+Text representation has traditionally been one of the
+most difficult problems of internationalization.  Java
+1.1, however, solves this problem quite elegantly and hides
+the difficult issues.  Java uses Unicode internally, so
+it can represent essentially any character in any commonly
+used written language.  As noted above, the remaining task
+is to convert Unicode to and from locale-specific encodings.
+Java 1.1 includes quite a few internal "byte-to-char"
+converters and "char-to-byte" converters that handle
+converting locale-specific character encodings to
+Unicode and vice versa.  While the converters themselves are
+not public, they are accessed through the
+InputStreamReader and OutputStreamWriter
+classes, which are two of the new character streams included
+in the java.io package.
+Any program can automatically handle locale-specific
+encodings simply by using these new character stream classes
+to do their textual input and output.  (And in addition to
+automatic encoding conversion, the program also benefits
+from the greatly improved efficiency of these new classes
+over the byte streams of Java 1.0.)
+Example 11.1
+shows a simple program that works with character encodings.
+It converts a file from one specified encoding to another by
+converting from the first encoding to Unicode and then from
+Unicode to the second encoding.  Note that most of the
+program is taken up with the mechanics of parsing argument
+lists, handling exceptions, and so on.  Only a few lines are
+required to create the InputStreamReader and
+OutputStreamWriter classes that perform the two
+halves of the conversion.  Also note that exceptions are
+handled by calling LocalizedError.display().  This
+method is not part of the Java 1.1 API; it is a custom
+method shown in Example 11.6
+at the end of this chapter.
+Example 11.1: Working with Character Encodings
+import java.io.*;
+/** A program to convert from one character encoding to another. */
+public class ConvertEncoding {
+  public static void main(String[] args) {
+    String from = null, to = null;
+    String infile = null, outfile = null;
+    for(int i = 0; i &lt; args.length; i++) {  // Parse command-line arguments.
+      if (i == args.length-1) usage();      // All legal args require another.
+      if (args[i].equals("-from")) from = args[++i];
+      else if (args[i].equals("-to")) to = args[++i];
+      else if (args[i].equals("-in")) infile = args[++i];
+      else if (args[i].equals("-out")) outfile = args[++i];
+      else usage();
+    }
+    try { convert(infile, outfile, from, to); }  // Attempt conversion.
+    catch (Exception e) {                        // Handle possible exceptions.
+      LocalizedError.display(e);  // Defined at the end of this chapter.
+      System.exit(1);
+    }
+  }
+  public static void usage() {
+    System.err.println("Usage: java ConvertEncoding &lt;options&gt;\n" +
+                       "Options:\n\t-from &lt;encoding&gt;\n\t-to &lt;encoding&gt;\n\t" +
+                       "-in &lt;file&gt;\n\t-out &lt;file&gt;");
+    System.exit(1);
+  }
+  public static void convert(String infile, String outfile,
+                             String from, String to)
+       throws IOException, UnsupportedEncodingException
+  {
+    // Set up byte streams.
+    InputStream in;
+    if (infile != null) in = new FileInputStream(infile);
+    else in = System.in;
+    OutputStream out;
+    if (outfile != null) out = new FileOutputStream(outfile);
+    else out = System.out;
+    // Use default encoding if no encoding is specified.
+    if (from == null) from = System.getProperty("file.encoding");
+    if (to == null) to = System.getProperty("file.encoding");
+    // Set up character streams.
+    Reader r = new BufferedReader(new InputStreamReader(in, from));
+    Writer w = new BufferedWriter(new OutputStreamWriter(out, to));
+    // Copy characters from input to output.  The InputStreamReader converts
+    // from the input encoding to Unicode, and the OutputStreamWriter converts
+    // from Unicode to the output encoding.  Characters that cannot be
+    // represented in the output encoding are output as '?'
+    char[] buffer = new char[4096];
+    int len;
+    while((len = r.read(buffer)) != -1)  // Read a block of input.
+      w.write(buffer, 0, len);           // And write it out.
+    r.close();                           // Close the input.
+    w.flush();                           // Flush and close output.
+    w.close();
+  }
+}
+Unicode
+Handling Local Customs
+ 
+ 
+ 
+ 
+ 
+ 
+ 

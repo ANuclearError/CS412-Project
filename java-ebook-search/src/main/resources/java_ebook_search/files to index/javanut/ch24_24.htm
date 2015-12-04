@@ -1,0 +1,47 @@
+
+[Chapter 24] 24.24 java.io.FilterInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.24 java.io.FilterInputStream (JDK 1.0)
+This class provides method definitions required to filter
+data obtained from the InputStream specified when
+the FilterInputStream is created. It must be
+subclassed to perform some sort of 
+filtering operation, and
+may not be instantiated directly. See the subclasses
+BufferedInputStream, DataInputStream,
+and
+PushbackInputStream.
+public class FilterInputStream extends InputStream {
+    // Protected Constructor
+            protected FilterInputStream(InputStream in);
+    // Protected Instance Variables
+            protected InputStream in;
+    // Public Instance Methods
+            public int available() throws IOException;  // Overrides InputStream
+            public void close() throws IOException;  // Overrides InputStream
+            public synchronized void mark(int readlimit);  // Overrides InputStream
+            public boolean markSupported();  // Overrides InputStream
+            public int read() throws IOException;  // Defines InputStream
+            public int read(byte[] b) throws IOException;  // Overrides InputStream
+            public int read(byte[] b, int off, int len) throws IOException;  // Overrides InputStream
+            public synchronized void reset() throws IOException;  // Overrides InputStream
+            public long skip(long n) throws IOException;  // Overrides InputStream
+}
+Hierarchy:
+Object->InputStream->FilterInputStream
+Extended By:
+BufferedInputStream, 
+CheckedInputStream, 
+DataInputStream, 
+InflaterInputStream, 
+LineNumberInputStream, 
+PushbackInputStream
+java.io.FilenameFilter (JDK 1.0)
+java.io.FilterOutputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

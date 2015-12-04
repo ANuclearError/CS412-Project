@@ -1,0 +1,99 @@
+
+[Chapter 16] ParseException
+Chapter 16The java.text Package
+ParseException
+Name
+ParseException
+Synopsis
+Class Name:
+java.text.ParseException
+Superclass:
+java.lang.Exception
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+A ParseException is thrown 
+when the text in a string that is being parsed is not in the correct format. 
+Class Summary
+public class java.text.ParseException extends java.lang.Exception {
+  // Constructors
+  public ParseException(String s, int errorOffset);
+  // Instance Methods
+  public int getErrorOffset();
+}
+Constructors
+ParseException
+public ParseException(String s, int errorOffset)
+Parameters
+s
+The detail message.
+errorOffset
+The offset at which the parsing error occurred. 
+Description
+This constructor creates a ParseException 
+with the given detail message and offset. 
+Instance Methods
+getErrorOffset
+public int getErrorOffset()
+Returns
+The error offset. 
+Description
+This method returns the offset at which the parsing error occurred. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Throwable
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DateFormat, 
+Exception, 
+Format, 
+MessageFormat, 
+NumberFormat 
+NumberFormat
+ParsePosition
+ 
+ 
+ 
+ 
+ 
+ 
+ 

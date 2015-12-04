@@ -1,0 +1,133 @@
+
+[Chapter 10] 10.8 Defining a Bean Customizer
+Chapter 10Java Beans
+10.8 Defining a Bean Customizer
+A bean may want to provide some way for the user of a
+beanbox program to customize its properties other than by setting
+them one at a time.  A bean can do this by
+creating a Customizer class for itself, and
+registering the customizer class with the
+BeanDescriptor object returned by its
+BeanInfo class, as we saw in
+Example 10.5.
+A customizer must be some kind of AWT component that is
+suitable for display in a dialog box created by the beanbox.
+Therefore, a customizer class is typically a subclass of
+Panel.  In addition, a customizer must implement the
+Customizer interface.  This interface consists of
+methods for adding and removing property change event
+listeners and a setObject() method that the beanbox
+calls to tell the customizer what bean object it is
+customizing.  Whenever the user makes a change to the bean
+through the customizer, the customizer should send a
+PropertyChangeEvent to any interested listeners.
+Finally, like a property editor, a customizer must have a
+no-argument constructor, so it can easily be instantiated
+by a beanbox.
+Example 10.8
+shows a customizer for our YesNoDialog bean.  This
+customizer displays a panel that has the same layout as a
+YesNoDialog, but it substitutes a 
+TextArea
+object for the message display and three
+TextField objects for the three buttons that the
+dialog can display.  These text entry areas allow the user
+to enter values for the message, yesLabel,
+noLabel, and cancelLabel
+properties.
+Figure 10.3
+shows this customizer panel displayed within a dialog box
+created by the beanbox program.  Again, note that the
+Done button is part of the beanbox dialog, not
+part of the customizer itself.
+Figure 10.3: The customizer dialog for the YesNoDialog bean
+Example 10.8: The YesNoDialogCustomizer Class
+package oreilly.beans.yesno;
+import java.awt.*;
+import java.awt.event.*;
+import java.beans.*;
+/**
+ * This class is a customizer for the YesNoDialog bean.  It displays a
+ * TextArea and three TextFields where the user can enter the dialog message
+ * and the labels for each of the three buttons.  It does not allow the
+ * dialog title or other resources to be set.
+ */
+public class YesNoDialogCustomizer extends Panel
+                                   implements Customizer, TextListener
+{
+  protected YesNoDialog bean;                 // The bean being customized.
+  protected TextComponent message, fields[];  // Components used by customizer
+  // Default constructor: YesNoDialogCustomizer() { super(); }
+  // The bean box calls this method to tell us what object to customize.
+  // This method will always be called before the customizer is displayed,
+  // so it is safe to create the customizer GUI here.
+  public void setObject(Object o) {
+    bean = (YesNoDialog)o;   // Save the object we're customizing.
+    // Put a label at the top of the panel.
+    this.setLayout(new BorderLayout());
+    this.add(new Label("Enter the message to appear in the dialog:"), "North");
+    // And a big text area below it for entering the dialog message.
+    message = new TextArea(bean.getMessage());
+    message.addTextListener(this);
+    // TextAreas don't know how big they want to be.  You must tell them.
+    message.setSize(400, 200);
+    this.add(message, "Center");
+    // Then add a row of textfields for entering the button labels.
+    Panel buttonbox = new Panel();                     // The row container.
+    buttonbox.setLayout(new GridLayout(1, 0, 25, 10)); // Equally spaced items.
+    this.add(buttonbox, "South");                      // Put row on bottom.
+    // Now go create three TextFields to put in this row.  But actually
+    // position a Label above each, so create a container for each
+    // TextField+Label combination.
+    fields = new TextComponent[3];           // Array of TextFields.
+    String[] labels = new String[] {         // Labels for each.
+      "Yes Button Label", "No Button Label", "Cancel Button Label"};
+    String[] values = new String[] {         // Initial values of each.
+      bean.getYesLabel(), bean.getNoLabel(), bean.getCancelLabel()};
+    for(int i = 0; i &lt; 3; i++) {
+      Panel p = new Panel();                 // Create a container.
+      p.setLayout(new BorderLayout());       // Give it a BorderLayout.
+      p.add(new Label(labels[i]), "North");  // Put a label on the top.
+      fields[i] = new TextField(values[i]);  // Create the text field.
+      p.add(fields[i], "Center");            // Put it below the label.
+      fields[i].addTextListener(this);       // Set the event listener.
+      buttonbox.add(p);                      // Add container to row.
+    }
+  }
+  // Add some space around the outside of the panel.
+  public Insets getInsets() { return new Insets(10, 10, 10, 10); }
+  // This is the method defined by the TextListener interface.  Whenever the
+  // user types a character in the TextArea or TextFields, this will get
+  // called.  It updates the appropriate property of the bean and fires a
+  // property changed event, as all customizers are required to do.
+  // Note that we are not required to fire an event for every keystroke.
+  // Instead we could include an "Apply" button that would make all the
+  // changes at once, with a single property changed event.
+  public void textValueChanged(TextEvent e) {
+    TextComponent t = (TextComponent)e.getSource();
+    String s = t.getText();
+    if (t == message) bean.setMessage(s);
+    else if (t == fields[0]) bean.setYesLabel(s);
+    else if (t == fields[1]) bean.setNoLabel(s);
+    else if (t == fields[2]) bean.setCancelLabel(s);
+    listeners.firePropertyChange(null, null, null);
+  }
+  // This code uses the PropertyChangeSupport class to maintain a list of
+  // listeners interested in the edits we make to the bean.
+  protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+  public void addPropertyChangeListener(PropertyChangeListener l) {
+    listeners.addPropertyChangeListener(l);
+  }
+  public void removePropertyChangeListener(PropertyChangeListener l) {
+    listeners.removePropertyChangeListener(l);
+  }
+}
+Defining a Complex Property Editor
+Naming Patterns and Conventions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

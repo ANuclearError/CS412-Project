@@ -1,0 +1,73 @@
+
+[Chapter 23] The java.beans Package
+Chapter 23
+23. The java.beans Package
+Contents:
+java.beans.BeanInfo (JDK 1.1)
+java.beans.Beans (JDK 1.1)
+java.beans.Customizer (JDK 1.1)
+java.beans.EventSetDescriptor (JDK 1.1)
+java.beans.FeatureDescriptor (JDK 1.1)
+java.beans.IndexedPropertyDescriptor (JDK 1.1)
+java.beans.IntrospectionException (JDK 1.1)
+java.beans.Introspector (JDK 1.1)
+java.beans.MethodDescriptor (JDK 1.1)
+java.beans.ParameterDescriptor (JDK 1.1)
+java.beans.PropertyChangeEvent (JDK 1.1)
+java.beans.PropertyChangeListener (JDK 1.1)
+java.beans.PropertyChangeSupport (JDK 1.1)
+java.beans.PropertyDescriptor (JDK 1.1)
+java.beans.PropertyEditor (JDK 1.1)
+java.beans.PropertyEditorManager (JDK 1.1)
+java.beans.PropertyEditorSupport (JDK 1.1)
+java.beans.PropertyVetoException (JDK 1.1)
+java.beans.SimpleBeanInfo (JDK 1.1)
+java.beans.VetoableChangeListener (JDK 1.1)
+java.beans.VetoableChangeSupport (JDK 1.1)
+java.beans.Visibility (JDK 1.1)
+The java.beans package contains the classes and
+interfaces that constitute the JavaBeans API.  It is new in
+Java 1.1.
+Figure 23.1
+shows the class hierarchy for this package.
+The classes and interfaces in this package are useful to
+programmers who are developing "beanbox" tools to manipulate beans,
+and to programmers who are writing their own beans.  Programmers who
+are building applications using beans do not have to be
+familiar with java.beans.  See Chapter 10, Java Beans
+for more details on writing custom beans.
+Figure 23.1: The java.beans package
+23.1 java.beans.BeanDescriptor (JDK 1.1)
+A BeanDescriptor object is a type of
+FeatureDescriptor that describes a Java bean.  The
+BeanInfo class for a Java bean optionally creates
+and initializes a BeanDescriptor object to describe
+the bean.  Typically, only application builders and similar
+tools use the BeanDescriptor.
+To create a BeanDescriptor, you must specify the
+class of the bean, and optionally, the class of a
+Customizer for the bean.  You can use the methods of
+FeatureDescriptor to provide additional information
+about the bean.
+public class BeanDescriptor extends FeatureDescriptor {
+    // Public Constructors
+            public BeanDescriptor(Class beanClass);
+            public BeanDescriptor(Class beanClass, Class customizerClass);
+    // Public Instance Methods
+            public Class getBeanClass();
+            public Class getCustomizerClass();
+}
+Hierarchy:
+Object->FeatureDescriptor->BeanDescriptor
+Returned By:
+BeanInfo.getBeanDescriptor(), 
+SimpleBeanInfo.getBeanDescriptor()
+java.awt.peer.WindowPeer (JDK 1.0)
+java.beans.BeanInfo (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

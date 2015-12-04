@@ -1,0 +1,249 @@
+
+[Chapter 17] Properties
+Chapter 17The java.util Package
+Properties
+Name
+Properties
+Synopsis
+Class Name:
+java.util.Properties
+Superclass:
+java.util.Hashtable
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The Properties class is a subclass 
+of Hashtable that deals exclusively 
+with string keys and string values. Furthermore, a Properties 
+object can be written to an OutputStream 
+and read from an InputStream. 
+Note that the load() and save() 
+correctly convert Unicode strings to and from byte streams, using the getLocalizedInputStream() 
+and getLocalizedOutputStream() 
+methods of Runtime. 
+Class Summary
+public class java.util.Properties extends java.util.Hashtable {
+  // Variables
+  protected Properties defaults;
+  // Constructors
+  public Properties();
+  public Properties(Properties defaults);
+  // Instance Methods
+  public String getProperty(String key);
+  public String getProperty(String key, String defaultValue);
+  public void list(PrintStream out);
+  public void list(PrintWriter out);                     // New in 1.1
+  public synchronized void load(InputStream in);
+  public Enumeration propertyNames();
+  public synchronized void save(OutputStream out, String header);
+}
+Variables
+defaults
+protected Properties defaults
+Description
+A collection of default property values. If a key/value 
+pair is not found in this Properties 
+object, the defaults object 
+is searched. 
+Constructors
+Properties
+public Properties()
+Description
+This constructor creates an empty Properties 
+object. 
+public Properties(Properties defaults)
+Parameters
+defaults
+A set of default 
+key/value pairs. 
+Description
+This constructor creates an empty Properties 
+object that gets default values for keys that it does not contain from 
+the given Properties object. 
+Instance Methods
+getProperty
+public String getProperty(String key)
+Parameters
+key
+The key of the value 
+to retrieve. 
+Returns
+The value of the given property or null 
+if the key is not associated with any value. 
+Description
+This method returns the value that is associated with the given key. If 
+the key is not found, a default value is returned if this object was created 
+with a default Properties table 
+that contains a value for the key. If neither a value nor a default value 
+can be found, this method returns null. 
+public String getProperty(String key, String defaultValue)
+Parameters
+key
+The key of the value 
+to retrieve.
+defaultValue
+The value 
+to return if key cannot be 
+found. 
+Returns
+The value of the given property or defaultValue 
+if the key is not associated with any value. 
+Description
+This method returns the value that is associated with the given key. If 
+the key is not found, a default value is returned if this object was created 
+with a default Properties table 
+that contains a value for the key. If neither a value nor a default value 
+can be found, this method returns defaultValue. 
+list
+public void list(PrintStream out)
+Parameters
+out
+The output stream to 
+use. 
+Description
+This method writes a listing of the contents of this object, in a format 
+suitable for debugging, to the given PrintStream. 
+As of JDK 1.1, use list(PrintWriter) 
+instead. 
+public void list(PrintWriter out)
+Availability
+New as of JDK 1.1 
+Parameters
+out
+The output stream to 
+use. 
+Description
+This method writes a listing of the contents of this object, in a format 
+suitable for debugging, to the given PrintWriter. 
+load
+public synchronized void load(InputStream in) throws IOException
+Parameters
+in
+The input stream to 
+use. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads key/value pairs from the given InputStream. 
+Here is the format the method expects: 
+Lines that begin with # or ! are comments and are ignored.
+Blank lines are ignored.
+All other lines should specify a key/value pair and be of the form:
+key = value
+or
+key : value
+or
+key value
+All of these forms are equivalent. The method also recognizes the following 
+escape characters and treats them as described: 
+Character
+Treatment
+\newline
+An escaped newline character is ignored, along with the spaces or tabs 
+that follow it
+\n
+Expands to a newline character
+\r
+Expands to a return character
+\t
+Expands to a tab character
+\uxxxx
+Expands to the Unicode character code specified 
+by the hexadecimal digits
+propertyNames
+public Enumeration propertyNames()
+Returns
+The keys in this Properties 
+object as an Enumeration. 
+Description
+This method returns an Enumeration that 
+iterates through the keys in this Properties 
+object. 
+save
+public synchronized void save(OutputStream out, String header)
+Parameters
+out
+The output stream to 
+use.
+header
+A header string. 
+Description
+This method writes key/value pairs to the given OutputStream. 
+The format of the output is such that it can be read by the load() 
+method.
+If header is not null, 
+a # followed by header 
+is written to the OutputStream 
+first, thereby making the content of the string a comment that precedes 
+the key/value pairs. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clear()
+Hashtable
+clone()
+Hashtable
+contains(Object)
+Hashtable
+containsKey(Object)
+Hashtable
+elements()
+Hashtable
+equals(Object)
+Object
+finalize()
+Object
+get(Object)
+Hashtable
+getClass()
+Object
+hashCode()
+Object
+isEmpty()
+Hashtable
+keys()
+Hashtable
+notify()
+Object
+notifyAll()
+Object
+put(Object, Object)
+Hashtable
+remove(Object)
+Hashtable
+size()
+Hashtable
+toString()
+Hashtable
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+Hashtable, 
+InputStream, 
+IOException, 
+OutputStream, 
+PrintStream, 
+PrintWriter, 
+Runtime 
+Observer
+PropertyResourceBundle
+ 
+ 
+ 
+ 
+ 
+ 
+ 

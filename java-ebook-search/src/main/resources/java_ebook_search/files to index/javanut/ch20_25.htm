@@ -1,0 +1,48 @@
+
+[Chapter 20] 20.25 java.awt.event.PaintEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.25 java.awt.event.PaintEvent (JDK 1.1)
+An event of this type indicates that a component should have
+its update() method invoked.  (The update()
+method typically, by default, invokes the
+paint() method.)
+PaintEvent differs from the other event types in
+java.awt.event in that it does not have a
+corresponding EventListener interface.
+PaintEvent is essentially for internal use by the
+AWT redisplay framework, so your programs should not try to
+handle it the way they handle other events.  Instead, applets
+and custom components should simply override their
+paint() and/or update() methods to redraw
+themselves appropriately.  AWT automatically invokes
+update() (which typically invokes
+paint()) when a PaintEvent arrives.
+Although you do not typically use the PaintEvent,
+redraw events are implemented through this class for
+simplicity, so that they are on equal footing with other
+event types, and so that advanced programs can manipulate
+them through the EventQueue.
+public class PaintEvent extends ComponentEvent {
+    // Public Constructor
+            public PaintEvent(Component source, int id, Rectangle updateRect);
+    // Constants
+            public static final int PAINT;
+            public static final int PAINT_FIRST;
+            public static final int PAINT_LAST;
+            public static final int UPDATE;
+    // Public Instance Methods
+            public Rectangle getUpdateRect();
+            public String paramString();  // Overrides ComponentEvent
+            public void setUpdateRect(Rectangle updateRect);
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->PaintEvent
+java.awt.event.MouseMotionListener (JDK 1.1)
+java.awt.event.TextEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

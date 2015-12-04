@@ -1,0 +1,141 @@
+
+[Chapter 7] 7.6 The Security Manager
+Chapter 7Basic Utility Classes
+7.6 The Security Manager
+ 
+As I described in Chapter 1, Yet Another Language?,
+a Java application's access to system resources, such as the
+display, the filesystem, threads, external processes, and the network,
+can be controlled at a single point with a security
+manager. The class that implements this functionality in
+the Java API is the
+java.lang.SecurityManager class.
+An instance of the SecurityManager class can
+be installed once, and only once, in the life of the Java run-time
+environment. Thereafter, every access to a fundamental system
+resource is filtered through specific methods of the
+SecurityManager object by the core Java
+packages. By installing a specialized
+SecurityManager, we can implement arbitrarily
+complex (or simple) security policies for allowing access to
+individual resources.
+When the Java run-time system starts executing, it's in a
+wide-open state until a SecurityManager is
+installed. The "null" security manager grants all
+requests, so the Java virtual environment can perform any activity
+with the same level of access as other programs running under the
+user's authority. If the application that is running needs to
+ensure a secure environment, it can install a
+SecurityManager with the
+static System.setSecurityManager()
+method. For example, a Java-enabled Web browser like Netscape
+Navigator installs a SecurityManager before it runs
+any Java applets.
+java.lang.SecurityManager must be subclassed
+to be used. This class does not actually contain any
+abstract methods; it's abstract
+as an indication that its default implementation is not very
+useful. By default, each security method in
+SecurityManager is implemented to provide the
+strictest level of security. In other words, the default
+SecurityManager simply rejects all requests.
+The following example, MyApp, installs a trivial 
+subclass of SecurityManager as one of its first 
+activities: 
+class FascistSecurityManager extends SecurityManager { } 
+ 
+public class MyApp { 
+    public static void main( Strings [] args ) { 
+        System.setSecurityManager( new FascistSecurityManager() ); 
+        // No access to files, network, windows, etc. 
+        ... 
+    } 
+} 
+In the above scenario, MyApp does little aside from
+reading from System.in and writing to
+System.out. Any attempts to read or write files,
+access the network, or even open an window, results in a
+SecurityException being thrown.
+After this draconian SecurityManager is
+installed, it's impossible to change the
+SecurityManager in any way. The security of this
+feature is not dependent on the SecurityManager;
+you can't replace or modify the SecurityManager
+under any circumstances. The upshot of this is that you have to
+install one that handles all your needs up front.
+To do something more useful, we can override
+the methods that are consulted for access to various kinds of
+resources. Table 7.7 lists some of the more
+important access methods. You should not normally have to call these
+methods yourself, although you could. They are called by the core Java
+classes before granting particular types of access.
+Table 7.8: SecurityManager Methods
+Method
+Can I...?
+checkAccess(Thread g)
+Access this thread?
+checkExit(int status)
+Execute a System.exit()?
+checkExec(String cmd)
+exec() this process?
+checkRead(String file)
+Read a file?
+checkWrite(String file)
+Write a file?
+checkDelete(String file)
+Delete a file?
+checkConnect(String host, int port)
+Connect a socket to a host?
+checkListen(int port)
+Create a server socket?
+checkAccept(String host, int port)
+Accept this connection?
+checkPropertyAccess(String key)
+Access this system property?
+checkTopLevelWindow(Object window)
+Create this new top-level window?
+All these methods, with the exception of
+checkTopLevelWindow(), simply return to grant
+access. If access is not granted, they throw a
+SecurityException.
+checkTopLevelWindow() returns a
+boolean value. A value of true
+indicates the access is granted; a value of false
+indicates the access is granted with the restriction that the new
+window should provide a warning border that serves to identify it as
+an untrusted window.
+Let's implement a silly
+SecurityManager that allows only files beginning
+with the name foo to be read:
+class  FooFileSecurityManager extends SecurityManager { 
+ 
+    public void checkRead( String s ) { 
+        if ( !s.startsWith("foo") ) 
+            throw new SecurityException("Access to non-foo file: " + 
+                s + " not allowed." ); 
+    } 
+} 
+Once the FooFileSecurityManager is installed, any
+attempt to read a filename other than foo* from any
+class will fail and cause a SecurityException to be
+thrown. All other security methods are inherited from
+SecurityManager, so they are left at their default
+restrictiveness.
+All restrictions placed on applets by an applet-viewer
+application are enforced through a
+SecurityManager, which allows untrusted code loaded from
+over the network to be executed safely. The restrictions placed on
+applets are currently fairly harsh. As time passes and security
+considerations related to applets are better understood and accepted,
+the applet API will hopefully become more powerful
+and allow forms of persistence and access to designated public
+information.
+Properties
+Internationalization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

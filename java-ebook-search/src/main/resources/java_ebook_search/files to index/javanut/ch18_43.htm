@@ -1,0 +1,31 @@
+
+[Chapter 18] 18.43 java.awt.MenuContainer (JDK 1.0)
+Chapter 18The java.awt Package
+18.43 java.awt.MenuContainer (JDK 1.0)
+This interface defines the methods necessary for
+MenuContainer types such as the Menu,
+Frame, and MenuBar objects.  Unless you
+implement new menu-like components, you never need
+to use it.
+public abstract interface MenuContainer {
+    // Public Instance Methods
+            public abstract Font getFont();
+            public abstract boolean postEvent(Event evt);
+            public abstract void remove(MenuComponent comp);
+}
+Implemented By:
+Component, 
+Frame, 
+Menu, 
+MenuBar
+Returned By:
+MenuComponent.getParent()
+java.awt.MenuComponent (JDK 1.0)
+java.awt.MenuItem (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

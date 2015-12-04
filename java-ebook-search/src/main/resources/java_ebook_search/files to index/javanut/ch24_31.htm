@@ -1,0 +1,30 @@
+
+[Chapter 24] 24.31 java.io.InvalidClassException (JDK 1.1)
+Chapter 24The java.io Package
+24.31 java.io.InvalidClassException (JDK 1.1)
+Signals that the serialization mechanism has encountered one
+of several possible problems with the class of an object that
+is being serialized or deserialized.  The classname
+field should contain the name of the class in question, and
+the getMessage() method is overridden to return
+this class name with the message.
+public class InvalidClassException extends ObjectStreamException {
+    // Public Constructors
+            public InvalidClassException(String reason);
+            public InvalidClassException(String cname, String reason);
+    // Public Instance Variables
+            public String classname;
+    // Public Instance Methods
+            public String getMessage();  // Overrides Throwable
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->ObjectStreamException->InvalidClassException
+java.io.InterruptedIOException (JDK 1.0)
+java.io.InvalidObjectException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

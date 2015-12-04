@@ -1,0 +1,28 @@
+
+[Chapter 2] 2.4 Shape
+Chapter 2Simple Graphics
+2.4 Shape
+The new Shape interface defines 
+a single method; it requires a geometric object to be able to report its 
+bounding box. Currently, the Rectangle 
+and Polygon classes implement 
+Shape; one would expect other 
+geometric classes to implement Shape 
+in the future. Although Component 
+has the single method defined by the Shape 
+interface, it does not implement the interface. 
+Shape Method
+public abstract Rectangle getBounds()  
+The getBounds() method returns 
+the shape's bounding Rectangle. 
+Once you have the bounding area, you can use methods like Graphics.copyArea() 
+to copy the shape. 
+Dimension
+Rectangle
+ 
+ 
+ 
+ 
+ 
+ 
+ 

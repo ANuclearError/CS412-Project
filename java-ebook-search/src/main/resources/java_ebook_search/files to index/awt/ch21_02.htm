@@ -1,0 +1,39 @@
+
+[Chapter 21] ActionListener 
+Chapter 21java.awt.event Reference
+ActionListener 
+Name
+ActionListener 
+Description
+Objects that implement the ActionListener 
+interface can receive ActionEvent 
+objects. Listeners must first register themselves with objects that produce 
+events. When events occur, they are then automatically propagated to all 
+registered listeners. 
+Interface Definition
+public abstract interface java.awt.event.ActionListener
+   extends java.util.EventListener {
+  // Interface Methods
+  public abstract void actionPerformed (ActionEvent e);
+}
+Interface Methods
+actionPerformed
+public abstract void actionPerformed (ActionEvent e)
+Parameters
+e
+The action event that occurred. 
+Description
+Notifies the ActionListener 
+that an event occurred. 
+See Also
+ActionEvent, AWTEventMulticaster, 
+EventListener 
+ActionEvent 
+AdjustmentEvent 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

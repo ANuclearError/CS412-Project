@@ -1,0 +1,72 @@
+
+[Chapter 23] 23.5 java.beans.EventSetDescriptor (JDK 1.1)
+Chapter 23The java.beans Package
+23.5 java.beans.EventSetDescriptor (JDK 1.1)
+An EventSetDescriptor object is a type of
+FeatureDescriptor that describes a single set of
+events supported by a Java bean.  A "set" of events
+corresponds to the one or more methods supported by a single
+EventListener interface.  The BeanInfo class
+for a Java bean optionally creates
+EventSetDescriptor objects to describe the event
+sets the bean supports.  Typically, only application
+builders and similar tools use the get and
+is methods of EventSetDescriptor objects to
+obtain the event-set description information.
+To create an EventSetDescriptor object, you must
+specify the class of the bean that supports the event set, the
+base name of the event set, the class of the
+EventListener interface that corresponds to the
+event set, and the methods within this interface that are
+invoked when particular events within the set occur.
+Optionally, you may also specify the methods of the bean
+class that are used to add and remove
+EventListener objects. The various constructors allow you
+to specify methods by name, as
+java.lang.reflect.Method objects, or as
+MethodDescriptor objects.
+Once you have created an EventSetDescriptor, you can
+use setUnicast() to specify whether it represents a unicast
+event and setInDefaultEventSet() to specify whether
+the event set should be treated as the default
+event set by builder applications.  The methods of the
+FeatureDescriptor superclass allow additional
+information about the property to be specified.
+public class EventSetDescriptor extends FeatureDescriptor {
+    // Public Constructors
+            public EventSetDescriptor(Class sourceClass, String eventSetName, Class listenerType,
+            public EventSetDescriptor'u'String listenerMethodName) throws IntrospectionException;
+            public EventSetDescriptor(Class sourceClass, String eventSetName, Class listenerType,
+            public EventSetDescriptor'u'String[] listenerMethodNames, String addListenerMethodName
+            public EventSetDescriptor'u'String removeListenerMethodName) throws IntrospectionException;
+            public EventSetDescriptor(String eventSetName, Class listenerType, Method[] listenerMethods,
+            public EventSetDescriptor'u'Method addListenerMethod, Method removeListenerMethod)
+            public EventSetDescriptor'u'throws IntrospectionException;
+            public EventSetDescriptor(String eventSetName, Class listenerType,
+            public EventSetDescriptor'u'MethodDescriptor[] listenerMethodDescriptors, Method addListenerMethod,
+            public EventSetDescriptor'u'Method removeListenerMethod) throws IntrospectionException;
+    // Public Instance Methods
+            public Method getAddListenerMethod();
+            public MethodDescriptor[] getListenerMethodDescriptors();
+            public Method[] getListenerMethods();
+            public Class getListenerType();
+            public Method getRemoveListenerMethod();
+            public boolean isInDefaultEventSet();
+            public boolean isUnicast();
+            public void setInDefaultEventSet(boolean inDefaultEventSet);
+            public void setUnicast(boolean unicast);
+}
+Hierarchy:
+Object->FeatureDescriptor->EventSetDescriptor
+Returned By:
+BeanInfo.getEventSetDescriptors(), 
+SimpleBeanInfo.getEventSetDescriptors()
+java.beans.Customizer (JDK 1.1)
+java.beans.FeatureDescriptor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

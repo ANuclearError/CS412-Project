@@ -1,0 +1,54 @@
+
+[Chapter 24] 24.27 java.io.FilterWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.27 java.io.FilterWriter (JDK 1.1)
+This abstract class is intended to act as a superclass for
+character output streams that filter the data written to
+them before writing it to some other character output
+stream.
+FilterWriter is declared abstract, so that
+it cannot be instantiated.  But none of its methods are
+themselves abstract: they all simply invoke the
+corresponding method on the output stream that was passed to
+the FilterWriter constructor.  If you were allowed to
+instantiate a FilterWriter object, you'd find that it
+acts as a "null filter"--that it simply passes the
+characters written to it along, without any filtration.
+Because FilterWriter implements a "null filter," it
+is an ideal superclass for classes that want to implement
+simple filters without having to override all of the methods
+of Writer.  In order to create your own filtered
+character output stream, you should subclass
+FilterWriter and override all of its write()
+methods to perform the desired filtering operation.  Note
+that you can implement two of the write() methods in
+terms of the third, and thus only implement your filtering
+algorithm once.  In some cases, you may want to override
+other Writer methods as well, and you may often want
+to add other methods or constructors that are specific to
+your subclass.
+FilterWriter is the character-stream analog of
+FilterOutputStream. 
+public abstract class FilterWriter extends Writer {
+    // Protected Constructor
+            protected FilterWriter(Writer out);
+    // Protected Instance Variables
+            protected Writer out;
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Writer
+            public void flush() throws IOException;  // Defines Writer
+            public void write(int c) throws IOException;  // Overrides Writer
+            public void write(char[] cbuf, int off, int len) throws IOException;  // Defines Writer
+            public void write(String str, int off, int len) throws IOException;  // Overrides Writer
+}
+Hierarchy:
+Object->Writer->FilterWriter
+java.io.FilterReader (JDK 1.1)
+java.io.InputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

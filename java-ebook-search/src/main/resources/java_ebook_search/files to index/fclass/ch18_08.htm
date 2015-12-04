@@ -1,0 +1,206 @@
+
+[Chapter 18] DeflaterOutputStream
+Chapter 18The java.util.zip Package
+DeflaterOutputStream
+Name
+DeflaterOutputStream
+Synopsis
+Class Name:
+java.util.zip.DeflaterOutputStream
+Superclass:
+java.io.FilterOutputStream
+Immediate Subclasses:
+java.util.zip.GZIPOutputStream, 
+java.util.zip.ZipOutputStream
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The DeflaterOutputStream class 
+represents an OutputStream 
+with an associated Deflater. 
+In other words, a DeflaterOutputStream 
+wraps a regular output stream, so that data written to the stream is compressed 
+and written to the underlying stream. Two subclasses, GZIPOutputStream 
+and ZipOutputStream, write 
+compressed data in widely-recognized formats. 
+Class Summary
+public class java.util.zip.DeflaterOutputStream 
+             extends java.io.FilterOutputStream {
+  // Variables
+  protected byte[] buf;
+  protected Deflater def;
+  // Constructors
+  public DeflaterOutputStream(OutputStream out);
+  public DeflaterOutputStream(OutputStream out, Deflater def);
+  public DeflaterOutputStream(OutputStream out, Deflater def, int size);
+  // Public Instance Methods
+  public void close();
+  public void finish();
+  public void write(int b);
+  public void write(byte[] b, int off, int len);
+  // Protected Instance Methods
+  protected void deflate();
+}
+Variables
+buf
+protected byte[] buf
+Description
+A buffer that holds the compressed data that is written to the underlying 
+stream. 
+def
+protected Deflater def
+Description
+The Deflater object that is 
+used internally. 
+Constructors
+DeflaterOutputStream
+public DeflaterOutputStream(OutputStream out)
+Parameters
+out
+The underlying output stream. 
+Description
+This constructor creates a DeflaterOutputStream 
+that writes data to the given OutputStream. 
+Before being written, the data is compressed by a default Deflater. 
+The DeflaterOutputStream uses 
+a compression buffer with the default size of 512 bytes. 
+public DeflaterOutputStream(OutputStream out, Deflater def)
+Parameters
+out
+The underlying output stream.
+def
+The Deflater object. 
+Description
+This constructor creates a DeflaterOutputStream 
+that writes data to the given OutputStream. 
+Before being written, the data is compressed by the given Deflater. 
+The DeflaterOutputStream uses 
+a compression buffer with the default size of 512 bytes. 
+   public DeflaterOutputStream(OutputStream out, Deflater def, int size)  
+Parameters
+out
+The underlying output stream.
+def
+The Deflater object.
+size
+The size of the output buffer. 
+Description
+This constructor creates a DeflaterOutputStream 
+that writes data to the given OutputStream. 
+Before being written, the data is compressed by the given Deflater. 
+The DeflaterOutputStream uses 
+a compression buffer of the given size. 
+Public Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.close() 
+Description
+This method closes the stream and releases any system resources that are 
+associated with it. 
+finish
+public void finish() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method finishes writing compressed data to the underlying stream without 
+closing it. 
+write
+public void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(int) 
+Description
+This method compresses a byte that contains the lowest eight bits of the 
+given integer value and writes it to the underlying OutputStream. 
+The method blocks until the byte is written. 
+public void write(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(byte[], int, int) 
+Description
+This method takes len bytes 
+from the given buffer, starting at off, 
+and compresses them. The method then writes the compressed data to the 
+underlying OutputStream. The 
+method blocks until all of the bytes have been written. 
+Protected Instance Methods
+deflate
+protected void deflate() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Description
+This method asks the internal Deflater 
+to compress the data in the buffer for this DeflaterOutputStream. 
+The method then writes the compressed contents of the buffer to the underlying 
+stream. The method is called by both write() 
+methods. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+flush()
+FilterOutputStream
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+write(byte[])
+FilterOutputStream
+See Also
+Deflater, 
+FilterOutputStream, 
+GZIPOutputStream, 
+IOException, 
+OutputStream, 
+ZipOutputStream 
+Deflater
+GZIPInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,342 @@
+
+[Chapter 22] MemoryImageSource
+Chapter 22java.awt.image Reference
+MemoryImageSource
+Name
+MemoryImageSource
+Description
+The MemoryImageSource class 
+allows you to create images completely in memory. You provide an array 
+of data; it serves as an image producer for that data. In the 1.1 release, 
+new methods support using this class for animation (notably setAnimated() 
+and the various overrides of newPixels()). 
+Class Definition
+public class java.awt.image.MemoryImageSource
+    extends java.lang.Object 
+    implements java.awt.image.ImageProducer {
+  // Constructors
+  public MemoryImageSource (int w, int h, ColorModel cm, 
+      byte[] pix, int off, int scan);
+  public MemoryImageSource (int w, int h, ColorModel cm, 
+      byte[] pix, int off, int scan, Hashtable props);
+  public MemoryImageSource (int w, int h, ColorModel cm, 
+      int[] pix, int off, int scan);
+  public MemoryImageSource (int w, int h, ColorModel cm, 
+      int[] pix, int off, int scan, Hashtable props);
+  public MemoryImageSource (int w, int h, int[] pix, 
+      int off, int scan);
+  public MemoryImageSource (int w, int h, int[] pix, 
+      int off, int scan, Hashtable props);
+  // Instance Methods
+  public synchronized void addConsumer (ImageConsumer ic);
+  public synchronized boolean isConsumer (ImageConsumer ic);
+  public void newPixels(); 
+  public synchronized void newPixels (int x, int y, 
+      int w, int h); 
+  public synchronized void newPixels (int x, int y, 
+      int w, int h, boolean framenotify); 
+  public synchronized void newPixels (byte[] newpix, 
+      ColorModel newmodel, int offset, int scansize); 
+  public synchronized void newPixels (int[] newpix, 
+      ColorModel newmodel, int offset, int scansize); 
+  public synchronized void removeConsumer (ImageConsumer ic);
+  public void requestTopDownLeftRightResend (ImageConsumer ic);
+  public synchronized void setAnimated (boolean animated); 
+  public synchronized void setFullBufferUpdates 
+      (boolean fullbuffers); 
+  public void startProduction (ImageConsumer ic);
+}
+Constructors
+MemoryImageSource
+public MemoryImageSource (int w, int h, ColorModel cm, byte[] pix, int off, int scan)
+Parameters
+w
+Width of the image being created.
+h
+Height of the image being created.
+cm
+ColorModel 
+of the image being created.
+pix
+Array of pixel information.
+off
+The offset of the first pixel in the array; elements 
+prior to this pixel are ignored.
+scan
+The number of pixels per scan line in the array. 
+Description
+Constructs a MemoryImageSource 
+object with the given parameters to serve as an ImageProducer 
+for a new image. 
+public MemoryImageSource (int w, int h, ColorModel cm, byte[] pix, int off, int scan, Hashtable props)
+Parameters
+w
+Width of the image being created.
+h
+Height of the image being created.
+cm
+ColorModel 
+of the image being created.
+pix
+Array of pixel information.
+off
+The offset of the first pixel in the array; elements 
+prior to this pixel are ignored.
+scan
+The number of pixels per scan line in the array.
+props
+Hashtable 
+of properties associated with image. 
+Description
+Constructs a MemoryImageSource 
+object with the given parameters to serve as an ImageProducer 
+for a new image. 
+public MemoryImageSource (int w, int h, ColorModel cm, int[] pix, int off, int scan)
+Parameters
+w
+Width of the image being created.
+h
+Height of the image being created.
+cm
+ColorModel 
+of the image being created.
+pix
+Array of pixel information.
+off
+The offset of the first pixel in the array; elements 
+prior to this pixel are ignored.
+scan
+The number of pixels per scan line in the array. 
+Description
+Constructs a MemoryImageSource 
+object with the given parameters to serve as an ImageProducer 
+for a new image. 
+public MemoryImageSource (int w, int h, ColorModel cm, int[] pix, int off, int scan, Hashtable props)
+Parameters
+w
+Width of the image being created.
+h
+Height of the image being created.
+cm
+ColorModel 
+of the image being created.
+pix
+Array of pixel information.
+off
+The offset of the first pixel in the array; elements 
+prior to this pixel are ignored.
+scan
+The number of pixels per scan line in the array.
+props
+Hashtable 
+of properties associated with image. 
+Description
+Constructs a MemoryImageSource 
+object with the given parameters to serve as an ImageProducer 
+for a new image. 
+public MemoryImageSource (int w, int h, int[] pix, int off, int scan)
+Parameters
+w
+Width of the image being created.
+h
+Height of the image being created.
+pix
+Array of pixel information.
+off
+The offset of the first pixel in the array; elements 
+prior to this pixel are ignored.
+scan
+The number of pixels per scan line in the array. 
+Description
+Constructs a MemoryImageSource 
+object with the given parameters to serve as an ImageProducer 
+for a new image. 
+public MemoryImageSource (int w, int h, int[] pix, int off, int scan, Hashtable props)
+Parameters
+w
+Width of the image being created.
+h
+Height of the image being created.
+pix
+Array of pixel information.
+off
+The offset of the first pixel in the array; elements 
+prior to this pixel are ignored.
+scan
+The number of pixels per scan line in the array.
+props
+Hashtable 
+of properties associated with image. 
+Description
+Constructs a MemoryImageSource 
+object with the given parameters to serve as an ImageProducer 
+for a new image. 
+Class Methods
+addConsumer
+public synchronized void addConsumer (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+requesting image data. 
+Implements
+ImageProducer.addConsumer(ImageConsumer) 
+Description
+Registers an ImageConsumer 
+as interested in Image information. 
+isConsumer
+public synchronized boolean isConsumer (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+to check. 
+Returns
+true if ImageConsumer 
+is registered with this ImageProducer, 
+false otherwise. 
+Implements
+ImageProducer.isConsumer(ImageConsumer) 
+newPixels
+public synchronized void newPixels() 
+Description
+Notifies the MemoryImageSource 
+that there is new data available. The MemoryImageSource 
+notifies all ImageConsumers 
+that there is new data, sending the full rectangle and notifying the consumers 
+that the frame is complete. 
+public synchronized void newPixels (int x, int y, int w, int h, boolean framenotify) 
+Parameters
+x
+x coordinate of the top left corner of the new image 
+data.
+y
+y coordinate of the top left corner of the new image 
+data.
+w
+Width of the new image data.
+h
+Height of the new image data. 
+Description
+Notifies the MemoryImageSource 
+that there is new data available. The MemoryImageSource 
+notifies all ImageConsumers 
+that there is new data in the rectangle described by x, 
+y, w, 
+and h. The consumers are notified that the frame is complete. 
+public synchronized void newPixels (int x, int y, int w, int h, boolean framenotify) 
+Parameters
+x
+x coordinate of the top left corner of the new image 
+data.
+y
+y coordinate of the top left corner of the new image 
+data.
+w
+Width of the new image data.
+h
+Height of the new image data.
+framenotify
+Determines whether this is a complete frame or not. 
+Description
+Notifies the MemoryImageSource 
+that there is new data available. The MemoryImageSource 
+notifies all ImageConsumers 
+that there is new data in the rectangle described by x, 
+y, w, 
+and h. If framenotify 
+is true, the consumers will also be notified that a frame is complete. 
+public synchronized void newPixels (byte[] newpix, ColorModel newmodel, int offset, int scansize) 
+Parameters
+newpix
+New array of image data.
+newmodel
+The color model to use for the new data.
+offset
+Offset into the data array
+scansize
+Size of each line. 
+Description
+Changes the image data for this MemoryImageSource 
+and notifies its ImageConsumers 
+that new data is available. 
+public synchronized void newPixels (int[] newpix, ColorModel newmodel, int offset, int scansize) 
+Parameters
+newpix
+New array of image data.
+newmodel
+The color model to use for the new data.
+offset
+Offset into the data array
+scansize
+Size of each line. 
+Description
+Changes the image data for this MemoryImageSource 
+and notifies its ImageConsumers 
+that new data is available. 
+removeConsumer
+public void removeConsumer (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+to remove. 
+Implements
+ImageProducer.removeConsumer(ImageConsumer) 
+Description
+Removes an ImageConsumer from 
+registered consumers for this ImageProducer. 
+requestTopDownLeftRightResend
+public void requestTopDownLeftRightResend (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+requesting image data. 
+Implements
+ImageProducer.requestTopDownLeftRightResend(ImageConsumer) 
+Description
+Requests the retransmission of the Image 
+data in top-down, left-to-right order. 
+setAnimated
+public void setAnimated (boolean animated) 
+Parameters
+animated
+Flag indicating whether this image is animated. 
+Description
+To use this MemoryImageSource for animation, call setAnimated(true). 
+The newPixels() methods will 
+not work otherwise. 
+setFullBufferUpdates
+public void setFullBufferUpdates (boolean fullbuffers) 
+Parameters
+fullbuffers
+true to 
+send full buffers; false otherwise. 
+Description
+This method is only important for animations; i.e., you should call setAnimated(true) 
+before using this function. If you do request to send full buffers, then 
+any rectangle parameters passed to newPixels() 
+will be ignored and the entire image will be sent to the consumers. 
+startProduction
+public void startProduction (ImageConsumer ic)
+Parameters
+ic
+ImageConsumer 
+requesting image data. 
+Implements
+ImageProducer.startProduction(ImageConsumer) 
+Description
+Registers ImageConsumer as 
+interested in Image information 
+and tells ImageProducer to 
+start sending the image data immediately. 
+See Also
+ColorModel, Hashtable, 
+ImageConsumer, ImageProducer, 
+Object 
+IndexColorModel
+PixelGrabber
+ 
+ 
+ 
+ 
+ 
+ 
+ 

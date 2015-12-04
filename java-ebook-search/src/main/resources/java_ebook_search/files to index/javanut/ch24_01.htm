@@ -1,0 +1,200 @@
+
+[Chapter 24] The java.io Package
+Chapter 24
+24. The java.io Package
+Contents:
+java.io.BufferedOutputStream (JDK 1.0)
+java.io.BufferedReader (JDK 1.1)
+java.io.BufferedWriter (JDK 1.1)
+java.io.ByteArrayInputStream (JDK 1.0)
+java.io.ByteArrayOutputStream (JDK 1.0)
+java.io.CharArrayReader (JDK 1.1)
+java.io.CharArrayWriter (JDK 1.1)
+java.io.CharConversionException (JDK 1.1)
+java.io.DataInput (JDK 1.0)
+java.io.DataInputStream (JDK 1.0)
+java.io.DataOutput (JDK 1.0)
+java.io.DataOutputStream (JDK 1.0)
+java.io.EOFException (JDK 1.0)
+java.io.Externalizable (JDK 1.1)
+java.io.File (JDK 1.0)
+java.io.FileDescriptor (JDK 1.0)
+java.io.FileInputStream (JDK 1.0)
+java.io.FileNotFoundException (JDK 1.0)
+java.io.FileOutputStream (JDK 1.0)
+java.io.FileReader (JDK 1.1)
+java.io.FileWriter (JDK 1.1)
+java.io.FilenameFilter (JDK 1.0)
+java.io.FilterInputStream (JDK 1.0)
+java.io.FilterOutputStream (JDK 1.0)
+java.io.FilterReader (JDK 1.1)
+java.io.FilterWriter (JDK 1.1)
+java.io.InputStream (JDK 1.0)
+java.io.InputStreamReader (JDK 1.1)
+java.io.InterruptedIOException (JDK 1.0)
+java.io.InvalidClassException (JDK 1.1)
+java.io.InvalidObjectException (JDK 1.1)
+java.io.IOException (JDK 1.0)
+java.io.LineNumberInputStream (JDK 1.0; Deprecated.)
+java.io.LineNumberReader (JDK 1.1)
+java.io.NotActiveException (JDK 1.1)
+java.io.NotSerializableException (JDK 1.1)
+java.io.ObjectInput (JDK 1.1)
+java.io.ObjectInputStream (JDK 1.1)
+java.io.ObjectInputValidation (JDK 1.1)
+java.io.ObjectOutput (JDK 1.1)
+java.io.ObjectOutputStream (JDK 1.1)
+java.io.ObjectStreamClass (JDK 1.1)
+java.io.ObjectStreamException (JDK 1.1)
+java.io.OptionalDataException (JDK 1.1)
+java.io.OutputStream (JDK 1.0)
+java.io.OutputStreamWriter (JDK 1.1)
+java.io.PipedInputStream (JDK 1.0)
+java.io.PipedOutputStream (JDK 1.0)
+java.io.PipedReader (JDK 1.1)
+java.io.PipedWriter (JDK 1.1)
+java.io.PrintStream (JDK 1.0)
+java.io.PrintWriter (JDK 1.1)
+java.io.PushbackInputStream (JDK 1.0)
+java.io.PushbackReader (JDK 1.1)
+java.io.RandomAccessFile (JDK 1.0)
+java.io.Reader (JDK 1.1)
+java.io.SequenceInputStream (JDK 1.0)
+java.io.Serializable (JDK 1.1)
+java.io.StreamCorruptedException (JDK 1.1)
+java.io.StreamTokenizer (JDK 1.0)
+java.io.StringBufferInputStream (JDK 1.0; Deprecated.)
+java.io.StringReader (JDK 1.1)
+java.io.StringWriter (JDK 1.1)
+java.io.SyncFailedException (JDK 1.1)
+java.io.UnsupportedEncodingException (JDK 1.1)
+java.io.UTFDataFormatException (JDK 1.0)
+java.io.WriteAbortedException (JDK 1.1)
+java.io.Writer (JDK 1.1)
+The java.io package contains a relatively large
+number of classes, but, as you can see from
+Figure 24.1 
+and
+Figure 24.2,
+the classes form a fairly structured hierarchy.  Most of the
+package consists of byte streams--subclasses of
+InputStream or OutputStream--and (in Java
+1.1) character streams--subclasses of Reader or
+Writer. Each of these stream types has a very
+specific purpose, and despite its size, java.io is a
+straightforward package to understand and to use.
+Before we consider the stream classes in the package, we'll
+consider the important non-stream classes. File
+represents a file or directory name in a system independent
+way, and provides methods for listing directories, querying
+file attributes, and for renaming and deleting files.
+FilenameFilter is an interface that defines a method
+that accepts or rejects specified filenames. It is used by
+the java.awt.FileDialog dialog box and by the
+File class to specify what types of files should be
+included in directory listings. RandomAccessFile
+allows you to read or write from or to arbitrary locations
+of a file. Often, though, you'll prefer sequential access
+to a file and should use one of the stream classes.
+InputStream and OutputStream are abstract
+classes that define methods for reading and writing bytes.
+Their subclasses allow bytes to be read from and written to
+a variety of sources and sinks. FileInputStream and
+FileOutputStream read from and write to files.
+ByteArrayInputStream and
+ByteArrayOutputStream read from and write to an
+array of bytes in memory. PipedInputStream reads
+bytes from a PipedOutputStream, and
+PipedOutputStream writes bytes to a
+PipedInputStream. These classes work together to
+implement a "pipe" for communication between threads.
+FilterInputStream and FilterOutputStream are
+special--they filter input and output bytes. When a
+FilterInputStream is created, an InputStream
+is specified for it to filter. When you call the
+read() method of a FilterInputStream, it
+calls the read() method of its specified stream,
+processes the bytes it reads somehow, and then returns the
+filtered bytes.
+Similarly, you specify an OutputStream to be filtered when
+you create a FilterOutputStream. Calling the
+write() method of a FilterOutputStream causes it to
+process your bytes in some way and then pass those filtered
+bytes to the write() method of its OutputStream.
+Figure 24.1: The java.io package
+Figure 24.2: The exception classes of the java.io package
+FilterInputStream and FilterOutputStream do
+not perform any filtering themselves; this is done by their
+subclasses. BufferedInputStream and
+BufferedOutputStream provide input and output
+buffering and can increase I/O efficiency.
+DataInputStream reads raw bytes from a stream and
+interprets them in various binary formats. It has various
+methods to read primitive Java data types in their standard
+binary formats.  DataOutputStream allows you to
+write Java primitive data types in binary format.
+In Java 1.1, the byte streams just described are
+complemented by an analogous set of character input and
+output streams.  Reader is the superclass of all
+character input streams, and Writer is the
+superclass of all character output streams.  These character
+streams supersede the byte streams for all textual I/O.
+They are more efficient than the byte streams, and they
+correctly handle the conversion between local encodings and
+Unicode text, making them invaluable for internationalized
+programs.  Most of the Reader and Writer
+streams have obvious byte stream analogs.
+BufferedReader is a commonly used stream.  It
+provides buffering for efficiency, and also has a
+readLine() method to read one line of text at a time.
+PrintWriter is another very common stream--its
+methods allow output of a textual representation of any
+primitive Java type or of any object (via the object's
+toString() method).  See Chapter 11, Internationalization
+for a discussion of the use of
+character streams in internationalized programs.
+The ObjectInputStream and ObjectOutputStream
+classes are special.  These byte stream classes are new in
+Java 1.1 and are part of the Object Serialization API.  See
+Chapter 9, Object Serialization for further details.
+24.1 java.io.BufferedInputStream (JDK 1.0)
+This class is a FilterInputStream that provides
+input data buffering--efficiency is increased by reading in large
+amounts of data and storing them in an internal buffer.
+When data is requested, it is usually available from the
+buffer. Thus, most calls to read data do not have to make a
+call to actually read data from a disk, network, or
+other slow source. Create a
+BufferedInputStream by specifying the
+InputStream that is to have buffering applied in the
+call to the constructor.  See also BufferedReader.
+public class BufferedInputStream extends FilterInputStream {
+    // Public Constructors
+            public BufferedInputStream(InputStream in);
+            public BufferedInputStream(InputStream in, int size);
+    // Protected Instance Variables
+            protected byte[] buf;
+            protected int count;
+            protected int marklimit;
+            protected int markpos;
+            protected int pos;
+    // Public Instance Methods
+            public synchronized int available() throws IOException;  // Overrides FilterInputStream
+            public synchronized void mark(int readlimit);  // Overrides FilterInputStream
+            public boolean markSupported();  // Overrides FilterInputStream
+            public synchronized int read() throws IOException;  // Overrides FilterInputStream
+            public synchronized int read(byte[] b, int off, int len) throws IOException;  // Overrides FilterInputStream
+            public synchronized void reset() throws IOException;  // Overrides FilterInputStream
+            public synchronized long skip(long n) throws IOException;  // Overrides FilterInputStream
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->BufferedInputStream
+java.beans.Visibility (JDK 1.1)
+java.io.BufferedOutputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

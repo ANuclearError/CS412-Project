@@ -1,0 +1,38 @@
+
+[Chapter 18] 18.11 java.awt.CheckboxGroup (JDK 1.0)
+Chapter 18The java.awt Package
+18.11 java.awt.CheckboxGroup (JDK 1.0)
+A CheckboxGroup object enforces mutual exclusion
+(also known as "radio button" behavior)
+among any number of Checkbox buttons.  A
+Checkbox component can specify a
+CheckboxGroup object when created or with
+Checkbox.setCheckboxGroup().  If a Checkbox
+with a given CheckboxGroup object is selected, then
+the CheckboxGroup ensures that the previously
+selected Checkbox becomes unselected.
+public class CheckboxGroup extends Object implements Serializable {
+    // Public Constructor
+            public CheckboxGroup();
+    // Public Instance Methods
+        #   public Checkbox getCurrent();
+        1.1 public Checkbox getSelectedCheckbox();
+        #   public synchronized void setCurrent(Checkbox box);
+        1.1 public synchronized void setSelectedCheckbox(Checkbox box);
+            public String toString();  // Overrides Object
+}
+Passed To:
+Checkbox(), 
+Checkbox.setCheckboxGroup(), 
+CheckboxPeer.setCheckboxGroup()
+Returned By:
+Checkbox.getCheckboxGroup()
+java.awt.Checkbox (JDK 1.0)
+java.awt.CheckboxMenuItem (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

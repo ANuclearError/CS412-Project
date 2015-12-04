@@ -1,0 +1,50 @@
+
+[Chapter 29] 29.4 java.text.CollationElementIterator (JDK 1.1)
+Chapter 29The java.text Package
+29.4 java.text.CollationElementIterator (JDK 1.1)
+A CollationElementIterator object is returned by
+the getCollationElementIterator() method of the
+RuleBasedCollator object.  The purpose of this class
+is to allow a program to iterate (with the next()
+method) through the characters of a string, returning
+ordering values for each of the "collation keys" in the
+string.  Note that collation keys are not exactly the same
+thing as characters.  In the traditional Spanish collation
+order, for example, the two-character sequence "ch" is
+treated as a single collation key that comes alphabetically
+between the letters "c" and "d."
+The value returned by the next() method is the
+collation order of the next collation key in the string.
+This numeric value can be directly compared to the value
+returned by next() for other
+CollationElementIterator objects.  The value
+returned by next() can also be decomposed into
+primary, secondary, and tertiary ordering values with the
+static methods of this class.
+This class is used by RuleBasedCollator to implement
+its compare() method, and to create
+CollationKey objects.  Few applications ever
+need to use it directly.
+public final class CollationElementIterator extends Object {
+    // No Constructor
+    // Constants
+            public static final int NULLORDER;
+    // Class Methods
+            public static final int primaryOrder(int order);
+            public static final short secondaryOrder(int order);
+            public static final short tertiaryOrder(int order);
+    // Public Instance Methods
+            public int next();
+            public void reset();
+}
+Returned By:
+RuleBasedCollator.getCollationElementIterator()
+java.text.ChoiceFormat (JDK 1.1)
+java.text.CollationKey (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

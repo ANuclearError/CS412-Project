@@ -1,0 +1,360 @@
+
+[Chapter 16] MessageFormat
+Chapter 16The java.text Package
+MessageFormat
+Name
+MessageFormat
+Synopsis
+Class Name:
+java.text.MessageFormat
+Superclass:
+java.text.Format
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The MessageFormat class constructs textual messages using a formatting pattern string. Conceptually, 
+the class functions much like printf() 
+in C. Syntactically, however, it is quite different. A MessageFormat 
+object uses a pattern string; formatted arguments are placed into the pattern 
+string to produce a resulting string. Arguments are delimited by matching 
+sets of curly braces and may include additional information about how that 
+data should be formatted. For example, consider the following code: 
+String message = 
+  "Boot of server {0}began at {1, time}on {1, date, full}.";
+MessageFormat boot = new MessageFormat(message);
+Date now = new Date();
+Object[] arguments = {"luna3", now};
+System.out.println(boot.format(arguments));
+This code produces the following output: 
+Boot of server luna3 began at 11:13:22 AM on Monday, March 03, 1997.
+Each of the arguments is numbered and includes an optional type and an 
+optional style. In the example above, {1, 
+date, full} 
+indicates that the argument at index 1 in the argument array should be 
+formatted using a DateFormat 
+object with the FULL style. 
+The allowed types and styles are: 
+Type
+Object
+Styles
+choice
+ChoiceFormat
+pattern
+date
+DateFormat
+short, medium, 
+long, full, 
+pattern
+number
+NumberFormat
+integer, percent, 
+currency, pattern
+time
+DateFormat
+short, medium, 
+long, full, 
+pattern
+For the date and time 
+types, the styles correspond to the styles, or lengths, of the resulting 
+date and time strings. You can also specify a date or time pattern string 
+as you would for creating a SimpleDateFormat 
+object. For the number type, 
+the styles correspond to formatting normal numbers, percentage values, 
+and currency values. You can also specify a number pattern string as you 
+would for creating a DecimalFormat 
+object. For the choice type, 
+you can specify a choice pattern as you would for creating a ChoiceFormat 
+object. If no type is specified, the argument should be a string. 
+The following example shows how to use a choice 
+format pattern with a MessageFormat: 
+Object[] arguments = {new Integer(1)};
+String grammar = "At last count, {0}server{0, choice, 0#s|1#|1&lt;s}
+ {0, choice, 0#were|1#was|1&lt;were}booted.";
+MessageFormat booted = new MessageFormat(grammar);
+System.out.println(booted.format(arguments));
+arguments[0] = new Integer(2);
+System.out.println(booted.format(arguments));
+This example produces the following output: 
+At last count, 1 server was booted.
+At last count, 2 servers were booted.
+As an alternative to specifying all of the formatting in the pattern string, 
+you can use an array of Format 
+objects to format the arguments. You can specify this array using setFormats(). 
+Note that you create MessageFormat 
+objects directly, rather than through factory methods. This is because 
+MessageFormat does not implement 
+any locale-specific behavior. To produce properly internationalized output, 
+the pattern string that is used to construct a MessageFormat 
+should come from a ResourceBundle 
+instead of being embedded in the code. 
+Class Summary
+public class java.text.MessageFormat extends java.text.Format {
+  // Constructors
+  public MessageFormat(String pattern);
+  // Class Methods
+  public static String format(String pattern, Object[] arguments);
+  // Instance Methods
+  public void applyPattern(String newPattern);
+  public Object clone();
+  public boolean equals(Object obj); 
+  public final StringBuffer format(Object source, StringBuffer result, 
+                            FieldPosition ignore);
+  public final StringBuffer format(Object[] source, StringBuffer result, 
+                            FieldPosition ignore);
+  public Format[] getFormats();
+  public Locale getLocale();
+  public int hashCode();
+  public Object[] parse(String source);
+  public Object[] parse(String source, ParsePosition status);
+  public Object parseObject(String text, ParsePosition status);
+  public void setFormat(int variable, Format newFormat);
+  public void setFormats(Format[] newFormats);
+  public void setLocale(Locale theLocale);
+  public String toPattern();
+}
+Constructors
+MessageFormat
+public MessageFormat(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This constructor creates a MessageFormat 
+with the given formatting pattern string. 
+Class Methods
+format
+public static String format(String pattern, Object[] arguments)
+Parameters
+pattern
+The pattern string.
+arguments
+An array of arguments. 
+Description
+Calling this static method 
+is equivalent to constructing a MessageFormat 
+using the given formatting pattern string and asking it to format the given 
+arguments with the format() 
+method. 
+Instance Methods
+applyPattern
+public void applyPattern(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This method tells this MessageFormat 
+to use the given formatting pattern to format and parse arguments. 
+clone
+public Object clone()
+Returns
+A copy of this MessageFormat. 
+Overrides
+Format.clone() 
+Description
+This method creates a copy of this MessageFormat 
+and then returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Format.equals() 
+Description
+This method returns true if 
+obj is an instance of MessageFormat 
+and is equivalent to this MessageFormat. 
+format
+   public StringBuffer format(Object source, StringBuffer result, FieldPosition ignore)  
+Parameters
+source
+The object to be formatted.
+result
+A StringBuffer 
+on which to append the formatted information.
+ignore
+Ignored. 
+Returns
+The given buffer result with 
+the formatted representation of the object appended to it. 
+Overrides
+Format.format(Object, 
+StringBuffer, FieldPosition) 
+Description
+This method formats the given object and appends the result to the given 
+StringBuffer. The method assumes 
+that the given object is an array of arguments. 
+   public StringBuffer format(Object[] source, StringBuffer result, FieldPosition ignore)  
+Parameters
+source
+The object array to be formatted.
+result
+A StringBuffer 
+on which to append the formatted information.
+ignore
+Ignored. 
+Returns
+The given buffer result with 
+the formatted representation of the object array appended to it. 
+Description
+This method formats the given arguments in the object array and appends 
+the result to the given StringBuffer. 
+getFormats
+public Format[] getFormats()
+Returns
+An array of the formats used by this MessageFormat. 
+Description
+This method returns the format objects that this MessageFormat 
+uses. Note that formats are numbered according to the order in which they 
+appear in the formatting pattern string, not according to their specified 
+argument numbers. 
+getLocale
+public Locale getLocale()
+Returns
+The Locale of this
+MessageFormat.
+Description
+This method returns the locate for this MessageFormat. 
+This locale is used to get default date, time, and number formatters. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this MessageFormat. 
+parse
+public Object[] parse(String source) throws ParseException
+Parameters
+source
+The string to be parsed. 
+Returns
+An array of objects represented by the given string. 
+Throws
+ParseException
+If the text cannot be parsed. 
+Description
+This method parses arguments from the given string, which should be in 
+the format given by the formatting pattern string of this MessageFormat. 
+If the string is not correctly formatted, an exception is thrown. 
+public Object[] parse(String source, ParsePosition status)
+Parameters
+source
+The string to be parsed.
+status
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+An array of objects represented by the test starting at the given position. 
+Description
+This method parses arguments from the given string, starting at the specified 
+position. The string should be in the format given by the formatting pattern 
+string of this MessageFormat. 
+parseObject
+public Object parseObject(String text, ParsePosition status)
+Parameters
+text
+The string to be parsed.
+status
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+The object represented by the test starting at the given position. 
+Overrides
+Format.parseObject(String, 
+ParsePosition) 
+Description
+This method parses arguments from the given string, starting at the specified 
+position. The string should be in the format given by the formatting pattern 
+string of this MessageFormat. 
+setFormat
+public void setFormat(int variable, Format newFormat)
+Parameters
+variable
+The index of an argument in the pattern string.
+newFormat
+The format object to use. 
+Description
+This method sets the Format 
+object that is used for the given argument in the formatting pattern string. 
+setFormats
+public void setFormats(Format[] newFormats)
+Parameters
+newFormats
+The format objects to use. 
+Description
+This method sets the Format 
+objects that format the arguments of this MessageFormat. 
+Note that formats are numbered according to the order in which they appear 
+in the formatting pattern string, not according to their specified argument 
+numbers. 
+setLocale
+public void setLocale(Locale theLocale)
+Parameters
+theLocale
+The new locale. 
+Description
+This method sets the Locale 
+object that generates the default date, time, and number format 
+objects. 
+toPattern
+public String toPattern()
+Returns
+The pattern string of this MessageFormat. 
+Description
+This method returns the pattern string of this MessageFormat. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+format(Object)
+Format
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+parseObject(String)
+Format
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ChoiceFormat, 
+DateFormat, 
+FieldPosition, 
+Format, 
+Locale, 
+NumberFormat, 
+ParseException, 
+ParsePosition, 
+ResourceBundle, 
+String, 
+StringBuffer 
+Format
+NumberFormat
+ 
+ 
+ 
+ 
+ 
+ 
+ 

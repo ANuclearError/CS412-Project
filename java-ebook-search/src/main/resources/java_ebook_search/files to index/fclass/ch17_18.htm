@@ -1,0 +1,129 @@
+
+[Chapter 17] PropertyResourceBundle
+Chapter 17The java.util Package
+PropertyResourceBundle
+Name
+PropertyResourceBundle
+Synopsis
+Class Name:
+java.util.PropertyResourceBundle
+Superclass:
+java.util.ResourceBundle
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The PropertyResourceBundle 
+class is a concrete subclass of ResourceBundle 
+that represents a set of resources for a locale. The resources are specified 
+as a set of key/value string pairs in a property file. Internally, 
+a Properties object is used 
+to retrieve the resources from the property file. 
+When ResourceBundle.getBundle() 
+is called, it attempts to find a resource bundle that most closely matches 
+a particular locale. This can be either a ListResourceBundle 
+subclass or a property file, represented by a PropertyResourceBundle. 
+Once the resource bundle has been retrieved, its contents can be used by 
+the application to present locale-specific information. 
+PropertyResourceBundle
+inherits a lot of functionality from ResourceBundle;
+see the class description of ResourceBundle for
+more information.
+Class Summary
+public class java.util.PropertyResourceBundle
+             extends java.util.ResourceBundle {
+  // Constructors
+  public PropertyResourceBundle(InputStream stream);
+  // Instance Methods
+  public Enumeration getKeys();
+  public Object handleGetObject(String key);
+}
+Constructors
+PropertyResourceBundle
+   public PropertyResourceBundle(InputStream stream) throws IOException  
+Parameters
+stream
+The input stream 
+to use. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This constructor creates a PropertyResourceBundle 
+that reads properties from the given input stream. 
+Instance Methods
+getKeys
+public Enumeration getKeys()
+Returns
+The keys in the resource bundle as an Enumeration. 
+Overrides
+ResourceBundle.getKeys() 
+Description
+This method returns an Enumeration 
+that iterates through the keys in this PropertyResourceBundle. 
+handleGetObject
+public final Object handleGetObject(String key)
+Parameters
+key
+The key of the resource 
+to retrieve. 
+Returns
+The resource that corresponds to this key. 
+Overrides
+ResourceBundle.handleGetObject() 
+Description
+This method returns the resource that corresponds to the given key. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+getObject(String)
+ResourceBundle
+getString(String)
+ResourceBundle
+getStringArray(String)
+ResourceBundle
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+setParent(ResourceBundle)
+ResourceBundle
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+IOException, 
+ListResourceBundle, 
+Properties, 
+ResourceBundle 
+Properties
+Random
+ 
+ 
+ 
+ 
+ 
+ 
+ 

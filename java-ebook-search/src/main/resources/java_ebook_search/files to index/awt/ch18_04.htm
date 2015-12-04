@@ -1,0 +1,91 @@
+
+[Chapter 18] AppletContext
+Chapter 18java.applet Reference
+AppletContext
+Name
+AppletContext
+Description
+AppletContext is an interface 
+that provides the means to control the browser environment in which the 
+applet is running. 
+Interface Definition
+public abstract interface java.applet.AppletContext {
+  // Interface Methods
+  public abstract Applet getApplet (String name);
+  public abstract Enumeration getApplets();
+  public abstract AudioClip getAudioClip (URL url);
+  public abstract Image getImage (URL url);
+  public abstract void showDocument (URL url);
+  public abstract void showDocument (URL url, String frame);
+  public abstract void showStatus (String message);
+}
+Interface Methods
+getApplet
+public abstract Applet getApplet (String name)
+Parameters
+name
+Name of applet to locate. 
+Returns
+Applet fetched. 
+Description
+Gets a reference to another executing applet. 
+getApplets
+public abstract Enumeration getApplets()
+Returns
+List of applets executing. 
+Description
+Gets references to all executing applets. 
+getAudioClip
+public abstract AudioClip getAudioClip (URL url)
+Parameters
+url
+Location of an audio file. 
+Returns
+AudioClip fetched. 
+Description
+Loads an audio file. 
+getImage
+public abstract Image getImage (URL url)
+Parameters
+url
+Location of an image file. 
+Returns
+Image fetched. 
+Description
+Loads an image file. 
+showDocument
+public abstract void showDocument (URL url)
+Parameters
+url
+New web page to display. 
+Description
+Changes the displayed web page. 
+public abstract void showDocument (URL url, String frame)
+Parameters
+url
+New web page to display.
+frame
+Name of the frame in which to display the new page. 
+Description
+Displays a web page in another frame. 
+showStatus
+public abstract void showStatus (String message)
+Parameters
+message
+Message to display. 
+Description
+Displays a message on the status line of the browser. 
+See Also
+Applet, AudioClip, 
+Enumeration, Image, 
+Object, String, 
+URL 
+Applet
+AppletStub
+ 
+ 
+ 
+ 
+ 
+ 
+ 

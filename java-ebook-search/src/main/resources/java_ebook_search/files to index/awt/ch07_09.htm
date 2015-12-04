@@ -1,0 +1,37 @@
+
+[Chapter 7] 7.9 Disabling the LayoutManager
+Chapter 7Layouts
+7.9 Disabling the LayoutManager
+To create a container with no layout manager, use null as the argument 
+to setLayout(). If you do this, 
+you must size and position every component individually. In most cases, 
+disabling the LayoutManager 
+is a bad idea because what might look great on one platform could look 
+really bad on another, due to differences in fonts, native components, 
+and other display characteristics. Figure 7.13 displays 
+a container with a disabled LayoutManager; 
+both buttons were positioned by specifying their size and location explicitly. 
+Figure 7.13: Applet with disabled layout manager
+Here's the code that produces Figure 7.13:
+import java.awt.Button;
+import java.applet.Applet;
+public class noLayout extends Applet {
+    public void init () {
+        setLayout (null);
+        Button x = new Button ("Hello");
+        add (x);
+        x.reshape (50, 60, 50, 70);
+        Button y = new Button ("World");
+        add (y);
+        y.reshape (100, 120, 50, 70);
+    }
+}
+Combining Layouts
+Designing Your Own LayoutManager
+ 
+ 
+ 
+ 
+ 
+ 
+ 

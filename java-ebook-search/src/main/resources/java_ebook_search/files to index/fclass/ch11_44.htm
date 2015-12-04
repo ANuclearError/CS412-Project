@@ -1,0 +1,105 @@
+
+[Chapter 11] ObjectStreamException
+Chapter 11The java.io Package
+ObjectStreamException
+Name
+ObjectStreamException
+Synopsis
+Class Name:
+java.io.ObjectStreamException
+Superclass:
+java.io.IOException
+Immediate Subclasses:
+java.io.InvalidClassException,
+java.io.InvalidObjectException,
+java.io.NotActiveException,
+java.io.NotSerializableException,
+java.io.OptionalDataException,
+java.io.StreamCorruptedException,
+java.io.WriteAbortedException
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The ObjectStreamException class 
+is the superclass for all of the serialization exceptions. 
+Class Summary
+public class java.io.ObjectStreamException extends java.io.IOException {
+  // Constructors
+  protected ObjectStreamException();
+  protected ObjectStreamException(String classname);
+}
+Constructors
+ObjectStreamException
+protected ObjectStreamException()
+Description
+This constructor creates an ObjectStreamException 
+with no detail message. 
+protected ObjectStreamException(String classname)
+Parameters
+classname
+The name of the 
+class. 
+Description
+This constructor creates an ObjectStreamException 
+with the specified detail message, which should be the name of the class 
+that caused the exception. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+InvalidClassException, 
+InvalidObjectException, 
+IOException, 
+NotActiveException, 
+NotSerializableException, 
+OptionalDataException, 
+StreamCorruptedException, 
+WriteAbortedException 
+ObjectStreamClass
+OptionalDataException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

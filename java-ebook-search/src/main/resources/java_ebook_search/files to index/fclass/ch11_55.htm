@@ -1,0 +1,229 @@
+
+[Chapter 11] PushbackReader
+Chapter 11The java.io Package
+PushbackReader
+Name
+PushbackReader
+Synopsis
+Class Name:
+java.io.PushbackReader
+Superclass:
+java.io.FilterReader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The PushbackReader class represents a character
+stream that allows data to be pushed back into the stream.  In other
+words, after data has been read from a
+PushbackReader, it can be pushed back into the
+stream so that it can be reread. This functionality is useful for
+implementing things like parsers that need to read data and then
+return it to the input stream. PushbackReader is
+the character-oriented equivalent of
+PushbackInputStream.
+Class Summary
+public class java.io.PushbackReader extends java.io.FilterReader {
+  // Constructors
+  public PushbackReader(Reader in);
+  public PushbackReader(Reader in, int size);
+  // Instance Methods
+  public void close();
+  public boolean markSupported();
+  public int read();
+  public int read(char[] cbuf, int off, int len);
+  public boolean ready();
+  public void unread(int c);
+  public void unread(char[] cbuf);
+  public void unread(char[] cbuf, int off, int len);
+}
+Constructors
+PushbackReader
+public PushbackReader(Reader in)
+Parameters
+in
+The reader to wrap. 
+Description
+This constructor creates a PushbackReader 
+that reads from the given Reader, 
+using a pushback buffer with the default size of one byte. 
+public PushbackReader(Reader in, int size)
+Parameters
+in
+The reader to wrap.
+size
+The size of the pushback buffer. 
+Description
+This constructor creates a PushbackReader 
+that reads from the given Reader, 
+using a pushback buffer of the given size. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterReader.close() 
+Description
+This method closes the reader and releases the system resources that are 
+associated with it. 
+markSupported
+public boolean markSupported()
+Returns
+The boolean value false. 
+Overrides
+FilterReader.markSupported() 
+Description
+This method returns false to 
+indicate that this class does not support mark() 
+and reset(). 
+read
+public int read() throws IOException
+Returns
+The next character of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterReader.read() 
+Description
+This method reads a character of data. If there is any data in the pushback 
+buffer, the method returns the next character in the pushback buffer. Otherwise, 
+it calls the read() method 
+of the underlying stream. The method blocks until the character is read, 
+the end of the stream is encountered, or an exception is thrown. 
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+An offset into the array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterReader.read(char[], int, int) 
+Description
+This method copies characters from the stream into the given array cbuf, 
+starting at index off and continuing 
+for len characters. If the 
+array can be populated solely from the pushback buffer, the method returns 
+immediately. Otherwise, the read(char[], 
+int, int) 
+method of the underlying stream is called to make up the difference. The 
+method blocks until some data is available. 
+ready
+public boolean ready() throws IOException
+Returns
+A boolean value that indicates 
+whether the stream is ready to be read. 
+Throws
+IOException
+If the stream 
+is closed. 
+Overrides
+FilterReader.ready() 
+Description
+If there is data in the pushback buffer, or if the underlying stream is 
+ready, this method returns true. 
+The underlying stream is ready if the next read() is 
+guaranteed not to block. 
+unread
+public void unread(int c) throws IOException
+Parameters
+c
+The value to push back. 
+Throws
+IOException
+If 
+the pushback buffer is full. 
+Description
+This method puts the given character into the pushback buffer. 
+public void unread(char[] cbuf) throws IOException
+Parameters
+cbuf
+An array of characters 
+to push back. 
+Throws
+IOException
+If 
+the pushback buffer is full. 
+Description
+This method puts all of the characters in the given array into the pushback 
+buffer. 
+public void unread(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to push back.
+off
+An offset into the array.
+len
+The number of characters to push back. 
+Throws
+IOException
+If 
+the pushback buffer is full. 
+Description
+This method puts len characters 
+from the given array, starting at offset off, 
+into the pushback buffer. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+FilterReader
+notify()
+Object
+notifyAll()
+Object
+read(char[])
+FilterReader
+reset()
+FilterReader
+skip(long)
+FilterReader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FilterReader, 
+IOException, 
+Reader 
+PushbackInputStream
+RandomAccessFile
+ 
+ 
+ 
+ 
+ 
+ 
+ 

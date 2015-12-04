@@ -1,0 +1,93 @@
+
+[Chapter 15] ProtocolException
+Chapter 15The java.net Package
+ProtocolException
+Name
+ProtocolException
+Synopsis
+Class Name:
+java.net.ProtocolException
+Superclass:
+java.io.IOException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+A ProtocolException is thrown 
+to indicate that there has been an error in an underlying protocol, such 
+as an HTTP or TCP protocol error. 
+Class Summary
+public class java.net.ProtocolException extends java.io.IOException {
+  // Constructors
+  public ProtocolException();
+  public ProtocolException(String host);
+}
+Constructors
+ProtocolException
+public ProtocolException()
+Description
+This constructor creates a ProtocolException 
+with no associated detail message. 
+public ProtocolException(String host)
+Parameters
+host
+The detail message. 
+Description
+This constructor creates a ProtocolException 
+with the specified detail message, which should be the host that caused 
+the underlying protocol error. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Throwable
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+IOException, 
+RuntimeException 
+NoRouteToHostException
+ServerSocket
+ 
+ 
+ 
+ 
+ 
+ 
+ 

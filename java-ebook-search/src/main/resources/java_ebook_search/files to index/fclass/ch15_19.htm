@@ -1,0 +1,50 @@
+
+[Chapter 15] SocketImplFactory
+Chapter 15The java.net Package
+SocketImplFactory
+Name
+SocketImplFactory
+Synopsis
+Interface Name:
+java.net.SocketImplFactory
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The SocketImplFactory interface 
+defines a method that creates a SocketImpl
+object. The interface is implemented 
+by classes that select SocketImpl 
+subclasses to support the Socket 
+and ServerSocket classes. 
+Interface Declaration
+public abstract interface java.net.SocketImplFactory {
+  // Methods
+  public abstract SocketImpl createSocketImpl();
+}
+Methods
+createSocketImpl
+public abstract SocketImpl createSocketImpl()
+Returns
+A SocketImpl object. 
+Description
+This method creates an instance of a subclass of SocketImpl 
+that is appropriate for the environment. 
+See Also
+ServerSocket, 
+Socket, 
+SocketImpl 
+SocketImpl
+URL
+ 
+ 
+ 
+ 
+ 
+ 
+ 

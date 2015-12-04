@@ -1,0 +1,43 @@
+
+[Chapter 30] 30.23 java.util.StringTokenizer (JDK 1.0)
+Chapter 30The java.util Package
+30.23 java.util.StringTokenizer (JDK 1.0)
+This class, when instantiated with a String,
+breaks the string up into tokens separated by any of the
+characters in the specified string of delimiters. (For
+example, words separated by space and tab characters are tokens.)
+The hasMoreTokens() and nextToken() methods
+can be used to obtain the tokens in order.
+countTokens() returns the number of tokens in the
+string. Note that StringTokenizer implements the
+Enumeration interface, so you may also access the
+tokens with the familiar hasMoreElements() and
+nextElement() methods.
+When you create a StringTokenizer you may specify a
+string of delimiter characters to use for the entire string,
+or you may rely on the default whitespace delimiters. You
+may also specify whether the delimiters themselves should be
+returned as tokens. You may optionally specify a new string
+of delimiter characters when you call nextToken().
+public class StringTokenizer extends Object implements Enumeration {
+    // Public Constructors
+            public StringTokenizer(String str, String delim, boolean returnTokens);
+            public StringTokenizer(String str, String delim);
+            public StringTokenizer(String str);
+    // Public Instance Methods
+            public int countTokens();
+            public boolean hasMoreElements();  // From Enumeration
+            public boolean hasMoreTokens();
+            public Object nextElement();  // From Enumeration
+            public String nextToken();
+            public String nextToken(String delim);
+}
+java.util.Stack (JDK 1.0)
+java.util.TimeZone (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

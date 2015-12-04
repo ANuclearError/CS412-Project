@@ -1,0 +1,153 @@
+
+[Chapter 16] CharacterIterator
+Chapter 16The java.text Package
+CharacterIterator
+Name
+CharacterIterator
+Synopsis
+Interface Name:
+java.text.CharacterIterator
+Super-interface:
+java.lang.Cloneable
+Immediate Sub-interfaces:
+None
+Implemented By:
+java.text.StringCharacterIterator
+Availability:
+New as of JDK 1.1 
+Description
+The CharacterIterator interface 
+defines methods that support bidirectional movement through a sequence 
+of text. The interface is implemented by classes that maintain a current 
+position in a sequence of characters. The interface provides methods for 
+moving to the first, last, next, and previous characters in the sequence. 
+The BreakIterator classes uses 
+this interface to locate boundaries in textual sequences. 
+Class Summary
+public abstract interface java.text.CharacterIterator
+                          extends java.lang.Cloneable {
+  // Constants
+  public static final char DONE;
+  // Methods
+  public abstract Object clone();
+  public abstract char current();
+  public abstract char first();
+  public abstract int getBeginIndex();
+  public abstract int getEndIndex();
+  public abstract int getIndex();
+  public abstract char last();
+  public abstract char next();
+  public abstract char previous();
+  public abstract char setIndex(int position);
+}
+Constants
+DONE
+public final static char DONE
+Description
+A constant that indicates that the beginning or end of the text has been 
+reached. It can be returned by next() 
+or previous(). 
+Methods
+clone
+public abstract Object clone()
+Returns
+A copy of this CharacterIterator. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this CharacterIterator 
+and returns it. 
+current
+public abstract char current()
+Returns
+The character at the current position of this 
+CharacterIterator or DONE 
+if the current position is not within the text sequence. 
+Description
+This method returns the character at the current position of this CharacterIterator. 
+The current position is returned by getIndex(). 
+first
+public abstract char first()
+Returns
+The first character in this CharacterIterator. 
+Description
+This method returns the character at the first position in this CharacterIterator. 
+The first position is returned by getBeginIndex(). 
+The current position of the iterator is set to this position. 
+getBeginIndex
+public abstract int getBeginIndex()
+Returns
+The index of the first character in this CharacterIterator. 
+Description
+This method returns the index of the beginning of the text for this CharacterIterator. 
+getEndIndex
+public abstract int getEndIndex()
+Returns
+The index after the last character in this CharacterIterator. 
+Description
+This method returns the index of the character following the end of the 
+text for this CharacterIterator. 
+getIndex
+public abstract int getIndex()
+Returns
+The index of the current character in this CharacterIterator. 
+Description
+This method returns the current position, or index, of this CharacterIterator. 
+last
+public abstract char last()
+Returns
+The last character in this CharacterIterator. 
+Description
+This method returns the character at the ending position of this CharacterIterator. 
+The last position is the value of getEndIndex()-1. 
+The current position of the iterator is set to this position. 
+next
+public abstract char next()
+Returns
+The next character in this CharacterIterator 
+or DONE if the current position 
+is already at the end of the text. 
+Description
+This method increments the current position of this CharacterIterator 
+by one and returns the character at the new position. If the current position 
+is already at getEndIndex(), 
+the position is not changed, and DONE 
+is returned. 
+previous
+public abstract char previous()
+Returns
+The previous character in this CharacterIterator 
+or DONE if the current position 
+is already at the beginning of the text. 
+Description
+This method decrements the current position of this CharacterIterator 
+by one and returns the character at the new position. If the current position 
+is already at getBeginIndex(), 
+the position is not changed, and DONE 
+is returned. 
+setIndex
+public abstract char setIndex(int position)
+Parameters
+position
+The new position. 
+Returns
+The character at the specified position in this CharacterIterator. 
+Throws
+IllegalArgumentException
+If the given position is not between getBeginIndex() 
+and getEndIndex()-1. 
+Description
+This method sets the current position, or index, of this CharacterIterator 
+to the given position. 
+See Also
+BreakIterator, 
+StringCharacterIterator 
+BreakIterator
+ChoiceFormat
+ 
+ 
+ 
+ 
+ 
+ 
+ 

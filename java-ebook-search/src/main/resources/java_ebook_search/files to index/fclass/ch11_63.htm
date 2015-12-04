@@ -1,0 +1,218 @@
+
+[Chapter 11] StringReader
+Chapter 11The java.io Package
+StringReader
+Name
+StringReader
+Synopsis
+Class Name:
+java.io.StringReader
+Superclass:
+java.io.Reader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The StringReader class represents 
+a character stream whose data source is a String. 
+This class is similar to the CharArrayReader 
+class, which uses a char array 
+as its data source. 
+StringReader is meant to replace 
+the StringBufferInputStream 
+class as of JDK 1.1. Unlike StringBufferInputStream, 
+StringReader handles Unicode 
+characters and supports mark() 
+and reset(). 
+Class Summary
+public class java.io.StringReader extends java.io.Reader {
+  // Constructors
+  public StringReader(String s);
+  // Instance Methods
+  public void close();
+  public void mark(int readAheadLimit);
+  public boolean markSupported();
+  public int read();
+  public int read(char[] cbuf, int off, int len);
+  public boolean ready();
+  public void reset();
+  public long skip(long ns);
+}
+Constructors
+StringReader
+public StringReader(String s)
+Parameters
+s
+The String 
+to use. 
+Description
+This constructor creates a StringReader 
+that uses the given String 
+as its data source. The data is not copied, so changes made to the String 
+affect the data that the StringReader 
+returns. 
+Instance Methods
+close
+public void close()
+Overrides
+Reader.close() 
+Description
+This method closes the reader by removing the link between this StringReader 
+and the String it was created 
+with. 
+mark
+public void mark(int readAheadLimit) throws IOException
+Parameters
+readAheadLimit
+The maximum number of characters that can be read before the saved position 
+becomes invalid. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.mark() 
+Description
+This method causes the StringReader 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position, and thus re-read a 
+portion of the string. Because the data for this stream comes from a String, 
+there is no limit on reading ahead, so readAheadLimit 
+is ignored. 
+markSupported
+public boolean markSupported()
+Returns
+The boolean value true. 
+Overrides
+Reader.markSupported() 
+Description
+This method returns true to 
+indicate that this class supports mark() 
+and reset(). 
+read
+public int read() throws IOException
+Returns
+The next character or -1 if the end of the string is encountered. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.read() 
+Description
+This method returns the next character from the string. The method cannot 
+block. 
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+An offset into the character array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the string is 
+encountered immediately. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.read(char[], int, int) 
+Description
+This method copies up to len 
+characters from the internal buffer into the given array cbuf, 
+starting at index off. 
+ready
+public boolean ready() throws IOException
+Returns
+A boolean value that indicates 
+whether the stream is ready to be read. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.ready() 
+Description
+If there is any data left to be read from the string, this method returns 
+true. 
+reset
+public void reset() throws IOException
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.reset() 
+Description
+This method resets the position of the StringReader 
+to the position that was saved by calling the mark() 
+method. If mark() has not been 
+called, the StringReader is 
+reset to read from the beginning of the string. 
+skip
+public long skip(long ns) throws IOException
+Parameters
+ns
+The number of bytes to 
+skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.skip() 
+Description
+This method skips ns characters of input. If you try 
+to skip past the end of the string, the stream is positioned at the end 
+of the string. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals (Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+read(char[])
+Reader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+CharArrayReader, 
+IOException, 
+Reader, 
+String, 
+StringBufferInputStream 
+StringBufferInputStream
+StringWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

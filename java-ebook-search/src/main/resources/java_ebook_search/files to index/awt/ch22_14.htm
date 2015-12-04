@@ -1,0 +1,190 @@
+
+[Chapter 22] RGBImageFilter
+Chapter 22java.awt.image Reference
+RGBImageFilter
+Name
+RGBImageFilter
+Description
+RGBImageFilter is an abstract 
+class that helps you filter images based on each pixel's color and 
+position. In most cases, the only method you need to implement in subclasses 
+is filterRGB(), which returns 
+a new pixel value based on the old pixel's color and position. RGBImageFilter 
+cannot be used to implement filters that depend on the value of neighboring 
+pixels, or other factors aside from color and position. 
+Class Definition
+public abstract class java.awt.image.RGBImageFilter
+    extends java.awt.image.ImageFilter {
+  // Variables
+  protected boolean canFilterIndexColorModel;
+  protected ColorModel newmodel;
+  protected ColorModel oldmodel;
+  // Instance Methods
+  public IndexColorModel filterIndexColorModel (IndexColorModel icm);
+  public abstract int filterRGB (int x, int y, int rgb);
+  public void filterRGBPixels (int x, int y, int width, 
+      int height, int[] pixels, int off, int scansize);
+  public void setColorModel (ColorModel model);
+  public void setPixels (int x, int y, int width, int height, 
+      ColorModel model, byte[] pixels, int offset, int scansize);
+  public void setPixels (int x, int y, int width, int height, 
+      ColorModel model, int[] pixels, int offset, int scansize);
+  public void substituteColorModel (ColorModel oldModel, 
+      ColorModel newModel);
+}
+Variables
+canFilterIndexColorModel
+protected boolean canFilterIndexColorModel
+Setting the canFilterIndexColorModel 
+variable to true indicates 
+the filter can filter IndexColorModel 
+images. To filter an IndexColorModel, 
+the filter must depend only on color, not on position. 
+newmodel
+protected ColorModel newmodel
+A place to store a new ColorModel. 
+origmodel
+protected ColorModel origmodel
+A place to store an old ColorModel. 
+Instance Methods
+filterIndexColorModel
+public IndexColorModel filterIndexColorModel (IndexColorModel icm)
+Parameters
+icm
+Color model to filter. 
+Returns
+Filtered color model. 
+Description
+Helper method for setColorModel() 
+that runs the entire color table of icm 
+through the filterRGB() method 
+of the subclass. Used only if canFilterIndexColorModel 
+is true, and the image uses 
+an IndexColorModel. 
+filterRGB
+public abstract int filterRGB (int x, int y, int rgb)
+Parameters
+x
+x-coordinate of pixel data.
+y
+y-coordinate of pixel data.
+rgb
+Color value of pixel to filter. 
+Returns
+New color value of pixel. 
+Description
+Subclasses implement this method to provide a filtering function that generates 
+new pixels. 
+filterRGBPixels
+public void filterRGBPixels (int x, int y, int width, int height, int[] pixels, int off, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data within 
+entire image.
+y
+y-coordinate of top-left corner of pixel data within 
+entire image.
+width
+Width of pixel data within entire image.
+height
+Height of pixel data within entire image.
+pixels
+Image data.
+off
+Offset from beginning of each line in pixels array.
+scansize
+Size of each line of data in pixels array. 
+Description
+Helper method for setPixels() 
+that filters each element of the pixels 
+buffer through the subclass's filterRGB() 
+method. 
+setColorModel
+public void setColorModel (ColorModel model)
+Parameters
+model
+The color model for the image. 
+Overrides
+ImageFilter.setColorModel(ColorModel) 
+Description
+Sets the image's color model. 
+setPixels
+public void setPixels (int x, int y, int width, int height, ColorModel model, byte[] pixels, int offset, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+width
+Width of the rectangle of pixel data delivered with 
+this method call.
+height
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+offset
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ImageFilter.setPixels(int, 
+int, int, int, ColorModel, byte[], int, int) 
+Description
+Called by the ImageProducer 
+to deliver a rectangular block of pixels for filtering. 
+public void setPixels (int x, int y, int width, int height, ColorModel model, int[] pixels, int offset, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+width
+Width of the rectangle of pixel data delivered with 
+this method call.
+height
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+offset
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ImageFilter.setPixels(int, 
+int, int, int, ColorModel, int[], int, int) 
+Description
+Called by the ImageProducer 
+to deliver a rectangular block of pixels for filtering. 
+substituteColorModel
+public void substituteColorModel (ColorModel oldModel, ColorModel newModel)
+Parameters
+oldModel
+New value for origmodel 
+variable.
+newModel
+New value for newmodel variable. 
+Description
+Helper method for setColorModel() 
+to initialize the protected variables newmodel 
+and origmodel. 
+See Also
+ColorModel, ImageFilter 
+ReplicateScaleFilter 
+java.awt.peer Reference
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,69 @@
+
+[Chapter 24] 24.69 java.io.Writer (JDK 1.1)
+Chapter 24The java.io Package
+24.69 java.io.Writer (JDK 1.1)
+This abstract class is the superclass of all character
+output streams.  It is an analog to OutputStream,
+which is the superclass of all byte output streams.
+Writer defines the basic write(),
+flush(), and close() methods that all
+character output streams provide.
+The five versions of the write() method write a
+single character, a character array or subarray, or a
+string or substring to the destination of the
+stream.  The most general version of this method--the one
+that writes a specified portion of a character array--is
+abstract and must be implemented by all subclasses.  By
+default, the other write() methods are implemented
+in terms of this abstract one.
+The flush() method is another abstract method that
+all subclasses must implement.  It should force any output
+buffered by the stream to be written to its destination.  If
+that destination is itself a character or byte output
+stream, it should invoke the flush() method of the
+destination stream as well.
+The close() method is also abstract.  Subclasses
+must implement this method so that it flushes and then
+closes the current stream, and also closes whatever
+destination stream it is connected to.  Once the stream has
+been closed, any future calls to write() or
+flush() should throw an IOException.
+public abstract class Writer extends Object {
+    // Protected Constructors
+            protected Writer();
+            protected Writer(Object lock);
+    // Protected Instance Variables
+            protected Object lock;
+    // Public Instance Methods
+            public abstract void close() throws IOException;
+            public abstract void flush() throws IOException;
+            public void write(int c) throws IOException;
+            public void write(char[] cbuf) throws IOException;
+            public abstract void write(char[] cbuf, int off, int len) throws IOException;
+            public void write(String str) throws IOException;
+            public void write(String str, int off, int len) throws IOException;
+}
+Extended By:
+BufferedWriter, 
+CharArrayWriter, 
+FilterWriter, 
+OutputStreamWriter, 
+PipedWriter, 
+PrintWriter, 
+StringWriter
+Passed To:
+BufferedWriter(), 
+CharArrayWriter.writeTo(), 
+FilterWriter(), 
+PrintWriter()
+Type Of:
+FilterWriter.out
+java.io.WriteAbortedException (JDK 1.1)
+The java.lang Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

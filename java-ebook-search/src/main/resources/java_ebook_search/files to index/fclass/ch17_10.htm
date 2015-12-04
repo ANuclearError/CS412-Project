@@ -1,0 +1,304 @@
+
+[Chapter 17] Hashtable
+Chapter 17The java.util Package
+Hashtable
+Name
+Hashtable
+Synopsis
+Class Name:
+java.util.Hashtable
+Superclass:
+java.util.Dictionary
+Immediate Subclasses:
+java.util.Properties
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+JDK 1.0 or later 
+Description
+The Hashtable class is a concrete 
+subclass of Dictionary that builds a table of key/value pairs. Any non-null 
+object can be used as a key or as a value. The objects used as keys must 
+implement the equals() and 
+hashCode() methods in a way that computes comparisons
+and hashcodes from the contents of an object. Once the 
+table is built, a value can be efficiently retrieved by supplying its associated 
+key. 
+Hashtable is an excellent example 
+of how a well-written class can hide an arcane algorithm. The casual user 
+simply instantiates a Hashtable 
+and uses put() and get() 
+to add and retrieve key and value pairs. However,
+when performance is an issue, you need to be aware of the considerations
+discussed in the following paragraphs.
+Internally, a Hashtable keeps 
+an array of key/value pairs. When a new key/value pair is 
+added to a Hashtable, it is 
+added to the array at an index that is calculated from the hashcode of 
+the key. If a key/value pair already exists at this index, the new 
+pair is linked to the existing key and value. Thus, a Hashtable 
+has an overall structure of an array of linked lists. 
+For a given key, the retrieval of the matching value from a Hashtable 
+is quite fast. The Hashtable 
+computes the hashcode of the key and uses it as an index into the array. 
+Then it only needs to search the linked list of key/value pairs 
+at that index to find a match for the given key. If the array is short, 
+but the Hashtable contains 
+many key/value pairs, however, the linked lists will be lengthy, 
+which adversely affects performance. 
+A Hashtable has a capacity, 
+which is the length of its array, and a load factor, which determines when 
+rehashing is performed. The load factor is a number between 0 and 1. If 
+the number of key/value pairs added to the Hashtable 
+exceeds the capacity multiplied by the load factor, the capacity of the 
+Hashtable is increased and 
+the key/value pairs are rehashed into the new array. Obviously, 
+this is an undesirable performance hit, so if you know approximately how 
+many items you will add to a Hashtable, 
+you should create one with an appropriate initial capacity. 
+Class Summary
+public class java.util.Hashtable extends java.util.Dictionary
+             implements java.lang.Cloneable, java.io.Serializable {
+  // Constructors
+  public Hashtable();
+  public Hashtable(int initialCapacity);
+  public Hashtable(int initialCapacity, float loadFactor);
+  // Instance Methods
+  public synchronized void clear();
+  public synchronized Object clone();
+  public synchronized boolean contains(Object value);
+  public synchronized boolean containsKey(Object key);
+  public synchronized Enumeration elements();
+  public synchronized Object get(Object key); 
+  public boolean isEmpty();
+  public synchronized Enumeration keys();
+  public synchronized Object put(Object key, Object value);
+  public synchronized Object remove(Object key); 
+  public int size();
+  public synchronized String toString();
+  // Protected Instance Methods
+  protected void rehash();
+}
+Constructors
+Hashtable
+public Hashtable()
+Description
+This constructor creates a Hashtable 
+with a default capacity of 101 and a default load factor of .75. 
+public Hashtable(int initialCapacity)
+Parameters
+initialCapacity
+The initial capacity. 
+Throws
+IllegalArgumentException
+If initialCapacity is less 
+than or equal to zero. 
+Description
+This constructor creates a Hashtable 
+with the given capacity and a default load factor of .75. 
+public Hashtable(int initialCapacity, float loadFactor)
+Parameters
+initialCapacity
+The initial capacity.
+loadFactor
+The load factor. 
+Throws
+IllegalArgumentException
+If initialCapacity or loadFactor 
+is less than or equal to zero. 
+Description
+This constructor creates a Hashtable 
+with the given capacity and load factor. 
+Instance Methods
+clear
+public synchronized void clear()
+Description
+This method removes all of the key/value 
+pairs from this Hashtable. 
+clone
+public synchronized Object clone()
+Returns
+A copy of this Hashtable. 
+Overrides
+Object.clone() 
+Description
+This method returns a shallow copy of this Hashtable. 
+This means that the internal array of the Hashtable 
+is copied, but the keys and values themselves are not copied. 
+contains
+public synchronized boolean contains(Object value)
+Parameters
+value
+The value to find. 
+Returns
+true if this Hashtable 
+contains the given value; false 
+otherwise. 
+Throws
+NullPointerException
+If the given value is null. 
+Description
+This method returns true if 
+the given value is contained in this Hashtable 
+object. The entire table is searched, which can be a time-consuming operation. 
+containsKey
+public synchronized boolean containsKey(Object key)
+Parameters
+key
+The key to find. 
+Returns
+true if this Hashtable 
+contains the given value; false 
+otherwise. 
+Description
+This method returns true if 
+the given key is contained in this Hashtable 
+object. Because the key is hashed to perform the search, this method runs 
+quite fast, especially in comparison to contains(). 
+elements
+public synchronized Enumeration elements()
+Returns
+The values in this Hashtable 
+as an Enumeration. 
+Overrides
+Dictionary.elements() 
+Description
+This method returns an Enumeration 
+that iterates through the values in this Hashtable. 
+get
+public synchronized Object get(Object key)
+Parameters
+key
+The key of the value 
+to retrieve. 
+Returns
+The value that corresponds to this key or null 
+if the key is not associated with any value. 
+Overrides
+Dictionary.get() 
+Description
+This method returns the value that is associated with the given key. 
+isEmpty
+public boolean isEmpty()
+Returns
+true if there are no values 
+in the Hashtable; false 
+otherwise. 
+Overrides
+Dictionary.isEmpty() 
+Description
+This method returns a boolean 
+value that indicates whether or not the Hashtable 
+is empty. 
+keys
+public synchronized Enumeration keys()
+Returns
+The keys in the Hashtable 
+as an Enumeration. 
+Overrides
+Dictionary.keys() 
+Description
+This method returns an Enumeration 
+that iterates through the keys in this Hashtable. 
+put
+public synchronized Object put(Object key, Object value)
+Parameters
+key
+A key object.
+value
+A value object. 
+Returns
+The previous value associated with the given key or null 
+if key has not previously been 
+associated with a value. 
+Throws
+NullPointerException
+If either the key or the value is null. 
+Overrides
+Dictionary.put() 
+Description
+This method associates the given key with the given value in this Hashtable. 
+remove
+public synchronized Object remove(Object key)
+Parameters
+key
+A key of the value 
+to remove. 
+Returns
+The value associated with the given key, or null 
+if key is not associated with 
+a value. 
+Overrides
+Dictionary.remove() 
+Description
+This method removes a key/value pair from this Hashtable. 
+If the given key is not in the Hashtable, 
+the method does nothing. 
+size
+public int size()
+Returns
+The number of key in the Hashtable. 
+Overrides
+Dictionary.size() 
+Description
+This method returns the number of key/value pairs in the Hashtable. 
+toString
+public String toString()
+Returns
+A string that represents this Hashtable. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Hashtable. 
+The string includes every key/value pair that is contained in the 
+Hashtable, so the string returned 
+by toString() can be quite 
+long. 
+Protected Instance Methods
+rehash
+protected void rehash()
+Description
+This method increases the capacity of this Hashtable. 
+A larger internal array is created and all existing key/value pairs 
+are rehashed into the new array. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Cloneable, 
+Dictionary, 
+Enumeration, 
+IllegalArgumentException, 
+NullPointerException, 
+Properties, 
+Serializable 
+GregorianCalendar
+ListResourceBundle
+ 
+ 
+ 
+ 
+ 
+ 
+ 

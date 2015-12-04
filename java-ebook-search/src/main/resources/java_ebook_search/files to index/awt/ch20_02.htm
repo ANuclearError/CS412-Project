@@ -1,0 +1,40 @@
+
+[Chapter 20] ClipboardOwner 
+Chapter 20java.awt.datatransfer Reference
+ClipboardOwner 
+Name
+ClipboardOwner 
+Description
+ClipboardOwner is implemented 
+by classes that want to be notified when someone else sets the contents 
+of a clipboard. 
+Interface Definition
+public abstract interface java.awt.datatransfer.ClipboardOwner {
+  // Interface Methods
+  public abstract void lostOwnership (Clipboard clipboard, Transferable contents);
+}
+Interface Methods
+lostOwnership
+public abstract void lostOwnership (Clipboard clipboard, Transferable contents)
+Parameters
+clipboard
+The clipboard whose contents have changed.
+contents
+The contents that this owner originally put on the 
+clipboard. 
+Description
+Tells the ClipboardOwner that 
+the contents it placed on the 
+given clipboard are no longer 
+there. 
+See Also
+Clipboard, StringSelection, Transferable 
+Clipboard 
+DataFlavor 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

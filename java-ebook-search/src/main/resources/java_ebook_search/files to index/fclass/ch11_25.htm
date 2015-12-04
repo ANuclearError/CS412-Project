@@ -1,0 +1,188 @@
+
+[Chapter 11] FilterOutputStream
+Chapter 11The java.io Package
+FilterOutputStream
+Name
+FilterOutputStream
+Synopsis
+Class Name:
+java.io.FilterOutputStream
+Superclass:
+java.io.ObjectStream
+Immediate Subclasses:
+java.io.BufferedOutputStream,
+java.io.DataOutputStream,
+java.io.PrintStream,
+java.util.zip.CheckedOutputStream,
+java.util.zip.DeflaterOutputStream
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The FilterOutputStream class 
+is the superclass of all of the output stream classes that filter output. 
+Each of the subclasses of FilterOutputStream 
+works by wrapping an existing output stream, called the underlying output 
+stream, and providing additional functionality. The methods of FilterOutputStream 
+simply override the methods of OutputStream 
+with versions that call the corresponding methods of the underlying stream. 
+FilterOutputStream cannot be 
+instantiated directly; it must be subclassed. An instance of one of the 
+subclasses of FilterOutputStream 
+is constructed with another OutputStream 
+object. The methods of a subclass of FilterOutputStream 
+should override some methods in order to extend their behavior or 
+provide some sort of filtering. 
+Class Summary
+public class java.io.FilterOutputStream extends java.io.OutputStream {
+  // Variables
+  protected OutputStream out;
+  // Constructors
+  public FilterOutputStream(OutputStream out);
+  // Instance Methods
+  public void close();
+  public void flush();
+  public void write(int b);
+  public void write(byte[] b); 
+  public void write(byte[] b, int off, int len); 
+}
+Variables
+out
+protected OutputStream out
+Description
+The underlying stream that this FilterOutputStream 
+wraps or filters. 
+Constructors
+FilterOutputStream
+public FilterOutputStream(OutputStream out)
+Parameters
+out
+The output stream to 
+filter. 
+Description
+This constructor creates a FilterOutputStream 
+that sends its data to out. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+OutputStream.close() 
+Description
+This method calls the close() 
+method of the underlying stream, which releases any system resources associated 
+with this object. 
+flush
+public void flush() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+OutputStream.flush() 
+Description
+This method calls the flush() 
+method of the underlying stream, which forces any bytes that may be buffered 
+by this FilterOutputStream 
+to be written to the underlying device. 
+write
+public void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+OutputStream.write(int) 
+Description
+This method writes a byte containing the low-order eight bits of the given 
+integer value. The method calls the write(int) 
+method of the underlying stream. 
+public void write(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+write to the stream. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+OutputStream.write(byte[]) 
+Description
+This method writes the bytes contained in the given array. To accomplish 
+this, it calls write(b, 0, b.length). 
+Subclasses need override only write(byte[], int, int) 
+for this method to work automatically. 
+public void write(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+OutputStream.write(byte[], int, int) 
+Description
+This method writes len bytes
+contained in the given array, starting at offset
+off.  It does this by calling
+write(int) for each element to be written in the
+array. This is inefficient, so subclasses should override
+write(byte[], int, int) with a method that
+efficiently writes a block of data.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedOutputStream, 
+CheckedOutputStream, 
+DataOutputStream, 
+DeflaterOutputStream, 
+IOException, 
+OutputStream, 
+PrintStream 
+FilterInputStream
+FilterReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

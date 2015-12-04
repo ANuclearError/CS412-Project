@@ -1,0 +1,48 @@
+
+[Chapter 6] 6.2 Labeled Statements
+Chapter 6Statements and Control Structures
+6.2 Labeled Statements
+Zero or more labels can appear before a statement:
+A label is
+defined throughout the block in which it occurs. The names of labels
+are independent of all other kinds of names. In other words, if
+a label has the same name as a local variable, formal parameter,
+class, interface, field variable, or method, there is never any
+confusion or interaction between those names.[1] 
+For example, the following
+code works even though it contains a label and formal parameter
+with the same name:
+[1] 
+Prior to 
+version 1.0.2, Java required labels to have names that did not conflict 
+with the names of local variables or formal parameters.
+public static void main (String[] argv) {
+  argv:
+    while (true) {
+        System.out.println(argv[0]);
+        if ( Math.random() &gt;.4)
+            break argv;
+        System.out.println("Again");
+    }
+}
+Labels are used to mark statements, but a labeled statement
+does not affect the order of execution when it is defined. The statement
+following the label is executed as if the label were not present.
+However, a label can be used in a break
+or continue
+statement to transfer control to a labeled statement. Unlike C/C++,
+Java does not have a goto statement.
+References
+Identifiers;
+Statement 6;
+The break Statement;
+The continue Statement
+Blocks
+The Empty Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

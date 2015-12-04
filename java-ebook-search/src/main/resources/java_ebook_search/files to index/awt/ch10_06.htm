@@ -1,0 +1,146 @@
+
+[Chapter 10] 10.6 CheckboxMenuItem
+Chapter 10Would You Like to Choose from the Menu?
+10.6 CheckboxMenuItem
+The CheckboxMenuItem is a subclass 
+of MenuItem that can be toggled. 
+It is similar to a Checkbox 
+but appears on a Menu. The 
+appearance depends upon the platform. There may or may not be a visual 
+indicator next to the choice. However, when the MenuItem 
+is selected (true), a checkmark 
+or some similar graphic will be displayed next to the label. 
+There is no way to put CheckboxMenuItem 
+components into a CheckboxGroup 
+to form a radio menu group. 
+An example of a CheckboxMenuItem 
+is the Show Java Console menu item in Netscape Navigator. 
+CheckboxMenuItem MethodsConstructors
+public CheckboxMenuItem (String label) 
+The first CheckboxMenuItem 
+constructor creates a CheckboxMenuItem 
+with no label displayed next to the check toggle. The initial value of 
+the CheckboxMenuItem is false. 
+To set the label at a later time, use setLabel(). 
+public CheckboxMenuItem (String label) 
+The next CheckboxMenuItem constructor 
+creates a CheckboxMenuItem 
+with label displayed next to 
+the check toggle. The initial value of the CheckboxMenuItem 
+is false. 
+public CheckboxMenuItem (String label, boolean state) 
+The final CheckboxMenuItem 
+constructor creates a CheckboxMenuItem 
+with label displayed next to 
+the check toggle. The initial value of the CheckboxMenuItem 
+is state. 
+Selection
+public boolean getState () 
+The getState() method retrieves 
+the current state of the CheckboxMenuItem. 
+public void setState (boolean condition) 
+The setState() method changes 
+the current state of the CheckboxMenuItem 
+to condition. When true, 
+the CheckboxMenuItem will have 
+the toggle checked. 
+public Object[] getSelectedObjects ()  
+The getSelectedItems() method 
+returns the currently selected item as an Object 
+array. This method, which is required by the ItemSelectable 
+interface, allows you to use the same methods to retrieve the selected 
+items of any Checkbox, Choice, 
+or List. The array has at most 
+one element, which contains the label of the selected item; if no item 
+is selected, getSelectedItems() 
+returns null. 
+Miscellaneous methods
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the CheckboxMenuItem 
+peer. 
+public String paramString ()
+The paramString() method of 
+CheckboxMenuItem should be 
+protected like other paramString() 
+methods. However, it is public, so you have access to it. When you call 
+the toString() method of a 
+CheckboxMenuItem, the default 
+toString() method of MenuComponent 
+is called. This in turn calls paramString() 
+which builds up the string to display. At the CheckboxMenuItem 
+level, the current state of the object is appended to the output. If the 
+constructor for the CheckboxMenuItem 
+was new CheckboxMenuItem(`File`) 
+the results would be: 
+java.awt.CheckboxMenuItem[label=File,state=false]
+CheckboxMenuItem Events Event handling
+A CheckboxMenuItem generates 
+an ACTION_EVENT when it is 
+selected. The argument to action() 
+is the label of the CheckboxMenuItem, 
+like the method provided by MenuItem, 
+not the state of the CheckboxMenuItem 
+as used in Checkbox. The 
+target of the ACTION_EVENT 
+is the Frame containing the 
+menu. You cannot subclass CheckboxMenuItem 
+and handle the Event within 
+the subclass unless you override postEvent(). Listeners and 1.1 event handling
+With the Java 1.1 event model, you register listeners, which are told when 
+the event happens. 
+public void addItemListener(ItemListener listener)  
+The addItemListener() method 
+registers listener as an object 
+that is interested in being notified when an ItemEvent 
+passes through the EventQueue 
+with this CheckboxMenuItem 
+as its target. When these item events occur, the listener.itemStateChanged() 
+method is called. Multiple listeners can be registered. 
+public void removeItemListener(ItemListener listener)  
+The removeItemListener() method 
+removes listener as a interested 
+listener. If listener is not 
+registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+every AWTEvent with this CheckboxMenuItem 
+as its target. processEvent() 
+then passes it along to any listeners for processing. When you subclass 
+CheckboxMenuItem, overriding 
+processEvent() allows you to 
+process all events yourself, before sending them to any listeners. In a 
+way, overriding processEvent() 
+is like overriding postEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() to ensure that events are delivered, even in the 
+absence of registered listeners. 
+protected void processItemEvent(ItemEvent e)  
+The processItemEvent() method 
+receives every ItemEvent with 
+this CheckboxMenuItem as its 
+target. processItemEvent() 
+then passes it along to any listeners for processing. When you subclass 
+CheckboxMenuItem, overriding 
+processItemEvent() allows you 
+to process all item events yourself, before sending them to any listeners. 
+In a way, overriding processItemEvent() 
+is like overriding action() using 
+the 1.0 event model. 
+If you override processItemEvent(), 
+remember to call the method super.processItemEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+to ensure that events are delivered even in the absence of registered listeners. 
+Menu
+MenuBar
+ 
+ 
+ 
+ 
+ 
+ 
+ 

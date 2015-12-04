@@ -1,0 +1,303 @@
+
+[Chapter 6] 6.7 FileDialog
+Chapter 6Containers
+6.7 FileDialog
+FileDialog is a subclass of 
+Dialog that lets the user select 
+files for opening or saving. You must load or save any files yourself. 
+If used in an application or appletviewer, the FileDialog 
+always looks like the local system's file dialog. The FileDialog 
+is always a modal Dialog, meaning 
+that the calling program is blocked from continuing (and cannot accept 
+input) until the user responds to the FileDialog. Figure 6.9 shows the FileDialog component in Motif, Windows NT/95, and the Macintosh.
+Unlike the other Window subclasses, 
+there is no LayoutManager for 
+FileDialog, since you are creating 
+the environment's actual file dialog. This means you cannot subclass 
+FileDialog to alter its behavior 
+or appearance. However, the class is not "final." 
+NOTE: 
+Netscape Navigator throws an AWTError 
+when you try to create a FileDialog 
+because Navigator does not permit local file system access. 
+FileDialog MethodsConstants
+A FileDialog has two modes: 
+one for loading a file (input) and one for saving (output). The following 
+variables provide the mode to the constructor. The FileDialog 
+functions the same way in both modes. The only visible difference is whether 
+a button on the screen is labeled Load or Save. 
+You must load or save the requested file yourself. On certain platforms 
+there may be functional differences: in SAVE 
+mode, the FileDialog may ask 
+if you want to replace a file if it already exists; in LOAD 
+mode, the FileDialog may not 
+accept a filename that does not exist. 
+public final static int LOAD 
+LOAD is the constant for load 
+mode. It is the default mode. 
+public final static int SAVE 
+SAVE is the constant for save 
+mode. 
+Constructors
+public FileDialog (Frame parent)  
+The first constructor creates a FileDialog 
+for loading with a parent Frame 
+of parent. The window title 
+is initially empty. 
+public FileDialog (Frame parent, String title) 
+This constructor creates a FileDialog 
+for loading with a parent Frame 
+of parent. The window title 
+is title. 
+public FileDialog (Frame parent, String title, int mode) 
+The final constructor creates a FileDialog 
+with an initial mode of mode. 
+If mode is neither LOAD 
+nor SAVE, the FileDialog 
+is in SAVE mode. 
+Figure 6.9: FileDialogs for Motif, Windows NT/95, and the Macintosh
+Appearance methods
+public String getDirectory () 
+getDirectory() returns 
+the current directory for the FileDialog. 
+Normally, you check this when FileDialog 
+returns after a show() and 
+a call to getFile() returns 
+something other than null. 
+public void setDirectory (String directory) 
+The setDirectory() method changes 
+the initial directory displayed in the FileDialog 
+to directory. You must call 
+setDirectory() prior to displaying 
+the FileDialog. 
+public String getFile () 
+The getFile() method returns 
+the current file selection from the FileDialog. 
+If the user pressed the Cancel button on the FileDialog, 
+getFile() returns null. 
+This is the only way to determine if the user pressed Cancel. 
+NOTE: 
+On some platforms in Java 1.0 getFile() 
+returns a string that ends in .*.* 
+(two periods and two asterisks) if the file does not exist. You need to 
+remove the extra characters before you can create the file. 
+public void setFile (String file) 
+The setFile() method changes 
+the default file for the FileDialog 
+to file. Because the FileDialog 
+is modal, this must be done before you call show(). 
+The string may contain a filename filter like *.java 
+to show a preliminary list of files to select. This has nothing to do with 
+the use of the FilenameFilter 
+class. 
+public FilenameFilter getFilenameFilter () 
+The getFilenameFilter() method 
+returns the current FilenameFilter. 
+The FilenameFilter class is 
+part of the java.io package. 
+FilenameFilter is an interface 
+that allows you to restrict choices to certain directory and filename combinations. 
+For example, it can be used to limit the user to selecting .jpg, 
+.gif, and .xbm 
+files. The class implementing FilenameFilter 
+would not return other possibilities as choices. 
+public void setFilenameFilter (FilenameFilter filter) 
+The setFilenameFilter() method 
+changes the current filename filter to filter. 
+This needs to be done before you show() 
+the FileDialog. 
+NOTE: 
+The JDK does not support the FilenameFilter 
+with FileDialog boxes. FilenameFilter 
+works but can't be used with FileDialog. 
+Miscellaneous methods
+public int getMode () 
+The getMode() method returns 
+the current mode of the FileDialog. 
+If an invalid mode was used in the constructor, this method returns an 
+invalid mode here. No error checking is performed. 
+public void setMode (int mode)  
+The setMode() method changes 
+the current mode of the FileDialog 
+to mode. If mode 
+is not one of the class constants LOAD or SAVE, setMode() 
+throws the run-time exception IllegalArgumentException. 
+public synchronized void addNotify () 
+The addNotify() method creates 
+the FileDialog peer. 
+This is automatically done when you call the show() 
+method of the FileDialog. If 
+you override this method, first call super.addNotify(), 
+then add your customizations for the new class. Then you can do everything 
+you need with the information about the newly created peer. 
+protected String paramString () 
+When you call the toString() method of
+FileDialog, the default
+toString() method of Component
+is called. This in turn calls paramString(), which
+builds up the string to display. At the FileDialog
+level, paramString() appends the directory (if not
+null) and current mode to the return value. Using
+the constructor FileDialog(top, `Load
+Me`), the results would be as follows:
+java.awt.FileDialog[0,0,0x0,invalid,hidden,modal,title=Load Me,load]
+A FileDialog Example
+To get a better grasp of how the FileDialog 
+works, the following application uses a FileDialog 
+to select a file for display in a TextArea. 
+You can also use FileDialog 
+to save the file back to disk. Figure 6.10 shows 
+the application, with a file displayed in the text area; the FileDialog 
+itself looks like any other file dialog on the run-time system. Example 6.3 
+shows the code. 
+CAUTION:
+This example can overwrite an existing file. 
+Figure 6.10: FileDialog test program
+Example 6.3: Complete FileDialog
+import java.awt.*;
+import java.io.*;
+public class FdTest extends Frame {
+    TextArea myTextArea;
+    Label myLabel;
+    Button loadButton;
+    Button saveButton;
+    FdTest () {
+        super ("File Dialog Tester");
+        Panel p = new Panel ();
+        p.add (loadButton = new Button ("Load"));
+        p.add (saveButton = new Button ("Save"));
+        add ("North", myLabel = new Label ());
+        add ("South", p);
+        add ("Center", myTextArea = new TextArea (10, 40));
+        Menu m = new Menu ("File");
+        m.add (new MenuItem ("Quit"));
+        MenuBar mb = new MenuBar();
+        mb.add (m);
+        setMenuBar (mb);
+        pack();
+    }
+    public static void main (String args[]) {
+        FdTest f = new FdTest();
+            f.show();
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            hide();
+            dispose ();
+            System.exit(0);
+            return true;  // never gets here
+        }
+        return super.handleEvent (e);
+    }
+    public boolean action (Event e, Object o) {
+        if (e.target instanceof MenuItem) {
+            hide();
+            dispose ();
+            System.exit(0);
+            return true;  // never gets here
+        } else if (e.target instanceof Button) {
+            int state;
+            String msg;
+            if (e.target == loadButton) {
+                state = FileDialog.LOAD;
+                msg = "Load File";
+            } else {// if (e.target == saveButton)
+                state = FileDialog.SAVE;
+                msg = "Save File";
+            }
+            FileDialog file = new FileDialog (this, msg, state);
+            file.setFile ("*.java");  // set initial filename filter
+            file.show(); // Blocks
+            String curFile;
+            if ((curFile = file.getFile()) != null) {
+                String filename = file.getDirectory() + curFile;
+                // curFile ends in .*.* if file does not exist
+                byte[] data;
+                setCursor (Frame.WAIT_CURSOR);
+                if (state == FileDialog.LOAD) {
+                    File f = new File (filename);
+                    try {
+                        FileInputStream fin = new FileInputStream (f);
+                        int filesize = (int)f.length();
+                        data = new byte[filesize];
+                        fin.read (data, 0, filesize);
+                    } catch (FileNotFoundException exc) {
+                        String errorString = "File Not Found: " + filename;
+                        data = new byte[errorString.length()];
+                        errorString.getBytes (0, errorString.length(), data, 0);
+                    } catch (IOException exc) {
+                        String errorString = "IOException: " + filename;
+                        data = new byte[errorString.length()];
+                        errorString.getBytes (0, errorString.length(), data, 0);
+                    }
+                    myLabel.setText ("Load: " + filename);
+                } else {
+// Remove trailing ".*.*" if present - signifies file does not exist
+                    if (filename.indexOf (".*.*") != -1) {
+                        filename = filename.substring (0, filename.length()-4);
+                    }
+                    File f = new File (filename);
+                    try {
+                        FileOutputStream fon = new FileOutputStream (f);
+                        String text = myTextArea.getText();
+                        int textsize = text.length();
+                        data = new byte[textsize];
+                        text.getBytes (0, textsize, data, 0);
+                        fon.write (data);
+                        fon.close ();
+                    } catch (IOException exc) {
+                        String errorString = "IOException: " + filename;
+                        data = new byte[errorString.length()];
+                        errorString.getBytes (0, errorString.length(), data, 0);
+                    }
+                    myLabel.setText ("Save: " + filename);
+                }
+                // Note - on successful save, text is redisplayed
+                myTextArea.setText (new String (data, 0));
+                setCursor (Frame.DEFAULT_CURSOR);
+            }
+            return true;
+        }
+        return false;
+    }
+}
+Most of this application is one long action() 
+method that handles all the action events that take place within the Frame. 
+The constructor doesn't do much besides arrange the display; it includes 
+code to create a File menu with one item, Quit. 
+This menu is visible in the upper left corner of the Frame; we'll 
+see more about working with menus in Chapter 10, Would You Like to Choose from the Menu? We provide 
+a main() method to display 
+the Frame and a handleEvent() 
+method to shut the application down if the event WINDOW_DESTROY 
+occurs. 
+But the heart of this program is clearly its action() 
+method. action() starts by 
+checking whether the user selected a menu item; if so, it shuts down the application because the only item on our menu is Quit. It then 
+checks whether the user clicked on one of the buttons and sets the FileDialog mode to LOAD or SAVE 
+accordingly. It then sets a default filename, *.java, which 
+limits the display to filenames ending in .java. 
+Next, action() shows the dialog. 
+Because file dialogs are modal, show() 
+blocks until the user selects a file or clicks Cancel. 
+The next line detects whether or not getFile() 
+returns null. A null 
+return indicates that the user selected Cancel; in this case, 
+the dialog disappears, but nothing else happens. We then build a complete 
+filename from the directory name and the name the user selected. If the 
+dialog's state is LOAD, 
+we read the file and display it in the text area. Otherwise, the dialog's 
+state must be SAVE, so we save 
+the contents of the text area under the given filename. Note that we first 
+check for the string *.* and remove it if it is present. 
+In Java 1.1, these two lines are unnecessary, but they don't hurt, 
+either. 
+Dialogs
+Layouts
+ 
+ 
+ 
+ 
+ 
+ 
+ 

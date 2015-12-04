@@ -1,0 +1,256 @@
+
+[Chapter 9] 9.2 Datagram Sockets
+Chapter 9Network Programming
+9.2 Datagram Sockets
+TinyHttpd used a Socket to
+create a connection to the client using the TCP
+protocol. In that example, TCP itself took care of
+data integrity; we didn't have to worry about data arriving out
+of order or incorrect. Now we'll take a walk on the wild
+side. We'll build an applet that uses a
+java.net.DatagramSocket, which uses the
+UDP protocol. A datagram is sort of like a
+"data telegram": it's a discrete chunk of data transmitted
+in one packet. Unlike the previous example, where we could get a
+convenient OutputStream from our
+Socket and write the data as if writing to
+a file, with a DatagramSocket we have to work one
+datagram at a time. (Of course, the TCP protocol was
+taking our OutputStream and slicing the data into
+packets, but we didn't have to worry about those details).
+UDP doesn't guarantee that the data
+will get through. If the data do get through, it may not arrive in
+the right order; it's even possible for duplicate datagrams to
+arrive. Using UDP is something like cutting the
+pages out of the encyclopedia, putting them into separate envelopes,
+and mailing them to your friend. If your friend wants to read the
+encyclopedia, it's his or her job to put the pages in order. If
+some pages got lost in the mail, your friend has to send you a letter
+asking for replacements.
+Obviously, you wouldn't use UDP to
+send a huge amount of data. But it's significantly more efficient
+than TCP, particularly if you don't care
+about the order in which messages arrive, or whether the data arrive
+at all. For example, in a database lookup, the client can send a
+query; the server's response itself constitutes an
+acknowledgment. If the response doesn't arrive within a
+certain time, the client can send another query. It shouldn't be
+hard for the client to match responses to its original queries. Some
+important applications that use UDP are the Domain
+Name System (DNS) and Sun's Network
+Filesystem (NFS).
+The HeartBeat Applet
+In this section we'll build a simple applet,
+HeartBeat, that sends a datagram to its server each
+time it's started and stopped. (See Chapter 10, Understand the Abstract Windowing Toolkit for a
+complete discussion of the Applet class.)
+We'll also build a simple standalone server application,
+Pulse, that receives that datagrams and prints
+them. By tracking the output, you could have a crude measure of who is
+currently looking at your Web page at any given time. This is an ideal
+application for UDP: we don't want the
+overhead of a TCP socket, and if datagrams get
+lost, it's no big deal.
+First, the HeartBeat applet: 
+import java.net.*; 
+import java.io.*; 
+ 
+public class HeartBeat extends java.applet.Applet { 
+    String myHost; 
+    int myPort; 
+ 
+    public void init() { 
+        myHost = getCodeBase().getHost(); 
+        myPort = Integer.parseInt( getParameter("myPort") ); 
+    } 
+ 
+    private void sendMessage( String message ) { 
+        try { 
+            byte [] data = new byte [ message.length() ]; 
+            message.getBytes(0, data.length, data, 0); 
+            InetAddress addr = InetAddress.getByName( myHost ); 
+            DatagramPacket pack = 
+               new DatagramPacket(data, data.length, addr, myPort); 
+ 
+            DatagramSocket ds = new DatagramSocket(); 
+            ds.send( pack ); 
+            ds.close(); 
+        }  
+        catch ( IOException e )    
+            System.out.println( e ); 
+    } 
+ 
+    public void start() { 
+        sendMessage("Arrived"); 
+    } 
+    public void stop() { 
+        sendMessage("Departed"); 
+    } 
+} 
+Compile the applet and include it in an HTML
+document with an &lt;applet&gt; tag:
+&lt;applet height=10 width=10 code=HeartBeat&gt;  
+    &lt;param name="myPort" value="1234"&gt; 
+&lt;/applet&gt; 
+The myPort parameter should specify the port 
+number on which our server application listens for data. 
+Next, the server-side application, Pulse: 
+import java.net.*; 
+import java.io.*; 
+ 
+public class Pulse { 
+    public static void main( String [] argv ) throws IOException { 
+ 
+        DatagramSocket s = 
+           new DatagramSocket(Integer.parseInt(argv[0])); 
+        while ( true ) { 
+            DatagramPacket packet = new DatagramPacket(new byte
+                                                      [1024], 1024); 
+            s.receive( packet ); 
+            String message = new String(packet.getData(), 0, 0, 
+                                        packet.getLength()); 
+            System.out.println( "Heartbeat from: " +  
+                packet.getAddress().getHostName() + " - " + message ); 
+        } 
+    } 
+} 
+Compile Pulse and run it on your Web server, 
+specifying a port number as an argument: 
+% java Pulse 1234
+The port number should be the same as the one you used in the
+myPort parameter of the
+&lt;applet&gt; tag for
+HeartBeat.
+Now, pull up the Web page in your browser. You won't see
+anything there (a better application might do something visual as
+well), but you should get a blip from the Pulse
+application. Leave the page and return to it a few times. Each time
+the applet is started or stopped, it sends a message:
+Heartbeat from: foo.bar.com - Arrived 
+Heartbeat from: foo.bar.com - Departed 
+Heartbeat from: foo.bar.com - Arrived 
+Heartbeat from: foo.bar.com - Departed 
+... 
+Cool, eh? Just remember the datagrams are not guaranteed to arrive 
+(although it's unlikely you'll see them fail), and it's possible 
+that you could miss an arrival or a departure. Now let's look at 
+the code. 
+HeartBeat
+HeartBeat overrides the init(),
+start(), and stop() methods of
+the Applet class, and implements one private method
+of its own, sendMessage(), that sends a
+datagram. HeartBeat begins its life in
+init(), where it determines the destination for its
+messages. 
+It uses the
+Applet getCodeBase() and
+getHost() methods to find the name of its
+originating host and fetches the correct port number from the
+myPort parameter of the HTML
+tag. After init() has finished, the
+start() and stop() methods are
+called whenever the applet is started or stopped. These methods merely
+call sendMessage() with the appropriate message.
+sendMessage() is responsible for sending a
+String message to the server as a datagram. It
+takes the text as an argument, constructs a datagram packet containing
+the message, and then sends the datagram. All of the datagram
+information, including the destination and port number, are packed
+into a java.net.DatagramPacket object. The
+DatagramPacket is like an addressed envelope,
+stuffed with our bytes. After the DatagramPacket is
+created, sendMessage() simply has to open a
+DatagramSocket and send it.
+The first four lines of sendMessage() build the 
+DatagramPacket: 
+try { 
+    byte [] data = new byte [ message.length() ]; 
+    message.getBytes(0, data.length, data, 0); 
+    InetAddress addr = InetAddress.getByName( myHost ); 
+    DatagramPacket pack = 
+       new DatagramPacket(data, data.length, addr, myPort ); 
+First, the contents of message are placed into an
+array of bytes called data. Next a
+java.net.InetAddress object is created from the
+name myHost. An InetAddress
+simply holds the network address information for a host in a special
+format. We get an InetAddress object for our host
+by using the static getByName() method of the
+InetAddress class. (We can't construct an
+InetAddress object directly.) Finally, we call the
+DatagramPacket constructor with four arguments: the
+byte array containing our data, the length of the data, the
+destination address object, and the port number.
+The remaining lines construct a default client
+DatagramSocket and call its
+send() method to transmit the
+DatagramPacket; after sending the datagram, we
+close the socket:
+DatagramSocket ds = new DatagramSocket(); 
+ds.send( pack ); 
+ds.close(); 
+Two operations throw a type of IOException: the
+InetAddress.getByName() lookup and the
+DatagramSocket
+send(). InetAddress.getByName()
+can throw an UnknownHostException, which is a type
+of IOException that indicates that the host name
+can't be resolved. If send() throws an
+IOException, it implies a serious client side
+problem in talking to the network. We need to catch these exceptions;
+our catch block simply prints a message telling us
+that something went wrong. If we get one of these exceptions, we can
+assume the datagram never arrived. However, we can't assume the
+converse. Even if we don't get an exception, we still
+don't know that the host is actually accessible or that the data
+actually arrived; with a DatagramSocket, we never
+find out.
+Pulse
+The Pulse server corresponds to the
+HeartBeat applet. First, it creates a
+DatagramSocket to listen on our prearranged
+port. This time, we specify a port number in the constructor; we get
+the port number from the command line as a string
+(argv[0]) and convert it to an integer with
+Integer.parseInt(). Note the difference between
+this call to the constructor and the call in
+HeartBeat. In the server, we need to listen for
+incoming datagrams on a prearranged port, so we need to specify the
+port when creating the DatagramSocket. In the
+client, we need only to send datagrams, so we don't have to
+specify the port in advance; we build the port number into the
+DatagramPacket itself.
+Second, Pulse creates an empty
+DatagramPacket of a fixed size to receive an
+incoming datagram. This alternative constructor for
+DatagramPacket takes a byte array and a length as
+arguments. As much data as possible is stored in the byte array when
+it's received. (A practical limit on the size of a
+UDP datagram is 8K.)  Finally,
+Pulse calls the
+DatagramSocket's receive()
+method to wait for a packet to arrive. When a packet arrives, its
+contents are printed.
+As you can see, working with DatagramSocket
+is slightly more tedious than working with
+Sockets. With datagrams, it's harder to spackle
+over the messiness of the socket interface. However, the Java
+API rather slavishly follows the
+UNIX interface, and that doesn't help. I
+don't see any reason why we have to prepare a datagram to hand
+to receive() (at least for the current
+functionality); receive() ought to
+create an appropriate object on its own and hand it to us, saving us
+the effort of building the datagram in advance and unpacking the data
+from it afterwards. It's easy to imagine other conveniences; perhaps
+we'll have them in a future release.
+Sockets
+Working with URLs
+ 
+ 
+ 
+ 
+ 
+ 
+ 

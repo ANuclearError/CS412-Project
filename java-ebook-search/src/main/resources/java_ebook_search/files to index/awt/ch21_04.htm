@@ -1,0 +1,39 @@
+
+[Chapter 21] AdjustmentListener 
+Chapter 21java.awt.event Reference
+AdjustmentListener 
+Name
+AdjustmentListener 
+Description
+Objects that implement the AdjustmentListener 
+interface can receive AdjustmentEvent 
+objects. Listeners must first register themselves with objects that produce 
+events. When events occur, they are then automatically propagated to all 
+registered listeners. 
+Interface Definition
+public abstract interface java.awt.event.AdjustmentListener
+   extends java.util.Eventlistener {
+  // Interface Methods
+  public abstract void adjustmentValueChanged (AdjustmentEvent e);
+}
+Interface Methods
+adjustmentPerformed
+public abstract void adjustmentValueChanged (AdjustmentEvent e)
+Parameters
+e
+The adjustment event that occurred. 
+Description
+Notifies the AdjustmentListener 
+that an event occurred. 
+See Also
+AdjustmentEvent, AWTEventMulticaster, 
+EventListener 
+AdjustmentEvent 
+ComponentAdapter 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

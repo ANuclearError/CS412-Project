@@ -1,0 +1,60 @@
+
+[Chapter 18] 18.47 java.awt.Point (JDK 1.0)
+Chapter 18The java.awt Package
+18.47 java.awt.Point (JDK 1.0)
+This class holds the X and Y coordinates of a
+two-dimensional point.  The move() method sets the
+coordinates, and the translate() method adds the
+specified values to the coordinates.  The x and
+y fields are public and may be manipulated directly.
+public class Point extends Object implements Serializable {
+    // Public Constructors
+        1.1  public Point();
+        1.1  public Point(Point p);
+            public Point(int x, int y);
+    // Public Instance Variables
+            public int x;
+            public int y;
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+        1.1  public Point getLocation();
+            public int hashCode();  // Overrides Object
+            public void move(int x, int y);
+        1.1  public void setLocation(Point p);
+        1.1  public void setLocation(int x, int y);
+            public String toString();  // Overrides Object
+            public void translate(int x, int y);
+}
+Passed To:
+Component.contains(), 
+Component.getComponentAt(), 
+Component.setLocation(), 
+Container.getComponentAt(), 
+Point(), 
+Point.setLocation(), 
+Polygon.contains(), 
+Rectangle(), 
+Rectangle.add(), 
+Rectangle.contains(), 
+Rectangle.setLocation(), 
+ScrollPane.setScrollPosition()
+Returned By:
+Component.getLocation(), 
+Component.getLocationOnScreen(), 
+Component.location(), 
+ComponentPeer.getLocationOnScreen(), 
+GridBagLayout.getLayoutOrigin(), 
+GridBagLayout.location(), 
+MouseEvent.getPoint(), 
+Point.getLocation(), 
+Rectangle.getLocation(), 
+ScrollPane.getScrollPosition()
+java.awt.Panel (JDK 1.0)
+java.awt.Polygon (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

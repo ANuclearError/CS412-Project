@@ -1,0 +1,97 @@
+
+[Chapter 1] 1.4 Containers
+Chapter 1Abstract Window Toolkit Overview
+1.4 Containers
+A Container is a type of component 
+that provides a rectangular area within which other components can be organized 
+by a LayoutManager. Because 
+Container is a subclass of 
+Component, a Container 
+can go inside another Container, 
+which can go inside another Container, 
+and so on, like Russian nesting dolls. Subclassing Container 
+allows you to encapsulate code for the components within it. This allows 
+you to create reusable higher-level objects easily. Figure 1.15 
+shows the components in a layout built from several nested containers.
+Figure 1.15: Components within containers
+Panels
+A Panel is the basic building 
+block of an applet. It provides a container with no special features. The 
+default layout for a Panel 
+is FlowLayout. The details 
+of Panel are discussed in 
+Panel. 
+Figure 1.16 shows an applet that contains 
+panels within panels within panels. 
+Figure 1.16: A multilevel panel
+Windows
+A Window provides a top-level 
+window on the screen, with no borders or menu bar. It provides a way to 
+implement pop-up messages, among other things. The default layout for a 
+Window is BorderLayout. 
+Window explores the Window 
+class in greater detail. Figure 1.17 shows a pop-up 
+message using a Window in Microsoft 
+Windows and Motif. 
+Figure 1.17: Pop-up windows
+Frames
+A Frame is a Window 
+with all the window manager's adornments (window title, borders, 
+window minimize/maximize/close functionality) added. It may 
+also include a menu bar. Since Frame 
+subclasses Window, its default 
+layout is BorderLayout. Frame 
+provides the basic building block for screen-oriented applications. Frame 
+allows you to change the mouse cursor, set an icon image, and have menus. 
+All the details of Frame are 
+discussed in Frames. 
+Figure 1.18 shows an example 
+Frame. 
+Figure 1.18: A frame
+Dialog and FileDialog
+A Dialog is a Window 
+that accepts input from the user. BorderLayout is the default layout of Dialog  
+because it subclasses Window. 
+A Dialog is a pop-up used for 
+user interaction; it can be modal to prevent the user from doing anything 
+with the application before responding. A FileDialog 
+provides a prebuilt Dialog 
+box that interacts with the filesystem. It implements the Open/Save 
+dialog provided by the native windowing system. You will primarily use 
+FileDialog with applications 
+since there is no guarantee that an applet can interact with the local 
+filesystem. (Netscape Navigator will throw an exception if you try to 
+use it.) The details of Dialog 
+are revealed in Dialogs, 
+while FileDialog 
+is discussed in FileDialog. 
+Figure 1.19 shows sample Dialog 
+and FileDialog boxes. 
+Figure 1.19: Examples of Dialog and FileDialog boxes
+ScrollPane
+Java 1.1 introduces the ScrollPane 
+container. In version 1.0, if you want to have a scrolling area (for example, 
+to display an image that won't fit onto the screen), you create a 
+panel using BorderLayout that 
+contains scrollbars on the right and bottom, and display part of the image 
+in the rest of the screen. When the user scrolls, you capture the event, 
+figure out what part of the image to display, and update the screen accordingly. 
+Although this works, its performance is poor, and it's inconvenient. 
+With version 1.1 of Java, you can tell the ScrollPane 
+what needs to scroll; it creates the scrollbars and handles all the events 
+automatically. ScrollPane 
+covers the ScrollPane; 
+Figure 1.20 shows a ScrollPane. 
+Chapter 11, Scrolling, covers the Adjustable 
+interface that Scrollbar implements 
+and ScrollPane utilizes. 
+Figure 1.20: A ScrollPane
+Layouts
+And the Rest
+ 
+ 
+ 
+ 
+ 
+ 
+ 

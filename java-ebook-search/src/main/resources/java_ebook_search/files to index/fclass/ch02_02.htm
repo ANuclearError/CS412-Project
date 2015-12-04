@@ -1,0 +1,46 @@
+
+[Chapter 2] 2.2 StringBuffer
+Chapter 2Strings and Related Classes
+2.2 StringBuffer
+StringBuffer objects are similar 
+to String objects in that they 
+both represent sequences of characters. The main difference is that a StringBuffer 
+is mutable, while a String 
+is not. The StringBuffer class 
+defines a number of append() 
+methods for adding characters to the end of the sequence, as well as a 
+number of insert() methods 
+for inserting characters anywhere in the sequence. 
+Many computations that produce a String 
+object use a StringBuffer internally 
+to build the string. For example, to write a method that takes a String 
+object and returns a new String 
+that contains the sequence of characters in reverse, you use a StringBuffer 
+as follows: 
+public static String reverse(String s) {
+    StringBuffer buf = new StringBuffer(s.length());
+    for (int i = s.length()-1; i &gt;= 0; i--) {
+        buf.append(s.charAt(i));
+    }
+    return buf.toString();
+}
+After creating a new StringBuffer 
+object, the method loops over the given string from the last character 
+to the first character and appends each character to the end of the StringBuffer 
+object. When the loop finishes, the StringBuffer 
+object contains a sequence of characters that is the reverse of the sequence 
+of characters in the given String 
+object. The method finishes by calling the toString() 
+method of the StringBuffer; 
+this method returns a String 
+object that contains the same sequence of characters as the StringBuffer 
+object. 
+String
+String Concatenation
+ 
+ 
+ 
+ 
+ 
+ 
+ 

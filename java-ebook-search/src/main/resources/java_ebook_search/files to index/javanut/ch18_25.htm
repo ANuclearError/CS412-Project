@@ -1,0 +1,49 @@
+
+[Chapter 18] 18.25 java.awt.FontMetrics (JDK 1.0)
+Chapter 18The java.awt Package
+18.25 java.awt.FontMetrics (JDK 1.0)
+This class represents font metrics for a specified
+Font.  The methods allow you to determine the
+overall metrics for the font (ascent, descent, etc.), and
+also to compute the width of strings that are to be
+displayed in a particular font.  You can obtain a
+FontMetrics object for a font with the
+getFontMetrics() method of Component or
+Toolkit. 
+public abstract class FontMetrics extends Object implements Serializable {
+    // Protected Constructor
+            protected FontMetrics(Font font);
+    // Protected Instance Variables
+            protected Font font;
+    // Public Instance Methods
+            public int bytesWidth(byte[] data, int off, int len);
+            public int charWidth(int ch);
+            public int charWidth(char ch);
+            public int charsWidth(char[] data, int off, int len);
+            public int getAscent();
+            public int getDescent();
+            public Font getFont();
+            public int getHeight();
+            public int getLeading();
+            public int getMaxAdvance();
+            public int getMaxAscent();
+        #   public int getMaxDecent();
+            public int getMaxDescent();
+            public int[] getWidths();
+            public int stringWidth(String str);
+            public String toString();  // Overrides Object
+}
+Returned By:
+Component.getFontMetrics(), 
+ComponentPeer.getFontMetrics(), 
+Graphics.getFontMetrics(), 
+Toolkit.getFontMetrics()
+java.awt.Font (JDK 1.0)
+java.awt.Frame (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

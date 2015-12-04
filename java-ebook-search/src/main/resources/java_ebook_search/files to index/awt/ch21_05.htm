@@ -1,0 +1,68 @@
+
+[Chapter 21] ComponentAdapter 
+Chapter 21java.awt.event Reference
+ComponentAdapter 
+Name
+ComponentAdapter 
+Description
+ComponentAdapter is a class 
+that implements the methods of ComponentListener 
+with empty functions. It may be easier for you to extend ComponentAdapter, 
+overriding only those methods you are interested in, than to implement 
+ComponentListener and provide 
+the empty functions yourself. 
+Class Definition
+public abstract class java.awt.event.ComponentAdapter
+   extends java.lang.Object
+   implements java.awt.event.ComponentListener {
+  // Instance Methods
+  public void componentHidden (ComponentEvent e);
+  public void componentMoved (ComponentEvent e);
+  public void componentResized (ComponentEvent e);
+  public void componentShown (ComponentEvent e);
+}
+Instance Methods
+componentHidden
+public void componentHidden (ComponentEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component is 
+hidden. 
+componentMoved
+public void componentMoved (ComponentEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component is 
+moved. 
+componentResized
+public void componentResized (ComponentEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component is 
+resized. 
+componentShown
+public void componentShown (ComponentEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component is 
+shown. 
+See Also
+Component, ComponentEvent, 
+ComponentListener 
+AdjustmentListener 
+ComponentEvent 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

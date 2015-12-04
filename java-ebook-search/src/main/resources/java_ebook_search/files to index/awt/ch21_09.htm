@@ -1,0 +1,85 @@
+
+[Chapter 21] ContainerEvent 
+Chapter 21java.awt.event Reference
+ContainerEvent 
+Name
+ContainerEvent 
+Description
+Container events are fired off when a component is added to or removed 
+from a container. The AWT automatically deals with adding components to 
+containers; these events are provided only for notification. 
+Class Definition
+public class java.awt.event.ContainerEvent
+   extends java.awt.event.ComponentEvent {
+  // Constants
+  public final static int COMPONENT_ADDED;
+  public final static int COMPONENT_REMOVED;
+  public final static int CONTAINER_FIRST;
+  public final static int CONTAINER_LAST;
+  // Constructors
+  public ContainerEvent (Component source, int id, Component child);
+  // Instance Methods
+  public Component getChild();
+  public Container getContainer();
+  public String paramString();
+}
+Constants
+COMPONENT_ADDED
+public final static int COMPONENT_ADDED
+Event type ID indicating that a component was added to a container. 
+CONTAINER_FIRST
+public final static int CONTAINER_FIRST
+Specifies the beginning range of container event ID values. 
+CONTAINER_LAST
+public final static int CONTAINER_LAST
+Specifies the ending range of container event ID values. 
+COMPONENT_REMOVED
+public final static int COMPONENT_REMOVED
+Event type ID indicating that a component was removed from a container. 
+Constructors
+ContainerEvent
+public ContainerEvent (Component source, int id, Component child)
+Parameters
+source
+The object that 
+generated the event.
+id
+The event type ID of 
+the event.
+child
+The component that 
+was added or removed. 
+Description
+Constructs a ContainerEvent 
+with the given characteristics. 
+Instance Methods
+getChild
+public Component getChild()
+Returns
+The component that is being added or removed. 
+getContainer
+public Container getContainer()
+Returns
+The container for this event. 
+paramString
+public String paramString()
+Returns
+String with current settings of the ContainerEvent. 
+Overrides
+ComponentEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+Component, ComponentEvent, 
+Container, ContainerAdapter, 
+ContainerListener 
+ContainerAdapter 
+ContainerListener 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

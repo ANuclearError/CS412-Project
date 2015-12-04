@@ -1,0 +1,104 @@
+
+[Chapter 7] 7.3 The import Directive
+Chapter 7Program Structure
+7.3 The import Directive
+You can refer to
+classes and interfaces defined in a particular package by qualifying
+their names with the package name and a period. For example, you
+can refer to the Socket class as
+java.net.Socket.
+Using this notation, you could write a declaration like the following:
+java.net.Socket s = new java.net.Socket();
+This declaration is rather verbose. As you can imagine, it
+would quickly become cumbersome to refer to classes this way in
+all of your programs.
+The import directive
+provides an alternative to prefixing the names of classes and interfaces
+defined in particular packages with their package names. An
+import directive makes definitions from another
+package available by their simple names:
+An import directive can only occur after the
+package
+directive in a compilation unit (if there is one) and before any
+class or interface declarations.
+An import directive with
+an identifier after the package name defines that identifier to
+have the same meaning as the fully qualified class or interface
+name. When an identifier is defined using an import
+directive, the definition exists only from the import
+directive that defines it to the end
+of the compilation unit.
+For example, you could use the following
+import directive:
+import java.net.Socket;
+Now the identifier Socket is defined to mean
+java.net.Socket.
+With the above import directive at the beginning
+of a compilation unit, you can rewrite the previous declaration
+as follows:
+Socket s = new Socket();
+If more than one import directive provides a definition
+for the same identifier, the compiler issues an error message.
+An import directive can also be used to 
+define an identifier as a synonym for the fully qualified name of 
+a class that is declared inside of another class. For example, 
+consider the following class declaration:
+package COM.geomaker;
+...
+public class z {
+    ...
+    class zz {
+        ...
+    }
+}
+A class in another file can refer to the class
+COM.geomaker.z.zz as just zz if
+the file contains the following import directive:
+import COM.geomaker.z.zz;
+An import directive with an asterisk (*)
+after the package name tells the compiler to search the specified
+package when it cannot find a definition for an identifier. In other
+words, this type of import directive makes all
+of the classes and interfaces in the package available by their
+simple names. Here's an example of such an
+import directive:
+import java.awt.*;
+When the compiler is searching packages specified by this type of
+import
+directive, it issues an error message if it finds the same name
+defined in two different packages.
+Every package in
+Java is considered separate and distinct, even if the name of a
+package begins with the name of another package. For example, the
+package java.awt is separate and distinct from
+the package java.awt.image. Even though the names
+imply a parent-child relationship, Java recognizes no such relationship
+between packages. Consider the following directive:
+import java.awt.*;
+This tells
+the Java compiler to search the java.awt package
+for class and interface names; it does not, however, tell the compiler
+to search java.awt.image for such names. For
+that to happen, a compilation unit must also include the following
+directive:
+import Java.awt.image.*;
+It is important to understand that an import directive
+does not cause the Java compiler to read any class or interface
+definitions. An import directive simply defines
+an identifier as a synonym for a fully qualified class or interface
+name or directs the compiler to search a package when it needs to
+find a definition. The compiler only reads a class or interface
+definition when its finds an actual reference to the class or interface.
+References
+Compilation Units;
+Identifiers;
+Packages
+Packages
+Documentation Comments
+ 
+ 
+ 
+ 
+ 
+ 
+ 

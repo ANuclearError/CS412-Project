@@ -1,0 +1,119 @@
+
+[Chapter 16] FieldPosition
+Chapter 16The java.text Package
+FieldPosition
+Name
+FieldPosition
+Synopsis
+Class Name:
+java.text.FieldPosition
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The FieldPosition class encapsulates 
+information about fields in formatted output. The fields in a particular 
+type of formatted output are identified by constants. A FieldPosition 
+object contains its field type and the field's position within the 
+formatted output. The field position is specified by the index of the first 
+character in the field and the index of the last character in the field. 
+You can use a FieldPosition 
+object to find the position of a particular field in a formatted string. 
+Consider the following code: 
+NumberFormat nf = NumberFormat.getInstance();
+StringBuffer sb = new StringBuffer();
+FieldPosition fp = new FieldPosition(NumberFormat.FRACTION_FIELD);
+nf.format(-1234.56, sb, fp);
+System.out.println(new String(sb));
+System.out.println("FRACTION_FIELD goes from " + fp.getBeginIndex()
+                   + " to " + fp.getEndIndex() + ".");
+This code produces the following output: 
+-1,234.56
+FRACTION_FIELD goes from 7 to 9.
+Class Summary
+public class java.text.FieldPosition extends java.lang.Object {
+  // Constructors
+  public FieldPosition(int field);
+  // Instance Methods
+  public int getBeginIndex();
+  public int getEndIndex();
+  public int getField();
+}
+Constructors
+FieldPosition
+public FieldPosition(int field)
+Parameters
+field
+A field constant. 
+Description
+This constructor creates a FieldPosition 
+object that represents the given field. 
+Instance Methods
+getBeginIndex
+public int getBeginIndex()
+Returns
+The beginning index.
+Description
+This method returns the beginning index of the field that is represented 
+by this FieldPosition. 
+getEndIndex
+public int getEndIndex()
+Returns
+The ending index of this FieldPosition. 
+Description
+This method returns the ending index of the field that is represented by 
+this FieldPosition. 
+getField
+public int getField()
+Returns
+The field constant of this FieldPosition. 
+Description
+This method returns the field constant of this FieldPosition. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DateFormat, 
+Format, 
+MessageFormat, 
+NumberFormat, 
+ParsePosition, 
+String 
+DecimalFormatSymbols
+Format
+ 
+ 
+ 
+ 
+ 
+ 
+ 

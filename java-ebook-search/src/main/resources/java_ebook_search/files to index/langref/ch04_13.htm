@@ -1,0 +1,208 @@
+
+[Chapter 4] 4.13 Assignment Operators
+Chapter 4Expressions
+4.13 Assignment Operators
+Assignment operators
+set the values of variables and array elements. An assignment operator
+may appear in an assignment expression:
+The actual assignment
+operator in an assignment expression can be the simple assignment
+operator = or one of the compound assignment
+operators shown below. All of the assignment operators are equal
+in precedence. Assignment operators are evaluated from right to
+left, so a=b=c is equivalent to a=(b=c).
+The left operand of an assignment operator must be an expression
+that produces a variable or an array element. The left operand of
+an assignment operator cannot be an expression that evaluates to
+a pure value, or a compile-time error occurs. So, for example, the
+left operand cannot be a final variable, since
+a final variable evaluates to a pure value, not
+a variable.
+The assignment operator itself produces
+a pure value, not a variable or an array element. The pure value
+produced by an assignment operator is the value of the variable
+or array element after it has been set by the assignment operation.
+The type of this pure value is the type of the variable or array
+element.
+The simple assignment operator =
+just sets the value of a variable or array element. It does not
+imply any other computation. The right operand of the simple assignment
+operator can be of any type, as long as that type is assignment-compatible
+with the type of the left operand, as described in the
+next section. If the right operand is not assignment-compatible,
+a compile-time error occurs.
+The compound assignment operators are:
++=
+-=
+*=
+/=
+|=
+&amp;=
+^=
+%=
+&lt;&lt;=
+&gt;&gt;=
+&gt;&gt;&gt;=
+Both of the operands of a compound assignment
+operator must be of primitive types, or a compile-time error occurs.
+The one exception is if the left operand of the +=
+operator is of type String; in this case the
+right operand can be of any type.
+A compound assignment
+operator combines a binary operator with the simple assignment operator
+=. Thus, to be assignment-compatible, the right
+operand of a compound assignment operator must be of a type that
+complies with the rules for the indicated binary operation. Otherwise,
+a compile-time error occurs. An assignment expression of the form:
+e1 op = e2
+is approximately equivalent to:
+e1 = (type) ((e1) op (e2))
+where type is the type of the expression
+e1. The only
+difference is that e1 is only evaluated once
+in the expression that uses the compound assignment operator.
+For example, consider the following code fragment:
+j = 0;
+a[0] = 3;
+a[1]=6;
+a[j++] += 2;
+After this code is executed, j
+equals 1 and a[0] is 5. Contrast this with the
+following code:
+j = 0;
+a[0] = 3;
+a[1]=6;
+a[j++] = a[j++] + 2;
+After this code is executed,
+j equals 2 and a[0] is 8 because
+j++ is evaluated twice.
+References
+Array Types;
+**UNKNOWN XREF**;
+Conditional Operator;
+Interface Variables;
+Local Variables;
+Order of Operations;
+Primitive Types;
+Reference Types;
+String;
+Unary Operators;
+Variables
+Assignment Compatibility
+Saying that
+one type of value is assignment-compatible
+with another type of value means that a value of the
+first type can be assigned to a variable of the second type. Here
+are the rules for assignment compatibility in Java:
+Every
+type is assignment-compatible with itself.
+The boolean
+type is not assignment-compatible with any other type.
+A
+value of any integer type can be assigned to a variable of any other
+integer type if the variable is of a type that allows it to contain
+the value without any loss of information.
+A value of
+any integer type can be assigned to a variable of any floating-point
+type, but a value of any floating-point type cannot be assigned
+to a variable of any integer type.
+A float
+value can be assigned to a double variable, but
+a double value cannot be assigned to a float
+variable.
+With a type cast, a value of any arithmetic
+type can be assigned to a variable of any other arithmetic type.
+Any reference can be assigned to a variable that is declared
+of type Object.
+A reference to an
+object can be assigned to a class-type reference variable if the
+class of the variable is the same class or a superclass of the class
+of the object.
+A reference to an object can be assigned
+to an interface-type reference variable if the class of the object
+implements the interface.
+A reference to an array can
+be assigned to an array variable if either of the following conditions
+is true:
+Both array types contain elements of the same
+type.
+Both array types contain object references and
+the type of reference contained in the elements of the array reference
+can be assigned to the type of reference contained in the elements
+of the variable.
+Here's an example that illustrates
+the rules about assignment compatibility of arrays:
+class Triangle extends Shape {...}
+...
+int[] i = new int[8];
+int j[];
+long l[];
+short s[];
+Triangle[] t;
+Shape[] sh;
+j = i;    // Okay
+s = i;    // Error
+l = i;    // Error
+sh = t;   // Okay
+t = sh;   // Error
+Assigning i
+to j is fine because both variables are declared
+as references to arrays that contain int values.
+On the other hand, assigning i to s
+is an error because the variables are declared as references to
+arrays that contain different kinds of elements and these elements
+are not object references. Assigning i to
+l
+is an error for the same reason. Assigning t
+to sh is fine because the variables are declared
+as references to arrays that contain object references, and
+sh[0]=t[0]
+is legal. However, assigning sh to t
+is an error because t[0]=sh[0] is not legal.
+It is not always possible for the compiler to determine if
+an assignment to an array element is legal; in these cases the assignment
+compatibility is checked at runtime. This situation can occur when
+a variable contains a reference to an array whose type of elements
+is specified by a class or interface name. In this case, it may
+not be possible to determine the actual type of the array elements
+until runtime. Consider the following example:
+void foo (InputStream a[]) {
+    a[0] = new FileInputStream("/dev/null");
+}
+Figure 4.1 shows
+the InputStream class
+and some of its subclasses in the java.io package.
+Figure 4.1: InputStream and some of its classes
+Any array with elements that contain references
+to objects of class InputStream or any of its
+subclasses can be passed to the method foo()
+shown in the above example. For example:
+FileInputStream f[] = new FileInputStream[3];
+foo(f);
+Since FileInputStream is a subclass of
+InputStream, the call to foo()
+does not cause any problems at runtime.
+However, the
+following call to foo() is problematic:
+DataInputStream f[] = new DataInputStream[3];
+foo(f);
+This call causes an ArrayStoreException
+to be thrown at runtime. Although DataInputStream
+is a subclass of InputStream, it is not a superclass
+of FileInputStream, so the array element assignment
+in foo() is not assignment-compatible.
+References
+Arithmetic Types;
+Array Types;
+Boolean Type;
+Class Types;
+Interface Types
+Conditional Operator
+Order of Operations
+ 
+ 
+ 
+ 
+ 
+ 
+ 

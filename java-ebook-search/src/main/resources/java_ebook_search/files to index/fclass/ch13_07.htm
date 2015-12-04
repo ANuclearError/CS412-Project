@@ -1,0 +1,308 @@
+
+[Chapter 13] Modifier
+Chapter 13The java.lang.reflect Package
+Modifier
+Name
+Modifier
+Synopsis
+Class Name:
+java.lang.reflect.Modifier
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The Modifier 
+class defines a number of constants and static methods that can decode the modifier values returned by the getModifiers() 
+methods of the Class, Constructor, 
+Field, and Method 
+classes. In other words, you can use the methods in this class to determine 
+the modifiers used to declare a class or a member of a class. The constants 
+in the Modifier class specify the bit values used to represent the various 
+modifiers in a modifier value. You can use these constants to test for 
+modifiers if you want to handle the boolean algebra yourself. 
+Class Summary
+public class java.lang.reflect.Modifier extends java.lang.Object {
+  // Constants
+  public final static int ABSTRACT;
+  public final static int FINAL;
+  public final static int INTERFACE;
+  public final static int NATIVE;
+  public final static int PRIVATE;
+  public final static int PROTECTED;
+  public final static int PUBLIC;
+  public final static int STATIC;
+  public final static int SYNCHRONIZED;
+  public final static int TRANSIENT;
+  public final static int VOLATILE;
+  // Class Methods
+  public static boolean isAbstract(int mod);
+  public static boolean isFinal(int mod);
+  public static boolean isInterface(int mod);
+  public static boolean isNative(int mod);
+  public static boolean isPrivate(int mod);
+  public static boolean isProtected(int mod);
+  public static boolean isPublic(int mod);
+  public static boolean isStatic(int mod);
+  public static boolean isSynchronized(int mod);
+  public static boolean isTransient(int mod);
+  public static boolean isVolatile(int mod);
+  public static String toString(int mod);
+}
+Constants
+ABSTRACT
+public final static int ABSTRACT
+Description
+A constant that represents the abstract 
+modifier. 
+FINAL
+public final static int FINAL
+Description
+A constant that represents the final 
+modifier. 
+INTERFACE
+public final static int INTERFACE
+Description
+A constant that represents the interface 
+keyword. 
+NATIVE
+public final static int NATIVE
+Description
+A constant that represents the native 
+modifier. 
+PRIVATE
+public final static int PRIVATE
+Description
+A constant that represents the private 
+modifier. 
+PROTECTED
+public final static int PROTECTED
+Description
+A constant that represents the protected 
+modifier. 
+PUBLIC
+public final static int PUBLIC
+Description
+A constant that represents the public 
+modifier. 
+STATIC
+public final static int STATIC
+Description
+A constant that represents the static 
+modifier. 
+SYNCHRONIZED
+public final static int SYNCHRONIZED
+Description
+A constant that represents the synchronized 
+modifier. 
+TRANSIENT
+public final static int TRANSIENT
+Description
+A constant that represents the transient 
+modifier. 
+VOLATILE
+public final static int VOLATILE
+Description
+A constant that represents the volatile 
+modifier.
+Class Methods
+isAbstract
+public static boolean isAbstract(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the abstract 
+modifier; false otherwise. 
+Description
+This method tests the given modifier value for the ABSTRACT 
+constant. 
+isFinal
+public static boolean isFinal(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the final modifier; 
+false otherwise. 
+Description
+This method tests the given modifier value for the FINAL 
+constant. 
+isInterface
+public static boolean isInterface(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the interface 
+keyword; false otherwise. 
+Description
+This method tests the given modifier value for the INTERFACE 
+constant. 
+isNative
+public static boolean isNative(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the native modifier; 
+false otherwise. 
+Description
+This method tests the given modifier value for the NATIVE 
+constant. 
+isPrivate
+public static boolean isPrivate(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the private 
+modifier; false otherwise. 
+Description
+This method tests the given modifier value for the PRIVATE 
+constant. 
+isProtected
+public static boolean isProtected(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the protected 
+modifier; false otherwise. 
+Description
+This method tests the given modifier value for the PROTECTED 
+constant. 
+isPublic
+public static boolean isPublic(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the public modifier; 
+false otherwise. 
+Description
+This method tests the given modifier value for the PUBLIC 
+constant. 
+isStatic
+public static boolean isStatic(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the static modifier; 
+false otherwise. 
+Description
+This method tests the given modifier value for the STATIC 
+constant. 
+isSynchronized
+public static boolean isSynchronized(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the synchronized 
+modifier; false otherwise. 
+Description
+This method tests the given modifier value for the SYNCHRONIZED 
+constant. 
+isTransient
+public static boolean isTransient(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the transient 
+modifier; false otherwise. 
+Description
+This method tests the given modifier value for the TRANSIENT 
+constant. 
+isVolatile
+public static boolean isVolatile(int mod)
+Parameters
+mod
+The modifier value 
+to test. 
+Returns
+true if the given modifier 
+value includes the volatile 
+modifier; false otherwise. 
+Description
+This method tests the given modifier value for the VOLATILE 
+constant. 
+toString
+public static String toString(int mod)
+Parameters
+mod
+The modifier value 
+to represent as a string. 
+Returns
+A string representation of the given modifier value. 
+Description
+This method returns a string that represents the given modifier value. 
+This string contains all of the modifiers specified by the given modifier 
+value. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+Constructor, 
+Field, 
+Member 
+Method
+BigDecimal
+ 
+ 
+ 
+ 
+ 
+ 
+ 

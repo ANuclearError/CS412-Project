@@ -1,0 +1,561 @@
+
+[Chapter 13] Field
+Chapter 13The java.lang.reflect Package
+Field
+Name
+Field
+Synopsis
+Class Name:
+java.lang.reflect.Field
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.reflect.Member
+Availability:
+New as of JDK 1.1 
+Description
+The Field 
+class represents a variable or constant in a class. A Field object can 
+be obtained by calling the getField() method of a Class object. Field 
+includes methods for getting the name, modifiers, type, and declaring class 
+of a field. The class also provides methods that can set and 
+retrieve the value of a field for a particular object. 
+Class Summary
+public final class java.lang.reflect.Field extends java.lang.Object
+                   implements java.lang.reflect.Member {
+  // Instance Methods
+  public boolean equals(Object obj); 
+  public native Object get(Object obj);
+  public native boolean getBoolean(Object obj);
+  public native byte getByte(Object obj);
+  public native char getChar(Object obj);
+  public Class getDeclaringClass();
+  public native double getDouble(Object obj);
+  public native float getFloat(Object obj);
+  public native int getInt(Object obj);
+  public native long getLong(Object obj);
+  public native int getModifiers();
+  public String getName();
+  public native short getShort(Object obj);
+  public Class getType();
+  public int hashCode();
+  public native void set(Object obj, Object value);
+  public native void setBoolean(Object obj, boolean z);
+  public native void setByte(Object obj, byte b);
+  public native void setChar(Object obj, char c);
+  public native void setDouble(Object obj, double d);
+  public native void setFloat(Object obj, float f);
+  public native void setInt(Object obj, int i);
+  public native void setLong(Object obj, long l);
+  public native void setShort(Object obj, short s);
+  public String toString();
+}
+Instance Methods
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of Field, 
+and it is equivalent to this Field. 
+get
+   public native Object get(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The value of this field in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object. If the 
+field is declared static, the 
+obj parameter is ignored. Otherwise, 
+the object supplied must be an instance of the class that declares this 
+field. If the field contains a value of a primitive type, the value is 
+wrapped in an appropriate object, and the object is returned. 
+getBoolean
+   public native boolean getBoolean(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The boolean value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a boolean.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a boolean. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getByte
+   public native byte getByte(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The byte value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a byte.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a byte. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getChar
+   public native char getChar(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The char value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a char.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a char. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getDeclaringClass
+public Class getDeclaringClass()
+Returns
+The Class 
+object that represents the class that declared this field. 
+Implements
+Member.getDeclaringClass() 
+Description
+This method returns the Class 
+object for the class in which this field is declared. 
+getDouble
+   public native double getDouble(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The double value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a double.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a double. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getFloat
+   public native float getFloat(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The float value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a float.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a float. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getInt
+   public native int getInt(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The int value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a int.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as an int. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getLong
+   public native long getLong(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The long value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a long.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a long. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getModifiers
+public native int getModifiers()
+Returns
+An integer that represents the modifier keywords used 
+to declare this field. 
+Implements
+Member.getModifiers() 
+Description
+This method returns an integer value that represents the modifiers of this 
+field. The Modifier class should decode the returned value. 
+getName
+public String getName()
+Returns
+The name of this field as a String. 
+Implements
+Member.getName() 
+Description
+This method returns the name of this field. 
+getShort
+   public native short getShort(Object obj) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be retrieved. 
+Returns
+The short value of this field 
+in the given object. 
+Throws
+IllegalArgumentException
+If obj is not the correct type, 
+or the field cannot be converted to a short.
+IllegalAccessException
+If the field is not accessible.
+NullPointerException
+If obj is null. 
+Description
+This method returns the value of this field in the given object as a short. 
+If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. 
+getType
+public Class getType()
+Returns
+The Class 
+object that represents the type of this field. 
+Description
+This method returns the Class 
+object for the type of this field. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this Field. 
+set
+   public native void set(Object obj, Object value) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+value
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or value 
+cannot be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+value. If the field is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this field. If the field contains a value of a primitive type, the given 
+value is automatically unwrapped before it is used to set the value of 
+the field. 
+setBoolean
+   public native void setBoolean(Object obj, boolean z) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+z
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or z cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+boolean value. If the field 
+is declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setByte
+   public native void setByte(Object obj, byte b) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+b
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or b cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+byte value. If the field is 
+declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setChar
+   public native void setChar(Object obj, char c) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+c
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or c cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+char value. If the field is 
+declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setDouble
+   public native void setDouble(Object obj, double d) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+d
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or d cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+double value. If the field 
+is declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setFloat
+   public native void setFloat(Object obj, float f) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+f
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or f cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+float value. If the field is 
+declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setInt
+   public native void setInt(Object obj, int i) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+i
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or i cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+int value. If the field is 
+declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setLong
+   public native void setLong(Object obj, long l) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+l
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or l cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+long value. If the field is 
+declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+setShort
+   public native void setShort(Object obj, short s) throws IllegalArgumentException, IllegalAccessException  
+Parameters
+obj
+The instance whose field value is to be set.
+s
+The new value. 
+Throws
+IllegalArgumentException
+If obj is not an instance of 
+the correct class, or s cannot 
+be converted to the correct type.
+IllegalAccessException
+If the field is not accessible or declared final.
+NullPointerException
+If obj is null. 
+Description
+This method sets the value of this field in the given object to the given 
+short value. If the field is 
+declared static, the obj 
+parameter is ignored. Otherwise, the object supplied must be an instance 
+of the class that declares this field. 
+toString
+public String toString()
+Returns
+A string representation of this object. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Field. 
+This string contains the access modifiers of the field, if any, followed 
+by the type, the fully qualified name of the declaring class, a period, 
+and the name of the field. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+Constructor, 
+IllegalAccessException, 
+IllegalArgumentException, 
+Member, 
+Method, 
+Modifier, 
+NullPointerException, 
+Object 
+Constructor
+InvocationTargetException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

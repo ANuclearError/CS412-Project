@@ -1,0 +1,120 @@
+
+[Chapter 7] 7.2 Packages
+Chapter 7Program Structure
+7.2 Packages
+A package is a group of classes. If a class is not declared as
+public,
+it can only be referenced by other classes in the same package.
+A class is specified as being part of a particular package by a
+package directive at the beginning of its compilation unit:
+A package directive can only occur at the beginning
+of a compilation unit (ignoring comments and white space). If there
+is no package directive in a compilation unit,
+the compilation unit is part of the default package.
+A package is identified by its name. However, the default package
+has no name. Here are some examples of package directives:
+package tools.text;
+package COM.geomaker;
+A class or interface definition can refer to class and interface
+definitions in a different package by qualifying the class or interface
+name with the package name and a period. For example, you can refer
+to the Socket class as follows:
+java.net.Socket
+However, if
+you attempt to use a non-public class or interface
+defined in another package, the Java compiler issues an error message.
+An import directive, described in the next section, makes the class and interface definitions in
+another package available by their simple names. In other words,
+if you use an import directive, you do not have
+to qualify the names of the classes and interfaces in the package
+with the package name.
+In Sun's implementation of Java,
+the name of the package for a given compilation unit is used to
+determine the directories that the Java interpreter searches to
+find the compiled Java code (i.e., the .class
+file) for the compilation unit. The Java interpreter uses a two-step
+process to find the compiled code for a class in a named package:
+The name of the package is converted into a relative path.
+Each identifier in the package name becomes the name of a directory
+in this relative path. (This scheme assumes that the Java interpreter
+is operating in an environment that supports a hierarchical file
+system.)
+The relative path is appended to the directories
+specified in the CLASSPATH
+environment variable and the resulting paths are searched for the
+.class file.
+If the Java interpreter
+is searching for the compiled code for a class that is in the default
+package, it simply searches the directories specified in the
+CLASSPATH environment variable.
+For example, say that the value of the CLASSPATH
+environment variable is as follows:[1]
+[1] 
+This example
+uses Windows syntax for directory names. The syntax for directory
+names is different in other environments. In particular, the character
+used to separate directory names varies in other environments.
+\java\classes;.\; 
+In this case, the Java interpreter searches for the
+.class files for classes in the
+package named COM.geomaker in the
+following directories:
+\java\classes\COM\geomaker
+.\COM\geomaker
+If a package name contains a Unicode character that cannot
+directly appear in a directory name, the character is represented
+in the directory name by an "at" sign (@) followed
+by one to four hexadecimal digits. For example, the package name:
+COM.geomaker.hg\u00f8
+becomes the relative path:
+\COM\geomaker\hg@f8
+Java classes can also be retrieved out of a .zip
+file if the file is specified as part of the
+CLASSPATH. For instance, the value of
+CLASSPATH could be set as follows:
+\java\classes;\java\classes.zip;.\; 
+When the Java interpreter finds a .zip file in
+the CLASSPATH, it searches the
+.zip file for the appropriate
+.class file. The core classes in the Java API are
+supplied in a file that is typically named something like
+jdk1.1/lib/classes.zip. As of Java 1.1, you do
+not normally need to put that .zip file in
+CLASSPATH because the Java interpreter
+automatically puts startDir/../classes.zip on the
+end of CLASSPATH (where
+startDir is the directory that contains the
+interpreter's executable file).
+The Java
+language specification defines a scheme for creating package names
+that should be globally unique. Since Internet domain names are
+globally unique, the idea is to incorporate them into package names.
+This is done by reversing the order of the components of the domain
+name, capitalizing the top-level component of the domain name, and
+using the result as a prefix for the descriptive portion of a package
+name. For example, if different organizations were to create packages
+that they all wanted to call opinion_poll, they
+could use this scheme to ensure global uniqueness. The resulting
+package names might be:
+COM.cnn.opinion_poll
+GOV.whitehouse.opinion_poll
+EDU.syracuse.newhouse.opinion_poll
+Package names that begin with an identifier that does not
+contain all uppercase letters are reserved for use as local package
+names. The one exception is package names that begin with the identifier
+java, which are reserved for packages that are part
+of the standard Java distribution.
+References
+Class Declarations;
+Identifiers;
+Interface Declarations;
+The import Directive
+Compilation Units
+The import Directive
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,61 @@
+
+[Chapter 22] 22.6 java.awt.peer.ComponentPeer (JDK 1.0)
+Chapter 22The java.awt.peer Package
+22.6 java.awt.peer.ComponentPeer (JDK 1.0)
+public abstract interface ComponentPeer {
+    // Public Instance Methods
+            public abstract int checkImage(Image img, int w, int h, ImageObserver o);
+            public abstract Image createImage(ImageProducer producer);
+            public abstract Image createImage(int width, int height);
+            public abstract void disable();
+            public abstract void dispose();
+            public abstract void enable();
+            public abstract ColorModel getColorModel();
+            public abstract FontMetrics getFontMetrics(Font font);
+            public abstract Graphics getGraphics();
+        1.1  public abstract Point getLocationOnScreen();
+        1.1  public abstract Dimension getMinimumSize();
+        1.1  public abstract Dimension getPreferredSize();
+            public abstract Toolkit getToolkit();
+        1.1  public abstract void handleEvent(AWTEvent e);
+            public abstract void hide();
+        1.1  public abstract boolean isFocusTraversable();
+            public abstract Dimension minimumSize();
+            public abstract void paint(Graphics g);
+            public abstract Dimension preferredSize();
+            public abstract boolean prepareImage(Image img, int w, int h, ImageObserver o);
+            public abstract void print(Graphics g);
+            public abstract void repaint(long tm, int x, int y, int width, int height);
+            public abstract void requestFocus();
+            public abstract void reshape(int x, int y, int width, int height);
+            public abstract void setBackground(Color c);
+        1.1  public abstract void setBounds(int x, int y, int width, int height);
+        1.1  public abstract void setCursor(Cursor cursor);
+        1.1  public abstract void setEnabled(boolean b);
+            public abstract void setFont(Font f);
+            public abstract void setForeground(Color c);
+        1.1  public abstract void setVisible(boolean b);
+            public abstract void show();
+}
+Extended By:
+ButtonPeer, 
+CanvasPeer, 
+CheckboxPeer, 
+ChoicePeer, 
+ContainerPeer, 
+LabelPeer, 
+LightweightPeer, 
+ListPeer, 
+ScrollbarPeer, 
+TextComponentPeer
+Returned By:
+Component.getPeer()
+java.awt.peer.ChoicePeer (JDK 1.0)
+java.awt.peer.ContainerPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

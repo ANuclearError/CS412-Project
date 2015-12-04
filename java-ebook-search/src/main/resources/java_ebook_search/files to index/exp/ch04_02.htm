@@ -1,0 +1,91 @@
+
+[Chapter 4] 4.2 Comments
+Chapter 4The Java Language
+4.2 Comments
+Java supports both C-style block comments delimited by
+/* and */ and C++-style line
+comments indicated by //:
+/*  This is a 
+        multiline 
+            comment.    */ 
+ 
+// This is a single line comment 
+// and so // is this 
+As in C, block comments can't be nested. Single-line comments are
+delimited by the end of a line; extra // indicators
+inside a single line have no effect. Line comments are useful for
+short comments within methods because you can still wrap block
+comments around large chunks of code during development.
+By convention, a block comment beginning with
+/** indicates a special "doc comment."
+A doc comment is commentary that is extracted by automated
+documentation generators, such as Sun's
+javadoc program that comes with the Java
+Development Kit. A doc comment is terminated by the next
+*/, just as with a regular block comment. Leading
+spacing up to a * on each line is ignored; lines
+beginning with @ are interpreted as special tags
+for the documentation generator:
+/** 
+ * I think this class is possibly the most amazing thing you will 
+ * ever see. Let me tell you about my own personal vision and
+ * motivation in creating it. 
+ * &lt;p&gt; 
+ * It all began when I was a small child, growing up on the 
+ * streets of Idaho. Potatoes were the rage, and life was good... 
+ * 
+ * @see PotatoPeeler 
+ * @see PotatoMasher 
+ * @author John 'Spuds' Smith 
+ * @version 1.00, 19 Dec 1996 
+ */ 
+ 
+javadoc creates HTML class
+documentation by reading the source code and the embedded
+comments. The author and version information is presented in the
+output and the @see tags make hypertext links to
+the appropriate class documentation. The compiler also looks at the
+doc comments; in particular, it is interested in the
+@deprecated tag, which means that the
+method has been declared obsolete and should be avoided in new
+programs. The compiler generates a warning message whenever it sees
+you use a deprecated feature in your code.
+Doc comments can appear above class, method, and variable
+definitions, but some tags may not be applicable to all. For example,
+a variable declaration can contain only a @see
+tag. Table 4.1 summarizes the tags used in doc
+comments.
+Table 4.1: Doc Comment Tags
+Tag
+Description
+Applies to
+@see
+Associated class name
+Class, method, or variable
+@author
+Author name
+Class
+@version
+Version string
+Class
+@param
+Parameter name and description
+Method
+@return
+Description of return value
+Method
+@exception
+Exception name and description
+Method
+@deprecated
+Declares an item obsolete
+Class, method, or variable
+Text Encoding
+Types
+ 
+ 
+ 
+ 
+ 
+ 
+ 

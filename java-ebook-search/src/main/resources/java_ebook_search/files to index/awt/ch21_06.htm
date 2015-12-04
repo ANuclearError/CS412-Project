@@ -1,0 +1,87 @@
+
+[Chapter 21] ComponentEvent 
+Chapter 21java.awt.event Reference
+ComponentEvent 
+Name
+ComponentEvent 
+Description
+Component events are generated when a component is shown, hidden, moved, 
+or resized. AWT automatically deals with component moves and resizing; 
+these events are provided only for notification. Subclasses of ComponentEvent 
+deal with other specific component-level events. 
+Class Definition
+public class java.awt.event.ComponentEvent
+   extends java.awt.AWTEvent {
+  // Constants
+  public final static int COMPONENT_FIRST;
+  public final static int COMPONENT_HIDDEN;
+  public final static int COMPONENT_LAST;
+  public final static int COMPONENT_MOVED;
+  public final static int COMPONENT_RESIZED;
+  public final static int COMPONENT_SHOWN;
+  // Constructors
+  public ComponentEvent (Component source, int id);
+  // Instance Methods
+  public Component getComponent();
+  public String paramString();
+}
+Constants
+COMPONENT_FIRST
+public final static int COMPONENT_FIRST
+Specifies the beginning range of component event ID values. 
+COMPONENT_HIDDEN
+public final static int COMPONENT_HIDDEN
+Event type ID indicating that the component was hidden. 
+COMPONENT_LAST
+public final static int COMPONENT_LAST
+Specifies the ending range of component event ID values. 
+COMPONENT_MOVED
+public final static int COMPONENT_MOVED
+Event type ID indicating that the component was moved. 
+COMPONENT_RESIZED
+public final static int COMPONENT_RESIZED
+Event type ID indicating that the component was resized. 
+COMPONENT_SHOWN
+public final static int COMPONENT_SHOWN
+Event type ID indicating that the component was shown. 
+Constructors
+ComponentEvent
+public ComponentEvent (Component source, int id)
+Parameters
+source
+The object that 
+generated the event.
+id
+The event type ID of 
+the event. 
+Description
+Constructs a ComponentEvent 
+with the given characteristics. 
+Instance Methods
+getComponent
+public Component getComponent()
+Returns
+The source of this event. 
+paramString
+public String paramString()
+Returns
+String with current settings of the ComponentEvent. 
+Overrides
+AWTEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+AWTEvent, Component, 
+ComponentAdapter, ComponentListener, ContainerEvent, FocusEvent, 
+InputEvent, PaintEvent, 
+WindowEvent 
+ComponentAdapter 
+ComponentListener 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

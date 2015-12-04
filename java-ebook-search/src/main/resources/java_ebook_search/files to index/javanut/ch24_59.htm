@@ -1,0 +1,95 @@
+
+[Chapter 24] 24.59 java.io.Serializable (JDK 1.1)
+Chapter 24The java.io Package
+24.59 java.io.Serializable (JDK 1.1)
+The Serializable interface defines no methods or
+constants. A class should implement this interface simply
+to indicate that it allows itself to be serialized
+and deserialized with
+ObjectOutputStream.writeObject() and
+ObjectInputStream.readObject(). 
+Objects that need special handling during
+serialization or deserialization may implement one or both
+of the following methods.  Note, however, that these methods
+are not part of the Serializable interface:
+private void writeObject(java.io.ObjectOutputStream out) 
+                  throws IOException
+private void readObject(java.io.ObjectInputStream in)
+                    throws IOException, ClassNotFoundException;
+Typically the writeObject() method performs any
+necessary cleanup or preparation for serialization,
+invokes the defaultWriteObject() method of the
+ObjectOutputStream to serialize the
+non-transient fields of the class, and then
+optionally writes any additional data that are required.
+Similarly, the readObject() method typically
+invokes the defaultReadObject() method of the
+ObjectInputStream, reads any additional data
+written by the corresponding writeObject() method,
+and finally performs any extra initialization required by the
+object.  The readObject() method may also register
+an ObjectInputValidation object to validate the
+object once it is completely deserialized.
+public interface Serializable {
+}
+Extended By:
+Externalizable
+Implemented By:
+BitSet, 
+Boolean, 
+BorderLayout, 
+BreakIterator, 
+Calendar, 
+CardLayout, 
+Character, 
+CheckboxGroup, 
+Class, 
+Collator, 
+Color, 
+Component, 
+Cursor, 
+Date, 
+DateFormatSymbols, 
+DecimalFormatSymbols, 
+Dimension, 
+Event, 
+EventObject, 
+File, 
+FlowLayout, 
+Font, 
+FontMetrics, 
+Format, 
+GridBagConstraints, 
+GridBagLayout, 
+GridLayout, 
+Hashtable, 
+InetAddress, 
+Insets, 
+Locale, 
+MediaTracker, 
+MenuComponent, 
+MenuShortcut, 
+Number, 
+ObjectStreamClass, 
+Point, 
+Polygon, 
+PropertyChangeSupport, 
+Random, 
+Rectangle, 
+String, 
+StringBuffer, 
+SystemColor, 
+Throwable, 
+TimeZone, 
+URL, 
+Vector, 
+VetoableChangeSupport
+java.io.SequenceInputStream (JDK 1.0)
+java.io.StreamCorruptedException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

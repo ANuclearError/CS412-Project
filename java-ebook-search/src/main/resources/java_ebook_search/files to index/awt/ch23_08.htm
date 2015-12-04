@@ -1,0 +1,46 @@
+
+[Chapter 23] DialogPeer
+Chapter 23java.awt.peer Reference
+DialogPeer
+Name
+DialogPeer
+Description
+DialogPeer is an interface 
+that defines the basis for a dialog box. 
+Interface Definition
+public abstract interface java.awt.peer.DialogPeer
+   extends java.awt.peer.WindowPeer {
+  // Interface Methods
+  public abstract void setResizable (boolean resizable);
+  public abstract void setTitle (String title);
+}
+Interface Methods
+setResizable
+public abstract void setResizable (boolean resizable)
+Parameters
+resizable
+true 
+if the dialog's peer should allow resizing; false 
+to prevent resizing. 
+Description
+Changes the resize state of the dialog's peer. 
+setTitle
+public abstract void setTitle (String title)
+Parameters
+title
+New title for the 
+dialog's peer. 
+Description
+Changes the title of the dialog's peer. 
+See Also
+FileDialogPeer, String, 
+WindowPeer 
+ContainerPeer
+FileDialogPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

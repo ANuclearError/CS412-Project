@@ -1,0 +1,197 @@
+
+[Chapter 19] Font
+Chapter 19java.awt Reference
+Font
+Name
+Font
+Description
+The Font class represents a 
+specific font to the system. 
+Class Definition
+public class java.awt.Font
+    extends java.lang.Object
+    implements java.io.Serializable {
+  
+  // Constants
+  public static final int BOLD;
+  public static final int ITALIC;
+  public static final int PLAIN;
+  
+  // Variables
+  protected String name;
+  protected int size;
+  protected int style;
+  
+  // Constructors
+  public Font (String name, int style, int size);
+  
+  // Class Methods
+  public static Font decode (String str); 
+  public static Font getFont (String name)
+  public static Font getFont (String name, Font defaultFont)
+  
+  // Instance Methods
+  public boolean equals (Object object);
+  public String getFamily();
+  public String getName();
+  public FontPeer getPeer(); 
+  public int getSize();
+  public int getStyle();
+  public int hashCode();
+  public boolean isBold();
+  public boolean isItalic();
+  public boolean isPlain();
+  public String toString();
+}
+Constants
+BOLD
+public static final int BOLD
+Constant for specifying bold fonts. 
+ITALIC
+public static final int ITALIC
+Constant for specifying fonts. 
+PLAIN
+public static final int PLAIN
+Constant for specifying plain fonts. 
+Variables
+name
+protected String name
+The font's logical name. 
+size
+protected int size
+The font size; allegedly in points, though probably not true typographer's 
+points. 
+style
+protected int style
+The font style, e.g., bold or italic or a combination thereof. 
+Constructors
+Font
+public Font (String name, int style, int size)
+Parameters
+name
+The name of the desired font. 
+style
+One of the style flags (PLAIN, 
+BOLD, or ITALIC) 
+or a combination. 
+size
+The size of the font to create. 
+Description
+Constructs a Font object with 
+the given characteristics. 
+Class Methods
+decode
+public static Font decode (String str) 
+Parameters
+str
+The string describing 
+the font. 
+Returns
+Font instance requested, or 
+default if str is invalid. 
+Description
+Gets font specified by str. 
+getFont
+public static Font getFont (String name)
+Parameters
+name
+The name of a system 
+property specifying a font to fetch. 
+Returns
+Font instance for name requested, 
+or null if name is invalid. 
+Description
+Gets font specified by the system property name. 
+public static Font getFont (String name, Font defaultFont)
+Parameters
+name
+The name of a system 
+property specifying a font to fetch. 
+defaultFont
+Font to return 
+if name not found in properties. 
+Returns
+Font instance of name requested, 
+or defaultFont if name 
+is invalid 
+Description
+Gets font specified by the system property name. 
+Instance Methods
+equals
+public boolean equals (Object object)
+Parameters
+object
+The object to compare. 
+Returns
+true if the objects are equivalent 
+fonts (same name, style, and point size), false 
+otherwise. 
+Overrides 
+Object.equals(Object) 
+Description
+Compares two different Font 
+instances for equivalence. 
+getFamily
+public String getFamily()
+Returns
+Retrieves the actual name of the font. 
+getName
+public String getName()
+Returns
+Retrieves the logical name of the font. 
+getPeer
+public FontPeer getPeer() 
+Returns
+The font's peer. 
+getSize
+public int getSize()
+Returns
+Retrieves the size parameter from creation 
+getStyle
+public int getStyle()
+Returns
+Retrieves the style parameter from creation. 
+hashCode
+public int hashCode()
+Returns
+A hashcode to use when using the Font 
+as a key in a Hashtable. 
+Overrides 
+Object.hashCode() 
+Description
+Generates a hashcode for the Font. 
+isBold
+public boolean isBold()
+Returns
+true if Font style 
+is bold, false otherwise. 
+isItalic
+public boolean isItalic()
+Returns
+true if Font style 
+is italic, false otherwise. 
+isPlain
+public boolean isPlain()
+Returns
+true if Font style 
+is neither bold nor italic, false 
+otherwise. 
+toString
+public String toString()
+Returns
+A string representation of the Font 
+object. 
+Overrides 
+Object.toString() 
+See Also
+FontMetrics, Object, 
+Properties, String 
+FlowLayout
+FontMetrics
+ 
+ 
+ 
+ 
+ 
+ 
+ 

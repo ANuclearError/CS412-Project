@@ -1,0 +1,161 @@
+
+[Chapter 4] 4.6 Internationalization
+Chapter 4What's New in Java 1.1
+4.6 Internationalization
+Internationalization
+[1]
+is the process of enabling a program to run internationally.
+That is, an internationalized program has the flexibility to
+run correctly in any country.  Once a program has been
+internationalized, enabling it to run in a particular
+country and/or language is merely a matter of "localizing" it
+for that country and language, or locale.
+[1] 
+This word is sometimes abbreviated I18N, because there are
+18 letters between the first I and the last N.
+You might think that the main task of localization is the
+matter of translating a program's user-visible text into
+a local language.  While this is an important task,
+it is not by any means the only one.  Other concerns
+include displaying dates and times in the
+customary format for the locale, displaying number and
+currency values in the customary format for the locale, and
+sorting strings in the customary order for the locale.
+Underlying all these localization issues is the even more
+fundamental issue of character encodings.  Almost every
+useful program must perform input and output of text, and
+before we can even think about textual I/O, we must be able
+to work with the local character encoding standard.  This
+hurdle to internationalization lurks slightly below the
+surface, and is not very "programmer-visible."
+Nevertheless, it is one of the most important and difficult
+issues in internationalization.
+As described in Chapter 11, Internationalization,
+Java 1.1 provides facilities that address all of these
+internationalization issues.  If you write programs that
+correctly make use of these facilities, the task of
+localizing your program for a new country really does boil
+down to the relatively simple matter of hiring a translator
+to convert your program's messages.  With the expansion of
+the global economy, and particularly of the global Internet,
+writing internationalized programs is going to become more
+and more important, and you should begin to take advantage
+of Java's internationalization capabilities right away.
+There are several distinct pieces to the problem of
+internationalization, and Java's solution to this problem
+also comes in distinct pieces.  The first issue in
+internationalization is the matter of knowing what locale
+a program is running in.  A locale is typically defined as a
+political, geographical, or cultural region that has a
+distinct language or distinct conventions for things such as
+date and time formats.  The notion of a locale is
+encapsulated in Java 1.1 by the Locale class, which
+is part of the java.util package.  Every Java
+program has a default locale, which is inherited from the
+operating system (where it may be set by the user).
+A program can simply rely on this default, or it can
+change the default.  Additionally, all Java methods that
+rely on the default locale also have variants that allow you
+to explicitly specify a locale.  Typically, though, using
+the default locale is exactly what you want to do.
+Once a program knows what locale it is running in, the most
+fundamental internationalization issue, as noted above, is
+the ability to read and write localized text.  Since Java
+uses the Unicode encoding for its characters and strings,
+any character of any commonly-used modern written language
+is representable in a Java program, which puts Java at a
+huge advantage over older languages such as C and C++.
+Thus, working with localized text is merely a matter of
+converting from the local character encoding to Unicode when
+reading text, such as a file or input from the user, and
+converting from Unicode to the local encoding when writing
+text.  Java's solution to this problem is in the
+java.io package, in the form of a new suite of
+character-based input and output streams (known as "readers"
+and "writers") that complement the existing byte-based input
+and output streams.
+The FileReader class, for example, is a
+character-based input stream used to read characters (which
+are not the same as bytes in all languages) from a file.
+The FileReader class assumes that the specified file
+is encoded using the default character encoding for the
+default locale, so it converts characters from the local
+encoding to Unicode characters as it reads them.  In most
+cases, this assumption is a good one, so all you need to
+do to internationalize the character set handling of your
+program is to switch from a FileInputStream to a
+FileReader object, and make similar switches for text
+output as well.  On the other hand, if you need to read a
+file that is encoded using some character set other than the
+default character set of the default locale, you can use a
+FileInputStream to read the bytes of the file, and
+then use an InputStreamReader to convert the stream
+of bytes to a stream of characters.  When you create an
+InputStreamReader, you specify the name of the
+encoding in use, and it performs the appropriate
+conversion automatically.
+As you can see, internationalizing the character set of your
+programs is a simple matter of switching from byte I/O
+streams to character I/O streams.  Internationalizing other
+aspects of your program requires a little more effort.  The
+classes in the java.text package are designed to
+allow you to internationalize your handling of numbers,
+dates, times, string comparisons, and so on.
+NumberFormat is used to convert numbers, monetary
+amounts, and percentages to an appropriate textual format
+for a locale.  Similarly, the DateFormat class,
+along with the Calendar and TimeZone classes
+from the java.util package, are used to display dates
+and times in a locale-specific way.  The Collator
+class is used to compare strings according to the
+alphabetization rules of a given locale, and the
+BreakIterator class is used to locate word, line,
+and sentence boundaries.
+The final major problem of internationalization is making
+your program flexible enough to display messages (or any
+type of user-visible text, such as the labels on GUI
+buttons) to the user in an appropriate language for the
+current locale.  Typically, this means that the program
+cannot use hard-coded messages and must instead read in a
+set of messages at run-time, based on the locale setting.
+Java provides an easy way to do this.  You define your
+messages as key/value pairs in a ResourceBundle
+subclass.  Then, you create a subclass of
+ResourceBundle for each language or locale your
+application supports, naming each class following a
+convention that includes the locale name.
+At run-time, you can use the
+ResourceBundle.getBundle() method to load the
+appropriate ResourceBundle class for the current
+locale.  The ResourceBundle contains the messages
+your application uses, each associated with a key, that
+serves as the message name.  Using this technique, your application can look
+up a locale-dependent message translation based on a
+locale-independent message name.  Note that this technique
+is useful for things other than textual messages.  It can be
+used to internationalize icons, or any other
+locale-dependent object used by your application.
+There is one final twist to this problem of
+internationalizing messages.  Often, we want to output
+messages such as, "Error at line 5 of file hello.java.",
+where parts of the message are static, and parts are
+dynamically generated at run-time (such as the line number
+and filename above).  This is further complicated by the fact
+that when we translate such messages the values we
+substitute in at run-time may appear in a different order.
+For example, in some different English speaking locale, we
+might want to display the line above as: "hello.java: error
+at line 5". The MessageFormat class of the
+java.text package allows you to substitute dynamic
+values into static messages in a very flexible way and
+helps tremendously with this situation, particularly when
+used in conjunction with resource bundles.
+Other AWT Improvements
+Object Serialization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

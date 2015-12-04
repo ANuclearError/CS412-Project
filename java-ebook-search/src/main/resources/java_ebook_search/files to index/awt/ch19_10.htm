@@ -1,0 +1,197 @@
+
+[Chapter 19] Checkbox
+Chapter 19java.awt Reference
+Checkbox
+Name
+Checkbox
+Description
+The Checkbox is a Component 
+that provides a true or false toggle switch for user input. 
+Class Definition
+public class java.awt.Checkbox
+    extends java.awt.Component
+    implements java.awt.ItemSelectable {
+  
+  // Constructors
+  public Checkbox();
+  public Checkbox (String label);
+  public Checkbox (String label, boolean state); 
+  public Checkbox (String label, boolean state, CheckboxGroup group); 
+  public Checkbox (String label, CheckboxGroup group, boolean state);
+  
+  // Instance Methods
+  public void addItemListener (ItemListener l); 
+  public void addNotify();
+  public CheckboxGroup getCheckboxGroup();
+  public String getLabel();
+  public Object[] getSelectedObjects(); 
+  public boolean getState();
+  public void removeItemListener (ItemListener l); 
+  public void setCheckboxGroup (CheckboxGroup group);
+  public synchronized void setLabel (String label);
+  public void setState (boolean state);
+  
+  // Protected Instance Methods
+  protected String paramString();
+  protected void processEvent (AWTEvent e); 
+  protected void processItemEvent (ItemEvent e); 
+}
+Constructors
+Checkbox
+public Checkbox()
+Description
+Constructs a Checkbox object 
+with no label that is initially false. 
+public Checkbox (String label)
+Parameters
+label
+Text to display with the Checkbox. 
+Description
+Constructs a Checkbox object 
+with the given label that 
+is initially false. 
+public Checkbox (String label, boolean state) 
+Parameters
+label
+Text to display with the Checkbox. 
+state
+Intial value of the Checkbox. 
+Description
+Constructs a Checkbox with 
+the given label, initialized 
+to the given state. 
+public Checkbox (String label, boolean state, CheckboxGroup group) 
+Parameters
+label
+Text to display with the Checkbox. 
+state
+Intial value of the Checkbox. 
+group
+The CheckboxGroup this Checkbox should belong to. 
+Description
+Constructs a Checkbox with 
+the given label, initialized 
+to the given state and belonging 
+to group. 
+public Checkbox (String label, CheckboxGroup group, boolean state)
+Parameters
+label
+Text to display with the Checkbox. 
+group
+The CheckboxGroup this Checkbox should belong to. 
+state
+Intial value of the Checkbox. 
+Description
+Constructs a Checkbox object 
+with the given settings.
+Instance Methods
+addItemListener
+public void addItemListener (ItemListener l) 
+Parameters
+l
+The listener to be added. 
+Implements
+ItemSelectable.addItemListener(ItemListener 
+l) 
+Description
+Adds a listener for the ItemEvent 
+objects this Checkbox generates. 
+addNotify
+public void addNotify()
+Overrides
+Component.addNotify() 
+Description
+Creates Checkbox peer. 
+getCheckboxGroup
+public CheckboxGroup getCheckboxGroup()
+Returns
+The current CheckboxGroup associated 
+with the Checkbox, if any. 
+getLabel
+public String getLabel()
+Returns
+The text associated with the Checkbox. 
+getSelectedObjects
+public Object[] getSelectedObjects() 
+Implements
+ItemSelectable.getSelectedObjects() 
+Description
+If the Checkbox is checked, 
+returns an array with length 1 containing the label of the Checkbox; 
+otherwise returns null. 
+getState
+public boolean getState()
+Returns
+The current state of the Checkbox. 
+removeItemListener
+public void removeItemListener (ItemListener l) 
+Parameters
+l
+The listener to be removed. 
+Implements
+ItemSelectable.removeItemListener (ItemListener l) 
+Description
+Removes the specified ItemListener 
+so it will not receive ItemEvent 
+objects from this Checkbox. 
+setCheckboxGroup
+public void setCheckboxGroup (CheckboxGroup group)
+Parameters
+group
+New group in which to place the Checkbox. 
+Description
+Associates the Checkbox with 
+a different CheckboxGroup. 
+setLabel
+public synchronized void setLabel (String label)
+Parameters
+label
+New text to associate with Checkbox. 
+Description
+Changes the text associated with the Checkbox. 
+setState
+public void setState (boolean state)
+Parameters
+state
+New state for the Checkbox. 
+Description
+Changes the state of the Checkbox. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of Checkbox. 
+Overrides
+Component.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+processEvent
+protected void processEvent(AWTEvent e) 
+Parameters
+e
+The event to process. 
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+processItemEvent
+protected void processItemEvent(ItemEvent e) 
+Parameters
+e
+The item event to process. 
+Description
+Item events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+See Also
+CheckboxGroup, Component, 
+ItemEvent, ItemSelectable, 
+String 
+CardLayout
+CheckboxGroup
+ 
+ 
+ 
+ 
+ 
+ 
+ 

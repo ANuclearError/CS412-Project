@@ -1,0 +1,39 @@
+
+[Chapter 28] 28.15 java.net.ServerSocket (JDK 1.0)
+Chapter 28The java.net Package
+28.15 java.net.ServerSocket (JDK 1.0)
+This class is used by servers to listen for connection
+requests from clients. When you create a
+ServerSocket, you specify the port to listen on.
+The accept() method begins listening on that port,
+and blocks until a client requests a connection on that
+port.  At that point, accept() accepts the
+connection, creating and returning a Socket that the
+server can use to communicate with the client.
+public class ServerSocket extends Object {
+    // Public Constructors
+            public ServerSocket(int port) throws IOException;
+            public ServerSocket(int port, int backlog) throws IOException;
+        1.1public ServerSocket(int port, int backlog, InetAddress bindAddr) throws IOException;
+    // Class Methods
+            public static synchronized void setSocketFactory(SocketImplFactory fac) throws IOException;
+    // Public Instance Methods
+            public Socket accept() throws IOException;
+            public void close() throws IOException;
+            public InetAddress getInetAddress();
+            public int getLocalPort();
+        1.1public synchronized int getSoTimeout() throws IOException;
+        1.1public synchronized void setSoTimeout(int timeout) throws SocketException;
+            public String toString();  // Overrides Object
+    // Protected Instance Methods
+        1.1  protected final void implAccept(Socket s) throws IOException;
+}
+java.net.ProtocolException (JDK 1.0)
+java.net.Socket (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

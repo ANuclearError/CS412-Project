@@ -1,0 +1,40 @@
+
+[Chapter 30] 30.11 java.util.ListResourceBundle (JDK 1.1)
+Chapter 30The java.util Package
+30.11 java.util.ListResourceBundle (JDK 1.1)
+This abstract class provides a simple way to define a
+ResourceBundle.  You may find it easier to subclass
+ListResourceBundle than to subclass
+ResourceBundle directly.
+ListResourceBundle provides implementations for the
+abstract handleGetObject() and getKeys()
+methods defined by ResourceBundle, and it adds its
+own abstract getContents() method that your
+subclasses must override.  getContents() returns an
+Object[][]--an array of arrays of objects.  This
+array can have any number of elements.  Each element of this
+array must itself be an array with two elements: the first
+element of each subarray should be a String that specifies
+the name of a resource, and the corresponding second element
+should be the value of that resource--this value can be an
+Object of any desired type.
+See also ResourceBundle and PropertyResourceBundle.
+public abstract class ListResourceBundle extends ResourceBundle {
+    // Default Constructor: public ListResourceBundle()
+    // Public Instance Methods
+            public Enumeration getKeys();  // Defines ResourceBundle
+            public final Object handleGetObject(String key);  // Defines ResourceBundle
+    // Protected Instance Methods
+            protected abstract Object[][] getContents();
+}
+Hierarchy:
+Object->ResourceBundle->ListResourceBundle
+java.util.Hashtable (JDK 1.0)
+java.util.Locale (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

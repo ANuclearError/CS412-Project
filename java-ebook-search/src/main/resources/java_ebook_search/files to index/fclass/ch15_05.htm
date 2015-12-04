@@ -1,0 +1,185 @@
+
+[Chapter 15] DatagramPacket
+Chapter 15The java.net Package
+DatagramPacket
+Name
+DatagramPacket
+Synopsis
+Class Name:
+java.net.DatagramPacket
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The DatagramPacket class represents 
+a packet of data that can be sent and received over the network using a 
+DatagramSocket. The class is 
+used to implement connectionless data communication. 
+Class Summary
+public final class java.net.DatagramPacket extends java.lang.Object {
+  // Constructors
+  public DatagramPacket(byte[] ibuf, int ilength);
+  public DatagramPacket(byte[] ibuf, int ilength, 
+                        InetAddress iaddr, int iport);
+  // Instance Methods
+  public synchronized InetAddress getAddress();
+  public synchronized byte[] getData();
+  public synchronized int getLength();
+  public synchronized int getPort();
+  public synchronized void setAddress(InetAddress iaddr);   // New in 1.1
+  public synchronized void setData(byte[] ibuf);            // New in 1.1
+  public synchronized void setLength(int ilength);          // New in 1.1
+  public synchronized void setPort(int iport);              // New in 1.1
+}
+Constructors
+DatagramPacket
+public DatagramPacket(byte ibuf[], int ilength)
+Parameters
+ibuf
+The data buffer for receiving incoming bytes.
+ilength
+The number of bytes to read. 
+Description
+This constructor creates a DatagramPacket 
+that receives data. The value of ilength 
+must be less than or equal to ibuf.length. 
+This DatagramPacket can be 
+passed to DatagramSocket.receive(). 
+   public DatagramPacket(byte ibuf[], int ilength, InetAddress iaddr, int iport)  
+Parameters
+ibuf
+The data buffer for the packet.
+ilength
+The number of bytes to send.
+iaddr
+The destination address.
+iport
+The destination port number. 
+Description
+This constructor creates a DatagramPacket 
+that sends packets of length ilength 
+to the given port of the specified address. The value of ilength 
+must be less than or equal to ibuf.length. 
+The packets are sent using DatagramSocket.send(). 
+Instance Methods
+getAddress
+public synchronized InetAddress getAddress()
+Returns
+The IP address of the packet. 
+Description
+If this packet has been received, the method returns the address of the 
+machine that sent it. If the packet is being sent, the method returns the 
+destination address. 
+getData
+public synchronized byte[] getData()
+Returns
+The packet data. 
+Description
+This method returns the data buffer associated with this DatagramPacket 
+object. This data is either the data being sent or 
+the data that has been received. 
+getLength
+public synchronized int getLength()
+Returns
+The packet length. 
+Description
+This method returns the length of the message in the buffer associated 
+with this DatagramPacket. This length
+is either the length of the data being sent or the length of the data that 
+has been received. 
+getPort
+public synchronized int getPort()
+Returns
+The port number of the packet. 
+Description
+If this packet has been received, the method returns the port number of 
+the machine that sent it. If the packet is being sent, the method returns 
+the destination port number. 
+setAddress
+public synchronized void setAddress(InetAddress iaddr)
+Availability
+New as of JDK 1.1 
+Parameters
+iaddr
+The destination address for the packet. 
+Description
+This method sets the destination address for this packet. When the packet 
+is sent using DatagramSocket.send(), 
+it is sent to the specified address. 
+setData
+public synchronized void setData(byte[] ibuf)
+Availability
+New as of JDK 1.1 
+Parameters
+ibuf
+The data buffer for the packet. 
+Description
+This method sets the data for this packet. When the packet is sent using 
+DatagramSocket.send(), the 
+specified data is sent. 
+setLength
+public synchronized void setLength(int ilength)
+Availability
+New as of JDK 1.1 
+Parameters
+ilength
+The number of bytes to send. 
+Description
+This method sets the length of the data to be sent for this packet. When 
+the packet is sent using DatagramSocket.send(), 
+the specified amount of data is sent. 
+setPort
+public synchronized void setPort(int iport)
+Availability
+New as of JDK 1.1 
+Parameters
+iport
+The port number for the packet. 
+Description
+This method sets the destination port number for this packet. When the 
+packet is sent using DatagramSocket.send(), 
+it is sent to the specified port. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DatagramSocket, 
+InetAddress 
+ContentHandlerFactory
+DatagramSocket
+ 
+ 
+ 
+ 
+ 
+ 
+ 

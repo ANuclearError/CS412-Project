@@ -1,0 +1,450 @@
+
+[Chapter 5] 5.5 Interface Declarations
+Chapter 5Declarations
+5.5 Interface Declarations
+An interface declaration creates a reference type in Java. An
+interface declaration is similar to a class declaration, with the
+following two very important differences.
+All of the methods in an interface are implicitly abstract.
+Every method declaration in an interface specifies the formal parameters
+and return type of the method, but it does not include an implementation
+of the method.
+All of the variables in an interface
+are implicitly static and final.
+Interfaces are most useful for declaring that an otherwise unrelated
+set of classes have a common set of methods. For example, if you want
+to store a variety of objects in a database, you might want all of
+those objects to have fetch and store methods. The fetch and store
+methods of each object require different implementations, so it makes
+sense to declare the fetch and store methods in an interface
+declaration. Then any class that needs fetch and store methods can
+implement the interface.
+The formal definition for an interface declaration is:
+While the above diagram may seem complicated, an interface declaration
+is really made up of five distinct things:
+Optional modifiers that specify attributes of the class
+ 
+The keyword interface
+ 
+An identifier that names the interface
+An optional extends
+clause that specifies the super interfaces of the declared interface
+Any number of interface member declarations, which can
+include variables and methods
+Here are some sample interface declarations:
+interface Dyn {
+    double squeeze();
+}
+interface Press extends Dyn {
+    double squeeze(double theta);
+}
+Here is an example of a class
+that implements Press:
+class Clamp implements Press {
+      ...
+    double squeeze() {
+        return squeeze(0);
+    }
+    double squeeze(double theta) {
+        return force*Math.cos(theta);
+    }
+      ...
+}
+Since the Press interface extends the
+Dyn interface, the Clamp class
+must implement the methods declared in both Dyn and
+Press.
+References
+Class Declarations;
+ClassOrInterfaceName 4.1.6;
+Identifiers;
+Interfaces;
+Interface Members
+Interface Modifiers
+The keywords public and
+abstract can appear
+as modifiers at the beginning of an interface declaration.  In this
+situation, these modifiers have the following meanings:
+public
+If an interface is declared public, it can be
+referenced by any class or interface. If the public
+modifier is not used, however, the interface can only be referenced by
+classes and interfaces in the same package. A single source file, or
+compilation unit, can only declare one public class
+or interface (see Compilation Units for an
+exception to this rule).
+abstract
+An interface is implicitly abstract; so
+all of the methods in an interface are implicitly
+abstract. Including the abstract
+modifier in an interface declaration is permitted, but it does not
+change the meaning of the interface declaration.
+References
+Compilation Units;
+Inner interface modifiers;
+Interface method modifiers;
+Interface variable modifiers
+Interface Name
+The identifier that follows the keyword interface
+is the name of the interface.  This identifier can be used as a
+reference type wherever the interface is accessible.
+References
+Interface Types
+Interface Inheritance
+The extends clause specifies any super-interfaces
+of the interface being declared; the extends
+keyword can be followed by the names of one or more interfaces. If an
+interface has an extends clause, the clause can
+only name other interfaces.
+Including an interface in the extends clause of
+another interface means that the declared interface inherits the
+variables and methods declared in the super-interface. A class that
+implements the declared interface must implement all of the methods in
+the declared interface, as well as all of the methods inherited from
+the super-interface.
+If an interface declaration does not include an
+extends clause, the interface does not extend any
+other interfaces.
+Interface Members
+The members of an interface can be variables or methods; an interface
+cannot have constructors, static initializers, instance initializers,
+nested top-level classes or interfaces, or member classes:
+References
+Interface Methods;
+Interface Variables
+Interface Variables
+Any field variables declared in an interface are implicitly
+static and final. In other
+words, field variables in an interface are named constants. Every
+field variable declaration in an interface must contain an initializer
+that sets the value of the named constant:
+A variable declaration in an interface is made up of three distinct
+things:
+Optional modifiers that specify attributes of the variable.
+A type, which can be either a primitive type or a reference type.
+Any number of identifiers that name variables. Each name must be
+followed by an initializer that sets the value of the constant.
+References
+Variable initializers;
+Expression 4;
+Identifiers;
+Type 3
+Interface variable modifiers
+Variables in an interface are implicitly static and
+final.  Including these modifiers in a variable
+declaration is permitted, but it is not necessary and it does not
+change the meaning of the variable declaration. Thus, by definition,
+all variables in an interface are named constants.
+If an interface is declared public, a field
+variable declared in the interface is public, even
+if it is declared with the private or
+protected modifier. If an interface is not declared
+public, however, any field variables in the
+interface have the default accessibility, which means that they are
+only accessible in classes and interfaces in the same package.
+It is an error to declare a field variable in an interface with the
+transient or volatile modifier.
+References
+Interface Modifiers;
+Variable modifiers
+Interface variable type
+If the interface variable declaration uses a primitive type, the
+variable contains a constant value of the specified primitive type. If
+the declaration uses a reference type, the variable contains a
+constant reference to the specified type of object. The presence of
+square brackets in a variable declaration, after either the type or
+variable name, indicates that the variable contains a reference to an
+array.
+References
+Array Types;
+Primitive Types;
+Reference Types
+Interface variable name
+The identifier that follows the variable type is the name of the
+variable. This identifier can be used anywhere that the variable is
+accessible.
+It is an error to declare two field variables with the same name in
+the same interface. It is also an error to declare a field variable
+with the same name as a method declared in the same interface or any
+of its super-interfaces.
+An interface that extends another interface inherits all of the
+variables in its super-interface.  Any class that implements an
+interface has access to all of the variables defined in that
+interface, as well as the variables inherited from super-interfaces.
+If a field variable is declared with the same name as a variable
+declared in a super-interface, the variable in the super-interface is
+considered to be shadowed. If a variable is shadowed in an interface,
+it cannot be accessed as a field of that interface. However, a
+shadowed variable can be accessed by casting a reference to an object
+that implements the interface to a reference to the appropriate
+super-interface in which the variable is not shadowed. For example:
+interface A {
+    int x = 4;
+}
+interface B extends A {
+    int x = 7;
+}
+class Z implements B {
+    Z() {
+        int i = x;              // i gets the value of B's x
+        int h = ((A)this).x;    // h gets the value of A's x
+    }
+}
+The variable x in interface A is
+shadowed by the variable x in interface
+B. Class Z implements interface
+B, so a reference to x produces
+the value 7, as defined in interface B. However, it
+is possible to access the shadowed variable by casting
+this to a reference to interface
+A.
+In some situations, an interface may inherit multiple field variables
+with the same name. This leads to a single, ambiguous variable
+name. For example:
+interface A {
+    int x = 4;
+}
+interface B {
+    int x = 43;
+}
+interface C extends A, B {
+    int y = 22;
+}
+class Z implements C {
+    public static void main (String[] argv) {
+        System.out.println(x);        // Ambiguous
+    }
+}
+In this example, the interface C inherits two
+variables named x.  This is fine, as long as
+C does not refer to the variable
+x by its simple name in any of its declarations. If
+C needs to use x, it must
+qualify the name with the appropriate interface name (e.g.,
+A.x). Class Z implements
+interface C, so it also has access to two variables
+named x. As a result, the use of
+x in main() is ambiguous. This
+problem can be resolved by qualifying the variable name with the
+appropriate interface name (e.g., B.x).
+A class that implements multiple interfaces can also inherit multiple
+field variables with the same name. Again, this leads to a single,
+ambiguous variable name:
+interface A {
+    int x = 4;
+}
+interface B {
+    int x = 43;
+}
+class Z implements A, B {
+    public static void main (String[] argv) {
+        System.out.println(x);        // Ambiguous
+    }
+}
+The class Z implements both interface
+A and interface B, so it
+inherits two variables named x. As a result, the
+use of x in main() is
+ambiguous. This problem can again be resolved by qualifying the
+variable name with the appropriate interface name (e.g.,
+B.x).
+References
+Field Expressions;
+Identifiers;
+Interface method name
+Interface variable initializers
+Every variable declaration in an interface must include an
+initializer that sets the value of the constant. The initializer does
+not, however, have to be a constant expression. If the variable is of
+a non-array type, the expression in the initializer is evaluated and
+the variable is set to the result of the expression, as long as the
+result is assignment-compatible with the variable. If the variable is
+of an array type, the initializer must be an array initializer.
+The initializer for a variable in an interface cannot refer to any
+variables that are declared after its own declaration.
+References
+Variable initializers;
+Array Types;
+Assignment Operators;
+Constant Expressions;
+Expression 4
+Interface Methods
+Any methods declared in an interface are implicitly
+abstract. In other words, methods in an interface
+do not have a specified implementation:
+A method declaration in an interface is made up of six distinct things:
+Optional modifiers that specify attributes of the method
+A type that specifies the type of value returned by
+the method
+An identifier that names the method
+A list of formal parameters that specifies the values that are passed
+to the method
+An optional throws clause that specifies any exceptions that can be
+thrown by the method
+A semicolon, since the method declaration does not include an
+implementation
+References
+ClassOrInterfaceName 4.1.6;
+Exception Handling 9;
+Method formal parameters;
+Identifiers;
+Type 3
+Interface method modifiers
+Methods in an interface are implicitly
+abstract. Including this modifier in a method
+declaration is permitted, but it is not necessary and it does not
+change the meaning of the method declaration.  Thus, by definition,
+none of the methods in an interface has a specified implementation.
+If an interface is declared public, a method
+declared in the interface is public, even if it is
+declared with the private or
+protected modifier. If the interface is not
+declared public, however, any methods in the
+interface have the default accessibility, which means that they are
+only accessible in classes and interfaces in the same package.
+It is an error to declare a method in an interface with the
+static, final,
+native, or synchronized
+modifier.  These modifiers are not allowed because defining a method
+in an interface is not meant to imply anything about the nature of the
+implementation, other than the return type of the method and the types
+of the formal parameters. A class that implements the interface has
+control over the implementation of the methods and can use any of
+these modifiers when they are appropriate for the implementation.
+References
+Interface Modifiers;
+Method modifiers
+Interface method return type
+A method declaration in an interface must specify the type of value
+returned by the method. The return value can be of a primitive type or
+of a reference type. The presence of square brackets in a method
+declaration, after either the return type or the formal parameters,
+indicates that the method returns a reference to the specified type of
+array.  If the method does not return a value, the declaration uses
+void to indicate that. The return type comes before
+the name of the method in the method declaration.
+References
+Array Types;
+Method return type;
+Primitive Types;
+Reference Types
+Interface method name
+The identifier that follows the return type is the name of the
+method. This identifier can be used anywhere that the method is
+accessible.
+It is an error to declare two methods that have the same name, the
+same number of parameters, and the same type for each corresponding
+parameter in the same interface. It is also an error to declare a
+method with the same name as a variable declared in the same interface
+or any of its super-interfaces.
+An interface that extends another interface inherits all of the
+methods in its super-interface.  Any class that implements an
+interface must provide an implementation for each of the methods
+defined in that interface, as well as each of the methods inherited
+from super-interfaces.
+If an interface inherits methods from multiple super-interfaces that
+have the same name, formal parameters, and return type, there is no
+problem. The various super-interfaces are in agreement about the
+method. The interface can also override the inherited methods by
+declaring a method with the same name, formal parameters, and return
+type. In any case, a class that implements the interface has to
+provide a single implementation for the method.
+However, if an interface inherits methods from multiple
+super-interfaces that have the same name and same formal parameters,
+but different return types, a compile-time error results. By the same
+token, if the interface attempts to override an inherited method with
+a method that has the same name and same formal parameters, but a
+different return type, a compile-time error results.
+If an interface inherits methods from multiple super-interfaces that
+have the same name but different formal parameters, there is no
+problem. The methods are simply considered overloaded in the
+interface. The interface can even declare additional methods that have
+the same name but different formal parameters. A class that implements
+the interface simply has to provide an implementation for each of the
+overloaded methods.
+References
+Identifiers;
+Interface variable name;
+Method Call Expression
+Interface method formal parameters
+The formal parameters in a method declaration specify a list of
+variables to which values are assigned when the method is called. If a
+method has no formal parameters, the parentheses must still appear in
+the method declaration. The presence of square brackets in a formal
+parameter declaration, either as part of a reference type or after the
+name of a formal parameter, indicates that the formal parameter is an
+array type.
+References
+Array Types;
+Method formal parameters;
+Method formal parameters;
+Type 3
+Interface method throws clause
+If a method is expected to throw any exceptions, the method
+declaration must declare that fact in a throws
+clause. If the declaration of a method in an interface contains a
+throws clause, any method in a sub-interface that
+overrides that method cannot include any classes in its
+throws clause that are not declared in the
+overridden method.
+References
+Exception Handling 9;
+Method throws clause
+Nested Top-Level Interfaces
+Nested top-level interfaces are interfaces that
+are declared inside of another class. Just as with a top-level
+interface declaration, the declaration of a nested top-level interface
+creates a reference type in Java. Here's the formal definition of
+a nested top-level interface:
+A nested top-level interface 
+can be accessed outside of its enclosing class by
+qualifying its name with the name of its enclosing class, as follows:
+EnclosingClass.InnerInterface
+The syntax for declaring nested top-level interfaces 
+is not supported prior to Java 1.1.
+References
+Nested top-level classes and interfaces;
+SimpleInterfaceDeclaration 5.5
+Inner interface modifiers
+The keywords public, abstract, 
+and static can be used in the declaration of a
+nested top-level interface. In this situation, these 
+modifiers have the following meanings:
+public
+If a nested top-level interface is declared
+public, it is accessible from any class or
+interface that can access the enclosing class. If the
+public modifier is not used, however, the nested
+top-level interface can only be referenced by classes and interfaces
+in the same package as the enclosing class.
+abstract
+A nested top-level interface is implicitly abstract; thus,
+all of the methods in the interface are implicitly
+abstract. Including the abstract
+modifier in a nested top-level interface declaration is permitted, 
+but it does not change the meaning of the interface declaration.
+static
+A nested top-level interface is implicitly static. 
+Including the static
+modifier in a nested top-level interface declaration is permitted, 
+but it does not change the meaning of the interface declaration.
+References
+Interface Modifiers
+Inner interface members
+The remainder of a nested top-level interface 
+declaration is the same as that for a top-level 
+interface declaration, which is described 
+in Interface Declarations.
+References
+Interface Declarations;
+Interface Methods;
+Interface Variables
+Class Declarations
+Statements and Control Structures
+ 
+ 
+ 
+ 
+ 
+ 
+ 

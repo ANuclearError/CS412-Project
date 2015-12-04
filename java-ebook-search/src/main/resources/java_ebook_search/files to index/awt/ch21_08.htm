@@ -1,0 +1,49 @@
+
+[Chapter 21] ContainerAdapter 
+Chapter 21java.awt.event Reference
+ContainerAdapter 
+Name
+ContainerAdapter 
+Description
+The ContainerAdapter class 
+implements the methods of ContainerListener 
+with empty functions. It may be easier for you to extend ContainerAdapter, 
+overriding only those methods you are interested in, than to implement 
+ContainerListener and provide 
+the empty functions yourself. 
+Class Definition
+public abstract class java.awt.event.ContainerAdapter
+   extends java.lang.Object
+   implements java.awt.event.ContainerListener {
+  // Instance Methods
+  public void componentAdded (ContainerEvent e);
+  public void componentRemoved (ContainerEvent e);
+}
+Instance Methods
+componentAdded
+public void componentAdded (ComponentEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component is 
+added to a container. 
+componentRemoved
+public void componentRemoved (ComponentEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component is 
+removed from a container. 
+See Also
+ContainerEvent, ContainerListener 
+ComponentListener 
+ContainerEvent 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

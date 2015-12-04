@@ -1,0 +1,45 @@
+
+[Chapter 10] 10.4 Custom Events
+Chapter 10Java Beans
+10.4 Custom Events
+Beans can use the standard AWT event
+types defined in the java.awt.event package, but
+they do not have to.  Our
+YesNoDialog class defines its own event type,
+AnswerEvent.  Defining a new event class is really quite
+simple; AnswerEvent is shown in
+Example 10.3.
+Example 10.3: The AnswerEvent Class
+package oreilly.beans.yesno;
+public class AnswerEvent extends java.util.EventObject {
+  protected int id;
+  public static final int YES = 0, NO = 1, CANCEL = 2;
+  public AnswerEvent(Object source, int id) {
+    super(source);
+    this.id = id;
+  }
+  public int getID() { return id; }
+}
+Along with the AnswerEvent class,
+YesNoDialog also defines a new type of event
+listener interface, ActionListener, that
+defines the methods that must be implemented by any object
+that wants to receive notification from a
+YesNoDialog.  The definition of AnswerListener is
+shown in Example 10.4.
+Example 10.4: The AnswerListener Interface
+package oreilly.beans.yesno;
+public interface AnswerListener extends java.util.EventListener {
+  public void yes(AnswerEvent e);
+  public void no(AnswerEvent e);
+  public void cancel(AnswerEvent e);
+}
+A More Complex Bean
+Specifying Bean Information
+ 
+ 
+ 
+ 
+ 
+ 
+ 

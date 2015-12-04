@@ -1,0 +1,36 @@
+
+[Chapter 21] 21.5 java.awt.image.FilteredImageSource (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.5 java.awt.image.FilteredImageSource (JDK 1.0)
+This class is an ImageProducer that produces image
+data filtered from some other ImageProducer. A
+FilteredImageSource is created with a specified
+ImageProducer and a specified ImageFilter.  
+For example, an applet might use the following code to
+download and crop an image:
+Image full_image = getImage(getDocumentBase(), "images/1.gif");
+ImageFilter cropper = new CropImageFilter(10, 10, 100, 100);
+ImageProducer prod = new FilteredImageSource(full_image.getSource(), cropper);
+Image cropped_image = createImage(prod);
+The methods of this class are the standard
+ImageProducer methods that you can invoke to add and
+remove ImageConsumer objects.
+public class FilteredImageSource extends Object implements ImageProducer {
+    // Public Constructor
+            public FilteredImageSource(ImageProducer orig, ImageFilter imgf);
+    // Public Instance Methods
+            public synchronized void addConsumer(ImageConsumer ic);  // From ImageProducer
+            public synchronized boolean isConsumer(ImageConsumer ic);  // From ImageProducer
+            public synchronized void removeConsumer(ImageConsumer ic);  // From ImageProducer
+            public void requestTopDownLeftRightResend(ImageConsumer ic);  // From ImageProducer
+            public void startProduction(ImageConsumer ic);  // From ImageProducer
+}
+java.awt.image.DirectColorModel (JDK 1.0)
+java.awt.image.ImageConsumer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

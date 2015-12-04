@@ -1,0 +1,31 @@
+
+[Chapter 18] 18.8 java.awt.Canvas (JDK 1.0)
+Chapter 18The java.awt Package
+18.8 java.awt.Canvas (JDK 1.0)
+This class is a Component that does no default
+drawing or event handling on its own.  You can subclass it
+to display any kind of drawing or image, and to handle any
+kind of user input event.  Canvas inherits the event
+handling methods of its superclass.  In Java 1.1, you can
+also subclass Component directly to create a
+"lightweight component," instead of having to subclass Canvas.
+public class Canvas extends Component {
+    // Public Constructor
+        1.1 public Canvas();
+    // Public Instance Methods
+            public void addNotify();  // Overrides Component
+            public void paint(Graphics g);  // Overrides Component
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Canvas
+Passed To:
+Toolkit.createCanvas()
+java.awt.Button (JDK 1.0)
+java.awt.CardLayout (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

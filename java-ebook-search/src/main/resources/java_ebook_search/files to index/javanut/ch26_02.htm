@@ -1,0 +1,54 @@
+
+[Chapter 26] 26.2 java.lang.reflect.Constructor (JDK 1.1)
+Chapter 26The java.lang.reflect Package
+26.2 java.lang.reflect.Constructor (JDK 1.1)
+This class represents a constructor method of a class.
+Instances of Constructor are obtained by calling
+getConstructor() and related methods of
+java.lang.Class.  Constructor implements the
+Member interface, so you can use the methods of that
+interface to obtain the constructor name, modifiers, and
+declaring class.  In addition, getParameterTypes()
+and getExceptionTypes() also return important
+information about the represented constructor.
+In addition to these methods that return information about
+the constructor, the newInstance() method allows the
+constructor to be invoked with an array of arguments in
+order to create a new instance of the class that declares
+the constructor.  If any of the arguments to the constructor
+are of primitive types, they must be converted to their
+corresponding wrapper object types in order to be passed to
+newInstance().  If the constructor causes an
+exception, the Throwable object it throws is
+wrapped within the InvocationTargetException that
+is thrown by newInstance().  Note that
+newInstance() is much more useful than the
+newInstance() method of java.lang.Class
+because it can pass arguments to the constructor.
+public final class Constructor extends Object implements Member {
+    // No Constructor
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+            public Class getDeclaringClass();  // From Member
+            public Class[] getExceptionTypes();
+            public native int getModifiers();  // From Member
+            public String getName();  // From Member
+            public Class[] getParameterTypes();
+            public int hashCode();  // Overrides Object
+            public native Object newInstance(Object[] initargs) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException;
+            public String toString();  // Overrides Object
+}
+Returned By:
+Class.getConstructor(), 
+Class.getConstructors(), 
+Class.getDeclaredConstructor(), 
+Class.getDeclaredConstructors()
+java.lang.reflect.Array (JDK 1.1)
+java.lang.reflect.Field (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,218 @@
+
+[Chapter 1] 1.7 Java and the World Wide Web
+Chapter 1Yet Another Language?
+1.7 Java and the World Wide Web
+Alice was beginning to get very tired of sitting by her sister on the
+bank, and of having nothing to do: once or twice she had peeped into
+the book her sister was reading, but it had no pictures or
+conversations in it, "and what is the use of a book,"
+thought Alice, "without pictures or conversations?"
+--Alice in Wonderland
+The application-level safety features of Java make it possible
+to develop new kinds of applications not necessarily feasible
+before now. A Web browser that implements the Java run-time system can
+incorporate Java applets as executable content inside of
+documents. This means that Web pages can contain not only static
+hypertext information but also full-fledged interactive
+applications. The added potential for use of the
+WWW is enormous.  A user can retrieve and use
+software simply by navigating with a Web browser.  Formerly static
+information can be paired with portable software for interpreting and
+using the information. Instead of just providing some data for a
+spreadsheet, for example, a Web document might contain a fully
+functional spreadsheet application embedded within it that allows
+users to view and manipulate the information.
+Applets
+The term applet is used to mean a small,
+subordinate, or embeddable application. By embeddable, I mean it's
+designed to be run and used within the context of a larger system. In
+that sense, most programs are embedded within a computer's operating
+system. An operating system manages its native applications in a
+variety of ways: it starts, stops, suspends, and synchronizes
+applications; it provides them with certain standard resources; and it
+protects them from one another by partitioning their environments.
+In this book, I'll be describing Java applets, which are
+Java applications meant to be embedded in and controlled by a
+larger application, such as a Java-enabled Web browser or an applet
+viewer. To include an applet as executable content in a Web document,
+you use a special HTML tag. The
+&lt;applet&gt; tag points to an applet and provides
+configuration information about the applet.
+As far as the Web browser model is concerned, an applet is just
+another type of object to display. Browsers make a distinction between
+items presented inline and items anchored via
+hypertext links and made available by external means, such as a viewer
+or helper application.  If you download an MPEG
+video clip, for instance, and your browser doesn't natively
+understand MPEG, it will look for a helper
+application (an MPEG player) to pass the
+information to. Java-enabled Web browsers generally execute applets
+inline, in the context of a particular document, as shown in Figure 1.4. However, less capable browsers could
+initially provide some support for Java applets through an external
+viewer.
+Figure 1.4: Applets in a Web document
+A Java applet is a compiled Java program, composed of classes
+just like any Java program. While a simple applet may consist of only
+a single class, most large applets should be broken into many
+classes. Each class is stored in a separate class file. The class
+files for an applet are retrieved from the network as they are
+needed. A large applet doesn't need to retrieve all its parts or
+all its data before beginning to interact with the
+user. Well-designed applets can take advantage of multithreading to
+wait for certain resources in the background, while performing other
+activities.
+An applet has a four-part life cycle. When an applet is
+initially loaded by a Web browser, it's asked to initialize
+itself. The applet is then informed each time it's displayed and each
+time it's no longer visible to the user. Finally, the applet is told
+when it's no longer needed, so that it can clean up after
+itself. During its lifetime, an applet may start and suspend itself,
+do work, communicate with other applications, and interact with the
+Web browser.
+Applets are autonomous programs, but they are confined within
+the walls of a Web browser or applet viewer, and have to play by its
+rules. I'll be discussing the details of what applets can and
+can't do as we explore features of the Java language. However, under
+the most conservative security policies, an applet can interact only
+with the user and can only communicate over the network with the host from
+which it originated. Other types of activities, like accessing files
+or interacting directly with outside applications, are typically
+prevented by the security manager that is part of the Web browser or
+applet viewer. But aside from these restrictions, there is no
+fundamental difference between a Java applet and a standalone Java
+application.
+New Kinds of Applications
+Sun's HotJava Web browser is written entirely in Java. Because
+it's a Java application, HotJava is immediately available on any
+platform with the Java run-time system. This goes a long way towards
+the goal of a Web browser serving as a universal access point for
+resources on the Net. And where one Web browser leads the way, more
+will surely follow.
+In addition to displaying Java applets as executable content in
+Web pages, the HotJava application dynamically extends itself by
+loading Java code from the Net. HotJava uses protocol
+handlers and content handlers to
+provide this functionality.[7]
+Protocol handlers and content handlers
+are classes in the Java API that let an application implement new
+types of URLs and interpret the objects retrieved from them. A Web
+browser that supports this functionality can load handlers from a
+remote location and effectively upgrade itself on the fly to use new
+protocols and access new kinds of information.
+[7] 
+Downloadable content and protocol handlers are not supported in
+HotJava 1.0, but will be supported in a future release.
+Like applets, content handlers and protocol handlers can be
+served by a Web site, along with the information they
+interpret. As an example, consider the new Portable Network Graphics
+(PNG) format, a freely distributable alternative to
+GIF. By supplying a PNG content
+handler along with PNG images on our server, we
+give users the ability to use the new image format, just as they would
+a built-in format. We don't have to create a new standard
+and force every Web browser to support the new format. Instead, the
+first time a user loads a document referencing a
+PNG image from our site, the Web browser will
+realize it doesn't understand the object and will ask the server if
+it has a content handler for it. Since we've provided a content
+handler, the browser can load it and then use it to interpret and
+display the image dynamically.
+In a similar manner, protocol handlers allow a Web browser to
+start speaking a new protocol with the server. This is especially
+useful for things like security protocols. If we invent a
+revolutionary new cryptographic protocol late one night, all we have
+to do is implement it in the form of a protocol handler and place it
+on our server. We can then start using URLs that
+point through our new protocol at objects on our server, and people can
+immediately begin using it.
+These scenarios describe just a few things that safe,
+transportable code will allow. We will undoubtedly see many other new
+breeds of application we can't even begin to anticipate.
+New Kinds of Media
+When it was first released, Java quickly achieved a reputation for
+multimedia capabilities. Frankly, this wasn't really deserved. At
+that point, Java provided facilities for doing simple animations and
+playing audio. You could even animate and play audio simultaneously,
+though you couldn't synchronize the two. Still, this was a significant
+advance for the Web, and people thought it was pretty impressive. 
+JavaSoft is now working on real media features, which go far beyond
+anything that has yet been seen on the Web. This includes CD quality
+sound, 3D animation, media players that synchronize
+audio and video, speech synthesis
+and recognition, and more. These new
+features aren't yet in Java 1.1, but 
+will make their way into Java over the next eighteen months.
+In short, if you were impressed by Java 1.0, you haven't seen anything
+yet. Java's multimedia capabilities will be taking shape over the next
+two years. 
+New Software Development Models
+For some time now, people have been using visual development
+environments to develop user interfaces. These environments let you
+generate applications by moving components around on the screen,
+connecting components to each other, and so on. In short, designing a
+user interface is a lot more like drawing a picture than like writing
+code. 
+For visual development environments to work well, you need to be able
+to create reusable software components. That's what Java Beans are all
+about. The JavaBeans architecture defines a way to package software as
+reusable building blocks. A graphical development tool can figure out
+a component's capabilities, customize the component, and connect it to
+other components to build applications. JavaBeans takes the idea of
+graphical development a step further. Beans aren't limited to visible,
+user interface components: you can have Beans that are entirely
+invisible, and whose job is purely computational. For example, you
+could have a Bean that did database access; you could connect this to
+a Bean that let the user request information from the database; and
+you could use another Bean to display the result. Or you could 
+have a set of Beans that implemented the functions in a mathematical
+library; you could then do numerical analysis by connecting different
+functions to each other. In either case, you could "write" programs
+without writing a single line of code. Granted, someone would have to
+write the Beans in the first place; but that's a much smaller task,
+and we expect markets to develop for "off the shelf" Bean collections.
+Before it can use a Bean, an application builder must find out the
+Bean's capabilities. There are a few ways it can do this; the simplest
+is called "reflection". To write a Bean that uses reflection, all you
+need to do is follow some simple design patterns. Let's say that
+you're writing a Bean that is capable of changing its color. Then you
+would write two methods that report the current color and change its
+value:
+...
+private Color c;
+public Color getMyColor() { return c; }
+public void setMyColor( Color c) { this.c = c; }
+These methods follow some well defined conventions (design patterns)
+that let the graphical interface builder (or any other tool that wants
+to do the work) analyze the Bean, and discover that it has a property
+called MyColor, that the value of this
+property is a Color object,
+and that the methods
+getMyColor() and
+setMyColor() should be used to change its
+value. 
+If they
+need to, Beans can provide additional information using a process
+called "introspection". But even without introspection, you can see
+that a graphical development tool can easily analyze a Bean, figure
+out what it can do, and let a user change the Bean's properties
+without writing any code. 
+Of course, once a development tool has customized a Bean and connected it
+to other Beans, it needs a way to save the result. A process called
+"serialization" lets a tool save the Bean's current state, along with
+any extra code it has written to stitch Beans together in an
+application. 
+Visual development tools that support Java Beans include Borland's
+JBuilder (http://www.borland.com), Symantec's Visual Cafe
+(http://www.symantec.com), and SunSoft's Java Workshop. By
+using a "bridge", Java Beans will be able to interact with other
+component environments, including ActiveX, OpenDoc, and LiveConnect. A
+beta version of the ActiveX bridge is currently available. 
+Application and User Level Security
+Java as a General Application Language
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,265 @@
+
+[Chapter 11] FilterInputStream
+Chapter 11The java.io Package
+FilterInputStream
+Name
+FilterInputStream
+Synopsis
+Class Name:
+java.io.FilterInputStream
+Superclass:
+java.io.InputStream
+Immediate Subclasses:
+java.io.BufferedInputStream,
+java.io.DataInputStream,
+java.io.LineNumberInputStream,
+java.io.PushbackInputStream,
+java.util.zip.CheckedInputStream,
+java.util.zip.InflaterInputStream
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The FilterInputStream class 
+is the superclass of all of the input stream classes that filter input. 
+Each of the subclasses of FilterInputStream 
+works by wrapping an existing input stream, called the underlying input 
+stream, and providing additional functionality. The methods of FilterInputStream 
+simply override the methods of InputStream 
+with versions that call the corresponding methods of the underlying stream. 
+FilterInputStream cannot be 
+instantiated directly; it must be subclassed. An instance of one of the 
+subclasses of FilterInputStream 
+is constructed with another InputStream 
+object. The methods of a subclass of FilterInputStream 
+should override some methods in order to extend their behavior or 
+provide some sort of filtering. 
+Class Summary
+public class java.io.FilterInputStream extends java.io.InputStream {
+  // Variables
+  protected InputStream in;
+  // Constructors
+  protected FilterInputStream(InputStream in);
+  // Instance Methods
+  public int available();
+  public void close();
+  public synchronized void mark(int readlimit);
+  public boolean markSupported();
+  public int read();
+  public int read(byte[] b);
+  public int read(byte[] b, int off, int len);
+  public synchronized void reset();
+  public long skip(long n);
+}
+Variables
+in
+protected InputStream in
+Description
+The underlying stream that this FilterInputStream 
+wraps or filters. 
+Constructors
+FilterInputStream
+protected FilterInputStream(InputStream in)
+Parameters
+in
+The input stream to 
+filter. 
+Description
+This constructor creates a FilterInputStream 
+that gets its data from in. 
+Instance Methods
+available
+public int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.available() 
+Description
+This method calls the available() 
+method of the underlying stream and returns the result. 
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.close() 
+Description
+This method calls the close() 
+method of the underlying stream, which releases any system resources associated 
+with this object. 
+mark
+public synchronized void mark(int readlimit)
+Parameters
+readlimit
+The maximum number 
+of bytes that can be read before the saved position becomes invalid. 
+Overrides
+InputStream.mark() 
+Description
+This method calls the mark() 
+method of the underlying stream. If the underlying stream supports mark() 
+and reset(), this method causes 
+the FilterInputStream 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position, and thus re-read a 
+portion of the input. 
+markSupported
+public boolean markSupported()
+Returns
+true if this stream supports 
+mark() and reset(); 
+false otherwise. 
+Overrides
+InputStream.markSupported() 
+Description
+This method calls the markSupported() 
+method of the underlying stream and returns the result. 
+read
+public int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read() 
+Description
+This method calls the read() 
+method of the underlying stream and returns the result. This method blocks 
+until some data is available, the end of the stream is detected, or an 
+exception is thrown. 
+public int read(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+be filled from the stream. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read(byte[]) 
+Description
+This method reads bytes of input to fill the given array. It does this 
+by calling read(b, 0, 
+b.length), 
+which allows subclasses to only override read(byte[], 
+int, int) 
+and have read(byte[]) work 
+automatically. The method blocks until some data is available. 
+public int read(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+This method reads up to len 
+bytes of input into the given array starting at index off. 
+It does this by calling the read(byte[], 
+int, int) 
+method of the underlying stream and returning the result. The method blocks 
+until some data is available. 
+reset
+public synchronized void reset() throws IOException
+Throws
+IOException
+If there was 
+no previous call to the mark() 
+method or the saved position has been invalidated. 
+Overrides
+InputStream.reset() 
+Description
+This method calls the reset() 
+method of the underlying stream. If the underlying stream supports mark() 
+and reset(), this method sets 
+the position of the FilterInputStream 
+to a position that was saved by a previous call to mark(). 
+Subsequent bytes read from this FilterInputStream 
+will begin from the saved position and continue normally. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of bytes to 
+skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.skip() 
+Description
+This method skips n bytes of 
+input. It calls the skip() 
+method of the underlying stream. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedInputStream, 
+CheckedInputStream, 
+DataInputStream, 
+FilterInputStream, 
+InflaterInputStream, 
+InputStream, 
+IOException, 
+LineNumberInputStream, 
+PushbackInputStream 
+FileWriter
+FilterOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

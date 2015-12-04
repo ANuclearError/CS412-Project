@@ -1,0 +1,49 @@
+
+[Chapter 29] 29.8 java.text.DateFormatSymbols (JDK 1.1)
+Chapter 29The java.text Package
+29.8 java.text.DateFormatSymbols (JDK 1.1)
+This class defines accessor methods for the various pieces
+of data, such as names of months and days, used by
+SimpleDateFormat to format and parse dates and
+times.  You do not typically use this class unless you are
+formatting dates for an unsupported locale or in some highly
+customized way.
+public class DateFormatSymbols extends Object implements Serializable, Cloneable {
+    // Public Constructors
+            public DateFormatSymbols();
+            public DateFormatSymbols(Locale locale);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public boolean equals(Object obj);  // Overrides Object
+            public String[] getAmPmStrings();
+            public String[] getEras();
+            public String getLocalPatternChars();
+            public String[] getMonths();
+            public String[] getShortMonths();
+            public String[] getShortWeekdays();
+            public String[] getWeekdays();
+            public String[][] getZoneStrings();
+            public int hashCode();  // Overrides Object
+            public void setAmPmStrings(String[] newAmpms);
+            public void setEras(String[] newEras);
+            public void setLocalPatternChars(String newLocalPatternChars);
+            public void setMonths(String[] newMonths);
+            public void setShortMonths(String[] newShortMonths);
+            public void setShortWeekdays(String[] newShortWeekdays);
+            public void setWeekdays(String[] newWeekdays);
+            public void setZoneStrings(String[][] newZoneStrings);
+}
+Passed To:
+SimpleDateFormat(), 
+SimpleDateFormat.setDateFormatSymbols()
+Returned By:
+SimpleDateFormat.getDateFormatSymbols()
+java.text.DateFormat (JDK 1.1)
+java.text.DecimalFormat (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

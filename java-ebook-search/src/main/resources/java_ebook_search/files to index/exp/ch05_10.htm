@@ -1,0 +1,197 @@
+
+[Chapter 5] 5.10 The Object and Class Classes
+Chapter 5Objects in Java
+5.10 The Object and Class Classes
+java.lang.Object is the mother of all objects; it's
+the primordial class from which all other classes are ultimately
+derived. Methods defined in Object are therefore
+very important because they appear in every instance of any class,
+throughout all of Java. At last count, there were nine
+public methods in Object. Five
+of these are versions of wait() and
+notify() that are used to synchronize threads on
+object instances, as we'll discuss in Chapter 6, Threads. The remaining four methods are used for basic
+comparison, conversion, and administration.
+Every object has a toString() method that is
+called when it's to be represented as a text
+value. PrintStream objects use
+toString() to print data, as discussed in
+Chapter 8, Input/Output Facilities. toString() is also used
+when an object is referenced in a string concatenation. Here are some
+examples:
+MyObj myObject = new MyObj(); 
+Answer theAnswer = new Answer(); 
+ 
+System.out.println( myObject ); 
+String s = "The answer is: " + theAnswer ; 
+To be friendly, a new kind of object should override
+toString() and implement its own version that
+provides appropriate printing functionality. Two other methods,
+equals() and hashCode(), may
+also require specialization when you create a new class.
+Equality
+equals() compares whether two objects are
+equivalent. Precisely what that means for a particular class is
+something that you'll have to decide for yourself. Two
+String objects, for example, are considered
+equivalent if they hold precisely the same characters in the same
+sequence:
+String userName = "Joe"; 
+... 
+if ( userName.equals( suspectName ) )
+    arrest( userName );
+Note that using equals() is *not* the 
+same as: 
+// if ( userName == suspectName )      // Wrong! 
+The above code tests to see if the two String 
+objects are the same object, which is sufficient but not necessary for 
+them to be equivalent objects. 
+A class should override the equals() method
+if it needs to implement its own notion of equality. If you have no
+need to compare objects of a particular class, you don't need to
+override equals().
+Watch out for accidentally overloading
+equals() when you mean to override
+it. equals() takes an Object as
+an argument and returns a boolean value. While
+you'll probably want to check only if an object is equivalent to
+an object of its own type, in order to properly override
+equals(), the method should accept a generic
+Object as its argument. Here's an example of
+implementing equals():
+class Sneakers extends Shoes { 
+    public boolean equals( Object arg ) { 
+        if ( (arg != null) &amp;&amp; (arg instanceof Sneakers) ) { 
+            // compare arg with this object to check equivalence 
+            // If comparison is okay... 
+            return true; 
+        } 
+        return false; 
+    } 
+    ... 
+} 
+A Sneakers object can now be properly compared by
+any current or future Java classes. If we had instead used a
+Sneakers type object as the argument to
+equals(), all would be well for classes that
+reference our objects as Sneakers, but methods that
+simply use Shoes would not see the overloaded
+method and would compare Sneakers against other
+Sneakers improperly.
+Hashcodes
+The hashCode() method returns an integer that is a
+hashcode for a class instance. A hashcode is like a signature
+for an object; it's an arbitrary-looking identifying number that is
+(with important exceptions) generally different for different
+instances of the class. Hashcodes are used in the process of storing
+objects in a Hashtable, or a similar kind of
+collection. The hashcode is essentially an index into the collection.
+See Chapter 7, Basic Utility Classes for a complete discussion of
+Hashtable objects and hashcodes.
+The default implementation of hashCode() in
+Object assigns each object instance a unique
+number to be used as a hashcode. If you don't override this
+method when you create a new class, each instance of the class will
+have a unique hashcode. This is sufficient for most objects. However,
+if the class has a notion of equivalent objects, then you should
+probably override hashCode() so that equivalent
+objects are given the same hashcode.
+java.lang.Class
+The last method of Object we need to discuss 
+is getClass().  This method returns a reference 
+to the Class object that produced the object 
+instance. 
+A good measure of the complexity of an object-oriented language
+is the degree of abstraction of its class structures. We know that
+every object in Java is an instance of a class, but what exactly is a
+class? In C++, objects are formulated by and instantiated from
+classes, but classes are really just artifacts of the compiler. Thus,
+you see only classes mentioned in C++ source code, not at run-time. By
+comparison, classes in Smalltalk are real, run-time entities in the
+language that are themselves described by "meta-classes"
+and "meta-class classes." Java strikes a happy medium between these
+two languages with what is, effectively, a two-tiered system that uses
+Class objects.
+Classes in Java source code are represented at run-time by
+instances of the java.lang.Class class. There's a
+Class object for every class you use; this
+Class object is responsible for producing instances
+for its class. This may sound overwhelming, but you don't have
+to worry about any of it unless you are interested in loading new
+kinds of classes dynamically at run-time.
+We can get the Class associated with 
+a particular object with the getClass() method:
+String myString = "Foo!"
+Class c = myString.getClass();
+We can also get the Class reference for a particular class statically,
+using the special .class notation:
+Class c = String.class;
+The .class reference looks like a static field that exists in every
+class.  However, it is really resolved by the compiler.
+One thing we can do with the Class object 
+is to ask for the name of the object's class: 
+String s = "Boofa!"; 
+Class strClass = s.getClass(); 
+System.out.println( strClass.getName() ); // prints "java.lang.String" 
+Another thing that we can do with a Class is 
+to ask it to produce a new instance of its type of object. Continuing with 
+the above example: 
+try { 
+    String s2 = (String)strClass.newInstance(); 
+} 
+catch ( InstantiationException e ) { ... } 
+catch ( IllegalAccessException e ) { ... } 
+newInstance() has a return type of
+Object, so we have to cast it to a reference of the
+appropriate type. A couple of problems can occur here. An
+InstantiationException indicates we're trying
+to instantiate an abstract class or an
+interface. IllegalAccessException is a more general
+exception that indicates we can't access a constructor for the
+object. Note that newInstance() can create only an
+instance of a class that has an accessible default constructor.
+There's no way for us to pass any arguments to a constructor.
+All this becomes more meaningful when we add the capability to look 
+up a Class by name. forName() 
+is a static method of Class 
+that returns a Class object given its name as 
+a String: 
+try { 
+    Class sneakersClass = Class.forName("Sneakers"); 
+}  
+catch ( ClassNotFoundException e ) { ... } 
+A ClassNotFoundException is thrown if the class 
+can't be located. 
+Combining the above tools, we have the power to load new kinds of classes 
+dynamically. When combined with the power of interfaces, we can use 
+new data types by name in our applications: 
+interface Typewriter { 
+    void typeLine( String s ); 
+    ... 
+} 
+ 
+class Printer implements Typewriter { 
+    ... 
+} 
+ 
+class MyApplication { 
+    ... 
+    String outputDeviceName = "Printer"; 
+ 
+    try { 
+        Class newClass = Class.forName( outputDeviceName ); 
+        Typewriter device = (Typewriter)newClass.newInstance(); 
+        ... 
+        device.typeLine("Hello..."); 
+    } 
+    catch ( Exception e ) { 
+} 
+Inner Classes
+Reflection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

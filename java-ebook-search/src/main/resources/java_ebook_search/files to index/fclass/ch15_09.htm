@@ -1,0 +1,496 @@
+
+[Chapter 15] HttpURLConnection
+Chapter 15The java.net Package
+HttpURLConnection
+Name
+HttpURLConnection
+Synopsis
+Class Name:
+java.net.HttpURLConnection
+Superclass:
+java.net.URLConnection
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The HttpURLConnection class 
+is an abstract class that is 
+a subclass of URLConnection. 
+HttpURLConnection defines many 
+of the HTTP server response codes as constants and provides methods for 
+parsing server responses. 
+An HttpURLConnection object 
+defines a network connection to a resource specified by a URL. Essentially, 
+the HttpURLConnection object 
+represents the HTTP request for that resource. 
+Class Summary
+public abstract class java.net.HttpURLConnection
+                      extends java.net.URLConnection {
+  // Constants
+  public final static int HTTP_ACCEPTED;
+  public final static int HTTP_BAD_GATEWAY;
+  public final static int HTTP_BAD_METHOD;
+  public final static int HTTP_BAD_REQUEST;
+  public final static int HTTP_CLIENT_TIMEOUT;
+  public final static int HTTP_CONFLICT;
+  public final static int HTTP_CREATED;
+  public final static int HTTP_ENTITY_TOO_LARGE;
+  public final static int HTTP_FORBIDDEN;
+  public final static int HTTP_GATEWAY_TIMEOUT;
+  public final static int HTTP_GONE;
+  public final static int HTTP_INTERNAL_ERROR;
+  public final static int HTTP_LENGTH_REQUIRED;
+  public final static int HTTP_MOVED_PERM;
+  public final static int HTTP_MOVED_TEMP;
+  public final static int HTTP_MULT_CHOICE;
+  public final static int HTTP_NOT_ACCEPTABLE;
+  public final static int HTTP_NOT_AUTHORITATIVE;
+  public final static int HTTP_NOT_FOUND;
+  public final static int HTTP_NOT_MODIFIED;
+  public final static int HTTP_NO_CONTENT;
+  public final static int HTTP_OK;
+  public final static int HTTP_PARTIAL;
+  public final static int HTTP_PAYMENT_REQUIRED;
+  public final static int HTTP_PRECON_FAILED;
+  public final static int HTTP_PROXY_AUTH;
+  public final static int HTTP_REQ_TOO_LONG;
+  public final static int HTTP_RESET;
+  public final static int HTTP_SEE_OTHER;
+  public final static int HTTP_SERVER_ERROR;
+  public final static int HTTP_UNAUTHORIZED;
+  public final static int HTTP_UNAVAILABLE;
+  public final static int HTTP_UNSUPPORTED_TYPE;
+  public final static int HTTP_USE_PROXY;
+  public final static int HTTP_VERSION;
+  // Variables
+  protected String method;
+  protected int responseCode;
+  protected String responseMessage;
+  // Constructors
+  protected HttpURLConnection(URL u);
+  // Class Methods
+  public static boolean getFollowRedirects();
+  public static void setFollowRedirects(boolean set);
+  // Instance Methods
+  public abstract void disconnect();
+  public String getRequestMethod();
+  public int getResponseCode();
+  public String getResponseMessage();
+  public void setRequestMethod(String method);
+  public abstract boolean usingProxy();
+}
+Constants
+HTTP_ACCEPTED
+public final static int HTTP_ACCEPTED = 202
+Description
+The HTTP response code that means the request 
+has been accepted by the server. 
+HTTP_BAD_GATEWAY
+public final static int HTTP_BAD_GATEWAY = 502
+Description
+The HTTP response code that means the server, acting as a gateway, has received a bad response from another server. 
+HTTP_BAD_METHOD
+public final static int HTTP_BAD_METHOD = 405
+Description
+The HTTP response code that means the requested method is not 
+allowed for the requested resource. 
+HTTP_BAD_REQUEST
+public final static int HTTP_BAD_REQUEST = 400
+Description
+The HTTP response code that means the request 
+was syntactically incorrect. 
+HTTP_CLIENT_TIMEOUT
+public final static int HTTP_CLIENT_TIMEOUT = 408
+Description
+The HTTP response code that means the server has 
+not received a request from the client in the time it expected. 
+HTTP_CONFLICT
+public final static int HTTP_CONFLICT = 409
+Description
+The HTTP response code that means there is a conflict with the 
+state of the requested resource.
+HTTP_CREATED
+public final static int HTTP_CREATED = 201
+Description
+The HTTP response code that means a new resource has 
+been created as the result of the request. 
+HTTP_ENTITY_TOO_LARGE
+public final static int HTTP_ENTITY_TOO_LARGE = 413
+Description
+The HTTP response code that means the request contains an entity 
+that is too large for the server. 
+HTTP_FORBIDDEN
+public final static int HTTP_FORBIDDEN = 403
+Description
+The HTTP response code that means the client does not have permission 
+to access the requested resource. 
+HTTP_GATEWAY_TIMEOUT
+public final static int HTTP_GATEWAY_TIMEOUT = 504
+Description
+The HTTP response code that means the server, acting as a gateway, has not received a response from an upstream server in 
+the time it expected. 
+HTTP_GONE
+public final static int HTTP_GONE = 410
+Description
+The HTTP response code that means the requested resource is no 
+longer available. 
+HTTP_INTERNAL_ERROR
+public final static int HTTP_INTERNAL_ERROR = 501
+Description
+The HTTP response code that means the server does not or cannot 
+support the client's request. 
+HTTP_LENGTH_REQUIRED
+public final static int HTTP_LENGTH_REQUIRED = 411
+Description
+The HTTP response code that means the server won't accept 
+the request without a length indication. 
+HTTP_MOVED_PERM
+public final static int HTTP_MOVED_PERM = 301
+Description
+The HTTP response code that means the requested resource has moved 
+permanently. 
+HTTP_MOVED_TEMP
+public final static int HTTP_MOVED_TEMP = 302
+Description
+The HTTP response code that means the requested resource has moved 
+temporarily. 
+HTTP_MULT_CHOICE
+public final static int HTTP_MULT_CHOICE = 300
+Description
+The HTTP response code that means the requested resource is available 
+in multiple representations. 
+HTTP_NOT_ACCEPTABLE
+public final static int HTTP_NOT_ACCEPTABLE = 406
+Description
+The HTTP response code that means the requested resource is not 
+available in a representation that is acceptable to the client. 
+HTTP_NOT_AUTHORITATIVE
+public final static int HTTP_NOT_AUTHORITATIVE = 203
+Description
+The HTTP response code that means the information returned may 
+be a copy. 
+HTTP_NOT_FOUND
+public final static int HTTP_NOT_FOUND = 404
+Description
+The HTTP response code that means the server could not find the 
+requested resource. 
+HTTP_NOT_MODIFIED
+public final static int HTTP_NOT_MODIFIED = 304
+Description
+The HTTP response code that means the requested resource has not 
+been modified. 
+HTTP_NO_CONTENT
+public final static int HTTP_NO_CONTENT = 204
+Description
+The HTTP response code that means the request has 
+been processed, but there is no new information. 
+HTTP_OK
+public final static int HTTP_OK = 200
+Description
+The HTTP response code that means the request succeeded. 
+HTTP_PARTIAL
+public final static int HTTP_PARTIAL = 206
+Description
+The HTTP response code that means the partial request has been 
+fulfilled. 
+HTTP_PAYMENT_REQUIRED
+public final static int HTTP_PAYMENT_REQUIRED = 402
+Description
+An HTTP response code that is reserved for future use. 
+HTTP_PRECON_FAILED
+public final static int HTTP_PRECON_FAILED = 412
+Description
+The HTTP response code that means the precondition in the request 
+has failed. 
+HTTP_PROXY_AUTH
+public final static int HTTP_PROXY_AUTH = 407
+Description
+The HTTP response code that means the client needs to authenticate 
+itself with the proxy. 
+HTTP_REQ_TOO_LONG
+public final static int HTTP_REQ_TOO_LONG = 414
+Description
+The HTTP response code that means the client request is too long. 
+HTTP_RESET
+public final static int HTTP_RESET = 205
+Description
+The HTTP response code that means the request has 
+been fulfilled, and the client should reset its view. 
+HTTP_SEE_OTHER
+public final static int HTTP_SEE_OTHER = 303
+Description
+The HTTP response code that means the requested resource is available 
+at another URL. 
+HTTP_SERVER_ERROR
+public final static int HTTP_SERVER_ERROR = 500
+Description
+The HTTP response code that means the server encountered a problem 
+and could not fulfill the request. 
+HTTP_UNAUTHORIZED
+public final static int HTTP_UNAUTHORIZED = 401
+Description
+The HTTP response code that means the client is not authenticated 
+for the requested resource. 
+HTTP_UNAVAILABLE
+public final static int HTTP_UNAVAILABLE = 503
+Description
+The HTTP response code that means the server is temporarily unable 
+to fulfill the request. 
+HTTP_UNSUPPORTED_TYPE
+public final static int HTTP_UNSUPPORTED_TYPE = 415
+Description
+The HTTP response code that means the server 
+cannot process the type of the request. 
+HTTP_USE_PROXY
+public final static int HTTP_USE_PROXY = 305
+Description
+The HTTP response code that means a proxy must be used to access 
+the requested resource. 
+HTTP_VERSION
+public final static int HTTP_VERSION = 505
+Description
+The HTTP response code that means the server does not support 
+the HTTP version used in the request. 
+Variables
+method
+protected String method = "GET"
+Description
+The method of this request. Valid values are: 
+"DELETE", 
+"GET", 
+"HEAD", 
+"OPTIONS", 
+"POST", 
+"PUT", 
+and "TRACE". 
+responseCode
+protected int responseCode = -1
+Description
+The response code from the server, which may 
+be one of the HTTP_ constants. 
+responseMessage
+protected String responseMessage = null
+Description
+The response message from the server that corresponds 
+to responseCode. 
+Constructors
+HttpURLConnection
+protected HttpURLConnection(URL u)
+Parameters
+u
+A URL object that represents a resource. 
+Description
+This constructor creates an HttpURLConnection 
+for the given URL object. 
+Class Methods
+getFollowRedirects
+public static boolean getFollowRedirects()
+Returns
+A boolean value that indicates 
+whether or not HTTP redirect codes are automatically followed. 
+Description
+This method indicates whether or not this HttpURLConnection 
+follows HTTP redirects. The default value is false. 
+setFollowRedirects
+public static void setFollowRedirects(boolean set)
+Parameters
+set
+A boolean value that specifies whether or not HTTP
+redirects should be followed. 
+Throws
+SecurityException
+If there is a SecurityManager installed and
+its checkSetFactory() method throws a
+SecurityException.
+Description
+This method specifies whether or not this HttpURLConnection 
+follows HTTP redirects. 
+Instance Methods
+disconnect
+public abstract void disconnect()
+Description
+This method closes the connection to the server. 
+getRequestMethod
+public String getRequestMethod()
+Returns
+The method of this request. 
+Description
+This method returns the method of this request. 
+getResponseCode
+public int getResponseCode() throws IOException
+Returns
+The response code from the server. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method returns the code the server sent in response to this request. 
+For example, suppose the server response is: 
+HTTP/1.0 404 Not Found
+In this case, the method returns integer value 404. 
+getResponseMessage
+public int getResponseMessage() throws IOException
+Returns
+The response message from the server. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method returns the message the server sent in response to this request. 
+For example, suppose the server response is: 
+HTTP/1.0 404 Not Found
+In this case, the method returns the string "Not Found". 
+setRequestMethod
+   public void setRequestMethod(String method) throws ProtocolException  
+Parameters
+method
+The new method for this request. 
+Throws
+ProtocolException
+If the connection has already been made or if
+method is invalid. 
+Description
+This method sets the method of this request. Valid values are: "DELETE", 
+"GET", 
+"HEAD", 
+"OPTIONS", 
+"POST", 
+"PUT", 
+and "TRACE". 
+usingProxy
+public abstract boolean usingProxy()
+Returns
+A boolean value that indicates 
+whether or not this HttpURLConnection 
+is using a proxy. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method returns a flag that indicates if this connection is going through 
+a proxy or not. 
+Inherited Variables
+Variable
+Inherited From
+Variable
+Inherited From
+allowUserInteraction
+URLConnection
+connected
+URLConnection
+doInput
+URLConnection
+doOutput
+URLConnection
+ifModifiedSince
+URLConnection
+url
+URLConnection
+useCaches
+URLConnection
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+connect()
+URLConnection
+equals(Object)
+Object
+finalize()
+Object
+getAllowUserInteraction()
+URLConnection
+getClass()
+Object
+getContent()
+URLConnection
+getContentEncoding()
+URLConnection
+getContentLength()
+URLConnection
+getContentType()
+URLConnection
+getDate()
+URLConnection
+getDefaultUseCaches()
+URLConnection
+getDoInput()
+URLConnection
+getDoOutput()
+URLConnection
+getExpiration()
+URLConnection
+getHeaderField(String)
+URLConnection
+getHeaderField(int)
+URLConnection
+getHeaderFieldDate(String, long)
+URLConnection
+getHeaderFieldInt(String, int)
+URLConnection
+getHeaderFieldKey(int)
+URLConnection
+getIfModifiedSince()
+URLConnection
+getInputStream()
+URLConnection
+getLastModified()
+URLConnection
+getOutputStream()
+URLConnection
+getRequestProperty(String)
+URLConnection
+getURL()
+URLConnection
+getUseCaches()
+URLConnection
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+setAllowUserInteraction(boolean)
+URLConnection
+setDefaultUseCaches(boolean)
+URLConnection
+setDoInput(boolean)
+URLConnection
+setDoOutput(boolean)
+URLConnection
+setIfModifiedSince(long)
+URLConnection
+setRequestProperty(String, String)
+URLConnection
+setUseCaches(boolean)
+URLConnection
+toString()
+URLConnection
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+IOException, 
+ProtocolException, 
+SecurityException, 
+SecurityManager, 
+URL, 
+URLConnection 
+FileNameMap
+InetAddress
+ 
+ 
+ 
+ 
+ 
+ 
+ 

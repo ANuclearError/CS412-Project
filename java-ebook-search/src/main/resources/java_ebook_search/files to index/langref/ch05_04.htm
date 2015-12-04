@@ -1,0 +1,1415 @@
+
+[Chapter 5] 5.4 Class Declarations
+Chapter 5Declarations
+5.4 Class Declarations
+A class declaration creates a reference type in Java. The class
+declaration also specifies the implementation of the class, including
+its variables, constructors, and methods. The formal definition of a
+class declaration is:
+While the above diagram may seem complicated, a class declaration is
+really made up of six distinct things:
+Optional modifiers that
+specify attributes of the class
+The keyword class
+An identifier that names the class
+An optional
+extends clause that specifies the superclass
+of the declared class
+An optional implements
+clause that specifies the interfaces implemented by the declared
+class
+Any number of member declarations, which can
+include variables, methods, constructors, static initializers, 
+instance initializers, nested top-level classes and interfaces,
+and member classes
+References
+Classes;
+ClassOrInterfaceName 4.1.6;
+Class Members;
+Identifiers
+Class Modifiers
+The keywords public, abstract,
+and final can appear as modifiers at the beginning
+of a class declaration. In this situation, these modifiers have the
+following meanings:[3]
+[3] 
+Version 1.0 of Java included a private protected
+access specification; this specification has been removed as of version
+1.0.2 of the language.
+public
+If a class is declared public, it can be referenced
+by any other class. If the public modifier is not
+used, however, the class can only be referenced by other classes in
+the same package. A single source file, or compilation unit, can only
+declare one public class or interface (see
+Compilation Units for an exception
+to this rule).
+abstract
+If a class is declared abstract, no instances of
+the class may be created. A class declared abstract
+may contain abstract methods. Classes not declared
+abstract may not contain abstract methods and must
+override any abstract methods they inherit with
+methods that are not abstract. Furthermore, classes
+that implement an interface and are not declared
+abstract must contain or inherit methods that are
+not abstract that have the same name, number of
+parameters, and corresponding parameter types as the methods declared
+in the interfaces that the class implements.
+final
+If a class is declared final, it cannot be
+subclassed. In other words, it cannot appear in the
+extends clause of another class.
+You want to declare a class final
+if it is important to ensure the exact properties and behavior of
+that class. Many of the classes in the java.lang
+package are declared final for that reason. In
+addition, the compiler can often optimize operations
+on final
+classes. For example, the compiler can optimize operations involving
+the String class because it can safely assume
+the exact logic of String methods. The compiler
+does not have to account for the possibility of methods of a
+final class being overridden in a subclass.
+References
+Compilation Units;
+Inner class modifiers;
+Local class modifiers;
+Method modifiers;
+Variable modifiers
+Class Name
+The identifier that follows the keyword class is
+the name of the class. This identifier can be used as a reference type
+wherever the class is accessible.
+References
+Class Types
+Class Inheritance
+The extends clause specifies the superclass of the
+class being declared. If a class is declared without an
+extends clause, the class Object
+is its implicit superclass.  The class inherits all of the accessible
+methods and variables of its superclass.
+If a class is declared final, it cannot appear in
+an extends clause for any other class.
+The implements clause specifies any interfaces
+implemented by the class being declared.  Unless it is an
+abstract class, the class (or one of its
+superclasses) must define implementations for all of the methods
+declared in the interfaces.
+References
+Inheritance;
+Interfaces;
+Interface Declarations;
+Object
+Class Members
+Fields are the variables,
+methods, constructors, static (load-time) initializers,
+instance initializers, nested top-level classes and interfaces,
+and member classes that are
+declared as part of a class:
+A member declaration causes the member to be defined throughout the
+entire class and all of its subclasses. This means that it is not a
+problem to have forward references
+to members, or in other words, you can use members in a class before
+you have defined them. For example:
+class foo {
+    void doIt() {
+        countIt();
+    }
+    void countIt() {
+        i++;
+    }
+    int i;
+}
+References
+Constructors;
+Nested Top-Level and Member Classes;
+Nested Top-Level Interfaces;
+Instance Initializers;
+Methods;
+Static Initializers;
+Variables
+Variables
+A variable that is declared as a member in a class is called a
+field variable. A field variable is different
+from a local variable, which is declared within a method or a block.
+The formal definition of a variable declaration is:
+While the above diagram may seem complicated, a variable declaration
+is really made up of four distinct things:
+Optional modifiers that specify attributes of the variable.
+A type, which can be either a primitive type or a reference type.
+Any number of identifiers that name variables. Each name can be
+followed by pairs of square brackets to indicate an array variable.
+An optional initializer for each variable declared.
+Here are some examples of variable declarations:
+int x;
+public static final double[] k, m[];
+References
+Variable initializers;
+Expression 4;
+Identifiers;
+Local Variables;
+Type 3
+Variable modifiers
+The modifiers public, protected,
+and private can be used in the declaration of a
+field variable to specify the accessibility of the variable. In this
+situation, the modifiers have the following meanings:[4]
+[4] 
+Version
+1.0 of Java included a private protected
+access specification; this specification has been removed as of version
+1.0.2 of the language.
+public
+A field variable that is declared public is
+accessible from any class.
+protected
+A field variable that is declared protected is
+accessible to any class that is part of the same package as the class
+in which the variable is declared. Such a field variable is also
+accessible to any subclass of the class in which it is declared;
+this occurs regardless of whether or not the subclass is part of
+the same package.
+private
+A field variable that is declared private
+is only accessible in the class in which it is declared. Such a
+field variable is not accessible to other classes. In particular,
+a field variable that is declared private is
+not accessible in subclasses of the class in which it is declared.
+If a field variable is not declared with any of the access modifiers,
+the variable has the default accessibility. Default access is often
+called "friendly" access because it is similar to
+friendly access in C++. A variable with default
+access is accessible in any class that is part of the same package as
+the class in which the variable is declared. However, a friendly
+variable is not accessible to classes outside of the package in which
+it is declared, even if the desired classes are subclasses of the class
+in which it is declared.
+The keywords static, final,
+transient, and volatile can also
+be used in the declaration of a field variable. These modifiers have
+the following meanings:
+static
+A field variable that is declared with the static
+modifier is called a class variable.
+There is exactly one copy of each class variable associated with
+the class; every instance of the class shares the single copy of
+the class's static variables. Thus, setting the
+value of a class variable changes the value of the variable for
+all objects that are instances of that class or any of its subclasses.
+For example, if you want to count how many instances of a class
+have been instantiated, you can write:
+class Foo {
+    ...
+    static int fooCount = 0;
+    Foo() {
+        fooCount++;
+    }
+    ...
+}
+A field variable that is not declared with the
+static modifier is called an instance
+variable.  There is a distinct copy of each instance
+variable associated with every instance of the class. Thus, setting
+the value of an instance variable in one object does not affect the
+value of that instance variable in any other object.
+final
+If a field variable is declared with the final
+modifier, the variable is a named constant value. As such, it must
+be assigned an initial value.  Any assignment to a
+final variable, other than the one that
+provides its initial value, is a compile-time error. The initial value
+for a final variable is typically 
+provided by an initializer that is part of the variable's declaration.
+For example:
+final int X = 4;
+A final field variable that is not initialized 
+in its declaration is called a blank final. 
+Blank finals are not supported prior to Java 1.1.
+A blank final that is declared static must
+be assigned a value exactly once in a static initializer. A 
+blank final that is not declared static
+must be assigned a value exactly once in an instance initializer or
+exactly once in each constructor. The compiler
+uses flow analysis that takes if statements
+and iteration statements into account to ensure that
+a blank final is assigned a value
+exactly once. Thus, it is possible to have multiple assignments to a blank
+final, so long as exactly one of them can be executed. For example,
+here is an instance initializer that sets the value of a blank final:
+{
+    final int DAYS_IN_YEAR;
+    if (isLeapYear(new Date()))
+        DAYS_IN_YEAR = 366;
+    else
+        DAYS_IN_YEAR = 365;
+    ...
+}
+Note that the meaning of final
+in a variable declaration is very different from the meaning of
+final in a method or class declaration. In particular,
+if a class contains a final variable, you can
+declare a variable with the same name in a subclass of that class
+without causing an error.
+transient
+The transient modifier is used to indicate that a
+field variable is not part of the persistent state of an object. The
+java.io.ObjectOutputStream class defines
+write() methods that output a representation of an
+object that can be read later to create a copy of the object.  These
+write() methods do not include field variables that
+are declared transient in the representation of an
+object.
+volatile
+The volatile modifier is used to tell the compiler
+that a field variable will be modified asynchronously by methods that
+are running in different threads. Each time the variable is accessed
+or set, it is fetched from or stored into global memory in a way that
+avoids the assumption that a version of the variable in a cache or a
+register is consistent with the version in global memory.
+References
+Class Modifiers;
+Inner class modifiers;
+Local class modifiers;
+Method modifiers
+Variable type
+A field variable declaration must always specify the type of the
+variable. If the declaration of a field variable uses a primitive
+type, the variable contains a value of the specified primitive
+type. If the declaration uses a reference type, the variable contains
+a reference to the specified type of object.
+The presence of square brackets in a
+variable declaration, after either the type or variable name, indicates
+that the variable contains a reference to an array. For example:
+int a[];        // a is an array of int
+int[] b;        // b is also an array of int
+It is also possible to declare a variable to contain an array of
+arrays, or more generally, arrays nested to any level. Each pair of
+square brackets in the declaration corresponds to a dimension of the
+array; it makes no difference whether the brackets appear after the
+type or the variable name. For example:
+int[][][] d3;      // Each of these is an array of
+int[][] f3[];      // arrays of arrays of integers
+int[] g3[][];
+int h3[][][];
+int[] j3, k3[];    // An array and an array of arrays
+References
+Array Types;
+Primitive Types;
+Reference Types
+Variable name
+The identifier that follows
+the variable type is the name of the variable. This identifier can
+be used anywhere that the variable is accessible.
+It is an error to declare two field variables with the same name in
+the same class. It is also an error to declare a field variable
+with the same name as a method declared in the same class or any
+of its superclasses.
+If a field variable is declared with the same name as a variable
+declared in a superclass, the variable in the superclass is considered
+to be shadowed. If a variable is shadowed in a
+class, it cannot be accessed as a field of that class. However, a
+shadowed variable can be accessed by casting a reference to an object
+of that class to a reference to the appropriate superclass in which
+the variable is not shadowed. For example:
+class A {
+    int x = 4;
+}
+class B extends A {
+    int x = 7;
+    B () {
+        int i = x;              // i gets the value of B's x
+        int h = ((A)this).x;    // h gets the value of A's x
+    }
+}
+Alternatively, if a variable is shadowed in a class but not
+in its immediate superclass, the methods of the class can access
+the shadowed variable using the keyword super.
+In the above example, this would look as follows:
+int h = super.x;        // h gets the value of A's x
+If a method is declared with the same name
+and parameters as a method in a superclass, the method in the superclass
+is considered to be overridden. Note that variable shadowing is
+different than method overriding. The most important difference
+is that using a reference to an instance of an object's superclass
+does not provide access to overridden methods. Overriding is described
+in detail in Method name.
+References
+Field Expressions;
+Identifiers;
+Inheritance;
+Method name
+Variable initializers
+A variable declaration
+can contain an initializer. However, if a variable is declared to
+be final, it must either have an initializer
+or be initialized exactly once in a static initializer, instance
+initializer, or constructor. If the
+variable is of a non-array type, the expression in the initializer
+is evaluated and the variable is set to the result of the expression,
+as long as the result is assignment-compatible with the variable.
+If the variable is of an array type, the initializer must be an
+array initializer:
+Each expression or array initializer in an array initializer is evaluated
+and becomes an element of the array produced by the initializer.
+The variable is set to the array produced by the initializer, as
+long as the assignment is assignment-compatible. Here are some examples
+of actual array initializers:
+short a[] = {2,5,8,2,11};    // array of 5 shorts
+int s[][] = { {3,45,8},      // array of 4 arrays
+              {12,9,33},     // of 3 ints
+              {7,22,53},
+              {33,1,2} };
+Note that a trailing comma is allowed within an array initializer.
+For example, the following is legal:
+int x[] = {2,23,4,};
+Any initializers for class variables (i.e., static
+variables) are evaluated when the class is loaded. The initializer for
+a class variable cannot refer to any instance variables in the
+class. An initializer for a static variable cannot
+refer to any static variables that are declared
+after its own declaration. The initial value of a class variable can
+also be set in a static initializer for the class; static initializers
+are described in Static Initializers.
+Any initializers for instance variables are evaluated when a
+constructor for the class is called to create an instance of the
+class. Every class has at least one constructor that explicitly or
+implicitly calls one of the constructors of its immediate superclass
+before it does anything else. When the superclass's constructor
+returns, any instance variable initializers (and
+instance initializers) are evaluated before the
+constructor does anything else. 
+The initial value of an instance variable can also be set in
+an instance initializer; instance initializers are described in
+Instance Initializers.
+Of course, it is also possible to set
+the initial values of instance variables explicitly in a
+constructor. Constructors are described
+in Constructors.
+If a variable declaration does not contain an initializer, the
+variable is set to a default value. The actual value is determined by
+the variable's type.  Table 5-1 shows the default values used for the
+various types in Java.
+Table 5.1: Default Values for Field Variables
+Type
+Default Value
+byte
+0
+char
+'\u0000'
+short
+0
+int
+0
+long
+0L
+float
+0.0F
+double
+0.0
+boolean
+false
+Object reference
+null
+For an array, every element
+of the array is set to the appropriate default value, based on the
+type of elements in the array.
+Here are some examples of variable declarations, with and without initializers:
+int i,j;                 // initialized to zero
+long k = 243L;
+double d = k*1.414;
+String s;                // initialized to null
+char c[] = new char[123];
+float f[] = { 3.2f, 4.7f, 9.12f, 345.9f};
+Double dbl = new Double(382.3748);
+java.io.File fl = new File("/dev/null");
+Object o = fl;
+References
+Array Types;
+Assignment Operators;
+Constructors;
+Expression 4;
+Instance Initializers;
+Static Initializers;
+Variable modifiers
+Methods
+A method is a piece of executable code that can be called as a
+subroutine or a function. A method can be passed parameters by its
+caller; the method can also return a result to its caller. In Java, a
+method can only be declared as a field in a class. The formal
+definition of a method declaration is:
+While the above diagram may seem complicated, a method declaration is
+really made up of six distinct things:
+Optional modifiers that specify attributes of the method
+A type that specifies the type of value returned by the method
+An identifier that names the method
+A list of formal parameters that specifies the values that are passed
+to the method
+An optional throws clause that specifies any
+exceptions that can be thrown by the method
+A block that defines the functionality of the method
+Here are some examples of method declarations:
+public static void main(String[] argv) {
+    System.out.println( argv[0] );
+}
+int readSquare(DataInputStream d) throws IOException {
+    int i = d.readInt();
+    return i*i;
+}
+int filledArray(int length, int value) [] {
+    int [] array = new int [length];
+    for (int i = 0; i &lt; length; i++ ) {
+        array[i] = value;
+    }
+    return array;
+}
+Unlike C/C++, Java only allows method declarations that fully
+specify the type and number of parameters that the method can be
+called with.
+References
+Blocks;
+ClassOrInterfaceName 4.1.6;
+Exception Handling 9;
+Method formal parameters;
+Identifiers;
+Type 3
+Method modifiers
+The modifiers public, protected,
+and private can be used in the declaration of
+a method to specify the accessibility of the method. In this situation,
+the modifiers have the following meanings:
+public
+A method that is declared public is accessible from
+any class.
+protected
+A method that is declared protected is accessible
+in any class that is part of the same package as the class in which
+the method is declared. Such a method is also accessible to any
+subclass of the class in which it is declared, regardless of whether
+or not the subclass is part of the same package.
+private
+A method that is declared private is only
+accessible in the class in which it is declared. Such a method is not
+accessible in other classes. In particular, a method that is declared
+private is not accessible in subclasses of the
+class in which it is declared. A method cannot be declared both
+private and abstract.
+If a method is not declared with any of the access modifiers, it
+has the default accessibility. Default access is often called
+"friendly" access because it is similar to friendly
+access in C++. A method with default access is accessible in any class
+that is part of the same package as the class in which the method is
+declared. However, a friendly method is not accessible to classes
+outside of the package in which it is declared, even if the classes
+are subclasses of the class in which it is declared.
+The keywords static, final,
+abstract, native, and
+synchronized can also be used in the declaration of
+a method. These modifiers have the following meanings:
+static
+A method that is declared with the static modifier
+is called a class method.  Class methods are not
+associated with an instance of a class. This means that a class method
+cannot directly refer to other, non-static methods
+or variables in its class, unless the method or variable is accessed
+through an explicit object reference. In addition, the keywords
+this and super are treated as
+undefined variables within static methods. A method
+that is declared static is also implicitly
+final, or in other words, static
+methods cannot be overridden. A method that is declared
+static cannot also be declared
+abstract.
+Because static methods are not
+associated with a class instance, you do not need an instance of
+a class to invoke such a method. For example, the Math
+class contains a collection of mathematical methods that can be
+called using the class name:
+Math.tan(x)
+A method that is not declared with the static
+modifier is called an instance method. Instance
+methods are associated with an instance of a class, so an instance
+method may contain direct references to any other methods or variables
+in its class.
+final
+A method that is declared with the final modifier
+cannot be overridden. In other words, if a method in a class is
+declared final, no subclass of that class can
+declare a method with the same name, number of parameters, and
+parameter types as the final method. Although
+final methods cannot be overridden, declaring a
+method to be final in no way prevents it from being
+overloaded.
+abstract
+If a method is declared with the abstract modifier,
+the declaration must end with a semicolon rather than a block. An
+abstract method declaration specifies the name,
+number and type of parameters, and return type of the method; it does
+not specify the implementation of the method. If a class contains an
+abstract method, the class must also be declared
+abstract.  If a non-abstract
+class inherits an abstract method, the class must
+override the method and provide an implementation.
+An abstract method cannot also be declared either
+private or static because
+neither private nor static
+methods can be overridden. A private method cannot
+be overridden because it is not inherited by its subclasses; a
+static method cannot be overridden because it is
+implicitly final.
+native
+If a method is declared with the native modifier,
+the declaration must end with a semicolon rather than a block. A
+native method is implemented in a platform-specific
+way using a language other than Java, such as C++. Because the
+implementation of a native method is not done in
+Java, Java requires the semicolon in place of an implementation.
+Because the implementation of a native method is
+platform-specific, you should avoid using native methods in classes
+that are expected to run on different kinds of clients. Native methods
+also require an installation process, which is another reason to avoid
+them for use on clients.
+synchronized
+If a method is declared with the synchronized
+modifier, a thread must obtain a lock before it can invoke the
+method. If the method is not declared static, the
+thread must obtain a lock associated with the object used to access
+the method. If the method is declared static, the
+thread must obtain a lock associated with the class in which the
+method is declared.
+A synchronized method is one of two mechanisms for providing
+single-threaded access to the contents of a class or object. The other
+mechanism is the synchronized statement.  Of the
+two, a synchronized method is usually the preferred mechanism.  If all
+access to instance data that is shared by multiple threads is through
+synchronized methods, the integrity of the instance
+data is guaranteed, no matter what the callers of the methods do.  On
+the other hand, if instance data shared by multiple threads is
+directly accessible outside of the class that defines it or its
+subclasses, providing single-threaded access to the data requires the
+use of synchronized statements.
+References
+Class Modifiers;
+Inner class modifiers;
+Local class modifiers;
+Variable modifiers
+Method return type
+A method declaration must always specify the type of value returned by
+the method. The return value can be of a primitive type or of a
+reference type.  If the method does not return a value, it should be
+declared with its return type specified as void.
+The return type comes before the name of the method in the method declaration.
+The presence of square brackets in a method declaration, after either
+the return type or the formal parameters, indicates that the method
+returns a reference to the specified type of array.
+For example:
+int a()[] {...};        // a returns an array of int
+int[] b() {...};        // b also returns an array of int
+It is also possible to declare that a method returns a reference to an
+array of arrays, or more generally, arrays nested to any level. Each
+pair of square brackets in the declaration corresponds to a dimension
+of the array; it makes no difference whether the brackets appear after
+the return type or the formal parameters. For example:
+int[][][] d3() {...};    // Each of these returns an array of
+int[][] f3()[] {...};    // arrays of arrays of integers
+int[] g3()[][] {...};
+int h3()[][][] {...};
+If a method is declared
+with the void return type, any return
+statement that appears within the method must not contain a return
+value. Because a method with a void return type
+does not return a value, such a method can only be called from an
+expression statement that consists of a method call expression.
+On the other hand, if a method is declared with a return type other
+than void, it must return through an explicit
+return statement that contains a return value that
+is assignment-compatible with the return type of the method.
+References
+Array Types;
+Expression Statements;
+Primitive Types;
+Reference Types;
+The return Statement
+Method name
+The identifier that follows
+the return type is the name of the method. This identifier can be
+used anywhere that the method is accessible.
+It is an
+error to declare two methods that have the same name, the same number
+of parameters, and the same type for each corresponding parameter
+in the same class. It is also an error to declare a method with
+the same name as a variable declared in the same class or any of
+its superclasses.
+A method is said to be overloaded
+if there is more than one accessible method in a class with the
+same name, but with parameters that differ in number
+or type.[5] This situation can arise
+if two or more such methods are declared in the same class. It can
+also occur when at least one of the methods is defined in a superclass
+and the rest are in a subclass.
+[5] 
+Although
+Java supports overloaded methods, it does not allow
+programs to define overloaded operators. While it is true that the
++ operator is defined in an overloaded way, that
+operator is part of the language specification and it is the only
+overloaded operator.
+Overloaded methods aren't required
+to have the same return type. For example:
+int max(int x, int y){return x&gt;y ? x : y;}
+double max(double x, double y){return x&gt;y ? x : y;}
+A method that is inherited from a superclass is said to be
+overridden if a method in the inheriting class
+has the same name, number of parameters, and types of parameters as
+the inherited method. If the overridden method returns
+void, the overriding method must also return
+void. Otherwise, the return type of the overriding
+method must be the same as the type of the overridden method.
+An overriding method can be more accessible than the overridden
+method, but it cannot be less accessible. In other words, a subclass
+cannot hide things that are visible in its superclass, but it can make
+visible things that are hidden. An object is considered to be an
+instance of its own class, as well as an instance of each of its
+superclasses.  As a result, you can use an object reference to call a
+method in an object and not worry about whether the object is actually
+an instance of a subclass of the type of the reference. If a subclass
+were allowed to override methods of its superclass with methods that
+were less accessible, you would no longer be able to use a reference
+without regard to the actual type of the object being referenced.
+For example, Object is the superclass of
+String. This means that a variable declared to
+contain a reference to an Object may actually refer
+to a String. The Object class
+defines a public method called
+hashCode(), so a reference to
+the Object class can be used to call the
+hashCode() method of whatever subclass of
+Object it refers to. Allowing a subclass of
+Object to declare a private
+hashcode() method would be inconsistent with this usage.
+Table 5-2 shows the access modifiers that are permitted for an
+overriding method, based on the access allowed for the overridden
+method.
+Table 5.2: Permitted Access Modifiers for Overriding Methods
+Access declared for overridden method
+no modifier
+protected
+public
+Access for overriding method
+private
+not allowed
+not allowed
+not allowed
+no modifier
+allowed
+not allowed
+not allowed
+protected
+allowed
+allowed
+not allowed
+public
+allowed
+allowed
+allowed
+If a method in the superclass is declared private,
+it is not inherited by the subclass.  This means that a method in the
+subclass that has the same name, number of parameters, and types of
+parameters does not override the private method in
+the superclass. As a result, the method in the subclass can have any
+return type and there are no restrictions on its accessibility.
+Non-static methods must be called through an object
+reference. If a non-static method is called with no
+explicit object reference, it is implicitly called using the object
+reference this. At compile-time, the type of the
+object reference is used to determine the combinations of method names
+and parameters that are accessible to the calling expression (see
+Method Call Expression).
+At runtime, however, the
+actual type of the object determines which of the methods is
+called. If the actual object is an instance of a subclass of the
+referenced class and the subclass overrides the method being called,
+the overriding method in the subclass is invoked.
+In other words, the actual type of the object is used to determine
+which method to call, not the type of the reference to that
+object. This means that you cannot simply cast an object reference to
+a superclass of the class of the actual object to call to an
+overridden method. Instead, you use the keyword
+super to access an overridden method in the
+superclass. For example:
+class A {
+    void doit() {
+        ...
+    }
+}
+class B extends A {
+    void doit() {
+        super.doit();      // calls overridden A.doit()
+    }
+    public static void main(String argv[]) {
+        B b = new B();
+        ((A)b).doit();     // calls B.doit()
+    }
+}
+The doit() method in class B
+calls the overridden doit() method in class
+A using the super
+construct. But, in main(), the
+doit() method in class B is
+invoked because casting a reference does not provide access to
+overridden methods.
+References
+Identifiers;
+Inheritance;
+Method Call Expression;
+Variable name
+Method formal parameters
+The formal parameters in a method declaration specify a list of
+variables to which values are assigned when the method is called:
+Within the block that contains the implementation of the method, the
+method's formal parameters are treated as local variables; the name of
+each formal parameter is available as an identifier in the method's
+implementation.  Formal parameters differ from local variables only in
+that their declaration and value come from outside the method's block.
+If a formal parameter is declared final, 
+any assignment to that parameter generates an error. 
+The syntax for declaring final 
+parameters is not supported prior to Java 1.1.
+If a method has no formal parameters, the parentheses must
+still appear in the method declaration.
+Here's an example of a method declaration with formal parameters:
+abstract int foo(DataInputStream d, Double[] values, int weights[]) ;
+The presence of square brackets
+in a formal parameter declaration, either as part of a reference
+type or after the name of a formal parameter, indicates that the
+formal parameter is an array type. For example:
+foo(int a[],    // a is an array of int
+    int[] b)    // b is also an array of int
+It is also possible to declare that a formal parameter is an array of
+arrays, or more generally, arrays nested to any level. Each pair of
+square brackets in the declaration corresponds to a dimension of the
+array; it makes no difference whether the brackets appear with the
+type or after the name of the formal parameter. For example:
+int[][][] d3        // Each of these is an array of
+int[][] f3[]        // arrays of arrays of integers
+int[] g3[][]
+int h3[][][]
+References
+Array Types;
+Blocks;
+Identifiers;
+Local Variables;
+Type 3
+Method throws clause
+If a method is expected to throw any exceptions, the method
+declaration must declare that fact in a throws
+clause. Java requires that most types of exceptions either be caught
+or declared, so bugs caused by programmers forgetting to handle
+particular types of exceptions are uncommon in Java programs.
+If a method implementation contains a throw
+statement, or if the method calls another method declared with a
+throws clause, there is the possibility that an
+exception will be thrown from within the method. If the exception is
+not caught, it will be thrown out of the method to its caller. Any
+exception that can be thrown out of a method in this way must be
+listed in a throws clause in the method
+declaration, unless the exception is an instance of
+Error, RuntimeException, or a
+subclass of one of those classes. Subclasses of the
+Error class correspond to situations that are not
+easily predicted, such as the system running out of memory. Subclasses
+of RuntimeException correspond to many common
+runtime problems, such as illegal casts and array index problems. The
+classes listed in a throws clause must be
+Throwable or any of its subclasses; the
+Throwable class is the superclass of all objects
+that can be thrown in Java.
+Consider the following example:
+import java.io.IOException;
+class throwsExample {
+    char[] a;
+    int position;
+    ...
+    // Method explicitly throws an exception
+    int read() throws IOException {
+        if (position &gt;= a.length)
+            throw new IOException();
+        return a[position++];
+    }
+    // Method implicitly throws an exception
+    String readUpTo(char terminator) throws IOException {
+        StringBuffer s = new StringBuffer();
+        while (true) {
+            int c = read(); // Can throw IOException
+            if (c == -1 || c == terminator) {
+                return s.toString();
+            }
+            s.append((char)c);
+        }
+        return s.toString():
+    }
+    // Method catches an exception internally
+    int getLength() {
+        String s;
+        try {
+            s = readUpTo(':');
+        } catch (IOException e) {
+            return 0;
+        }
+        return s.length();
+    }
+    // Method can throw a RuntimeException
+    int getAvgLength() {
+        int count = 0;
+        int total = 0;
+        int len;
+        while (true){
+            len = getLength();
+            if (len == 0)
+                break;
+            count++;
+            total += len;
+        }
+        return total/count; // Can throw ArithmeticException
+    }
+}
+The method read() can throw an
+IOException, so it declares that fact in its
+throws clause.  Without that
+throws clause, the compiler would complain that the
+method must either declare IOException in its
+throws clause or catch it. Although the
+readUpTo() method does not explicitly throw any
+exceptions, it calls the read() method that does
+throw an IOException, so it declares that fact in
+its throws clause. Whether explicitly or implicitly
+thrown, the requirement to catch or declare an exception is the
+same. The getLength() method catches the
+IOException thrown by
+readUpTo(), so it does not have to declare the
+exception. The final method, getAvgLength(), can
+throw an ArithmeticException if
+count is zero. Because
+ArithmeticException is a subclass of
+RuntimeException, the fact that it can be thrown
+out of getAvgLength() does not need to be declared.
+If a method overrides another method, the overriding method cannot
+throw anything that the overridden method does not throw.
+Specifically, if the declaration of a method contains a
+throws clause, any method that overrides that
+method cannot include any classes in its throws
+clause that are not declared in the overridden method. This
+restriction avoids surprises. When a method is called, the Java
+compiler requires that all of the objects listed the method's
+throws clause are either caught by the calling
+method or declared in the calling method's throws
+clause. The requirement that an overriding method cannot include any
+class in its throws clause that is not in the
+overridden method's throws clause ensures that the
+guarantee made by the compiler is respected by the runtime
+environment.
+References
+Exception Handling 9;
+The throw Statement;
+The try Statement
+Method implementation
+A method declaration must end with either a block or a semicolon. If
+either the abstract or native
+modifier is used in the declaration, the declaration must end with a
+semicolon. All other method declarations must end with a block that
+defines the implementation of the method.
+References
+Blocks;
+Method modifiers
+Constructors
+A constructor is a special kind of method that is designed to set the
+initial values of an object's instance variables and do anything else
+that is necessary to create an object. Constructors are only called as
+part of the object creation process. The declaration of a constructor
+does not include a return type. The name of a constructor is always the same as the name
+of the class:
+A constructor declaration is really made up of five distinct things:
+Optional modifiers that specify attributes of the constructor
+An identifier that names the constructor; this identifier
+must be the same as the name of the class
+A list of formal parameters that specifies the values that are passed
+to the constructor
+An optional throws clause that specifies any
+exceptions that can be thrown by the constructor
+A block that defines the functionality of the constructor
+Here is an example that shows a class with some constructors:
+class Construct {
+    private Construct(Double[] values, int weights[]) {
+    }
+    public Construct(OutputStream o, Double[] values, int weights[]) 
+                    throws IOException {
+        this(values, weights);
+        o.write(weights[0]);
+    }
+    public Construct() {
+    }
+}
+References
+Blocks;
+ClassOrInterfaceName 4.1.6;
+Exception Handling 9;
+Method formal parameters;
+Identifiers;
+Object Creation
+Constructor modifiers
+The modifiers public, protected,
+and private can be used in the declaration of
+a constructor to specify the accessibility of the constructor. In
+this situation, the modifiers have the following meanings:
+public
+A constructor that is declared public is accessible
+from any class.
+protected
+A constructor that is declared protected is
+accessible in any class that is part of the same package as the class
+in which the constructor is declared. Such a constructor is also
+accessible to any subclass of the class in which it is declared,
+regardless of whether or not the subclass is part of the same package.
+private
+A constructor that is declared private
+is accessible in the class in which it is declared. Such a constructor
+is not accessible in other classes. In particular, a constructor
+that is declared private is not accessible in
+subclasses of the class in which it is declared.
+If a class is declared with at least one constructor, to prevent Java
+from providing a default public constructor, and
+all of the constructors are declared private, no
+other class can create an instance of the class. It makes sense to
+prevent the instantiation of a class if the class exists only to
+provide a collection of static methods. An example
+of this type of class is java.lang.Math.
+private constructors
+can be used by static methods in the same class.
+If a constructor is not declared with any of the access modifiers, the
+constructor has the default accessibility. Default access is often
+called "friendly" access because it is similar to
+friendly access in C++. A constructor with default
+access is accessible in any class that is part of the same package as
+the class in which the constructor is declared. However, a friendly
+constructor is not accessible in subclasses of the class in which it
+is declared.
+References
+Class Modifiers;
+Inner class modifiers;
+Local class modifiers
+Constructor name
+A constructor has no name of its own. The identifier that appears in a
+constructor declaration must be the same as the name of the class in
+which the constructor is declared. This identifier can be used
+anywhere that the constructor is accessible.
+References
+Class Types
+Constructor return type
+A constructor has no declared return type; it always returns an object
+that is an instance of its class. A return
+statement in a constructor is treated the same as it is in a method
+declared to return void; the
+return statement must not contain a return
+value. Note that it is not possible to explicitly declare a
+constructor to have the return type void.
+References
+The return Statement
+Constructor formal parameters
+The formal parameters in a constructor declaration specify a list of
+variables to which values are assigned when the constructor is
+called. Within the block that contains the implementation of the
+constructor, the constructor's formal parameters are treated as local
+variables; the name of each formal parameter is available as an
+identifier in the constructor's implementation.  Formal parameters
+differ from local variables only in that their declaration and value
+come from outside the constructor's block.
+If a formal parameter is declared final, 
+any assignment to that parameter generates an error. 
+The syntax for declaring final 
+parameters is not supported prior to Java 1.1.
+If a constructor has no formal parameters, the parentheses
+must still appear in the constructor declaration.
+The presence of square brackets in a formal parameter declaration, either
+as part of a reference type or after the name of a formal parameter,
+indicates that the formal parameter is an array type. For example:
+Foo(int a[],    // a is an array of int
+    int[] b)    // b is also an array of int
+It is also possible to declare that a formal parameter is an array of
+arrays, or more generally, arrays nested to any level. Each pair of
+square brackets in the declaration corresponds to a dimension of the
+array; it makes no difference whether the brackets appear with the
+type or after the name of the formal parameter. For example:
+int[][][] d3        // Each of these is an array of
+int[][] f3[]        // arrays of arrays of integers
+int[] g3[][]
+int h3[][][]
+References
+Array Types;
+Blocks;
+Method formal parameters;
+Local Variables
+Constructor throws clause
+If a constructor is expected to throw any exceptions, the constructor
+declaration must declare that fact in a throws
+clause. If a constructor implementation contains a
+throw statement, or if the constructor calls
+another constructor or method declared with a
+throws clause, there is the possibility that an
+exception will be thrown from within the constructor.
+If the exception is not caught, it will be thrown out of the constructor to its
+caller. Any exception that can be thrown out of a constructor in this
+way must be listed in a throws clause in the
+constructor declaration, unless the exception is an instance of
+Error, RuntimeException, or a
+subclass of one of those classes.
+Subclasses of the Error class correspond to situations that are not
+easily predicted, such as the system running out of memory. Subclasses
+of RuntimeException correspond to many common
+runtime problems, such as illegal casts and array index problems. The
+classes listed in a throws clause must be
+Throwable or any of its subclasses; the
+Throwable class is the superclass of all objects
+that can be thrown in Java.
+References
+Exception Handling 9;
+The throw Statement;
+The try Statement
+Constructor implementation
+The block at the end of a constructor declaration contains the
+implementation of the constructor. The block is called the constructor
+body.  The first statement in a constructor body is special; it is
+the only place that Java allows an explicit call to a constructor
+outside of an allocation expression. An explicit call to a constructor
+has a special form:
+In an explicit constructor call, the keyword this
+can be used to specify a call to a constructor in the same class.  The
+keyword super can be used to specify a call to a
+constructor in the immediate superclass.
+For example:
+class Square extends RegularPolygon {
+    // Construct a square without specifying the length of the sides
+    Square() {
+        this(5);
+    }
+    // Construct a square with sides of a specified length
+    Square(int len) {
+        super(4,len);
+    }
+}
+The first constructor simply calls the second constructor with the
+argument 5. The second constructor calls a constructor in the
+immediate superclass to create a four-sided regular polygon with sides
+of the given length.
+Except for the constructors in the class Object, a
+constructor always begins by calling another constructor in the same
+class or in its immediate superclass. If the first statement in a
+constructor is not an explicit call to another constructor using
+this or super and the class is
+not Object, the compiler inserts a call to
+super() before the first statement in the
+constructor. 
+In other words, if a constructor does not begin with an
+explicit call to another constructor, it begins with an implicit call
+to the constructor of its immediate superclass that takes no argument.
+The result is
+constructor chaining: a constructor for each superclass of a class is
+called before the constructor of the class executes any of its own
+code.  After all of the calls to the superclasses' constructors
+(explicit or implicit) have returned, any instance variables that have
+initializers are initialized, and finally the constructor executes its
+own code.
+Constructor chaining places a restriction on the arguments that can be
+passed to a constructor in an explicit constructor call. The
+expressions provided as arguments must not refer to any instance
+variables of the object being created because these instance variables
+are not initialized until the superclass's constructor returns.
+References
+ArgumentList 4.1.8;
+Object Allocation Expressions;
+this;
+super
+The default constructor
+If a class declaration does not contain any constructor declarations,
+Java supplies a default constructor for the class. The default
+constructor is public, it takes no arguments, and
+it simply calls the constructor of its class's superclass that takes no
+arguments. The default constructor is approximately equivalent to:
+public MyClass() {
+    super();
+}
+Because Java creates a default constructor only for a class that does
+not have any explicitly declared constructors, it is possible for the
+superclass of that class not to have a constructor that takes no
+arguments. If a class declaration does not contain a constructor
+declaration and its immediate superclass does not have a constructor
+that takes no arguments, the compiler issues an error message because
+the default constructor references a non-existent constructor in the
+superclass. The default constructor for the class
+Object does not contain a call to another
+constructor because class Object has no superclass.
+References
+Object
+Constructor inheritance
+A subclass does not inherit constructors from its superclass, as it
+does normal methods. This is one important difference between regular
+methods and constructors: constructors are not inherited. However, a
+subclass can access a constructor in its superclass, as long as the
+constructor is accessible, based on any access modifiers used in its
+declaration.
+This example illustrates the difference between inheritance and accessibility:
+public class A {
+    public A (int q) {
+    }
+}
+public class B extends A {
+    public B () {
+        super(5);
+    }
+}
+Although class B is a subclass of class
+A, B does not inherit the public
+constructor in A that takes a single argument.
+This means that if you try to create a new instance of
+B using an allocation expression with a single
+argument, you'll get an error message from the compiler. Here's an
+erroneous call:
+B b1 = new B(9);
+However, as shown in the example, the constructor in
+B can access the constructor in
+A using the keyword super.
+The finalize method
+A class declaration can include a special method that is called before
+an instance of the class is destroyed by the garbage collector. This
+method is called a finalizer ; it has the name
+finalize().  The finalize()
+method for a class must be declared with no parameters, a
+void return type, and no modifiers:
+void finalize() {...}
+If a class has a finalize() method, it is normally
+called by the garbage collector before an object of that class type is
+destroyed. A program can also explicitly call an object's
+finalize() method, but in this case, the garbage
+collector does not call the method during the object destruction
+process. If the garbage collector does call an object's
+finalize() method, the garbage collector does not
+immediately destroy the object because the
+finalize() method might do something that results
+in a reference to the object. Thus the garbage collector waits to
+destroy the object until it can again prove it is safe to do so. The
+next time the garbage collector decides it is safe to destroy the
+object, it does so without calling the finalizer again. In any case, a
+finalize() method is never called more than once
+by the garbage collector for a particular object.
+A superclass of the class may also define a
+finalize() method, but Java does not provide a
+mechanism that automatically calls the superclass's
+finalize() method. If a class contains a
+finalize() method, it is a good idea for that
+method to call super.finalize() as the very last
+thing that it does. This technique ensures that the
+finalize() method of the superclass gets
+called. The technique even works if the superclass does not explicitly
+define a finalize() method, since every class
+inherits a default finalize() method from the
+Object class. This default
+finalize method does not do anything.
+References
+Object Destruction
+Static Initializers
+A static initializer 
+is a piece of code that is executed when a class
+is loaded. A static initializer is simply a block of code in a class
+declaration that is preceded by the keyword static:
+A class is loaded when its definition is needed by another class. You
+can specifically request that a class be loaded by calling the
+forName() method of the Class
+class on the class you want to load. Alternatively, you can use the
+loadClass() method of a
+ClassLoader object to load a class directly.
+When a class is loaded, a Class object is created
+to represent it and storage for the class's static
+variables is allocated.  When a class is initialized, its static
+initializers and static variable initializers are
+evaluated in the order in which they appear in the class
+declaration. For example, here is a class that contains both static
+initializers and static variable initializers:
+class foo {
+    static int i = 4;
+    static {
+        i += 2;
+        j = 5 * i;
+    }
+    static int j = 7;
+    static double d;
+    static frame f = new Frame();
+    static { d = Math.tan(Math.PI/j); }
+}
+When the foo class is loaded, here is what
+happens. First, the variable i is set to 4. Then
+the first static initializer is executed. It increments
+i by 2, which makes it 6, and sets
+j to 5*i, which is 30. Next, the
+variable j is set to 7 by its initializer; this
+overwrites the value that was set in the static initializer. The
+variable f is then set to the new
+Frame object created by its initializer. Finally,
+the second static initializer is executed.  It sets the variable
+d to , which is .
+Notice that the first static initializer uses the variable
+j, even though the variable is not declared until
+after the static initializer. A static initializer can refer to a
+static variable that is declared after the static
+initializer. However, the same is not true for
+static variable initializers. A
+static variable initializer cannot refer to any
+variables that are declared after its own declaration, or the compiler
+generates an error message. The following class declaration is
+erroneous:
+class foo {
+    static int x = y*3;    // error because y defined after x
+    static int y;
+}
+If an exception is thrown out of a static initializer, the method that
+caused the class to be defined throws an
+ExceptionInInitializerError. 
+This ExceptionInInitializerError 
+contains a reference to the original exception that can be fetched by
+calling its getException() method.
+References
+Blocks;
+Class;
+Errors;
+Variables
+Instance Initializers
+An instance initializer is a piece of code that
+is executed when an instance of a class is created. Specifically, 
+it is executed after the object's immediate superclass constructor 
+returns, but before the constructor of the class itself runs.
+An instance initializer is simply a block of code in a class that
+is not in any method. Here is the formal syntax:
+Every class has at least one constructor that explicitly or
+implicitly calls one of the constructors of its immediate superclass
+before it does anything else. When the superclass's constructor
+returns, any instance initializers and instance variable
+initializers are evaluated before the constructor does anything else.
+The instance initializers and instance variable initializers are
+evaluated in the order in which they appear in the class
+declaration. If an instance
+initializer throws an exception, the exception appears to have
+come from the constructor that called the superclass's constructor.
+References
+Blocks;
+Constructors;
+Variable initializers
+Nested Top-Level and Member Classes
+Nested top-level classes and member classes are classes that
+are declared inside of another class. Just as with a top-level
+class declaration, the declaration of a nested top-level class or member
+class creates a reference type in Java. Here's the formal definition of
+a nested top-level or member class declaration:
+A class declared inside of another class has access to all of the
+variables, methods, and other inner classes of the enclosing class. 
+If a nested top-level or member class is not private, 
+it can also be accessed outside of its enclosing class by
+qualifying its name with the name of its enclosing class, as follows:
+EnclosingClass.InnerClass
+The syntax for declaring nested top-level classes and member classes
+is not supported prior to Java 1.1.
+References
+Nested top-level classes and interfaces;
+Member classes;
+Class Declarations
+Inner class modifiers
+The keywords public, protected, 
+and private can be used in the declaration of a
+nested top-level or member class to specify the accessibility of the 
+inner class. In this situation, the modifiers have the following meanings:
+public
+A nested top-level or member class that is declared public 
+is accessible from any class that can access the enclosing class.
+protected
+A nested top-level or member class that is declared
+protected is accessible from any class that is part
+of the same package as the enclosing class. Such an inner class is
+also accessible to any subclass of the enclosing class, regardless of
+whether or not the subclass is part of the same package.
+private
+A nested top-level or member class that is declared
+private is only accessible from its enclosing class
+and other classes declared within the enclosing class.  In particular,
+an inner class that is declared private is not
+accessible in subclasses of its enclosing class.
+If a nested top-level or member class is not declared with any of the
+access modifiers, the class has the default accessability. Default
+access is often called "friendly" access because it is similar to
+friendly access in C++. An inner class with default
+access is accessible in any class that is part of the same package 
+as the enclosing class. However, a friendly
+inner class is not accessible to classes outside of the package of the
+enclosing class, even if the desired classes are subclasses of the 
+enclosing class.
+The keywords abstract, final,
+and static can also be used in the 
+declaration of a nested top-level or member class.  These modifiers
+have the following meanings:
+abstract
+If a nested top-level or member class is declared
+abstract, no instances of the class may be
+created. An inner class declared abstract may
+contain abstract methods; classes not declared
+abstract may not contain
+abstract methods and must override any
+abstract methods they inherit with methods that are
+not abstract. Furthermore, classes that implement
+an interface and are not declared abstract must
+contain or inherit methods that are not abstract,
+that have the same name, have the same number of parameters,
+and have corresponding
+parameter types as the methods declared in the interfaces that the
+class implements.
+final
+If a nested top-level or member class is declared
+final, it cannot be subclassed. In other words, it
+connot appear in the extends clause of another
+class.
+static
+An inner class that is declared with the static modifier
+is called a nested top-level class. A class can only be declared with
+the static modifier if its enclosing class is a
+top-level class (i.e., it is not declared within another class). The
+code within a nested top-level class cannot directly access
+non-static variables and methods of its enclosing
+class.
+An inner class that is not declared with the static
+modifier is called a member class. The code within a member class can 
+access all of the variables and methods of its
+enclosing class, including private variables and
+methods.
+References
+Class Modifiers;
+Local class modifiers
+Inner class members
+The body of a nested top-level or member class
+cannot declare any static variables, 
+static methods, static classes,
+or static initializers. Beyond those restrictions, 
+the remainder of the declaration is the same as that for a top-level 
+class declaration, which is described in
+Class Declarations.
+References
+Class Declarations;
+Constructors;
+Instance Initializers;
+Methods;
+Nested Top-Level and Member Classes;
+Static Initializers;
+Variables
+Object-Orientation Java Style
+Interface Declarations
+ 
+ 
+ 
+ 
+ 
+ 
+ 

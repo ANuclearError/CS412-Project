@@ -1,0 +1,23 @@
+
+[Chapter 28] 28.26 java.net.URLStreamHandlerFactory (JDK 1.0)
+Chapter 28The java.net Package
+28.26 java.net.URLStreamHandlerFactory (JDK 1.0)
+This interface defines a method that creates a
+URLStreamHandler object for a specified protocol.
+Normal applications never need to use or implement this
+interface.
+public abstract interface URLStreamHandlerFactory {
+    // Public Instance Methods
+            public abstract URLStreamHandler createURLStreamHandler(String protocol);
+}
+Passed To:
+URL.setURLStreamHandlerFactory()
+java.net.URLStreamHandler (JDK 1.0)
+The java.text Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

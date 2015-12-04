@@ -1,0 +1,246 @@
+
+[Chapter 11] FileOutputStream
+Chapter 11The java.io Package
+FileOutputStream
+Name
+FileOutputStream
+Synopsis
+Class Name:
+java.io.FileOutputStream
+Superclass:
+java.io.OutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The FileOutputStream class represents a byte stream
+that writes data to a file. The file can be specified using a
+FileDescriptor, a File object,
+or a String that represents a pathname. All of the
+constructors can throw a SecurityException if the
+application does not have permission to write to the specified file.
+FileOutputStream provides a low-level interface for
+writing data to a file. Wrap a
+FileOutputStream with a
+DataOutputStream or a
+PrintStream if you need a higher-level interface
+that can handle writing strings and binary data.  You should also
+think about wrapping a FileOutputStream with a
+BufferedOutputStream to increase writing
+efficiency.
+Data must be written sequentially to a FileOutputStream; 
+you can either overwrite existing data or append data to the end of the 
+file. If you need random access to file data, use the RandomAccessFile 
+class instead. 
+Class Summary
+public class java.io.FileOutputStream extends java.io.OutputStream {
+  // Constructors
+  public FileOutputStream(String name);
+  public FileOutputStream(String name, boolean append);     // New in 1.1
+  public FileOutputStream(File file);
+  public FileOutputStream(FileDescriptor fdObj);
+  // Public Instance Methods
+  public native void close();
+  public final FileDescriptor getFD();
+  public native void write(int b);
+  public void write(byte[] b); 
+  public void write(byte[] b, int off, int len);
+  // Protected Instance Methods
+  protected void finalize();
+}
+Constructors
+FileOutputStream
+public FileOutputStream(String name) throws IOException
+Parameters
+name
+A String 
+that contains the pathname of the file to be used for output. The path 
+must conform to the requirements of the native operating system. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to write to the named file. 
+Description
+This constructor creates a FileOutputStream that sends 
+its output to the file named by the specified String. 
+   public FileOutputStream(String name, boolean append) throws IOException  
+Availability
+New as of JDK 1.1 
+Parameters
+name
+A String that contains the pathname of the file to
+be used for output. The path must conform to the requirements of the
+native operating system.
+append
+Specifies whether or not data is appended to the output stream.
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to write to the named file. 
+Description
+This constructor creates a FileOutputStream 
+that sends its output to the named file. If append 
+is true, the stream is positioned 
+at the end of the file, and data is appended to the end of the file. Otherwise, 
+if append is false, 
+the stream is positioned at the beginning of the file, and any previous 
+data is overwritten. 
+public FileOutputStream(File file) throws IOException
+Parameters
+file
+The File 
+to use as output. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to write to the named file. 
+Description
+This constructor creates a FileOutputStream 
+that sends its output to the file represented by the specified File. 
+public FileOutputStream(FileDescriptor fdObj)
+Parameters
+fdObj
+The FileDescriptor of the file to use as output. 
+Throws
+SecurityException
+If the application does not have permission to write to the specified file.
+NullPointerException
+If FileDescriptor is null. 
+Description
+This constructor creates a FileOutputStream 
+that sends its output to the file identified by the given FileDescriptor. 
+Public Instance Methods
+close
+public native void close() throws IOException
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+OutputStream.close() 
+Description
+This method closes this file output stream and releases any resources used 
+by it. 
+getFD
+public final FileDescriptor getFD() throws IOException
+Throws
+IOException
+If 
+there is no FileDescriptor 
+associated with this object. 
+Description
+This method returns the file descriptor associated with the data source 
+of this FileOutputStream. 
+write
+public native void write(int b) throws IOException
+Parameters
+b
+The value to write to 
+the stream. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+OutputStream.write(int) 
+Description
+This method writes a byte containing the low-order eight bits of the 
+given value to the output stream. 
+public void write(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+write to the stream. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+OutputStream.write(byte[]) 
+Description
+This method writes the entire contents of the given array to the output 
+stream. 
+public void write(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+OutputStream.write(byte[], int, int) 
+Description
+This method writes len bytes 
+from the given array, starting at element off, 
+to the output stream. 
+Protected Instance Methods
+finalize
+protected void finalize() throws IOException
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method is called when the FileOutputStream 
+is garbage-collected to ensure that close() 
+is called. If the stream has a valid file descriptor, the close() 
+method is called to free the system resources used by this stream. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+flush()
+OutputStream
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedOutputStream, 
+DataOutputStream, 
+File, 
+FileDescriptor, 
+FileNotFoundException, 
+IOException, 
+NullPointerException, 
+OutputStream, 
+PrintStream, 
+RandomAccessFile, 
+SecurityException 
+FileNotFoundException
+FileReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

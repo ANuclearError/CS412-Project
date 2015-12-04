@@ -1,0 +1,164 @@
+
+[Chapter 6] 6.12 The try Statement
+Chapter 6Statements and Control Structures
+6.12 The try Statement
+A try statement provides a way to
+catch exceptions and execute clean-up code for a block:
+A try statement contains a block of code to be
+executed. A try statement can have any number
+of optional catch clauses; these clauses act
+as exception handlers for the try block. A
+try statement can also have a finally
+clause.
+If present, the finally block is always executed
+before control leaves the try statement, so it
+is a good place to supply clean-up code for the try block.
+Note that a try statement must have either a
+catch clause or a finally clause.
+Here is an example of a try statement that
+includes a catch clause and a finally
+clause:
+try {
+    out.write(b);
+} catch (IOException e) {
+    System.out.println("Output Error");
+} finally {
+    out.close();
+}
+If out.write() throws an IOException,
+the exception is caught by the catch clause.
+Regardless of whether out.write() returns normally
+or throws an exception, the finally block is
+executed, which ensures that out.close() is always
+called.
+A try statement
+begins by executing the block that follows the keyword try.
+If an exception is thrown from within the try
+block and the try statement has any catch
+clauses, those clauses are searched in order for one that
+can handle the exception. A catch clause can
+handle an exception if the ClassOrInterfaceName
+specified in the clause is the same class as or a superclass of
+the object specified in the throw statement that
+caused the exception. The ClassOrInterfaceName
+specified in a catch clause must be Throwable
+or be one of its subclasses. If a catch clause handles
+an exception, that catch block is executed.
+If an exception is thrown from within the try block
+and the try statement does not have any
+catch clauses that can handle the exception,
+the exception propagates
+up to the next enclosing try statement. An exception
+also propagates up if it is thrown from within a catchblock in a try statement.
+The identifier specified in parentheses for the catch clause
+is defined as a local variable within the catch block.
+The local variable is initialized to refer to the thrown object,
+in a manner that is similar to the way it which formal parameters
+for a method are handled. This means that an identifier in a
+catch
+clause cannot have the same name as a local variable or formal parameter
+that is defined in an enclosing block. If the catch
+parameter is declared as final, any assignment
+to that parameter in the catch block generates
+an error. The syntax for specifying final 
+catch parameters is not supported prior to Java 1.1.
+Any catch
+clauses in a try statement are checked in sequence
+to see if they can handle a given exception. Thus, the order in
+which catch clauses appear is important. In essence,
+more specific catch clauses should appear before
+more general catch clauses.
+Figure 6.1 shows
+the inheritance hierarchy for a few of the classes of objects that
+can be thrown in Java.
+Figure 6.1: Some exception classes in Java
+Based on the classes shown
+in Figure 6.1,
+consider the following example:
+try {
+    System.out.write(b);
+} catch (InterruptedIOException e) { ...
+} catch (IOException e) { ...
+} catch (Exception e) { ...
+}
+The catch clauses in this example appear
+in order from most specific to least specific. That means that if
+an InterruptedIOException were thrown, it would
+be caught by the first catch clause. Similarly,
+an IOException would be caught by the second
+catch clause and an Exception
+would be caught by the third clause. If, however, the catch
+clause for Exception appeared first, neither
+of the other catch clauses would ever be executed
+because the catch clause for Exception
+would catch all of the exceptions.
+If a try statement includes a finally
+clause, the finally block is always executed
+before control leaves the try statement. There
+are two different ways that control can leave a try
+statement:
+The try statement completes
+normally. Normal completion occurs when all of the statements in
+the try block have been executed, so that control
+falls out of the bottom of the try block. Normal
+completion can also occur when an exception is thrown in the
+try block, as long as the exception is handled by a
+catch clause in the try statement.
+The try statement completes abruptly, due to an attempted
+control transfer out of the try block.
+A break,
+continue, or return statement
+in the try block causes an abrupt completion. In addition,
+abrupt completion can occur when an exception occurs and is not
+handled by a catch clause in the try
+statement, since the exception propagates out of the
+try block.
+If a try statement
+completes normally and it does not have a finally clause,
+the statement following the try statement is
+the next statement to be executed. However, if the try
+statement does have a finally clause,
+the finally block is executed first,
+before control can be transferred to the statement following the
+try statement.
+If the finally block contains a break,
+continue, return, or
+throw statement, the pending control transfer
+is forgotten and
+control is instead transferred to the target of the break,
+continue, return, or
+throw statement in the finally block.
+If a try statement completes abruptly and
+it does not have a finally clause, the control
+transfer out of the try block takes place immediately.
+However, if the try statement does have a
+finally clause, the finally
+block is executed first, before the control transfer can take place.
+If the finally block contains a break,
+continue,
+return, or throw statement,
+the pending control transfer is forgotten and control is instead
+transferred to the target of the break,
+continue,
+return, or throw statement
+in the finally block.
+References
+Blocks;
+Exception Handling 9;
+Expression 4;
+Identifiers;
+The break Statement;
+The continue Statement;
+The return Statement;
+The throw Statement;
+Throwable
+Type 3;
+The throw Statement
+The synchronized Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

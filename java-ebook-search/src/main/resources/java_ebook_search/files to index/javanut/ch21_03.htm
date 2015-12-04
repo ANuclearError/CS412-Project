@@ -1,0 +1,31 @@
+
+[Chapter 21] 21.3 java.awt.image.CropImageFilter (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.3 java.awt.image.CropImageFilter (JDK 1.0)
+This class implements an ImageFilter that crops an
+image to a specified rectangle. The methods defined by this
+class are used for communication between the filter and its
+FilteredImageSource and should never be called
+directly.
+public class CropImageFilter extends ImageFilter {
+    // Public Constructor
+            public CropImageFilter(int x, int y, int w, int h);
+    // Public Instance Methods
+            public void setDimensions(int w, int h);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model, 
+            public void setPixels'u'byte[] pixels, int off, int scansize);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'int[] pixels, int off, int scansize);  // Overrides ImageFilter
+            public void setProperties(Hashtable props);  // Overrides ImageFilter
+}
+Hierarchy:
+Object->ImageFilter(ImageConsumer, Cloneable)->CropImageFilter
+java.awt.image.ColorModel (JDK 1.0)
+java.awt.image.DirectColorModel (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

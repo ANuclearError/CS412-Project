@@ -1,0 +1,306 @@
+
+[Chapter 17] SimpleTimeZone
+Chapter 17The java.util Package
+SimpleTimeZone
+Name
+SimpleTimeZone
+Synopsis
+Class Name:
+java.util.SimpleTimeZone
+Superclass:
+java.util.TimeZone
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The SimpleTimeZone class is 
+a concrete subclass of the abstract 
+TimeZone class. 
+SimpleTimeZone represents 
+a time zone offset for use with GregorianCalendar. 
+SimpleTimeZone does 
+not take into account the historical vicissitudes of daylight savings time, 
+however. Instead, it assumes that the shifts to and from daylight savings 
+time always occur at the same time of the year. 
+Normally, SimpleTimeZone 
+objects are not created directly, but instead obtained 
+by calling TimeZone.getDefault(). 
+This method creates a subclass of TimeZone 
+that is appropriate for the current locale. You can also call TimeZone.getTimeZone() 
+to obtain a TimeZone object 
+for a specific time zone. 
+Class Summary
+public class java.util.SimpleTimeZone extends java.util.TimeZone {
+  // Constructors
+  public SimpleTimeZone(int rawOffset, String ID);
+  public SimpleTimeZone(int rawOffset, String ID, int startMonth, 
+                       int startDayOfWeekInMonth, int startDayOfWeek, 
+                       int startTime, int endMonth, int endDayOfWeekInMonth,
+                       int endDayOfWeek, int endTime);
+  // Instance Methods
+  public Object clone();
+  public boolean equals(Object obj); 
+  public int getOffset(int era, int year, int month, int day, 
+                      int dayOfWeek, int millis); 
+  public int getRawOffset();
+  public synchronized int hashCode();
+  public boolean inDaylightTime(Date date); 
+  public void setEndRule(int month, int dayOfWeekInMonth, 
+                        int dayOfWeek, int time);
+  public void setRawOffset(int offsetMillis); 
+  public void setStartRule(int month, int dayOfWeekInMonth, 
+                          int dayOfWeek, int time);
+  public void setStartYear(int year);
+  public boolean useDaylightTime();
+}
+Constructors
+SimpleTimeZone
+public SimpleTimeZone(int rawOffset, String ID)
+Parameters
+rawOffset
+The raw offset of this time zone from GMT, in milliseconds.
+ID
+The ID of this time zone. 
+Description
+This constructor creates a SimpleTimeZone 
+that uses the given offset from GMT and has the specified ID. This constructor 
+creates a SimpleTimeZone that 
+does not use daylight savings time. 
+   public SimpleTimeZone(int rawOffset, String ID, int startMonth, int startDayOfWeekInMonth, int startDayOfWeek, int startTime, int endMonth, int endDayOfWeekInMonth, int endDayOfWeek, int endTime)  
+Parameters
+rawOffset
+The raw offset of this time zone from GMT, in milliseconds.
+ID
+The ID of this time 
+zone.
+startMonth
+The month when 
+daylight savings time begins.
+startDayOfWeekInMonth
+The week in the month when daylight savings time begins.
+startDayOfWeek
+The day 
+of the week when daylight savings time begins.
+startTime
+The time of day 
+when daylight savings time begins, in milliseconds.
+endMonth
+The month when 
+daylight savings time ends.
+endDayOfWeekInMonth
+The week in the month when daylight savings time ends.
+endDayOfWeek
+The day of 
+the week when daylight savings time ends.
+endTime
+The time of day 
+when daylight savings time ends, in milliseconds. 
+Description
+This constructor creates a SimpleTimeZone 
+that uses the given offset from GMT, has the specified ID, and uses daylight 
+savings time. Daylight savings time begins and ends at the specified dates 
+and times.
+For example, Brazil Eastern Time (BET) is three hours behind GMT. Daylight 
+savings time for BET starts on the first Sunday in April at 2:00 AM, and 
+ends on the last Sunday in October, also at 2:00 A.M. To construct a TimeZone 
+that represents BET, you would use the following:
+new SimpleTimeZone(-3 * 60 * 60 * 1000, "BET",
+                  Calendar.APRIL, 1, 
+                  Calendar.SUNDAY, 2 * 60 * 60 * 1000,
+                  Calendar.OCTOBER, -1,
+                  Calendar.SUNDAY, 2 * 60 * 60 * 1000)
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this SimpleTimeZone. 
+Overrides
+TimeZone.clone() 
+Description
+This method creates a copy of this SimpleTimeZone 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of SimpleTimeZone, 
+and it contains the same value as the object this method is associated 
+with. 
+getOffset
+   public int getOffset(int era, int year, int month, int day, int dayOfWeek, int millis)  
+Parameters
+era
+The era.
+year
+The year.
+month
+The month.
+day
+The day.
+dayOfWeek
+The day of the 
+week.
+millis
+The time of day 
+in milliseconds. 
+Returns
+An offset from GMT, in milliseconds. 
+Overrides
+TimeZone.getOffset() 
+Description
+This method calculates an offset from GMT for the given date for this SimpleTimeZone. 
+In other words, the offset takes daylight savings time into account. The 
+return value should be added to GMT to get local time. 
+getRawOffset
+public int getRawOffset()
+Returns
+An offset from GMT, in milliseconds. 
+Overrides
+TimeZone.getRawOffset() 
+Description
+This method returns the raw offset from GMT for this SimpleTimeZone. 
+In other words, the offset does not take daylight savings time into account. 
+hashCode
+public synchronized int hashCode()
+Returns
+A hashcode for this SimpleTimeZone. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object. 
+inDaylightTime
+public boolean inDaylightTime(Date date)
+Parameters
+date
+The date to be tested. 
+Returns
+true if the given date is between 
+the start and end of daylight savings time for this SimpleTimeZone; 
+false otherwise. 
+Overrides
+TimeZone.inDaylightTime() 
+Description
+This method returns a boolean 
+value that indicates if the given date is in daylight savings time for 
+this SimpleTimeZone. 
+setEndRule
+   public void setEndRule(int month, int dayOfWeekInMonth, int dayOfWeek, int time)  
+Parameters
+month
+The month when daylight savings time ends.
+DayOfWeekInMonth
+The week of the month when daylight savings time ends.
+dayOfWeek
+The day of the week when daylight savings time ends.
+time
+The time of day when daylight savings time ends, in milliseconds. 
+Description
+This method sets the time when daylight savings time ends for this SimpleTimeZone. 
+For example, to set the end of daylight savings time to 2 A.M. on
+the last Sunday 
+in October, you would use the following: 
+setEndRule(Calendar.OCTOBER, -1, Calendar.SUNDAY, 
+           2 * 60 * 60 * 1000)
+setRawOffset
+public void setRawOffset(int offsetMillis)
+Parameters
+offsetMillis
+The new raw 
+offset from GMT, in milliseconds. 
+Overrides
+TimeZone.setRawOffset() 
+Description
+This method is used to set the raw offset value for this SimpleTimeZone. 
+setStartRule
+   public void setStartRule(int month, int dayOfWeekInMonth, int dayOfWeek, int time)  
+Parameters
+month
+The month when daylight 
+savings time begins.
+DayOfWeekInMonth
+The week of the month when daylight savings time begins.
+dayOfWeek
+The day of the week when daylight savings time begins.
+time
+The time of day when daylight savings time begins, in milliseconds. 
+Description
+This method sets the time when daylight savings time begins for this SimpleTimeZone. 
+For example, to set the beginning of daylight savings time to 2 A.M. on
+the first 
+Sunday in April, you would use the following: 
+setEndRule(Calendar.APRIL, 1, Calendar.SUNDAY, 
+           2 * 60 * 60 * 1000)
+setStartYear
+public void setStartYear(int year)
+Parameters
+year
+The year when daylight 
+savings time begins. 
+Description
+This method sets the year after which the start and end rules for daylight 
+savings time are observed. 
+useDaylightTime
+public boolean useDaylightTime()
+Returns
+true if this SimpleTimeZone 
+uses daylight savings time; false 
+otherwise. 
+Overrides
+TimeZone.useDaylightTime() 
+Description
+This method returns a boolean 
+value that indicates whether or not this SimpleTimeZone 
+uses daylight savings time. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+getID()
+TimeZone
+notify()
+Object
+notifyAll()
+Object
+setID()
+TimeZone
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+Cloneable, 
+Date, 
+GregorianCalendar, 
+Locale, 
+TimeZone 
+ResourceBundle
+Stack
+ 
+ 
+ 
+ 
+ 
+ 
+ 

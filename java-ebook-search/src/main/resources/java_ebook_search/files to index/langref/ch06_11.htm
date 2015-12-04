@@ -1,0 +1,59 @@
+
+[Chapter 6] 6.11 The throw Statement
+Chapter 6Statements and Control Structures
+6.11 The throw Statement
+A throw statement is used to cause
+an exception to be thrown:
+The expression in a throw statement
+must produce a reference to an object that is an instance of the
+Throwable class or one of its subclasses. Otherwise,
+the compiler issues an error message. You typically want the expression
+in a throw statement to produce an object that
+is an instance of a subclass of the Exception
+class.
+Here is an example of a throw statement:
+throw new ProtocolException();
+A throw statement
+causes normal program execution to stop. Control is immediately
+transferred to the innermost enclosing try statement
+in the search for a catch clause that can handle
+the exception. If the innermost try statement
+cannot handle the exception, the exception propagates up through
+enclosing statements in the current method. If the current method
+does not contain a try statement that can handle
+the exception, the exception propagates up to the invoking method.
+If this method does not contain an appropriate
+try statement,
+the exception propagates up again, and so on. Finally, if no
+try statement is found to handle the exception,
+the currently running thread terminates. The termination of a thread
+is described in Stopping a thread.
+As an exception propagates through
+enclosing try statements, any
+finally blocks associated with those
+try statements
+are executed until the exception is caught. If a finally block contains a break,
+continue,
+return, or throw statement,
+the pending control transfer initiated by the throw
+statement is forgotten. Instead, control is transferred to the target of the
+break, continue,
+return,
+or throw statement in the finally block.
+References
+Exception Handling 9;
+Expression 4;
+The break Statement;
+The continue Statement;
+The return Statement;
+The try Statement;
+Throwable
+The return Statement
+The try Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

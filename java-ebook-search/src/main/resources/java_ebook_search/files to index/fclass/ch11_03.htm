@@ -1,0 +1,267 @@
+
+[Chapter 11] BufferedReader
+Chapter 11The java.io Package
+BufferedReader
+Name
+BufferedReader
+Synopsis
+Class Name:
+java.io.BufferedReader
+Superclass:
+java.io.Reader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+A BufferedReader object provides a more
+efficient way to read just a few characters at a time from a
+Reader.
+BufferedReader objects
+use a buffer to store input from an associated Reader. 
+In other words, a large number of characters are read from the underlying 
+reader and stored in an internal buffer. A BufferedReader 
+is more efficient than a regular Reader 
+because reading data from memory is faster than reading it from a disk 
+or a network. All reading is done directly from the buffer; the disk or 
+network needs to be accessed only occasionally to fill up the buffer. 
+You should wrap a BufferedReader around any
+Reader whose read() operations
+may be time consuming or costly, such as a
+FileReader or InputStreamReader.
+BufferedReader 
+provides a way to mark a position in the stream and subsequently reset 
+the stream to that position, using mark() 
+and reset(). 
+A BufferedReader is similar 
+to a BufferedInputStream, but 
+it operates on a stream of Java characters instead of a byte stream, which
+makes it easier to support internationalization. 
+Class Summary
+public class java.io.BufferedReader extends java.io.Reader {
+  // Constructors
+  public BufferedReader(Reader in);
+  public BufferedReader(Reader in, int sz);
+  // Instance Methods
+  public void close();
+  public void mark(int readAheadLimit);
+  public boolean markSupported();
+  public int read(); 
+  public int read(char[] cbuf, int off, int len);
+  public String readLine();
+  public boolean ready();
+  public void reset();
+  public long skip(long n);
+}
+Constructors
+BufferedReader
+public BufferedReader(Reader in)
+Parameters
+in
+The reader to buffer. 
+Description
+This constructor creates a BufferedReader 
+that buffers input from the given Reader 
+using a buffer with the default size of 8192 characters. 
+public BufferedReader(Reader in, int sz)
+Parameters
+in
+The reader to buffer.
+sz
+The size of buffer to use. 
+Throws
+IllegalArgumentException
+If the specified size is less than 0. 
+Description
+This constructor creates a BufferedReader 
+that buffers input from the given Reader, 
+using a buffer of the given size. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Overrides
+Reader.close() 
+Description
+This method closes this BufferedReader and its
+underlying Reader.
+mark
+public void mark(int readAheadLimit) throws IOException
+Parameters
+readlimit
+The maximum number of bytes that can be read before the saved position becomes invalid. 
+Throws
+IOException 
+If the stream 
+is closed. 
+Overrides
+Reader.mark(int) 
+Description
+This method causes the BufferedReader 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position, and thus reread a 
+portion of the buffer. 
+markSupported
+public boolean markSupported()
+Returns
+The boolean value true. 
+Overrides
+Reader.markSupported() 
+Description
+This method returns true to 
+indicate that this class supports mark() 
+and reset(). 
+read
+public int read() throws IOException
+Returns
+The next character of data, or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+Reader.read() 
+Description
+This method returns the next character from the buffer. If all the characters 
+in the buffer have been read, the buffer is filled from the underlying 
+Reader, and the next character 
+is returned. If the buffer does not need to be filled, this method returns 
+immediately. If the buffer needs to be filled, this method blocks until 
+data is available from the underlying Reader, 
+the end of the stream is reached, or an exception is thrown. 
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+Offset into the character array.
+len
+Number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.read(char[], int, int) 
+Description
+This method reads characters from the internal buffer into the given array 
+cbuf, starting at index off 
+and continuing for up to len bytes. 
+If there are any characters in the buffer, this method returns 
+immediately. Otherwise the buffer needs to be filled; this method blocks 
+until the data is available from the underlying InputStream, 
+the end of the stream is reached, or an exception is thrown. 
+readLine
+public String readLine() throws IOException
+Returns
+A String containing the line 
+just read, or null if the end 
+of the stream has been reached. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads a line of text. Lines are
+terminated by "\n", "\r",
+or "\r\n". The line terminators are not
+returned with the line string.
+ready
+public boolean ready() throws IOException
+Returns
+A boolean value that indicates 
+whether the stream is ready to be read. 
+Throws
+IOException
+If the stream is closed. 
+Overrides
+Reader.ready() 
+Description
+If there is data in the buffer, or if the underlying stream is ready, this 
+method returns true. The underlying 
+stream is ready if the next read() 
+is guaranteed to not block. Note that a return value of 
+false does not guarantee that the next
+read operation will block.
+reset
+public void reset() throws IOException
+Throws
+IOException
+If the reader 
+is closed, mark() has not been 
+called, or the saved position has been invalidated. 
+Overrides
+Reader.reset() 
+Description
+This method sets the position of the BufferedReader 
+to a position that was saved by a previous call to mark(). 
+Subsequent characters read from this BufferedReader 
+will begin from the saved position and continue normally. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of characters 
+to skip. 
+Returns
+The actual number of characters skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.skip() 
+Description
+This method skips n characters 
+of input. If the new position of the stream is still within the data contained 
+in the buffer, the method returns immediately. Otherwise the buffer is 
+repeatedly filled until the requested position is available. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+read(char[])
+Reader
+toString()
+Object
+void wait()
+Object
+void wait(long)
+Object
+void wait(long, int)
+Object
+See Also
+IllegalArgumentException, 
+IOException, 
+Reader, 
+String 
+BufferedOutputStream
+BufferedWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

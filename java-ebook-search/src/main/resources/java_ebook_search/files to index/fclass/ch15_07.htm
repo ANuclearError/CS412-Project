@@ -1,0 +1,224 @@
+
+[Chapter 15] DatagramSocketImpl
+Chapter 15The java.net Package
+DatagramSocketImpl
+Name
+DatagramSocketImpl
+Synopsis
+Class Name:
+java.net.DatagramSocketImpl
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The DatagramSocketImpl class 
+is an abstract class that defines 
+the bulk of the methods that make the DatagramSocket 
+and MulticastSocket classes 
+work. Non-public subclasses 
+of DatagramSocketImpl provide 
+platform-specific implementations of datagram socket communication. 
+Class Summary
+public abstract class java.net.DatagramSocketImpl
+                      extends java.lang.Object {
+  // Variables
+  protected FileDescriptor fd;
+  protected int localPort;
+  // Protected Instance Methods
+  protected abstract void bind(int lport, InetAddress laddr);
+  protected abstract void close();
+  protected abstract void create();
+  protected FileDescriptor getFileDescriptor();
+  protected int getLocalPort();
+  protected abstract byte getTTL();
+  protected abstract void join(InetAddress inetaddr);
+  protected abstract void leave(InetAddress inetaddr);
+  protected abstract int peek(InetAddress i);
+  protected abstract void receive(DatagramPacket p);
+  protected abstract void send(DatagramPacket p);
+  protected abstract void setTTL(byte ttl);
+}
+Variables
+fd
+protected FileDescriptor fd
+Description
+The file descriptor that represents this socket. 
+localPort
+protected int localPort
+Description
+The local port number of this socket. 
+Protected Instance Methods
+bind
+   protected abstract void bind(int lport, InetAddress laddr) throws SocketException  
+Parameters
+lport
+A port number.
+laddr
+A local address. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method binds the socket to the given address and port. If the address 
+or the port is unavailable, an exception is thrown. 
+close
+protected void close()
+Description
+This method closes the socket, releasing any 
+system resources it holds. 
+create
+protected abstract void create() throws SocketException
+Throws
+SocketException
+If a socket error occurs. 
+Description
+This method creates a socket that is not bound to an address and port. 
+getFileDescriptor
+protected FileDescriptor getFileDescriptor()
+Returns
+The file descriptor for this socket. 
+Description
+This method returns the file descriptor associated with this DatagramSocketImpl. 
+getLocalPort
+protected int getLocalPort()
+Returns
+The port number for this socket. 
+Description
+This method returns the local port to which this DatagramSocketImpl 
+is bound. 
+getTTL
+protected abstract byte getTTL() throws IOException
+Returns
+The time-to-live (TTL) value for this socket. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method returns the TTL value for this socket. This value is the number 
+of hops that an outgoing packet can traverse before it is discarded. 
+join
+   protected abstract void join(InetAddress inetaddr) throws IOException  
+Parameters
+inetaddr
+The IP address of the group to join. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method is used by MulticastSocket 
+to join a multicast group. An exception is thrown if the given address 
+is not a multicast address. While the socket is part of a group, it receives 
+all packets that are sent to the group. 
+leave
+   protected abstract void leave(InetAddress inetaddr) throws IOException  
+Parameters
+inetaddr
+The IP address of the group to leave. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method is used by MulticastSocket 
+to leave a multicast group. An exception is thrown if the given address 
+is not a multicast address. 
+peek
+protected abstract int peek(InetAddress i) throws IOException
+Parameters
+i
+A reference to an InetAddress object. 
+Returns
+The port number of the next incoming packet. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method places the address of the next incoming packet in the given 
+InetAddress 
+object. The method also returns the port number of the next incoming packet. 
+The method looks at the address of an incoming packet to 
+determine if it should be accepted. 
+receive
+   protected abstract void receive(DatagramPacket p) throws IOException  
+Parameters
+p
+The DatagramPacket that receives incoming data. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method receives a datagram packet on this socket. After this method 
+returns, the given DatagramPacket 
+contains the packet's data and length, and the sender's address 
+and port number. If the data that was sent is longer that the given packet's 
+data buffer, the data is truncated. 
+send
+protected abstract void send(DatagramPacket p) throws IOException
+Parameters
+p
+The DatagramPacket to be sent. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method sends a packet from this socket. The packet data, packet length, 
+destination address, and destination port number are specified by the given 
+DatagramPacket. 
+setTTL
+protected abstract void setTTL(byte ttl) throws IOException
+Parameters
+ttl
+The new TTL value for this socket. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method is used to set the TTL value of the socket. The TTL value is 
+the number of hops that an outgoing packet can traverse before it is discarded. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DatagramPacket, 
+DatagramSocket, 
+FileDescriptor, 
+InetAddress, 
+IOException, 
+MulticastSocket 
+DatagramSocket
+FileNameMap
+ 
+ 
+ 
+ 
+ 
+ 
+ 

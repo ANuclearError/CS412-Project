@@ -1,0 +1,32 @@
+
+[Chapter 20] 20.28 java.awt.event.WindowAdapter (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.28 java.awt.event.WindowAdapter (JDK 1.1)
+This class is a trivial implementation of
+WindowListener; it provides empty bodies for each
+of the methods of that interface.  When you are not
+interested in all of these methods, it is often easier to
+subclass WindowAdapter than it is to implement
+WindowListener from scratch.
+public abstract class WindowAdapter extends Object implements WindowListener {
+    // Default Constructor: public WindowAdapter()
+    // Public Instance Methods
+            public void windowActivated(WindowEvent e);  // From WindowListener
+            public void windowClosed(WindowEvent e);  // From WindowListener
+            public void windowClosing(WindowEvent e);  // From WindowListener
+            public void windowDeactivated(WindowEvent e);  // From WindowListener
+            public void windowDeiconified(WindowEvent e);  // From WindowListener
+            public void windowIconified(WindowEvent e);  // From WindowListener
+            public void windowOpened(WindowEvent e);  // From WindowListener
+}
+Hierarchy:
+Object->WindowAdapter(WindowListener(EventListener))
+java.awt.event.TextListener (JDK 1.1)
+java.awt.event.WindowEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

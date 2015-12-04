@@ -1,0 +1,44 @@
+
+[Chapter 29] 29.11 java.text.FieldPosition (JDK 1.1)
+Chapter 29The java.text Package
+29.11 java.text.FieldPosition (JDK 1.1)
+FieldPosition objects are optionally passed to the
+format() methods of the Format class and its
+subclasses to return additional information about the
+formatting that has been performed.  The
+getBeginIndex() and getEndIndex() methods of
+this class are used to return the starting and ending
+character positions of some field of the formatted string.
+The integer value passed to the FieldPosition()
+constructor specifies what field of the returned string
+should have its bounds returned.  The NumberFormat
+and DateFormat classes define various constants
+(which end with the string _FIELD) that can be used
+here.  Typically, this bounds information is useful for
+aligning formatted strings in columns--for example, aligning
+the decimal points in a column of numbers.
+public class FieldPosition extends Object {
+    // Public Constructor
+            public FieldPosition(int field);
+    // Public Instance Methods
+            public int getBeginIndex();
+            public int getEndIndex();
+            public int getField();
+}
+Passed To:
+ChoiceFormat.format(), 
+DateFormat.format(), 
+DecimalFormat.format(), 
+Format.format(), 
+MessageFormat.format(), 
+NumberFormat.format(), 
+SimpleDateFormat.format()
+java.text.DecimalFormatSymbols (JDK 1.1)
+java.text.Format (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,142 @@
+
+[Chapter 19] Adjustable 
+Chapter 19java.awt Reference
+Adjustable 
+Name
+Adjustable 
+Description
+The Adjustable interface is useful for scrollbars, sliders, dials, and other components 
+that have an adjustable numeric value. Classes that implement the Adjustable 
+interface should send AdjustmentEvent 
+objects to listeners that have registered via addAdjustmentListener(AdjustmentListener). 
+Interface Definition
+public abstract interface java.awt.Adjustable {
+  // Constants
+  public final static int HORIZONTAL = 0;
+  public final static int VERTICAL = 1;
+  
+  // Interface Methods
+  public abstract void addAdjustmentListener (AdjustmentListener l);
+  public abstract int getBlockIncrement();
+  public abstract int getMaximum();
+  public abstract int getMinimum();
+  public abstract int getOrientation();
+  public abstract int getUnitIncrement();
+  public abstract int getValue();
+  public abstract int getVisibleAmount();
+  public abstract void removeAdjustmentListener (AdjustmentListener l);
+  public abstract void setBlockIncrement (int b);
+  public abstract void setMaximum (int max);
+  public abstract void setMinimum (int min);
+  public abstract void setUnitIncrement (int u);
+  public abstract void setValue (int v);
+  public abstract void setVisibleAmount (int v);
+}
+Constants
+HORIZONTAL
+public static final int HORIZONTAL
+A constant representing horizontal orientation. 
+VERTICAL
+public static final int VERTICAL
+A constant representing vertical orientation. 
+Interface Methods
+addAdjustmentListener
+public abstract void addAdjustmentListener (ActionListener l)
+Parameters
+l
+An object that implements the AdjustmentListener interface. 
+Description
+Add a listener for adjustment event. 
+getBlockIncrement
+public abstract int getBlockIncrement()
+Returns
+The amount to scroll when a paging area is selected. 
+getMaximum
+public abstract int getMaximum()
+Returns
+The maximum value that the Adjustable 
+object can take. 
+getMinimum
+public abstract int getMinimum()
+Returns
+The minimum value that the Adjustable object can take. 
+getOrientation
+public abstract int getOrientation()
+Returns
+A value representing the direction of the Adjustable 
+object. 
+getUnitIncrement
+public abstract int getUnitIncrement()
+Returns
+The unit amount to scroll.
+getValue
+public abstract int getValue()
+Returns
+The current setting for the Adjustable object. 
+getVisibleAmount
+public abstract int getVisibleAmount()
+Returns
+The current visible setting (i.e., size) for the Adjustable 
+object. 
+removeAdjustmentListener
+public abstract void removeAdjustmentListener (AdjustmentListener l)
+Parameters
+l
+One of the object's AdjustmentListeners. 
+Description
+Remove an adjustment event listener.
+setBlockIncrement
+public abstract void setBlockIncrement (int b)
+Parameters
+b
+New block increment amount. 
+Description
+Changes the block increment amount for the Adjustable 
+object. 
+setMaximum
+public abstract void setMaximum (int max)
+Parameters
+max
+New maximum value. 
+Description
+Changes the maximum value for the Adjustable object. 
+setMinimum
+public abstract void setMinimum (int min)
+Parameters
+min
+New minimum value. 
+Description
+Changes the minimum value for the Adjustable object. 
+setUnitIncrement
+public abstract void setUnitIncrement (int u)
+Parameters
+u
+New unit increment amount. 
+Description
+Changes the unit increment amount for the Adjustable object. 
+setValue
+public abstract void setValue (int v)
+Parameters
+v
+New value. 
+Description
+Changes the current value of the Adjustable object. 
+setVisibleAmount
+public abstract void setVisibleAmount (int v)
+Parameters
+v
+New amount visible. 
+Description
+Changes the current visible amount of the Adjustable object. 
+See Also
+AdjustmentEvent, AdjustmentListener, 
+Scrollbar 
+AWTException
+BorderLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

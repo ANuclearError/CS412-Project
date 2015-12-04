@@ -1,0 +1,136 @@
+
+[Chapter 10] 10.9 Naming Patterns and Conventions
+Chapter 10Java Beans
+10.9 Naming Patterns and Conventions
+As we've seen, beanbox programs may rely on introspection of
+a bean to determine the list of properties, events, and
+methods it supports.  In order for this to work, bean
+developers must follow a set of standard naming conventions,
+sometimes referred to as JavaBeans "design patterns." These
+patterns specify, for example, that the getter and setter
+accessor methods for a property should begin with
+get and set.  Not all of the patterns are
+absolute requirements.  If a bean has accessor methods with
+different names, it is possible to use a
+PropertyDescriptor object, specified in a
+BeanInfo class, to specify the accessor methods for the
+property.  Note, however, that although an accessor method name
+is not required to follow the pattern, the method is
+required to have the exact type signature specified by
+the pattern.
+This section lists the design patterns for bean properties, events,
+and methods.  It also lists other conventions and requirements that
+you should keep in mind when developing beans.
+Java Bean Patterns
+Beans
+class name:
+Any
+superclass:
+Any
+constructor:
+Must have a no-argument constructor, or a
+serialized template file
+packaging:
+JAR file manifest entry specifies 
+Java-Bean: True
+Properties (property p of type T)
+getter:
+public T getP()
+setter:
+public void setP(T value)
+Boolean Properties (property p of type boolean)
+getter:
+public boolean getP()
+(boolean value)
+or public boolean is P() setter:
+public void setP
+Indexed Properties (property p of type T[])
+array getter:
+public T[] getP()
+array setter:
+public void setP(T[] value)
+element getter:
+public T getP(int index)
+element setter:
+public void setP(int index, T value)
+Bound Properties (property p of type T)
+getter:
+Same as regular property
+setter:
+Same as regular property
+listeners:
+One event listener list for all bound properties of a bean
+listener registration:
+public void addPropertyChangeListener (PropertyChangeListener l)
+listener removal:
+public void removePropertyChangeListener (PropertyChangeListener l)
+Constrained Properties (property p of type T)
+getter:
+Same as regular property
+setter:
+public void setP(T value) 
+                                      throws PropertyVetoException
+listeners:
+One event listener list for all constrained properties of a bean
+listener registration:
+public void addVetoableChangeListener (VetoableChangeListener l)
+listener removal:
+public void removeVetoableChangeListener
+            (VetoableChangeListener l)
+Events (event named E)
+event class name:
+EEvent
+listener name:
+EListener
+listener methods:
+public void methodname(EEvent e)
+listener registration:
+public void addEListener(EListener l)
+listener removal:
+public void removeEListener(EListener l)
+Unicast Events (event named E only one listener allowed)
+listener registration:
+public void addEListener(EListener l)
+       throws TooManyListenersException
+listener removal:
+public void removeEListener(EListener l)
+Methods
+method name:
+Any
+method args:
+Any; some tools only recognize no-argument methods
+BeanInfo Classes (for bean B)
+class name:
+BBeanInfo
+Property Editors (for properties of type T)
+class name:
+TEditor
+constructor:
+Must have a no-argument constructor
+Property Editors (for individual properties)
+class name:
+Any; register via PropertyDescriptor
+constructor:
+Must have a no-argument constructor
+Customizers (for bean B)
+class name:
+Any; register via BeanDescriptor
+(BCustomizer by convention)
+superclass:
+Must be a component; typically extends Panel
+constructor:
+Must have a no-argument constructor
+Documentation File (for bean B)
+default docs:
+B.html
+localized docs:
+locale/B.html
+Defining a Bean Customizer
+Internationalization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

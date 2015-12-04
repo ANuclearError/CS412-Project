@@ -1,0 +1,364 @@
+
+[Chapter 2] 2.13 Exceptions and Exception Handling
+Chapter 2How Java Differs from C
+2.13 Exceptions and Exception Handling
+Exception handing is a significant new feature of Java.
+[6]
+There are a number of new terms associated with exception
+handling.  First, an exception is a signal that
+indicates that some sort of exceptional condition (such as
+an error) has occurred.  To throw an exception is to
+signal an exceptional condition.  To catch an
+exception is to handle it--to take whatever actions are
+necessary to recover from it.
+[6] 
+It is similar to, but not quite the same as,
+exception handling in C++.
+Exceptions propagate up through the lexical block
+structure of a Java method, and then up the method call
+stack.  If an exception is not caught by the block of code
+that throws it, it propagates to the next higher
+enclosing block of code.  If it is not caught there, it
+propagates up again.  If it is not caught anywhere in the
+method, it propagates to the invoking method, where it
+again propagates through the block structure.  If an
+exception is never caught, it propagates all the way to the
+main() method from which the program started, and
+causes the Java interpreter to print an error message and a
+stack trace and exit.
+As we'll see in the subsections below, exceptions make error
+handling (and "exceptional condition" handling) more regular
+and logical by allowing you to group all your exception
+handling code into one place.  Instead of worrying about all
+of the things that can go wrong with each line of your code,
+you can concentrate on the algorithm at hand and
+place all your error handling code (that is, your exception
+catching code) in a single place.
+Exception Objects
+An exception in Java is an object that is an instance of 
+some subclass of java.lang.Throwable.
+Throwable has two standard subclasses:
+java.lang.Error and java.lang.Exception.
+[7]
+Exceptions that are subclasses of Error generally
+indicate linkage problems related to dynamic loading, or
+virtual machine problems such as running out of memory.
+They should almost always be considered unrecoverable, and
+should not be caught.  While the distinction is not always
+clear, exceptions that are subclasses of Exception
+indicate conditions that may be caught and recovered from.
+They include such exceptions as java.io.EOFException,
+which signals the end of a file, and java.lang.ArrayAccessOutOfBounds, which indicates
+that a program has tried to read past the end of an array.
+[7] 
+We'll use the term "exception" to refer to any subclass of
+Throwable, whether it is actually an
+Exception or an Error.
+Since exceptions are objects, they can contain data and
+define methods.  The Throwable object, at the top of
+the exception class hierarchy, includes a String
+message in its definition and this field is inherited by
+all exception classes.  This field is used to store a
+human-readable error message that describes the exceptional
+condition.  It is set when the exception object is created
+by passing an argument to the constructor method.  The
+message can be read from the exception with the
+Throwable.getMessage() method.  Most exceptions
+contain only this single message, but a few add other data.
+The java.io.InterruptedIOException, for example,
+adds the following field:
+public int bytesTransferred;
+This field specifies how much of the I/O was complete before the
+exceptional condition occurred.
+Exception Handling
+The try/catch/finally statement is
+Java's exception handling mechanism.  try
+establishes a block of code that is to have its exceptions
+and abnormal exits (through break, continue,
+return, or exception propagation) handled.  The
+try block is followed by zero or more catch
+clauses that catch and handle specified types of
+exceptions.  The catch clauses are optionally
+followed by a finally block that contains 
+"clean-up" code.  The statements of a finally block are
+guaranteed to be executed, regardless of how the code in the
+try block exits.  A detailed example of the
+try/catch/finally syntax is shown in
+Example 2.2.
+Example 2.2: The try/catch/finally Statement
+try {
+        // Normally this code runs from the top of the block to the bottom 
+        // without problems.  But it sometimes may raise exceptions or
+        // exit the block via a break, continue, or return statement.
+}
+catch (SomeException e1) {
+        // Handle an exception object e1 of type SomeException
+        // or of a subclass of that type. 
+}
+catch (AnotherException e2) {
+        // Handle an exception object e2 of type AnotherException
+        // or of a subclass of that type.
+}
+finally {
+        // Always execute this code, after we leave the try clause,
+        // regardless of whether we leave it:
+        //    1) Normally, after reaching the bottom of the block.
+        //    2) With an exception that is handled by a catch.
+        //    3) With an exception that is not handled.
+        //    4) Because of a break, continue, or return statement.
+}
+try
+The try clause simply establishes a block of code
+that is to have its exceptions and abnormal exits (through
+break, continue, return, or
+exception propagation) handled.  The try clause by
+itself doesn't do anything interesting; it is the
+catch and finally clauses that do the
+exception handling and clean-up operations.
+catch
+A try block may be followed by zero or more
+catch clauses that specify code to handle various
+types of exceptions. catch clauses have an unusual
+syntax: each is declared with an argument, much like a
+method argument.  This argument must be of type
+Throwable or a subclass.  When an exception occurs,
+the first catch clause that has an argument of the
+appropriate type is invoked.  The type of the argument must
+match the type of the exception object, or it must be a
+superclass of the exception.  This catch argument is
+valid only within the catch block, and refers to the
+actual exception object that was thrown.
+The code within a catch block should take whatever
+action is necessary to cope with the exceptional condition.
+If the exception was a java.io.FileNotFoundException 
+exception, for example, you might handle it by asking the user 
+to check his or her spelling and try again.  Note that it is not 
+required to have a catch clause for every possible 
+exception--in some cases the correct response is to allow the 
+exception to propagate up and be caught by the invoking method. 
+In other cases, such as a programming error signaled by
+NullPointerException, the correct response is to not
+catch the exception at all, but to allow it to propagate and to
+have the Java interpreter exit with a stack trace and an
+error message.
+finally
+The finally clause is generally used to clean up
+(close files, release resources, etc.) after the try
+clause.  What is useful about the finally clause is
+that the code in a finally block is guaranteed to be
+executed, if any portion of the try block is
+executed, regardless of how the code in the try
+block completes.  In the normal case, control reaches the
+end of the try block and then proceeds to the
+finally block, which performs any necessary cleanup.
+If control leaves the try block because of a
+return, continue, or break statement,
+the contents of the finally block are executed
+before control transfers to its new destination.
+If an exception occurs in the try block and there
+is a local catch block to handle the exception,
+control transfers first to the catch block, and then
+to the finally block. If there is not a local
+catch block to handle the exception, control
+transfers first to the finally block, and then
+propagates up to the nearest
+catch clause that can handle the exception.
+Note that if a finally block itself transfers control with a
+return, continue, or break
+statement, or by raising an exception, the pending
+control transfer is abandoned, and this new transfer is
+processed.  
+Also note that try and finally can be used
+together without exceptions or any catch clauses.
+In this case, the finally block is simply cleanup
+code that is guaranteed to be executed regardless of any
+break, continue, or return
+statements within the try clause.
+Declaring Exceptions
+Java requires that any method that can cause a "normal
+exception" to occur must either catch the
+exception or specify the type of the exception
+with a throws clause in the method declaration. 
+[8]
+Such a throws clause might look like these:
+[8] 
+C++ programmers should note that Java uses throws where
+C++ uses throw.
+public void open_file() throws IOException {
+    // Statements here that might generate an uncaught java.io.IOException
+}
+public void myfunc(int arg) throws MyException1, MyException2 {
+    ...
+}
+Note that the exception class specified in a
+throws clause may be a superclass of the exception
+type that is actually thrown.  Thus if a method throws
+exceptions a, b, and c, all of which 
+are subclasses of d, the throws clause may specify 
+all of a, b, and c, or it may simply 
+specify d.
+We said above that the throws clause must be used to
+declare any "normal exceptions."  This oxymoronic phrase
+refers to any subclass of Throwable that is not a
+subclass of Error or a subclass of
+RuntimeException.  Java does not require these types
+of exceptions to be declared because practically any method
+can conceivably generate them, and it would quickly become
+tedious to properly declare them all.  For example, every
+method running on a buggy Java interpreter can throw an
+InternalError exception (a subclass of
+Error) and it doesn't make sense to have to declare
+this in a throws clause for every method.
+Similarly, as far as the Java compiler is concerned, any
+method that accesses an array can generate an
+ArrayIndexOutOfBoundsException exception (a
+subclass of RuntimeException).
+The standard exceptions that you often have to
+declare are java.io.IOException and a number of its
+more specific subclasses.
+java.lang.InterruptedException and several other
+less commonly used exceptions must also be declared.
+How do you know when you
+have to declare a throws clause?  One way is to pay
+close attention to the documentation for the methods you
+call--if any "normal exceptions"
+can be thrown, either catch them or declare them.  Another
+way to know what exceptions you've got to declare is to
+declare none and wait for the compilation errors--the
+compiler will tell you what to put in your throws
+clause!
+Defining and Generating Exceptions
+You can signal your own exceptions with the throw
+statement.  The throw keyword must be followed by an object
+that is Throwable or a subclass.  Often, exception
+objects are allocated in the same statement that they are
+thrown in:
+throw new MyException("my exceptional condition occurred.");
+When an exception is thrown, normal program execution stops
+and the interpreter looks for a catch clause that
+can handle the exception.  Execution propagates up through
+enclosing statements and through invoking functions until
+such a handler is found.  Any finally blocks that
+are passed during this propagation are executed.
+Using exceptions is a good way to signal and handle errors
+in your own code.  By grouping all your error handling and
+recover code together within the
+try/catch/finally structure, you
+will end up with cleaner code that is easier to understand.
+Sometimes, when you are throwing an exception, you can use
+one of the exception classes already defined by Java API.
+Often, though, you will want to define and throw your own
+exception types.
+Example 2.3
+shows how you can define your own exception types, throw
+them, and handle them.  It also helps clarify how exceptions
+propagate.  It is a long example, but worth studying in some
+detail. You'll know you understand exception handling if you 
+can answer the following: What happens when this program 
+is invoked with no argument; with a string argument; and with 
+integer arguments 0, 1, 2, and 99?
+Example 2.3: Defining, Throwing, and Handling Exceptions
+// Here we define some exception types of our own.
+// Exception classes generally have constructors but no data or 
+// other methods.  All these do is call their superclass constructors.
+class MyException extends Exception {
+  public MyException() { super(); }
+  public MyException(String s) { super(s); }
+}
+class MyOtherException extends Exception {
+  public MyOtherException() { super(); }
+  public MyOtherException(String s) { super(s); }
+}
+class MySubException extends MyException {
+  public MySubException() { super(); }
+  public MySubException(String s) { super(s); }
+}
+public class throwtest {
+  // This is the main() method.  Note that it uses two
+  // catch clauses to handle two standard Java exceptions.
+  public static void main(String argv[]) {
+    int i;
+    
+    // First, convert our argument to an integer.
+    // Make sure we have an argument and that it is convertible.
+    try {  i = Integer.parseInt(argv[0]);  }
+    catch (ArrayIndexOutOfBoundsException e) { // argv is empty
+      System.out.println("Must specify an argument");
+      return;
+    }
+    catch (NumberFormatException e) { // argv[0] isn't an integer
+      System.out.println("Must specify an integer argument");
+      return;
+    }
+    
+    // Now, pass that integer to method a().
+    a(i);
+  }
+  
+  // This method invokes b(), which is declared to throw
+  // one type of exception.  We handle that one exception.
+  public static void a(int i) {
+    try {
+      b(i);
+    }
+    catch (MyException e) {                                      // Point 1
+      // Here we handle MyException and its subclass MySubException.
+      if (e instanceof MySubException)
+        System.out.print("MySubException: ");
+      else
+        System.out.print("MyException: ");
+      System.out.println(e.getMessage());
+      System.out.println("Handled at point 1");
+    }
+  }
+  
+  // This method invokes c(), and handles one of the two exception
+  // types that that method can throw.  The other exception type is
+  // not handled, and is propagated up and declared in this method's
+  // throws clause.  This method also has a finally clause to finish
+  // up the work of its try clause.  Note that the finally clause is
+  // executed after a local catch clause, but before a containing
+  // catch clause or one in an invoking procedure.
+  public static void b(int i) throws MyException {
+    int result;
+    try {
+      System.out.print("i = " + i);
+      result = c(i);
+      System.out.print(" c(i) = " + result);
+    }
+    catch (MyOtherException e) {                                 // Point 2
+      // Handle MyOtherException exceptions:
+      System.out.println("MyOtherException: " + e.getMessage());
+      System.out.println("Handled at point 2");
+    }
+    finally {
+      // Terminate the output we printed above with a newline.
+      System.out.print("\n");
+    }
+  }
+  
+  // This method computes a value or throws an exception.
+  // The throws clause only lists two exceptions, because
+  // one of the exceptions thrown is a subclass of another.
+  public static int c(int i) throws MyException, MyOtherException {
+    switch (i) {
+    case 0:      // processing resumes at point 1 above
+      throw new MyException("input too low");
+    case 1:      // processing resumes at point 1 above
+      throw new MySubException("input still too low");
+    case 99:     // processing resumes at point 2 above
+      throw new MyOtherException("input too high");
+    default:
+      return i*i;
+    }
+  }
+}
+Statements
+Miscellaneous Differences
+ 
+ 
+ 
+ 
+ 
+ 
+ 

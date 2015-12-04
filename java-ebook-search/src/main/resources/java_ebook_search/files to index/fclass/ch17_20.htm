@@ -1,0 +1,278 @@
+
+[Chapter 17] ResourceBundle
+Chapter 17The java.util Package
+ResourceBundle
+Name
+ResourceBundle
+Synopsis
+Class Name:
+java.util. 
+ResourceBundle
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.util.ListResourceBundle,
+java.util.PropertyResourceBundle
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ResourceBundle class is 
+an abstract class that represents 
+a set of localized data. An application retrieves a ResourceBundle 
+based on its locale. A ResourceBundle 
+can contain GUI labels and other locale-specific information that the application 
+needs to run in a specific locale. 
+Conceptually, a resource bundle is a set of related classes that all inherit 
+from a particular subclass of ResourceBundle. 
+The base resource bundle defines all of the resources for a particular 
+application, while each of the subclasses specifies the appropriate values 
+for a particular locale. Each subclass has the same base name, plus a suffix 
+that identifies its locale. 
+A static method, getBundle(), 
+is used to locate a resource bundle for a particular locale. This method 
+searches for resources in two forms. First, it looks for a subclass of 
+ResourceBundle or ListResourceBundle 
+with the appropriate name. If one is found, an instance of the class is 
+created and returned. If no appropriate subclass can be found, getBundle() 
+then searches for a property file with the appropriate name. If one is 
+found, a PropertyResourceBundle 
+is created from the file and returned. 
+The getBundle() method constructs 
+a name from a specified base resource name and the locale. It then searches 
+for either a class or a property file with this name. If the method fails 
+to find an exact match, it tries to find a close match. The method constructs 
+names by dropping to the next name on the list if 
+the current name cannot be found: 
+base + "_" 
++ language + "_" 
++ country + "_" 
++ variant 
+base + "_" 
++ language + "_" 
++ country 
+base + "_" 
++ language 
+base 
+base + "_" 
++ default language + "_" 
++ default country + "_" 
++ default variant 
+base + "_" 
++ default language + "_" 
++ default country 
+base + "_" 
++ default language 
+For example, if you call getBundle('Labels', 
+new Locale('it', 
+'IT', 'Be')), 
+the method looks for a class or property file with one of the following 
+names (assuming the default locale is the United States): 
+Labels_it_IT_Be 
+Labels_it_IT 
+Labels_it 
+Labels 
+Labels_en_US_Be 
+Labels_en_US 
+Labels_en 
+A particular ResourceBundle 
+object contains a set of key/value pairs that defines the resources 
+for a particular application. The keys are always String 
+objects that name the resources, while the values can be any sort of object 
+needed for the application. The ResourceBundle 
+class defines convenience methods for retrieving String
+and String[] objects. If you 
+need to use other kinds of objects, you can use the getObject() 
+method to retrieve them and simply cast the results to the appropriate 
+types. 
+Class Summary
+public abstract class java.util.ResourceBundle extends java.lang.Object {
+  // Variables
+  protected ResourceBundle parent;
+  // Class Methods
+  public final static ResourceBundle getBundle(String baseName);
+  public final static ResourceBundle getBundle(String baseName, 
+                                              Locale locale);
+  // Instance Methods
+  public abstract Enumeration getKeys();
+  public final Object getObject(String key)j;
+  public final String getString(String key);
+  public final String[] getStringArray(String key);
+  // Protected Instance Methods
+  protected abstract Object handleGetObject(String key);
+  protected void setParent(ResourceBundle parent);
+}
+Variables
+parent
+protected ResourceBundle parent
+Description
+The parent ResourceBundle of 
+this ResourceBundle. If this 
+ResourceBundle does not contain 
+a particular resource, its parent is searched. The parent can be set using 
+setParent(). 
+Class Methods
+getBundle
+   public final static ResourceBundle getBundle(String baseName) throws MissingResourceException  
+Parameters
+baseName
+The resource name. 
+Returns
+The named ResourceBundle for 
+the default locale. 
+Throws
+MissingResourceException
+If a matching ResourceBundle can't be located. 
+Description
+This method finds or constructs the appropriate ResourceBundle 
+subclass specified by baseName 
+and localized for the default locale. See the description of the ResourceBundle 
+class for more information about how this method works. 
+   public final static ResourceBundle getBundle(String baseName, Locale locale)  
+Parameters
+baseName
+The resource name.
+locale
+The Locale to use. 
+Returns
+The named ResourceBundle for 
+the given locale. 
+Throws
+MissingResourceException
+If a matching ResourceBundle can't be located. 
+Description
+This method finds or constructs the appropriate ResourceBundle 
+subclass specified by baseName 
+and localized for the given locale. See the description of the ResourceBundle 
+class for more information about how this method works. 
+Instance Methods
+getKeys
+public abstract Enumeration getKeys()
+Returns
+The keys in the ResourceBundle 
+as an Enumeration. 
+Description
+This method returns an Enumeration 
+that iterates through the keys in this ResourceBundle. 
+A subclass of ResourceBundle 
+must provide an implementation for this method. 
+getObject
+   public final Object getObject(String key) throws MissingResourceException  
+Parameters
+key
+The key of the resource 
+to retrieve. 
+Returns
+The Object identified by key. 
+Throws
+MissingResourceException
+If the resource cannot be found. 
+Description
+This method returns the named resource as an Object. 
+If the named resource is not found in this ResourceBundle, 
+the parent ResourceBundle is 
+searched. 
+getString
+   public final String getString(String key) throws MissingResourceException  
+Parameters
+key
+The key of the resource to retrieve. 
+Returns
+The String object identified 
+by key. 
+Throws
+MissingResourceException
+If the resource cannot be found. 
+Description
+This method returns the named resource as a String 
+object. This method is a convenience routine that calls getObject() 
+and casts the result to a String 
+object. 
+getStringArray
+   public final String[] getStringArray(String key) throws MissingResourceException  
+Parameters
+key
+The key of the resource to retrieve. 
+Returns
+The String[] array identified 
+by key. 
+Throws
+MissingResourceException
+If the resource cannot be found. 
+Description
+This method returns the named resource as an array of String 
+objects. This method is a convenience routine that calls getObject() 
+and casts the result to a String[] 
+object. 
+Protected Instance Methods
+handleGetObject
+   protected abstract Object handleGetObject(String key) throws MissingResourceException  
+Parameters
+key
+The key of the resource to retrieve. 
+Returns
+The resource that corresponds to this key. 
+Throws
+MissingResourceException
+If the resource cannot be found. 
+Description
+This method returns the resource that corresponds to the given key. This 
+method is called directly by getObject(), 
+so it is called indirectly by getMenu(), 
+getMenuBar(), 
+getString(), and getStringArray().
+A subclass of ResourceBundle 
+must provide an implementation for this method. 
+setParent
+protected void setParent(ResourceBundle parent)
+Parameters
+parent
+The new parent of this ResourceBundle. 
+Description
+This method sets the parent ResourceBundle 
+of this ResourceBundle. If 
+a requested resource cannot be found in this ResourceBundle, 
+the parent is searched. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+ListResourceBundle, 
+Locale, 
+PropertyResourceBundle, 
+String 
+Random
+SimpleTimeZone
+ 
+ 
+ 
+ 
+ 
+ 
+ 

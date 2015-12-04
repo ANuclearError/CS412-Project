@@ -1,0 +1,386 @@
+
+[Chapter 11] The java.io Package
+Chapter 11
+11. The java.io Package
+Contents:
+BufferedOutputStream
+BufferedReader
+BufferedWriter
+ByteArrayInputStream
+ByteArrayOutputStream
+CharArrayReader
+CharArrayWriter
+CharConversionException
+DataInput
+DataInputStream
+DataOutput
+DataOutputStream
+EOFException
+Externalizable
+File
+FileDescriptor
+FileInputStream
+FilenameFilter
+FileNotFoundException
+FileOutputStream
+FileReader
+FileWriter
+FilterInputStream
+FilterOutputStream
+FilterReader
+FilterWriter
+InputStream
+InputStreamReader
+InterruptedIOException
+InvalidClassException
+InvalidObjectException
+IOException
+LineNumberInputStream
+LineNumberReader
+NotActiveException
+NotSerializableException
+ObjectInput
+ObjectInputStream
+ObjectInputValidation
+ObjectOutput
+ObjectOutputStream
+ObjectStreamClass
+ObjectStreamException
+OptionalDataException
+OutputStream
+OutputStreamWriter
+PipedInputStream
+PipedOutputStream
+PipedReader
+PipedWriter
+PrintStream
+PrintWriter
+PushbackInputStream
+PushbackReader
+RandomAccessFile
+Reader
+SequenceInputStream
+Serializable
+StreamCorruptedException
+StreamTokenizer
+StringBufferInputStream
+StringReader
+StringWriter
+SyncFailedException
+UnsupportedEncodingException
+UTFDataFormatException
+WriteAbortedException
+Writer
+The package java.io contains the 
+classes that handle fundamental input and output operations
+in Java.  The I/O classes can be grouped as follows:
+Classes for reading input from a stream of data.
+Classes for writing output to a stream of data.
+Classes that manipulate files on the local filesystem.
+Classes that handle object serialization.
+I/O in Java is based on streams.  A stream represents
+a flow of data or a channel of communication.  Java 1.0 supports only
+byte streams.  The InputStream class is
+the superclass of all of the Java 1.0 byte input streams, while 
+OutputStream is the superclass of all 
+the byte output streams.  The drawback to these byte streams is
+that they do not always handle Unicode characters correctly.  
+As of Java 1.1, java.io contains classes 
+that represent character streams.  These character stream classes
+handle Unicode characters appropriately by using a character encoding
+to convert bytes to characters and vice versa.  The 
+Reader class is the superclass of all the Java
+1.1 character input streams, while Writer
+is the superclass of all character output streams.
+The InputStreamReader and 
+OutputStreamWriter classes provide a bridge
+between byte streams and character streams.  If you wrap an
+InputStreamReader around an
+InputStream object, the bytes in the byte
+stream are read and converted to characters using the character
+encoding scheme specified by the InputStreamReader.
+Likewise, you can wrap an OutputStreamWriter
+around any OutputStream object so that you can 
+write characters and have them converted to bytes.
+As of Java 1.1, java.io also contains
+classes to support object serialization.  Object
+serialization is the ability to write the complete state of
+an object to an output stream, and then later recreate that
+object by reading in the serialized state from an input stream.
+The ObjectOutputStream and
+ObjectInputStream classes handle serializing
+and deserializing objects, respectively.
+The RandomAccessFile class is the only
+class that does not use a stream for reading or writing data.
+As its name implies, RandomAccessFile
+provides nonsequential access to a file for both reading
+and writing purposes.  
+The File class represents a file on the
+local file system.  The class provides methods to identify and 
+retrieve information about a file.
+Figure 11.1 shows the class hierarchy for the
+java.io package. The java.io
+package defines a number of standard I/O exception classes.  These
+exception classes are all subclasses of
+IOException, as shown in Figure 11.2.
+Figure 11.1: The java.io package
+Figure 11.2: The exception classes in the java.io package
+BufferedInputStream
+Name
+BufferedInputStream
+Synopsis
+Class Name:
+java.io.BufferedInputStream
+Superclass:
+java.io.FilterInputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+A BufferedInputStream object provides a more
+efficient way to read just a few bytes at a time from an
+InputStream.
+BufferedInputStream object use a buffer to
+store input from an associated InputStream.  In
+other words, a large number of bytes are read from the underlying
+stream and stored in an internal buffer. A
+BufferedInputStream is more efficient than a
+regular InputStream because reading data from
+memory is faster than reading it from a disk or a network. All reading
+is done directly from the internal buffer; the disk or network
+needs to be accessed only occasionally to fill up the buffer.
+You should wrap a BufferedInputStream 
+around any InputStream whose 
+read() operations may be time 
+consuming or costly, such as a FileInputStream. 
+BufferedInputStream provides 
+a way to mark a position in the stream and subsequently reset the stream 
+to that position, using mark() 
+and reset(). 
+Class Summary
+public class java.io.BufferedInputStream extends java.io.FilterInputStream {
+  // Variables
+  protected byte[] buf;
+  protected int count;
+  protected int marklimit;
+  protected int markpos;
+  protected int pos;
+  // Constructors
+  public BufferedInputStream(InputStream in);
+  public BufferedInputStream(InputStream in, int size);
+  // Instance Methods
+  public synchronized int available();
+  public synchronized void mark(int readlimit);
+  public boolean markSupported();
+  public synchronized int read();
+  public synchronized int read(byte[] b, int off, int len);
+  public synchronized void reset();
+  public synchronized long skip(long n);
+}
+Variables
+buf
+protected byte[] buf
+Description
+The buffer that stores the data from the input stream. 
+count
+protected int count
+Description
+A placeholder that marks the end of valid data in the buffer. 
+marklimit
+protected int marklimit
+Description
+The maximum number of bytes that can be read after a call to mark() 
+before a call to reset() fails. 
+markpos
+protected int markpos
+Description
+The position of the stream when mark() 
+was called. If mark() has not 
+been called, this variable is -1. 
+pos
+protected int pos
+Description
+The current position in the buffer, or in other words, the index of the 
+next character to be read. 
+Constructors
+BufferedInputStream
+public BufferedInputStream(InputStream in)
+Parameters
+in
+The input stream to buffer. 
+Description
+This constructor creates a BufferedInputStream 
+that buffers input from the given InputStream, 
+using a buffer with the default size of 2048 bytes. 
+public BufferedInputStream(InputStream in, int size)
+Parameters
+in
+The input stream to buffer.
+size
+The size of buffer to use. 
+Description
+This constructor creates a BufferedInputStream 
+that buffers input from the given InputStream, 
+using a buffer of the given size. 
+Instance Methods
+available
+public synchronized int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.available() 
+Description
+This method returns the number of bytes that can be read without having 
+to wait for more data to become available. The returned value is the sum 
+of the number of bytes remaining in the object's buffer and the number 
+returned as the result of calling the available() 
+method of the underlying InputStream 
+object. 
+mark
+public synchronized void mark(int readlimit)
+Parameters
+readlimit
+The maximum number 
+of bytes that can be read before the saved position becomes invalid. 
+Overrides
+FilterInputStream.mark() 
+Description
+This method causes the BufferedInputStream 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position, and thus reread a 
+portion of the buffer. 
+markSupported
+public synchronized boolean markSupported()
+Returns
+The boolean value true. 
+Overrides
+FilterInputStream.markSupported() 
+Description
+This method returns true to 
+indicate that this class supports mark() 
+and reset(). 
+read
+public synchronized int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.read() 
+Description
+This method returns the next byte from the buffer. If all the bytes in 
+the buffer have been read, the buffer is filled from the underlying InputStream 
+and the next byte is returned. If the buffer does not need to be filled, 
+this method returns immediately. If the buffer needs to be filled, this 
+method blocks until data is available from the underlying InputStream, 
+the end of the stream is reached, or an exception is thrown. 
+   public synchronized int read(byte b[], int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to 
+be filled from the stream.
+off
+An offset into the 
+byte array.
+len
+The number of bytes 
+to read. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.read(byte[], int, int) 
+Description
+This method copies bytes from the internal buffer into the given array 
+b, starting at index off 
+and continuing for up to len bytes. 
+If there are any bytes in the buffer, this method returns 
+immediately. Otherwise the buffer needs to be filled; this method
+blocks until the data is available from the underlying InputStream, 
+the end of the stream is reached, or an exception is thrown. 
+reset
+public synchronized void reset() throws IOException
+Throws
+IOException
+If there was 
+no previous call to this BufferedInputStream's 
+mark method, or the saved position has been invalidated. 
+Overrides
+FilterInputStream.reset() 
+Description
+This method sets the position of the BufferedInputStream 
+to a position that was saved by a previous call to mark(). 
+Subsequent bytes read from this BufferedInputStream 
+will begin from the saved position and continue normally. 
+skip
+public synchronized long skip(long n) throws IOException
+Parameters
+n
+The number of bytes to skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.skip() 
+Description
+This method skips n bytes of 
+input. If the new position of the stream is still within the data contained 
+in the buffer, the method returns immediately. Otherwise the skip() 
+method of the underlying stream is called. A subsequent call to read() 
+forces the buffer to be filled. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+FilterInputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+FilterInputStream
+toString()
+Object
+void wait()
+Object
+void wait(long)
+Object
+void wait(long, int)
+Object
+See Also
+FilterInputStream, 
+InputStream, 
+IOException 
+Writer
+BufferedOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

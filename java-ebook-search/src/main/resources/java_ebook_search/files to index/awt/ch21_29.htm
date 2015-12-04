@@ -1,0 +1,98 @@
+
+[Chapter 21] WindowEvent 
+Chapter 21java.awt.event Reference
+WindowEvent 
+Name
+WindowEvent 
+Description
+Window events are generated when a window is opened, closed, iconified, 
+or deiconified. 
+Class Definition
+public class java.awt.event.WindowEvent
+   extends java.awt.event.ComponentEvent {
+  // Constants
+  public final static int WINDOW_ACTIVATED;
+  public final static int WINDOW_CLOSED;
+  public final static int WINDOW_CLOSING;
+  public final static int WINDOW_DEACTIVATED;
+  public final static int WINDOW_DEICONIFIED;
+  public final static int WINDOW_FIRST;
+  public final static int WINDOW_ICONIFIED;
+  public final static int WINDOW_LAST;
+  public final static int WINDOW_OPENED;
+  // Constructors
+  public WindowEvent (Window source, int id);
+  // Instance Methods
+  public Window getWindow();
+  public String paramString();
+}
+Constants
+WINDOW_ACTIVATED
+public final static int WINDOW_ACTIVATED
+Event type ID indicating the window has been activated, brought to the 
+foreground. 
+WINDOW_CLOSED
+public final static int WINDOW_CLOSED
+Event type ID indicating the window has closed. 
+WINDOW_CLOSING
+public final static int WINDOW_CLOSING
+Event type ID indicating the window is closing. 
+WINDOW_DEACTIVATED
+public final static int WINDOW_DEACTIVATED
+Event type ID indicating the window has been deactivated, placed in the 
+background. 
+WINDOW_DEICONIFIED
+public final static int WINDOW_DEICONIFIED
+Event type ID indicating the window has been restored from an 
+iconified state. 
+WINDOW_FIRST
+public final static int WINDOW_FIRST
+Specifies the beginning range of window event ID values. 
+WINDOW_ICONIFIED
+public final static int WINDOW_ICONIFIED
+Event type ID indicating the window has been iconified (minimized). 
+WINDOW_LAST
+public final static int WINDOW_LAST
+Specifies the ending range of window event ID values. 
+WINDOW_OPENED
+public final static int WINDOW_OPENED
+Event type ID indicating the window has opened. 
+Constructors
+WindowEvent
+public WindowEvent (Window source, int id)
+Parameters
+source
+The object that 
+generated the event.
+id
+The event type ID of 
+the event. 
+Description
+Constructs a WindowEvent with 
+the given characteristics. 
+Instance Methods
+getWindow
+public Window getWindow()
+Returns
+The window that generated this event. 
+paramString
+public String paramString()
+Returns
+String with current settings of the WindowEvent. 
+Overrides
+ComponentEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+ComponentEvent, Window, 
+WindowAdapter, WindowListener 
+WindowAdapter 
+WindowListener 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

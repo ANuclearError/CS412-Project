@@ -1,0 +1,223 @@
+
+[Chapter 11] ByteArrayOutputStream
+Chapter 11The java.io Package
+ByteArrayOutputStream
+Name
+ByteArrayOutputStream
+Synopsis
+Class Name:
+java.io.ByteArrayOutputStream
+Superclass:
+java.io.FilterOutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+A ByteArrayOutputStream 
+is a stream whose data is written to an internal 
+byte array. None of the methods 
+of this class throws an IOException 
+because the data is written to an array instead of an actual I/O 
+device. 
+The data for a ByteArrayOutputStream 
+can be sent to another OutputStream 
+using the writeTo() method. 
+A copy of the array can be obtained using the toCharArray() 
+method. 
+Class Summary
+public class java.io.ByteArrayOutputStream extends java.io.OutputStream {
+  // Variables
+  protected byte[] buf;
+  protected int count;
+  // Constructors
+  public ByteArrayOutputStream();
+  public ByteArrayOutputStream(int size);
+  // Instance Methods
+  public synchronized void reset();
+  public int size( );
+  public synchronized byte[] toByteArray();
+  public String toString();
+  public String toString(int hibyte);            // Deprecated in 1.1
+  public String toString(String enc);            // New in 1.1
+  public synchronized void write(int b);
+  public synchronized void write(byte[] b, int off, int len);
+  public synchronized void writeTo(OutputStream out);
+}
+Variables
+buf
+protected byte[] buf
+Description
+The buffer that holds data for this stream. 
+count
+protected int count
+Description
+A placeholder that marks the end of the data in the buffer. 
+Constructors
+ByteArrayOutputStream
+public ByteArrayOutputStream()
+Description
+This constructor creates a ByteArrayOutputStream 
+with an internal buffer that has a default size of 32 bytes. The buffer 
+grows automatically as data is written to the stream. 
+public ByteArrayOutputStream(int size)
+Parameters
+size
+The initial buffer 
+size. 
+Description
+This constructor creates a ByteArrayOutputStream 
+with an internal buffer that has a size of size 
+bytes. The buffer grows automatically as data is written to the stream. 
+Instance Methods
+reset
+public synchronized void reset()
+Description
+This method discards the current contents of the buffer and
+resets the position of the stream to zero. Subsequent data 
+is written starting at the beginning of the array. 
+size
+public int size()
+Description
+This method returns the number of bytes currently stored in this object's 
+internal buffer. It is a count of the number of bytes that have been written 
+to the stream. 
+toByteArray
+public synchronized byte[] toByteArray()
+Returns
+A copy of the data that has been written to this ByteArrayOutputStream. 
+Description
+This method copies the data in the internal array and returns a reference 
+to the copy. The returned array is as long as the data that has been written 
+to the stream, i.e., the same as size(). 
+toString
+public String toString()
+Returns
+A copy of the data that has been written to this ByteArrayOutputStream. 
+Overrides
+Object.toString() 
+Description
+This method returns a reference to a String object that 
+contains a copy of the bytes currently stored in this object's internal 
+buffer. The bytes are assumed to represent characters in the encoding
+that is customary for the native platform, so the bytes are converted
+to Unicode characters based on that assumption.
+public String toString(int hibyte)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+hibyte
+A value to use as 
+the high byte of each character. 
+Returns
+A copy of the data that has been written to this ByteArrayOutputStream, 
+where each character in the string has a high byte of hibyte 
+and a low byte taken from the corresponding byte in the array. 
+Description
+This method provides a way to convert from bytes to characters. As of 1.1, 
+it is deprecated and replaced with toString(String). 
+   public String toString(String enc) throws UnsupportedEncodingException  
+Availability
+New as of JDK 1.1 
+Parameters
+enc
+The encoding scheme 
+to use. 
+Returns
+A copy of the data that has been written to this ByteArrayOutputStream, 
+converted from bytes to characters via the named encoding scheme enc. 
+Throws
+UnsupportedEncodingException
+The 
+specified encoding is not supported. 
+Description
+This method returns a Java String 
+created from the byte array of this stream. The conversion is performed 
+according to the encoding scheme enc. 
+write
+public synchronized void write(int b)
+Parameters
+b
+The value to write. 
+Overrides
+OutputStream.write(int) 
+Description
+This method writes the low-order 8 bits of the 
+given value into the internal array. If the array 
+is full, a larger array is allocated. 
+public synchronized void write(byte b[], int off, int len)
+Parameters
+b
+The array to copy from.
+off
+Offset into the byte array.
+len
+Number of bytes to write. 
+Overrides
+OutputStream.write(byte[], int, int) 
+Description
+This method copies len bytes 
+to this object's internal array from b, 
+starting oset elements from 
+the beginning of the supplied array b. 
+If the internal array is full, a larger array is allocated. 
+writeTo
+   public synchronized void writeTo(OutputStream out) throws IOException  
+Parameters
+out
+The destination stream. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method writes the contents of this object's internal buffer 
+to the given OutputStream. 
+All the data that has been written to this ByteArrayOutputStream 
+is written to out. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+OutputStream
+equals(Object)
+Object
+finalize()
+Object
+flush()
+OutputStream
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(byte[])
+OutputStream
+See Also
+IOException, 
+OutputStream, 
+String, 
+UnsupportedEncodingException 
+ByteArrayInputStream
+CharArrayReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

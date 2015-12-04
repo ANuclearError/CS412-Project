@@ -1,0 +1,61 @@
+
+[Chapter 18] 18.56 java.awt.SystemColor (JDK 1.1)
+Chapter 18The java.awt Package
+18.56 java.awt.SystemColor (JDK 1.1)
+Instances of the SystemColor
+class represent colors used in the system
+desktop.  You can use these colors to produce applications
+and custom components
+that fit well in the desktop color scheme.  On platforms
+that allow the desktop colors to be modified dynamically,
+the actual color represented by these symbolic system colors
+may be dynamically updated.
+The SystemColor class does not have a constructor,
+but it defines constant SystemColor objects that
+represent each of the symbolic colors used by the system
+desktop.
+If you need to compare a SystemColor object to a
+regular Color object, use the getRGB()
+method of both objects and compare the resulting values.
+public final class SystemColor extends Color implements Serializable {
+    // No Constructor
+    // Color Constants
+            public static final SystemColor activeCaption, activeCaptionBorder, activeCaptionText;
+            public static final SystemColor control, controlDkShadow, controlHighlight;
+            public static final SystemColor controlLtHighlight, controlShadow, controlText;
+            public static final SystemColor desktop;
+            public static final SystemColor inactiveCaption, inactiveCaptionBorder, inactiveCaptionText;
+            public static final SystemColor info, infoText;
+            public static final SystemColor menu, menuText;
+            public static final SystemColor scrollbar;
+            public static final SystemColor text, textHighlight, textHighlightText;
+            public static final SystemColor textInactiveText, textText;
+            public static final SystemColor window, windowBorder, windowText;
+    // Color Index Constants
+            public static final int ACTIVE_CAPTION, ACTIVE_CAPTION_BORDER, ACTIVE_CAPTION_TEXT;
+            public static final int CONTROL, CONTROL_DK_SHADOW, CONTROL_HIGHLIGHT;
+            public static final int CONTROL_LT_HIGHLIGHT, CONTROL_SHADOW, CONTROL_TEXT;
+            public static final int DESKTOP;
+            public static final int INACTIVE_CAPTION, INACTIVE_CAPTION_BORDER, INACTIVE_CAPTION_TEXT;
+            public static final int INFO, INFO_TEXT;
+            public static final int MENU, MENU_TEXT;
+            public static final int NUM_COLORS;
+            public static final int SCROLLBAR;
+            public static final int TEXT, TEXT_HIGHLIGHT, TEXT_HIGHLIGHT_TEXT;
+            public static final int TEXT_INACTIVE_TEXT, TEXT_TEXT;
+            public static final int WINDOW, WINDOW_BORDER, WINDOW_TEXT;
+    // Public Instance Methods
+            public int getRGB();  // Overrides Color
+            public String toString();  // Overrides Color
+}
+Hierarchy:
+Object->Color(Serializable)->SystemColor(Serializable)
+java.awt.Shape (JDK 1.1)
+java.awt.TextArea (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

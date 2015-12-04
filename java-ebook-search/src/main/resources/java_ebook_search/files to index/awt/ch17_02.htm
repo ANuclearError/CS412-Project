@@ -1,0 +1,113 @@
+
+[Chapter 17] 17.2 PrintJob Class
+Chapter 17Printing
+17.2 PrintJob Class
+The abstract PrintJob class 
+provides the basis for the platform-specific printing subclasses. Through 
+PrintJob, you have access to 
+properties like page size and resolution. 
+Constructor and Pseudo-Constructor
+public PrintJob ()  
+The PrintJob() constructor 
+is public; however, the class is abstract, so you would never create a PrintJob 
+instance directly. 
+Since you can't call the PrintJob 
+constructor directly, you need some other way of getting a print job to 
+work with. The proper way to get an instance of PrintJob 
+is to ask the Toolkit, which 
+is described in Chapter 15, Toolkit and Peers. The getPrintJob() 
+method requires a Frame as 
+the first parameter, a String 
+as the second parameter, and a Properties set as the third parameter. Here's 
+how you might call it: 
+PrintJob pjob = getToolkit().getPrintJob(aFrame, "Job Title",
+                                         (Properties)null);
+The Frame is used to hold a 
+print dialog box, asking the user to confirm or cancel the print job. (Whether 
+or not you get the print dialog may be platform specific, but your programs 
+should always assume that the dialog may appear.) The String 
+is the job's title; it will be used to identify the job in the print 
+queue and on the job's header page, if there is one. 
+The Properties parameter is 
+used to request printing options, like page reversal. The property names, 
+and whether the requested properties are honored at all, are platform specific. 
+UNIX systems use the following properties:
+awt.print.printer
+awt.print.paperSize
+awt.print.destination
+awt.print.orientation
+awt.print.options
+awt.print.fileName
+awt.print.numCopies
+Windows NT/95 ignores the properties sheet. If the properties sheet is null, 
+as in the previous example, you get the system's default printing options. 
+If the properties sheet is non-null, 
+getPrintJob() modifies it to 
+show the actual options used to print the job. You can use the modified 
+properties sheet to find out what properties are recognized on your system 
+and to save a set of printing options for use on a later print job. 
+If you are printing multiple pages, each page should originate from the 
+same print job. 
+According to Sun's documentation, getPrintJob() 
+ought to return null if the 
+user cancels the print job. However, this is a problem. On some platforms 
+(notably Windows NT/95), the print dialog box doesn't even appear 
+until you call the getGraphics() method. 
+In this case, getPrintJob() 
+still returns a print job and never returns null. 
+If the user cancels the job, getGraphics() 
+returns null. 
+Methods
+public abstract Graphics getGraphics ()  
+The getGraphics() method returns 
+an instance of Graphics that 
+also implements PrintGraphics. 
+This graphics context can then be used as the parameter to methods like 
+paint(), print(), 
+update(), or printAll() 
+to print a single page. (All of these methods result in calls to paint(); 
+in paint(), you draw whatever 
+you want to print on the Graphics 
+object.) 
+On Windows NT/95 platforms, getGraphics() 
+returns null if the user cancels the print job.
+public abstract Dimension getPageDimension ()  
+The getPageDimension() method 
+returns the dimensions of the page in pixels, as a Dimension 
+object. Since getGraphics() 
+returns a graphics context only for a single page, it is the programmer's 
+responsibility to decide when the current page is full, print the current 
+page, and start a new page with a new Graphics 
+object. The page size is chosen to roughly represent a screen but has no 
+relationship to the page size or orientation. 
+public abstract int getPageResolution ()  
+The getPageResolution() method 
+returns the number of pixels per inch for drawing on the page. It is completely 
+unclear what this means, since the number returned has no relationship 
+to the printer resolution. It appears to be similar to the screen resolution. 
+public abstract boolean lastPageFirst ()  
+The lastPageFirst() method 
+lets you know if the user configured the printer to print pages in reverse 
+order. If this returns true, 
+you need to generate the last page first. If false, 
+you should print the first page first. This is relevant only if you are 
+trying to print a multipage document. 
+public abstract void end ()  
+The end() method terminates 
+the print job. This is the last method you should call when printing; it 
+does any cleaning up that's necessary. 
+public void finalize ()  
+The finalize() method is called 
+by the garbage collector. In the event you forget to call end(), 
+finalize() calls it for you. 
+However, it is best to call end() 
+as soon as you know you have finished printing; don't rely on finalize(). 
+PrintGraphics Interface
+Component Methods
+ 
+ 
+ 
+ 
+ 
+ 
+ 

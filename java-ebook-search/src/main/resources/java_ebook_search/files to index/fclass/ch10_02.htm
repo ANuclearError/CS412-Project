@@ -1,0 +1,136 @@
+
+[Chapter 10] 10.2 System Properties
+Chapter 10Accessing the Environment
+10.2 System Properties
+System properties provide a mechanism for getting information
+about the environment. You can get the value of a system property by
+passing its name to the System.getProperty(String)
+method. This method returns the value of the named property as a
+String, or it returns null if
+the property is not defined. Since it is common to assume a default
+value if a property is not specified, there is also a
+System.getProperty(String,
+String) method that takes the name of a property
+and a default String value to return if the
+property is not defined.
+Table 10.1 lists the standard system properties for 
+a Java environment. Many of these properties are guaranteed to be defined 
+in any Java environment. Note, however, that untrusted applets aren't 
+allowed to access many of these properties. 
+Table 10.1: Standard System Properties
+Property Name
+Description
+file.encoding
+The character encoding for the default locale ( Java 1.1 only)
+file.encoding.pkg
+The package that contains the converters that handle converting between 
+local encodings and Unicode ( Java 1.1 only)
+file.separator
+The platform-dependent file separator 
+(e.g., "/" on UNIX, "\" 
+for Windows)
+java.class.path
+The value of the CLASSPATH 
+environment variable
+java.class.version
+The version of the Java API
+java.compiler
+The just-in-time compiler to use, if any. The java 
+interpreter provided with the JDK initializes this property from the environment 
+variable JAVA_COMPILER
+java.home
+The directory in which Java is installed
+java.version
+The version of the Java interpreter
+java.vendor
+A vendor-specific string
+java.vendor.url
+A vendor URL
+line.separator
+The platform-dependent line separator (e.g.,
+"\n" on UNIX,
+"\r\n" for Windows)
+os.name
+The name of the operating system
+os.arch
+The system architecture
+os.version
+The operating system version
+path.separator
+The platform-dependent path separator 
+(e.g., ":" on UNIX, "," 
+for Windows)
+user.dir
+The current working directory 
+when the properties were initialized
+user.home
+The home directory of the current user
+user.language
+The two-letter language code of the default locale ( Java 1.1 only)
+user.name
+The username of the current user
+user.region
+The two-letter country code of the default locale ( Java 1.1 only)
+user.timezone
+The default time zone ( Java 1.1 only)
+The Java API also provides some convenience methods for getting the value 
+of a system property that should be interpreted as a data type other than 
+String: 
+Boolean.getBoolean() 
+returns the value of a named system property as a boolean. 
+Color.getColor() returns 
+a Color object that represents 
+the color specified by the value of a named system property interpreted 
+as an RGB value. For example, the value 0xFFFFFF 
+is white, 0xFF000 is red, 0x00FF00 
+is green, and 0x0000FF is blue. 
+Font.getFont() returns a Font
+object that is mapped to a font in the native windowing system. If the
+string passed to getFont() is
+"poster", the method uses the value of the system
+property awt.font.poster as the name of the native
+font.
+By default, the font style is plain and the font size is 12 points. If
+the font name is prefixed with bold-,
+italic- or bolditalic-, that
+style is used instead. If the font name is prefixed with a size and a
+-, that size is used instead. If both style and
+size are specified, style must come first. For example, passing
+"italic-14-timesRoman" to
+getFont() causes it to return a
+Font object that uses the native font identified by
+the system property awt.font.timesRoman. That font
+should be an italic, 14-point, TimesRoman font.
+Integer.getInteger() returns 
+the value of a named system property as an int. 
+Long.getLong() returns 
+the value of a named system property as a long. 
+There are two built-in mechanisms for setting system properties. Note that 
+you can use these mechanisms to set the standard system properties or to 
+define specific system properties for your own application. 
+You can define properties from the command line of the Java virtual 
+machine using the -D command 
+line option. For example, to define a property named time.server 
+with the value tm02, you can 
+invoke the interpreter like this: 
+C:\&gt; java -Dtime.server=tm02
+You can define any number of system properties using -D, 
+as long as each property is specified with its own -D 
+option. 
+You can programmatically define properties by calling the
+System.setProperties() method. The
+Properties object that you pass to
+System.setProperties() becomes the new source for
+all system property values.
+If a program is running in a browser or other environment that has a
+SecurityManager installed, it may be denied any
+access to system properties.
+I/O
+Environment Variables
+ 
+ 
+ 
+ 
+ 
+ 
+ 

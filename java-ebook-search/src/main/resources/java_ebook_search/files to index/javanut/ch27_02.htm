@@ -1,0 +1,85 @@
+
+[Chapter 27] 27.2 java.math.BigInteger (JDK 1.1)
+Chapter 27The java.math Package
+27.2 java.math.BigInteger (JDK 1.1)
+This subclass of java.lang.Number represents
+integers that can be arbitrarily large--i.e., integers that
+are not limited to the 64 bits available with the
+long data type.  BigInteger defines methods
+that duplicate the functionality of the standard Java
+arithmetic and bit-manipulation operators.  The
+compareTo() method compares two BigInteger
+objects, and returns -1, 0, or 1 to indicate the result of
+the comparison.
+The gcd(), modPow(), modInverse(),
+and isProbablePrime() methods perform advanced
+operations and are used primarily in cryptography and
+related algorithms.
+public class BigInteger extends Number {
+    // Public Constructors
+            public BigInteger(byte[] val) throws NumberFormatException;
+            public BigInteger(int signum, byte[] magnitude) throws NumberFormatException;
+            public BigInteger(String val, int radix) throws NumberFormatException;
+            public BigInteger(String val) throws NumberFormatException;
+            public BigInteger(int numBits, Random rndSrc) throws IllegalArgumentException;
+            public BigInteger(int bitLength, int certainty, Random rnd);
+    // Class Methods
+            public static BigInteger valueOf(long val);
+    // Public Instance Methods
+            public BigInteger abs();
+            public BigInteger add(BigInteger val) throws ArithmeticException;
+            public BigInteger and(BigInteger val);
+            public BigInteger andNot(BigInteger val);
+            public int bitCount();
+            public int bitLength();
+            public BigInteger clearBit(int n) throws ArithmeticException;
+            public int compareTo(BigInteger val);
+            public BigInteger divide(BigInteger val) throws ArithmeticException;
+            public BigInteger[] divideAndRemainder(BigInteger val) throws ArithmeticException;
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object x);  // Overrides Object
+            public BigInteger flipBit(int n) throws ArithmeticException;
+            public float floatValue();  // Defines Number
+            public BigInteger gcd(BigInteger val);
+            public int getLowestSetBit();
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public boolean isProbablePrime(int certainty);
+            public long longValue();  // Defines Number
+            public BigInteger max(BigInteger val);
+            public BigInteger min(BigInteger val);
+            public BigInteger mod(BigInteger m);
+            public BigInteger modInverse(BigInteger m) throws ArithmeticException;
+            public BigInteger modPow(BigInteger exponent, BigInteger m);
+            public BigInteger multiply(BigInteger val);
+            public BigInteger negate();
+            public BigInteger not();
+            public BigInteger or(BigInteger val);
+            public BigInteger pow(int exponent) throws ArithmeticException;
+            public BigInteger remainder(BigInteger val) throws ArithmeticException;
+            public BigInteger setBit(int n) throws ArithmeticException;
+            public BigInteger shiftLeft(int n);
+            public BigInteger shiftRight(int n);
+            public int signum();
+            public BigInteger subtract(BigInteger val);
+            public boolean testBit(int n) throws ArithmeticException;
+            public byte[] toByteArray();
+            public String toString(int radix);
+            public String toString();  // Overrides Object
+            public BigInteger xor(BigInteger val);
+}
+Hierarchy:
+Object->Number(Serializable)->BigInteger
+Passed To:
+BigDecimal()
+Returned By:
+BigDecimal.toBigInteger()
+java.math.BigDecimal (JDK 1.1)
+The java.net Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

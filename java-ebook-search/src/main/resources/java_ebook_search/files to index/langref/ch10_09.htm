@@ -1,0 +1,486 @@
+
+[Chapter 10] Float
+Chapter 10The java.lang Package
+Float
+Name
+Float
+Synopsis
+Class Name:
+java.lang.Float
+Superclass:
+java.lang.Number
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Float class provides an object wrapper
+for a float value. This is useful when you need
+to treat a float value as an object. For example,
+there are a number of utility methods that take a reference to an
+Object as one of their arguments. You cannot
+specify a float value for one of these arguments,
+but you can provide a reference to a Float object
+that encapsulates the float value. Furthermore,
+as of JDK 1.1, the Float class is necessary to 
+support the Reflection API and class literals.
+In Java, float values are represented using
+the IEEE 754 format. The Float class provides
+constants for the three special values that are mandated by this format:
+POSITIVE_INFINITY, NEGATIVE_INFINITY,
+and NaN (not-a-number).
+The Float class also provides some utility
+methods, such as methods for determining whether a floatx
+value is an infinity value or NaN, for converting float
+values to other primitive types, and for converting a float
+to a String and vice versa.
+Class Summary
+public final class java.lang.Float extends java.lang.Number {
+    // Constants
+    public static final float MIN_VALUE;
+    public static final float MAX_VALUE;
+    public static final float NaN;
+    public static final float NEGATIVE_INFINITY;
+    public static final float POSITIVE_INFINITY;
+    public final static Class TYPE;                    // New in 1.1
+    // Constructors
+    public Float(double value);
+    public Float(float value);
+    public Float(String s);
+    // Class Methods
+    public static native int floatToIntBits(float value);
+    public static native float intBitsToFloat(int bits);
+    public static boolean isInfinite(float v);
+    public static boolean isNaN(float v);
+    public static String toString(float f);
+    public static Float valueOf(String s);
+    // Instance Methods
+    public byte byteValue();                           // New in 1.1
+    public double doubleValue();
+    public boolean equals(Object obj);
+    public float floatValue();
+    public int hashCode();
+    public int intValue();
+    public boolean isInfinite();
+    public boolean isNaN();
+    public long longValue();
+    public short shortValue();                         // New in 1.1
+    public String toString();
+}
+Constants
+MAX_VALUE
+public static final float MAX_VALUE = 3.40282346638528860e+38f
+Description
+The largest value that can be represented by a float.
+MIN_VALUE
+public static final float MIN_VALUE = 1.40129846432481707e-45f
+Description
+The smallest value that can be represented by a float.
+NaN
+public static final float NaN = 0.0f / 0.0f
+Description
+This variable represents the value NaN, a special value produced by float operations
+such as division of zero by zero. When NaN is one of the operands,
+most arithmetic operations return NaN as the result.
+Most comparison operators (&lt;, &lt;=,
+==, &gt;=, &gt;)
+return false when one of their arguments is NaN.
+The exception is !=, which returns true
+when one of its arguments is NaN.
+NEGATIVE_INFINITY
+public static final float NEGATIVE_INFINITY = -1.0f / 0.0f
+Description
+This variable represents the value negative infinity, which
+is produced when a float operation underflows
+or a negative float value is divided by zero.
+Negative infinity is by definition less than any other float
+value.
+POSITIVE_INFINITY
+public static final float POSITIVE_INFINITY = 1.0f / 0.0f
+Description
+This variable represents the value positive infinity, which
+is produced when a float operation overflows
+or a positive float value is divided by zero.
+Positive infinity is by definition greater than any other float
+value.
+TYPE
+public static final Class TYPE 
+Availability
+New as of JDK 1.1
+Description
+The Class object that represents the type
+float.
+It is always true that Float.TYPE 
+== float.class.
+Constructors
+Float
+public Float(double value)
+Parameters
+value
+The double value to be encapsulated
+by this object.
+Description
+Creates a Float object with the specified
+double value. The value is rounded to float
+precision.
+public Float(float value)
+Parameters
+value
+The float value to be encapsulated
+by this object.
+Description
+Creates a Float object with the specified
+float value.
+public Float(String s) throws NumberFormatException
+Parameters
+s
+The string to be made into a Float
+object.
+Throws
+NumberFormatException
+If the sequence of characters in the given String
+does not form a valid float literal.
+Description
+Constructs a Float object with the value
+specified by the given string. The string must contain a sequence
+of characters that forms a legal float literal.
+Class Methods
+floatToIntBits
+public static native int floatToIntBits(float value)
+Parameters
+value
+The float value to be converted.
+Returns
+The int value that contains the same sequence
+of bits as the representation of the given float value.
+Description
+This method returns the int value that
+contains the same sequence of bits as the representation of the
+given float value. The meaning of the bits in
+the result is defined by the IEEE 754 floating-point format: bit
+31 is the sign bit, bits 30-23 are the exponent, and bits 22-0 are
+the mantissa. An argument of POSITIVE_INFINITY
+produces the result 0x7f800000, an argument of
+NEGATIVE_INFINITY produces the result 0xff800000,
+and an argument of NaN produces the result 0x7fc00000.
+The value returned by this method can be converted back to
+the original float value by the
+intBitsToFloat() method.
+intBitsToFloat
+public static native float intBitsToFloat(int bits)
+Parameters
+bits
+The int value to be converted.
+Returns
+The float value whose representation is
+the same as the bits in the given int value.
+Description
+This method returns the float value whose
+representation is the same as the bits in the given int
+value. The meaning of the bits in the int
+value is defined by the IEEE 754 floating-point format: bit 31 is
+the sign bit, bits 30-23 are the exponent, and bits 22-0 are the
+mantissa. The argument 0x7f800000 produces the
+result POSITIVE_INFINITY, and the argument 0xff800000
+produces the result NEGATIVE_INFINITY. Arguments
+in the ranges 0x7f800001 through 0x7f8fffff
+and 0xff800001 through 0xff8fffffL
+all produce the result NaN.
+Except for NaN values not normally used by Java, this method
+is the inverse of the floatToIntBits() method.
+isInfinite
+public static boolean isInfinite(float v)
+Parameters
+v
+The float value to be tested.
+Returns
+true if the specified value is equal to
+POSITIVE_INFINITY or NEGATIVE_INFINITY;
+otherwise false.
+Description
+This method determines whether or not the specified value
+is an infinity value.
+isNaN
+public static boolean isNaN(float v)
+Parameters
+v
+The float value to be tested.
+Returns
+true if the specified value is equal to
+NaN; otherwise false.
+Description
+This method determines whether or not the specified value
+is NaN.
+toString
+public static String toString(float f)
+Parameters
+f
+The float value to be converted.
+Returns
+A string representation of the given value.
+Description
+This method returns a String object that
+contains a representation of the given float value.
+The values NaN, NEGATIVE_INFINITY, POSITIVE_INFINITY,
+-0.0, and +0.0 are represented by
+the strings "NaN",
+"--Infinity", "Infinity",
+"--0.0", and "0.0",
+respectively.
+For other values, the exact string representation depends
+on the value being converted. If the absolute value of f
+is greater than or equal to 10^-3 
+or less than or equal to 10^7, it
+is converted to a string with an optional minus sign (if the
+value is negative) followed by up to eight digits
+before the decimal point, a decimal point, and the necessary number
+of digits after the decimal point (but no trailing zero if there is 
+more than one significant digit).  There is always a minimum of
+one digit after the decimal point.
+Otherwise, the value is converted to a string with an optional
+minus sign (if the value is negative), followed by a single digit,
+a decimal point, the necessary number of digits after the decimal
+point (but no trailing zero if there is more than one significant digit),
+and the letter E followed by a plus or a minus 
+sign and a base 10 exponent of at least one digit.  Again, there is always 
+a minimum of one digit after the decimal point.
+Note that the definition of this method has changed as of JDK 1.1.  
+Prior to that release, the method provided a string representation
+that was equivalent to the %g format of 
+the printf function in C.
+valueOf
+   public static Float valueOf(String s) throws NumberFormatException  
+Parameters
+s
+The string to be made into a Float
+object.
+Returns
+The Float object constructed from the string.
+Throws
+NumberFormatException
+If the sequence of characters in the given String
+does not form a valid float literal.
+Description
+Constructs a Float object with the value
+specified by the given string. The string must contain a sequence
+of characters that forms a legal float literal.
+This method ignores leading and trailing whitespace in the string.
+Instance Methods
+byteValue
+public byte byteValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a byte.
+Overrides
+Number.byteValue()
+Description
+This method returns the truncated value of this object as a
+byte. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by an byte, the method
+returns Byte.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by an byte, the method
+returns Byte.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+doubleValue
+public double doubleValue()
+Returns
+The value of this object as a double.
+Overrides
+Number.doubleValue()
+Description
+This method returns the value of this object as a double.
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object.
+Returns
+true if the objects are equal; false
+if they are not.
+Overrides
+Object.equals()
+Description
+This method returns true if obj
+is an instance of Float and it contains the same
+value as the object this method is associated with. More specifically,
+the method returns true
+if the floatToIntBits()
+method returns the same result for the values of both
+objects.
+This method produces a different result than the ==
+operator when both values are NaN. In this case,
+the == operator produces false,
+while this method returns true. By the same token,
+the method also produces a different result when the two values
+are +0.0 and -0.0. In this
+case, the == operator produces true,
+while this method returns false.
+floatValue
+public float floatValue()
+Returns
+The value of this object as a float.
+Overrides
+Number.floatValue()
+Description
+This method returns the value of this object as a float.
+hashCode
+public int hashCode()
+Returns
+A hashcode based on the float value of
+the object.
+Overrides
+Object.hashCode()
+Description
+This method returns a hashcode computed from the value of
+this object. More specifically, if f is the value
+of the object, this method returns Float.floatToIntBits(f).
+intValue
+public int intValue()
+Returns
+The value of this object as an int.
+Overrides
+Number.intValue()
+Description
+This method returns the truncated value of this object as an
+int. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by an int, the method
+returns Integer.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by an int, the method
+returns Integer.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+isInfinite
+public boolean isInfinite(float v)
+Returns
+true if the value of this object is equal
+to POSITIVE_INFINITY or NEGATIVE_INFINITY;
+otherwise false.
+Description
+This method determines whether or not the value of this object
+is an infinity value.
+isNaN
+public boolean isNaN()
+Returns
+true if the value of this object is equal
+to NaN; otherwise false.
+Description
+This method determines whether or not the value of this object
+is NaN.
+longValue
+public long longValue()
+Returns
+The value of this object as a long.
+Overrides
+Number.longValue()
+Description
+This method returns the truncated value of this object as a
+long. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by a long, the method
+returns Long.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by a long, the method
+returns Long.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+shortValue
+public short shortValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a short.
+Overrides
+Number.shortValue()
+Description
+This method returns the truncated value of this object as a
+short. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by an short, the method
+returns Short.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by an short, the method
+returns Short.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+toString
+public String toString()
+Returns
+A string representation of the value of this object.
+Overrides
+Object.toString()
+Description
+This method returns a String object that
+contains a representation of the value of this object.
+The values NaN, NEGATIVE_INFINITY,
+POSITIVE_INFINITY, -0.0, and
++0.0 are represented by 
+the strings "NaN", "--Infinity", 
+"Infinity", "--0.0", 
+and "0.0", respectively.
+For other values, the exact string representation depends
+on the value being converted. If the absolute value of this object
+is greater than or equal to 10^-3 
+or less than or equal to 10^7, it
+is converted to a string with an optional minus sign (if the
+value is negative) followed by up to eight digits
+before the decimal point, a decimal point, and the necessary number
+of digits after the decimal point (but no trailing zero if there is 
+more than one significant digit).  There is always a minimum of
+one digit after the decimal point.
+Otherwise, the value is converted to a string with an optional
+minus sign (if the value is negative), followed by a single digit,
+a decimal point, the necessary number of digits after the decimal
+point (but no trailing zero if there is more than one significant digit),
+and the letter E followed by a plus or a minus 
+sign and a base 10 exponent of at least one digit. Again, there is always 
+a minimum of one digit after the decimal point.
+Note that the definition of this method has changed as of JDK 1.1.  
+Prior to that release, the method provided a string representation
+that was equivalent to the %g format of 
+the printf function in C.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class;
+Double;
+Exceptions;
+Floating-point literals;
+Floating-point types;
+Number;
+String
+Double
+Integer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

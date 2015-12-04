@@ -1,0 +1,37 @@
+
+[Chapter 23] 23.19 java.beans.PropertyVetoException (JDK 1.1)
+Chapter 23The java.beans Package
+23.19 java.beans.PropertyVetoException (JDK 1.1)
+The PropertyVetoException signals that a
+VetoableChangeListener that received a
+PropertyChangeEvent for a "constrained" property of
+a bean has vetoed that proposed change.  
+When this exception is received, the property in question
+should revert back to its original value, and any
+VetoableChangeListener objects that have already
+been notified of the property change must be re-notified to
+indicate that the property has reverted to its old value.
+The VetoableChangeSupport class handles this
+re-notification automatically and re-throws the
+PropertyVetoException to notify its caller that the
+change was rejected.
+public class PropertyVetoException extends Exception {
+    // Public Constructor
+            public PropertyVetoException(String mess, PropertyChangeEvent evt);
+    // Public Instance Methods
+            public PropertyChangeEvent getPropertyChangeEvent();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->PropertyVetoException
+Thrown By:
+VetoableChangeListener.vetoableChange(), 
+VetoableChangeSupport.fireVetoableChange()
+java.beans.PropertyEditorSupport (JDK 1.1)
+java.beans.SimpleBeanInfo (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

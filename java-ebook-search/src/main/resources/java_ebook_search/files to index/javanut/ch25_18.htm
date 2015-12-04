@@ -1,0 +1,33 @@
+
+[Chapter 25] 25.18 java.lang.Error (JDK 1.0)
+Chapter 25The java.lang Package
+25.18 java.lang.Error (JDK 1.0)
+This class forms the root of the error hierarchy in Java. Subclasses
+of Error, unlike subclasses of Exception,
+should generally not be caught, and generally cause
+termination of the program.  Subclasses of Error
+need not be declared in the throws clause of a
+method definition.
+getMessage() returns a message associated with the
+error. See Throwable for other methods.
+public class Error extends Throwable {
+    // Public Constructors
+            public Error();
+            public Error(String s);
+}
+Hierarchy:
+Object->Throwable(Serializable)->Error
+Extended By:
+AWTError, 
+LinkageError, 
+ThreadDeath, 
+VirtualMachineError
+java.lang.Double (JDK 1.0)
+java.lang.Exception (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

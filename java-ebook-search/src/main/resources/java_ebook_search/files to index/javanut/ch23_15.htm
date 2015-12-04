@@ -1,0 +1,61 @@
+
+[Chapter 23] 23.15 java.beans.PropertyDescriptor (JDK 1.1)
+Chapter 23The java.beans Package
+23.15 java.beans.PropertyDescriptor (JDK 1.1)
+A PropertyDescriptor object is a type of
+FeatureDescriptor that describes a single property
+of a Java bean.  The BeanInfo class for a Java bean
+optionally creates and initializes
+PropertyDescriptor objects to describe the
+properties that the bean supports.  Typically, only
+application builders and similar tools use the
+get and is methods to obtain this property
+description information.
+You create a PropertyDescriptor by specifying the
+name of the property and the Class object for the
+bean.  If you have not followed the standard "design
+patterns" for accessor method naming, you may also
+specify the accessor methods for the property.  Once a
+PropertyDescriptor is created, the
+setBound() and setConstrained() methods
+allow you to specify whether the property is bound and/or
+constrained.  setPropertyEditorClass() allows you to
+specify a specific property editor that should be used to
+edit the value of this property (this is useful, for
+example, when the property is an enumerated type with a
+specific list of supported values).  The methods of the
+FeatureDescriptor superclass allow additional
+information about the property to be specified.
+public class PropertyDescriptor extends FeatureDescriptor {
+    // Public Constructors
+            public PropertyDescriptor(String propertyName, Class beanClass) throws IntrospectionException;
+            public PropertyDescriptor(String propertyName, Class beanClass, String getterName,
+            public PropertyDescriptor'u'String setterName) throws IntrospectionException;
+            public PropertyDescriptor(String propertyName, Method getter, Method setter) throws IntrospectionException;
+    // Public Instance Methods
+            public Class getPropertyEditorClass();
+            public Class getPropertyType();
+            public Method getReadMethod();
+            public Method getWriteMethod();
+            public boolean isBound();
+            public boolean isConstrained();
+            public void setBound(boolean bound);
+            public void setConstrained(boolean constrained);
+            public void setPropertyEditorClass(Class propertyEditorClass);
+}
+Hierarchy:
+Object->FeatureDescriptor->PropertyDescriptor
+Extended By:
+IndexedPropertyDescriptor
+Returned By:
+BeanInfo.getPropertyDescriptors(), 
+SimpleBeanInfo.getPropertyDescriptors()
+java.beans.PropertyChangeSupport (JDK 1.1)
+java.beans.PropertyEditor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

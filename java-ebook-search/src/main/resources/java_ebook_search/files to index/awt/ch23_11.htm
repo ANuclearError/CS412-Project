@@ -1,0 +1,64 @@
+
+[Chapter 23] FramePeer
+Chapter 23java.awt.peer Reference
+FramePeer
+Name
+FramePeer
+Description
+FramePeer is an interface that 
+defines the basis for a frame. 
+Interface Definition
+public abstract interface java.awt.peer.FramePeer
+   extends java.awt.peer.WindowPeer {
+  // Interface Methods
+  public abstract void setIconImage (Image image);
+  public abstract void setMenuBar (MenuBar bar);
+  public abstract void setResizable (boolean resizable);
+  public abstract void setTitle (String title);
+}
+Interface Methods
+setIconImage
+public abstract void setIconImage (Image image)
+Parameters
+image
+New image to use 
+for frame peer's icon. 
+Description
+Changes the icon associated with the frame's peer. 
+setMenuBar
+public abstract void setMenuBar (MenuBar bar)
+Parameters
+bar
+New MenuBar 
+to use for the frame's peer. 
+Description
+Changes the menu bar of the frame. 
+setResizable
+public abstract void setResizable (boolean resizable)
+Parameters
+resizable
+true 
+if the frame's peer should allow resizing, false 
+to prevent resizing. 
+Description
+Changes the resize state of the frame's peer. 
+setTitle
+public abstract void setTitle (String title)
+Parameters
+title
+New title to use 
+for the frame's peer. 
+Description
+Changes the title of the frame's peer. 
+See Also
+Image, MenuBar, 
+String, WindowPeer 
+FontPeer 
+LabelPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

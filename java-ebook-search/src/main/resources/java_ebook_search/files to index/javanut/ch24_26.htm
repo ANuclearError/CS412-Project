@@ -1,0 +1,63 @@
+
+[Chapter 24] 24.26 java.io.FilterReader (JDK 1.1)
+Chapter 24The java.io Package
+24.26 java.io.FilterReader (JDK 1.1)
+This abstract class is intended to act as a superclass for
+character input streams that read data from some other
+character input stream, filter it in some way, and then
+return the filtered data when their own read()
+methods are called.
+FilterReader is declared abstract, so that
+it cannot be instantiated.  But none of its methods are
+themselves abstract: they all simply call the requested
+operation on the input stream passed to the
+FilterReader() constructor.  If you were allowed to
+instantiate a FilterReader, you'd find that it is a
+"null filter"--i.e., it simply reads characters from the
+specified input stream and returns them without filtering of
+any kind.
+Because FilterReader implements a "null filter," it
+is an ideal superclass for classes that want to implement
+simple filters, but do not want to override all of the
+methods of Reader.  In order to create your own
+filtered character input stream, you should subclass
+FilterReader and override both of its read()
+methods to perform the desired filtering operation.  Note
+that you can implement one of the read() methods in
+terms of the other, and thus only implement the filtration
+once.  Recall that the other read() methods defined
+by Reader are implemented in terms of these methods,
+so you do not need to override those.  In some cases, you may
+also need to override other methods of FilterReader
+as well, and you may want to provide methods or constructors
+that are specific to your subclass.
+FilterReader is the character-stream analog to
+FilterInputStream. 
+public abstract class FilterReader extends Reader {
+    // Protected Constructor
+            protected FilterReader(Reader in);
+    // Protected Instance Variables
+            protected Reader in;
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Reader
+            public void mark(int readAheadLimit) throws IOException;  // Overrides Reader
+            public boolean markSupported();  // Overrides Reader
+            public int read() throws IOException;  // Overrides Reader
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Defines Reader
+            public boolean ready() throws IOException;  // Overrides Reader
+            public void reset() throws IOException;  // Overrides Reader
+            public long skip(long n) throws IOException;  // Overrides Reader
+}
+Hierarchy:
+Object->Reader->FilterReader
+Extended By:
+PushbackReader
+java.io.FilterOutputStream (JDK 1.0)
+java.io.FilterWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

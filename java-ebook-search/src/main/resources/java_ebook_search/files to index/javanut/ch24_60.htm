@@ -1,0 +1,26 @@
+
+[Chapter 24] 24.60 java.io.StreamCorruptedException (JDK 1.1)
+Chapter 24The java.io Package
+24.60 java.io.StreamCorruptedException (JDK 1.1)
+This exception signals that the data stream being read by an
+ObjectInputStream has been corrupted and does not
+contain valid serialized object data.
+public class StreamCorruptedException extends ObjectStreamException {
+    // Public Constructors
+            public StreamCorruptedException(String reason);
+            public StreamCorruptedException();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->ObjectStreamException->StreamCorruptedException
+Thrown By:
+ObjectInputStream(), 
+ObjectInputStream.readStreamHeader()
+java.io.Serializable (JDK 1.1)
+java.io.StreamTokenizer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

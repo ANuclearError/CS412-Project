@@ -1,0 +1,36 @@
+
+[Chapter 18] 18.37 java.awt.LayoutManager2 (JDK 1.1)
+Chapter 18The java.awt Package
+18.37 java.awt.LayoutManager2 (JDK 1.1)
+This interface is an extension of the LayoutManager
+interface.  It defines additional layout management methods
+for layout managers that perform constraint-based layout.
+GridBagLayout is an example of a
+constraint-based layout manager--each component added to the
+layout is associated with a GridBagConstraints
+object that specifies the "constraints" on how the component
+is to be laid out.
+Java programs do not directly invoke the methods of this
+interface--they are used by the Container
+object for which the layout manager is registered.
+public abstract interface LayoutManager2 extends LayoutManager {
+    // Public Instance Methods
+            public abstract void addLayoutComponent(Component comp, Object constraints);
+            public abstract float getLayoutAlignmentX(Container target);
+            public abstract float getLayoutAlignmentY(Container target);
+            public abstract void invalidateLayout(Container target);
+            public abstract Dimension maximumLayoutSize(Container target);
+}
+Implemented By:
+BorderLayout, 
+CardLayout, 
+GridBagLayout
+java.awt.LayoutManager (JDK 1.0)
+java.awt.List (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

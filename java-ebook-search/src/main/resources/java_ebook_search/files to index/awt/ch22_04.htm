@@ -1,0 +1,149 @@
+
+[Chapter 22] DirectColorModel
+Chapter 22java.awt.image Reference
+DirectColorModel
+Name
+DirectColorModel
+Description
+The DirectColorModel class 
+provides a ColorModel that 
+specifies a translation between pixels and alpha, red, green, and blue 
+component values, where the color values are embedded directly within the 
+pixel. 
+Class Definition
+public class java.awt.image.DirectColorModel
+    extends java.awt.image.ColorModel {
+  // Constructors
+  public DirectColorModel (int bits, int redMask, int greenMask, 
+    int blueMask);
+  public DirectColorModel (int bits, int redMask, int greenMask, 
+    int blueMask, 
+    int alphaMask);
+  // Instance Methods
+  public final int getAlpha (int pixel);
+  public final int getAlphaMask();
+  public final int getBlue (int pixel);
+  public final int getBlueMask();
+  public final int getGreen (int pixel);
+  public final int getGreenMask()
+  public final int getRed (int pixel);
+  public final int getRedMask();
+  public final int getRGB (int pixel);
+}
+Constructors
+DirectColorModel
+public DirectColorModel (int bits, int redMask, int greenMask, int blueMask)
+Parameters
+bits
+The number of bits required per pixel of an image using 
+this model.
+redMask
+The location of the red component of a pixel.
+greenMask
+The location of the green component of a pixel.
+blueMask
+The location of the blue component of a pixel. 
+Throws
+IllegalArgumentException
+If the mask bits are not contiguous 
+or overlap. 
+Description
+Constructs a DirectColorModel 
+object with the given size and color masks; the alpha (transparency) component 
+is not used. 
+public DirectColorModel (int bits, int redMask, int greenMask, int blueMask, int alphaMask)
+Parameters
+bits
+The number of bits required per pixel of an image using 
+this model.
+redMask
+The location of the red component of a pixel.
+greenMask
+The location of the green component of a pixel.
+blueMask
+The location of the blue component of a pixel.
+alphaMask
+The location of the alpha component of a pixel. 
+Throws
+IllegalArgumentException
+If 
+the mask bits are not contiguous or overlap. 
+Description
+Constructs a DirectColorModel 
+object with the given size and color masks. 
+Instance Methods
+getAlpha
+public final int getAlpha (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current alpha setting of the pixel. 
+Overrides
+ColorModel.getAlpha(int) 
+getAlphaMask
+public final int getAlphaMask()
+Returns
+The current alpha mask setting of the color model. 
+getBlue
+public final int getBlue (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current blue setting of the pixel. 
+Overrides
+ColorModel.getBlue(int) 
+getBlueMask
+public final int getBlueMask()
+Returns
+The current blue mask setting of the color model. 
+getGreen
+public final int getGreen (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current green setting of the pixel. 
+Overrides
+ColorModel.getGreen(int) 
+getGreenMask
+public final int getGreenMask()
+Returns
+The current green mask setting of the color model. 
+getRed
+public final int getRed (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current red setting of the pixel. 
+Overrides
+ColorModel.getRed(int) 
+getRedMask
+public final int getRedMask()
+Returns
+The current red mask setting of the color model. 
+getRGB
+public final int getRGB (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current combined red, green, and blue settings of the pixel. 
+Overrides
+ColorModel.getRGB(int) 
+Description
+Gets the color of pixel in 
+the default RGB color model. 
+See Also
+ColorModel 
+CropImageFilter
+FilteredImageSource
+ 
+ 
+ 
+ 
+ 
+ 
+ 

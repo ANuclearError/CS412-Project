@@ -1,0 +1,41 @@
+
+[Chapter 25] 25.45 java.lang.Number (JDK 1.0)
+Chapter 25The java.lang Package
+25.45 java.lang.Number (JDK 1.0)
+This is an abstract class that is the superclass of
+Byte, Short, 
+Integer, Long, Float, and
+Double. It defines the conversion functions that
+those types all implement.
+public abstract class Number extends Object implements Serializable {
+    // Default Constructor: public Number()
+    // Public Instance Methods
+        1.1public byte byteValue();
+            public abstract double doubleValue();
+            public abstract float floatValue();
+            public abstract int intValue();
+            public abstract long longValue();
+        1.1public short shortValue();
+}
+Extended By:
+BigDecimal, 
+BigInteger, 
+Byte, 
+Double, 
+Float, 
+Integer, 
+Long, 
+Short
+Returned By:
+ChoiceFormat.parse(), 
+DecimalFormat.parse(), 
+NumberFormat.parse()
+java.lang.NullPointerException (JDK 1.0)
+java.lang.NumberFormatException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

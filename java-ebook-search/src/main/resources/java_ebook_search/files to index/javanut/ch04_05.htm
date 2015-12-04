@@ -1,0 +1,237 @@
+
+[Chapter 4] 4.5 Other AWT Improvements
+Chapter 4What's New in Java 1.1
+4.5 Other AWT Improvements
+In addition to the major change in the AWT event model,
+there have been quite a few other improvements to the AWT.
+These improvements are summarized in the sections below.
+Printing
+Printing in Java 1.1 is implemented through the new
+PrintJob class and PrintGraphics interface.
+The PrintJob class represents a print request.
+When a PrintJob object is created, the user is
+prompted with a platform-dependent print dialog, which
+allows her to specify options such as which printer to use.
+The getGraphics() method of a PrintJob
+object returns a Graphics object that can be used for
+printing.  This object is an instance of a subclass of
+Graphics that knows how to print in a
+platform-dependent way.  The object also implements the
+PrintGraphics interface.  To print a component, you
+simply pass this Graphics object to the component's
+print() method.  If the component does not define
+this method, the default implementation simply
+invokes the paint() method, which usually does the
+right thing.  When you want to print a component and all of
+its subcomponents, you can simply pass the Graphics object
+to the printAll() method of the component.
+Printing multiple pages is more complex, of course.  The
+application is responsible for pagination of the output, and
+in order to draw the output on the page the application may
+also need to query the PrintJob object to determine
+the page size (in pixels) and page resolution (in pixels per
+inch).
+For security reasons, applets are not allowed to initiate
+print jobs; if they were, you could expect to see applets on
+the Net that automatically printed hardcopy advertisements to
+your printer!  Note, however, that this does not mean that
+applets cannot print
+themselves when the browser or applet viewer initiates the
+print request object and invokes the printAll() method
+of the applet.
+Chapter 8, New AWT Features contains an example that uses
+the printing capabilities of Java 1.1.
+Cut-and-Paste
+Data transfer via the cut-and-paste metaphor is supported in
+Java 1.1 by the classes and interfaces in the
+java.awt.datatransfer package.  One half of this
+package provides generic data-transfer functionality, and
+the other half provides the classes and interfaces needed
+for clipboard-based cut-and-paste.  In future versions of
+the JDK, we can expect to see support for the drag-and-drop
+data transfer metaphor added to this package.
+For the purposes of data transfer, the DataFlavor
+class represents the notion of a data type or data format.
+A DataFlavor consists of a human-readable name for
+the flavor and one of two possible machine-readable format definitions.  The
+first of the machine-readable descriptions is a String
+that specifies a MIME type for the transferred data. The second
+is a Class object that represents a
+Java class.  When a DataFlavor is specified with a
+Class object, it is an instance of this class that
+is passed when data transfer actually occurs.
+Any value that can be transferred through the Java 1.1 data
+transfer mechanism must be represented by a class that
+implements the Transferable interface.  This
+interface defines methods to query the data flavors that the
+class supports, and it defines a method that the data transfer
+mechanism calls to convert the transferable value into the
+appropriate form for a given DataFlavor.
+While the DataFlavor class and the
+Transferable interface define the fundamental data
+transfer mechanism, they, by themselves, are not enough to
+initiate or perform data transfer.  For this purpose,
+java.awt.datatransfer also defines the
+Clipboard class and the ClipboardOwner
+interface.  Together, they support a cut-and-paste metaphor
+for data transfer.  Because strings are often transferred
+between applications, java.awt.datatransfer provides
+the StringSelection class.  This class implements
+both the Transferable and the ClipboardOwner
+interfaces and makes it very easy to transfer textual data
+through cut-and-paste.
+Inter-application data
+transfer is performed through the system clipboard.  It is
+also possible to perform intra-application transfers through
+a private clipboard that an application creates for itself.
+Note that untrusted applets are not allowed to access the
+system clipboard--there could be sensitive information
+contained on it that untrusted code should not have access
+to.  This means that applets cannot participate in
+inter-application cut-and-paste. Chapter 8, New AWT Features
+provides an example that demonstrates intra-application
+cut-and-paste data transfer.
+Popup Menus and Menu Shortcuts
+Java 1.1 adds support for popup menus to the
+AWT.  The PopupMenu class is a subclass of
+Menu; menu items are added to it just as they
+are added to regular pulldown menus.  A popup menu can be
+attached to an arbitrary AWT component, using the new
+add() method of the Component class.  And,
+finally, a popup menu can be "popped up" by calling its
+show() method. (The menu pops itself down
+automatically.)
+An application typically displays a popup menu when the
+user clicks a certain mouse button over the component that
+the menu is attached to.  However, different platforms
+traditionally use different mouse buttons to display popup
+menus.  You can use the new isPopupTrigger() method
+of MouseEvent to determine whether a given mouse click has the
+appropriate modifiers set to trigger the popup menu for the
+current platform.
+Java 1.1 also adds support for menu shortcut keys.  The new
+MenuShortcut class represents a menu shortcut key.
+An instance of this class may optionally be specified
+whenever you create a MenuItem object.  Again, different
+platforms use different modifier keys to invoke menu
+shortcuts, so when you create a MenuShortcut object,
+you specify only the key in question (plus, optionally, the
+Shift key).  The system translates this into a
+platform-dependent shortcut using Ctrl, Alt, or
+some other modifier key.
+The example in Chapter 8, New AWT Features demonstrates both a popup menu and menu shortcuts.
+Keyboard Focus Traversal
+The ability to operate a GUI without using the mouse is an
+important feature of any windowing toolkit.  The addition of
+menu shortcuts in Java 1.1 is an important step in this
+direction.  Java 1.1 also adds rudimentary facilities for
+keyboard focus traversal (i.e., moving keyboard focus among
+the individual components in a window) using the Tab
+and Shift-Tab keys.
+Under the new focus traversal scheme, components within a
+container are traversed in the order in which they were
+added to the container.  (Note, however, that it is possible
+to override this order by specifying an explicit position
+within the container's component list for a new component as
+it is added to the container with the add() method.)
+Beyond adding components to their container in the order
+desired for traversal, nothing else is required of the
+programmer in order to make keyboard focus traversal work.
+If you are creating a custom component that can accept
+keyboard focus, you should override the
+isFocusTraversable() method to return true.
+The component should call the requestFocus() method
+it inherits from Component when the user clicks on
+it or otherwise activates it.  Finally, when a component
+receives focus, (i.e., when its processFocusEvent()
+method is invoked), it should provide some sort of visual
+indication, such as a highlighted border, that it has the
+focus.
+Miscellaneous Improvements
+The SystemColor class
+represents a color used by the desktop system.  On some
+platforms, these colors may be dynamically updated while the
+system is running.  The SystemColor class also
+implements quite a few constants that represent system
+colors for various GUI components.  Thus, if you want your
+GUIs to match the desktop color scheme, you might create
+them using colors such as SystemColor.menu (the
+background color for menus) and SystemColor.menuText
+(foreground color for menus), for example.
+The treatment of fonts has been changed and improved
+somewhat in Java 1.1.  The use of the font names
+"TimesRoman," "Helvetica," and "Courier" is now discouraged.
+Instead, you should use "serif," "sansserif," and
+"monospaced"--these names convey the essential style of the
+font face, without specifying the exact font to be used.
+The font names "Dialog" and "DialogInput" are still
+supported in Java 1.1.  An important reason for switching to
+generic font names is that Java can now display any Unicode
+character for which there is an appropriate font installed
+on the host system.  The names "serif" and "sansserif" have
+meaning even when applied to non-Latin character sets, such
+as Japanese Kanji characters; the names "timesroman" and
+"helvetica" clearly do not.  Another result of this fuller
+Unicode support is that the use of the "ZapfDingbats" font
+is also discouraged.  Instead, regardless of what font you
+are using, you can simply encode these graphical symbols
+using Unicode characters between \u2700 and
+\u27ff.  (See Chapter 11, Internationalization
+for an example.) This improved support for Unicode makes it
+much easier to write internationalized programs in Java.
+In Java 1.0, mouse cursors could only be specified for a
+Frame.  In Java 1.1, every component can have a its
+own cursor, represented by the new Cursor object.
+There are new methods of Component for setting and
+querying the cursor.  This change does not add any new
+predefined cursor images, nor does it add the ability to
+create custom cursors; it merely allows you to specify a
+cursor for any arbitrary component, and to do so in a more
+logical fashion.
+The ScrollPane class is new in Java 1.1.  It is a
+Container that makes it very easy to scroll a large
+component or GUI within a smaller visible area.  Doing this
+in Java 1.0 required a custom container, and suffered from
+some serious performance problems. Chapter 8, New AWT Features shows the use
+of a ScrollPane object.
+Another new feature is the ability to
+create "lightweight components."  These are components and
+containers that do not have a native window of their own.
+In Java 1.0, custom components and containers had to be
+subclassed from Canvas or Panel.  In Java
+1.1, however, you can subclass Component and
+Container directly.  Doing so creates a simpler component or
+container, without the overhead of a native window.  It also
+allows you to create partially transparent components that
+appear non-rectangular.
+Java 1.1 also includes several miscellaneous changes to
+clipping and image manipulation:
+The Graphics class defines a method to set an
+arbitrary clipping rectangle, even to one that is larger
+than the current clipping region.  There is also a new
+method to query the current clipping region.
+Graphics also defines two new drawImage()
+methods that are more flexible than the existing
+drawImage() methods.  These new methods allow
+arbitrary image cropping, scaling, and flipping.
+There are two new classes, ReplicateScaleFilter and
+AreaAveragingScaleFilter, that can be used to scale
+an image as it is loaded, and a new convenience method, 
+Image.getScaledInstance(), to obtain a new
+Image object that contains a scaled version of some
+other Image.
+New methods have been added to the MemoryImageSource
+class that allow images generated from memory to be
+dynamically and efficiently updated, allowing a kind of
+image animation.
+New methods have been added to the PixelGrabber
+class to make it more efficient and flexible to use.
+Deprecated Features
+Internationalization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

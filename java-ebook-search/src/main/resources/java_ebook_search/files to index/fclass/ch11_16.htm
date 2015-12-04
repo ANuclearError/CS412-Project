@@ -1,0 +1,445 @@
+
+[Chapter 11] File
+Chapter 11The java.io Package
+File
+Name
+File
+Synopsis
+Class Name:
+java.io.File
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The File class provides methods 
+to obtain information about files and directories. A File 
+object encapsulates the name of a file or a directory. A File 
+object can list the files in a directory, check the existence and 
+type of a file, create new directories, and rename and delete files, among 
+other things. However, the File 
+class does not handle I/O to files. Actual reading and writing is 
+accomplished using RandomAccessFile, 
+FileReader, 
+FileWriter, FileInputStream, 
+and FileOutputStream objects. 
+The File class also defines some constants for the platform-specific directory 
+and path separator characters. If you want to avoid putting system-dependent 
+path information in your program, you may want to reference all files relative 
+to the directory in which your program is running (i.e., the current directory). 
+Alternatively, you can use java.awt.FileDialog 
+to prompt the user for system-dependent paths. 
+Many of the methods in File 
+throw a SecurityException if 
+the application does not have sufficient privileges for the requested operation. 
+This happens in two steps. First, System.getSecurityManager() 
+is called. If a SecurityManager 
+has been installed, it is queried for the appropriate permission. For example, 
+File.canRead() calls SecurityManager.canRead(). 
+If the application does not have permission to read the specified file, 
+the SecurityManager throws 
+a SecurityException, which 
+in turn is thrown by File.canRead(). 
+Class Summary
+public class java.io.File extends java.lang.Object
+                          implements java.io.Serializable {
+  // Constants
+  public final static String pathSeparator;
+  public final static char pathSeparatorChar;
+  public final static String separator;
+  public final static char separatorChar;
+  // Constructors
+  public File(String path);
+  public File(String path, String name);
+  public File(File dir, String name);
+  // Instance Methods
+  public boolean canRead();
+  public boolean canWrite();
+  public boolean delete();
+  public boolean equals(Object obj);
+  public boolean exists();
+  public String getAbsolutePath();
+  public String getCanonicalPath();              // New in 1.1
+  public String getName();
+  public String getParent();
+  public String getPath();
+  public int hashCode();
+  public native boolean isAbsolute();
+  public boolean isDirectory();
+  public boolean isFile();
+  public long lastModified();
+  public long length();
+  public String[] list();
+  public String[] list(FilenameFilter filter);
+  public boolean mkdir();
+  public boolean mkdirs();
+  public boolean renameTo(File dest);
+  public String toString();
+}
+Constants
+pathSeparator
+public final static String pathSeparator
+Description
+This string holds the value of
+System.getProperty('path.separator').  It
+contains the character that separates paths in a path list. Usually it
+is ":" or
+";".
+pathSeparatorChar
+public final static char pathSeparatorChar
+Description
+This variable holds the first (and only) character in pathSeparator. 
+separator
+public final static String separator
+Description
+This string holds the value of System.getProperty('file.separator'). 
+It contains the character that separates directory 
+and filenames in a path string. Usually it is "/" 
+or "\". 
+separatorChar
+public final static char separatorChar
+Description
+This variable holds the first (and only) character in separator. 
+Constructors
+File
+public File(String path)
+Parameters
+path
+A full pathname (i.e., 
+a directory and filename). 
+Description
+This constructor creates a File object that represents 
+the file specified by path. 
+public File(String path, String name)
+Parameters
+path
+A directory path.
+name
+A filename. 
+Description
+This constructor creates a File object that represents 
+the file with the specified name 
+in the directory described by path. 
+In other words, the full pathname is the directory, followed by the separator 
+character, followed by the filename.
+If path is null, 
+the constructor creates a File 
+that represents the file with the specified name 
+in the current directory. The current directory is the directory in which 
+the program is running. 
+public File(File dir, String name)
+Parameters
+dir
+A File object that represents a directory.
+name
+A filename. 
+Description
+This constructor creates a File object that represents 
+the file with the specified name 
+in the directory described by the File 
+object dir. In other words, 
+the full pathname is the directory represented by dir, 
+followed by the separator character, followed by the filename.
+If dir is null, 
+the constructor creates a File 
+that represents the file with the specified name 
+in the current directory. The current directory is the directory in which 
+the program is running. 
+Instance Methods
+canRead
+public boolean canRead()
+Returns
+A boolean value that indicates 
+if the file is readable. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns true if 
+File corresponds to an existing, 
+readable file or directory. Otherwise it returns false. 
+canWrite
+public boolean canWrite()
+Returns
+A boolean value that indicates 
+if the file is writable. 
+Throws
+SecurityException
+If the application does not have permission to write to the File. 
+Description
+This method returns true if 
+File corresponds to an existing, 
+writable file or directory. Otherwise it returns false. 
+delete
+public boolean delete()
+Returns
+true if the file is deleted; 
+otherwise false. 
+Throws
+SecurityException
+If the application does not have permission to delete the file. 
+Description
+This method attempts to delete the file or directory associated with this 
+File object. A directory is 
+only deleted if it is empty. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The Object to be compared. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of File 
+that encapsulates the same pathname as this object. 
+exists
+public boolean exists()
+Returns
+true if the file or directory 
+exists; false otherwise. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns true if 
+this File corresponds to an 
+existing file or directory. 
+getAbsolutePath
+public String getAbsolutePath()
+Returns
+A String that contains the 
+absolute pathname. 
+Description
+This method returns the absolute pathname of the file or directory associated 
+with this File. 
+getCanonicalPath
+public String getCanonicalPath() throws IOException
+Availability
+New as of JDK 1.1 
+Returns
+A String that contains the 
+canonical, or exact, pathname. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the canonical pathname of the file or directory associated 
+with this File. 
+getName
+public String getName()
+Returns
+A String that contains the 
+filename. 
+Description
+This method returns the filename associated with this 
+File. The string returned does not include the 
+name of the directory. 
+getParent
+public String getParent()
+Returns
+A String that contains the 
+parent directory of the file, or null 
+if it does not exist. 
+Description
+This method returns the name of the parent directory of the file or directory 
+associated with this File. 
+The algorithm used returns everything in the pathname before the last separator 
+character. 
+getPath
+public String getPath()
+Returns
+A String that contains the 
+pathname of the file. 
+Description
+This method returns the full pathname associated with this File. 
+hashCode
+public int hashCode()
+Returns
+A hashcode value for this file. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode based on the pathname associated with this 
+File. 
+isAbsolute
+public native boolean isAbsolute()
+Returns
+true if the File 
+represents an absolute path; false otherwise. 
+Description
+This method indicates if the File 
+represents an absolute path; what constitutes an absolute path is system-dependent. 
+isDirectory
+public boolean isDirectory()
+Returns
+true if the File 
+represents a directory; false otherwise. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns true if 
+this File corresponds to a 
+directory. 
+isFile
+public boolean isFile()
+Returns
+true if the File 
+represents a normal file; false otherwise. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns true if 
+this File corresponds to a 
+normal file, as opposed to an alternative, such as a
+directory, a named pipe, or a device.
+lastModified
+public long lastModified()
+Returns
+The time the file was last modified, or 0L 
+if the file does not exist. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns the modification time of the file or directory that 
+corresponds to this File. The format of the time returned 
+is useful for comparing modification times; it's not meant to be used 
+for other purposes. 
+length
+public long length()
+Returns
+The file length, in bytes, or 0L if the file does not exist. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns the length of the file or directory that corresponds 
+to this File. 
+list
+public String[] list()
+Returns
+An array of the names of the files and directories contained by this File, 
+or null if this File 
+is not a directory. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns the contents of a directory. The current directory 
+and the parent directory are not included in the list. 
+public String[] list(FilenameFilter filter)
+Parameters
+filter
+A filter to use. 
+Returns
+An array of the names of the files and directories contained by this File 
+and filtered by filter, or 
+null if this File 
+is not a directory. 
+Throws
+SecurityException
+If the application does not have permission to read the File. 
+Description
+This method returns of the contents of a directory as selected by the given 
+FilenameFilter object. Specifically, 
+a name is included if the FilenameFilter 
+object's accept() 
+method returns true for that 
+name.
+If filter is null, 
+this method is equivalent to, but slower than, list(). 
+mkdir
+public boolean mkdir()
+Returns
+true if the directory is created; 
+false otherwise. 
+Throws
+SecurityException
+If the application does not have permission to write to the File. 
+Description
+This method creates a directory with the pathname specified by this File. 
+mkdirs
+public boolean mkdirs()
+Returns
+true if the directory is created; 
+false otherwise. 
+Throws
+SecurityException
+If the application does not have permission to write to the File. 
+Description
+This method creates a directory with the pathname specified by this File. 
+The method also creates all the parent directories if necessary. 
+renameTo
+public boolean renameTo(File dest)
+Parameters
+dest
+A File 
+that specifies the new name. 
+Returns
+true if the name is changed; 
+false otherwise. 
+Throws
+SecurityException
+If the application does not have permission to write to this File 
+or the file represented by dest. 
+Description
+This method changes the pathname of this File 
+to the pathname specified by dest. 
+toString
+public String toString()
+Returns
+A String that contains the pathname of this File. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this File 
+object. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FileInputStream, 
+FilenameFilter, 
+FileOutputStream, 
+FileReader, 
+FileWriter, 
+IOException, 
+SecurityException 
+Externalizable
+FileDescriptor
+ 
+ 
+ 
+ 
+ 
+ 
+ 

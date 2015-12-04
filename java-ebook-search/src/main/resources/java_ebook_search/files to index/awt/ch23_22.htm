@@ -1,0 +1,87 @@
+
+[Chapter 23] ScrollPanePeer 
+Chapter 23java.awt.peer Reference
+ScrollPanePeer 
+Name
+ScrollPanePeer 
+Description
+ScrollPanePeer 
+is an interface that defines the basis for a scrolling container. 
+Interface Definition
+public abstract interface java.awt.peer.ScrollPanePeer
+   extends java.awt.peer.ContainerPeer {
+  // Interface Methods
+  public abstract void childResized (int w, int h);
+  public abstract int getHScrollbarHeight();
+  public abstract int getVScrollbarWidth();
+  public abstract void setScrollPosition (int x, int y);
+  public abstract void setUnitIncrement (Adjustable adj, int u);
+  public abstract void setValue (Adjustable adj, int v);
+}
+Interface Methods
+childResized
+public abstract void childResized (int w, int h)
+Parameters
+w
+The new child width.
+h
+The new child height. 
+Description
+Tells the peer that the child has a new size. 
+getHScrollbarHeight
+public abstract int getHScrollbarHeight()
+Returns
+Height that a horizontal scrollbar would occupy. 
+Description
+The height is returned regardless of whether the scrollbar is showing or 
+not. 
+getVScrollbarWidth
+public abstract int getVScrollbarWidth()
+Returns
+Width that a vertical scrollbar would occupy. 
+Description
+The width is returned regardless of whether the scrollbar is showing or 
+not. 
+setScrollPosition
+public abstract void setScrollPosition (int x, int y)
+Parameters
+x
+The new horizontal position.
+y
+The new vertical position. 
+Description
+Changes the coordinate of the child component that is displayed at the 
+origin of the ScrollPanePeer. 
+setUnitIncrement
+public abstract void setUnitIncrement (Adjustable adj, int u)
+Parameters
+adj
+The Adjustable 
+object to change.
+u
+The new value. 
+Description
+Changes the unit increment of the given Adjustable 
+object. 
+setValue
+public abstract void setValue (Adjustable adj, int v)
+Parameters
+adj
+The Adjustable 
+object to change.
+v
+The new value. 
+Description
+Changes the value of the given Adjustable 
+object. 
+See Also
+Adjustable, ContainerPeer, Scrollbar 
+ScrollbarPeer
+TextAreaPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

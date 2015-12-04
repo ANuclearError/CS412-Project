@@ -1,0 +1,58 @@
+
+[Chapter 18] 18.58 java.awt.TextComponent (JDK 1.0)
+Chapter 18The java.awt Package
+18.58 java.awt.TextComponent (JDK 1.0)
+This class is the superclass of the TextArea and
+TextField components.  It cannot be instantiated
+itself, but provides methods that are common to these two
+component types.  setEditable() specifies
+whether the text in the text component is editable or not.
+getText() returns the text in the component, and
+setText() specifies text to be displayed.
+getSelectedText() returns the currently selected
+text in the text component, and getSelectionStart()
+and getSelectionEnd() return the extents of the
+selected region of text.  select() and
+selectAll() select some or all of the text displayed
+in the text component.
+See also TextField and TextArea.
+public class TextComponent extends Component {
+    // No Constructor
+    // Protected Instance Variables
+        1.1  protected transient TextListener textListener;
+    // Public Instance Methods
+        1.1  public void addTextListener(TextListener l);
+        1.1  public int getCaretPosition();
+            public synchronized String getSelectedText();
+            public synchronized int getSelectionEnd();
+            public synchronized int getSelectionStart();
+            public synchronized String getText();
+            public boolean isEditable();
+            public void removeNotify();  // Overrides Component
+        1.1  public void removeTextListener(TextListener l);
+            public synchronized void select(int selectionStart, int selectionEnd);
+            public synchronized void selectAll();
+        1.1  public void setCaretPosition(int position);
+            public synchronized void setEditable(boolean b);
+        1.1  public synchronized void setSelectionEnd(int selectionEnd);
+        1.1  public synchronized void setSelectionStart(int selectionStart);
+            public synchronized void setText(String t);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Component
+        1.1  protected void processEvent(AWTEvent e);  // Overrides Component
+        1.1  protected void processTextEvent(TextEvent e);
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->TextComponent
+Extended By:
+TextArea, 
+TextField
+java.awt.TextArea (JDK 1.0)
+java.awt.TextField (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

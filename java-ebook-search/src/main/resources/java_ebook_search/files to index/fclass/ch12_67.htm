@@ -1,0 +1,98 @@
+
+[Chapter 12] VerifyError
+Chapter 12The java.lang Package
+VerifyError
+Name
+VerifyError
+Synopsis
+Class Name:
+java.lang.VerifyError 
+Superclass:
+java.lang.LinkageError 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+A VerifyError is thrown when 
+the byte-code verifier detects that a class file, though well-formed, contains 
+some sort of internal inconsistency or security problem. 
+As part of loading the byte-codes for a class, the Java virtual
+machine may run the .class file through the
+byte-code verifier. The default mode of the virtual machine causes it
+not to verify classes that are found locally, however. Thus, after
+compiling an applet and running it locally, you may still get a
+VerifyError when you put it on a web server.
+Class Summary
+public class java.lang.VerifyError extends java.lang.LinkageError {
+  // Constructors
+  public VerifyError();
+  public VerifyError(String s);
+}
+Constructors
+VerifyError
+public VerifyError()
+Description
+This constructor creates a VerifyError 
+with no associated detail message. 
+public VerifyError(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates a VerifyError 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Error, 
+LinkageError, 
+Throwable 
+UnsatisfiedLinkError
+VirtualMachineError
+ 
+ 
+ 
+ 
+ 
+ 
+ 

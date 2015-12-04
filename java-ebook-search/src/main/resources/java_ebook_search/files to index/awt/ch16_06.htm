@@ -1,0 +1,30 @@
+
+[Chapter 16] 16.6 UnsupportedFlavorException
+Chapter 16Data Transfer
+16.6 UnsupportedFlavorException
+The UnsupportedFlavorException 
+exception is thrown when you ask Transferable.getTransferData() 
+to give you data in a flavor that isn't supported by the object on 
+the clipboard. For example, if the clipboard currently holds an image and 
+you ask for the data in the stringFlavor, 
+you will almost certainly get an UnsupportedFlavorException 
+because it is unlikely that an image object will be able to give you its 
+data as a String. You can either 
+ignore the exception or display an appropriate message to the user. 
+UnsupportedFlavorException MethodConstructor
+public UnsupportedFlavorException (DataFlavor flavor)
+The sole constructor creates an UnsupportedFlavorException 
+with a detail message containing the human presentable name of flavor. 
+To retrieve this message, call getMessage(), 
+which this exception inherits from the Exception 
+superclass (and which is required by the Throwable 
+interface). 
+StringSelection
+Reading and Writing the Clipboard
+ 
+ 
+ 
+ 
+ 
+ 
+ 

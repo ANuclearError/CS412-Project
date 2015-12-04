@@ -1,0 +1,176 @@
+
+[Chapter 4] 4.9 Equality Comparison Operators
+Chapter 4Expressions
+4.9 Equality Comparison Operators
+The equality
+comparison operators in Java are used for equal-to (==)
+and not-equal-to (!=) comparison operations.
+The equality comparison operators may appear in an equality expression:
+The
+equality comparison operators are equal in precedence and are evaluated
+from left to right. The == and !=
+comparison operators can perform numerical comparisons, boolean
+comparisons, and reference type comparisons. Both of these operators
+produce boolean values.
+References
+Relational Comparison Operators;
+Order of Operations
+Equal-To Operator ==
+The equal-to operator == performs a comparison
+between its operands and returns a boolean value.
+It returns the pure value true if the operands
+are equal to each other; otherwise it returns the pure value false.
+The == operator may appear as part of an equality
+expression. The equal-to operator never throws an exception.
+The operands of == may be of any type,
+but they must both be of the same kind of type or a compile-time
+error occurs. If one operand is of an arithmetic type, the other
+must also be of an arithmetic type. If one operand is of type boolean,
+the other must also be of type boolean. If one
+operand is a reference type, the other must also be a reference
+type. Note that neither operand can be an expression that invokes
+a void method.
+If both operands
+are of arithmetic types, then the operator performs an arithmetic equality
+comparison. The operator may perform type conversions on the operands:
+If either operand is of type double, then the
+other operand is converted to double.
+Otherwise,
+if either operand is of type float, the other
+operand is converted to float.
+Otherwise,
+if either operand is of type long, the other
+operand is converted to long.
+Otherwise,
+both operands are converted to int.
+The
+equality comparison of any two arithmetic values produces true
+if and only if both operands are the same value; otherwise the comparison
+produces false. The comparison of floating-point
+data is governed by the following additional rules:
+If
+either operand is not-a-number (NaN), the comparison produces false.
+Positive infinity is a distinct value that is equal to itself,
+and not equal to any other value.
+Negative infinity
+is a distinct value that is equal to itself, and not equal to any
+other value.
+Positive and negative zero are treated
+as equal, so -0.0==0.0 produces true.
+If both operands are boolean values, the
+operator performs a Boolean equality comparison. The comparison
+produces true if both operands are true
+or both operands are false. Otherwise, the comparison
+produces false.
+If both operands
+are reference types, the operator performs an object equality comparison.
+In order to perform this type of comparison, it must be possible
+to cast the value of one of the operands to the type of the other
+operand, or a compile-time error occurs. The comparison produces
+true if both of its operands refer to the same
+object or if both of its operands are null; otherwise
+the comparison produces false.
+Because
+the == operator determines if two objects are
+the same object, it is not appropriate for comparisons that need
+to determine if two objects have the same contents. For example,
+if you need to know whether two String objects
+contain the same sequences of characters, the ==
+operator is inappropriate. You should use the equals()
+method instead:[4]
+[4] 
+This is similar to the difference
+in C between writing string1==string2 and
+strcmp(string1, string2)==0.
+string1.equals (string2)  // Compares contents of strings
+string1 == string2        // Compares actual string objects
+References
+Arithmetic Types;
+Boolean Type;
+Reference Types
+Not-Equal-To-Operator !=
+The not-equal-to operator !=
+performs a comparison between its operands and returns
+a boolean
+value. It returns the pure value true if the
+operands are not equal to each other; otherwise it returns the pure
+value false. The != operator
+may appear as part of an equality expression. The not-equal-to operator
+never throws an exception.
+The operands of !=
+may be of any type, but they must both be of the same kind of type
+or a compile-time error occurs. If one operand is of an arithmetic
+type, the other must also be of an arithmetic type. If one operand
+is of type boolean, the other must also be of
+type boolean. If one operand is a reference type,
+the other must also be a reference type. Note that neither operand
+can be an expression that invokes a void method.
+If both operands are of arithmetic types, the operator performs
+an arithmetic inequality comparison. The operator may perform type
+conversions on the operands:
+If either operand is of type double,
+then the other operand is converted to
+double.
+Otherwise, if either operand
+is of type float, the other operand is converted
+to float.
+Otherwise, if either operand
+is of type long, the other operand is converted
+to long.
+Otherwise, both operands
+are converted to int.
+The inequality
+comparison of any two arithmetic values produces true
+if and only if both operands are not the same value; otherwise the
+comparison produces false. The comparison of
+floating-point data is governed by the following additional rules:
+If either operand is not-a-number (NaN), the comparison produces
+true. NaN is the only value that compares as
+not equal to itself.
+Positive infinity is a distinct
+value that is equal to itself, and not equal to any other value.
+Negative infinity is a distinct value that is equal to itself,
+and not equal to any other value.
+Positive and negative
+zero are treated as equal, so -0.0!=0.0 produces
+false.
+If both operands are boolean
+values, the operator performs a Boolean inequality comparison. The
+comparison produces false if both operands are
+true or both operands are false.
+Otherwise, the comparison produces true.
+If both operands are reference types, the operator performs
+an object equality comparison. In order to perform this type of
+comparison, it must be possible to cast the value of one of the
+operands to the type of the other operand, or a compile-time error
+occurs. The comparison produces true if both
+of its operands refer to different objects and if both of its operands
+are not null; otherwise the comparison produces
+false.
+Because the !=
+operator determines if two objects are different objects, it is
+not appropriate for comparisons that need to determine if two objects
+have different contents. For example, if you need to know whether
+two String objects contain different sequences
+of characters, the != operator is inappropriate.
+You should use the equals()
+method instead:[5]
+[5] 
+This is similar to the difference in C
+between writing string1!=string2
+and strcmp(string1, string2)!=0.
+!string1.equals (string2) // Compares contents of strings
+string1 != string2        // Compares actual string objects
+References
+Arithmetic Types;
+Boolean Type;
+Reference Types
+Relational Comparison Operators
+Bitwise/Logical Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

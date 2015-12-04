@@ -1,0 +1,99 @@
+
+[Chapter 15] SocketException
+Chapter 15The java.net Package
+SocketException
+Name
+SocketException
+Synopsis
+Class Name:
+java.net.SocketException
+Superclass:
+java.io.IOException
+Immediate Subclasses:
+java.net.BindException, 
+java.net.ConnectException, 
+java.net.NoRouteToHostException
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 and later 
+Description
+A SocketException is thrown 
+when an error occurs while a socket is being used. As of JDK 1.1, there 
+are some more specific subclasses of SocketException, 
+namely BindException, ConnectException, 
+and NoRouteToHostException. 
+Class Summary
+public class java.net.SocketException extends java.io.IOException {
+  // Constructors
+  public SocketException();
+  public SocketException(String msg);
+}
+Constructors
+SocketException
+public SocketException()
+Description
+This constructor creates a SocketException 
+with no associated detail message. 
+public SocketException(String msg)
+Parameters
+msg
+The detail message. 
+Description
+This constructor creates a SocketException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Throwable
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BindException, 
+ConnectException, 
+Exception, 
+IOException, 
+NoRouteToHostException, 
+RuntimeException 
+Socket
+SocketImpl
+ 
+ 
+ 
+ 
+ 
+ 
+ 

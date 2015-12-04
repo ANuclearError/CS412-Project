@@ -1,0 +1,165 @@
+
+[Chapter 1] Introduction
+Chapter 1
+1. Introduction
+Contents:
+A "Hello World" Program
+New Language Features in Java 1.1
+Compiling a Java Source File
+Running a Java Application
+Notational Conventions
+Java is a relatively new programming language. However, many of the
+features that make up the language are not new at all. Java's
+designers borrowed features from a variety of older languages, such as
+Smalltalk and Lisp, in order to achieve their design goals.
+Java is designed to be both robust and secure, so that it can be used
+to write small, hosted programs, or applets,
+that can be run safely by
+hosting programs such as Web browsers and cellular phones. Java also
+needs to be portable, so that these programs can run on many different
+kinds of systems. What follows is a list of the important features
+that Java's designers included to create a robust, secure, and
+portable language.
+Java is a simple language. It borrows most of its syntax from
+C/C++, so it is easy for C/C++ programmers to understand
+the syntax of Java code.
+But that is where the similarities end. Java does not support
+troublesome features from C/C++, so it is much simpler than either of
+those languages. In fact, if you examine the features of Java, you'll
+see that it has more in common with languages like Smalltalk and Lisp.
+Java is a statically typed language, like C/C++. This means that
+the Java compiler can perform static type checking and enforce a
+number of usage rules.
+Java is fully runtime-typed as well. The Java runtime system
+keeps track of all the objects in the system, which makes it possible
+to determine their types at runtime. For example, casts from one
+object type to another are verified at runtime. Runtime typing also
+makes it possible to use completely new, dynamically loaded objects
+with some amount of type safety.
+Java is a late-binding language, like Smalltalk, which means that it
+binds method calls to their definitions at runtime. Runtime binding is
+essential for an object-oriented language, where a subclass can
+override methods in its superclass, and only the runtime system can
+determine which method should be invoked. However, Java also supports
+the performance benefits of early binding. When the compiler can
+determine that a method cannot be overridden by subclassing, the
+method definition is bound to the method call at compile-time.
+Java takes care of memory management for applications, which is
+unlike C/C++, where the programmer is responsible for explicit memory
+management. Java supports the dynamic allocation of arrays and
+objects, and then takes care of reclaiming the storage for objects and
+arrays when it is safe to do so, using a technique called garbage
+collection. This eliminates one of the largest sources of bugs in
+C/C++ programs.
+Java supports object references, which are like pointers in C/C++.
+However, Java does not allow any manipulation of references. For
+example, there is no way that a programmer can explicitly dereference
+a reference or use pointer arithmetic. Java implicitly handles
+dereferencing references, which means that they can be used to do
+most of the legitimate things that C/C++ pointers can do.
+Java uses a single-inheritance class model, rather than the
+error-prone multiple-inheritance model used by C++. Instead, Java
+provides a feature called an interface
+(borrowed from Objective C) that specifies the behavior of
+an object without defining
+its implementation. Java supports multiple inheritance of interfaces,
+which provides many of the benefits of multiple inheritance, without
+the associated problems.
+Java has support for multiple threads of execution built into the
+language, so there are mechanisms for thread synchronization and
+explicit waiting and signaling between threads.
+Java has a powerful exception-handling mechanism, somewhat like that
+in newer implementations of C++. Exception handling provides a way to
+separate error-handling code from normal code, which leads to cleaner,
+more robust applications.
+Java is both a compiled and an interpreted language. Java code is
+compiled to Java byte-codes, which are then executed by a Java
+runtime environment, called the Java virtual machine. The specifications of
+the Java language and the virtual machine are fully defined; there are
+no implementation-dependent details. This architecture makes Java
+an extremely portable language.
+Java uses a three-layer security model to protect a system from
+untrusted Java code. The byte-code verifier reads byte-codes before
+they are run and makes sure that they obey the basic rules of the Java
+language. The class loader takes care of bringing compiled Java
+classes into the runtime interpreter. The security manager handles
+application-level security, by controlling whether or not a program
+can access resources like the filesystem, network ports, external
+processes, and the windowing system.
+As you can see, Java has quite a list of interesting features. If you
+are a C/C++ programmer, many of the constructs of the Java language
+that are covered in this book should look familiar to you. Just be
+warned that you shouldn't take all of these constructs at face value,
+since many of them are different in Java than they are in C/C++.
+1.1 A "Hello World" Program
+Before diving into the various constructs provided by the
+Java language, you should have at least a general understanding
+of the Java programming environment. In the fine tradition of all
+language reference manuals, here is a short Java program that outputs
+"Hello world!" and then exits:
+/*
+ * Sample program to print "Hello World"
+ */
+class HelloWorld {             // Declare class HelloWorld
+    public static void main(String argv[]) {
+        System.out.println("Hello World!");
+    }
+}
+This example begins with a comment that starts with /*
+and ends with */. This type of comment is called
+a C-style comment. The example also uses another kind of comment
+that begins with // and ends at the end of the
+line. This kind of comment is called a single-line
+comment; it is identical to that style of comment
+in C++. Java supports a third type of comment, called a documentation
+comment, that provides for the extraction of comment text into a
+machine-generated document.
+Comments aside, the example consists of a single class
+declaration for the class called HelloWorld.
+If you are unfamiliar with classes, you can think of a class as
+a collection of variables and pieces of executable code called methods
+for the purposes of this discussion. In Java, most executable code
+is part of a method.
+Methods are identical to virtual member functions in C++, except that
+they can exist only as part of a class. Methods are also similar
+to functions, procedures, and subroutines in other programming languages.
+The HelloWorld class contains a single
+method named main().
+When you ask the Java interpreter to run a Java program, you tell
+it what code to run by giving it the name of a class. The Java interpreter
+then loads the class and searches it for a method named
+main() that has the same attributes and
+parameters as shown in the example. The interpreter
+then calls that main() method.
+In the declaration of main(), the name
+main is preceded by the three keywords: public,
+static, and void. The public
+modifier makes the main()
+method accessible from any class. The static
+modifier, when applied to a method, means that the method can be
+called independently of an instance of a class. The void
+keyword means that the method returns no value. The main()
+method of an application should always be declared with these three
+keywords. Although the meanings of these keywords is similar to
+their meanings in C++, there are some differences in the meaning
+of the keyword static as used in Java and C++.
+The main() method contains a single line
+of executable code that calls the println()
+method of the object System.out. Passing the
+argument "Hello World!" to the println()
+method results in "Hello World!" being output. System.out is an object that encapsulates an application's standard
+output. It is similar in purpose to stdout in
+C and cout in C++. Java also
+has System.in
+and System.err objects that are similar in purpose
+to stdin and stderr in C and
+cin and cerr in C++, respectively.
+Acknowledgments
+New Language Features in Java 1.1
+ 
+ 
+ 
+ 
+ 
+ 
+ 

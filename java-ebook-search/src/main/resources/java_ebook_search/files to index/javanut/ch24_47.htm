@@ -1,0 +1,48 @@
+
+[Chapter 24] 24.47 java.io.OutputStreamWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.47 java.io.OutputStreamWriter (JDK 1.1)
+This class is a character output stream that uses a byte
+output stream as the destination for its data: when
+characters are written to an OutputStreamWriter, it
+translates them into bytes according to a particular locale-
+and/or platform-specific character encoding, and writes those
+bytes to the specified OutputStream.  This is a very
+important internationalization feature in Java 1.1.
+When you create an OutputStreamWriter, you specify
+the OutputStream to which it writes bytes, and
+you optionally specify the name of the character encoding
+that should be used to convert characters to bytes.  If you
+do not specify an encoding name, the
+OutputStreamWriter uses the default encoding of
+the default locale, which is usually the correct thing to
+do.
+OutputStreamWriter supports the usual Writer
+methods.  It also has a getEncoding() method which
+returns the name of the encoding being used to convert
+characters to bytes.
+public class OutputStreamWriter extends Writer {
+    // Public Constructors
+            public OutputStreamWriter(OutputStream out, String enc) throws UnsupportedEncodingException;
+            public OutputStreamWriter(OutputStream out);
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Writer
+            public void flush() throws IOException;  // Defines Writer
+            public String getEncoding();
+            public void write(int c) throws IOException;  // Overrides Writer
+            public void write(char[] cbuf, int off, int len) throws IOException;  // Defines Writer
+            public void write(String str, int off, int len) throws IOException;  // Overrides Writer
+}
+Hierarchy:
+Object->Writer->OutputStreamWriter
+Extended By:
+FileWriter
+java.io.OutputStream (JDK 1.0)
+java.io.PipedInputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

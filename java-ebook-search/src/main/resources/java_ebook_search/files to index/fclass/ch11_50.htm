@@ -1,0 +1,172 @@
+
+[Chapter 11] PipedReader
+Chapter 11The java.io Package
+PipedReader
+Name
+PipedReader
+Synopsis
+Class Name:
+java.io.PipedReader
+Superclass:
+java.io.Reader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The PipedReader 
+class represents half of a communication pipe; a PipedReader 
+must be connected to a PipedWriter. 
+When the two halves of a communication pipe are connected, data written 
+to the PipedWriter can be read 
+from the PipedReader. 
+The communication pipe formed by a PipedReader
+and a PipedWriter should be used to 
+communicate between threads. If both ends of a pipe are used by
+the same thread, the thread can hang.
+The PipedReader class is the 
+character-based equivalent of the byte-based PipedInputStream. 
+Class Summary
+public class java.io.PipedReader extends java.io.Reader {
+  // Constructors
+  public PipedReader();
+  public PipedReader(PipedWriter src);
+  // Instance Methods
+  public void close();
+  public void connect(PipedWriter src);
+  public int read(char[] cbuf, int off, int len);
+}
+Constructors
+PipedReader
+public PipedReader ()
+Description
+This constructor creates a PipedReader 
+that is not connected to a PipedWriter. 
+The created object must be connected to a PipedWriter 
+before it can be used. 
+public PipedReader(PipedWriter src) throws IOException
+Parameters
+src
+The PipedWriter 
+to connect. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This constructor creates a PipedReader 
+that receives data from the given PipedWriter. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.close() 
+Description
+This method closes the reader and releases the system resources that are 
+associated with it. 
+connect
+public void connect(PipedWriter src) throws IOException
+Parameters
+src
+The PipedWriter 
+to connect. 
+Throws
+IOException 
+If another 
+PipedWriter is already connected 
+to this PipedReader. 
+Description
+This method connects the given PipedWriter 
+to this PipedReader 
+object. If there is already a connected PipedWriter, 
+an exception is thrown. 
+read
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled.
+off
+An offset into the array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If the pipe is broken. In other words, if this
+PipedReader is closed or if the connected
+PipedWriter is dead.
+InterruptedIOException
+While this method is waiting for input, if the
+interrupted() method of the thread that invoked
+this method is called.
+Overrides
+Reader.read(char[], int, int) 
+Description
+This method copies characters from the pipe buffer into the given array 
+cbuf, starting at index off 
+and continuing for len characters. 
+If there is at least one character in the buffer, the method returns as 
+many characters as are in the buffer (up to len). 
+If the buffer is empty, the method blocks until data is written to the 
+connected PipedWriter. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+Reader
+markSupported()
+Reader
+notify()
+Object
+notifyAll()
+Object
+read()
+Reader
+read(char[])
+Reader
+reset()
+Reader
+skip(long)
+Reader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+IOException, 
+PipedInputStream, 
+PipedWriter, 
+Reader 
+PipedOutputStream
+PipedWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

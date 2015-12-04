@@ -1,0 +1,80 @@
+
+[Chapter 29] 29.6 java.text.Collator (JDK 1.1)
+Chapter 29The java.text Package
+29.6 java.text.Collator (JDK 1.1)
+This class is used to compare, order, and sort strings in a
+way that is appropriate for the default locale or some other
+specified locale.  Because it is an abstract class, it
+cannot be instantiated directly.  Instead, you must use the
+static getInstance() method to obtain an instance of
+a Collator subclass that is appropriate for the
+default or specified locale.  You can use
+getAvailableLocales() to determine whether a
+Collator object is available for a desired locale.
+Once an appropriate Collator object has been
+obtained, you can use the compare() method to
+compare strings.  The possible return values of this method
+are -1, 0, and 1, which indicate, respectively, that the
+first string is collated before the second, that the two are
+equivalent for collation purposes, and that the first string
+is collated after the second.  The equals() method
+is a convenient shortcut for testing two strings for
+collation equivalence.
+When sorting an array of strings, each string in the array
+is typically compared more than once.  Using the
+compare() method in this case is inefficient. A
+more efficient method for comparing strings multiple times is to use
+getCollationKey() for each string to create
+CollationKey objects.  These objects can then be
+compared to each other more quickly than the strings
+themselves could be compared.
+You can customize the way the Collator object
+performs comparisons by calling setStrength().  If
+you pass the constant PRIMARY to this method,
+the comparison only looks at primary differences in the
+strings--it compares letters but ignores accents and case
+differences.  If you pass the constant SECONDARY,
+it ignores case differences but does not ignore
+accents.  And if you pass TERTIARY (the default), the
+Collator object takes both accents and case
+differences into account in its comparison.
+public abstract class Collator extends Object implements Cloneable, Serializable {
+    // Protected Constructor
+            protected Collator();
+    // Constants
+            public static final int CANONICAL_DECOMPOSITION;
+            public static final int FULL_DECOMPOSITION;
+            public static final int IDENTICAL;
+            public static final int NO_DECOMPOSITION;
+            public static final int PRIMARY;
+            public static final int SECONDARY;
+            public static final int TERTIARY;
+    // Class Methods
+            public static synchronized Locale[] getAvailableLocales();
+            public static synchronized Collator getInstance();
+            public static synchronized Collator getInstance(Locale desiredLocale);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public abstract int compare(String source, String target);
+            public boolean equals(String source, String target);
+            public boolean equals(Object that);  // Overrides Object
+            public abstract CollationKey getCollationKey(String source);
+            public synchronized int getDecomposition();
+            public synchronized int getStrength();
+            public abstract synchronized int hashCode();  // Overrides Object
+            public synchronized void setDecomposition(int decompositionMode);
+            public synchronized void setStrength(int newStrength);
+}
+Extended By:
+RuleBasedCollator
+Returned By:
+Collator.getInstance()
+java.text.CollationKey (JDK 1.1)
+java.text.DateFormat (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

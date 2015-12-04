@@ -1,0 +1,40 @@
+
+[Chapter 31] 31.2 java.util.zip.CheckedInputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.2 java.util.zip.CheckedInputStream (JDK 1.1)
+This class is a subclass of
+java.io.FilterInputStream; it allows a stream to be
+read and a checksum computed on its contents at the same
+time.  This is useful when you want to check the integrity
+of a stream of data against a published checksum value.
+To create a CheckedInputStream, you must specify
+both the stream that it should read and also a
+Checksum object, such as CRC32, that
+implements the particular checksum algorithm you desire.
+The read() and skip() methods are the same
+as those of other input streams.  As bytes are read, they
+are incorporated into the checksum that is being computed.
+Note that the getChecksum() method does not return
+the checksum value itself, but rather the Checksum
+object.  You must call the getValue() method of this
+object to obtain the checksum value.
+public class CheckedInputStream extends FilterInputStream {
+    // Public Constructor
+            public CheckedInputStream(InputStream in, Checksum cksum);
+    // Public Instance Methods
+            public Checksum getChecksum();
+            public int read() throws IOException;  // Overrides FilterInputStream
+            public int read(byte[] buf, int off, int len) throws IOException;  // Overrides FilterInputStream
+            public long skip(long n) throws IOException;  // Overrides FilterInputStream
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->CheckedInputStream
+java.util.zip.Adler32 (JDK 1.1)
+java.util.zip.CheckedOutputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

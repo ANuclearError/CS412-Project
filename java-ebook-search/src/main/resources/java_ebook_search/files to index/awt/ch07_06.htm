@@ -1,0 +1,263 @@
+
+[Chapter 7] 7.6 GridBagLayout
+Chapter 7Layouts
+7.6 GridBagLayout
+The GridBagLayout is the most 
+complex and flexible of the standard layout managers. Although it sounds 
+like it should be a subclass of GridLayout, 
+it's a different animal entirely. With GridLayout, 
+elements are arranged in a rectangular grid, and each element in the container 
+is sized identically (where possible). With GridBagLayout, 
+elements can have different sizes and can occupy multiple rows or columns. 
+The position and behavior of each element is specified by an instance of 
+the GridBagConstraints class. 
+By properly constraining the elements, you can specify the number of rows 
+and columns an element occupies, which element grows when additional screen 
+real estate is available, and various other restrictions. The actual grid 
+size is based upon the number of components within the GridBagLayout 
+and the GridBagConstraints 
+of those objects. For example, Figure 7.8 shows a 
+GridBagLayout with seven components, 
+arranged on a 3x3 grid. The maximum capacity of a screen using 
+GridBagLayout in Java 1.0 is 
+128 x 128 cells; in Java 1.1, the maximum size is 512 x 512 cells. 
+Figure 7.8: GridBagLayout with seven components on a 3x3 grid
+With the other layout managers, adding a component to the container 
+requires only a call to add(). In 
+Java 1.0, the GridBagLayout 
+also requires you to call setConstraints() 
+to tell the layout manager how to position the component. With Java 1.1, 
+you use the new add() method 
+that permits you to pass the component and its constraints in a single 
+method call (add(Component, Object)). 
+If no components are added with constraints (thus all using the defaults), 
+the GridBagLayout places the 
+components in a single row at the center of the screen and sizes them 
+to their getPreferredSize(). 
+This is a nice way to place a single object in the center of the screen 
+without stretching it to take up the available space, as BorderLayout 
+does. Figure 7.9 compares the default GridBagLayout 
+with a BorderLayout displaying 
+the same object in the center region. 
+Figure 7.9: Centering a component: GridBagLayout vs. BorderLayout
+When designing a container that will use GridBagLayout, 
+it is easiest to plan what you want on graph paper, and then determine 
+how the constraints should be set. The alternative, adding the components 
+to the layout and then tweaking the constraints until you have something 
+you like, could lead to premature baldness. Seriously, a trial-and-error approach to getting the constraints right will certainly be 
+frustrating and will probably fail. Figure 7.10, 
+using the same GridBagLayout used in Figure 7.8, indicates 
+how the layout manager counts cells. The partial code used to create the 
+screen follows in Example 7.2. 
+Example 7.2: Creating a GridBagLayout
+public void init() {
+    Button b;
+    GridBagLayout gb = new GridBagLayout();
+    GridBagConstraints gbc = new GridBagConstraints();
+    setLayout(gb);
+    try {
+/* Row One - Three button */
+        b = new Button ("One");
+        addComponent (this, b, 0, 0, 1, 1, 
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+        b = new Button ("Two");
+        addComponent (this, b, 1, 0, 1, 1, 
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+        b = new Button ("Three");
+        addComponent (this, b, 2, 0, 1, 1, 
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+/* Row Two - Two buttons */
+        b = new Button ("Four");
+        addComponent (this, b, 0, 1, 2, 1, 
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+        b = new Button ("Five");
+        addComponent (this, b, 2, 1, 1, 2,
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+/* Row Three - Two buttons */
+        b = new Button ("Six");
+        addComponent (this, b, 0, 2, 1, 1, 
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+        b = new Button ("Seven");
+        addComponent (this, b, 1, 2, 1, 1, 
+                GridBagConstraints.NONE, GridBagConstraints.CENTER);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+Figure 7.10: How GridBagLayout counts rows and columns
+Most of the work in Example 7.2 is done by the helper method addComponent(), 
+which creates a set of constraints, applies them to a component, and adds 
+the component to a container. The code for addComponent() 
+appears in GridBagConstraints; its signature is: 
+public static void addComponent (Container container, Component component,
+        int gridx, int gridy, int gridwidth, int gridheight, int fill,
+        int anchor) throws AWTException ;
+The top left cell in the layout has location (0,0). There's nothing 
+very surprising about buttons one, two, three, six, and seven. They occupy 
+a 1x1 area on the layout's 3x3 grid. Button four occupies a 2x1 area; 
+it is placed at location (0,1), and thus occupies this cell plus the cell 
+at (1,1). Likewise, button five occupies a 1x2 area, and takes up the cells 
+at (2,1) and (2,2). The total size of the layout is determined entirely 
+by the components that are placed in it and their constraints. 
+GridBagLayout MethodsVariables
+There are a handful of instance variables for GridBagLayout. 
+They are not initialized until the container whose layout is GridBagLayout 
+has been validated. 
+public int columnWidths[] 
+The columnWidths[] array contains 
+the widths of the components in the row with the most elements. The values 
+of this array are returned by the getLayoutDimensions() 
+method. You can access the array directly, but it is not recommended. 
+public int rowHeights[] 
+The rowHeights[] array contains 
+the heights of the components in the column with the most elements. The 
+values of this array are returned by the getLayoutDimensions() 
+method. You can access the array directly, but it is not recommended. 
+public double columnWeights[] 
+The columnWeights[] array contains 
+the weightx values of the components 
+in the row with the most elements. The values of this array are returned 
+by the getLayoutWeights() method. 
+You can access the array directly, but it is not recommended. 
+public double rowWeights[] 
+The rowWeights[] array contains 
+the weighty values of the components 
+in the column with the most elements. The values of this array are returned 
+by the getLayoutWeights() method. 
+You can access the array directly, but it is not recommended. 
+Constructors
+public GridBagLayout () 
+The constructor for GridBagLayout 
+creates an instance of GridBagLayout 
+with default GridBagConstraints 
+behavior. An internal table is used to keep track of the components added 
+to the layout. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component)  
+The addLayoutComponent() method 
+of GridBagLayout does nothing. 
+This method is not deprecated, unlike the similarly named methods in the 
+other layout managers that implement LayoutManager2. 
+public void removeLayoutComponent (Component component)  
+The removeLayoutComponent() 
+method of GridBagLayout does 
+nothing. 
+public Dimension preferredLayoutSize (Container target)  
+The preferredLayoutSize() method 
+calculates the preferred dimensions of the components of target. 
+Sizing is based on the constraints of the various components. This task 
+is definitely better off left to the computer. 
+public Dimension minimumLayoutSize (Container target)  
+The minimumLayoutSize() method 
+calculates the minimum dimensions required to position the components of 
+target. Sizing is based on 
+the constraints of the various components. 
+public void layoutContainer (Container target)  
+The layoutContainer() method 
+positions the components within target 
+based upon the constraints of each component. If a component's anchor 
+constraints are invalid, layoutContainer() 
+throws the run-time exception IllegalArgumentException. 
+The process of arranging the components is very complicated and beyond 
+the scope of this book. 
+LayoutManager2 methods
+public void addLayoutComponent (Component component, Object constraints) 
+  
+This addLayoutComponent() method 
+of GridBagLayout associates 
+the component with the given 
+constraints object. It calls 
+the setConstaints() method. 
+If name is not a GridBagConstraints, 
+addLayoutComponent() throws 
+the run-time exception IllegalArgumentException. 
+public abstract Dimension maximumLayoutSize(Container target)  
+The maximumLayoutSize() method 
+returns a Dimension object 
+with a width and height of Integer.MAX_VALUE. 
+In practice, this means that GridBagLayout 
+doesn't support the concept of maximum size. 
+public abstract float getLayoutAlignmentX(Container target)  
+The getLayoutAlignmentX() method 
+says that GridBagLayout containers 
+should be centered horizontally within the area available. 
+public abstract float getLayoutAlignmentY(Container target)  
+The getLayoutAlignmentY() method 
+says that GridBagLayout containers 
+should be centered vertically within the area available. 
+public abstract void invalidateLayout(Container target)  
+The invalidateLayout() method 
+of GridBagLayout does nothing. 
+Constraints
+public GridBagConstraints getConstraints (Component component) 
+The getConstraints() method 
+returns a clone of the current constraints for component. 
+This makes it easier to generate constraints for a component based on another 
+component. 
+public void setConstraints (Component component, GridBagConstraints constraints) 
+The setConstraints() method 
+changes the constraints on 
+component to a clone of constraints. 
+The system creates a clone() 
+of constraints so you can change 
+the original constraints without affecting component. 
+Layout
+public Point getLayoutOrigin () 
+The getLayoutOrigin() method 
+returns the origin for the GridBagLayout. 
+The origin is the top left point within the container at which the components 
+are drawn. Before the container is validated, getLayoutOrigin() 
+returns the Point (0,0). After 
+validation, getLayoutOrigin() 
+returns the actual origin of the layout. The space used by the components 
+within a GridBagLayout may 
+not fill the entire container. You can use the results of getLayoutOrigin() 
+and getLayoutDimensions() to 
+find the layout's actual size and draw a Rectangle 
+around the objects. 
+public int[][] getLayoutDimensions () 
+The getLayoutDimensions() method 
+returns two one-dimensional arrays as a single two-dimensional array. Index 
+0 is an array of widths (columnWidths 
+instance variable), while index 1 is an array of heights (rowHeights 
+instance variable). Until the layout is validated, these will be empty. 
+After validation, the first array contains the widths of the components 
+in the row with the most elements. The second contains the heights of the 
+components in the column with the most elements. For Figure 7.10, the results would be (38, 51, 48) for widths since the first row 
+has three elements and (21, 21, 21) for the heights since the first (and 
+second) column has three elements in it. 
+public double[][] getLayoutWeights () 
+The getLayoutWeights() method 
+returns two one-dimensional arrays as a single two-dimensional array. Index 
+0 is an array of column weights (columnWeights 
+instance variable), while index 1 is an array of row weights (rowWeights 
+instance variable). Until the layout is validated, these will be empty. 
+After validation, the first dimension contains all the weightx values of 
+the components in the row with the most elements. The second dimension 
+contains all the weighty values 
+of the components in the column with the most elements. For Figure 7.10, the results would be (0, 0, 0) for weightx 
+since the first row has three elements and (0, 0, 0) for weighty 
+since the first column has three elements in it. 
+Miscellaneous methods
+public Point location (int x, int y) 
+The location() method returns 
+the Point (0,0) until the container 
+is validated. After validation, this method returns the grid element under 
+the location (x, y), 
+where x and y 
+are in pixels. The results could be used as the gridx 
+and gridy constraints when 
+adding another component. 
+public String toString () 
+The toString() method of GridBagLayout 
+returns the name of the class: 
+java.awt.GridBagLayout
+CardLayout
+GridBagConstraints
+ 
+ 
+ 
+ 
+ 
+ 
+ 

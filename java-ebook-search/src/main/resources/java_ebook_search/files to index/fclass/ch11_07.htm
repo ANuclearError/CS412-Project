@@ -1,0 +1,252 @@
+
+[Chapter 11] CharArrayReader
+Chapter 11The java.io Package
+CharArrayReader
+Name
+CharArrayReader
+Synopsis
+Class Name:
+java.io.CharArrayReader
+Superclass:
+java.io.Reader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The CharArrayReader class represents 
+a stream whose data comes from a character array. This class is similar 
+to ByteArrayInputStream, but 
+it deals with a Java character stream rather than a byte stream. Furthermore, 
+this class supports marking a position in the stream, which ByteArrayInputStream 
+does not. 
+The position of the end of the stream depends on the constructor used. 
+If the CharArrayReader(char[] buf) 
+constructor is used, the end of the stream is the end of the character 
+array. If the CharArrayReader(char[] buf, int offset, 
+int length) constructor is used, the end of the 
+stream is reached at the index given by offset+length. 
+Class Summary
+public class java.io.CharArrayReader extends java.io.Reader {
+  // Variables
+  protected char[] buf;
+  protected int count;
+  protected int markedPos;
+  protected int pos;
+  // Constructors
+  public CharArrayReader(char[] buf);
+  public CharArrayReader(char[] buf, int offset, int length);
+  // Instance Methods
+  public void close();
+  public void mark(int readAheadLimit);
+  public boolean markSupported();
+  public int read();
+  public int read(char[] b, int off, int len);
+  public boolean ready();
+  public void reset();
+  public long skip(long n);
+}
+Variables
+buf
+protected char[] buf
+Description
+The buffer represented by this reader. 
+count
+protected int count
+Description
+The size of the buffer, or in other words, the length of the array. 
+markedPos
+protected int markedPos
+Description
+The buffer position when mark() 
+was called. If mark() has not 
+been called, this variable is 0. 
+pos
+protected int pos
+Description
+The current position in the buffer. 
+Constructors
+CharArrayReader
+public CharArrayReader(char[] buf)
+Parameters
+buf
+The reader source. 
+Description
+This constructor creates a CharArrayReader 
+object that uses the given array of characters as its data source. The 
+data is not copied, so changes made to the array affect the data that the 
+CharArrayReader returns. 
+public CharArrayReader(char[] buf, int offset, int length)
+Parameters
+buf
+The reader source.
+offset
+An offset into the array.
+length
+The number of bytes to read. 
+Description
+This constructor creates a CharArrayReader 
+that uses, as its data source, length 
+characters in a given array of bytes, starting at offset 
+characters from the beginning of the array. The data is not copied, so 
+changes made to the array affect the data that the CharArrayReader 
+returns. 
+Instance Methods
+close
+public void close()
+Overrides
+Reader.close() 
+Description
+This method closes the reader by removing the link between this CharArrayReader 
+and the array it was created with. 
+mark
+public void mark(int readAheadLimit) throws IOException
+Parameters
+readAheadLimit
+The maximum number of characters that can be read before the saved position 
+becomes invalid. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.mark(int) 
+Description
+This method causes the CharArrayReader 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position, and thus reread a 
+portion of the buffer. Because the data for this stream comes from a char 
+array, there is no limit on reading ahead, so readAheadLimit 
+is ignored. 
+markSupported
+public boolean markSupported()
+Returns
+The boolean value true. 
+Overrides
+Reader.markSupported() 
+Description
+This method returns true to 
+indicate that this class supports mark() 
+and reset(). 
+read
+public int read() throws IOException
+Returns
+The next character or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.read() 
+Description
+This method returns the next character in the array. 
+public int read(char[] b, int off, int len) throws IOException
+Parameters
+b
+An array of characters to be filled from the stream.
+off
+An offset into the character array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.read(char[], int, int) 
+Description
+This method copies up to len 
+characters from its internal array into the given array b, 
+starting at index off. 
+ready
+public boolean ready() throws IOException
+Returns
+A boolean value that indicates 
+whether the stream is ready to be read. 
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.ready() 
+Description
+If there is any data left to be read from the character array, this method 
+returns true. 
+reset
+public void reset() throws IOException
+Throws
+IOException
+If the stream 
+is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.reset() 
+Description
+This method resets the position of the CharArrayReader 
+to the position that was saved by calling the mark() 
+method. If mark() has not been 
+called, the CharArrayReader 
+is reset to read from the beginning of the array. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of characters to 
+skip. 
+Returns
+The actual number of characters skipped. 
+Throws
+IOException
+If the stream is closed or any other kind of I/O error occurs. 
+Overrides
+Reader.skip() 
+Description
+This method skips n characters of input. If you try to 
+skip past the end of the array, the stream is positioned at the end of 
+the array. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals (Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+read(char[])
+Reader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+IOException, 
+Reader, 
+String 
+ByteArrayOutputStream
+CharArrayWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

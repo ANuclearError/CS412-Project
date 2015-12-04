@@ -1,0 +1,230 @@
+
+[Chapter 19] TextField
+Chapter 19java.awt Reference
+TextField
+Name
+TextField
+Description
+The TextField class provides 
+a single line Component for 
+user input. 
+Class Definition
+public class java.awt.TextField
+    extends java.awt.TextComponent {
+  
+  // Constructors
+  public TextField();
+  public TextField (int columns);
+  public TextField (String text);
+  public TextField (String text, int columns);
+  
+  // Instance Methods
+  public void addActionListener (ActionListener l); 
+  public void addNotify();
+  public boolean echoCharIsSet();
+  public int getColumns();
+  public char getEchoChar();
+  public Dimension getMinimumSize(); 
+  public Dimension getMinimumSize (int columns); 
+  public Dimension getPreferredSize();    
+  public Dimension getPreferredSize (int columns); 
+  public Dimension minimumSize(); 
+  public Dimension minimumSize (int columns); 
+  public Dimension preferredSize(); 
+  public Dimension preferredSize (int columns); 
+  public void removeActionListener (ActionListener l); 
+  public void setColumns(int columns); 
+  public void setEchoChar(char c); 
+  public void setEchoCharacter (char c); 
+  
+  // Protected Instance Methods
+  protected String paramString();
+  protected void processActionEvent (ActionEvent e); 
+  protected void processEvent (AWTEvent e); 
+}
+Constructors
+TextField
+public TextField()
+Description
+Constructs a TextField object 
+of the default size. 
+public TextField (int columns)
+Parameters 
+columns
+Requested number of displayed columns. 
+Description
+Constructs a TextField object 
+of the given size.
+public TextField (String text)
+Parameters 
+text
+Initial text for TextField. 
+Description
+Constructs a TextField object 
+with the given content. 
+public TextField (String text, int columns)
+Parameters 
+text
+Initial text for TextField. 
+columns
+Requested number of displayed columns. 
+Description
+Constructs a TextField object 
+with the given content and size. 
+Instance Methods
+addActionListener
+public void addActionListener (ActionListener l) 
+Parameters 
+l
+An object that implements the ActionListener 
+interface. 
+Description
+Add a listener for the action event. 
+addNotify
+public synchronized void addNotify()
+Overrides 
+Component.addNotify() 
+Description
+Creates TextField's peer. 
+echoCharIsSet
+public boolean echoCharIsSet()
+Returns
+true if the TextField
+ has an echo character used as a response 
+to any input character; false 
+otherwise. An echo character can be used to create a TextField 
+for hidden input, like a password; the same character (e.g., "x") 
+is used to echo all input. 
+getColumns
+public int getColumns()
+Returns
+The width of the TextField 
+in columns. 
+getEchoChar
+public char getEchoChar()
+Returns
+The current echo character. 
+getMinimumSize
+public Dimension getMinimumSize() 
+Returns
+The minimum dimensions of the TextField. 
+public Dimension getMinimumSize (int columns) 
+Parameters 
+columns
+Number of columns within TextField 
+to size. 
+Returns
+The minimum dimensions of a TextField 
+of the given size. 
+getPreferredSize
+public Dimension getPreferredSize() 
+Returns
+The preferred dimensions of the TextField. 
+public Dimension getPreferredSize (int columns) 
+Parameters 
+columns
+Number of columns within TextField 
+to size. 
+Returns
+The preferred dimensions of a TextField 
+of the given size. 
+minimumSize
+public Dimension minimumSize() 
+Returns
+The minimum dimensions of the TextField. 
+Replaced by getMinimumSize(). 
+public Dimension minimumSize (int columns) 
+Parameters 
+columns
+Number of columns within TextField 
+to size. 
+Returns
+The minimum dimensions of a TextField 
+of the given size. Replaced by getMinimumSize(int). 
+preferredSize
+public Dimension preferredSize() 
+Returns
+The preferred dimensions of the TextField. 
+Replaced by getPreferredSize(). 
+public Dimension preferredSize (int columns) 
+Parameters 
+columns
+Number of columns within TextField 
+to size. 
+Returns
+The preferred dimensions of a TextField 
+of the given size. Replaced by getPreferredSize(int). 
+removeActionListener
+public void removeActionListener (ActionListener l) 
+Parameters 
+l
+One of this TextField's 
+ActionListeners. 
+Description
+Remove an action event listener. 
+setColumns
+public void setColumns (int columns) 
+Parameters 
+columns
+New number of columns. 
+Throws 
+IllegalArgumentException
+If 
+columns is less than zero. 
+Description
+Changes the number of columns. 
+setEchoChar
+public void setEchoChar (char c) 
+Parameters 
+c
+The character to echo for all input. To echo the characters 
+that the user types (the default), set the echo character to 0 (zero). 
+Description
+Changes the character that is used to echo all user input in the TextField. 
+setEchoCharacter
+public void setEchoCharacter (char c) 
+Parameters 
+c
+The character to echo for all input. To echo the characters 
+that the user types (the default), set the echo character to 0 (zero). 
+Description
+Replaced by setEchoChar(char) 
+for consistency with getEchoChar(). 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of TextField. 
+Overrides 
+TextComponent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+processActionEvent
+protected void processActionEvent (ActionEvent e) 
+Parameters 
+e
+The action event to process. 
+Description
+Action events are passed to this method for processing. Normally, this 
+method is called by processEvent(). 
+processEvent
+protected void processEvent (AWTEvent e) 
+Parameters 
+e
+The event to process. 
+Description
+Low-level AWTEvents are passed 
+to this method for processing. 
+See Also
+Dimension, TextComponent, 
+String 
+TextComponent
+Toolkit
+ 
+ 
+ 
+ 
+ 
+ 
+ 

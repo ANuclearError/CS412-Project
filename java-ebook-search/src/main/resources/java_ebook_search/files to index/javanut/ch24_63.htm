@@ -1,0 +1,41 @@
+
+[Chapter 24] 24.63 java.io.StringReader (JDK 1.1)
+Chapter 24The java.io Package
+24.63 java.io.StringReader (JDK 1.1)
+This class is a character input stream that uses a
+String object as the source of the characters it
+returns.  When you create a StringReader, you must
+specify the String that it is to read from.
+StringReader defines the normal Reader
+methods, and supports mark() and reset().
+If reset() is called before mark() has been
+called, the stream is reset to the beginning of
+the specified string.
+StringReader is a character stream analog to
+StringBufferInputStream, which is deprecated in Java
+1.1.  StringReader is also similar to
+CharArrayReader.  
+public class StringReader extends Reader {
+    // Public Constructor
+            public StringReader(String s);
+    // Public Instance Methods
+            public void close();  // Defines Reader
+            public void mark(int readAheadLimit) throws IOException;  // Overrides Reader
+            public boolean markSupported();  // Overrides Reader
+            public int read() throws IOException;  // Overrides Reader
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Defines Reader
+            public boolean ready();  // Overrides Reader
+            public void reset() throws IOException;  // Overrides Reader
+            public long skip(long ns) throws IOException;  // Overrides Reader
+}
+Hierarchy:
+Object->Reader->StringReader
+java.io.StringBufferInputStream (JDK 1.0; Deprecated.)
+java.io.StringWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

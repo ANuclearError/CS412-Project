@@ -1,0 +1,75 @@
+
+[Chapter 5] Declarations
+Chapter 5
+5. Declarations
+Contents:
+Naming Conventions
+Lexical Scope of Declarations
+Object-Orientation Java Style
+Class Declarations
+Interface Declarations
+A declaration
+is a construct that associates a name with storage that contains
+specified data or a specified type of data. More specifically, declarations
+associate names with classes, interfaces, methods, and variables.
+In addition, the declaration of a class, interface, or method defines
+the actual class, interface, or method that is associated with the
+name. Methods and variables can only be declared within classes
+and interfaces, so this chapter covers method and variable declarations
+in the context of class and interface declarations.
+Every name has a lexical scope. The scope of a declaration
+determines the portions of a program in which the declaration
+is applicable.
+A declaration can be preceded by modifiers
+that specify attributes of the name or of the data associated with
+the name. One such attribute for a name is its accessibility. The
+accessibility modifiers specify the other classes that can access
+the data associated with the name. The static
+modifier specifies an attribute for data; it indicates whether the
+data is associated with a class or with individual instances of
+a class.
+Because Java is an object-oriented programming
+language, this chapter also describes the object-oriented model
+used by the language. An understanding of this model is necessary
+for a complete understanding of class and interface declarations.
+5.1 Naming Conventions
+The Java language
+has no requirements for choosing names, aside from the lexical requirements
+for identifiers stated
+in Identifiers.
+However, there are certain
+conventions that you should follow when choosing names; these conventions
+are the ones used by Sun in much of the Java API. Following these
+conventions makes your programs easier to read, as many programmers
+are already accustomed to reading programs that use them:
+If an identifier is logically made up of multiple words, the first
+letter of each word other than the first is uppercase and the rest of
+the letters are lowercase (e.g., aSimpleExample).
+Sun is consistent about following this convention.
+The first letter of the name of a class or interface is uppercase,
+while the first letter of all other names is lowercase. Sun is also
+consistent about following this convention.
+The names of final variables that are intended to represent symbolic
+constants are all uppercase; logical words contained in the name are
+separated by underscore characters (e.g.,
+MAX_LEGAL_VALUE).  Sun uses this convention quite
+often, but is not entirely consistent.
+Some Java programmers have adopted the additional convention
+of beginning the names of instance variables with an underscore
+(e.g., _value).
+Avoid the use of $ in names to prevent confusion with compiler-generated names.  Sun is consistent about following this convention.
+References
+Class Name;
+Identifiers;
+Interface Name;
+Interface Variables;
+Variables
+Constant Expressions
+Lexical Scope of Declarations
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,117 @@
+
+[Chapter 11] Serializable
+Chapter 11The java.io Package
+Serializable
+Name
+Serializable
+Synopsis
+Interface Name:
+java.io.Serializable
+Super-interface:
+None
+Immediate Sub-interfaces:
+java.io.Externalizable
+Implemented By:
+java.awt.BorderLayout, 
+java.awt.CardLayout,
+java.awt.CheckboxGroup, 
+java.awt.Color,
+java.awt.Component, 
+java.awt.Cursor,
+java.awt.Dimension, 
+java.awt.Event,
+java.awt.FlowLayout, 
+java.awt.Font,
+java.awt.FontMetrics, 
+java.awt.GridBagConstraints,
+java.awt.GridBagLayout, 
+java.awt.GridLayout,
+java.awt.Insets, 
+java.awt.MediaTracker,
+java.awt.MenuComponent, 
+java.awt.MenuShortcut,
+java.awt.Point, 
+java.awt.Polygon,
+java.awt.Rectangle, 
+java.awt.SystemColor,
+java.io.File, 
+java.io.ObjectStreamClass,
+java.lang.Boolean, 
+java.lang.Character,
+java.lang.Class, 
+java.lang.Number,
+java.lang.String, 
+java.lang.StringBuffer,
+java.lang.Throwable,
+java.net.InetAddress,
+java.net.URL, 
+java.text.BreakIterator,
+java.text.Collator, 
+java.text.DateFormatSymbols,
+java.text.DecimalFormatSymbols, 
+java.text.Format,
+java.util.BitSet, 
+java.util.Calendar,
+java.util.Date, 
+java.util.EventObject, 
+java.util.Hashtable, 
+java.util.Locale,
+java.util.Random, 
+java.util.TimeZone,
+java.util.Vector
+Availability:
+New as of JDK 1.1 
+Description
+The Serializable interface 
+is implemented by classes that allow object instances to be serialized 
+and deserialized. A class uses the default serialization mechanism simply 
+by implementing this interface. A class that wants finer control over serialization 
+and deserialization should implement the following methods (with these 
+exact signatures): 
+private void readObject(ObjectInputStream in) 
+             throws IOException, ClassNotFoundException; 
+private void writeObject(ObjectOutputStream out) throws IOException;
+The ObjectOutputStream and 
+ObjectInputStream classes support 
+serialization and deserialization, respectively. 
+Interface Declaration
+public abstract interface java.io.Serializable {
+}
+See Also
+BitSet, 
+Boolean, 
+BreakIterator, 
+Calendar, 
+Character, 
+Class, 
+Collator, 
+Date, 
+DateFormatSymbols, 
+DecimalFormatSymbols, 
+EventObject, 
+Externalizable, 
+File, 
+Format, 
+Hashtable, 
+InetAddress, 
+Locale, 
+Number, 
+ObjectInputStream, 
+ObjectOutputStream, 
+ObjectStreamClass, 
+Random, 
+String, 
+StringBuffer, 
+Throwable, 
+TimeZone, 
+URL, 
+Vector 
+SequenceInputStream
+StreamCorruptedException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,170 @@
+
+[Chapter 11] PipedWriter
+Chapter 11The java.io Package
+PipedWriter
+Name
+PipedWriter
+Synopsis
+Class Name:
+java.io.PipedWriter
+Superclass:
+java.io.Writer
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The PipedWriter class represents half of a
+communication pipe; a PipedReader must be connected
+to a PipedWriter. When the two halves of a
+communication pipe are connected, data written to the
+PipedWriter can be read from the
+PipedReader. The communication pipe formed by a
+PipedWriter and a PipedReader
+should be used to communicate between threads. If both ends of a pipe
+are used by the same thread, the thread can hang.
+The PipedWriter class is the character-based
+equivalent of the byte-based PipedOutputStream.
+Class Summary
+public class java.io.PipedWriter extends java.io.Writer {
+  // Constructors
+  public PipedWriter();
+  public PipedWriter(PipedReader sink);
+  // Instance Methods
+  public void close();
+  public void connect(PipedReader sink);
+  public void flush();
+  public void write(char[] cbuf, int off, int len;
+}
+Constructors
+PipedWriter
+public PipedWriter()
+Description
+This constructor creates a PipedWriter 
+that is not connected to a PipedReader. 
+The created object must be connected to a PipedReader 
+before it can be used. 
+public PipedWriter(PipedReader sink)
+Parameters
+sink
+The PipedReader 
+to connect. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This constructor creates a PipedWriter 
+that sends data to the given PipedReader. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+Overrides
+Writer.close() 
+Description
+This method closes the writer and releases the system resources that are 
+associated with it. 
+connect
+public void connect(PipedReader sink) throws IOException
+Parameters
+sink
+The PipedReader 
+to connect. 
+Throws
+IOException 
+If another 
+PipedReader is already connected 
+to this PipedWriter or this 
+PipedWriter is already connected. 
+Description
+This method connects this PipedWriter 
+object to the given PipedReader. 
+If this PipedWriter or sink 
+is already connected, an exception is thrown. 
+flush
+public void flush() throws IOException
+Throws
+IOException 
+If any kind of I/O error occurs. 
+InterruptedIOException
+While this method is waiting for buffer space to become available, if
+the interrupted() method of the thread that invoked
+this method is called.
+Overrides
+Writer.flush() 
+Description
+This method flushes the writer, which tells the connected PipedReader 
+to notify its readers to read any available data. 
+write
+   public void write(char[] cbuf, int off, int len) throws IOException  
+Parameters
+cbuf
+An array of characters to write to the stream.
+off
+An offset into the character array.
+len
+The number of characters to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(char[], int, int) 
+Description
+This method writes len characters 
+of output from the given array, starting at offset off. 
+The method passes the given data to the connected PipedReader. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(int)
+Writer
+write(char[])
+Writer
+write(String)
+Writer
+write(String, int, int)
+Writer
+See Also
+IOException, 
+PipedOutputStream, 
+PipedReader, 
+Writer 
+PipedReader
+PrintStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

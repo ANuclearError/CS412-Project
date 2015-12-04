@@ -1,0 +1,138 @@
+
+[Chapter 18] CheckedOutputStream
+Chapter 18The java.util.zip Package
+CheckedOutputStream
+Name
+CheckedOutputStream
+Synopsis
+Class Name:
+java.util.zip.CheckedOutputStream
+Superclass:
+java.io.FilterOutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The CheckOutputStream class 
+represents an OutputStream 
+with an associated checksum. In other words, a CheckedOutputStream 
+wraps a regular output stream and computes a checksum value as data is 
+written to the stream. The checksum can verify the integrity 
+of the data. When you create a CheckedOutputStream, 
+you must specify an object that implements the Checksum 
+interface that computes the checksum. 
+Class Summary
+public class java.util.zip.CheckedOutputStream
+             extends java.io.FilterOutputStream {
+  // Constructors
+  public CheckedOutputStream(OutputStream out, Checksum cksum);
+  
+  // Instance Methods
+  public Checksum getChecksum();
+  public void write(int b);
+  public void write(byte[] b, int off, int len);
+}
+Constructors
+CheckedOutputStream
+public CheckedOutputStream(OutputStream out, Checksum cksum)
+Parameters
+out
+The underlying output stream.
+cksum
+The checksum object. 
+Description
+This constructor creates a CheckedOutputStream 
+that writes data to the given OutputStream 
+and updates the given Checksum. 
+Instance Methods
+getChecksum
+public Checksum getChecksum()
+Returns
+The Checksum associated with 
+this output stream. 
+Description
+This method returns the Checksum 
+object associated with this output stream. 
+write
+public void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(int) 
+Description
+This method writes a byte that contains the lowest eight bits of the given 
+integer value to the underlying OutputStream 
+and then updates the checksum. 
+public void write(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(byte[], int, int) 
+Description
+This method writes len bytes 
+to the underlying OutputStream 
+from the given array, starting at off. 
+The checksum is then updated with the data that has been written. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+FilterOutputStream
+equals(Object)
+Object
+finalize()
+Object
+flush()
+FilterOutputStream
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+write(byte[])
+FilterOutputStream
+See Also
+Checksum, 
+FilterOutputStream, 
+IOException, 
+OutputStream 
+CheckedInputStream
+Checksum
+ 
+ 
+ 
+ 
+ 
+ 
+ 

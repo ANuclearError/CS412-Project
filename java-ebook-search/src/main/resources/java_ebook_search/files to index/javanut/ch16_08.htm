@@ -1,0 +1,90 @@
+
+[Chapter 16] javap
+Chapter 16JDK Tools
+javap
+Name
+javap---The Java Class Disassembler
+Availability
+JDK 1.0 and later.
+Synopsis
+javap [ options ] classnames
+Description
+javap disassembles the class files specified by the
+class names on the command line and prints a human-readable
+version of those classes.
+By default, javap prints declarations of the
+non-private members of each of the classes specified
+on the command line.  The -l, -p, and
+-c options specify additional information to be
+printed, including a complete disassembly of the byte-codes
+in each of the specified classes.  javap can also be
+used to run the class verifier on Java classes.
+Options
+-c
+Print the Java Virtual Machine instructions for each of the
+methods in each of the specified classes.  This option
+disassembles all methods, including private methods.
+-classpath path
+The path that javap uses to look up the classes named
+on the command line.  This option overrides the default
+path and any path specified by the CLASSPATH
+environment variable.  The path specified is an
+ordered list of directories and ZIP files, separated by
+colons on UNIX systems or semicolons on Windows systems.
+To specify additional directories or ZIP files for
+javap to search without overriding the default system
+class path, use the CLASSPATH environment variable.
+See the java reference page for more information on
+specifying paths.
+-h
+Outputs the class in a form suitable for inclusion in a C
+header file.
+-l
+Prints line numbers and local variable tables in addition to
+the public fields of the class.  Note that line numbers and local
+variable information is included for use with
+debuggers. Local variable information is available only if a
+class was compiled with the -g option to
+javac; line number information is available only
+if a class was compiled without the -O option.
+-p
+Prints private methods and
+variables of the specified class in addition to the public
+ones. Note that some compilers (though not javac) may
+allow this private field information to be "obfuscated"
+in such a way that private fields and method arguments
+no longer have meaningful names.  This makes Java classes harder
+to disassemble or reverse engineer.
+-s
+Outputs the class member declarations using the internal
+Virtual Machine format.
+-v
+Verbose.  Outputs additional information (in the form of
+Java comments) about each member of each specified class.
+-verify
+Causes javap to run the class verifier on the
+specified classes and display the results of verification.
+-version
+Causes javap to display its version number.
+Environment
+CLASSPATH
+Specifies an ordered list (colon-separated on UNIX,
+semicolon-separated on Windows systems) of directories and
+ZIP files in which javap should look for class 
+definitions.  When a path is specified with this environment
+variable, javap always implicitly appends the location
+of the system classes to the end of the path.  If this
+environment variable is not specified, the default path
+is the current directory and the system classes.  This
+variable is overridden by the -classpath option.
+See Also
+java, javac
+javakey
+jdb
+ 
+ 
+ 
+ 
+ 
+ 
+ 

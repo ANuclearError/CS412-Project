@@ -1,0 +1,49 @@
+
+[Chapter 10] Accessing the Environment
+Chapter 10
+10. Accessing the Environment
+Contents:
+I/O
+System Properties
+Environment Variables
+External Program Execution
+Garbage Collection
+Self Termination
+The java.lang.System and
+java.lang.Runtime classes provide a variety of
+methods that allow a Java program to access information and resources
+for the environment in which it is running. This environment includes
+the Java virtual machine and the native operating system.
+10.1 I/O
+The System class defines three 
+static variables for the three 
+default I/O stream objects that are used by Java programs: 
+in
+This variable refers to an InputStream 
+that is associated with the process's standard input. 
+out
+This variable refers to a PrintStream 
+object that is associated with the process's standard output. In an 
+applet environment, the PrintStream 
+is likely to be associated with a separate window or a file, although this 
+is not guaranteed.
+This stream is the most commonly used of the three I/O streams provided 
+by the System class. Even in 
+GUI-based applications, sending output to this stream can be useful for 
+debugging purposes. The usual idiom for sending output to this stream is: 
+System.out.println("some string");
+err
+This variable refers to a PrintStream 
+object that is associated with the process's standard error output. 
+In an applet environment, the PrintStream 
+is likely to be associated with a separate window or a file, although this 
+is not guaranteed. 
+ClassLoader
+System Properties
+ 
+ 
+ 
+ 
+ 
+ 
+ 

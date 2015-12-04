@@ -1,0 +1,287 @@
+
+[Chapter 15] SocketImpl
+Chapter 15The java.net Package
+SocketImpl
+Name
+SocketImpl
+Synopsis
+Class Name:
+java.net.SocketImpl
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The SocketImpl class is an 
+abstract class that defines 
+the bulk of the methods that make the Socket 
+and ServerSocket classes work. 
+Thus, SocketImpl is used to 
+create both client and server sockets. Non-public 
+subclasses of SocketImpl provide 
+platform-specific implementations of stream-based socket communication. 
+A plain socket implements the methods in SocketImpl 
+as described; other implementations could provide socket communication 
+through a proxy or firewall. 
+Class Summary
+public abstract class java.net.SocketImpl extends java.lang.Object {
+  // Variables
+  protected InetAddress address;
+  protected FileDescriptor fd;
+  protected int localport;
+  protected int port;
+  // Instance Methods
+  public String toString();
+  // Protected Instance Methods
+  protected abstract void accept(SocketImpl s);
+  protected abstract int available();
+  protected abstract void bind(InetAddress host, int port);
+  protected abstract void close();
+  protected abstract void connect(String host, int port);
+  protected abstract void connect(InetAddress address, int port);
+  protected abstract void create(boolean stream);
+  protected FileDescriptor getFileDescriptor();
+  protected InetAddress getInetAddress();
+  protected abstract InputStream getInputStream();
+  protected int getLocalPort();
+  protected abstract OutputStream getOutputStream();
+  protected int getPort();
+  protected abstract void listen(int backlog);
+}
+Variables
+address
+protected InetAddress address
+Description
+The remote IP address to which this socket is 
+connected. 
+fd
+protected FileDescriptor fd
+Description
+The file descriptor that represents this socket. 
+localPort
+protected int localPort
+Description
+The local port number of this socket. 
+port
+protected int port
+Description
+The remote port number of this socket. 
+Instance Methods
+toString
+public String toString()
+Returns
+The string representation of this SocketImpl. 
+Overrides
+Object.toString() 
+Description
+This method returns a String 
+that contains a representation of this object. 
+Protected Instance Methods
+accept
+protected abstract void accept(SocketImpl s) throws IOException
+Parameters
+s
+A SocketImpl 
+to connect. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method accepts a connection. The method connects the given socket 
+s to a remote host in response 
+to the remote host's connection request on this SocketImpl. 
+available
+protected abstract int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the number of bytes that can be read from the socket 
+without waiting for more data to arrive. 
+bind
+   protected abstract void bind(InetAddress host, int port) throws IOException  
+Parameters
+host
+An IP address.
+port
+A port number. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method binds the socket to the given address and port. If the address 
+or the port is unavailable, an exception is thrown. 
+close
+protected abstract void close() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method closes the socket, releasing any system resources it holds. 
+connect
+   protected abstract void connect(String host, int port) throws IOException  
+Parameters
+host
+A remote hostname.
+port
+A port number on the 
+remote host. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method connects this socket to the specified port on the given host. 
+   protected abstract void connect(InetAddress address, int port) throws IOException  
+Parameters
+address
+A remote IP address.
+port
+A port number on the 
+remote host. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method connects this socket to the specified port on the host at the 
+given address. 
+create
+protected abstract void create(boolean stream) throws IOException
+Parameters
+stream
+A boolean 
+value that indicates if this socket is a stream socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method creates a socket that is not bound and not connected. If the 
+stream argument is true, 
+a stream socket is created. Otherwise, a datagram socket is created. 
+getFileDescriptor
+protected final FileDescriptor getFileDescriptor
+Returns
+The file descriptor for this socket. 
+Description
+This method returns the file descriptor associated with this SocketImpl. 
+getInetAddress
+protected InetAddress getInetAddress()
+Returns
+The remote IP address to which this SocketImpl 
+is connected. 
+Description
+This method returns the IP address of the remote host to which this SocketImpl 
+is connected. 
+getInputStream
+protected abstract InputStream getInputStream() throws IOException
+Returns
+An InputStream that wraps this socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns an InputStream 
+that reads data from the socket. 
+getLocalPort
+protected int getLocalPort()
+Returns
+The local port number from which this SocketImpl 
+originates. 
+Description
+This method returns the local port number that is the origin of the socket. 
+getOutputStream
+   protected abstract OutputStream getOutputStream() throws IOException  
+Returns
+An OutputStream that wraps this socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns an OutputStream 
+that sends data through the socket. 
+getPort
+protected int getPort()
+Returns
+The remote port number to which this SocketImpl 
+is connected. 
+Description
+This method returns the port number of the remote host to which this socket 
+is connected. 
+listen
+protected abstract void listen(int backlog) throws IOException
+Parameters
+backlog
+The maximum length 
+of pending connections queue. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This object can directly accept a connection if its accept() 
+method has been called and is waiting for a connection. Otherwise, the 
+local system rejects connections to this socket unless listen() 
+has been called.
+This method requests that the local system listen for connections and accept 
+them on behalf of this object. The accepted connections are placed in a 
+queue of the specified length. When there are connections in the queue, 
+a call to this object's accept() 
+method removes a connection from the queue and immediately returns. If 
+the queue is full, additional connection requests are refused. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FileDescriptor, 
+InetAddress, 
+InputStream, 
+IOException, 
+OutputStream, 
+ServerSocket, 
+Socket, 
+SocketImplFactory 
+SocketException
+SocketImplFactory
+ 
+ 
+ 
+ 
+ 
+ 
+ 

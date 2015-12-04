@@ -1,0 +1,61 @@
+
+[Chapter 29] 29.2 java.text.CharacterIterator (JDK 1.1)
+Chapter 29The java.text Package
+29.2 java.text.CharacterIterator (JDK 1.1)
+This interface defines an API for portably iterating through
+the characters that comprise a string of text, regardless of
+the encoding of that text.  Such an API is necessary because
+the number of bytes per character is different for different
+encodings, and some encodings even use variable-width
+characters within the same string of text.  In addition to
+allowing iteration, a class that implements the
+CharacterIterator interface for non-Unicode text also performs
+translation of characters from their native encoding to
+standard Java Unicode characters.
+CharacterIterator is similar to
+java.util.Enumeration, but is somewhat more complex
+than that interface.  The first() and last()
+methods return the first and last characters in the text,
+and the next() and prev() methods allow you
+to loop forward or backwards through the characters of the
+text.  These methods return the DONE constant when
+they go beyond the first or last character in the text--a
+test for this constant can be used to terminate a loop.
+The CharacterIterator interface also allows random
+access to the characters in a string of text.  The
+getBeginIndex() and getEndIndex() methods return
+the character positions for the start and end of the string,
+and setIndex() sets the current position.
+getIndex() returns the index of the current
+position, and current() returns the character at
+that position.
+public abstract interface CharacterIterator extends Cloneable {
+    // Constants
+            public static final char DONE;
+    // Public Instance Methods
+            public abstract Object clone();  // Overrides Object
+            public abstract char current();
+            public abstract char first();
+            public abstract int getBeginIndex();
+            public abstract int getEndIndex();
+            public abstract int getIndex();
+            public abstract char last();
+            public abstract char next();
+            public abstract char previous();
+            public abstract char setIndex(int position);
+}
+Implemented By:
+StringCharacterIterator
+Passed To:
+BreakIterator.setText()
+Returned By:
+BreakIterator.getText()
+java.text.BreakIterator (JDK 1.1)
+java.text.ChoiceFormat (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

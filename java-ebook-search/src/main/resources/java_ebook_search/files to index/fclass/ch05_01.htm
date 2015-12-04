@@ -1,0 +1,69 @@
+
+[Chapter 5] Collections
+Chapter 5
+5. Collections
+Contents:
+Enumerations
+Vectors
+Stacks
+Hashtables
+Java provides a number of utility classes that help you to manage a
+collection of objects. These collection classes allow you to work with
+objects without regard to their types, so they can be extremely useful
+for managing objects at a high level of abstraction. This chapter
+describes the following collection classes:
+The java.util.Vector 
+class, which represents a dynamic array of objects. 
+The java.util.Stack class, 
+which represents a dynamic stack of objects. 
+The java.util.Dictionary 
+class, which is an abstract 
+class that manages a collection of objects by associating a key with each 
+object. 
+The java.util.Hashtable 
+class, which is a subclass of java.util.Dictionary 
+that implements a specific algorithm to associate keys with objects. Given 
+a key, a Hashtable can retrieve 
+the associated object with little or no searching. 
+The java.util.Enumeration 
+interface, which supports sequential access to a set of elements. 
+5.1 Enumerations
+The Enumeration interface is 
+implemented by classes that provide serial access to a set of elements, 
+or objects, in a collection. An object that implements the Enumeration 
+interface provides two methods for dealing with the set: nextElement() 
+and hasMoreElements(). The 
+nextElement() method returns 
+a value of type Object, so 
+it can be used with any kind of collection. When you remove an object from 
+an Enumeration, you may need 
+to cast the object to the appropriate type before using it. You can iterate 
+through the elements in an Enumeration 
+only once; there is no way to reset it to the beginning or move backwards 
+through the elements. 
+Here is an example that prints the contents of an object the implements 
+the Enumeration interface: 
+static void printEnumeration(Enumeration e) {
+    while (e.hasMoreElements()) {
+        System.out.println(e.nextElement());
+    }
+Note that the above method is able to print all of the objects in the Enumeration 
+without knowing their class types because the println() 
+method handles objects of any type. 
+A number of classes in the Java API provide a method that returns a reference 
+to an Enumeration object, rather 
+than implementing the Enumeration 
+interface directly. For example, as you'll see shortly, the Vector 
+class provides an elements() 
+method that returns an Enumeration 
+of the objects in a Vector 
+object. 
+Generating Exceptions
+Vectors
+ 
+ 
+ 
+ 
+ 
+ 
+ 

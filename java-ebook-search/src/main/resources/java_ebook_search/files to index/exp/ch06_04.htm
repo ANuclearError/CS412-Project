@@ -1,0 +1,152 @@
+
+[Chapter 6] 6.4 Scheduling and Priority
+Chapter 6Threads
+6.4 Scheduling and Priority
+Java makes certain guarantees as to how its threads are
+scheduled. Every thread has a priority value. If, at any time, a
+thread of a higher priority than the current thread becomes runnable,
+it preempts the lower priority thread and begins executing. By
+default, threads at the same priority are scheduled round robin, which
+means once a thread starts to run, it continues until it
+does one of the following:
+Sleeps
+Calls  Thread.sleep()  or  wait()
+Waits for lock
+Waits for a lock in order to run a synchronized method
+Blocks on I/O
+Blocks, for example, in a xread() or an
+accept() call
+Explicitly yields control
+Calls yield()
+Terminates
+Completes its target method or is terminated by a
+stop() call
+This situation looks something like what's shown in Figure 6.4.
+Figure 6.4: Priority preemptive, round robin scheduling
+Java leaves certain aspects of scheduling up to the
+implementation.[2]
+The main point here is that some, but not all, implementations 
+of Java use time slicing on threads of the same priority.[3]
+ In a time-sliced system, thread processing is chopped up, so that each 
+thread runs for a short period of time before the context is switched to 
+the next thread, as shown in Figure 6.5.
+[2] 
+This implementation-dependent aspect of Java isn't a big deal,
+since it doesn't hurt for an implementation to add time slicing
+on top of the default round-robin scheduling. It's actually not
+hard to create a time-slicing effect by simply having a high-priority
+thread sleeping for a specified time interval. Every time it wakes up,
+it interrupts a lower-priority thread and causes processing to shift
+round robin to the next thread.
+[3] 
+As of Java Release 1.0, Sun's Java Interpreter for the Windows 95 and
+Windows NT platforms uses time slicing, as does the Netscape Navigator
+Java environment. Sun's Java 1.0 for the Solaris
+UNIX platforms doesn't.
+Higher priority threads still preempt lower priority threads 
+in this scheme. The addition of time slicing mixes up the processing 
+among threads of the same priority; on a multiprocessor machine, threads 
+may even be run simultaneously. Unfortunately, this feature can lead to
+differences in your application's behavior.
+Figure 6.5: Priority preemptive, time-sliced scheduling
+Since Java doesn't guarantee time slicing, you shouldn't write code
+that relies on this type of scheduling; any software you write needs
+to function under the default round-robin scheduling. But if
+you're wondering what your particular flavor of Java does, try
+the following experiment:
+class Thready { 
+    public static void main( String args [] ) { 
+        new MyThread("Foo").start(); 
+        new MyThread("Bar").start(); 
+    } 
+} 
+ 
+class MyThread extends Thread { 
+    String message; 
+ 
+    MyThread ( String message ) { 
+        this.message = message; 
+    } 
+ 
+    public void run() { 
+        while ( true )  
+            System.out.println( message ); 
+    } 
+} 
+The Thready class starts up two
+MyThread objects. Thready is a
+thread that goes into a hard loop (very bad form) and prints its
+message. Since we don't specify a priority for either thread,
+they both inherit the priority of their creator, so they have the same
+priority.  When you run this example, you will see how your Java
+implementation does it scheduling. Under a round-robin scheme, only
+"Foo" should be printed; "Bar" never
+appears. In a time-slicing implementation, you should occasionally see the
+"Foo" and "Bar" messages alternate.
+Priorities
+Now let's change the priority of the second thread:
+class Thready { 
+    public static void main( String args [] ) { 
+        new MyThread("Foo").start(); 
+        Thread bar = new MyThread("Bar"); 
+        bar.setPriority( Thread.NORM_PRIORITY + 1 ); 
+        bar.start(); 
+    } 
+} 
+As you might expect, this changes how our example behaves. Now you may
+see a few "Foo" messages, but "Bar" should
+quickly take over and not relinquish control, regardless of the
+scheduling policy.
+Here we have used the setPriority() method of the
+Thread class to adjust our thread's
+priority. The Thread class defines three standard
+priority values, as shown in Table 6.1.
+Table 6.1: Thread Priority Values
+Value
+Definition
+MIN_PRIORITY
+Minimum priority
+NORM_PRIORITY
+Normal priority
+MAX_PRIORITY
+Maximum priority
+If you need to change the priority of a thread, you should use one of
+these values or a close relative value. But let me warn you against
+using MAX_PRIORITY or a close relative value; if
+you elevate many threads to this priority level, priority will quickly
+become meaningless. A slight increase in priority should be enough for
+most needs. For example, specifying NORM_PRIORITY + 1 in
+our example is enough to beat out our other thread.
+Yielding
+As I said earlier, whenever a thread sleeps, waits, or blocks on I/O,
+it gives up its time slot, and another thread is scheduled.  So as
+long as you don't write methods that use hard loops, all threads
+should get their due. However, a Thread can also
+give up its time voluntarily with the yield()
+call. We can change our previous example to include a
+yield() on each iteration:
+class MyThread extends Thread { 
+    ... 
+ 
+    public void run() { 
+        while ( true ) { 
+            System.out.println( message ); 
+            yield(); 
+        } 
+    } 
+} 
+Now you should see "Foo" and "Bar" 
+messages alternating one for one. If you have threads that perform very intensive calculations, or
+otherwise eat a lot of CPU time, you might want to
+find an appropriate place for them to yield control occasionally.
+Alternatively, you might want to drop the priority of your intensive
+thread, so that more important processing can proceed around it.
+Synchronization
+Basic Utility Classes
+ 
+ 
+ 
+ 
+ 
+ 
+ 

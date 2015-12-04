@@ -1,0 +1,486 @@
+
+[Chapter 6] 6.3 Synchronization
+Chapter 6Threads
+6.3 Synchronization
+Every thread has a life of its own. Normally, a thread goes about its
+business without any regard for what other threads in the application
+are doing. Threads may be time-sliced, which means they can run in
+arbitrary spurts and bursts as directed by the operating system.  On a
+multiprocessor system, it is even possible for many different threads
+to be running simultaneously on different
+CPUs. This section is about coordinating the
+activities of two or more threads, so they can work together and not
+collide in their use of the same address space.
+Java provides a few simple structures for synchronizing the activities
+of threads. They are all based on the concept of
+monitors, a widely used synchronization scheme
+developed by C.A.R. Hoare. You don't have to know the details
+about how monitors work to be able to use them, but it may help you to
+have a picture in mind.
+A monitor is essentially a lock. The lock is attached to a resource
+that many threads may need to access, but that should be accessed
+by only one thread at a time. It's not unlike a public restroom at a
+gas station. If the resource is not being used, the thread can acquire
+the lock and access the resource. By the same token, if the restroom
+is unlocked, you can enter and lock the door. When the thread is done,
+it relinquishes the lock, just as you unlock the door and leave it
+open for the next person. However, if another thread already has the
+lock for the resource, all other threads have to wait until the
+current thread finishes and releases the lock, just as if the restroom
+is locked when you arrive, you have to wait until the current occupant
+is done and unlocks the door.
+Fortunately, Java makes the process of synchronizing access to
+resources quite easy. The language handles setting up and acquiring
+locks; all you have to do is specify which resources require locks.
+Serializing Methods
+The most common need for synchronization among threads in Java is to
+serialize their access to some resource, namely an object.  In other
+words, synchronization makes sure only one thread at a time can
+perform certain activities that manipulate an object. In Java, every
+object has a lock associated with it. To be more specific, every class
+and every instance of a class has its own lock. The
+synchronized keyword marks places where a thread
+must acquire the lock before proceeding.
+For example, say we implemented a SpeechSynthesizer 
+class that contains a say() method. We don't want 
+multiple threads calling say() at the same time or we 
+wouldn't be able to understand anything being said. So we 
+mark the say() method as synchronized, which means that 
+a thread has to acquire the lock on the SpeechSynthesizer 
+object before it can speak:
+class SpeechSynthesizer { 
+ 
+    synchronized void say( String words ) { 
+        // Speak 
+    } 
+} 
+Because say() is an instance method, a thread has
+to acquire the lock on the particular
+SpeechSynthesizer instance it is using before it
+can invoke the say() method. When
+say() has completed, it gives up the lock, which
+allows the next waiting thread to acquire the lock and run the method.
+Note that it doesn't matter whether the thread is owned by the
+SpeechSynthesizer itself or some other object;
+every thread has to acquire the same lock, that of the
+SpeechSynthesizer instance. If
+say() were a class (static) method instead of an
+instance method, we could still mark it as synchronized. But in this
+case as there is no instance object involved, the lock would be on
+the class object itself.
+Often, you want to synchronize multiple methods of the same class, so that 
+only one of the methods modifies or examines parts of the class at a time. 
+All static synchronized methods in a class use the same class object 
+lock. By the same token, all instance methods in a class use the 
+same instance object lock. In this way, Java can guarantee that only one 
+of a set of synchronized methods is running at a time. For example, 
+a SpreadSheet class might contain a number of instance 
+variables that represent cell values, as well as some methods that manipulate 
+the cells in a row:
+class SpreadSheet { 
+ 
+    int cellA1, cellA2, cellA3; 
+ 
+    synchronized int sumRow() { 
+        return cellA1 + cellA2 + cellA3; 
+    } 
+ 
+    synchronized void setRow( int a1, int a2, int a3 ) { 
+        cellA1 = a1; 
+        cellA2 = a2; 
+        cellA3 = a3; 
+    } 
+... 
+} 
+In this example, both methods setRow() and
+sumRow() access the cell values. You can see that
+problems might arise if one thread were changing the values of the
+variables in setRow() at the same moment another
+thread was reading the values in sumRow(). To
+prevent this, we have marked both methods as synchronized. When
+threads are synchronized, only one will be run at a time. If a thread
+is in the middle of executing setRow() when another
+thread calls sumRow(), the second thread waits
+until the first one is done executing setRow()
+before it gets to run sumRow(). This
+synchronization allows us to preserve the consistency of the
+SpreadSheet. And the best part is that all of this
+locking and waiting is handled by Java; it's transparent to the
+programmer.
+In addition to synchronizing entire methods, the
+synchronized keyword can be used in a special
+construct to guard arbitrary blocks of code. In this form it also
+takes an explicit argument that specifies the object for which it is
+to acquire a lock:
+synchronized ( myObject ) { 
+    // Functionality that needs to be synced 
+    ... 
+    } 
+The code block above can appear in any method.  When it is reached,
+the thread has to acquire the lock on myObject
+before proceeding. In this way, we can have methods (or parts of
+methods) in different classes synchronized the same as methods
+in the same class.
+A synchronized method is, therefore, equivalent to 
+a method with its statements synchronized on the current object. Thus:
+synchronized void myMethod () { 
+    ... 
+} 
+is equivalent to:
+void myMethod () { 
+    synchronized ( this ) { 
+        ... 
+    } 
+} 
+wait() and notify()
+With the synchronized keyword, we can serialize the
+execution of complete methods and blocks of code. The
+wait() and notify() methods of
+the Object class extend this capability. Every
+object in Java is a subclass of Object, so every
+object inherits these methods. By using wait() and
+notify(), a thread can give up its hold on a lock
+at an arbitrary point, and then wait for another thread to give it
+back before continuing. All of the coordinated activity still happens
+inside of synchronized blocks, and still only one thread is executing
+at a given time.
+By executing wait() from a synchronized block, a
+thread gives up its hold on the lock and goes to sleep. A thread might
+do this if it needs to wait for something to happen in another part of
+the application, as you'll see shortly. Later, when the
+necessary event happens, the thread that is running it calls
+notify() from a block synchronized on the same
+object. Now the first thread wakes up and begins trying to acquire the
+lock again.
+When the first thread manages to reacquire the lock, it continues
+from the point it left off. However, the thread that waited may
+not get the lock immediately (or perhaps ever). It depends on when the
+second thread eventually releases the lock, and which thread manages
+to snag it next. Note also, that the first thread won't wake up
+from the wait() unless another thread calls
+notify(). There is an overloaded version of
+wait(), however, that allows us to specify a
+timeout period. If another thread doesn't call
+notify() in the specified period, the waiting
+thread automatically wakes up.
+Let's look at a simple scenario to see what's going on. In
+the following example, we'll assume there are three
+threads--one waiting to execute each of the three synchronized
+methods of the MyThing class. We'll call them
+the waiter, notifier, and
+related threads, respectively. Here's a code
+fragment to illustrate:
+class MyThing { 
+ 
+    synchronized void waiterMethod() { 
+        // Do some stuff 
+ 
+        // Now we need to wait for notifier to do something 
+        wait(); 
+ 
+        // Continue where we left off 
+    } 
+ 
+    synchronized void notifierMethod() { 
+        // Do some stuff  
+ 
+        // Notify waiter that we've done it 
+        notify(); 
+ 
+        // Do more things 
+    } 
+ 
+    synchronized void relatedMethod() { 
+        // Do some related stuff 
+    } 
+Let's assume waiter gets through the gate
+first and begins executing waiterMethod().  The two
+other threads are initially blocked, trying to acquire the lock for
+the MyThing object. When waiter
+executes the wait() method, it relinquishes its
+hold on the lock and goes to sleep. Now there are now two viable
+threads waiting for the lock. Which thread gets it depends on
+several factors, including chance and the priorities of the
+threads. (We'll discuss thread scheduling in the next section.)
+Let's say that notifier is the next thread to
+acquire the lock, so it begins to run. waiter
+continues to sleep and related languishes, waiting
+for its turn. When notifier executes the call to
+notify(), Java prods the waiter
+thread, effectively telling it something has
+changed. waiter then wakes up and rejoins
+related in vying for the MyThing
+lock. Note that it doesn't actually receive the lock; it just
+changes from saying "leave me alone" to "I want the
+lock."
+At this point, notifier still owns the lock and
+continues to hold it until it leaves its synchronized method (or
+perhaps executes a wait() itself). When it
+finally completes, the other two methods get to fight over the
+lock. waiter would like to continue executing
+waiterMethod() from the point it left off,
+while unrelated, which has been patient, would like
+to get started. We'll let you choose your own ending for the
+story.
+For each call to notify(), Java wakes up just one
+method that is asleep in a wait() call. If there
+are multiple threads waiting, Java picks the first thread on a
+first-in, first-out basis. The Object class also
+provides a notifyAll() call to wake up all waiting
+threads. In most cases, you'll probably want to use
+notifyAll() rather than
+notify().  Keep in mind that notify() really means "Hey, something related to this object
+has changed. The condition you are waiting for may have changed, so
+check it again." In general, there is no reason to assume
+only one thread at a time is interested in the change or able to act
+upon it. Different threads might look upon whatever has changed in
+different ways.
+Often, our waiter thread is waiting 
+for a particular condition to change and we will want to sit in a loop 
+like the following:
+... 
+while ( condition != true ) 
+    wait(); 
+... 
+Other synchronized threads call notify() or
+notifyAll() when they have modified the environment
+so that waiter can check the condition again. This
+is the civilized alternative to polling and sleeping, as you'll
+see the following example.
+The Message Passer
+Now we'll illustrate a classic interaction between two threads:
+a Producer and a Consumer.  A
+producer thread creates messages and places them into a queue, while a
+consumer reads them out and displays them. To be realistic,
+we'll give the queue a maximum depth. And to make things really
+interesting, we'll have our consumer thread be lazy and run much
+slower than the producer. This means that Producer
+occasionally has to stop and wait for Consumer to
+catch up. The example below shows the Producer and
+Consumer classes.
+import java.util.Vector; 
+ 
+class Producer extends Thread { 
+    static final int MAXQUEUE = 5; 
+    private Vector messages = new Vector(); 
+  
+    public void run() { 
+        try { 
+            while ( true ) { 
+                putMessage(); 
+                sleep( 1000 ); 
+            } 
+        }  
+        catch( InterruptedException e ) { } 
+    } 
+ 
+    private synchronized void putMessage() 
+        throws InterruptedException { 
+        
+        while ( messages.size() == MAXQUEUE ) 
+            wait(); 
+        messages.addElement( new java.util.Date().toString() ); 
+        notify(); 
+    } 
+ 
+    // Called by Consumer 
+    public synchronized String getMessage() 
+        throws InterruptedException { 
+        notify(); 
+        while ( messages.size() == 0 ) 
+            wait(); 
+        String message = (String)messages.firstElement(); 
+        messages.removeElement( message ); 
+        return message; 
+    } 
+} 
+ 
+class Consumer extends Thread { 
+    Producer producer; 
+     
+    Consumer(Producer p) { 
+        producer = p; 
+    } 
+  
+    public void run() { 
+        try { 
+            while ( true ) { 
+                String message = producer.getMessage(); 
+                System.out.println("Got message: " + message); 
+                sleep( 2000 ); 
+            } 
+        }  
+        catch( InterruptedException e ) { } 
+    } 
+  
+    public static void main(String args[]) { 
+        Producer producer = new Producer(); 
+        producer.start(); 
+        new Consumer( producer ).start(); 
+    } 
+} 
+For convenience, we have included a main() method
+that runs the complete example in the Consumer
+class. It creates a Consumer that is tied to a
+Producer and starts the two classes.  You can run
+the example as follows:
+% java Consumer
+The output is the time-stamp messages created by the
+Producer:
+Got message: Sun Dec 19 03:35:55 CST 1996 
+Got message: Sun Dec 19 03:35:56 CST 1996 
+Got message: Sun Dec 19 03:35:57 CST 1996 
+... 
+The time stamps initially show a spacing of one second, although they
+appear every two seconds. Our Producer runs faster
+than our Consumer. Producer
+would like to generate a new message every second, while
+Consumer gets around to reading and displaying
+a message only every two seconds. Can you see how long it will take the
+message queue to fill up? What will happen when it does?
+Let's look at the code. We are using a few new tools
+here. Producer and Consumer are
+subclasses of Thread. It would have been a better
+design decision to have Producer and
+Consumer implement the Runnable
+interface, but we took the slightly easier path and subclassed
+Thread. You should find it fairly simple to use
+the other technique; you might try it as an exercise.
+The Producer and Consumer
+classes pass messages through an instance of a
+java.util.Vector object. We haven't discussed
+the Vector class yet, but you can think of
+this one as a queue where we add and remove elements in first-in,
+first-out order. See Chapter 7, Basic Utility Classes for more information
+about the Vector class.
+The important activity is in the synchronized methods:
+putMessage() and
+getMessage(). Although one of the methods is used
+by the Producer thread and the other by the
+Consumer thread, they both live in the
+Producer class because they have to be synchronized
+on the same object to work together. Here they both implicitly use the
+Producer object's lock. If the queue is
+empty, the Consumer blocks in a call in the
+Producer, waiting for another message.
+Another design option would implement the
+getMessage() method in the
+Consumer class and use a synchronized code block to
+explicitly synchronize on the Producer object. In
+either case, synchronizing on the Producer is
+important because it allows us to have multiple
+Consumer objects that feed on the same
+Producer.
+putMessage()'s job is to add a new message to
+the queue. It can't do this if the queue is already
+full, so it first checks the number of elements in
+messages. If there is room, it stuffs in another
+time stamp. If the queue is at its limit however,
+putMessage() has to wait until there's
+space. In this situation, putMessage() executes a
+wait() and relies on the consumer to call
+notify() to wake it up after a message has been
+read. Here we have putMessage() testing the
+condition in a loop. In this simple example, the test probably
+isn't necessary; we could assume that when
+putMessage() wakes up, there is a free
+spot. However, this test is another example of good programming
+practice. Before it finishes, putMessage() calls
+notify() itself to prod any
+Consumer that might be waiting on an empty
+queue.
+getMessage() retrieves a message for the
+Consumer.  It enters a loop like the
+Producer's, waiting for the queue to have at
+least one element before proceeding. If the queue is empty, it
+executes a wait() and expects the producer to call
+notify() when more items are available. Notice that
+getMessage() makes its own unconditional call to
+notify(). This is a somewhat lazy way of keeping
+the Producer on its toes, so that the queue should
+generally be full. Alternatively, getMessage()
+might test to see if the queue had fallen below a low water mark
+before waking up the producer.
+Now let's add another Consumer to the
+scenario, just to make things really interesting. Most of the
+necessary changes are in the Consumer class; the
+example below shows the code for the modified class.
+class Consumer extends Thread { 
+    Producer producer; 
+        String name; 
+     
+    Consumer(String name, Producer producer) { 
+        this.producer = producer; 
+        this.name = name; 
+    } 
+  
+    public void run() { 
+        try { 
+            while ( true ) { 
+                String message = producer.getMessage(); 
+                System.out.println(name + " got message: " + message); 
+                sleep( 2000 ); 
+            } 
+        }  
+        catch( InterruptedException e ) { } 
+    } 
+  
+    public static void main(String args[]) { 
+        Producer producer = new Producer(); 
+        producer.start(); 
+         
+        // Start two this time 
+        new Consumer( "One", producer ).start(); 
+        new Consumer( "Two", producer ).start(); 
+    } 
+} 
+The Consumer constructor now takes a string name,
+to identify each consumer. The run() method uses
+this name in the call to println() to identify
+which consumer received the message.
+The only modification to make in the
+Producer code is to change the call to
+notify() in putMessage() to a
+call to notifyAll(). Now, instead of the consumer
+and producer playing tag with the queue, we can have many players
+waiting on the condition of the queue to change. We might have a
+number of consumers waiting for a message, or we might have the
+producer waiting for a consumer to take a message. Whenever the
+condition of the queue changes, we prod all of the waiting methods to
+reevaluate the situation by calling notifyAll().
+Note, however, that we don't need to change the call to
+notify() in getMessage(). If a
+Consumer thread is waiting for a message to appear
+in the queue, it's not possible for the
+Producer to be simultaneously waiting because the
+queue is full.
+Here is some sample output when there are two consumers running, as in
+the main() method shown above:
+One got message: Wed Mar 20 20:00:01 CST 1996 
+Two got message: Wed Mar 20 20:00:02 CST 1996 
+One got message: Wed Mar 20 20:00:03 CST 1996 
+Two got message: Wed Mar 20 20:00:04 CST 1996 
+One got message: Wed Mar 20 20:00:05 CST 1996 
+Two got message: Wed Mar 20 20:00:06 CST 1996 
+One got message: Wed Mar 20 20:00:07 CST 1996 
+Two got message: Wed Mar 20 20:00:08 CST 1996 
+... 
+We see nice, orderly alternation between the two 
+consumers, as a result of the calls to sleep() in the 
+various methods. Interesting things would happen, however, if we were to 
+remove all of the calls to sleep() and let things run 
+at full speed. The threads would compete and their behavior would depend 
+on whether or not the system is using time slicing. On a time-sliced system, 
+there should be a fairly random distribution between the two consumers, 
+while on a nontime-sliced system, a single consumer could monopolize the 
+messages. And since you're probably wondering about time slicing, let's talk about thread priority 
+and scheduling.
+Threading Applets
+Scheduling and Priority
+ 
+ 
+ 
+ 
+ 
+ 
+ 

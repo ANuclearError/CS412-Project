@@ -1,0 +1,32 @@
+
+[Chapter 18] 18.55 java.awt.Shape (JDK 1.1)
+Chapter 18The java.awt Package
+18.55 java.awt.Shape (JDK 1.1)
+This interface encapsulates some very generic information
+about geometric shapes.  All Shape objects must have
+a bounding box--i.e., a rectangle that completely encloses
+the represented shape.
+When the forthcoming Java2D API is integrated with the AWT,
+this interface may be changed.  For this reason, Java 1.1
+applications can use this interface, but should not
+implement it in their own classes.
+public abstract interface Shape {
+    // Public Instance Methods
+            public abstract Rectangle getBounds();
+}
+Implemented By:
+Polygon, 
+Rectangle
+Passed To:
+Graphics.setClip()
+Returned By:
+Graphics.getClip()
+java.awt.Scrollbar (JDK 1.0)
+java.awt.SystemColor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

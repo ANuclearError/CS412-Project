@@ -1,0 +1,78 @@
+
+[Chapter 25] 25.7 java.lang.Character (JDK 1.0)
+Chapter 25The java.lang Package
+25.7 java.lang.Character (JDK 1.0)
+This class provides an immutable object wrapper around the
+primitive char data type. charValue()
+returns the char value of a Character
+object. A number of class methods provide the Java/Unicode
+equivalent of the C &lt;ctype.h&gt; character macros for
+checking the type of characters and converting to uppercase
+and lowercase letters. getType() returns the
+character type.  The return value is one of the constants
+defined by the class, which represents a number of broad
+Unicode character categories.
+digit() returns the integer
+equivalent of a given character for a given radix
+(e.g., radix 16 for hexadecimal). forDigit() returns
+the character that corresponds to the specified value for
+the specified radix.
+public final class Character extends Object implements Serializable {
+    // Public Constructor
+            public Character(char value);
+    // Constants
+            public static final int MAX_RADIX, MIN_RADIX;
+            public static final char MAX_VALUE, MIN_VALUE;
+        1.1public static final Class TYPE;
+    // Character Type Constants
+        1.1public static final byte COMBINING_SPACING_MARK, CONNECTOR_PUNCTUATION, CONTROL;
+        1.1public static final byte CURRENCY_SYMBOL, DASH_PUNCTUATION, DECIMAL_DIGIT_NUMBER;
+        1.1public static final byte ENCLOSING_MARK, END_PUNCTUATION, FORMAT;
+        1.1public static final byte LETTER_NUMBER, LINE_SEPARATOR, LOWERCASE_LETTER;
+        1.1public static final byte MATH_SYMBOL, MODIFIER_LETTER, MODIFIER_SYMBOL;
+        1.1public static final byte NON_SPACING_MARK, OTHER_LETTER, OTHER_NUMBER;
+        1.1public static final byte OTHER_PUNCTUATION, OTHER_SYMBOL, PARAGRAPH_SEPARATOR;
+        1.1public static final byte PRIVATE_USE, SPACE_SEPARATOR, START_PUNCTUATION;
+        1.1public static final byte SURROGATE, TITLECASE_LETTER, UNASSIGNED;
+        1.1public static final byte UPPERCASE_LETTER;
+    // Class Methods
+            public static int digit(char ch, int radix);
+            public static char forDigit(int digit, int radix);
+        1.1public static int getNumericValue(char ch);
+        1.1public static int getType(char ch);
+            public static boolean isDefined(char ch);
+            public static boolean isDigit(char ch);
+        1.1public static boolean isISOControl(char ch);
+        1.1public static boolean isIdentifierIgnorable(char ch);
+        1.1public static boolean isJavaIdentifierPart(char ch);
+        1.1public static boolean isJavaIdentifierStart(char ch);
+        #   public static boolean isJavaLetter(char ch);
+        #   public static boolean isJavaLetterOrDigit(char ch);
+            public static boolean isLetter(char ch);
+            public static boolean isLetterOrDigit(char ch);
+            public static boolean isLowerCase(char ch);
+        #   public static boolean isSpace(char ch);
+        1.1public static boolean isSpaceChar(char ch);
+            public static boolean isTitleCase(char ch);
+        1.1public static boolean isUnicodeIdentifierPart(char ch);
+        1.1public static boolean isUnicodeIdentifierStart(char ch);
+            public static boolean isUpperCase(char ch);
+        1.1public static boolean isWhitespace(char ch);
+            public static char toLowerCase(char ch);
+            public static char toTitleCase(char ch);
+            public static char toUpperCase(char ch);
+    // Public Instance Methods
+            public char charValue();
+            public boolean equals(Object obj);  // Overrides Object
+            public int hashCode();  // Overrides Object
+            public String toString();  // Overrides Object
+}
+java.lang.Byte (JDK 1.1)
+java.lang.Class (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

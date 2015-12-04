@@ -1,0 +1,226 @@
+
+[Chapter 15] DatagramSocket
+Chapter 15The java.net Package
+DatagramSocket
+Name
+DatagramSocket
+Synopsis
+Class Name:
+java.net.DatagramSocket
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.net.MulticastSocket
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The DatagramSocket class implements 
+packet-oriented, connectionless data communication. In Internet parlance, 
+this is the User Datagram Protocol, commonly known as UDP (see RFC 768). 
+Each packet wanders through the network, routed by its destination address. 
+Different packets can take different paths through the network and may 
+arrive in a different order than they were sent. Furthermore, packets are 
+not even guaranteed to reach their destination. It is up to an application 
+that uses DatagramSocket to 
+determine if data is out of order or missing. While these features may 
+seem like disadvantages of DatagramSocket, 
+there is also some advantage to using this class. 
+Primarily, communication using DatagramSocket 
+is faster than Socket stream 
+communication because of the lack of overhead involved. 
+Class Summary
+public class java.net.DatagramSocket extends java.lang.Object {
+  // Constructors
+  public DatagramSocket();
+  public DatagramSocket(int port);
+  public DatagramSocket(int port, InetAddress laddr);     // New in 1.1
+  // Instance Methods
+  public void close();
+  public InetAddress getLocalAddress();                   // New in 1.1
+  public int getLocalPort();
+  public synchronized int getSoTimeout();                 // New in 1.1
+  public synchronized void receive(DatagramPacket p);
+  public void send(DatagramPacket p);
+  public synchronized void setSoTimeout(int timeout);     // New in 1.1
+}
+Constructors
+DatagramSocket
+public DatagramSocket() throws SocketException
+Throws
+SocketException
+If any kind of socket error occurs.
+SecurityException
+If the application is not allowed to listen on the port. 
+Description
+This constructor creates a DatagramSocket 
+that is bound to any available port on the local host machine. 
+public DatagramSocket(int port) throws SocketException
+Parameters
+port
+A port number. 
+Throws
+SocketException
+If any kind of socket error occurs.
+SecurityException
+If the application is not allowed to listen on the given port. 
+Description
+This constructor creates a DatagramSocket 
+that is bound to the given port on the local host machine. 
+   public DatagramSocket(int port, InetAddress laddr) throws SocketException  
+Availability
+New as of JDK 1.1 
+Parameters
+port
+A port number.
+laddr
+A local address. 
+Throws
+SocketException
+If any kind of socket error occurs.
+SecurityException
+If the application is not allowed to listen on the given port on the specified 
+host. 
+Description
+This constructor creates a DatagramSocket 
+that is bound to the given port on the specified local host machine. 
+Instance Methods
+close
+public void close()
+Description
+This method closes the socket, releasing any 
+system resources it holds. 
+getLocalAddress
+public InetAddress getLocalAddress()
+Availability
+New as of JDK 1.1 
+Returns
+The local address of the socket. 
+Throws
+SecurityException
+If the application is not allowed to retrieve the address. 
+Description
+This method returns the local address to which this DatagramSocket 
+is bound. 
+getLocalPort
+public int getLocalPort()
+Returns
+The port number of the socket. 
+Description
+This method returns the local port to which this DatagramSocket 
+is bound. 
+getSoTimeout
+public synchronized int getSoTimeout() throws SocketException
+Availability
+New as of JDK 1.1 
+Returns
+The receive time-out value for the socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method returns the receive time-out value for this socket. A value 
+of zero indicates that the socket waits indefinitely for an incoming packet, 
+while a non-zero value indicates the number of milliseconds it waits. 
+receive
+   public synchronized void receive(DatagramPacket p) throws IOException  
+Parameters
+p
+The DatagramPacket that receives incoming data. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to receive data from the packet's 
+source.
+InterruptedIOException
+If a packet does not arrive before the time-out period expires. 
+Description
+This method receives a datagram packet on this socket. After this method 
+returns, the given DatagramPacket 
+contains the packet's data and length, and the sender's address 
+and port number. If the data that was sent is longer that the given packet's 
+data buffer, the data is truncated.
+If a time-out value is specified using the setSoTimeout() 
+method, the method either returns with the received packet or times out, 
+throwing an InterruptedIOException. 
+If no time-out value is specified, the method blocks until it receives a 
+packet. 
+send
+public void send(DatagramPacket p) throws IOException
+Parameters
+p
+The DatagramPacket to be sent. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to send data to the packet's destination. 
+Description
+This method sends a packet from this socket. The packet data, packet length, 
+destination address, and destination port number are specified by the given 
+DatagramPacket. 
+setSoTimeout
+   public synchronized void setSoTimeout(int timeout) throws SocketException  
+Availability
+New as of JDK 1.1 
+Parameters
+timeout
+The new time-out value, in milliseconds, for this socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method is used to set the time-out value that is used for receive(). 
+A non-zero value specifies the length of time, in milliseconds, that the 
+DatagramSocket should wait 
+for an incoming packet. A value of zero indicates that the DatagramSocket 
+should wait indefinitely for an incoming packet. If a time-out value is 
+needed, this method must be called before receive(). 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DatagramPacket, 
+DatagramSocketImpl, 
+InetAddress, 
+InterruptedIOException, 
+IOException, 
+MulticastSocket, 
+SecurityException, 
+Socket, 
+SocketException 
+DatagramPacket
+DatagramSocketImpl
+ 
+ 
+ 
+ 
+ 
+ 
+ 

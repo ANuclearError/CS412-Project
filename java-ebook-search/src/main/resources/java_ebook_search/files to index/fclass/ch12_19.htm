@@ -1,0 +1,126 @@
+
+[Chapter 12] Exception
+Chapter 12The java.lang Package
+Exception
+Name
+Exception
+Synopsis
+Class Name:
+java.lang.Exception 
+Superclass:
+java.lang.Throwable 
+Immediate Subclasses:
+java.awt.AWTException,
+java.awt.datatransfer.UnsupportedFlavorException,
+java.io.IOException, 
+java.lang.ClassNotFoundException, 
+java.lang.CloneNotSupportedException, 
+java.lang.IllegalAccessException, 
+java.lang.InstantiationException, 
+java.lang.InterruptedException, 
+java.lang.NoSuchMethodException, 
+java.lang.RuntimeException, 
+java.lang.reflect.InvocationTargetException, 
+java.text.FormatException, 
+java.util.TooManyListenersException,
+java.util.zip.DataFormatException 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+The Exception 
+class is the superclass of all of the standard exception classes that can 
+be thrown in Java. The subclasses of Exception 
+represent exceptional conditions a normal Java program may want to 
+handle. Any explicitly thrown object in a Java program should be an instance 
+of a subclass of Exception. 
+Many of the standard exceptions are also subclasses of RuntimeException. 
+Run-time exceptions represent run-time conditions that can occur generally 
+in any Java method, so a method is not required to declare that it throws 
+any of the run-time exceptions. However, if a method can throw any of the 
+other standard exceptions, it must declare them in its throws 
+clause. 
+A Java program should try to handle all of the standard exception 
+classes, since they represent routine abnormal conditions that should be 
+anticipated and caught to prevent program termination. 
+Class Summary
+public class java.lang.Exception extends java.lang.Throwable {
+  // Constructors
+  public Exception();
+  public Exception(String s);
+}
+Constructors
+Exception
+public Exception()
+Description
+This constructor creates an Exception with 
+no associated detail message. 
+public Exception(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an Exception with 
+the specified message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ClassNotFoundException, 
+CloneNotSupportedException, 
+DataFormatException, 
+FormatException, 
+IllegalAccessException, 
+InstantiationException, 
+InvocationTargetException, 
+InterruptedException, 
+NoSuchMethodException, 
+RuntimeException, 
+Throwable, 
+TooManyListenersException 
+Error
+ExceptionInInitializerError
+ 
+ 
+ 
+ 
+ 
+ 
+ 

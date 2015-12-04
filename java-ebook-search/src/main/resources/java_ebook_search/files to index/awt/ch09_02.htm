@@ -1,0 +1,527 @@
+
+[Chapter 9] 9.2 Lists
+Chapter 9Pick Me
+9.2 Lists
+Like the Choice component, 
+the List provides a way to 
+present your user with a fixed sequence of choices to select. However, 
+with List, several items can 
+be displayed at a time on the screen. A List 
+can also allow multiple selection, so that more than one choice can be 
+selected. 
+Normally, a scrollbar is associated with the List 
+to enable the user to move to the items that do not fit on the screen. 
+On some platforms, the List 
+may not display the scrollbar if there is enough room to display all choices. 
+A List can be resized by the 
+LayoutManager according to 
+the space available. Figure 9.2 shows two lists, one of which has no items to display.
+List MethodsConstructors
+public List () 
+This constructor creates an empty List 
+with four visible lines. You must rely on the current LayoutManager 
+to resize the List or override 
+the preferredSize() (version 
+1.0) or getPreferredSize() 
+(version 1.1) method to affect the size of the displayed List. 
+A List created with this constructor 
+is in single-selection mode, so the user can select only one item at a 
+time. 
+public List (int rows) 
+This constructor creates a List 
+that has rows visible lines. 
+This is just a request; the LayoutManager 
+is free to adjust the height of the List 
+to some other amount based upon available space. A List 
+created with this constructor is in single-selection mode, so the user 
+will be able to select only one item at a time. 
+public List (int rows, boolean multipleSelections) 
+The final constructor for List 
+creates a List that has rows 
+visible lines. This is just a request; the LayoutManager 
+is free to adjust the height of the List 
+to some other amount based upon available space. If multipleSelections 
+is true, this List 
+permits multiple items to be selected. If false, 
+this is a single-selection list. 
+Figure 9.2: Two lists; the list on the right is empty
+Content control
+public int getItemCount ()  public int countItems () 
+The getItemCount() method returns 
+the length of the list. The length of the list is the number of items in 
+the list, not the number of visible rows. 
+countItems() is the Java 1.0 
+name for this method. 
+public String getItem (int index) 
+The getItem() method returns 
+the String representation for 
+the item at position index. 
+The String is the parameter 
+passed to the addItem() or 
+add()  method. 
+public String[] getItems ()  
+The getItems() method returns 
+a String array that contains 
+all the elements in the List. 
+This method does not care if an item is selected or not. 
+public synchronized void add (String item)  public synchronized void addItem (String item) 
+The add() method adds item 
+as the last entry in the List. If item 
+already exists in the list, this method adds it again. 
+addItem() is the Java 1.0 name 
+for this method. 
+public synchronized void add (String item, int index)  public synchronized void addItem (String item, int index) 
+This version of the add() method has an 
+additional parameter, index, 
+which specifies where to add item 
+to the List. If index 
+&lt; 0 or index 
+&gt;= getItemCount(), 
+item is added to the end 
+of the List. The position count 
+is zero based, so if index 
+is 0, it will be added as the first item. 
+addItem() is the Java 1.0 name 
+for this method. 
+public synchronized void replaceItem (String newItem, int index) 
+The replaceItem() method replaces 
+the contents at position index 
+with newItem. If the item at 
+index has been selected, newItem 
+will not be selected. 
+public synchronized void removeAll ()  public synchronized void clear () 
+The removeAll() method clears 
+out all the items in the list. 
+clear() is the Java 1.0 name 
+for this method. 
+NOTE: 
+Early versions (Java1.0) of the clear() 
+method did not work reliably across platforms. You were better off calling the method 
+listVar.delItems(0, listVar.countItems()-1), 
+where listVar is your List 
+instance. 
+public synchronized void remove (String item)  
+The remove() method removes 
+item from the list of available 
+choices. If item appears in 
+the List several times, only 
+the first instance is removed. If item 
+is null, remove() 
+throws the run-time exception NullPointerException. 
+If item is not found in the 
+List, remove() 
+throws the IllegalArgumentException run-time exception. 
+public synchronized void remove (int position)  public synchronized void delItem (int position) 
+The remove() method removes 
+the entry at position from 
+the List. If position 
+is invalid--either position 
+&lt; 0 or position &gt;= getItemCount()--remove() 
+throws the ArrayIndexOutOfBoundsException 
+run-time exception with a message indicating that position 
+was invalid. 
+delItem() is the Java 1.0 name 
+for this method. 
+public synchronized void delItems (int start, int end) 
+The delItems() method removes 
+entries from position start 
+to position end from the List. 
+If either parameter is invalid--either start 
+&lt; 0 or end &gt;= getItemCount()--delItems() 
+throws the ArrayIndexOutOfBoundsException 
+run-time exception with a message indicating which position was invalid. If start 
+is greater than end, nothing 
+happens.
+Selection and positioning
+public synchronized int getSelectedIndex () 
+The getSelectedIndex() method 
+returns the position of the selected item. If nothing is selected in the 
+List, getSelectedIndex() 
+returns -1. The value -1 is also returned if the List 
+is in multiselect mode and multiple items are selected. For multiselection 
+lists, use getSelectedIndexes() instead. 
+public synchronized int[] getSelectedIndexes () 
+The getSelectedIndexes() method 
+returns an integer array of the selected items. If nothing is selected, 
+the array will be empty. 
+public synchronized String getSelectedItem () 
+The getSelectedItem() method 
+returns the label of the selected item. The label is the string used in 
+the add() or addItem() 
+call. If nothing is selected in the List, 
+getSelectedItem() returns null. 
+The return value is also null 
+if List is in multiselect 
+mode and multiple items are selected. For multiselection lists, use getSelectedItems() instead. 
+public synchronized String[] getSelectedItems () 
+The getSelectedItems() method 
+returns a String array of the 
+selected items. If nothing is selected, the array is empty. 
+public synchronized Object[] getSelectedObjects () 
+The getSelectedObjects() method 
+returns the results of the method getSelectedItems() 
+as an Object array instead 
+of a String array, to conform 
+to the ItemSelectable interface. 
+If nothing is selected, the returned array is empty. 
+public synchronized void select (int index) 
+The select() method selects 
+the item at position index, 
+which is zero based. If the List 
+is in single-selection mode, any other selected item is deselected. If 
+the List is in multiple-selection 
+mode, calling this method has no effect on the other selections. The item 
+at position index is made visible. 
+NOTE: 
+A negative index seems to select everything within the List. 
+This seems more like an irregularity than a feature to rely upon. 
+public synchronized void deselect (int index) 
+The deselect() method deselects 
+the item at position index, which is zero based. deselect() 
+does not reposition the visible elements. 
+public boolean isIndexSelected (int index)  public boolean isSelected (int index) 
+The isIndexSelected() method 
+checks whether index is currently 
+selected. If it is, isIndexSelected() 
+returns true; otherwise, it 
+returns false. 
+isSelected() is the Java 1.0 
+name for this method. 
+public boolean isMultipleMode ()  public boolean allowsMultipleSelections () 
+The isMultipleMode() method 
+returns the current state of the List. 
+If the List is in multiselection 
+mode, isMultipleMode() returns 
+true; otherwise, it returns 
+false. 
+allowsMultipleSelections() 
+is the Java 1.0 name for this method. 
+public void setMultipleMode (boolean value)  public void setMultipleSelections (boolean value) 
+The setMultipleMode() method 
+allows you to change the current state of a List 
+from one selection mode to the other. The currently selected items change 
+when this happens. If value 
+is true and the List 
+is going from single- to multiple-selection mode, the selected item gets 
+deselected. If value is false 
+and the List is going from 
+multiple to single, the last item physically selected remains selected 
+(the last item clicked on in the list, not the item with the highest index). 
+If there was no selected item, the first item in the list becomes selected, 
+or the last item that was deselected 
+becomes selected. If staying within 
+the same mode, setMultipleMode() 
+has no effect on the selected items. 
+setMultipleSelections() is 
+the Java 1.0 name for this method. 
+public void makeVisible (int index) 
+The makeVisible() method ensures 
+that the item at position index 
+is displayed on the screen. This is useful if you want to make sure a certain 
+entry is displayed when another action happens on the screen. 
+public int getVisibleIndex () 
+The getVisibleIndex() method 
+returns the last index from a call to the method makeVisible(). 
+If makeVisible() was never 
+called, -1 is returned. 
+Sizing
+public int getRows () 
+The getRows() method returns 
+the number of rows passed to the constructor of the List. 
+It does not return the number of visible rows. To get a rough idea of the 
+number of visible rows, compare the getSize() 
+of the component with the results of getPreferredSize(getRows()). 
+public Dimension getPreferredSize (int rows)  public Dimension preferredSize (int rows) 
+The getPreferredSize() method 
+returns the preferable Dimension 
+(width and height) for the size of a List 
+with a height of rows. The 
+rows specified may be different 
+from the rows designated in the constructor. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getPreferredSize ()  public Dimension preferredSize () 
+The getPreferredSize() method 
+returns the Dimension (width 
+and height) for the preferred size of the List. 
+Without the rows parameter, this version of getPreferredSize() 
+uses the constructor's number of rows to calculate the List's 
+preferred size. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getMiminumSize (int rows)  public Dimension minimumSize (int rows) 
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of a List 
+with a height of rows. The 
+rows specified may be different 
+from the rows designated in the constructor. For a List, 
+getMinimumSize() and getPreferredSize() 
+should return the same dimensions. 
+minimumSize() is the Java 1.0 
+name for this method. 
+public Dimension getMiminumSize ()  public Dimension minimumSize () 
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of the List. 
+Without the rows parameter, this getMinimumSize() 
+uses the constructor's number of rows to calculate the List's 
+minimum size. 
+minimumSize() is the Java 1.0 
+name for this method. 
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method creates 
+the List peer. If you 
+override this method, call super.addNotify() 
+first, then add your customizations for the new class. You will then be able 
+to do everything you need with the information about the newly created 
+peer. 
+public synchronized void removeNotify () 
+The removeNotify() method destroys 
+the peer of the List and removes 
+it from the screen. Prior to the List 
+peer's destruction, the last selected entry is saved. If you override 
+this method for a specific List, 
+issue the particular commands that you need for your new object, then call 
+super.removeNotify() last. 
+protected String paramString ()  
+When you call the toString() 
+method of List, the default 
+toString() method of Component 
+is called. This in turn calls paramString(), 
+which builds up the string to display. At the List 
+level, the currently selected item (getSelectedItem()) 
+is appended to the output. Using Figure 9.2 as an 
+example, the results would be the following: 
+java.awt.List[0,34,107x54,selected=null]
+List Events
+The primary event for a List 
+occurs when the user selects an item in the list. With the 1.0 event model, 
+double-clicking a selection causes an ACTION_EVENT 
+and triggers the action() method, 
+while single-clicking causes a LIST_SELECT or LIST_DESELECT event. Once 
+the List has the input focus, 
+it is possible to change the selection by using the arrow or keyboard keys. 
+The arrow keys scroll through the list of choices, triggering the KEY_ACTION, 
+LIST_SELECT, LIST_DESELECT, 
+and KEY_ACTION_RELEASE events, 
+and thus the keyDown(), handleEvent(), 
+and keyUp() methods (no specific 
+method gets called for LIST_SELECT 
+and LIST_DESELECT). action() 
+is called only when the user double-clicks on an item with the mouse. If 
+the mouse is used to scroll through the list, no mouse events are triggered; 
+ACTION_EVENT is generated 
+only when the user double-clicks on an item. 
+With the 1.1 event model, you register an ItemListener 
+with addItemListener() 
+or an ActionListener 
+with the addActionListener() 
+method. When the user selects the List, 
+either the ItemListener.itemStateChanged() 
+method or the ActionListener.actionPerformed() 
+method is called through the protected List.processItemEvent() 
+method or List.processActionEvent() 
+method. Key, mouse, and focus listeners are registered through the three Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. Action
+public boolean action (Event e, Object o)
+The action() method for a List 
+is called when the user double-clicks on any item in the List. 
+e is the Event 
+instance for the specific event, while o 
+is the label for the item selected, from the add() 
+or addItem() call. If List 
+is in multiple-selection mode, you might not wish to catch this event because 
+it's not clear whether the user wanted to choose the item just selected 
+or all of the items selected. You can solve this problem by putting a multi-selecting 
+list next to a Button that 
+the user presses when the selection process is finished. Capture the event 
+generated by the Button. The 
+following example shows how to set up and handle a list in this manner, 
+with the display shown in Figure 9.3. In this example, 
+I just print out the selections to prove that I captured them. 
+import java.awt.*;
+import java.applet.*;
+public class list3 extends Applet {
+   List l;
+   public void init () {
+        String fonts[];
+        fonts = Toolkit.getDefaultToolkit().getFontList();
+        l = new List(4, true);
+        for (int i = 0; i &lt; fonts.length; i++) {
+            l.addItem (fonts[i]);
+        }
+        setLayout (new BorderLayout (10, 10));
+        add ("North", new Label ("Pick Font Set"));
+        add ("Center", l);
+        add ("South", new Button ("Submit"));
+        resize (preferredSize());
+        validate();
+   }
+   public boolean action (Event e, Object o) {
+        if (e.target instanceof Button) {
+             String chosen[] = l.getSelectedItems();
+             for (int i=0;i&lt;chosen.length;i++)
+                System.out.println (chosen[i]);
+        }
+        return false;
+   }
+}
+Figure 9.3: Multiselect List
+Keyboard
+Ordinarily, List generates all 
+the KEY events once it has 
+the input focus. But the way it handles keyboard input differs slightly 
+depending upon the selection mode of the list. Furthermore, each platform 
+offers slightly different behavior, so code that depends on keyboard events 
+in List is not portable. One 
+strategy is to take advantage of the keyboard events when they are available 
+but allow for another way of managing the list in case they are not. 
+public boolean keyDown (Event e, int key)
+The keyDown() method is called 
+whenever the user presses a key while the List 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyDown() 
+could be either KEY_PRESS for 
+a regular key or KEY_ACTION 
+for an action-oriented key (i.e., arrow or function key). If you check 
+the current selection in this method through getSelectedItem() 
+or getSelectedIndex(), you 
+will actually be told the previously selected item because the List's 
+selection has not changed yet. keyDown() 
+is not called when the user selects items with the mouse. 
+public boolean keyUp (Event e, int key)
+The keyUp() method is called 
+whenever the user releases a key while the List 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyUp() 
+could be either KEY_RELEASE 
+for a regular key or KEY_ACTION_RELEASE 
+for an action-oriented key (i.e., arrow or function key). 
+Mouse
+Ordinarily, the List component 
+does not trigger any mouse events. Double-clicking the mouse over any element 
+in the list generates an ACTION_EVENT. 
+Single-clicking could result in either a LIST_SELECT 
+or LIST_DESELECT, depending 
+on the mode of the List and 
+the current state of the item chosen. When the user changes the selection 
+with the mouse, the ACTION_EVENT 
+is posted only when an item is double-clicked. List
+There is a special pair of events for lists: LIST_SELECT 
+and LIST_DESELECT. No special 
+method is called when these events are triggered. However, you can catch 
+them in the handleEvent() method. 
+If the List is in single-selection 
+mode, a LIST_SELECT event is 
+generated whenever the user selects one of the items in the List. 
+In multiple-selection mode, you will get a LIST_SELECT 
+event when an element gets selected and a LIST_DESELECT 
+event when it is deselected. The following code shows how to use this event 
+type. 
+public boolean handleEvent (Event e) {
+    if (e.id == Event.LIST_SELECT) {
+        System.out.println ("Selected item: " + e.arg);
+        return true;
+    } else {
+        return super.handleEvent (e);
+    }
+}
+Focus
+Normally, the List component 
+does not reliably trigger any focus events. Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners, and they are told when 
+the event happens. 
+public void addItemListener(ItemListener listener)  
+The addItemListener() method 
+registers listener as an object 
+interested in being notified when an ItemEvent 
+passes through the EventQueue 
+with this List as its target. 
+The listener.itemStateChanged() 
+method is called when these events occur. Multiple listeners can be registered. 
+public void removeItemListener(ItemListener listener)  
+The removeItemListener() method 
+removes listener as an interested 
+listener. If listener is not 
+registered, nothing happens. 
+public void addActionListener(ActionListener listener)  
+The addActionListener() method 
+registers listener as an object 
+interested in being notified when an ActionEvent 
+passes through the EventQueue 
+with this List as its target. 
+The listener.actionPerformed() 
+method is called when these events occur. Multiple listeners can be registered. 
+public void removeActionListener(ActionListener listener)  
+The removeActionListener() 
+method removes listener as 
+a interested listener. If listener 
+is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+all AWTEvents with this List 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+List, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding the method processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processItemEvent(ItemEvent e)  
+The processItemEvent() method 
+receives all ItemEvents with 
+this List as its target. processItemEvent() 
+then passes them along to any listeners for processing. When you subclass 
+List, overriding processItemEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processItemEvent() 
+is like overriding handleEvent() to 
+deal with LIST_SELECT and LIST_DESELECT 
+using the 1.0 event model. 
+If you override processItemEvent(), 
+remember to call the method super.processItemEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processActionEvent(ActionEvent e)  
+The processActionEvent() method 
+receives all ActionEvents with 
+this List as its target. processActionEvent() 
+then passes them along to any listeners for processing. When you subclass 
+List, overriding processActionEvent() 
+allows you to process all action events yourself, before sending them to 
+any listeners. In a way, overriding processActionEvent() 
+is like overriding action() using 
+the 1.0 event model. 
+If you override processActionEvent(), 
+remember to call the method super.processActionEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+Choice
+Checkbox
+ 
+ 
+ 
+ 
+ 
+ 
+ 

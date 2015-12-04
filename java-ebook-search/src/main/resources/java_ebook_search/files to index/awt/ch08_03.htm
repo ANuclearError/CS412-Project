@@ -1,0 +1,406 @@
+
+[Chapter 8] 8.3 TextArea
+Chapter 8Input Fields
+8.3 TextArea
+TextArea is the TextComponent 
+for multiline input. Some constructors permit you to set the rows and 
+columns of the TextArea on 
+the screen. However, the LayoutManager 
+may change your settings. As with TextField, 
+the only way to limit the number of characters that a user can enter is 
+to override the keyDown() method. 
+The text in a TextArea appears 
+left justified, and the justification is not customizable. 
+In Java 1.1, you can control the appearance of a TextArea scrollbar; earlier versions gave you no control over the scrollbars. When 
+visible, the vertical scrollbar is on the right of the TextArea, 
+and the horizontal scrollbar is on the bottom. You can remove either scrollbar 
+with the help of several new TextArea 
+constants; you can't move them to another side. When the horizontal 
+scrollbar is not present, the text wraps automatically when the user reaches 
+the right side of the TextArea. 
+Prior to Java 1.1, there was no way to enable word wrap. 
+TextArea VariablesConstants
+The constants for TextArea 
+are new to Java 1.1; they allow you to control the visibility and word wrap policy of a TextArea 
+scrollbar. There is no way to listen for 
+the events when a user scrolls a TextArea. 
+public static final int SCROLLBARS_BOTH  
+The SCROLLBARS_BOTH mode is 
+the default for TextArea. It 
+shows both scrollbars all the time and does no word wrap. 
+public static final int SCROLLBARS_HORIZONTAL_ONLY  
+The SCROLLBARS_HORIZONTAL_ONLY 
+mode displays a scrollbar along the bottom of the TextArea. 
+When this scrollbar is present, word wrap is disabled. 
+public static final int SCROLLBARS_NONE  
+The SCROLLBARS_NONE mode displays 
+no scrollbars around the TextArea 
+and enables word wrap. If the text is too long, the TextArea 
+displays the lines surrounding the cursor. You can use the cursor to move 
+up and down within the TextArea, 
+but you cannot use a scrollbar to navigate. Because this mode has no horizontal 
+scrollbar, word wrap is enabled. 
+public static final int SCROLLBARS_VERTICAL_ONLY  
+The SCROLLBARS_VERTICAL_ONLY 
+mode displays a scrollbar along the right edge of the TextArea. 
+If the text is too long to display, you can scroll within the area. Because 
+this mode has no horizontal scrollbar, word wrap is enabled. 
+TextArea MethodsConstructors
+public TextArea () 
+This constructor creates an empty TextArea 
+with both scrollbars. The TextArea 
+is 0 rows high and 0 columns wide. Depending upon the platform, the TextArea 
+could be really small (and useless) or rather large. It is a good idea 
+to use one of the other constructors to control the size of the TextArea. 
+public TextArea (int rows, int columns) 
+This constructor creates an empty TextArea 
+with both scrollbars. The TextArea 
+is rows high and columns 
+wide. 
+public TextArea (String text) 
+This constructor creates a TextArea 
+with an initial content of text 
+and both scrollbars. The TextArea 
+is 0 rows high and 0 columns wide. Depending upon the platform, the TextArea 
+could be really small (and useless) or rather large. It is a good idea 
+to use one of the other constructors to control the size of the TextArea. 
+public TextArea (String text, int rows, int columns) 
+This constructor creates a TextArea 
+with an initial content of text. 
+The TextArea is rows 
+high and columns wide and has 
+both scrollbars. 
+The following example uses the first four constructors. 
+The results are shown in Figure 8.3. With the size-less 
+constructors, notice that Windows 95 creates a rather large TextArea. 
+UNIX systems create a much smaller area. Depending upon the LayoutManager, 
+the TextAreas could be resized 
+automatically. 
+import java.awt.TextArea;
+public class textas extends java.applet.Applet {
+    public void init () {
+        add (new TextArea ());                     // A
+        add (new TextArea (3, 10));                // B
+        add (new TextArea ("Empty Area"));         // C
+        add (new TextArea ("Empty Area", 3, 10));  // D
+    }
+}
+Figure 8.3: TextArea constructor
+public TextArea (String text, int rows, int columns, int scrollbarPolicy)  
+The final constructor creates a TextArea 
+with an initial content of text. 
+The TextArea is rows 
+high and columns wide. The 
+initial scrollbar display policy is designated by the scrollbarPolicy 
+parameter and is one of the TextArea 
+constants in the previous example. This constructor is the only way provided to change the 
+scrollbar visibility; there is no setScrollbarVisibility() 
+method. Figure 8.4 displays the different settings. 
+Figure 8.4: TextArea policies
+Setting text
+The text-setting methods are usually called in response to an external 
+event. When you handle the insertion position, you must translate it from 
+the visual row and column to a one-dimensional position. It is easier to 
+position the insertion point based upon the beginning, end, or current selection 
+(getSelectionStart() and getSelectionEnd()). 
+public void insert (String string, int position)  public void insertText (String string, int position) 
+The insert() method inserts 
+string at position 
+into the TextArea. If position 
+is beyond the end of the TextArea, 
+string is appended to the end 
+of the TextArea. 
+insertText() is the Java 1.0 name for this method. 
+public void append (String string)  public void appendText (String string) 
+The append() method inserts 
+string at the end of the TextArea. 
+appendText() is 
+the Java 1.0 name for this method. 
+public void replaceRange (String string, int startPosition, int endPosition)  public void replaceText (String string, int startPosition, int endPosition) 
+The replaceRange() method replaces 
+the text in the current TextArea 
+from startPosition to endPosition 
+with string. If endPosition 
+is before startPosition, it 
+may or may not work as expected. (For instance, on a Windows 95 platform, 
+it works fine when the TextArea 
+is displayed on the screen. However, when the TextArea 
+is not showing, unexpected results happen. Other platforms may vary.) If 
+startPosition is 0 and endPosition 
+is the length of the contents, this method functions the same as TextComponent.setText(). 
+replaceText() is 
+the Java 1.0 name for this method. 
+Sizing
+public int getRows () 
+The getRows() method returns 
+the number of rows set by the constructor or a subsequent call to setRows(). 
+This could be different from the displayed height of the TextArea. 
+public void setRows (int rows)  
+The setRows() method changes 
+the preferred number of rows to display for the TextField 
+to rows. Because the current 
+LayoutManager will do what 
+it wants, the new setting may be ignored. If rows &lt; 0, setRows() 
+throws the run-time exception IllegalArgumentException. 
+public int getColumns () 
+The getColumns() method returns 
+the number of columns set by the constructor or a subsequent call to setColumns(). 
+This could be different from the displayed width of the TextArea. 
+public void setColumns (int columns)  
+The setColumns() method changes 
+the preferred number of columns to display for the TextArea 
+to columns. Because the current 
+LayoutManager will do what 
+it wants, the new setting may be ignored. If columns 
+&lt; 0, setColumns() throws 
+the run-time exception IllegalArgumentException. 
+public Dimension getPreferredSize (int rows, int columns)  public Dimension preferredSize (int rows, int columns)  
+The getPreferredSize() method 
+returns the Dimension (width 
+and height) for the preferred size of the TextArea 
+with a preferred height of rows 
+and width of columns. The rows 
+and columns specified may be 
+different from the current settings. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getPreferredSize (int rows, int columns)  public Dimension preferredSize ()  
+The getPreferredSize() method 
+returns the Dimension (width 
+and height) for the preferred size of the TextArea. 
+Without the rows and columns parameters, this getPreferredSize() 
+uses the constructor's number of rows and columns to calculate the 
+TextArea's preferred 
+size. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getMinimumSize (int rows, int columns)  public Dimension minimumSize (int rows, int columns)   
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of the TextArea 
+with a height of rows and width 
+of columns. The rows 
+and columns specified may be 
+different from the current settings. 
+minimumSize() is the Java 1.0 
+name for this method. 
+public Dimension getMinimumSize ()  public Dimension minimumSize ()  
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of the TextArea. 
+Without the rows and columns parameters, this getMinimumSize() 
+uses the current settings for rows and columns to calculate the TextArea's 
+minimum size. 
+minimumSize() is the Java 1.0 
+name for this method. 
+Miscellaneous methods
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the TextArea peer. 
+If you override this method, call super.addNotify() 
+first, then add your customizations for the new class. You will then be 
+able to do everything you need with the information about the newly created 
+peer. 
+public int getScrollbarVisibility()  
+The getScrollbarVisibility() 
+method retrieves the scrollbar visibility setting, which is set by the 
+constructor. There is no setScollbarVisibility() 
+method to change the setting. The return value is one of the TextArea 
+constants: SCROLLBARS_BOTH, 
+SCROLLBARS_HORIZONTAL_ONLY, 
+SCROLLBARS_NONE, or SCROLLBARS_VERTICAL_ONLY. 
+protected String paramString ()  
+When you call the toString() 
+method of TextArea, the default 
+toString() method of Component 
+is called. This in turn calls paramString(), 
+which builds up the string to display. The TextArea 
+level adds the number of rows and columns for the TextArea, 
+and Java 1.1 adds the scrollbar visibility policy. Using new 
+TextArea(`Empty Area`, 3, 10), the results displayed 
+could be: 
+java.awt.TextArea[text0,0,0,0x0,invalid,text="Empty Area",
+editable,selection=0-0, rows=3,columns=10, scrollbarVisibility=both]
+TextArea Events
+With the 1.0 event model, the TextArea 
+component can generate KEY_PRESS 
+and KEY_ACTION (which calls 
+keyDown()) along with KEY_RELEASE 
+and KEY_ACTION_RELEASE (which 
+called keyUp()). There is no 
+ACTION_EVENT generated for 
+TextArea. 
+NOTE: 
+The GOT_FOCUS and LOST_FOCUS 
+events can be generated by this component but not reliably across platforms. 
+Currently, they are generated on most UNIX platforms but not on Microsoft 
+Windows NT/95 under Java 1.0. These events are generated under Java 1.1. 
+Similarly, the mouse events are not generated with JDK 1.0.2. See 
+Appendix C for more information about platform dependencies. 
+With the Java 1.1 event model, there are no listeners specific to TextArea. 
+You can register key, mouse, and focus listeners through the Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. To register listeners for text events, call TextComponent.addTextListener(). Action
+The TextArea component has 
+no way to trigger the action event, since carriage return is a valid character. 
+You would need to put something like a Button 
+on the screen to cause an action for a TextArea. 
+The following Rot13 program 
+demonstrates this technique. The user enters text in the TextArea 
+and selects the Rotate Me button to rotate the text. If the 
+user selects Rotate Me again, it rotates again, back to the 
+original position. Without the button, there would be no way to trigger the event. 
+Figure 8.5 shows this example in action. 
+import java.awt.*;
+public class Rot13 extends Frame {
+    TextArea ta;
+    Component rotate, done;
+    public Rot13 () {
+        super ("Rot-13 Example");
+        add ("North", new Label ("Enter Text to Rotate:"));
+        ta = (TextArea)(add ("Center", new TextArea (5, 40)));
+        Panel p = new Panel ();
+        rotate = p.add (new Button ("Rotate Me"));
+        done = p.add (new Button ("Done"));
+        add ("South", p);
+    }
+    public static void main (String args[]) {
+        Rot13 rot = new Rot13();
+        rot.pack();
+        rot.show();
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            hide();
+            dispose();
+            System.exit (0);
+            return true;
+        }
+        return super.handleEvent (e);
+    }
+    public boolean action (Event e, Object o) {
+        if (e.target == rotate) {
+            ta.setText (rot13Text (ta.getText()));
+            return true;
+        } else if (e.target == done) {
+            hide();
+            dispose();
+            System.exit (0);
+        }
+        return false;
+    }
+    String rot13Text (String s) {
+        int len = s.length();
+        StringBuffer returnString = new StringBuffer (len);
+        char c;
+        for (int i=0;i&lt;len;i++) {
+            c = s.charAt (i);
+            if (((c &gt;= 'A') &amp;&amp; (c &lt;= 'M')) ||
+                ((c &gt;= 'a') &amp;&amp; (c &lt;= 'm')))
+                c += 13;
+            else if (((c &gt;= 'N') &amp;&amp; (c &lt;= 'Z')) ||
+                ((c &gt;= 'n') &amp;&amp; (c &lt;= 'z')))
+                c -= 13;
+            returnString.append (c);
+        }
+        return returnString.toString();
+    }
+}
+Figure 8.5: TextArea with activator button
+Keyboard
+Ordinarily, the TextArea component 
+generates all the key events. 
+public boolean keyDown (Event e, int key) 
+The keyDown() method is called 
+whenever the user presses a key. keyDown() 
+may be called many times in succession if the key remains 
+pressed. e is the Event 
+instance for the specific event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyDown() 
+could be either Event.KEY_PRESS 
+for a regular key or Event.KEY_ACTION 
+for an action-oriented key (i.e., an arrow or function key). Some of the 
+things you can do through this method are validate input, convert each 
+character to
+uppercase, and limit
+the number or type of characters entered. 
+The technique is simple: you just need to remember that the user's 
+keystroke is actually displayed by the TextArea 
+peer, which receives the event after the TextArea 
+itself. Therefore, a TextArea 
+subclass can modify the character displayed by modifying the key 
+field (e.key) of the Event 
+and returning false, which 
+passes the Event on down the 
+chain; remember that returning false 
+indicates that the Event has 
+not been completely processed. The following method uses this technique 
+to convert all alphabetic characters to the opposite case: 
+public boolean keyDown (Event e, int key) {
+    if (Character.isUpperCase ((char)key)) {
+        e.key = Character.toLowerCase ((char)key);
+    } else if (Character.isLowerCase ((char)key)) {
+        e.key = Character.toUpperCase ((char)key);
+    }
+    return false;
+}
+If keyDown() returns true, 
+it indicates that the Event 
+has been completely processed. In this case, the Event 
+never propagates to the peer, and the keystroke is never displayed. 
+public boolean keyUp (Event e, int key) 
+The keyUp() method is called 
+whenever the user releases a key. e 
+is the Event instance for the 
+specific event, while key is 
+the integer representation of the character pressed. The identifier for 
+the event (e.id) for keyUp() 
+could be either Event.KEY_RELEASE 
+for a regular key, or Event.KEY_ACTION_RELEASE 
+for an action-oriented key (i.e., an arrow or function key). 
+Mouse
+Ordinarily, the TextArea component 
+does not trigger any mouse events. 
+NOTE: 
+Mouse events are not generated for TextArea 
+with JDK 1.0.2. See Appendix C for more information about platform dependencies. 
+Focus
+The TextArea component does 
+not reliably generate focus events. 
+NOTE: 
+The GOT_FOCUS and LOST_FOCUS 
+events can be generated by this component but not reliably across platforms. 
+With the JDK, they are generated on most UNIX platforms but not on Microsoft 
+Windows NT/95 under JDK 1.0. These events are generated with JDK 1.1. See Appendix 
+C for more information about platform dependencies. 
+public boolean gotFocus (Event e, Object o)   
+The gotFocus() method is triggered 
+when the TextArea gets the 
+input focus. e is the Event 
+instance for the specific event, while o 
+is a String representation 
+of the current contents (getText()). 
+public boolean lostFocus (Event e, Object o)   
+The lostFocus() method is 
+triggered when the input focus leaves the TextArea. e 
+is the Event instance for the 
+specific event, while o is 
+a String representation of 
+the current contents (getText()). 
+Listeners and 1.1 event handling
+There are no listeners specific to the TextArea 
+class. You can register Key, mouse, and focus listeners through the Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. Also, you register listeners for text events by calling TextComponent.addTextListener(). 
+TextField
+Extending TextField
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,936 @@
+
+[Chapter 17] Calendar
+Chapter 17The java.util Package
+Calendar
+Name
+Calendar
+Synopsis
+Class Name:
+java.util.Calendar
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.util.GregorianCalendar
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The Calendar class is an abstractclass that is used to convert between
+Date objects, which represent points in time, and
+calendar fields, like months or days of the week. The JDK 1.0
+Date class included calendar and text-formatting methods. As of JDK 1.1, both of these functions have been
+split off from Date in order to support
+internationalization. As of JDK 1.1, Date
+represents only a point in time, measured in milliseconds. A subclass
+of Calendar examines the
+Date in the context of a particular calendar
+system; a Calendar instance is a locale-sensitive object. Also as of
+JDK 1.1, the java.text.DateFormat class generates and parses strings representing points in time.
+Calendar defines a number of symbolic constants. They
+represent either fields or values. For example,
+MONTH is a field constant. It can be passed to
+get() and set() to retrieve and
+adjust the month. AUGUST, on the other hand,
+represents a particular month value. Calling
+get(Calendar.MONTH) could return
+Calendar.AUGUST.
+Internally, Calendar keeps 
+track of a point in time in two ways. First, a "raw" value 
+is maintained, which is simply a count of milliseconds since midnight, 
+January 1, 1970 GMT, or, in other words, a Date object. 
+Second, the calendar keeps track of a number of fields, which are the values 
+that are specific to the Calendar 
+type. These are values such as day of the week, day of the month, and month. 
+The raw millisecond value can be calculated from the field values, or vice 
+versa. 
+When a Date object is computed 
+from the time fields, there may be insufficient information to compute 
+the raw millisecond value. For example, the year and the month could be 
+set, but not the day of the month. In this case, Calendar 
+uses default information to fill in the missing fields. For GregorianCalendar, 
+the default field values are taken from the date of the epoch, or midnight, 
+January 1, 1970 GMT. 
+Another problem that can arise when computing a Date 
+object from the time fields is that of inconsistent information in the 
+fields. For example, the time fields could specify "Sunday, March 
+8, 1997" when in fact March 8, 1997 is a Saturday. If the time fields 
+contain inconsistent information, Calendar 
+gives preference to the combinations of fields in the following order: 
+month and day of the week 
+month, week of the month, and day of the week 
+month, day of the week in the month, and day of the week 
+day of the year 
+day of the week and week of the year 
+hour of the day 
+A.M./P.M. and hour of A.M./P.M. 
+There is also the possibility of ambiguity for certain points in time, 
+so the following rules apply. The time 24:00:00 belongs to the next day 
+and midnight is an A.M. time, while noon is a P.M. time. 
+Class Summary
+public abstract class java.util.Calendar extends java.lang.Object
+                      implements java.lang.Cloneable, java.io.Serializable {
+  // Constants
+  public final static int AM;
+  public final static int AM_PM;
+  public final static int APRIL;
+  public final static int AUGUST;
+  public final static int DATE;
+  public final static int DAY_OF_MONTH;
+  public final static int DAY_OF_WEEK;
+  public final static int DAY_OF_WEEK_IN_MONTH;
+  public final static int DAY_OF_YEAR;
+  public final static int DECEMBER;
+  public final static int DST_OFFSET;
+  public final static int ERA;
+  public final static int FEBRUARY;
+  public final static int FIELD_COUNT;
+  public final static int FRIDAY;
+  public final static int HOUR;
+  public final static int HOUR_OF_DAY;
+  public final static int JANUARY;
+  public final static int JULY;
+  public final static int JUNE;
+  public final static int MARCH;
+  public final static int MAY;
+  public final static int MILLISECOND;
+  public final static int MINUTE;
+  public final static int MONDAY;
+  public final static int MONTH;
+  public final static int NOVEMBER;
+  public final static int OCTOBER;
+  public final static int PM;
+  public final static int SATURDAY;
+  public final static int SECOND;
+  public final static int SEPTEMBER;
+  public final static int SUNDAY;
+  public final static int THURSDAY;
+  public final static int TUESDAY;
+  public final static int UNDECIMBER;
+  public final static int WEDNESDAY;
+  public final static int WEEK_OF_MONTH;
+  public final static int WEEK_OF_YEAR;
+  public final static int YEAR;
+  public final static int ZONE_OFFSET;
+  // Variables
+  protected boolean areFieldsSet;
+  protected int[] fields;
+  protected boolean[] isSet;
+  protected boolean isTimeSet;
+  protected long time;
+  // Constructors
+  protected Calendar();
+  protected Calendar(TimeZone zone, Locale aLocale);
+  // Class Methods
+  public static synchronized Locale[] getAvailableLocales();
+  public static synchronized Calendar getInstance();
+  public static synchronized Calendar getInstance(TimeZone zone);
+  public static synchronized Calendar getInstance(Locale aLocale);
+  public static synchronized Calendar getInstance(TimeZone zone, 
+                                      Locale aLocale);
+  // Instance Methods
+  public abstract void add(int field, int amount);
+  public abstract boolean after(Object when);
+  public abstract boolean before(Object when);
+  public final void clear();
+  public final void clear(int field);
+  public Object clone();
+  public abstract boolean equals(Object when); 
+  public final int get(int field);
+  public int getFirstDayOfWeek();
+  public abstract int getGreatestMinimum(int field);
+  public abstract int getLeastMaximum(int field);
+  public abstract int getMaximum(int field);
+  public int getMinimalDaysInFirstWeek();
+  public abstract int getMinimum(int field);
+  public final Date getTime();
+  public TimeZone getTimeZone();
+  public boolean isLenient();
+  public final boolean isSet(int field);
+  public abstract void roll(int field, boolean up);
+  public final void set(int field, int value);
+  public final void set(int year, int month, int date);
+  public final void set(int year, int month, int date, 
+                       int hour, int minute);
+  public final void set(int year, int month, int date, int hour, 
+                       int minute, int second);
+  public void setFirstDayOfWeek(int value);
+  public void setLenient(boolean lenient);
+  public void setMinimalDaysInFirstWeek(int value);
+  public final void setTime(Date date);
+  public void setTimeZone(TimeZone value);
+  // Protected Instance Methods
+  protected void complete();
+  protected abstract void computeFields();
+  protected abstract void computeTime();
+  protected long getTimeInMillis();
+  protected final int internalGet(int field);
+  protected void setTimeInMillis(long millis);
+}
+Constants
+AM
+public final static int AM
+Description
+A constant value that represents morning times. 
+AM_PM
+public final static int AM_PM
+Description
+A field constant that represents the A.M./P.M. 
+flag of this object. 
+APRIL
+public final static int APRIL
+Description
+A constant value that represents the month of 
+April. 
+AUGUST
+public final static int AUGUST
+Description
+A constant value that represents the month of 
+August. 
+DATE
+public final static int DATE
+Description
+A field constant that represents the day of the 
+month of this object. 
+DAY_OF_MONTH
+public final static int DAY_OF_MONTH
+Description
+A field constant that represents the day of the 
+month of this object. This field is synonymous with DATE. 
+DAY_OF_WEEK
+public final static int DAY_OF_WEEK
+Description
+A field constant that represents the day of the 
+week of this object. 
+DAY_OF_WEEK_IN_MONTH
+public final static int DAY_OF_WEEK_IN_MONTH
+Description
+A field constant that represents the day of the 
+week in the current month. For example, February 10, 1997, has a DAY_OF_WEEK_IN_MONTH 
+value of 2 because it is the second Monday in February for that year. 
+DAY_OF_YEAR
+public final static int DAY_OF_YEAR
+Description
+A field constant that represents the day of the 
+year of this object. January 1 is the first day of the year. 
+DECEMBER
+public final static int DECEMBER
+Description
+A constant value that represents the month of 
+December. 
+DST_OFFSET
+public final static int DST_OFFSET
+Description
+A field constant that represents the offset due 
+to daylight savings time, in milliseconds, of this object. 
+ERA
+public final static int ERA
+Description
+A field constant that represents the era of this 
+object. A Gregorian calendar has two eras, BC and AD. 
+FEBRUARY
+public final static int FEBRUARY
+Description
+A constant value that represents the month of 
+February. 
+FIELD_COUNT
+public final static int FIELD_COUNT
+Description
+A constant that represents the number of attribute 
+fields for Calendar objects. 
+FRIDAY
+public final static int FRIDAY
+Description
+A constant value that represents the day Friday. 
+HOUR
+public final static int HOUR
+Description
+A field constant that represents the hour of 
+this object. 
+HOUR_OF_DAY
+public final static int HOUR_OF_DAY
+Description
+A field constant that represents the hour of 
+the day of this object. A time of 1:00 P.M. has an HOUR 
+value of 1, but an HOUR_OF_DAY 
+value of 13. 
+JANUARY
+public final static int JANUARY
+Description
+A constant value that represents the month of 
+January. 
+JULY
+public final static int JULY
+Description
+A constant value that represents the month of 
+July. 
+JUNE
+public final static int JUNE
+Description
+A constant value that represents the month of 
+June. 
+MARCH
+public final static int MARCH
+Description
+A constant value that represents the month of 
+March. 
+MAY
+public final static int MAY
+Description
+A constant value that represents the month of 
+May. 
+MILLISECOND
+public final static int MILLISECOND
+Description
+A field constant that represents the milliseconds 
+of this object. 
+MINUTE
+public final static int MINUTE
+Description
+A field constant that represents the minutes 
+of this object. 
+MONDAY
+public final static int MONDAY
+Description
+A constant value that represents the day Monday. 
+MONTH
+public final static int MONTH
+Description
+A field constant that represents the month of 
+this object. 
+NOVEMBER
+public final static int NOVEMBER
+Description
+A constant value that represents the month of 
+November. 
+OCTOBER
+public final static int OCTOBER
+Description
+A constant value that represents the month of 
+October. 
+PM
+public final static int PM
+Description
+A constant value that represents afternoon and 
+evening times. 
+SATURDAY
+public final static int SATURDAY
+Description
+A constant value that represents the day Saturday. 
+SECOND
+public final static int SECOND
+Description
+A field constant that represents the seconds 
+of this object. 
+SEPTEMBER
+public final static int SEPTEMBER
+Description
+A constant value that represents the month of 
+September. 
+SUNDAY
+public final static int SUNDAY
+Description
+A constant value that represents the day Sunday. 
+THURSDAY
+public final static int THURSDAY
+Description
+A constant value that represents the day Thursday. 
+TUESDAY
+public final static int TUESDAY
+Description
+A constant value that represents the day Tuesday. 
+UNDECIMBER
+public final static int UNDECIMBER
+Description
+A constant value that represents the thirteenth 
+month used in lunar calendars. 
+WEDNESDAY
+public final static int WEDNESDAY
+Description
+A constant value that represents the day Wednesday. 
+WEEK_OF_MONTH
+public final static int WEEK_OF_MONTH
+Description
+A field constant that represents the week of 
+the month of this object. 
+WEEK_OF_YEAR
+public final static int WEEK_OF_YEAR
+Description
+A field constant that represents the week of 
+the year of this object. 
+YEAR
+public final static int YEAR
+Description
+A field constant that represents the year of 
+this object. 
+ZONE_OFFSET
+public final static int ZONE_OFFSET
+Description
+A field constant that represents the raw time 
+zone offset, in milliseconds, of this object. The value should be added 
+to GMT to get local time. 
+Variables
+areFieldsSet
+protected boolean areFieldsSet
+Description
+A boolean value that indicates 
+if the time fields of this Calendar 
+have been set. These fields can be computed from the raw millisecond time 
+value. 
+fields
+protected int[] fields
+Description
+An array that stores the time field values for 
+this Calendar. 
+isSet
+protected boolean[] isSet
+Description
+An array that contains a flag for each entry 
+in the fields array. The value 
+of each flag indicates if the corresponding entry in fields 
+has been set for this Calendar. 
+isTimeSet
+protected boolean isTimeSet
+Description
+A boolean value that indicates 
+if the raw millisecond time value of this Calendar 
+has been set. The value can be computed from the time fields. 
+time
+protected long time
+Description
+The raw time value for this Calendar. 
+The value is the number of milliseconds since midnight, January 1, 1970 
+GMT. 
+Constructors
+Calendar
+protected Calendar()
+Description
+This constructor creates a Calendar 
+that uses the system's default time zone and locale. The default 
+time zone is that returned by TimeZone.getDefault(). 
+The default locale is that returned by Locale.getDefault(). 
+protected Calendar(TimeZone zone, Locale aLocale)
+Parameters
+zone
+The TimeZone 
+to use.
+aLocale
+The Locale 
+to use. 
+Description
+This constructor creates a Calendar 
+that uses the supplied time zone and locale. 
+Class Methods
+getAvailableLocales
+public static synchronized Locale[] getAvailableLocales()
+Returns
+An array of Locale objects 
+for which Calendar objects 
+are installed. 
+Description
+This method returns an array of locales that have corresponding Calendar 
+objects. 
+getInstance
+public static synchronized Calendar getInstance()
+Returns
+A Calendar for the default 
+time zone and locale. 
+Description
+This method returns a newly constructed Calendar 
+for the default time zone and locale. Future implementations
+of this method may infer the subclass of Calendar
+to instantiate based on the default locale. However, the current
+implementation always returns a GregorianCalendar.
+The default time zone is that 
+returned by TimeZone.getDefault(). The 
+default locale is that returned by Locale.getDefault(). 
+public static synchronized Calendar getInstance(TimeZone zone)
+Parameters
+zone
+The TimeZone 
+to use. 
+Returns
+A Calendar for the given time 
+zone and the default locale. 
+Description
+This method returns a newly constructed Calendar 
+for the given time zone and the default locale. Future implementations
+of this method may infer the subclass of Calendar
+to instantiate based on the default locale. However, the current
+implementation always returns a GregorianCalendar.
+The default locale is that 
+returned by Locale.getDefault(). 
+public static synchronized Calendar getInstance(Locale aLocale)
+Parameters
+aLocale
+The Locale 
+to use. 
+Returns
+A Calendar for the given locale 
+and the default time zone. 
+Description
+This method returns a newly constructed Calendar 
+for the given locale and the default time zone. Future implementations
+of this method may infer the subclass of Calendar
+to instantiate based on the given locale. However, the current
+implementation always returns a GregorianCalendar.
+The default time zone is 
+that returned by TimeZone.getDefault(). 
+public static synchronized Calendar getInstance(TimeZone zone, Locale aLocale)
+Parameters
+zone
+The TimeZone 
+to use.
+aLocale
+The Locale 
+to use. 
+Returns
+A Calendar 
+for the given time zone and locale. 
+Description
+This method returns a newly constructed Calendar 
+for the given time zone and locale. Future implementations
+of this method may infer the subclass of Calendar
+to instantiate based on the given locale. However, the current
+implementation always returns a GregorianCalendar.
+Instance Methods
+add
+public abstract void add(int field, int amount)
+Parameters
+field
+The time field to 
+be modified.
+amount
+The amount to add 
+to the specified field value. This value can be negative. 
+Description
+This method adds the given amount to the specified time field. For example, 
+you can compute a date 90 days beyond the current date of this Calendar 
+by calling add(Calendar.DATE, 
+90). 
+after
+public abstract boolean after(Object when)
+Parameters
+when
+The object to compare 
+to this Calendar. 
+Returns
+true if this object is after 
+when; false 
+otherwise. 
+Description
+This method returns true if 
+when is a Calendar 
+object whose value falls before the value of this Calendar. 
+before
+public abstract boolean before(Object when)
+Parameters
+when
+The object to compare 
+to this Calendar. 
+Returns
+true if this object is before 
+when; false 
+otherwise. 
+Description
+This method returns true if 
+when is a Calendar 
+object whose value falls after the value of this Calendar. 
+clear
+public final void clear()
+Description
+This method clears the values of all of the time 
+fields of this Calendar. 
+public final void clear(int field)
+Parameters
+field
+The time field to be cleared. 
+Description
+This method clears the specified time field by setting its value to 0. 
+clone
+public Object clone()
+Returns
+A copy of this Calendar. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this Calendar 
+and returns it. In other words, the returned Calendar 
+has the same time field values and raw time value as this Calendar. 
+equals
+public abstract boolean equals(Object when)
+Parameters
+when
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+when is an instance of Calendar 
+and it contains the same value as the object this method is associated 
+with. 
+get
+public final int get(int field)
+Parameters
+field
+The time field to 
+be retrieved. 
+Returns
+The value of the given time field. 
+Description
+This method returns the value of the specified time field. If the fields 
+of this Calendar have not been 
+set, they are set from the raw time value before the requested field is 
+returned. 
+getFirstDayOfWeek
+public int getFirstDayOfWeek()
+Returns
+The first day of the week for this Calendar. 
+Description
+This method returns the day that is considered the beginning of the week 
+for this Calendar. This value 
+is determined by the Locale 
+of this Calendar. For example, 
+the first day of the week in the United States is Sunday, while in France 
+it is Monday. 
+getGreatestMinimum
+public abstract int getGreatestMinimum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The highest minimum value for the given time field. 
+Description
+This method returns the highest minimum value for the given time field, 
+if the field has a range of minimum values. If the field does not have 
+a range of minimum values, this method is equivalent to getMinimum(). 
+getLeastMaximum
+public abstract int getLeastMaximum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The lowest maximum value for the given time field. 
+Description
+This method returns the lowest maximum value for the given time field, 
+if the field has a range of maximum values. If the field does not have 
+a range of maximum values, this method is equivalent to getMaximum(). For example, for a GregorianCalendar, 
+the lowest maximum value of DATE_OF_MONTH 
+is 28. 
+getMaximum
+public abstract int getMaximum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The maximum value for the given time field. 
+Description
+This method returns the maximum value for the given time field. For example, 
+for a GregorianCalendar, the 
+maximum value of DATE_OF_MONTH 
+is 31. 
+getMinimalDaysInFirstWeek
+public int getMinimalDaysInFirstWeek()
+Returns
+The number of days that must be in the first week of the year. 
+Description
+This method returns the number of days that must be in the first week of 
+the year. For example, a value of 7 indicates that the first week of the 
+year must be a full week, while a value of 1 indicates that the first week 
+of the year can contain a single day. This value is determined by the Locale 
+of this Calendar. 
+getMinimum
+public abstract int getMinimum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The minimum value for the given time field. 
+Description
+This method returns the minimum value for the given time field. For example, 
+for a GregorianCalendar, the 
+minimum value of DATE_OF_MONTH 
+is 1. 
+getTime
+public final Date getTime()
+Returns
+A Date 
+object that represents the point in time represented by this Calendar. 
+Description
+This method returns a newly created Date 
+object that is constructed from the value returned by getTimeInMillis(). 
+getTimeZone
+public TimeZone getTimeZone()
+Returns
+The TimeZone 
+of this Calendar. 
+Description
+This method returns the TimeZone 
+object for this Calendar. 
+isLenient
+public boolean isLenient()
+Returns
+A boolean value that indicates 
+the leniency of this Calendar. 
+Description
+This method returns the current leniency of this Calendar. 
+A value of false indicates 
+that the Calendar throws exceptions 
+when questionable data is passed to it, while a value of true 
+indicates that the Calendar 
+makes its best guess to interpret questionable data. For example, if the 
+Calendar is being lenient, 
+a date such as 
+March 135, 1997 is interpreted as the 134th 
+day after March 1, 1997. 
+isSet
+public final boolean isSet(int field)
+Parameters
+field
+A time field constant. 
+Returns
+true if the time field has 
+been set; false otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not the specified time field has been set. 
+roll
+public abstract void roll(int field, boolean up)
+Parameters
+field
+The time field to 
+be adjusted.
+up
+A boolean 
+value that indicates if the given field should be incremented. 
+Description
+This method adds or subtracts one time unit from the given time field. 
+For example, to increase the current date by one day, you can call roll(Calendar.DATE, 
+true).
+The method maintains the field being rolled within its valid range.
+For example, in a calendar system that uses hours and minutes to
+measure time, rolling the minutes up from 59 sets that field to 0.
+By the same token, rolling that field down from 0 sets it to 59.
+The roll() method does not adjust the value
+of any other field than the one specified by its field 
+argument.  In particular, for calendar systems that have months 
+with different numbers of days, it may be necessary to adjust the 
+month and also year when the day of the month is rolled up. 
+It is the responsibility of the caller of roll() 
+to perform that adjustment.
+set
+public final void set(int field, int value)
+Parameters
+field
+The time field to 
+be set.
+value
+The new value. 
+Description
+This method sets the value of the specified time field. 
+public final void set(int year, int month, int date)
+Parameters
+year
+The value for the 
+year field.
+month
+The value for the 
+month field, where 0 represents the first month.
+date
+The value for the 
+day-of-the-month field. 
+Description
+This method sets the values of the year, month, and day-of-the-month 
+fields of this Calendar. 
+   public final void set(int year, int month, int date, int hour, int minute)  
+Parameters
+year
+The value for the 
+year field.
+month
+The value for the 
+month field, where 0 represents the first month.
+date
+The value for the 
+day-of-the-month field.
+hour
+The value for the 
+hour field.
+minute
+The value for the 
+minute field. 
+Description
+This method sets the values of the year, month, day-of-the-month, 
+hour, and minute fields of this Calendar. 
+   public final void set(int year, int month, int date, int hour, int minute, int second)  
+Parameters
+year
+The value for the 
+year field.
+month
+The value for the 
+month field, where 0 represents the first month.
+date
+The value for the 
+day-of-the-month field.
+hour
+The value for the 
+hour field.
+minute
+The value for the 
+minute field.
+second
+The value for the 
+second field. 
+Description
+This method sets the values of the year, month, day-of-the-month, 
+hour, minute, and second fields of this Calendar. 
+setFirstDayOfWeek
+public void setFirstDayofWeek(int value)
+Parameters
+value
+The value for the 
+first day of the week. 
+Description
+This method sets the day that is considered the beginning of 
+the week for this Calendar. 
+This value should be determined by the Locale 
+of this Calendar. For example, 
+the first day of the week in the United States is Sunday; in France 
+it's Monday. 
+setLenient
+public void setLenient(boolean lenient)
+Parameters
+lenient
+A boolean 
+value that specifies the leniency of this Calendar. 
+Description
+This method sets the leniency of this Calendar. 
+A value of false specifies 
+that the Calendar throws exceptions 
+when questionable data is passed to it, while a value of true 
+indicates that the Calendar 
+makes its best guess to interpret questionable data. For example, if the 
+Calendar is being lenient, 
+a date such as March 135, 1997 is interpreted as the 135th 
+day after March 1, 1997. 
+setMinimalDaysInFirstWeek
+public void setMinimalDaysInFirstWeek(int value)
+Parameters
+value
+The value for the 
+minimum number of days in the first week of the year. 
+Description
+This method sets the minimum number of days in the first week 
+of the year. For example, a value of 7 indicates the first week of 
+the year must be a full week, while a value of 1 indicates the first 
+week of the year can contain a single day. This value should be determined 
+by the Locale of this Calendar. 
+setTime
+public final void setTime(Date date)
+Parameters
+date
+A Date 
+object that represents the new time value. 
+Description
+This method sets the point in time that is represented by this 
+Calendar. 
+setTimeZone
+public void setTimeZone(TimeZone value)
+Parameters
+value
+A TimeZone 
+object that represents the new time zone. 
+Description
+This method is used to set the time zone of this Calendar. 
+Protected Instance Methods
+complete
+protected void complete()
+Description
+This method fills out the fields of this Calendar as much as 
+possible by calling computeTime() 
+and computeFields(). 
+computeFields
+protected abstract void computeFields()
+Description
+This method calculates the time fields of this 
+Calendar from its raw time 
+value. 
+computeTime
+protected abstract void computeTime()
+Description
+This method calculates the raw time value of this Calendar from its time 
+field values. 
+getTimeInMillis
+protected long getTimeInMillis()
+Returns
+The raw time value of this Calendar. 
+Description
+This method returns the raw time value of this Calendar. 
+The value is measured as the number of milliseconds since midnight, January 
+1, 1970 GMT. 
+internalGet
+protected final int internalGet(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The value of the given time field. 
+Description
+This method returns the value of the specified time field without 
+first checking to see if it needs to be computed from the raw time value.
+setTimeInMillis
+protected void setTimeInMillis(long millis)
+Parameters
+millis
+The new raw time 
+value for this Calendar. 
+Description
+This method sets the raw time value of this Calendar. 
+The value is measured as the number of milliseconds since midnight, January 
+1, 1970 GMT. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Cloneable, 
+Date, 
+DateFormat, 
+GregorianCalendar, 
+Locale, 
+Serializable, 
+TimeZone 
+BitSet
+Date
+ 
+ 
+ 
+ 
+ 
+ 
+ 

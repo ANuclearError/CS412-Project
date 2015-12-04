@@ -1,0 +1,49 @@
+
+[Chapter 25] 25.64 java.lang.Throwable (JDK 1.0)
+Chapter 25The java.lang Package
+25.64 java.lang.Throwable (JDK 1.0)
+This is the root class of the Java exception and error
+hierarchy. All exceptions and errors
+are subclasses of Throwable. The
+getMessage() method retrieves any error message
+associated with the exception or error. 
+printStackTrace() prints a stack trace that
+shows where the exception occurred.
+fillInStackTrace() extends the stack trace when
+the exception is partially handled, and then re-thrown.
+public class Throwable extends Object implements Serializable {
+    // Public Constructors
+            public Throwable();
+            public Throwable(String message);
+    // Public Instance Methods
+            public native Throwable fillInStackTrace();
+        1.1public String getLocalizedMessage();
+            public String getMessage();
+            public void printStackTrace();
+            public void printStackTrace(PrintStream s);
+        1.1public void printStackTrace(PrintWriter s);
+            public String toString();  // Overrides Object
+}
+Extended By:
+Error, 
+Exception
+Passed To:
+ExceptionInInitializerError(), 
+InvocationTargetException(), 
+Thread.stop(), 
+ThreadGroup.uncaughtException()
+Returned By:
+ExceptionInInitializerError.getException(), 
+InvocationTargetException.getTargetException(), 
+Throwable.fillInStackTrace()
+Thrown By:
+Object.finalize()
+java.lang.ThreadGroup (JDK 1.0)
+java.lang.UnknownError (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

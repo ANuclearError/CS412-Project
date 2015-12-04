@@ -1,0 +1,37 @@
+
+[Chapter 31] 31.9 java.util.zip.GZIPInputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.9 java.util.zip.GZIPInputStream (JDK 1.1)
+This class is a subclass of InflaterInputStream
+that reads and uncompresses data compressed in gzip
+format.  To create a GZIPInputStream, you must
+simply specify the InputStream it is to read
+compressed data from, and optionally specify a buffer size
+for the internal decompression buffer.  Once a
+GZIPInputStream is created, you can use the
+read() and close() methods as you would with
+any input stream.
+public class GZIPInputStream extends InflaterInputStream {
+    // Public Constructors
+            public GZIPInputStream(InputStream in, int size) throws IOException;
+            public GZIPInputStream(InputStream in) throws IOException;
+    // Constants
+            public static final int GZIP_MAGIC;
+    // Protected Instance Variables
+            protected CRC32 crc;
+            protected boolean eos;
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides FilterInputStream
+            public int read(byte[] buf, int off, int len) throws IOException;  // Overrides InflaterInputStream
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->InflaterInputStream->GZIPInputStream
+java.util.zip.DeflaterOutputStream (JDK 1.1)
+java.util.zip.GZIPOutputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

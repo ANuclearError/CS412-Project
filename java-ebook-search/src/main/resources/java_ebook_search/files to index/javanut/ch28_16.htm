@@ -1,0 +1,61 @@
+
+[Chapter 28] 28.16 java.net.Socket (JDK 1.0)
+Chapter 28The java.net Package
+28.16 java.net.Socket (JDK 1.0)
+This class implements a socket for interprocess
+communication over the network. The constructor methods
+create the socket and connect it to the specified host and
+port. You may also optionally specify whether communication
+through the socket should be based on an underlying reliable
+connection-based stream protocol, or on an underlying
+unreliable (but faster) datagram protocol. A stream
+protocol is the default.
+Once the socket is created, getInputStream() and
+getOutputStream() return InputStream and
+OutputStream objects that you can use just as you
+would for file input and output. getInetAddress()
+and getPort() return the address and port that the
+socket is connected to. getLocalPort() returns the
+local port that the socket is using.
+public class Socket extends Object {
+    // Public Constructors
+            public Socket(String host, int port) throws UnknownHostException, IOException;
+            public Socket(InetAddress address, int port) throws IOException;
+        1.1public Socket(String host, int port, InetAddress localAddr, int localPort) throws IOException;
+        1.1public Socket(InetAddress address, int port, InetAddress localAddr, int localPort) throws IOException;
+        #   public Socket(String host, int port, boolean stream) throws IOException;
+        #   public Socket(InetAddress host, int port, boolean stream) throws IOException;
+    // Protected Constructors
+        1.1protected Socket();
+        1.1protected Socket(SocketImpl impl) throws SocketException;
+    // Class Methods
+            public static synchronized void setSocketImplFactory(SocketImplFactory fac) throws IOException;
+    // Public Instance Methods
+            public synchronized void close() throws IOException;
+            public InetAddress getInetAddress();
+            public InputStream getInputStream() throws IOException;
+        1.1public InetAddress getLocalAddress();
+            public int getLocalPort();
+            public OutputStream getOutputStream() throws IOException;
+            public int getPort();
+        1.1public int getSoLinger() throws SocketException;
+        1.1public synchronized int getSoTimeout() throws SocketException;
+        1.1public boolean getTcpNoDelay() throws SocketException;
+        1.1public void setSoLinger(boolean on, int val) throws SocketException;
+        1.1public synchronized void setSoTimeout(int timeout) throws SocketException;
+        1.1public void setTcpNoDelay(boolean on) throws SocketException;
+            public String toString();  // Overrides Object
+}
+Passed To:
+ServerSocket.implAccept()
+Returned By:
+ServerSocket.accept()
+java.net.ServerSocket (JDK 1.0)
+java.net.SocketException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

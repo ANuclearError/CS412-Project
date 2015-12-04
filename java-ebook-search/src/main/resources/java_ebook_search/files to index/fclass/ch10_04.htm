@@ -1,0 +1,52 @@
+
+[Chapter 10] 10.4 External Program Execution
+Chapter 10Accessing the Environment
+10.4 External Program Execution
+The Runtime.exec() method allows 
+a Java program to run an external program. There are four forms of the 
+exec() method, but they all 
+expect to receive command-line-style information about the program to be 
+run. The simplest exec() method 
+takes a single String argument 
+that contains the name of the program and its arguments. For example, to 
+print a file named foo.ps in 
+a Windows environment, you can use the following: 
+getRuntime().exec("copy foo.ps lpt1:");
+Another form of exec() takes an array of String
+objects as its argument. The first element of the array is the name of
+the program to run; the remaining array elements are arguments to the
+program. The other two forms of exec() take a
+second argument that specifies the environment variables that are
+available to the program. The second argument should be an array of
+strings that are all of the form
+name =value.
+The external program started by exec() is run
+asynchronously from the Java program that started it. All forms of the
+exec() method return immediately; they return a
+reference to a Process object that you can use to
+communicate with the external program. The three standard I/O streams
+for the external program can be accessed by calling the
+getInputStream(),
+getOutputStream(), and
+getErrorStream() methods of the
+Process object.  If you want to wait for the
+external program to complete, you can call the
+waitFor() method. This method returns the
+program's exit code. The exitValue() method
+returns the program's exit code if it is called after the
+program has completed. If it is called before the program completes,
+it throws an IllegalThreadStateException.  You can
+kill the external program by calling the destroy()
+method.
+If a program is running in a browser or other environment that has a
+SecurityManager installed, it may be denied the
+ability to execute external programs.
+Environment Variables
+Garbage Collection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

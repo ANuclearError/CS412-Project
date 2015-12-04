@@ -1,0 +1,370 @@
+
+[Chapter 16] ChoiceFormat
+Chapter 16The java.text Package
+ChoiceFormat
+Name
+ChoiceFormat
+Synopsis
+Class Name:
+java.text.ChoiceFormat
+Superclass:
+java.text.NumberFormat
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ChoiceFormat class is a 
+concrete subclass of NumberFormat 
+that maps numerical ranges to strings, or formats. ChoiceFormat 
+objects are used most often by MessageFormat 
+objects to handle plurals, verb agreement, and other such issues. 
+The ranges in a ChoiceFormat 
+are specified as an ascending array of double 
+values, where each number is the bottom end of a range. A value is mapped 
+to a format when it falls within the range for that format. If the value 
+does not fall in any of the ranges, it is mapped to the first or the last 
+format, depending on whether the value is too low or too high. For example, 
+consider the following code: 
+double[] limits = {1, 10, 100};
+String[] labels = {"small", "medium", "large"}
+ChoiceFormat cf = new ChoiceFormat(limits, labels);
+Any number greater than or equal to one and less than 10 is mapped to the 
+format "small". Any number greater than or equal to 10 and 
+less than 100 is mapped to "medium". Numbers greater than or 
+equal to 100 are mapped to "large".
+Furthermore, numbers less 
+than one are also mapped to "small". 
+The nextDouble() and previousDouble() 
+methods can generate double 
+values that are higher or lower than other double 
+values. These methods provide another way to specify the limits used by 
+a ChoiceFormat object. 
+As shown above, you can create a ChoiceFormat 
+object by specifying the limits and formats in two separate arrays. You 
+can also create a ChoiceFormat 
+object using a pattern string that specifies the limits and formats. The 
+string is of the form: 
+[limit1]#[format1]|[limit2]#[format2]|...
+A &lt; character 
+can be used in place of the # 
+to indicate that the next higher number, as determined by nextDouble(), 
+should be used as the limit. The toPattern() 
+method can be used to generate the pattern string for an existing ChoiceFormat 
+object. 
+Note that you create ChoiceFormat 
+objects directly, rather than through factory methods. This is because 
+ChoiceFormat does not implement 
+any locale-specific behavior. To produce properly internationalized output, 
+the formats for a ChoiceFormat 
+should come from a ResourceBundle 
+instead of being embedded in the code. 
+Class Summary
+public class java.text.ChoiceFormat extends java.text.NumberFormat {
+  // Constructors
+  public ChoiceFormat(String newPattern);
+  public ChoiceFormat(double[] limits, String[] formats);
+  // Class Methods
+  public static final double nextDouble(double d);
+  public static double nextDouble(double d, boolean positive);
+  public static final double previousDouble(double d);
+  // Instance Methods
+  public void applyPattern(String newPattern);
+  public Object clone();
+  public boolean equals(Object obj);
+  public StringBuffer format(double number, 
+                      StringBuffer toAppendTo, FieldPosition status);
+  public StringBuffer format(long number, 
+                      StringBuffer toAppendTo, FieldPosition status);
+  public Object[] getFormats();
+  public double[] getLimits();
+  public int hashCode();
+  public Number parse(String text, ParsePosition status);
+  public void setChoices(double[] limits, String[] formats);
+  public String toPattern();
+}
+Constructors
+ChoiceFormat
+public ChoiceFormat(String newPattern)
+Parameters
+newPattern
+The pattern string. 
+Description
+This constructor creates a ChoiceFormat 
+that uses the limits and formats represented by the given pattern string. 
+public ChoiceFormat(double[] limits, String[] formats)
+Parameters
+limits
+An array of limits. 
+Each element is the lower end of a range that runs up through, but not 
+including, the next element.
+formats
+An array of format strings that correspond to the limit ranges. 
+Description
+This constructor creates a ChoiceFormat 
+that uses the given limits and format strings 
+Class Methods
+nextDouble
+public static final double nextDouble(double d)
+Parameters
+d
+A double value. 
+Returns
+The least double that 
+is greater than d. 
+Description
+This method returns the least double 
+greater than d. Calling this method is 
+equivalent to nextDouble(d, 
+true). 
+public static double nextDouble(double d, boolean positive)
+Parameters
+d
+A double value.
+positive
+A boolean 
+value that specifies whether to return the next higher or next lower value. 
+Returns
+If positive is true,
+the least double that is greater than d.
+If positive is false,
+the greatest double that is less than d.
+Description
+This method finds the next higher or next lower double 
+value from d, depending on 
+the value of positive. 
+If positive is true,
+the method returns the least double 
+greater than d. Otherwise, the method returns
+the greatest double less than d.
+previousDouble
+public static final double previousDouble(double d)
+Parameters
+d
+A double value. 
+Returns
+The greatest double 
+that is less than d. 
+Description
+This method returns the greatest double 
+less than d.
+Calling this method is 
+equivalent to nextDouble(d, 
+false). 
+Instance Methods
+applyPattern
+public void applyPattern(String newPattern)
+Parameters
+newPattern
+The pattern string. 
+Description
+This method tells this ChoiceFormat 
+to use the limits and formats represented by the given formatting pattern 
+string. Pattern strings for ChoiceFormat objects
+are described above in the class description.
+clone
+public Object clone()
+Returns
+A copy of this ChoiceFormat. 
+Overrides
+NumberFormat.clone() 
+Description
+This method creates a copy of this ChoiceFormat 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Format.equals() 
+Description
+This method returns true if 
+obj is an instance of ChoiceFormat 
+and is equivalent to this ChoiceFormat. 
+format
+   public StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition status)  
+Parameters
+number
+The double value to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+status
+Ignored. 
+Returns
+The given StringBuffer 
+with the String corresponding to
+the given number appended to it.
+Overrides
+NumberFormat.format(double, StringBuffer, FieldPosition) 
+Description
+This method formats the given number and appends the result to the given 
+StringBuffer. 
+   public StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition status)  
+Parameters
+number
+The long 
+value to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+status
+Ignored. 
+Returns
+The given StringBuffer 
+with the String corresponding to
+the given number appended to it.
+Overrides
+NumberFormat.format(long, 
+StringBuffer, FieldPosition) 
+Description
+This method formats the given number and appends the result to the given 
+StringBuffer. 
+getFormats
+public Object[] getFormats()
+Returns
+An array that contains the format strings. 
+Description
+This method returns an array containing the current set of format strings. 
+getLimits
+public double[] getLimits()
+Returns
+An array that contains the limit values. 
+Description
+This method returns an array that contains the current set of limits. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+NumberFormat.hashCode() 
+Description
+This method returns a hashcode for this ChoiceFormat. 
+parse
+public Number parse(String text, ParsePosition status)
+Parameters
+text
+The string to be parsed.
+status
+A ParsePosition 
+object that can specify a position in the string. 
+Returns
+A Number object that encapsulates the value
+that corresponds to the longest format string that matches the 
+text that starts at the given position. If there is no
+matching format string, the value Double.NaN
+is returned.
+Overrides
+NumberFormat.parse(String, 
+ParsePosition) 
+Description
+This method parses a number from the given string, starting from the given 
+position. The method returns a Number object that encapsulates the value
+that corresponds to the longest format string that matches the 
+text starting at the given position. If there is no
+matching format string, the method returns the 
+value Double.NaN.
+If there is a matching format string, the index value of
+the given ParsePosition 
+object is incremented by the length of that format string.
+setChoices
+public void setChoices(double[] limits, String[] formats)
+Parameters
+limits
+An array of limits. 
+Each element is the lower end of a range that runs up through, but not 
+including, the next element.
+formats
+An array of format strings that correspond to the limit ranges. 
+Description
+This method sets the limits and format strings that this ChoiceFormat 
+uses. 
+toPattern
+public String toPattern()
+Returns
+The pattern string of this ChoiceFormat. 
+Description
+This method returns a string that represents the limits and format strings 
+of this ChoiceFormat. Pattern strings for ChoiceFormat objects
+are described above in the class description.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+format(double)
+NumberFormat
+format(long number)
+NumberFormat
+format(Object, StringBuffer, FieldPosition)
+NumberFormat
+getClass()
+Object
+getMaximumFractionDigits()
+NumberFormat
+getMaximumIntegerDigits()
+NumberFormat
+getMinimumFractionDigits()
+NumberFormat
+getMinimumIntegerDigits()
+NumberFormat
+isGroupingUsed()
+NumberFormat
+isParseIntegerOnly()
+NumberFormat
+notify()
+Object
+notifyAll()
+Object
+parse(String)
+NumberFormat
+parseObject(String)
+Format
+parseObject(String, ParsePosition)
+NumberFormat
+setGroupingUsed(boolean)
+NumberFormat
+setMaximumFractionDigits(int)
+NumberFormat
+setMaximumIntegerDigits(int)
+NumberFormat
+setMinimumFractionDigits(int)
+NumberFormat
+setMinimumIntegerDigits(int)
+NumberFormat
+setParseIntegerOnly(boolean)
+NumberFormat
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FieldPosition, 
+MessageFormat, 
+Number, 
+NumberFormat, 
+ParsePosition, 
+ResourceBundle, 
+String, 
+StringBuffer 
+CharacterIterator
+CollationElementIterator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

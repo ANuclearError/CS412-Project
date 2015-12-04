@@ -1,0 +1,52 @@
+
+[Chapter 23] 23.3 java.beans.Beans (JDK 1.1)
+Chapter 23The java.beans Package
+23.3 java.beans.Beans (JDK 1.1)
+The Beans class is never meant to be instantiated;
+its static methods provide miscellaneous JavaBeans
+features.
+The instantiate() method creates an instance of a
+bean.  The specified bean name represents either a
+serialized bean file or a bean class file; it is
+interpreted relative to the specified ClassLoader
+object.  
+The setDesignTime() and isDesignTime()
+methods are used to set and query a flag that indicates
+whether beans are being used in an application builder
+environment.  Similarly, setGuiAvailable() and
+isGuiAvailable() set and query a flag that indicates
+whether the Java Virtual Machine is running in an
+environment in which a GUI is available.  (Note that
+untrusted applet code cannot call setDesignTime() or
+setGuiAvailable().)
+The isInstanceOf() method is a replacement for the
+Java instanceof operator for use with beans.
+Currently, it behaves just like instanceof, but in
+the future it may work with beans that consist of a set
+of Java objects, each of which provides a different "view" of
+a bean.  Similarly, the getInstanceOf() method is a
+replacement for the Java cast operator.	It converts a
+bean to a superclass or interface type.  Currently, it
+behaves just like a cast, but you should use it for future
+compatibility with multiclass beans.
+public class Beans extends Object {
+    // Default Constructor: public Beans()
+    // Class Methods
+            public static Object getInstanceOf(Object bean, Class targetType);
+            public static Object instantiate(ClassLoader cls, String beanName)
+            public static Object instantiate'u'throws IOException, ClassNotFoundException;
+            public static boolean isDesignTime();
+            public static boolean isGuiAvailable();
+            public static boolean isInstanceOf(Object bean, Class targetType);
+            public static void setDesignTime(boolean isDesignTime) throws SecurityException;
+            public static void setGuiAvailable(boolean isGuiAvailable) throws SecurityException;
+}
+java.beans.BeanInfo (JDK 1.1)
+java.beans.Customizer (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,55 @@
+
+[Chapter 18] 18.5 java.awt.Adjustable (JDK 1.1)
+Chapter 18The java.awt Package
+18.5 java.awt.Adjustable (JDK 1.1)
+This interface defines the methods that should be
+implemented by an object that maintains a user-adjustable
+numeric value. This value has a specified minimum and maximum
+value, and it may be incremented or decremented either a
+unit at a time or a block at a time.  An Adjustable
+object generates an AdjustmentEvent when it is
+adjusted, and it maintains a list of AdjustmentListener
+objects interested in being notified when such an event
+occurs.
+This interface abstracts the essential functionality of the
+Scrollbar component.
+public abstract interface Adjustable {
+    // Constants
+            public static final int HORIZONTAL;
+            public static final int VERTICAL;
+    // Public Instance Methods
+            public abstract void addAdjustmentListener(AdjustmentListener l);
+            public abstract int getBlockIncrement();
+            public abstract int getMaximum();
+            public abstract int getMinimum();
+            public abstract int getOrientation();
+            public abstract int getUnitIncrement();
+            public abstract int getValue();
+            public abstract int getVisibleAmount();
+            public abstract void removeAdjustmentListener(AdjustmentListener l);
+            public abstract void setBlockIncrement(int b);
+            public abstract void setMaximum(int max);
+            public abstract void setMinimum(int min);
+            public abstract void setUnitIncrement(int u);
+            public abstract void setValue(int v);
+            public abstract void setVisibleAmount(int v);
+}
+Implemented By:
+Scrollbar
+Passed To:
+AdjustmentEvent(), 
+ScrollPanePeer.setUnitIncrement(), 
+ScrollPanePeer.setValue()
+Returned By:
+AdjustmentEvent.getAdjustable(), 
+ScrollPane.getHAdjustable(), 
+ScrollPane.getVAdjustable()
+java.awt.AWTException (JDK 1.0)
+java.awt.BorderLayout (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

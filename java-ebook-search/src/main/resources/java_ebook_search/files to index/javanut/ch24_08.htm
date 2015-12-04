@@ -1,0 +1,58 @@
+
+[Chapter 24] 24.8 java.io.CharArrayWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.8 java.io.CharArrayWriter (JDK 1.1)
+This class is a character output stream that uses an
+internal character array as the destination of characters
+written to it.  When you create a CharArrayWriter,
+you may optionally specify an initial size for the character
+array, but you do not specify the character array
+itself--this array is managed internally by the
+CharArrayWriter, and grows as necessary to
+accommodate all the characters written to it.  The
+toString() and toCharArray() methods return
+a copy of all characters written to the stream, either as a
+string or as an array of characters.
+CharArrayWriter defines the standard
+write(), flush(), and close() methods
+that all Writer subclasses do.  It also defines a
+few other useful methods.  size() returns the number
+of characters that have been written to the stream.
+reset() resets the stream to its initial state, with
+an empty character array; this is more efficient than
+creating a new CharArrayWriter.  Finally,
+writeTo() writes the contents of the internal
+character array to some other specified character stream.
+CharArrayWriter is the character-stream analog of
+ByteArrayOutputStream, and is quite similar to
+StringWriter.
+public class CharArrayWriter extends Writer {
+    // Public Constructors
+            public CharArrayWriter();
+            public CharArrayWriter(int initialSize);
+    // Protected Instance Variables
+            protected char[] buf;
+            protected int count;
+    // Public Instance Methods
+            public void close();  // Defines Writer
+            public void flush();  // Defines Writer
+            public void reset();
+            public int size();
+            public char[] toCharArray();
+            public String toString();  // Overrides Object
+            public void write(int c);  // Overrides Writer
+            public void write(char[] c, int off, int len);  // Defines Writer
+            public void write(String str, int off, int len);  // Overrides Writer
+            public void writeTo(Writer out) throws IOException;
+}
+Hierarchy:
+Object->Writer->CharArrayWriter
+java.io.CharArrayReader (JDK 1.1)
+java.io.CharConversionException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

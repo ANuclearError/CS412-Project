@@ -1,0 +1,67 @@
+
+[Chapter 25] 25.51 java.lang.Runtime (JDK 1.0)
+Chapter 25The java.lang Package
+25.51 java.lang.Runtime (JDK 1.0)
+This class encapsulates a number of platform-dependent
+system functions. The static method
+getRuntime() returns the Runtime object
+for the current platform, and this object can be used
+to perform system functions in a platform-independent
+way.
+exec() starts a new process running externally to
+the interpreter. Note that any processes run outside of
+Java may be system-dependent.
+exit() causes the Java interpreter to exit and
+return a specified return code.
+freeMemory() returns the approximate amount of free
+memory. totalMemory() returns the total amount of
+memory available to the Java interpreter. gc()
+forces the garbage collector to run synchronously, which may
+free up more memory. Similarly, runFinalization()
+forces the finalize() methods of unreferenced
+objects to be run immediately. This may free up system
+resources that those objects were holding.
+load() loads a dynamic library with a fully
+specified path name. loadLibrary() loads a dynamic
+library with only the library name specified; it looks in
+platform-dependent locations for the specified library.
+These libraries generally contain native code definitions
+for native methods.
+traceInstructions() and traceMethodCalls()
+enable and disable tracing by the interpreter.
+Note that some of the Runtime methods are
+more commonly called via the static methods of the
+System class.
+public class Runtime extends Object {
+    // No Constructor
+    // Class Methods
+            public static Runtime getRuntime();
+        1.1public static void runFinalizersOnExit(boolean value);
+    // Public Instance Methods
+            public Process exec(String command) throws IOException;
+            public Process exec(String command, String[] envp) throws IOException;
+            public Process exec(String[] cmdarray) throws IOException;
+            public Process exec(String[] cmdarray, String[] envp) throws IOException;
+            public void exit(int status);
+            public native long freeMemory();
+            public native void gc();
+        #   public InputStream getLocalizedInputStream(InputStream in);
+        #   public OutputStream getLocalizedOutputStream(OutputStream out);
+            public synchronized void load(String filename);
+            public synchronized void loadLibrary(String libname);
+            public native void runFinalization();
+            public native long totalMemory();
+            public native void traceInstructions(boolean on);
+            public native void traceMethodCalls(boolean on);
+}
+Returned By:
+Runtime.getRuntime()
+java.lang.Runnable (JDK 1.0)
+java.lang.RuntimeException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

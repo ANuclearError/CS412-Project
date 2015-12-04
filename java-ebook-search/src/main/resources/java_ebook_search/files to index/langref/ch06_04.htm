@@ -1,0 +1,48 @@
+
+[Chapter 6] 6.4 Expression Statements
+Chapter 6Statements and Control Structures
+6.4 Expression Statements
+Expression statements
+are the most common statements in Java. An expression statement
+consists of an expression that is executed for its side effects.
+Only certain kinds of expressions can be used in an expression statement:
+Here are some examples of expression statements:
+x = 3*y;
+foo(x);
+x++;
+--y;
+new zombie();
+Notice that a top-level expression
+is an expression that has a side effect or calls a method. An assignment
+expression has the side effect of altering the value of a variable
+or array element. A statement expression that consists of an increment
+or decrement operator has the side effect of incrementing or decrementing
+the contents of a variable or an array element. A method call expression
+has the side effect of calling a method. If the method returns a
+result, the result is discarded. A special variant of MethodCallExpression,
+called ExplicitConstructorCallStatement, allows
+a constructor to be called explicitly as the first statement of
+another constructor. An allocation expression creates an object
+and has the side effect of calling its constructor.
+An expression statement is evaluated fully, including its side effects,
+before the next statement is executed.[2]
+[2] 
+A Java compiler
+can produce code that follows a different order of evaluation, provided
+that the code produces the same result as code that does follow
+the specified order of evaluation.
+References
+Allocation Expressions;
+Assignment Operators;
+Constructor implementation;
+Method Call Expression;
+Primary Expressions
+The Empty Statement
+The if Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

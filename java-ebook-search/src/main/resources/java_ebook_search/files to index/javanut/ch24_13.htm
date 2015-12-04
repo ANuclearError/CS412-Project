@@ -1,0 +1,59 @@
+
+[Chapter 24] 24.13 java.io.DataOutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.13 java.io.DataOutputStream (JDK 1.0)
+This class is a subclass of FilterOutputStream that
+allows you to write Java primitive data types in a
+portable binary format. Create a DataOutputStream by specifying
+the OutputStream that is to be filtered in the call
+to the constructor.
+Many of this class's methods write a single Java primitive
+type, in binary format to the output stream.
+write() writes a single byte, an array, or a
+subarray of bytes. flush() forces any
+buffered data to be output. size() returns the
+number of bytes written so far.
+writeUTF() outputs a Java string of Unicode
+characters using a slightly modified version of the UTF-8
+"transformation format."  UTF-8 is an ASCII-compatible
+encoding of Unicode characters that is often used for the
+transmission and storage of Unicode text. Except for the
+writeUTF() method, this class is used for binary
+output of data.  Textual output should be done with
+PrintWriter, or PrintStream in Java 1.0.
+DataOutputStream only has methods to output
+primitive types.  Use ObjectOutputStream to output
+object values.
+public class DataOutputStream extends FilterOutputStream implements DataOutput {
+    // Public Constructor
+            public DataOutputStream(OutputStream out);
+    // Protected Instance Variables
+            protected int written;
+    // Public Instance Methods
+            public void flush() throws IOException;  // Overrides FilterOutputStream
+            public final int size();
+            public synchronized void write(int b) throws IOException;  // Overrides FilterOutputStream
+            public synchronized void write(byte[] b, int off, int len) throws IOException;  // Overrides FilterOutputStream
+            public final void writeBoolean(boolean v) throws IOException;  // From DataOutput
+            public final void writeByte(int v) throws IOException;  // From DataOutput
+            public final void writeBytes(String s) throws IOException;  // From DataOutput
+            public final void writeChar(int v) throws IOException;  // From DataOutput
+            public final void writeChars(String s) throws IOException;  // From DataOutput
+            public final void writeDouble(double v) throws IOException;  // From DataOutput
+            public final void writeFloat(float v) throws IOException;  // From DataOutput
+            public final void writeInt(int v) throws IOException;  // From DataOutput
+            public final void writeLong(long v) throws IOException;  // From DataOutput
+            public final void writeShort(int v) throws IOException;  // From DataOutput
+            public final void writeUTF(String str) throws IOException;  // From DataOutput
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->DataOutputStream(DataOutput)
+java.io.DataOutput (JDK 1.0)
+java.io.EOFException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

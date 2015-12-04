@@ -1,0 +1,28 @@
+
+[Chapter 22] 22.23 java.awt.peer.TextAreaPeer (JDK 1.0)
+Chapter 22The java.awt.peer Package
+22.23 java.awt.peer.TextAreaPeer (JDK 1.0)
+public abstract interface TextAreaPeer extends TextComponentPeer {
+    // Public Instance Methods
+        1.1  public abstract Dimension getMinimumSize(int rows, int columns);
+        1.1  public abstract Dimension getPreferredSize(int rows, int columns);
+        1.1  public abstract void insert(String text, int pos);
+            public abstract void insertText(String txt, int pos);
+            public abstract Dimension minimumSize(int rows, int cols);
+            public abstract Dimension preferredSize(int rows, int cols);
+        1.1  public abstract void replaceRange(String text, int start, int end);
+            public abstract void replaceText(String txt, int start, int end);
+}
+Hierarchy:
+(TextAreaPeer(TextComponentPeer(ComponentPeer)))
+Returned By:
+Toolkit.createTextArea()
+java.awt.peer.ScrollbarPeer (JDK 1.0)
+java.awt.peer.TextComponentPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

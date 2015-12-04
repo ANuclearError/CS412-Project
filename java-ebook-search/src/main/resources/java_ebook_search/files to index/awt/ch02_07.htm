@@ -1,0 +1,443 @@
+
+[Chapter 2] 2.7 Image
+Chapter 2Simple Graphics
+2.7 Image
+An Image is a displayable object 
+maintained in memory. AWT has built-in support for reading files in GIF 
+and JPEG format, including GIF89a animation. Netscape 
+Navigator, Internet Explorer, HotJava, and Sun's 
+JDK also understand the XBM image format. Images are loaded 
+from the filesystem or network by the getImage() 
+method of either Component 
+or Toolkit, drawn onto the 
+screen with drawImage() from 
+Graphics, and manipulated by 
+several objects within the java.awt.image 
+package. Figure 2.15 shows an Image. 
+Figure 2.15: An Image
+Image is an abstract class 
+implemented by many different platform-specific classes. The system that 
+runs your program will provide an appropriate implementation; you do not 
+need to know anything about the platform-specific classes, because the 
+Image class completely defines 
+the API for working with images. If you're curious, the platform-specific packages used by the JDK are: 
+sun.awt.win32.Win32Image 
+on Java 1.0 Windows NT/95 platforms
+sun.awt.windows.WImage 
+on Java 1.1 Windows NT/95 platforms
+sun.awt.motif.X11Image 
+on UNIX/Motif platforms
+sun.awt.macos.MacImage 
+on the Macintosh
+This section covers only the Image 
+object itself. AWT also includes a package named java.awt.image 
+that includes more advanced image processing utilities. The classes in 
+java.awt.image are covered 
+in Chapter 12, Image Processing. 
+Image MethodsConstants
+public static final Object UndefinedProperty 
+In Java 1.0, the sole constant of Image 
+is UndefinedProperty. It is 
+used as a return value from the getProperty() 
+method to indicate that the requested property is unavailable. 
+Java 1.1 introduces the getScaledInstance() 
+method. The final parameter to the method is a set of hints to tell the 
+method how best to scale the image. The following constants provide possible 
+values for this parameter. 
+public static final int SCALE_DEFAULT  
+The SCALE_DEFAULT hint should 
+be used alone to tell getScaledInstance() 
+to use the default scaling algorithm. 
+public static final int SCALE_FAST  
+The SCALE_FAST hint tells getScaledInstance() 
+that speed takes priority over smoothness. 
+public static final int SCALE_SMOOTH  
+The SCALE_SMOOTH hint tells 
+getScaledInstance() that smoothness 
+takes priority over speed. 
+public static final int SCALE_REPLICATE  
+The SCALE_REPLICATE hint tells 
+getScaledInstance() to use 
+ReplicateScaleFilter or a reasonable 
+alternative provided by the toolkit. ReplicateScaleFilter 
+is discussed in Chapter 12, Image Processing. 
+public static final int SCALE_AREA_AVERAGING  
+The SCALE_AREA_AVERAGING hint tells 
+getScaledInstance() to use 
+AreaAveragingScaleFilter or a reasonable 
+alternative provided by the toolkit. AreaAveragingScaleFilter 
+is discussed in Chapter 12, Image Processing. 
+Constructors
+There are no constructors for Image. 
+You get an Image object to 
+work with by using the getImage() 
+method of Applet (in an applet), 
+Toolkit (in an application), 
+or the createImage() method 
+of Component or Toolkit. 
+getImage() uses a separate 
+thread to fetch the image. The thread starts when you call drawImage(), 
+prepareImage(), or any other 
+method that requires image information. getImage() 
+returns immediately. You can also use the MediaTracker 
+class to force an image to load before it is needed. MediaTracker 
+is discussed in the next section. Characteristics
+public abstract int getWidth (ImageObserver observer) 
+The getWidth() method returns 
+the width of the image object. The width may not be available if the image 
+has not started loading; in this case, getWidth() 
+returns -1. An image's size is available long before loading is complete, 
+so it is often useful to call getWidth() 
+while the image is loading. 
+public abstract int getHeight (ImageObserver observer) 
+The getHeight() method returns 
+the height of the image object. The height may not be available if the 
+image has not started loading; in this case, the getHeight() method 
+returns -1. An image's size is available long before loading is complete, 
+so it is often useful to call getHeight() 
+while the image is loading. 
+Miscellaneous methods
+public Image getScaledInstance (int width, int height, int hints)  
+The getScaledInstance() method 
+enables you to generate scaled versions of images before they are needed. 
+Prior to Java 1.1, it was necessary to tell the drawImage() 
+method to do the scaling. However, this meant that scaling didn't take place 
+until you actually tried to draw the image. Since scaling takes time, drawing 
+the image required more time; the net result was degraded appearance. With 
+Java 1.1, you can generate scaled copies of images before drawing them; 
+then you can use a version of drawImage() 
+that does not do scaling, and therefore is much quicker. 
+The width parameter of getScaledInstance() 
+is the new width of the image. The height 
+parameter is the new height of the image. If either is -1, the scaling 
+retains the aspect ratio of the original image. For instance, if the original 
+image size was 241 by 72 pixels, and width 
+and height were 100 and -1, 
+the new image size would be 100 by 29 pixels. If both width and height 
+are -1, the getScaledInstance() 
+method retains the image's original size. The hints 
+parameter is one of the Image 
+class constants. 
+Image i = getImage (getDocumentBase(), "rosey.jpg");
+Image j = i.getScaledInstance (100, -1, Image.SCALE_FAST);
+public abstract ImageProducer getSource () 
+The getSource() method returns 
+the image's producer, which is an object of type ImageProducer. 
+This object represents the image's source. Once you have the ImageProducer, 
+you can use it to do additional image processing; for example, you could 
+create a modified version of the original image by using a FilteredImageSource. 
+Image producers and image filters are covered in Chapter 12, Image Processing. 
+public abstract Graphics getGraphics () 
+The getGraphics() method returns 
+the image's graphics context. The method getGraphics() 
+works only for Image objects 
+created in memory with Component.createImage (int, int). 
+If the image came from a URL or a file (i.e., from getImage()), 
+getGraphics() throws the run-time exception 
+ClassCastException. 
+public abstract Object getProperty (String name, ImageObserver observer) 
+The getProperty() method interacts 
+with the image's property list. An object representing the requested 
+property name will be returned 
+for observer. observer 
+represents the Component on 
+which the image is rendered. If the property name 
+exists but is not available yet, getProperty() 
+returns null. If the property name does not exist, the getProperty() 
+method returns the Image.UndefinedProperty 
+object. 
+Each image type has its own property list. A property named comment 
+stores a comment String from 
+the image's creator. The CropImageFilter 
+adds a property named croprect. 
+If you ask getProperty() for 
+an image's croprect 
+property, you get a Rectangle 
+that shows how the original image was cropped. 
+public abstract void flush() 
+The flush() method resets an 
+image to its initial state. Assume you acquire an image over the network 
+with getImage(). The first 
+time you display the image, it will be loaded over the network. If you 
+redisplay the image, AWT normally reuses the original image. However, if 
+you call flush() before redisplaying 
+the image, AWT fetches the image again from its source. (Images created 
+with createImage() aren't 
+affected.) The flush() method 
+is useful if you expect images to change while your program is running. 
+The following program demonstrates flush(). 
+It reloads and displays the file flush.gif 
+every time you click the mouse. If you change the file flush.gif 
+and click on the mouse, you will see the new file. 
+import java.awt.*;
+public class flushMe extends Frame {
+    Image im;
+    flushMe () {
+        super ("Flushing");
+        im = Toolkit.getDefaultToolkit().getImage ("flush.gif");
+        resize (175, 225);
+    }
+    public void paint (Graphics g) {
+        g.drawImage (im, 0, 0, 175, 225, this);
+    }
+    public boolean mouseDown (Event e, int x, int y) {
+        im.flush();
+        repaint();
+        return true;
+    }
+    public static void main (String [] args) {
+        Frame f = new flushMe ();
+        f.show();
+    }
+}
+Simple Animation
+Creating simple animation sequences in Java is easy. Load a series of images, 
+then display the images one at a time. Example 2.1 is 
+an application that displays a simple animation sequence. Example 2.2 
+is an applet that uses a thread to run the application. These programs 
+are far from ideal. If you try them, you'll probably notice some 
+flickering or missing images. We discuss how to fix these problems shortly. 
+Example 2.1: Animation Application
+import java.awt.*;
+public class Animate extends Frame {
+    static Image im[];
+    static int numImages = 12;
+    static int counter=0;
+    Animate () {
+        super ("Animate");
+    }
+    public static void main (String[] args) {
+        Frame f = new Animate();
+        f.resize (225, 225);
+        f.show();
+        im = new Image[numImages];
+        for (int i=0;i&lt;numImages;i++) {
+            im[i] = Toolkit.getDefaultToolkit().getImage ("clock"+i+".jpg");
+        }
+    }
+    public synchronized void paint (Graphics g) {
+        g.translate (insets().left, insets().top);
+        g.drawImage (im[counter], 0, 0, this);
+        counter++;
+        if (counter == numImages)
+            counter = 0;
+        repaint (200);
+    }
+}
+This application displays images with the name clockn.jpg, 
+where n is a number between 
+0 and 11. It fetches the images using the getImage() 
+method of the Toolkit class--hence, 
+the call to Toolkit.getDefaultToolkit(), 
+which gets a Toolkit object 
+to work with. The paint() method 
+displays the images in sequence, using drawImage(). 
+paint() ends with a call to 
+repaint(200), which schedules 
+another call to paint() in 
+200 milliseconds. 
+The AnimateApplet, whose code 
+is shown in Example 2.2, does more or less the same thing. It is able to use the 
+Applet.getImage() method. A 
+more significant difference is that the applet creates a new thread to 
+control the animation. This thread calls sleep(200), 
+followed by repaint(), to display 
+a new image every 200 milliseconds. 
+Example 2.2: Multithreaded Animation Applet
+import java.awt.*;
+import java.applet.*;
+public class AnimateApplet extends Applet implements Runnable {
+    static Image im[];
+    static int numImages = 12;
+    static int counter=0;
+    Thread animator;
+    public void init () {
+        im = new Image[numImages];
+        for (int i=0;i&lt;numImages;i++)
+            im[i] = getImage (getDocumentBase(), "clock"+i+".jpg");
+    }
+    public void start() {
+        if (animator == null) {
+            animator = new Thread (this);
+            animator.start ();
+        }
+    }
+    public void stop() {
+        if ((animator != null) &amp;&amp; (animator.isAlive())) {
+            animator.stop();
+            animator = null;
+        }
+    }
+    public void run () {
+        while (animator != null) {
+            try {
+                animator.sleep(200);
+                repaint ();
+                counter++;
+                if (counter==numImages)
+                    counter=0;
+            } catch (Exception e) {
+                e.printStackTrace ();
+            }
+        }
+    }
+    public void paint (Graphics g) {
+        g.drawImage (im[counter], 0, 0, this);
+    }
+}
+One quick fix will help the flicker problem in both of these examples. 
+The update() method (which 
+is inherited from the Component 
+class) normally clears the drawing area and calls paint(). 
+In our examples, clearing the drawing area is unnecessary and, worse, results 
+in endless flickering; on slow machines, you'll see update() 
+restore the background color between each image. It's a simple matter 
+to override update() so that 
+it doesn't clear the drawing area first. Add the following method to 
+both of the previous examples: 
+public void update (Graphics g) {
+    paint (g);
+}
+Overriding update() helps, 
+but the real solution to our problem is double buffering, which we'll 
+turn to next. 
+Double Buffering
+Double buffering means drawing to an offscreen graphics context and then 
+displaying this graphics context to the screen in a single operation. So 
+far, we have done all our drawing directly on the screen--that is, to 
+the graphics context provided by the paint() 
+method. As your programs grow more complex, paint() 
+gets bigger and bigger, and it takes more time and resources to update 
+the entire drawing area. On a slow machine, the user will see the individual 
+drawing operations take place, which will make your program look slow and 
+clunky. By using the double buffering technique, you can take your time 
+drawing to another graphics context that isn't displayed. When you 
+are ready, you tell the system to display the completely new image at once. 
+Doing so eliminates the possibility of seeing partial screen updates and 
+flickering. 
+The first thing you need to do is create an image as your drawing canvas. 
+To get an image object, call the createImage() 
+method. createImage() is a 
+method of the Component class, 
+which we will discuss in Chapter 5, Components. Since Applet 
+extends Component, you can 
+call createImage() within an 
+applet. When creating an application and extending Frame, 
+createImage() returns null 
+until the Frame's peer 
+exists. To make sure that the peer exists, call addNotify() 
+in the constructor, or make sure you call show() 
+before calling createImage(). 
+Here's the call to the createImage() 
+method that we'll use to get an Image 
+object: 
+Image im = createImage (300, 300); // width and height
+Once you have an Image object, 
+you have an area you can draw on. But how do you draw on it? There are 
+no drawing methods associated with Image; 
+they're all in the Graphics 
+class. So we need to get a Graphics 
+context from the Image. To 
+do so, call the getGraphics() 
+method of the Image class, 
+and use that Graphics context 
+for your drawing: 
+Graphics buf = im.getGraphics();
+Now you can do all your drawings with buf. To display the drawing, the 
+paint() method only needs to 
+call drawImage(im, . . .). 
+Note the hidden connection between the Graphics 
+object, buf, and the Image 
+you are creating, im. You draw 
+onto buf; then you use drawImage() 
+to render the image on the on-screen Graphics 
+context within paint(). 
+Another feature of buffering is that you do not have redraw the entire 
+image with each call to paint(). 
+The buffered image you're working on remains in memory, and you can 
+add to it at will. If you are drawing directly to the screen, you would 
+have to recreate the entire drawing each time paint() 
+is called; remember, paint() 
+always hands you a completely new Graphics 
+object. Figure 2.16 shows how double buffering 
+works. 
+Figure 2.16: Double buffering
+Example 2.3 puts it all together for you. It plays a 
+game, with one move drawn to the screen each cycle. We still do the drawing 
+within paint(), but we draw 
+into an offscreen buffer; that buffer is copied onto the screen by g.drawImage(im, 
+0, 0, this). If we were doing a lot of drawing, 
+it would be a good idea to move the drawing operations into a different 
+thread, but that would be overkill for this simple applet. 
+Example 2.3: Double Buffering--Who Won?
+import java.awt.*;
+import java.applet.*;
+public class buffering extends Applet {
+    Image im;
+    Graphics buf;
+    int pass=0;
+    public void init () {
+        // Create buffer
+        im = createImage (size().width, size().height);
+        // Get its graphics context
+        buf = im.getGraphics();
+        // Draw Board Once
+        buf.setColor (Color.red);
+        buf.drawLine (  0,  50, 150,  50);
+        buf.drawLine (  0, 100, 150, 100);
+        buf.drawLine ( 50,   0,  50, 150);
+        buf.drawLine (100,   0, 100, 150);
+        buf.setColor (Color.black);
+    }
+    public void paint (Graphics g) {
+        // Draw image - changes are written onto buf
+        g.drawImage (im, 0, 0, this);
+        // Make a move
+        switch (pass) {
+            case 0:
+                buf.drawLine (50, 50, 100, 100);
+                buf.drawLine (50, 100, 100, 50);
+                break;
+            case 1:
+                buf.drawOval (0, 0, 50, 50);
+                break;
+            case 2:
+                buf.drawLine (100, 0, 150, 50);
+                buf.drawLine (150, 0, 100, 50);
+                break;
+            case 3:
+                buf.drawOval (0, 100, 50, 50);
+                break;
+            case 4:
+                buf.drawLine (0, 50, 50, 100);
+                buf.drawLine (0, 100, 50, 50);
+                break;
+            case 5:
+                buf.drawOval (100, 50, 50, 50);
+                break;
+            case 6:
+                buf.drawLine (50,  0, 100, 50);
+                buf.drawLine (50, 50, 100,  0);
+                break;
+            case 7:
+                buf.drawOval (50, 100, 50, 50);
+                break;
+            case 8:
+                buf.drawLine (100, 100, 150, 150);
+                buf.drawLine (150, 100, 100, 150);
+                break;
+        }
+        pass++;
+        if (pass &lt;= 9)
+            repaint (500);
+    }
+}
+Polygon
+MediaTracker
+ 
+ 
+ 
+ 
+ 
+ 
+ 

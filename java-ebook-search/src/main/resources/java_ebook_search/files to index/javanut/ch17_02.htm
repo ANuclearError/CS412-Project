@@ -1,0 +1,41 @@
+
+[Chapter 17] 17.2 java.applet.AppletContext (JDK 1.0)
+Chapter 17The java.applet Package
+17.2 java.applet.AppletContext (JDK 1.0)
+This interface defines the methods that allow an applet to
+interact with the context in which it runs (which is usually
+a Web browser or an applet viewer).  The object that
+implements the AppletContext interface is returned
+by Applet.getAppletContext().  You
+can use it to take advantage of a Web browser's cache,
+or to display a message to the user in the Web browser's or
+applet viewer's message area.
+The getAudioClip() and getImage() methods
+may make use of a Web browser's caching mechanism.
+showDocument() and showStatus() give an
+applet a small measure of control over the appearance of the
+browser or applet viewer.  The getApplet() and
+getApplets() methods allow an applet to find out
+what other applets are running at the same time.
+public abstract interface AppletContext {
+    // Public Instance Methods
+            public abstract Applet getApplet(String name);
+            public abstract Enumeration getApplets();
+            public abstract AudioClip getAudioClip(URL url);
+            public abstract Image getImage(URL url);
+            public abstract void showDocument(URL url);
+            public abstract void showDocument(URL url, String target);
+            public abstract void showStatus(String status);
+}
+Returned By:
+Applet.getAppletContext(), 
+AppletStub.getAppletContext()
+java.applet.Applet (JDK 1.0)
+java.applet.AppletStub (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

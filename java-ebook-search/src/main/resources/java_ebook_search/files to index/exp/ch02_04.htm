@@ -1,0 +1,428 @@
+
+[Chapter 2] 2.4 Hello Web! IV: Netscape's Revenge
+Chapter 2A First Applet
+2.4 Hello Web! IV: Netscape's Revenge
+We have explored quite a few features of Java with the first three
+versions of the HelloWeb applet. But until now,
+our applet has been rather passive; it has waited patiently for events
+to come its way and responded to the whims of the user. Now our
+applet is going to take some
+initiative--HelloWeb4 will blink! The code for
+our latest version is shown below.
+import java.applet.Applet;
+import java.awt.*;
+import java.awt.event.*;
+public class HelloWeb4 extends Applet 
+    implements MouseMotionListener, ActionListener, Runnable {
+    int messageX = 125, messageY = 95;
+    String theMessage;
+    Button theButton;
+    int colorIndex = 0;
+    static Color[] someColors = { 
+        Color.black, Color.red, Color.green, Color.blue, Color.magenta };
+    Thread blinkThread;
+    boolean blinkState;
+    public void init() {
+        theMessage = getParameter("message");
+        theButton = new Button("Change Color");
+        add(theButton);
+        addMouseMotionListener(this);
+        theButton.addActionListener(this);
+    }
+    
+    public void paint( Graphics graphics ) {
+        graphics.setColor( blinkState ? Color.white : currentColor() );
+        graphics.drawString( theMessage, messageX, messageY );
+    }
+    public void mouseDragged( MouseEvent e ) {
+        messageX = e.getX(); 
+        messageY = e.getY();
+        repaint();
+    }
+    public void mouseMoved( MouseEvent e ) { }
+    public void actionPerformed( ActionEvent e ) {
+        if ( e.getSource() == theButton ) {
+            changeColor();
+        }
+    }
+    synchronized private void changeColor() {
+        if ( ++colorIndex == someColors.length )
+            colorIndex = 0;
+        theButton.setForeground( currentColor() );
+        repaint();
+    }
+    synchronized private Color currentColor() {
+        return someColors[ colorIndex ];
+    }
+    public void run() {
+        while ( true ) {
+            blinkState = !blinkState;
+            repaint();
+            try {  
+                Thread.sleep(500); 
+            } catch (Exception e ) { 
+                // Handle error condition here...
+            }
+        }
+    }
+    public void start() {
+        if ( blinkThread == null ) {
+            blinkThread = new Thread(this);
+            blinkThread.start();
+        }
+    }
+    public void stop() {
+        if ( blinkThread != null ) {
+            blinkThread.stop();
+            blinkThread = null;
+        }
+    }
+}
+If you create HelloWeb4 as you have the other
+applets and then run it in a Java-enabled Web browser, you'll
+see that the text does in fact blink. My apologies if you don't
+like blinking text--I'm not overly fond of it
+either--but it does make for a simple, instructive example.
+Threads
+All the changes we've made in HelloWeb4 have
+to do with setting up a separate thread of execution to make the text
+of our applet blink. Java is a multithreaded
+language, which means there can be many threads running at the same
+time. A thread is a separate flow of control
+within a program. Conceptually, threads are similar to processes,
+except that unlike processes, multiple threads share the same address
+space, which means that they can share variables and methods (but they
+have their own local variables). Threads are also quite lightweight in
+comparison to processes, so it's conceivable for a single application
+to be running hundreds of threads concurrently.
+Multithreading provides a way for an application to handle many
+different tasks at the same time. It's easy to imagine multiple
+things going on at the same time in an application like a Web browser.
+The user could be listening to an audio clip while scrolling an image,
+and in the background the browser is downloading an image.
+Multithreading is especially useful in GUI-based applications, as it
+can improve the interactive performance of these applications.
+Unfortunately for us, programming with multiple threads can be quite
+a headache. The difficulty lies in making sure routines are
+implemented so they can be run by multiple concurrent threads.
+If a routine changes the value of a state variable, for example, then
+only one thread can be executing the routine at a time. Later in this
+section, we'll examine briefly the issue of coordinating
+multiple thread's access to shared data. In other languages,
+synchronization of threads can be an extremely complex and error-prone
+endeavor. You'll see that Java gives you a few simple tools that
+help you deal with many of these problems. Java threads can be
+started, stopped, suspended, and prioritized. Threads are preemptive,
+so a higher priority thread can interrupt a lower priority thread when
+vying for processor time. See Chapter 6, Threads for a
+complete discussion of threads.
+The Java run-time system creates and manages a number of threads.
+I've already mentioned the AWT thread, which manages
+repaint() requests and event processing for
+GUI components that belong to the
+java.awt package. A Java-enabled Web browser
+typically has at least one separate thread of execution it uses to
+manage the applets it displays. Until now, our example has done most
+of its work from methods of the Applet class, which
+means that is has been borrowing time from these threads. Methods like
+mouseDragged() and
+actionPerformed() are 
+invoked by the AWT thread and run on its
+time. Similarly, our init() method is called by a
+thread in the Web browser. This means we are somewhat limited in the
+amount of processing we do within these methods. If we
+were, for instance, to go into an endless loop in our
+init() method, our applet would never appear, as it
+would never finish initializing. If we want an applet to perform any
+extensive processing, such as animation, a lengthy calculation, or
+communication, we should create separate threads for these tasks.
+The Thread Class
+As you might have guessed, threads are created and controlled as
+Thread objects. We have added a new instance
+variable, blinkThread, to our example to hold the
+Thread that handles our blinking activity:
+Thread blinkThread; 
+An instance of the Thread class corresponds to a
+single thread. It contains methods to start, control, and stop the
+thread's execution. Our basic plan is to create a
+Thread object to handle our blinking code. We call
+the Thread's start()
+method to begin execution. Once the thread starts, it continues to
+run until we call the Thread's
+stop() method to terminate it.
+But Java doesn't allow pointers to methods, so how do we tell the
+thread which method to run?  Well, the Thread
+object is rather picky; it always expects to execute a method called
+run() to perform the action of the thread. The
+run() method can, however, with a little
+persuasion, be located in any class we desire.
+We specify the location of the run() method in
+one of two ways. First, the Thread class itself
+has a method called run(). One way to execute some
+Java code in a separate thread is to subclass
+Thread and override its run()
+method to do our bidding. In this case, we simply create an instance
+of this subclass and call its start() method.
+But it's not always desirable or possible to create a subclass of
+Thread to contain our
+run() method. In this case, we need to
+tell the Thread which object contains the
+run() method it should execute. The
+Thread class has a constructor that takes
+an object reference as its argument. If we create a
+Thread object using this constructor and
+call its start() method, the
+Thread executes the
+run() method of the target object, rather
+than its own. In order to accomplish this, Java needs to have a
+guarantee that the object we are passing it does indeed contain a
+compatible run() method. We already
+know how to make such a guarantee: we use an interface. Java provides
+an interface named Runnable that must be
+implemented by any class that wants to become a
+Thread.
+The Runnable Interface
+The second technique I described for creating a
+Thread object involved passing an object
+that implements the Runnable interface to
+the Thread constructor. 
+The 
+Runnable interface specifies that the object
+contains a run() method that takes no arguments and
+returns no value. This method is called automatically when the system
+needs to start the thread. 
+Sticking with our technique for implementing our applet in a single
+class, we have opted to add the run() method for
+blinkThread to our HelloWeb4
+class. This means that HelloWeb4 needs to
+implement the Runnable interface. We indicate that
+the class implements the interface in our class declaration:
+public class HelloWeb4 extends Applet
+    implements MouseMotionListener, ActionListener, Runnable {...}
+At compile time, the Java compiler checks to make sure we abide
+by this statement. We have carried through by adding an appropriate
+run() method to our applet. Our
+run() method has the task of changing the color of
+our text a couple of times a second. It's a very short routine, but
+I'm going to delay looking at it until we tie up some loose ends
+in dealing with the Thread itself.
+start() and stop()
+Now that we know how to create a Thread to execute
+our applet's run() method, we need to figure
+out where to actually do it. The start() and
+stop() methods of the Applet
+class are similar to init(). The
+start() method is called when an applet is first
+displayed. If the user then leaves the Web document or scrolls the
+applet off the screen, the stop() method is
+invoked. If the user subsequently returns, the
+start() method is called again, and so on. Unlike
+init(), start() and
+stop() can be called repeatedly during the lifetime
+of an applet.
+The start() and stop() methods
+of the Applet class have absolutely nothing to do
+with the Thread object, except that they are a good
+place for an applet to start and stop a thread. An applet is
+responsible for managing the threads that it creates. It would be
+considered rude for an applet to continue such tasks as animation,
+making noise, or performing extensive calculations long after it's no
+longer visible on the screen. It's common practice, therefore, to
+start a thread when an applet becomes visible and stop it when the
+applet is no longer visible.
+Here's the start() method from
+HelloWeb4:
+public void start() { 
+    if ( blinkThread == null ) { 
+        blinkThread = new Thread(this); 
+        blinkThread.start(); 
+    } 
+} 
+The method first checks to see if there is an object assigned to
+blinkThread; recall that an uninitialized instance
+variable has a default value of null. If not, the
+method creates a new instance of Thread, passing
+the target object that contains the run() method to
+the constructor. Since HelloWeb4 contains our
+run() method, we pass the special variable
+this to the constructor to let the thread know
+where to find the run() method it should run.
+this always refers to our object. Finally, after
+creating the new Thread, we call its
+start() method to begin execution.
+Our stop() method takes the complimentary position:
+public void stop() { 
+    if ( blinkThread != null ) { 
+        blinkThread.stop(); 
+        blinkThread = null; 
+    } 
+} 
+This method checks to see if blinkThread is empty.
+If not, it calls the thread's stop()
+method to terminate its execution. By setting the value of
+blinkThread back to null, we
+have eliminated all references to the thread object we created in the
+start() method, so the garbage collector can
+dispose of the object.
+run()
+Our run() method does its job by setting the value
+of the variable blinkState. We have added
+blinkState, a boolean value, to
+represent whether we are currently blinking on or off:
+boolean blinkState; 
+The setColor() line of our
+paint() method has been modified slightly to handle
+blinking. The call to setColor() now draws the
+text in white when blinkState is
+true:
+gc.setColor( blinkState ? Color.white : currentColor() ); 
+Here we are being somewhat terse and using the C-like ternary operator
+to return one of two alternate color values based on the value of
+blinkState.
+Finally, we come to the run() method itself:
+public void run() { 
+    while ( true ) { 
+        blinkState = !blinkState; 
+        repaint(); 
+        try { 
+            Thread.sleep(500); 
+        } 
+        catch (InterruptedException e ) { 
+        } 
+    } 
+} 
+At its outermost level, run() uses an infinite
+while loop. This means the method will run
+continuously until the thread is terminated by a call to the
+controlling Thread object's
+stop() method.
+The body of the loop does three things on each pass:
+Flips the value of blinkState to its opposite
+value using the not operator, !.
+Calls repaint() so that our
+paint() method can have an opportunity to redraw
+the text in accordance with blinkState.
+Uses a try/catch statement to trap for an error
+in our call to the sleep() method of the
+Thread class. sleep() is a
+static method of the Thread class. The method can
+be invoked from anywhere and has the effect of putting the current
+thread to sleep for the specified number of milliseconds. The effect
+here is to give us approximately two blinks per second.
+Exceptions
+The try/catch statement in Java is used to handle
+special conditions called exceptions. An
+exception is a message that is sent, normally in response to an error,
+during the execution of a statement or a method. When an exceptional
+condition arises, an object is created that contains information about
+the particular problem or condition. Exceptions act somewhat like
+events. Java stops execution at the place where the exception
+occurred, and the exception object is said to be
+thrown by that section of code. Like events, an
+exception must be delivered somewhere and handled. The section of
+code that receives the exception object is said to
+catch the exception. An exception causes the
+execution of the instigating section of code to abruptly stop and
+transfers control to the code that receives the exception object.
+The try/catch construct allows you to catch
+exceptions for a section of code. If an exception is caused by a
+statement inside of a try clause, Java attempts to
+deliver the exception to the appropriate catch
+clause. A catch clause looks like a method
+declaration with one argument and no return type. If Java finds a
+catch clause with an argument type that matches the
+type of the exception, that catch clause is
+invoked. A try clause can have multiple
+catch clauses with different argument types; Java
+chooses the appropriate one in a way that is analogous to the
+selection of overloaded methods.
+If there is no try/catch clause surrounding the
+code, or a matching catch clause is not found, the
+exception is thrown up the call stack to the calling method. If the
+exception is not caught there, it's thrown up another level, and so
+on until the exception is handled. This provides a very flexible
+error-handling mechanism, so that exceptions in deeply nested calls
+can bubble up to the surface of the call stack for handling. As a
+programmer, you need to know what exceptions a particular statement
+can generate, so methods in Java are required to declare the
+exceptions they can throw. If a method doesn't handle an
+exception itself, it must specify that it can throw that exception, so
+that the calling method knows that it may have to handle it. See
+Chapter 4, The Java Language for a complete discussion of exceptions
+and the try/catch clause.
+So, why do we need a try/catch clause around our
+sleep() call?  What kind of exception can
+Thread's sleep() method
+throw and why do we care about it, when we don't seem to check
+for exceptions anywhere else?  Under some circumstances,
+Thread's sleep() method
+can throw an InterruptedException, indicating that
+it was interrupted by another thread. Since the
+run() method specified in the
+Runnable interface doesn't declare it can
+throw an InterruptedException, we must catch it
+ourselves, or the compiler will complain. The
+try/catch statement in our example has an empty
+catch clause, which means that it handles the
+exception by ignoring it. In this case, our thread's
+functionality is so simple it doesn't matter if it's
+interrupted. All of the other methods we have used either handle
+their own exceptions or throw only general-purpose exceptions that are
+assumed to be possible everywhere and don't need to be explicitly
+declared.
+A Word About Synchronization
+At any given time, there can be a number of threads running in the
+Java interpreter. Unless we explicitly coordinate them, these threads
+will be executing methods without any regard for what the other
+threads are doing. Problems can arise when these methods share the
+same data. If one method is changing the value of some variables at
+the same time that another method is reading these variables, it's
+possible that the reading thread might catch things in the middle and
+get some variables with old values and some with new. Depending on
+the application, this situation could cause a critical error.
+In our HelloWeb examples, both our
+paint() and mouseDrag() methods
+access the messageX and messageY
+variables. Without knowing the implementation of our particular Java
+environment, we have to assume that these methods could conceivably be
+called by different threads and run concurrently. 
+paint() could be called while
+mouseDrag() is in the midst of updating
+messageX and messageY. At that
+point, the data is in an inconsistent state and if
+paint() gets lucky, it could get the new x value
+with the old y value. Fortunately, in this case, we probably would
+not even notice if this were to happen in our application. We did,
+however, see another case, in our changeColor() and
+currentColor() methods, where there is the
+potential for a more serious "out of bounds" error to
+occur.
+The synchronized modifier tells Java to acquire a
+lock for the class that contains the method
+before executing that method. Only one method can have the lock on a
+class at any given time, which means that only one synchronized method
+in that class can be running at a time. This allows a method to alter
+data and leave it in a consistent state before a concurrently running
+method is allowed to access it. When the method is done, it releases
+the lock on the class.
+Unlike synchronization in other languages, the
+synchronized keyword in Java provides locking at
+the language level. This means there is no way that you can
+forget to unlock a class. Even if the method throws an exception or
+the thread is terminated, Java will release the lock. This feature
+makes programming with threads in Java much easier than in other
+languages. See Chapter 6, Threads for more details on
+coordinating threads and shared data.
+Whew! Now it's time to say goodbye to
+HelloWeb. I hope that you have developed a feel
+for the major features of the Java language, and that this will help
+you as you go on to explore the details of programming with Java.
+Hello Web! III: The Button Strikes!
+Tools of the Trade
+ 
+ 
+ 
+ 
+ 
+ 
+ 

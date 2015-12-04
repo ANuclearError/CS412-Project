@@ -1,0 +1,38 @@
+
+[Chapter 18] 18.12 java.awt.CheckboxMenuItem (JDK 1.0)
+Chapter 18The java.awt Package
+18.12 java.awt.CheckboxMenuItem (JDK 1.0)
+This class represents a checkbox with a textual label in a GUI menu.
+It maintains a boolean state--whether it is
+checked or not.
+See also MenuItem.
+public class CheckboxMenuItem extends MenuItem implements ItemSelectable {
+    // Public Constructors
+        1.1 public CheckboxMenuItem();
+            public CheckboxMenuItem(String label);
+        1.1 public CheckboxMenuItem(String label, boolean state);
+    // Public Instance Methods
+        1.1 public synchronized void addItemListener(ItemListener l);  // From ItemSelectable
+            public void addNotify();  // Overrides MenuItem
+        1.1 public synchronized Object[] getSelectedObjects();  // From ItemSelectable
+            public boolean getState();
+            public String paramString();  // Overrides MenuItem
+        1.1 public synchronized void removeItemListener(ItemListener l);  // From ItemSelectable
+            public synchronized void setState(boolean b);
+    // Protected Instance Methods
+        1.1 protected void processEvent(AWTEvent e);  // Overrides MenuItem
+        1.1  protected void processItemEvent(ItemEvent e);
+}
+Hierarchy:
+Object->MenuComponent(Serializable)->MenuItem->CheckboxMenuItem(ItemSelectable)
+Passed To:
+Toolkit.createCheckboxMenuItem()
+java.awt.CheckboxGroup (JDK 1.0)
+java.awt.Choice (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

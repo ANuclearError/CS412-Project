@@ -1,0 +1,125 @@
+
+[Chapter 25] 25.57 java.lang.String (JDK 1.0)
+Chapter 25The java.lang Package
+25.57 java.lang.String (JDK 1.0)
+The String class represents a string of
+characters. A String object is created by the Java
+compiler whenever it encounters a string in
+doublequotes--this method of creation is usually simpler
+than using a constructor.  A number of the methods of this
+class provide useful string manipulation functions.
+length() returns the number of characters in a
+string.  charAt() extracts a character from a
+string.  compareTo() compares two strings.
+equalsIgnoreCase() tests string for equality,
+ignoring case.  startsWith() and endsWith()
+compare the start and end of a string to a specified
+value.  indexOf() and lastIndexOf() search
+forward and backwards in a string for a specified character
+or substring.  substring() returns a substring of a
+string.  replace() creates a new copy of the string
+with one character replaced by another.
+toUpperCase() and toLowerCase() convert the
+case of a string.  trim() strips whitespace from the
+start and end of a string.  concat() concatenates
+two strings, which can also be done with the +
+operator.
+Note that String objects are immutable--there is no
+setCharAt() method to change the contents.  The
+methods above that return a String do not modify the
+string they are passed, but instead return a modified copy
+of the string.  Use a StringBuffer if you want to
+manipulate the contents of a string, or use
+toCharArray() to convert a string to an array of
+char values.
+The static valueOf() methods convert various Java
+primitive types to strings.
+public final class String extends Object implements Serializable {
+    // Public Constructors
+            public String();
+            public String(String value);
+            public String(char[] value);
+            public String(char[] value, int offset, int count);
+        #   public String(byte[] ascii, int hibyte, int offset, int count);
+        #   public String(byte[] ascii, int hibyte);
+        1.1public String(byte[] bytes, int offset, int length, String enc) throws UnsupportedEncodingException;
+        1.1public String(byte[] bytes, String enc) throws UnsupportedEncodingException;
+        1.1public String(byte[] bytes, int offset, int length);
+        1.1public String(byte[] bytes);
+            public String(StringBuffer buffer);
+    // Class Methods
+            public static String copyValueOf(char[] data, int offset, int count);
+            public static String copyValueOf(char[] data);
+            public static String valueOf(Object obj);
+            public static String valueOf(char[] data);
+            public static String valueOf(char[] data, int offset, int count);
+            public static String valueOf(boolean b);
+            public static String valueOf(char c);
+            public static String valueOf(int i);
+            public static String valueOf(long l);
+            public static String valueOf(float f);
+            public static String valueOf(double d);
+    // Public Instance Methods
+            public char charAt(int index);
+            public int compareTo(String anotherString);
+            public String concat(String str);
+            public boolean endsWith(String suffix);
+            public boolean equals(Object anObject);  // Overrides Object
+            public boolean equalsIgnoreCase(String anotherString);
+        #   public void getBytes(int srcBegin, int srcEnd, byte[] dst, int dstBegin);
+        1.1public byte[] getBytes(String enc) throws UnsupportedEncodingException;
+        1.1public byte[] getBytes();
+            public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin);
+            public int hashCode();  // Overrides Object
+            public int indexOf(int ch);
+            public int indexOf(int ch, int fromIndex);
+            public int indexOf(String str);
+            public int indexOf(String str, int fromIndex);
+            public native String intern();
+            public int lastIndexOf(int ch);
+            public int lastIndexOf(int ch, int fromIndex);
+            public int lastIndexOf(String str);
+            public int lastIndexOf(String str, int fromIndex);
+            public int length();
+            public boolean regionMatches(int toffset, String other, int ooffset, int len);
+            public boolean regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len);
+            public String replace(char oldChar, char newChar);
+            public boolean startsWith(String prefix, int toffset);
+            public boolean startsWith(String prefix);
+            public String substring(int beginIndex);
+            public String substring(int beginIndex, int endIndex);
+            public char[] toCharArray();
+        1.1public String toLowerCase(Locale locale);
+            public String toLowerCase();
+            public String toString();  // Overrides Object
+        1.1public String toUpperCase(Locale locale);
+            public String toUpperCase();
+            public String trim();
+}
+Passed To:
+Many methods
+Returned By:
+Many methods
+Type Of:
+BorderLayout.CENTER, 
+BorderLayout.EAST, 
+BorderLayout.NORTH, 
+BorderLayout.SOUTH, 
+BorderLayout.WEST, 
+File.pathSeparator, 
+File.separator, 
+Font.name, 
+HttpURLConnection.method, 
+HttpURLConnection.responseMessage, 
+InvalidClassException.classname, 
+StreamTokenizer.sval, 
+StringBufferInputStream.buffer
+java.lang.StackOverflowError (JDK 1.0)
+java.lang.StringBuffer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

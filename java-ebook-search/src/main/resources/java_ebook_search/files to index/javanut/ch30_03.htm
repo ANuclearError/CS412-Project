@@ -1,0 +1,77 @@
+
+[Chapter 30] 30.3 java.util.Date (JDK 1.0)
+Chapter 30The java.util Package
+30.3 java.util.Date (JDK 1.0)
+This class represents dates and times. It lets you work
+with them in a system-independent way. You can create a
+Date by specifying the number of milliseconds from
+the epoch (midnight GMT, January 1st, 1970), or by
+specifying the year, month, date, and optionally, the hour,
+minute, and second. Years are specified as the number of
+years since 1900. If you call the Date constructor
+with no arguments, the Date is initialized to
+the current time and date. The instance methods of the
+class allow you to get and set the various date and time
+fields, to compare dates and times, and to convert dates to
+and from string representations.
+In Java 1.1, many of the date methods have been deprecated
+in favor of the methods of the Calendar class.
+public class Date extends Object implements Serializable, Cloneable {
+    // Public Constructors
+            public Date();
+            public Date(long date);
+        #   public Date(int year, int month, int date);
+        #   public Date(int year, int month, int date, int hrs, int min);
+        #   public Date(int year, int month, int date, int hrs, int min, int sec);
+        #   public Date(String s);
+    // Class Methods
+        #   public static long UTC(int year, int month, int date, int hrs, int min, int sec);
+        #   public static long parse(String s);
+    // Public Instance Methods
+            public boolean after(Date when);
+            public boolean before(Date when);
+            public boolean equals(Object obj);  // Overrides Object
+        #   public int getDate();
+        #   public int getDay();
+        #   public int getHours();
+        #   public int getMinutes();
+        #   public int getMonth();
+        #   public int getSeconds();
+            public long getTime();
+        #   public int getTimezoneOffset();
+        #   public int getYear();
+            public int hashCode();  // Overrides Object
+        #   public void setDate(int date);
+        #   public void setHours(int hours);
+        #   public void setMinutes(int minutes);
+        #   public void setMonth(int month);
+        #   public void setSeconds(int seconds);
+            public void setTime(long time);
+        #   public void setYear(int year);
+        #   public String toGMTString();
+        #   public String toLocaleString();
+            public String toString();  // Overrides Object
+}
+Passed To:
+Calendar.setTime(), 
+Date.after(), 
+Date.before(), 
+DateFormat.format(), 
+GregorianCalendar.setGregorianChange(), 
+SimpleDateFormat.format(), 
+SimpleTimeZone.inDaylightTime(), 
+TimeZone.inDaylightTime()
+Returned By:
+Calendar.getTime(), 
+DateFormat.parse(), 
+GregorianCalendar.getGregorianChange(), 
+SimpleDateFormat.parse()
+java.util.Calendar (JDK 1.1)
+java.util.Dictionary (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

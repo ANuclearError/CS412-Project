@@ -1,0 +1,63 @@
+
+[Chapter 15] ContentHandlerFactory
+Chapter 15The java.net Package
+ContentHandlerFactory
+Name
+ContentHandlerFactory
+Synopsis
+Interface Name:
+java.net.ContentHandlerFactory
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The ContentHandlerFactory interface 
+defines a method that creates and returns an appropriate ContentHandler 
+object for a given MIME type. The interface is implemented by classes that 
+select ContentHandler subclasses 
+to process content. 
+The URLStreamHandler class 
+uses a ContentHandlerFactory 
+to create ContentHandler objects. 
+The content type is usually implied by the portion of the URL following 
+the last period. For example, given the following URL: 
+http://www.tolstoi.org/anna.html
+the MIME content type is text/html. 
+A ContentHandlerFactory that 
+recognizes text/html 
+returns a ContentHandler object 
+that can process that kind of content. 
+Interface Declaration
+public abstract interface java.net.ContentHandlerFactory {
+  // Methods
+  public abstract ContentHandler createContentHandler(String mimetype);
+}
+Methods
+createContentHandler
+   public abstract ContentHandler createContentHandler( String mimetype)  
+Parameters
+mimetype
+A String that represents a MIME type. 
+Returns
+A ContentHandler object that 
+can read the specified type of content. 
+Description
+This method creates an object of the appropriate subclass of ContentHandler 
+that can read and process data for the given MIME type. 
+See Also
+ContentHandler, 
+URLStreamHandler 
+ContentHandler
+DatagramPacket
+ 
+ 
+ 
+ 
+ 
+ 
+ 

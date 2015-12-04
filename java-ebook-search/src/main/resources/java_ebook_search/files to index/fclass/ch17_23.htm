@@ -1,0 +1,190 @@
+
+[Chapter 17] StringTokenizer
+Chapter 17The java.util Package
+StringTokenizer
+Name
+StringTokenizer
+Synopsis
+Class Name:
+java.util.StringTokenizer
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.util.Enumeration
+Availability:
+JDK 1.0 or later 
+Description
+The StringTokenizer class implements 
+a simple, delimiter-based string tokenizer. In other words, a StringTokenizer 
+is used to break a String into 
+tokens separated by delimiter characters. By default, the class uses the 
+standard whitespace characters as delimiters, but you can specify any delimiter 
+characters you want, either when the StringTokenizer 
+is created or on a token-by-token basis. You can also specify whether the 
+delimiters are returned as tokens or not. A StringTokenizer 
+returns the tokens in its String 
+in order, either as String 
+objects or as Objects in an 
+Enumeration. 
+StringTokenizer shouldn't 
+be confused with the more complex java.io.StreamTokenizer, 
+which parses a stream into tokens that are similar to those used in the 
+Java language. 
+Class Summary
+public class java.util.StringTokenizer extends java.lang.Object
+             implements java.util.Enumeration {
+  // Constructors
+  public StringTokenizer(String str);
+  public StringTokenizer(String str, String delim);
+  public StringTokenizer(String str, String delim, boolean returnTokens);
+  // Instance Methods
+  public int countTokens();
+  public boolean hasMoreElements();
+  public boolean hasMoreTokens();
+  public Object nextElement();
+  public String nextToken();
+  public String nextToken(String delim);
+}
+Constructors
+StringTokenizer
+public StringTokenizer(String str)
+Parameters
+str
+The String 
+to be tokenized. 
+Description
+This constructor creates a StringTokenizer 
+that breaks apart the given string using the default delimiter characters. 
+The default delimiters are the standard whitespace characters: space, 
+tab (\t), 
+carriage return (\r), 
+and newline (\n). 
+public StringTokenizer(String str, String delim)
+Parameters
+str
+The String 
+to be tokenized.
+delim
+The delimiter characters. 
+Description
+This constructor creates a StringTokenizer 
+that breaks apart the given string using the characters in delim 
+as delimiter characters. 
+   public StringTokenizer(String str, String delim, boolean returnTokens)  
+Parameters
+str
+The String 
+to be tokenized.
+delim
+The delimiter characters.
+returnTokens
+A boolean 
+value that indicates whether or not delimiters should be returned as tokens. 
+Description
+This constructor creates a StringTokenizer 
+that breaks apart the given string using the characters in delim 
+as delimiter characters. If returnTokens 
+is true, the delimiters are 
+returned as tokens; otherwise they are skipped. 
+Instance Methods
+countTokens
+public int countTokens()
+Returns
+The number of tokens remaining in the string. 
+Description
+This method returns the number of tokens that remain in the string, which 
+is the same as the number of times nextToken() 
+can be called before an exception is thrown. 
+hasMoreElements
+public boolean hasMoreElements()
+Returns
+true if there are more tokens 
+to be returned; false otherwise. 
+Implements
+Enumeration.hasMoreElements() 
+Description
+This method returns the result of calling hasMoreTokens(). 
+hasMoreTokens
+public boolean hasMoreTokens()
+Returns
+true if there are more tokens 
+to be returned; false otherwise. 
+Description
+This method returns true if 
+this object has more tokens to return. 
+nextElement
+public Object nextElement()
+Returns
+The next token as an Object. 
+Throws
+NoSuchElementException
+If there are no more tokens in the string. 
+Implements
+Enumeration.nextElement() 
+Description
+This method returns result of calling nextToken(). 
+nextToken
+public String nextToken()
+Returns
+The next token as a String. 
+Throws
+NoSuchElementException
+If there are no more tokens in the string. 
+Description
+This method returns the next token. 
+public String nextToken(String delim)
+Parameters
+delim
+The delimiter characters. 
+Returns
+The next token as a String. 
+Throws
+NoSuchElementException
+If there are no more tokens in the string. 
+Description
+This method sets the delimiter characters to the characters in the given 
+string and then returns the next token. The change in delimiters persists 
+until another call to this method changes them again. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Objxect
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+NoSuchElementException, 
+StreamTokenizer, 
+String 
+Stack
+TimeZone
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,87 @@
+
+[Chapter 18] Checksum
+Chapter 18The java.util.zip Package
+Checksum
+Name
+Checksum
+Synopsis
+Interface Name:
+java.util.zip.Checksum
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+java.util.zip.Adler32, 
+java.util.zip.CRC32
+Availability:
+New as of JDK 1.1 
+Description
+The Checksum interface defines 
+the methods that are needed to compute a checksum value for a stream of 
+data. The checksum value can be used for error checking purposes. Note, 
+however, that the checksum value must fit into a long value, so this interface 
+is not suitable for cryptographic checksum algorithms. 
+The Adler32 and CRC32 
+classes implement the Checksum 
+interface, using the Adler-32 and CRC-32 algorithms, respectively. The 
+CheckedInputStream and CheckedOutputStream 
+classes provide a higher-level mechanism for computing checksums on data 
+streams. 
+Class Summary
+public abstract interface java.util.zip.Checksum {
+  // Methods
+  public abstract long getValue();
+  public abstract void reset();
+  public abstract void update(int b);
+  public abstract void update(byte[] b, int off, int len);
+}
+Methods
+getValue
+public abstract long getValue()
+Returns
+The current checksum value. 
+Description
+This method returns the current value of this checksum. 
+reset
+public abstract void reset()
+Description
+This method resets the checksum to its initial value, making it appear as though 
+it has not been updated by any data. 
+update
+public abstract void update(int b)
+Parameters
+b
+The value to be added 
+to the data stream for the checksum calculation. 
+Description
+This method adds the specified value to the data stream and updates the 
+checksum value. The method uses only the lowest eight bits of the given 
+int. 
+public abstract void update(byte[] b, int off, int len)
+Parameters
+b
+An array of bytes to 
+be added to the data stream for the checksum calculation.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Description
+This method adds len bytes 
+from the specified array, starting at off, 
+to the data stream and updates the checksum value. 
+See Also
+Adler32, 
+CheckedInputStream, 
+CheckedOutputStream, 
+CRC32 
+CheckedOutputStream
+CRC32
+ 
+ 
+ 
+ 
+ 
+ 
+ 

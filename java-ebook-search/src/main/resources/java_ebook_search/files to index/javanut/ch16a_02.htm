@@ -1,0 +1,176 @@
+
+[Part 5] 5.2 Reading a Quick Reference Entry
+Part 5How To Use This Quick Reference
+5.2 Reading a Quick Reference Entry
+Each class and interface has its own entry in this quick
+reference.  These quick-reference entries document the class
+or interface as described below.  Because the
+information in each entry is quite dense, the descriptions
+of it that follow are somewhat complicated.  I recommend
+that you flip through the following chapters as you read to
+find examples of each of the features described.
+Name and Availability
+Each quick reference entry has a title that is the name of the class
+or interface it documents.  To the right of
+that title, you'll find availability information that
+indicates when the class or interface was added to the Java
+API.  The string "JDK 1.0" indicates that the class or
+interface has been around since the original release of
+Java.  The string "JDK 1.1" indicates that it has been added in
+the Java 1.1 release, and is therefore not backwards
+compatible with Java 1.0 environments.  If the availability
+string is followed by the word "Deprecated," it means that
+the class or interface has been deprecated and its use is
+discouraged.  There are two such deprecated classes in Java
+1.1.
+Description
+The class name is followed by a short description of the
+most important features of the class.  This description may
+be anywhere from a couple of sentences to several paragraphs
+long.
+Synopsis
+The description is always followed by a synopsis of the
+class or interface.  This is a listing that looks like a
+Java class definition, except that method bodies and field
+initializers are omitted.  This synopsis contains the
+following information:
+Class Modifiers
+The synopsis begins with a list of class modifiers.  All classes
+and interfaces in this quick reference are public;
+some are also declared abstract or final
+Class or Interface
+If the modifiers are followed by the class keyword,
+it is a class that is being documented.  If they are
+followed by the interface keyword, it is an
+interface that is being documented.
+Class Name
+The name of the class or interface follows the class
+or interface keyword.  It is highlighted in
+bold.
+Superclass
+The superclass of the class follows the extends keywords.
+Interfaces
+The list of interfaces that the class implements, if any,
+follows the implements keyword.
+Members
+The constructors, fields, and methods defined by the class
+or interface form the bulk of the synopsis.  All
+public and protected members are listed.  They are divided
+into the following categories, and listed alphabetically by
+name within each category.  Each category begins with a
+comment to break the synopsis listing into logical sections.
+The categories, in the order listed, are:
+Public constructors
+Protected constructors
+Constants
+Class variables
+Public instance variables
+Protected instance variables
+Class methods
+Public instance methods
+Protected instance methods
+Availability
+If a member synopsis begins with the string "1.1", it
+indicates that the constructor, field, or method has been added
+to the class or interface in Java 1.1.  Note that this
+indication only appears in classes and interfaces that are
+not themselves new in Java 1.1.  If a member synopsis begins
+with "#", it means that the constructor, field, or method has been
+deprecated in Java 1.1, and that its use is discouraged.
+Member Modifiers
+The modifiers for each member are listed.  These
+provide important information about how the members are
+used.  The modifiers you may find listed are:
+public, protected, static,
+abstract, final, synchronized,
+native, and transient.
+Member Type
+The listing for a member may include a type.  The types of fields and
+constants are shown, as are the return types of methods.  Constructors do
+not have return types in Java.
+Member Name
+The name of each class member is in bold, for easy scanning.
+Parameters
+The synopsis for a method or constructor includes
+the type and name of each parameter that it takes.  The parameter names
+are shown in italic to indicate that they are not to
+be used literally.
+Exceptions
+The exceptions that may be thrown by a method or constructor
+follow the throws keyword in the synopsis.
+Inheritance
+The synopsis for a method may be followed by a comment that
+includes a class or interface name.  If a method is followed
+by a //Overrides comment, the method
+overrides a method by the same name in the specified
+superclass.  If a method synopsis is followed by a
+//Defines comment, the method provides the
+definition of an abstract method of the specified
+superclass.  Finally, if a method synopsis is followed by
+a //From comment, the method implements a
+method from the named interface (which is implemented by the
+class or a superclass).
+Cross References
+The synopsis section is followed by a number of optional
+"cross reference" sections that indicate other, related
+classes that may be of interest.  In the first edition of this book,
+this information was available in separate index chapters.
+We think it should be even more useful when associated
+directly with each class and interface entry.  The cross
+reference sections are the following:
+Hierarchy
+This section lists all of the superclasses of the class, as
+well as any interfaces implemented by those superclasses.
+It may also list any interfaces extended by an interface.
+This section only appears when it provides information that
+is not available from the extends and
+implements clauses of the class synopsis.  In the
+hierarchy listing, arrows indicate superclass to subclass
+relationships, while the interfaces implemented by a class
+follow the class name in parentheses.  This information can
+be useful, for example, to determine whether a class
+implements Serializable or Cloneable
+somewhere up its superclass hierarchy.
+Extended By
+This section lists all direct subclasses of this class, or
+any interfaces that extend this interface, which
+tells you that there are more specific classes or
+interfaces to look at.
+Implemented By
+This section lists all of the classes that directly implement this
+interface, which is useful when you know that you want to
+use the interface but you don't know what implementations of
+it are available.
+Passed To
+This section lists all of the methods and constructors that are
+passed an object of this type as an argument, which is useful
+when you have an object of a given type and want to figure
+out what you can do with it.
+Returned By
+This section lists all of the methods (but not constructors) that
+return an object of this type, which is useful when you know
+that you want to work with an object of this type, but don't
+know how to obtain one.
+Type Of
+This section lists all of the fields and constants that are of this
+type, which can help you figure out how to obtain an object of
+this type.
+Thrown By
+For exception and error classes, this section lists all
+of the methods and constructors that throw exceptions of this type.
+This material helps you figure out when a given exception or error may
+be thrown.  Note, however, that this section is based on
+the exception types listed in the throws clauses of
+methods and constructors.  Subclasses of RuntimeException do not
+have to be listed in throws clauses, so
+it is not possible to generate a complete cross reference of
+methods that throw these types of "unchecked" exceptions.
+Finding a Quick Reference Entry
+The java.applet Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

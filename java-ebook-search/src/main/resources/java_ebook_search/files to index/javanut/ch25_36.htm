@@ -1,0 +1,69 @@
+
+[Chapter 25] 25.36 java.lang.Long (JDK 1.0)
+Chapter 25The java.lang Package
+25.36 java.lang.Long (JDK 1.0)
+This class provides an immutable object wrapper around the
+long primitive data type.
+This class also contains useful minimum and maximum
+constants and useful conversion methods.
+parseLong() and valueOf() convert a
+string to a long or to a Long,
+respectively. Each can take a radix argument to specify the
+base that the value is represented in.  toString()
+converts in the other direction and may also take a radix
+argument. toBinaryString(), toOctalString(),
+and toHexString() convert a long to a string
+using base 2, base 8, and base 16.  These methods treat the
+long as an unsigned value.
+Other routines return the value of a Long as various
+primitive types, and finally, the getLong()
+methods return the long value of a named property or
+the value of the specified default.
+public final class Long extends Number {
+    // Public Constructors
+            public Long(long value);
+            public Long(String s) throws NumberFormatException;
+    // Constants
+            public static final long MAX_VALUE;
+            public static final long MIN_VALUE;
+        1.1public static final Class TYPE;
+    // Class Methods
+            public static Long getLong(String nm);
+            public static Long getLong(String nm, long val);
+            public static Long getLong(String nm, Long val);
+            public static long parseLong(String s, int radix) throws NumberFormatException;
+            public static long parseLong(String s) throws NumberFormatException;
+            public static String toBinaryString(long i);
+            public static String toHexString(long i);
+            public static String toOctalString(long i);
+            public static String toString(long i, int radix);
+            public static String toString(long i);
+            public static Long valueOf(String s, int radix) throws NumberFormatException;
+            public static Long valueOf(String s) throws NumberFormatException;
+    // Public Instance Methods
+        1.1public byte byteValue();  // Overrides Number
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object obj);  // Overrides Object
+            public float floatValue();  // Defines Number
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public long longValue();  // Defines Number
+        1.1public short shortValue();  // Overrides Number
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->Number(Serializable)->Long
+Passed To:
+Long.getLong()
+Returned By:
+Long.getLong(), 
+Long.valueOf()
+java.lang.LinkageError (JDK 1.0)
+java.lang.Math (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

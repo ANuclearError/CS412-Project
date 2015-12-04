@@ -1,0 +1,73 @@
+
+[Chapter 23] 23.2 java.beans.BeanInfo (JDK 1.1)
+Chapter 23The java.beans Package
+23.2 java.beans.BeanInfo (JDK 1.1)
+The BeanInfo interface defines the methods that a
+class must implement in order to export information about a
+Java bean.  The Introspector class knows how to
+obtain all the basic information required about a bean.
+A bean that wants to be more "programmer-friendly" may provide
+a class that implements this interface, however, in order to
+provide additional information about itself (such as an
+icon and description strings for each of its properties,
+events, and methods).  Note that a bean developer defines a
+class that implements the methods of this interface.
+Typically only builder applications and similar tools
+actually invoke the methods defined here.
+The methods getBeanDescriptor(),
+getEventSetDescriptors(),
+getPropertyDescriptors(), and
+getMethodDescriptors() should return
+appropriate descriptor objects for the bean, or
+null, if the bean does not provide explicit bean,
+event set, property, or method descriptor objects.  The
+getDefaultEventIndex() and
+getDefaultPropertyIndex() methods return values that
+specify the "default" event and property--i.e., that are most likely
+to be of interest to a programmer using the bean.  These methods
+should return -1 if there are no defaults.
+The getIcon() method should return an image object
+suitable for representing the bean in a palette or menu of
+available beans.  The argument passed to this method is one
+of the four constants defined by the class; it specifies the
+type and size of icon requested.  If the requested icon
+cannot be provided, getIcon() should return
+null.  
+A BeanInfo class is allowed to return
+null or -1 if it cannot provide the requested
+information.  In this case, the Introspector class
+provides basic values for the omitted information from
+its own introspection of the bean.  See
+SimpleBeanInfo for a trivial implementation of this
+interface, suitable for convenient subclassing.
+public abstract interface BeanInfo {
+    // Constants
+            public static final int ICON_COLOR_16x16;
+            public static final int ICON_COLOR_32x32;
+            public static final int ICON_MONO_16x16;
+            public static final int ICON_MONO_32x32;
+    // Public Instance Methods
+            public abstract BeanInfo[] getAdditionalBeanInfo();
+            public abstract BeanDescriptor getBeanDescriptor();
+            public abstract int getDefaultEventIndex();
+            public abstract int getDefaultPropertyIndex();
+            public abstract EventSetDescriptor[] getEventSetDescriptors();
+            public abstract Image getIcon(int iconKind);
+            public abstract MethodDescriptor[] getMethodDescriptors();
+            public abstract PropertyDescriptor[] getPropertyDescriptors();
+}
+Implemented By:
+SimpleBeanInfo
+Returned By:
+BeanInfo.getAdditionalBeanInfo(), 
+Introspector.getBeanInfo(), 
+SimpleBeanInfo.getAdditionalBeanInfo()
+java.beans.BeanDescriptor (JDK 1.1)
+java.beans.Beans (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

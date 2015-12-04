@@ -1,0 +1,92 @@
+
+[Chapter 18] 18.60 java.awt.Toolkit (JDK 1.0)
+Chapter 18The java.awt Package
+18.60 java.awt.Toolkit (JDK 1.0)
+This abstract class defines methods that, when implemented,
+create platform-dependent "peers" for each of the
+java.awt Component types.  Java supports its
+platform-independent GUI interface by implementing a
+subclass of Toolkit for each platform.  Portable
+programs should never use these methods to create
+peers directly--they should use the Component
+classes themselves.  A Toolkit object cannot be
+instantiated directly.  Component.getToolkit() returns
+the Toolkit being used for a particular
+component.
+The Toolkit class defines a few methods that you can
+use directly: the static method getDefaultToolkit()
+returns the default Toolkit that is in use.
+getScreenSize() returns the screen size in pixels,
+and getScreenResolution() returns the resolution in
+dots-per-inch.  getFontList() returns the names of
+supported fonts.  sync() flushes
+all pending graphics output, which can be useful for
+animation.
+In Java 1.1, getPrintJob(),
+getSystemClipboard(), and
+getSystemEventQueue() are also of interest.
+public abstract class Toolkit extends Object {
+    // Default Constructor: public Toolkit()
+    // Class Methods
+            public static synchronized Toolkit getDefaultToolkit();
+        1.1  protected static Container getNativeContainer(Component c);
+        1.1  public static String getProperty(String key, String defaultValue);
+    // Public Instance Methods
+        1.1  public abstract void beep();
+            public abstract int checkImage(Image image, int width, int height, ImageObserver observer);
+            public abstract Image createImage(ImageProducer producer);
+        1.1  public Image createImage(byte[] imagedata);
+        1.1  public abstract Image createImage(byte[] imagedata, int imageoffset, int imagelength);
+            public abstract ColorModel getColorModel();
+            public abstract String[] getFontList();
+            public abstract FontMetrics getFontMetrics(Font font);
+            public abstract Image getImage(String filename);
+            public abstract Image getImage(URL url);
+        1.1  public int getMenuShortcutKeyMask();
+        1.1  public abstract PrintJob getPrintJob(Frame frame, String jobtitle, Properties props);
+            public abstract int getScreenResolution();
+            public abstract Dimension getScreenSize();
+        1.1  public abstract Clipboard getSystemClipboard();
+        1.1  public final EventQueue getSystemEventQueue();
+            public abstract boolean prepareImage(Image image, int width, int height, ImageObserver observer);
+            public abstract void sync();
+    // Protected Instance Methods
+            protected abstract ButtonPeer createButton(Button target);
+            protected abstract CanvasPeer createCanvas(Canvas target);
+            protected abstract CheckboxPeer createCheckbox(Checkbox target);
+            protected abstract CheckboxMenuItemPeer createCheckboxMenuItem(CheckboxMenuItem target);
+            protected abstract ChoicePeer createChoice(Choice target);
+        1.1  protected LightweightPeer createComponent(Component target);
+            protected abstract DialogPeer createDialog(Dialog target);
+            protected abstract FileDialogPeer createFileDialog(FileDialog target);
+            protected abstract FramePeer createFrame(Frame target);
+            protected abstract LabelPeer createLabel(Label target);
+            protected abstract ListPeer createList(List target);
+            protected abstract MenuPeer createMenu(Menu target);
+            protected abstract MenuBarPeer createMenuBar(MenuBar target);
+            protected abstract MenuItemPeer createMenuItem(MenuItem target);
+            protected abstract PanelPeer createPanel(Panel target);
+        1.1  protected abstract PopupMenuPeer createPopupMenu(PopupMenu target);
+        1.1  protected abstract ScrollPanePeer createScrollPane(ScrollPane target);
+            protected abstract ScrollbarPeer createScrollbar(Scrollbar target);
+            protected abstract TextAreaPeer createTextArea(TextArea target);
+            protected abstract TextFieldPeer createTextField(TextField target);
+            protected abstract WindowPeer createWindow(Window target);
+        1.1  protected abstract FontPeer getFontPeer(String name, int style);
+        1.1  protected abstract EventQueue getSystemEventQueueImpl();
+        1.1  protected void loadSystemColors(int[] systemColors);
+}
+Returned By:
+Component.getToolkit(), 
+ComponentPeer.getToolkit(), 
+Toolkit.getDefaultToolkit(), 
+Window.getToolkit()
+java.awt.TextField (JDK 1.0)
+java.awt.Window (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

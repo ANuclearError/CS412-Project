@@ -1,0 +1,316 @@
+
+[Chapter 8] 8.2 URL Objects
+Chapter 8Networking
+8.2 URL Objects
+The URL class provides higher-level access to data
+than sockets do. A URL object encapsulates a
+Uniform Resource Locator (URL) specification. Once you have created a
+URL object, you can use it to access the data in
+the location specified by the URL.  A
+URL allows you to access the data without needing
+to be aware of the details of the protocol being used, such as HTTP or
+FTP. For some types of data, a URL object provides
+a way to get the data already encapsulated in an appropriate kind of
+object. For example, a URL can provide JPEG data
+encapsulated in an ImageProducer object or text data encapsulated in a
+String object.
+You can create a URL object 
+as follows: 
+try {
+    URL js = new URL("http://www.javasoft.com/index.html");
+}catch (MalformedURLException e) {
+    return;
+}
+This type of URL specification is called an absolute URL specification because 
+it completely specifies where to find the data. It is also possible to 
+create a URL object with a 
+relative URL specification that is combined with an absolute specification: 
+try {
+   URL jdk = new URL(js,"java.sun.com/products/JDK/index.html");
+}catch (MalformedURLException e) {
+    return;
+}
+In this example, the URL created in the previous
+example is combined with a relative URL specification that doesn't
+specify a network address or a root directory. The constructor can only combine the specifications if the protocol for both
+specifications is the same. If no protocol is specified, HTTP is
+assumed. The rules for combining the specifications depend on the
+protocol. In fact, the syntax rules for the portion of the URL after
+the protocol and up to an optional # depend on the
+protocol. If there's a # in the URL specification,
+the portion of the spec after the # is
+considered reference information that specifies a location within a
+file.
+Once you have created a URL 
+object, you can use the following access methods to get the information 
+that the URL object encapsulates: 
+getProtocol() 
+getHost() 
+getFile() 
+getPort() 
+getRef() 
+If you want to determine if two URL objects refer
+to the same file, you can use the sameFile(URL)
+method, which compares all the information in two
+URL objects except the reference information.
+The highest level of functionality available from a
+URL object is provided by the
+getContent() method. The
+getContent() method tries to determine the type of
+data in the file specified by the URL, and then it
+returns the contents of the file encapsulated in an appropriate object
+for that type of data. For example, if the file contains GIF data,
+getContent() returns an ImageProducer object. If
+the type of data is not explicitly specified,
+getContent() tries to guess the type from the
+filename extension and possibly also from the contents of the
+file. The data type names that Java uses conform to the naming scheme
+for MIME data types, as do the filename extensions that are
+recognized. The data types that correspond to various file extensions
+are shown in Table 8.2.
+Table 8.2: File Extensions and Data Types
+Suffix
+Data Type
+Suffix
+Data Type
+.a [1]
+application/octet-stream
+.ms
+application/x-troff-ms
+.ai
+application/postscript
+.mv
+video/x-sgi-movie
+.aif
+audio/x-aiff
+.nc
+application/x-netcdf
+.aifc
+audio/x-aiff
+.o [1]
+application/octet-stream
+.aiff
+audio/x-aiff
+.obj [2]
+application/octet-stream
+.arc
+application/octet-stream
+.oda
+application/oda
+.au
+audio/basic
+.pbm
+image/x-portable-bitmap
+.avi
+application/x-troff-msvideo
+.pdf
+application/pdf
+.bcpio
+application/x-bcpio
+.pgm
+image/x-portable-graymap
+.bin
+application/octet-stream
+.pl
+text/plain
+.c
+text/plain
+.pnm
+image/x-portable-anymap
+.c++
+text/plain
+.ppm
+image/x-portable-pixmap
+.cc
+text/plain
+.ps
+application/postscript
+.cdf
+application/x-netcdf
+.qt
+video/quicktime
+.cpio
+application/x-cpio
+.ras
+image/x-cmu-rast
+.dump
+application/octet-stream
+.rgb
+image/x-rgb
+.dvi
+application/x-dvi
+.roff
+application/x-troff
+.el
+text/plain
+.rtf  [2]
+application/rtf
+.eps
+application/postscript
+.rtx
+application/rtf
+.etx
+text/x-setext
+.saveme
+application/octet-stream
+.exe
+application/octet-stream
+.sh
+application/x-shar
+.gif
+image/gif
+.shar
+application/x-shar
+.gtar
+application/x-gtar
+.snd
+audio/basic
+.gz
+application/octet-stream
+.src
+application/x-wais-source
+.h
+text/plain
+.sv4cpio
+application/x-sv4cpio
+.hdf
+application/x-hdf
+.sv4crc
+application/x-sv4crc
+.hqx
+application/octet-stream
+.t
+application/x-troff
+.htm
+text/html
+.tar
+application/x-tar
+.html
+text/html
+.tex
+application/x-tex
+.ief
+image/ief
+.texi
+application/x-texinfo
+.java
+text/plain
+.texinfo
+application/x-texinfo
+.jfif
+image/jpeg
+.text
+text/plain
+.jfif-tbnl
+image/jpeg
+.tif
+image/tiff
+.jpe
+image/jpeg
+.tiff
+image/tiff
+.jpeg
+image/jpeg
+.tr
+application/x-troff
+.jpg
+image/jpeg
+.tsv
+text/tab-separated-values
+.latex
+application/x-latex
+.txt
+text/plain
+.lib [2]
+application/octet-stream
+.ustar
+application/x-ustar
+.man
+application/x-troff-man
+.uu
+application/octet-stream
+.me
+application/x-troff-me
+.wav
+audio/x-wav
+.mime
+message/rfc822
+.wsrc
+application/x-wais-source
+.mov
+video/quicktime
+.xbm
+image/x-xbitmap
+.movie
+video/x-sgi-movie
+.xpm
+image/x-xpixmap
+.mpe
+video/mpeg
+.xwd
+image/x-xwindowdump
+.mpeg
+video/mpeg
+.z [2]
+application/octet-stream
+.mpg
+video/mpeg
+.zip  [2]
+application/zip
+Footnotes:
+[1] 
+UNIX only.
+[2] 
+Windows only.
+If the filename does not end with a recognized extension, the first
+few bytes of the file are examined. If the first few bytes match the
+signature of a known type, the file is assumed to be of that
+type. Table 8.3 shows the byte combinations that
+are recognized.
+Table 8.3: File Contents and Corresponding File Type
+File Begins with
+Inferred Data Type
+"GIF8"
+image/gif
+"#def"
+image/x-bitmap
+"! XPM2"
+image/x-pixmap
+"&lt;html&gt;"
+text/html
+"&lt;head&gt;"
+text/html
+"&lt;body&gt;"
+text/html
+If you want to access the raw contents of a file instead of getting it 
+encapsulated in an object, you can call the openStream() 
+method of a URL. The openStream() 
+method returns a reference to an InputStream 
+object that you can use to read the file. 
+URLConnection Objects
+After a URL object has parsed its specification,
+it actually creates a URLConnection object that is
+responsible for the protocol that it uses. The
+URLConnection is also responsible for determining
+the type of data in the file. The object is an instance of a subclass
+of URLConnection that is specific to the protocol
+specified by the URL object. As of Java 1.1, the
+java.net package includes the
+HttpURLConnection class for the HTTP protocol.
+The URLConnection object for a
+URL provides complete control over the downloading
+of data from that URL. Unfortunately, the functionality of
+URLConnection is quite complex and goes beyond the
+scope of this book. For a detailed explanation of
+URLConnection, see Java Network
+Programming by Eliotte Rusty Harold, published by
+O'Reilly &amp; Associates.
+Sockets
+Security
+ 
+ 
+ 
+ 
+ 
+ 
+ 

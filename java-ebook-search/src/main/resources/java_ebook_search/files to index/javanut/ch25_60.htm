@@ -1,0 +1,61 @@
+
+[Chapter 25] 25.60 java.lang.System (JDK 1.0)
+Chapter 25The java.lang Package
+25.60 java.lang.System (JDK 1.0)
+This class defines methods that provide a
+platform-independent interface to system functions. All of
+the methods and variables of this class are static. The
+class may not be instantiated.
+getProperty() looks up a named property on the
+system properties list, returning the optionally specified
+default value if no property definition was found.
+getProperties() returns the entire properties list.
+setProperties() sets a Properties object on
+the properties list.
+The in, out, and err variables are
+the system standard input, output, and error streams.
+arraycopy() copies an array or a portion of an array
+into a destination array.
+currentTimeMillis() returns the
+current time in milliseconds since midnight GMT on January
+1, 1970.
+exit(), gc(), load(),
+loadLibrary(), and runFinalization() invoke
+the methods of the same name in the Runtime object.
+See Runtime for details.
+public final class System extends Object {
+    // No Constructor
+    // Constants
+            public static final PrintStream err;
+            public static final InputStream in;
+            public static final PrintStream out;
+    // Class Methods
+            public static native void arraycopy(Object src, int src_position, Object dst, int dst_position, int length);
+            public static native long currentTimeMillis();
+            public static void exit(int status);
+            public static void gc();
+            public static Properties getProperties();
+            public static String getProperty(String key);
+            public static String getProperty(String key, String def);
+            public static SecurityManager getSecurityManager();
+        #   public static String getenv(String name);
+        1.1public static native int identityHashCode(Object x);
+            public static void load(String filename);
+            public static void loadLibrary(String libname);
+            public static void runFinalization();
+        1.1public static void runFinalizersOnExit(boolean value);
+        1.1public static void setErr(PrintStream err);
+        1.1public static void setIn(InputStream in);
+        1.1public static void setOut(PrintStream out);
+            public static void setProperties(Properties props);
+            public static void setSecurityManager(SecurityManager s);
+}
+java.lang.StringIndexOutOfBoundsException (JDK 1.0)
+java.lang.Thread (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

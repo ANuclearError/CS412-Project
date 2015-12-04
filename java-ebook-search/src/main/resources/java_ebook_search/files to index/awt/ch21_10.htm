@@ -1,0 +1,48 @@
+
+[Chapter 21] ContainerListener 
+Chapter 21java.awt.event Reference
+ContainerListener 
+Name
+ContainerListener 
+Description
+Objects that implement the ContainerListener 
+interface can receive ContainerEvent 
+objects. Listeners must first register themselves with objects that produce 
+events. When events occur, they are then automatically propagated to all 
+registered listeners. 
+Interface Definition
+public abstract interface java.awt.event.ContainerListener
+   extends java.util.EventListener {
+  // Instance Methods
+  public abstract void componentAdded (ContainerEvent e);
+  public abstract void componentRemoved (ContainerEvent e);
+}
+Interface Methods
+componentAdded
+public abstract void componentAdded (ContainerEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the ContainerListener 
+that a component has been added to the container. 
+componentRemoved
+public abstract void componentRemoved (ContainerEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the ContainerListener 
+that a component has been removed from the container. 
+See Also
+ContainerAdapter, 
+ContainerEvent, EventListener 
+ContainerEvent 
+FocusAdapter 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

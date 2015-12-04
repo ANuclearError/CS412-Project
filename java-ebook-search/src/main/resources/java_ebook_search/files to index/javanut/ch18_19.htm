@@ -1,0 +1,42 @@
+
+[Chapter 18] 18.19 java.awt.Dimension (JDK 1.0)
+Chapter 18The java.awt Package
+18.19 java.awt.Dimension (JDK 1.0)
+This class has two public instance variables that describe
+the width and height of something.  The width and
+height fields are public and may be manipulated
+directly.
+public class Dimension extends Object implements Serializable {
+    // Public Constructors
+            public Dimension();
+            public Dimension(Dimension d);
+            public Dimension(int width, int height);
+    // Public Instance Variables
+            public int height;
+            public int width;
+    // Public Instance Methods
+        1.1  public boolean equals(Object obj);  // Overrides Object
+        1.1  public Dimension getSize();
+        1.1  public void setSize(Dimension d);
+        1.1  public void setSize(int width, int height);
+            public String toString();  // Overrides Object
+}
+Passed To:
+Applet.resize(), 
+Component.resize(), 
+Component.setSize(), 
+Dimension(), 
+Dimension.setSize(), 
+Rectangle(), 
+Rectangle.setSize()
+Returned By:
+Many methods
+java.awt.Dialog (JDK 1.0)
+java.awt.Event (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

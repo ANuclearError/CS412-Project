@@ -1,0 +1,59 @@
+
+[Chapter 13] 13.2 Character Escape Sequences
+Chapter 13Java Syntax
+13.2 Character Escape Sequences
+Java uses the escape sequences listed in Table 13.2
+to represent certain special character values.  These escape
+sequences may appear in any Java char or
+String literal.
+Table 13.2: Java Escape Characters
+Escape Sequence
+Character Value
+\b
+Backspace
+\t
+Horizontal tab
+\n
+Newline
+\f
+Form feed
+\r
+Carriage return
+\"
+Double quote
+\'
+Single quote
+\\
+Backslash
+\xxx
+The character corresponding to the octal value xxx,
+where xxx is between 000 and 0377.
+\uxxxx
+The Unicode character with encoding xxxx, where
+xxxx is one to four hexidecimal digits.  Unicode
+escapes are distinct from the other escape types listed
+here; they are described below in more detail.
+Java characters, strings, and identifiers (e.g., field,
+method, and class names) are composed of 16-bit Unicode
+characters.  The Unicode \u escape sequence may be
+used anywhere in a Java program (not only in char
+and String literals) to represent a Unicode character.
+Unicode \u escape sequences are processed before
+the other escape sequences described in
+Character Escape Sequences,
+and thus the two types of escape sequences can have very
+different semantics.  A Unicode escape is simply an
+alternative way to represent a character which may not be
+displayable on non-Unicode systems.  The character
+escapes, however, can represent special characters in a way
+that prevents the usual interpretation of those characters
+by the compiler.
+Primitive Data Types
+Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

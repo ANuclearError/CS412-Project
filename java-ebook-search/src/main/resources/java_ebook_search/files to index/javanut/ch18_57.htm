@@ -1,0 +1,61 @@
+
+[Chapter 18] 18.57 java.awt.TextArea (JDK 1.0)
+Chapter 18The java.awt Package
+18.57 java.awt.TextArea (JDK 1.0)
+This class is a GUI component
+that displays and optionally edits multi-line
+text.  The appendText(), insertText(), and
+replaceText() provide various techniques for
+specifying text to appear in the TextArea.
+Many important TextArea methods are defined by the
+TextComponent superclass.  
+See also TextComponent and TextField.
+public class TextArea extends TextComponent {
+    // Public Constructors
+            public TextArea();
+            public TextArea(String text);
+            public TextArea(int rows, int columns);
+            public TextArea(String text, int rows, int columns);
+        1.1  public TextArea(String text, int rows, int columns, int scrollbars);
+    // Constants
+        1.1  public static final int SCROLLBARS_BOTH;
+        1.1  public static final int SCROLLBARS_HORIZONTAL_ONLY;
+        1.1  public static final int SCROLLBARS_NONE;
+        1.1  public static final int SCROLLBARS_VERTICAL_ONLY;
+    // Public Instance Methods
+            public void addNotify();  // Overrides Component
+        1.1  public synchronized void append(String str);
+        #   public void appendText(String str);
+            public int getColumns();
+        1.1  public Dimension getMinimumSize(int rows, int columns);
+        1.1  public Dimension getMinimumSize();  // Overrides Component
+        1.1  public Dimension getPreferredSize(int rows, int columns);
+        1.1  public Dimension getPreferredSize();  // Overrides Component
+            public int getRows();
+        1.1  public int getScrollbarVisibility();
+        1.1  public synchronized void insert(String str, int pos);
+        #   public void insertText(String str, int pos);
+        #   public Dimension minimumSize(int rows, int columns);
+        #   public Dimension minimumSize();  // Overrides Component
+        #   public Dimension preferredSize(int rows, int columns);
+        #   public Dimension preferredSize();  // Overrides Component
+        1.1  public synchronized void replaceRange(String str, int start, int end);
+        #   public void replaceText(String str, int start, int end);
+        1.1  public void setColumns(int columns);
+        1.1  public void setRows(int rows);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides TextComponent
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->TextComponent->TextArea
+Passed To:
+Toolkit.createTextArea()
+java.awt.SystemColor (JDK 1.1)
+java.awt.TextComponent (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

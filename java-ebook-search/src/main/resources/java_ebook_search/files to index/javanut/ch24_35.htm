@@ -1,0 +1,40 @@
+
+[Chapter 24] 24.35 java.io.LineNumberReader (JDK 1.1)
+Chapter 24The java.io Package
+24.35 java.io.LineNumberReader (JDK 1.1)
+This class is a character input stream that keeps track of
+the number of lines of text that have been read from it.  It
+supports the usual Reader methods, and also the
+readLine() method introduced by its superclass.  In
+addition to these methods, you can call
+getLineNumber() to query the number of lines set so 
+far.  You can also call setLineNumber() to set the
+line number for the current line.  Subsequent lines are
+numbered sequentially from this specified starting point.
+This class is a character-stream analog to
+LineNumberInputStream, which has been deprecated in Java 1.1.
+public class LineNumberReader extends BufferedReader {
+    // Public Constructors
+            public LineNumberReader(Reader in);
+            public LineNumberReader(Reader in, int sz);
+    // Public Instance Methods
+            public int getLineNumber();
+            public void mark(int readAheadLimit) throws IOException;  // Overrides BufferedReader
+            public int read() throws IOException;  // Overrides BufferedReader
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Overrides BufferedReader
+            public String readLine() throws IOException;  // Overrides BufferedReader
+            public void reset() throws IOException;  // Overrides BufferedReader
+            public void setLineNumber(int lineNumber);
+            public long skip(long n) throws IOException;  // Overrides BufferedReader
+}
+Hierarchy:
+Object->Reader->BufferedReader->LineNumberReader
+java.io.LineNumberInputStream (JDK 1.0; Deprecated.)
+java.io.NotActiveException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

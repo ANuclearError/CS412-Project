@@ -1,0 +1,595 @@
+
+[Chapter 10] StringBuffer
+Chapter 10The java.lang Package
+StringBuffer
+Name
+StringBuffer
+Synopsis
+Class Name:
+java.lang.StringBuffer
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later
+Description
+The StringBuffer class represents a variable-length
+sequence of characters. StringBuffer objects
+are used in computations that involve creating new String
+objects. The StringBuffer class provides a number
+of utility methods for working with StringBuffer objects,
+including append() and insert() methods
+that add characters to a StringBuffer and methods
+that fetch the contents of StringBuffer objects.
+When a StringBuffer
+object is created, the constructor determines the initial contents
+and capacity of the StringBuffer. The capacity
+of a StringBuffer is the number of characters
+that its internal data structure can hold. This is distinct from
+the length of the contents of a StringBuffer,
+which is the number of characters that are actually stored in the
+StringBuffer object. The capacity of a StringBuffer
+can vary. When
+a StringBuffer object is asked to hold more characters
+than its current capacity allows, the StringBuffer
+enlarges its internal data structure. However, it is more costly
+in terms of execution time and memory when a StringBuffer
+has to repeatedly increase its capacity than when a StringBuffer
+object is created with sufficient capacity.
+Because the intended use of StringBuffer
+objects involves modifying their contents, all methods of the StringBuffer
+class that modify StringBuffer objects are synchronized.
+This means that is it safe for multiple threads to try to modify
+a StringBuffer object at the same time.
+StringBuffer objects are used implicitly
+by the string concatenation operator. Consider the following code:
+String s, s1, s2;
+s = s1 + s2;
+To compute the string concatenation, the Java compiler generates
+code like:
+s = new StringBuffer().append(s1).append(s2).toString();
+Class Summary
+public class java.lang.StringBuffer extends java.lang.Object {
+    // Constructors
+    public StringBuffer();
+    public StringBuffer(int length);
+    public StringBuffer(String str);
+    // Instance Methods
+    public StringBuffer append(boolean b);
+    public synchronized StringBuffer append(char c);
+    public synchronized StringBuffer append(char[] str);
+    public synchronized StringBuffer append(char[] str, int offset, int len);
+    public StringBuffer append(double d);
+    public StringBuffer append(float f);
+    public StringBuffer append(int i);
+    public StringBuffer append(long l);
+    public synchronized StringBuffer append(Object obj);
+    public synchronized StringBuffer append(String str);
+    public int capacity();
+    public synchronized char charAt(int index);
+    public synchronized void ensureCapacity(int minimumCapacity);
+    public synchronized void getChars(int srcBegin, int srcEnd, 
+                             char[] dst, int dstBegin);
+    public StringBuffer insert(int offset, boolean b);
+    public synchronized StringBuffer insert(int offset, char c);
+    public synchronized StringBuffer insert(int offset, char[] str);
+    public StringBuffer insert(int offset, double d);
+    public StringBuffer insert(int offset, float f);
+    public StringBuffer insert(int offset, int i);
+    public StringBuffer insert(int offset, long l);
+    public synchronized StringBuffer insert(int offset, Object obj);
+    public synchronized StringBuffer insert(int offset, String str);
+    public int length();
+    public synchronized StringBuffer reverse();
+    public synchronized void setCharAt(int index, char ch);
+    public synchronized void setLength(int newLength);
+    public String toString();
+}
+Constructors
+StringBuffer
+public StringBuffer()
+Description
+Creates a StringBuffer object that does
+not contain any characters and has a capacity of 16 characters.
+public StringBuffer(int capacity)
+Parameters
+capacity
+The initial capacity of this StringBufffer
+object.
+Throws
+NegativeArraySizeException
+If capacity is negative.
+Description
+Creates a StringBuffer object that does
+not contain any characters and has the specified capacity.
+public StringBuffer(String str)
+Parameters
+str
+A String object.
+Description
+Creates a StringBuffer object that contains
+the same sequence of characters as the given String
+object and has a capacity 16 greater than the length of the String.
+Instance Methods
+append
+public StringBuffer append(boolean b)
+Parameters
+b
+A boolean value.
+Returns
+This StringBuffer object.
+Description
+This method appends either "true" or 
+"false" to the end of
+the sequence of characters stored in ths StringBuffer
+object, depending on the value of b.
+public synchronized StringBuffer append(char c)
+Parameters
+c
+A char value.
+Returns
+This StringBuffer object.
+Description
+This method appends the given character to the end of the
+sequence of characters stored in this StringBuffer
+object.
+public synchronized StringBuffer append(char str[])
+Parameters
+str
+An array of char values.
+Returns
+This StringBuffer object.
+Description
+This method appends the characters in the given array to the
+end of the sequence of characters stored in this StringBuffer
+object.
+   public synchronized StringBuffer append(char str[], int offset, int len)  
+Parameters
+str
+An array of char values.
+offset
+An offset into the array.
+len
+The number of characters from the array to be appended.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset or len are
+out of range.
+Description
+This method appends the specified portion of the given array
+to the end of the character sequence stored in this StringBuffer
+object. The portion of the array that is appended starts offset
+elements from the beginning of the array and is len
+elements long.
+public StringBuffer append(double d)
+Parameters
+d
+A double value.
+Returns
+This StringBuffer object.
+Description
+This method converts the given double value
+to a string using Double.toString(d) and appends
+the resulting string to the end of the sequence of characters stored
+in this StringBuffer object.
+public StringBuffer append(float f)
+Parameters
+f
+A float value.
+Returns
+This StringBuffer object.
+Description
+This method converts the given float value
+to a string using Float.toString(f) and appends
+the resulting string to the end of the sequence of characters stored
+in this StringBuffer object.
+public StringBuffer append(int i)
+Parameters
+i
+An int value.
+Returns
+This StringBuffer object.
+Description
+This method converts the given int value
+to a string using Integer.toString(i) and appends
+the resulting string to the end of the sequence of characters stored
+in this StringBuffer object.
+public StringBuffer append(long l)
+Parameters
+l
+A long value.
+Returns
+This StringBuffer object.
+Description
+This method converts the given long value
+to a string using Long.toString(l) and appends
+the resulting string to the end of the sequence of characters stored
+in this StringBuffer object.
+public synchronized StringBuffer append(Object obj)
+Parameters
+obj
+A reference to an object.
+Returns
+This StringBuffer object.
+Description
+This method gets the string representation of the given object
+by calling String.valueOf(obj) and appends
+the resulting string to the end of the character sequence stored
+in this StringBuffer object.
+public synchronized StringBuffer append(String str)
+Parameters
+str
+A String object.
+Returns
+This StringBuffer object.
+Description
+This method appends the sequence of characters represented
+by the given String to the characters in this
+StringBuffer object. If str
+is null, the string "null" is appended.
+capacity
+public int capacity()
+Returns
+The capacity of this StringBuffer object.
+Description
+This method returns the current capacity of this object. The
+capacity of a StringBuffer object is the number
+of characters that its internal data structure can hold. A StringBuffer
+object automatically increases its capacity when it is asked to
+hold more characters than its current capacity allows.
+charAt
+public synchronized char charAt(int index)
+Parameters
+index
+An index into the StringBuffer.
+Returns
+The character stored at the specified position in this
+StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If index is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method returns the character at the specified position
+in the StringBuffer object. The first character
+in the StringBuffer is at index 0.
+ensureCapacity
+public synchronized void ensureCapacity(int minimumCapacity)
+Parameters
+minimumCapacity
+The minimum desired capacity.
+Description
+This method ensures that the capacity of this StringBuffer
+object is at least the specified number of characters. If necessary,
+the capacity of this object is increased to the greater of minimumCapacity
+or double its current capacity plus two.
+It is more efficient to ensure that the capacity of a StringBuffer
+object is sufficient to hold all of the additions that will be made
+to its contents, rather than let the StringBuffer
+increase its capacity in multiple increments.
+getChars
+   public synchronized void getChars(int srcBegin, int srcEnd, char dst[], int dstBegin)  
+Parameters
+srcBegin
+The index of the first character to be copied.
+srcEnd
+The index after the last character to be copied.
+dst
+The destination char array.
+dstBegin
+An offset into the destination array.
+Throws
+StringIndexOutOfBoundsException
+If srcBegin, srcEnd,
+or dstBegin is out of range.
+Description
+This method copies each character in the specified range of
+this StringBuffer object to the given array of
+char values. More specifically, the first character
+to be copied is at index srcBegin; the last character
+to be copied is at index srcEnd-1.
+These characters
+are copied into dst, starting at index dstBegin
+and ending at index:
+dstBegin + (srcEnd-srcBegin) - 1
+insert
+public StringBuffer insert(int offset, boolean b)
+Parameters
+offset
+ 
+An offset into the StringBuffer.
+b
+A boolean value.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is out of range.
+Description
+This method inserts either "true" or 
+"false" into the sequence
+of characters stored in this StringBuffer object,
+depending on the value of b. The string is inserted
+at a position offset characters from the beginning
+of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+public synchronized StringBuffer insert(int offset, char c)
+Parameters
+offset
+An offset into the StringBuffer.
+c
+A char value.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method inserts the given character into the sequence
+of characters stored in this StringBuffer object.
+The character is inserted at a position offset
+characters from the beginning of the sequence. If offset
+is 0, the character is inserted before the first
+character in the StringBuffer.
+public synchronized StringBuffer insert(int offset, char str[])
+Parameters
+offset
+An offset into the StringBuffer.
+str
+An array of char values.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method inserts the characters in the given array into
+the sequence of characters stored in this StringBuffer
+object. The characters are inserted at a position offset
+characters from the beginning of the sequence. If offset
+is 0, the characters are inserted before the
+first character in the StringBuffer.
+public StringBuffer insert(int offset, double d)
+Parameters
+offset
+An offset into the StringBuffer.
+d
+A double value.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method converts the given double value
+to a string using Double.toString(d) and inserts
+the resulting string into the sequence of characters stored in this
+StringBuffer object. The string is inserted at
+a position offset characters from the beginning
+of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+public StringBuffer insert(int offset, float f)
+Parameters
+offset
+An offset into the StringBuffer.
+f
+A float value.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method converts the given float value
+to a string using Float.toString(f) and inserts
+the resulting string into the sequence of characters stored in this
+StringBuffer object. The string is inserted at
+a position offset characters from the beginning
+of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+public StringBuffer insert(int offset, int i)
+Parameters
+offset
+An offset into the StringBuffer.
+i
+An int value.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method converts the given int value
+to a string using Integer.toString(i) and inserts
+the resulting string into the sequence of characters stored in this
+StringBuffer object. The string is inserted at
+a position offset characters from the beginning
+of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+public StringBuffer insert(int offset, long l)
+Parameters
+offset
+An offset into the StringBuffer.
+l
+A long value.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method converts the given long value
+to a string using Long.toString(l) and inserts
+the resulting string into the sequence of characters stored in this
+StringBuffer object. The string is inserted at
+a position offset characters from the beginning
+of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+public synchronized StringBuffer insert(int offset, Object obj)
+Parameters
+offset
+An offset into the StringBuffer.
+obj
+A reference to an object.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method gets the string representation of the given object
+by calling String.valueOf(obj) and inserts
+the resulting string into the sequence of characters stored in this
+StringBuffer object. The string is inserted at
+a position offset characters from the beginning
+of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+public synchronized StringBuffer insert(int offset, String str)
+Parameters
+offset
+An offset into the StringBuffer.
+str
+A String object.
+Returns
+This StringBuffer object.
+Throws
+StringIndexOutOfBoundsException
+If offset is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method inserts the sequence of characters represented
+by the given String into the sequence of characters
+stored in this StringBuffer object. If str
+is null, the string "null" is inserted. The string
+is inserted at a position offset characters from
+the beginning of the sequence. If offset is 0,
+the string is inserted before the first character in the StringBuffer.
+length
+public int length()
+Returns
+The number of characters stored in this StringBuffer
+object.
+Description
+This method returns the number of characters stored in this
+StringBuffer object. The length is distinct from
+the capacity of a StringBuffer, which is the
+number of characters that its internal data structure can hold.
+reverse
+public synchronized StringBuffer reverse()
+Returns
+This StringBuffer object.
+Description
+This method reverses the sequence of characters stored in
+this StringBuffer object.
+setCharAt
+public synchronized void setCharAt(int index, char ch)
+Parameters
+index
+The index of the character to be set.
+ch
+A char value.
+Throws
+StringIndexOutOfBoundsException
+If index is less than zero or
+greater than or equal to the length of the StringBuffer
+object.
+Description
+This method modifies the character located index
+characters from the beginning of the sequence of characters stored
+in this StringBuffer object. The current character
+at this position is replaced by the character ch.
+setLength
+public synchronized void setLength(int newLength)
+Parameters
+newLength
+The new length for this StringBuffer.
+Throws
+StringIndexOutOfBoundsException
+If index is less than zero.
+Description
+This method sets the length of the sequence of characters
+stored in this StringBuffer object. If the length
+is set to be less than the current length, characters are lost from
+the end of the character sequence. If the length is set to be more
+than the current length, NUL characters (\u0000)
+are added to the end of the character sequence.
+toString
+public String toString()
+Returns
+A new String object that represents the
+same sequence of characters as the sequence of characters stored
+in this StringBuffer object.
+Overrides
+Object.toString()
+Description
+This method returns a new String object
+that represents the same sequence of characters as the sequence
+of characters stored in this StringBuffer object.
+Note that any subsequent changes to the contents of this StringBuffer
+object do not affect the contents of the String
+object created by this method.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Character;
+Double;
+Exceptions;
+Float;
+Integer;
+Long;
+Object;
+String;
+String Concatenation Operator +
+String
+System
+ 
+ 
+ 
+ 
+ 
+ 
+ 

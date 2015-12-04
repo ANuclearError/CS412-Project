@@ -1,0 +1,303 @@
+
+[Chapter 7] 7.2 Math Utilities
+Chapter 7Basic Utility Classes
+7.2 Math Utilities
+Java supports integer and floating-point arithmetic
+directly. Higher-level math operations are supported through the
+java.lang.Math class. Java provides wrapper classes
+for all primitive data types, so you can treat them as objects if
+necessary. Java also provides the java.util.Random
+class for generating random numbers.
+Java handles errors in integer arithmetic by throwing an
+ArithmeticException:
+int zero = 0; 
+ 
+try { 
+    int i = 72 / zero; 
+}  
+catch ( ArithmeticException e ) {       // division by zero 
+} 
+To generate the error in the above example, we created the
+intermediate variable zero. The compiler is
+somewhat crafty and would have caught us if we had blatantly tried to
+perform a division by zero.
+Floating-point arithmetic expressions, on the other hand,
+don't throw exceptions. Instead, they take on the special
+out-of-range values shown in Table 7.3.
+Table 7.3: Special Floating-Point Values
+Value
+Mathematical representation
+POSITIVE_INFINITY
+1.0/0.0
+NEGATIVE_INFINITY
+-1.0/0.0
+NaN
+0.0/0.0
+The following example generates an infinite result: 
+double zero = 0.0; 
+double d = 1.0/zero; 
+ 
+if ( d == Double.POSITIVE_INFINITY ) 
+    System.out.println( "Division by zero" ); 
+The special value NaN indicates the result is
+"not a number." The value NaN has the
+special distinction of not being equal to itself (NaN !=
+NaN). Use Float.isNaN() or
+Double.isNaN() to test for NaN.
+java.lang.Math
+The java.lang.Math class serves as Java's
+math library. All its methods are static and
+used directly; you can't instantiate a Math
+object. We use this kind of degenerate class when we really want
+methods to approximate normal functions in C. While this tactic defies the
+principles of object-oriented design, it makes sense in this
+case, as it provides a means of grouping some related utility
+functions in a single class. Table 7.4 summarizes the methods in java.lang.Math. 
+Table 7.4: Methods in java.lang.Math
+Method
+Argument type(s)
+Functionality
+Math.abs(a)
+int, long, float, double
+Absolute value
+Math.acos(a)
+double
+Arc cosine
+Math.asin(a)
+double
+Arc sine
+Math.atan(a)
+double
+Arc tangent
+Math.atan2(a,b)
+double
+Converts rectangular to polar coordinates
+Math.ceil(a)
+double
+Smallest whole number greater than or equal to a
+Math.cos(a)
+double
+Cosine
+Math.exp(a)
+double
+Exponential number to the power of a
+Math.floor(a)
+double
+Largest whole number less than or equal to a
+Math.log(a)
+double
+Natural logarithm of a
+Math.max(a, b)
+int, long, float, double
+Maximum
+Math.min(a, b)
+int, long, float, double
+Minimum
+Math.pow(a, b)
+double
+a to the power of b
+Math.random()
+None
+Random number generator
+Math.rint(a)
+double
+Converts double value to integral value in double format
+Math.round(a)
+float, double
+Rounds
+Math.sin(a)
+double
+Sine
+Math.sqrt(a)
+double
+Square root
+Math.tan(a)
+double
+Tangent
+log(), pow(), and
+sqrt() can throw an
+ArithmeticException. abs(),
+max(), and min() are overloaded
+for all the scalar values, int,
+long, float, or
+double, and return the corresponding type. Versions
+of Math.round() accept either
+float or double and return
+int or long respectively. The
+rest of the methods operate on and return double
+values:
+double irrational = Math.sqrt( 2.0 ); 
+int bigger = Math.max( 3, 4 ); 
+long one = Math.round( 1.125798 ); 
+For convenience, Math also contains the
+static final
+double values E and
+PI:
+double circumference = diameter * Math.PI; 
+java.math
+If a long or a double
+just isn't big enough for you, the java.math package
+provides two classes, BigInteger and
+BigDecimal, that support arbitrary-precision
+numbers.  These are full-featured classes with a bevy of methods for
+performing arbitrary-precision math.  In the following example, we
+use BigInteger to add two numbers together.
+try {
+    BigDecimal twentyone = new BigDecimal("21");
+    BigDecimal seven = new BigDecimal("7");
+    BigDecimal sum = twentyone.add(seven);
+     
+    int twentyeight = sum.intValue();
+}
+catch (NumberFormatException nfe) { }
+catch (ArithmeticException ae) { }
+Wrappers for Primitive Types
+In languages like Smalltalk, numbers and other simple types are
+objects, which makes for an elegant language design, but has
+trade-offs in efficiency and complexity. By contrast, there is a
+schism in the Java world between class types (i.e., objects) and
+primitive types (i.e., numbers, characters, and boolean values). Java
+accepts this trade-off simply for efficiency reasons. When
+you're crunching numbers you want your computations to be
+lightweight; having to use objects for primitive types would seriously
+affect performance. For the times you want to treat values as
+objects, Java supplies a wrapper class for each of the primitive
+types, as shown in Table 7.5.
+Table 7.5: Primitive Type Wrappers
+Primitive
+Wrapper
+void
+java.lang.Void
+boolean
+java.lang.Boolean
+char
+java.lang.Character
+byte
+java.lang.Byte
+short
+java.lang.Short
+int
+java.lang.Integer
+long
+java.lang.Long
+float
+java.lang.Float
+double
+java.lang.Double
+An instance of a wrapper class encapsulates a single value of
+its corresponding type. It's an immutable object that serves as a
+container to hold the value and let us retrieve it later. You can
+construct a wrapper object from a primitive value or from a
+String representation of the value. The following
+code is equivalent:
+Float pi = new Float( 3.14 ); 
+Float pi = new Float( "3.14" ); 
+Wrapper classes throw a NumberFormatException when
+there is an error in parsing from a string:
+try { 
+    Double bogus = new Double( "huh?" ); 
+} 
+catch ( NumberFormatException e ) {     // bad number 
+} 
+You should arrange to catch this exception if you want to deal with
+it. Otherwise, since it's a subclass of
+RuntimeException, it will propagate up the call
+stack and eventually cause a run-time error if not caught.
+Sometimes you'll use the wrapper classes simply to parse
+the String representation of a number:
+String sheep = getParameter("sheep"); 
+int n = new Integer( sheep ).intValue(); 
+Here we are retrieving the value of the sheep
+parameter. This value is returned as a String, so
+we need to convert it to a numeric value before we can use it. Every
+wrapper class provides methods to get primitive values out of the
+wrapper; we are using intValue() to retrieve an
+int out of Integer. Since
+parsing a String representation of a number is such
+a common thing to do, the Integer and
+Long classes also provide the
+static methods
+Integer.parseInt() and
+Long.parseLong() that read a
+String and return the appropriate type. So the
+second line above is equivalent to:
+int n = Integer.parseInt( sheep ); 
+All wrappers provide access to their values in various
+forms. You can retrieve scalar values with the methods
+doubleValue(), floatValue(),
+longValue(), and intValue():
+Double size = new Double ( 32.76 ); 
+ 
+double d = size.doubleValue(); 
+float f = size.floatValue(); 
+long l = size.longValue(); 
+int i = size.intValue(); 
+The code above is equivalent to the primitive
+double value cast to the various types. For
+convenience, you can cast between the wrapper classes like 
+Double class and the primitive data types.
+Another common use of wrappers occurs when we have to treat a
+primitive value as an object in order to place it in a list or other
+structure that operates on objects. As you'll see shortly, a
+Vector is an extensible array of
+Objects. We can use wrappers to hold numbers in
+a Vector, along with other objects:
+Vector myNumbers = new Vector(); 
+ 
+Integer thirtyThree = new Integer( 33 ); 
+myNumbers.addElement( thirtyThree ); 
+Here we have created an Integer wrapper so that we
+can insert the number into the Vector using
+addElement(). Later, when we are taking elements
+back out of the Vector, we can get the number back
+out of the Integer as follows:
+Integer theNumber = (Integer)myNumbers.firstElement(); 
+int n = theNumber.intValue();           // n = 33 
+Random Numbers
+You can use the java.util.Random class to generate
+random values. It's a pseudo-random number generator that can be
+initialized with a 48-bit seed.[1]
+ The default constructor uses the current 
+time as a seed, but if you want a repeatable sequence, specify your 
+own seed with: 
+[1] 
+The generator uses a linear congruential formula. See The Art of 
+Computer Programming, Volume 2 "Semi-numerical Algorithms,"
+by Donald Knuth (Addison-Wesley). 
+long seed = mySeed; 
+Random rnums = new Random( seed ); 
+This code creates a random-number generator. Once you have a generator, 
+you can ask for random values of various types using the methods listed 
+in Table 7.6.
+Table 7.6: Random Number Methods
+Method
+Range
+nextInt()
+-2147483648 to 2147483647
+nextLong()
+-9223372036854775808 to 9223372036854775807
+nextFloat()
+-1.0 to 1.0
+nextDouble()
+-1.0 to 1.0
+By default, the values are uniformly distributed. You can use the
+nextGaussian() method to create a Gaussian
+distribution of double values, with a mean of 0.0
+and a standard deviation of 1.0.
+The static method Math.random()
+retrieves a random double value. This method
+initializes a private random-number generator in
+the Math class, using the default
+Random constructor.
+ So every call to
+Math.random() corresponds to a call to
+nextDouble() on that random number generator.
+Strings
+Dates
+ 
+ 
+ 
+ 
+ 
+ 
+ 

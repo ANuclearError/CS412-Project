@@ -1,0 +1,45 @@
+
+[Chapter 1] 1.4 Running a Java Application
+Chapter 1Introduction
+1.4 Running a Java Application
+To run a Java application, you invoke the Java interpreter,
+java, with one or more arguments. The first
+argument is always the name of a Java class. Here is how
+to run the "Hello World" application:
+C:\&gt; java HelloWorld
+The capitalization of the class name must match the name used
+in the class declaration in the source file. The interpreter loads
+the specified class and then calls its main()
+method.
+A class can belong to a particular package. This allows the
+class to prevent classes in other packages from accessing its declared
+variables and methods. If a class is not specified as part of a
+package, it automatically becomes part of the default package. Because
+the HelloWorld class is part of the default package,
+you do not need to include the package name as part of the class
+name on the command line. If the HelloWorld
+class were part of a package called student.language,
+however, you would have to include the package name on the command line.
+For example, you would run the application as follows:
+C:\&gt; java student.language.HelloWorld
+Any additional arguments specified on the command line are
+passed to the main() method in its String[]
+parameter. For the "Hello World" application, the String[]
+parameter is an empty array. If, however, there were command-line arguments,
+the first array element, String[0], would correspond
+to the first command-line argument specified after the class name,
+String[1] would correspond to the next command-line
+element, and so on. The name of the class does not appear as an
+element in the array of parameters passed to the main()
+method. This is different than in C/C++, where the first element
+in the array of command-line arguments identifies the program name
+and the second element is the first command-line argument.
+Compiling a Java Source File
+Notational Conventions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

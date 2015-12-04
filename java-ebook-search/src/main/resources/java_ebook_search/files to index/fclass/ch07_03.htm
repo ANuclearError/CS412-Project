@@ -1,0 +1,166 @@
+
+[Chapter 7] 7.3 Versioning of Classes
+Chapter 7Object Serialization
+7.3 Versioning of Classes
+One you have written a class that works with serialization, the next concern 
+is that serialized instances of that class can be deserialized by programs 
+that use a different version of the same class. 
+After a class is written, it is often necessary to modify its
+definition as requirements change or new features are
+needed. Deserialization may fail if the definition of a class in use
+when an instance was serialized is different than the definition in
+use when the instance is deserialized.  If you do not take any
+measures to assure the serialization mechanism that the two classes
+are different versions of the same class, deserialization fails by
+throwing an InvalidClassException.  And even if the
+serialization mechanism is satisfied that the two class definitions
+represent different versions of the same class, it may find
+incompatible differences between the definitions.
+The following changes to the definition of a class are noticed by the
+serialization mechanism:
+Adding or deleting instance variables. 
+Moving a class up or down the inheritance hierarchy. 
+Making a non-static, non-transient 
+variable either static or transient 
+has the same effect as deleting the variable. Similarly, changing a variable 
+that is static or transient 
+to be non-static or non-transient 
+has the same effect as adding the variable. 
+Changing the data type of a transient 
+variable from a primitive data type to an object reference type or from 
+an object reference type to a primitive data type. 
+Changing the readObject() 
+or writeObject() method of 
+a class so that it calls defaultReadObject() 
+or defaultWriteObject() when 
+it did not previously, or so that it does not call one of these methods 
+when it did previously. The removal or addition of a readObject() 
+or writeObject() method that 
+does not call defaultReadObject() 
+or defaultWriteObject() has 
+a similar effect. 
+Changing a class from Serializable 
+to Externalizable or from Externalizable 
+to Serializable. 
+It's possible to code around some of these problems if you can first
+convince the serialization mechanism that the two class definitions
+are different versions of the same class. In order to convince the
+serialization mechanism of such a thing, the class definition used for
+deserialization of an object must define a static
+final  long variable named
+serialVersionUID.  If the class used for
+serialization also defined that variable with the same value, the two
+class definitions are assumed to define different versions of the same
+class.
+If the class used for serialization does not define
+serialVersionUID, the serialization mechanism
+performs the comparison using a value that is computed by calling the
+ObjectStreamClass.getSerialVersionUID()
+method. That computation is based on the fields defined by the
+class. To take advantage of this automatic computation when you define
+serialVersionUID, you should use the
+serialver program that comes with the JDK to
+determine the appropriate value for
+serialVersionUID. The
+serialver program computes a value for
+serialVersionUID by calling the
+ObjectStreamClass.getSerialVersionUID() method.
+Assuming you've convinced the serialization mechanism that the two
+class definitions represent different versions of the same class, here
+is some advice on how to deal with the differences that can be worked
+around:
+Missing variables
+If the class used to deserialize an object defines variables the class 
+used to serialize the object did not define, the serialized object does 
+not contain any values for those variables. This situation can also arise 
+if the class used to serialize the object defined a variable as static 
+or transient, while the class 
+used to deserialize the object defines it as non-static 
+or non-transient.
+When an object is deserialized and there are variables missing in its
+serialized form, the variables in the deserialized object are set to
+default values. In other words, the value of such a variable is
+true if it has an arithmetic data type,
+false if it has a boolean data
+type, or null if it has an object reference
+type. Deserialization ignores intializers in variable declarations.
+When you add variables to a Serializable 
+class, consider the possibility that the new version of the class will deserialize an object serialized with an older version of the 
+class. If that happens and it is unacceptable for the new variables to 
+have default values after deserialization, you can define a validateObject() 
+method for the class to check for the default values and provide acceptable 
+values or throw an InvalidObjectException. 
+Extra variables
+If the serialized form of an object contains values for variables that
+are not defined by the class used to deserialize that object, the values 
+are read and then ignored. If the value of such a variable is an object, 
+the object is created and immediately becomes a candidate for garbage collection. 
+Missing classes
+If the class used to deserialize an object inherits from an ancestor
+class that the class used to serialize the object did not inherit
+from, the serialized object does not contain any values for the
+variables of the additional ancestor class. Just as with missing
+variables, those variables are deserialized with their default values.
+When you add an ancestor class to a Serializable 
+class, consider the possibility that the new version of the class will deserialize an object serialized with an older version of the 
+class. If that happens and it is unacceptable for instance variables in 
+the new ancestor class to have default values after deserialization, you 
+can define a validateObject() 
+method for the class to check for the default values and provide acceptable 
+values or throw an InvalidObjectException. 
+Extra classes
+If the class used to serialize an object inherits from an ancestor class 
+that the class used to deserialize the object does not inherit from, the 
+values for the variables defined by that extra ancestor class are read 
+but not used. 
+Adding writeObject() and
+readObject() methods
+You can add writeObject() and 
+readObject() methods to a class 
+that did not have them. In order to deserialize objects that were serialized 
+using the older class definition, the new methods must begin by calling 
+defaultWriteObject() and defaultReadObject(). 
+That ensures that information written out using default logic is still 
+processed using default logic.
+If the writeObject() and
+readObject() methods write and read additional
+information to and from the byte stream, you should also add an
+additional variable to the class to serve as a version indicator. For
+example, you might declare an int variable and
+initialize it to one. If, after defaultReadObject()
+returns, the value of that variable is 0, you know
+the object was serialized using the old class definition and that any
+additional information that would have been written by the
+writeObject() method will not be there.
+Removing writeObject() and 
+readObject() methods
+If you remove writeObject() and
+readObject() methods from a class and deserialize
+an object using the new class definition, the information written by a
+call to writeObject() is simply read by the default
+logic and any additional information is ignored.
+Changing a class so that it implements Serializable
+If a superclass of an object did not implement
+Serializable when the object was serialized, and
+that superclass does implement Serializable when
+the object is deserialized, the result is similar to the missing class
+situation. There is no information about the variables of the newly
+Serializable superclass in the byte stream, so its
+instance variables are initialized to default values.
+Changing a class so that it does not implement
+Serializable
+If a superclass of an object implemented
+Serializable when the object was serialized, and
+that superclass does not implement Serializable
+when the object is deserialized, the result is similar to the extra
+class situation. The information in the byte stream for that class is
+read and discarded.
+Writing Classes to Work with Serialization
+Networking
+ 
+ 
+ 
+ 
+ 
+ 
+ 

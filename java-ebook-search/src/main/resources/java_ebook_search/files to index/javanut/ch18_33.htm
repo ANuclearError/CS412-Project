@@ -1,0 +1,40 @@
+
+[Chapter 18] 18.33 java.awt.Insets (JDK 1.0)
+Chapter 18The java.awt Package
+18.33 java.awt.Insets (JDK 1.0)
+This class holds four values that represent the top, left,
+bottom, and right margins, in pixels, of a Container
+or other Component.  Objects of this type may be
+specified in a GridBagConstraints
+layout object, and
+are returned by Container.insets(), which queries
+the margins of a container.
+public class Insets extends Object implements Cloneable, Serializable {
+    // Public Constructor
+            public Insets(int top, int left, int bottom, int right);
+    // Public Instance Variables
+            public int bottom;
+            public int left;
+            public int right;
+            public int top;
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+        1.1  public boolean equals(Object obj);  // Overrides Object
+            public String toString();  // Overrides Object
+}
+Returned By:
+Container.getInsets(), 
+Container.insets(), 
+ContainerPeer.getInsets(), 
+ContainerPeer.insets()
+Type Of:
+GridBagConstraints.insets
+java.awt.Image (JDK 1.0)
+java.awt.ItemSelectable (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

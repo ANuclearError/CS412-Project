@@ -1,0 +1,96 @@
+
+[Chapter 12] IllegalThreadStateException
+Chapter 12The java.lang Package
+IllegalThreadStateException
+Name
+IllegalThreadStateException
+Synopsis
+Class Name:
+java.lang.IllegalThreadStateException 
+Superclass:
+java.lang.IllegalArgumentException 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+An IllegalThreadStateException 
+is thrown to indicate an attempt to perform an operation on a thread that 
+is not legal for the thread's current state, such as attempting to 
+resume a dead thread. 
+Class Summary
+public class java.lang.IllegalThreadStateException
+             extends java.lang.IllegalArgumentException {
+  // Constructors
+  public IllegalThreadStateException();
+  public IllegalThreadStateException(String s);
+}
+Constructors
+IllegalThreadStateException
+public IllegalThreadStateException()
+Description
+This constructor creates an IllegalThreadStateException 
+with no associated detail message. 
+public IllegalThreadStateException(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an IllegalThreadStateException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+IllegalArgumentException, 
+RuntimeException, 
+Thread, 
+Throwable 
+IllegalStateException
+IncompatibleClassChangeError
+ 
+ 
+ 
+ 
+ 
+ 
+ 

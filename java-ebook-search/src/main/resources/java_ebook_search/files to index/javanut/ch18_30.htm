@@ -1,0 +1,47 @@
+
+[Chapter 18] 18.30 java.awt.GridLayout (JDK 1.0)
+Chapter 18The java.awt Package
+18.30 java.awt.GridLayout (JDK 1.0)
+This class implements the LayoutManager interface to
+lay out Component objects in a Container.  It
+divides the Container into a specified number of
+rows and columns and arranges the components in those rows
+and columns, left-to-right and top-to-bottom.  If either the
+number of rows or the number of columns is set to zero, its value
+is computed from the other dimension and the total
+number of components.  Do not confuse this class with the
+more flexible and complicated GridBagLayout.
+Note that applications should never call the
+LayoutManager methods of this class directly; the
+Container for which the GridLayout is
+registered does this.
+public class GridLayout extends Object implements LayoutManager, Serializable {
+    // Public Constructors
+        1.1  public GridLayout();
+            public GridLayout(int rows, int cols);
+            public GridLayout(int rows, int cols, int hgap, int vgap);
+    // Public Instance Methods
+            public void addLayoutComponent(String name, Component comp);  // From LayoutManager
+        1.1  public int getColumns();
+        1.1  public int getHgap();
+        1.1  public int getRows();
+        1.1  public int getVgap();
+            public void layoutContainer(Container parent);  // From LayoutManager
+            public Dimension minimumLayoutSize(Container parent);  // From LayoutManager
+            public Dimension preferredLayoutSize(Container parent);  // From LayoutManager
+            public void removeLayoutComponent(Component comp);  // From LayoutManager
+        1.1  public void setColumns(int cols);
+        1.1  public void setHgap(int hgap);
+        1.1  public void setRows(int rows);
+        1.1  public void setVgap(int vgap);
+            public String toString();  // Overrides Object
+}
+java.awt.GridBagLayout (JDK 1.0)
+java.awt.IllegalComponentStateException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

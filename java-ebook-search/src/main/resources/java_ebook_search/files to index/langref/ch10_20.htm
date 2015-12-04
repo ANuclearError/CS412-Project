@@ -1,0 +1,1093 @@
+
+[Chapter 10] String
+Chapter 10The java.lang Package
+String
+Name
+String
+Synopsis
+Class Name:
+java.lang.String
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later
+Description
+The String class represents sequences
+of characters. Once a String object is created,
+it is immutable. In other words, the sequence of characters that
+a String represents cannot be changed after it
+is created. The StringBuffer class, on the other
+hand, represents a sequence of characters that can be changed. StringBuffer
+objects are used to perform computations on String objects.
+The String class includes a number of utility
+methods, such as methods for fetching individual characters or ranges
+of contiguous characters, for translating characters to upper- or
+lowercase, for searching strings, and for parsing numeric values
+in strings.
+String literals are compiled into String
+objects. Where a String literal appears in an
+expression, the compiled code contains a String object.
+If s is declared as String,
+the following two expressions are identical:
+s.equals("ABC")
+"ABC".equals(s)
+The string concatenation operator implicitly creates
+String objects.
+Class Summary
+public final class java.lang.String extends java.lang.Object {
+    // Constructors
+    public String();
+    public String(byte[] bytes);                          // New in 1.1
+    public String(byte[] bytes, String enc);              // New in 1.1
+    public String(byte[] bytes, int offset, int length);  // New in 1.1
+    public String(byte[] bytes, int offset, 
+                  int length, String enc);                // New in 1.1
+    public String(byte[] lowbytes, int hibyte);        // Deprecated in 1.1
+    public String(byte[] lowbytes, int hibyte, 
+                  int offset, int count);              // Deprecated in 1.1
+    public String(char[] value);
+    public String(char[] value, int offset, int;
+    public String(String value);
+    public String(StringBuffer buffer);
+    // Class Methods
+    public static String copyValueOf(char data[]);
+    public static String copyValueOf(char data[], int offset, int count);
+    public static String valueOf(boolean b);
+    public static String valueOf(char c);
+    public static String valueOf(char[] data);
+    public static String valueOf(char[] data, int offset, int count);
+    public static String valueOf(double d);
+    public static String valueOf(float f);
+    public static String valueOf(int i);
+    public static String valueOf(long l);
+    public static String valueOf(Object obj);
+    // Instance Methods
+    public char charAt(int index);
+    public int compareTo(String anotherString);
+    public String concat(String str);
+    public boolean endsWith(String suffix);
+    public boolean equals(Object anObject);
+    public boolean equalsIgnoreCase(String anotherString);
+    public byte[] getBytes();                             // New in 1.1
+    public byte[] getBytes(String enc);                   // New in 1.1
+    public void getBytes(int srcBegin, int srcEnd, 
+                         byte[] dst, int dstBegin);     // Deprecated in 1.1
+    public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin);
+    public int hashCode();
+    public int indexOf(int ch);
+    public int indexOf(int ch, int fromIndex);
+    public int indexOf(String str);
+    public int indexOf(String str, int fromIndex);
+    public native String intern();
+    public int lastIndexOf(int ch);
+    public int lastIndexOf(int ch, int fromIndex);
+    public int lastIndexOf(String str);
+    public int lastIndexOf(String str, int fromIndex;
+    public int length();
+    public boolean regionMatches(boolean ignoreCase, int toffset,
+                                 String other, int ooffset, int len);
+    public boolean regionMatches(int toffset, String other,
+                                 int ooffset, int len);
+    public String replace(char oldChar, char newChar);
+    public boolean startsWith(String prefix);
+    public boolean startsWith(String prefix, int toffset);
+    public String substring(int beginIndex);
+    public String substring(int beginIndex, int endIndex);
+    public char[] toCharArray();
+    public String toLowerCase();
+    public String toLowerCase(Locale locale);             // New in 1.1
+    public String toString();
+    public String toUpperCase();
+    public String toUpperCase(Locale locale);             // New in 1.1
+    public String trim();
+}
+Constructors
+String
+public String()
+Description
+Creates a new String object that represents
+the empty string (i.e., a string with zero characters).
+public String(byte[] bytes)
+Availability
+New as of JDK 1.1
+Parameters
+bytes
+An array of byte values.
+Description
+Creates a new String object that represents
+the sequence of characters stored 
+in the given bytes
+array. The bytes in the array are converted to characters 
+using the system's default character encoding scheme.
+public String(byte[] bytes, String enc)
+Availability
+New as of JDK 1.1
+Parameters
+bytes
+An array of byte values.
+enc
+The name of an encoding scheme.
+Throws
+UnsupportedEncodingException
+If enc is not a supported encoding scheme.
+Description
+Creates a new String object that represents
+the sequence of characters stored 
+in the given bytes
+array. The bytes in the array are converted to characters 
+using the specified character encoding scheme.
+public String(byte[] bytes, int offset, int length)
+Availability
+New as of JDK 1.1
+Parameters
+bytes
+An array of byte values.
+offset
+An offset into the array.
+length
+The number of bytes to be included.
+Throws
+StringIndexOutOfBoundsException
+If offset or length
+indexes an element that is outside the bounds of the bytes
+array.
+Description
+Creates a new String object that represents
+the sequence of characters stored in the specified portion
+of the given bytes
+array. The bytes in the array are converted to characters 
+using the system's default character encoding scheme.
+   public String(byte[] bytes, int offset, int length, String enc)  
+Availability
+New as of JDK 1.1
+Parameters
+bytes
+An array of byte values.
+offset
+An offset into the array.
+length
+The number of bytes to be included.
+enc
+The name of an encoding scheme.
+Throws
+StringIndexOutOfBoundsException
+If offset or length
+indexes an element that is outside the bounds of the bytes
+array.
+UnsupportedEncodingException
+If enc is not a supported encoding scheme.
+Description
+Creates a new String object that represents
+the sequence of characters stored in the specified portion
+of the given bytes
+array. The bytes in the array are converted to characters 
+using the specified character encoding scheme.
+public String(byte[] lowbytes, int hibyte)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+lowbytes
+An array of byte values.
+hibyte
+The value to be put in the high-order byte of each
+16-bit character.
+Description
+Creates a new String object that represents
+the sequence of characters stored in the given lowbytes
+array. The type of the array elements is byte,
+which is an 8-bit data type, so each element must be converted
+to a char, which is a 16-bit data type. The value
+of the hibyte argument is used to provide the
+value of the high-order byte when the byte values
+in the array are converted to char values.
+More specifically, for each element i in
+the array lowbytes, the character at position i
+in the created String object is:
+((hibyte &amp; 0xff)&lt;&lt;8) | lowbytes[i]
+This method is deprecated as of JDK 1.1 because it does not 
+convert bytes into characters properly.  You should instead use 
+one of the constructors that takes a specific character encoding
+argument or that uses the default encoding.
+   public String(byte[] lowbytes, int hibyte, int offset, int count)  
+Availability
+Deprecated as of JDK 1.1
+Parameters
+lowbytes
+An array of byte values.
+hibyte
+The value to be put in the high-order byte of each
+16-bit character.
+offset
+An offset into the array.
+count
+The number of bytes from the array to be included
+in the string.
+Throws
+StringIndexOutOfBoundsException
+If offset or count
+indexes an element that is outside the bounds of the lowbytes
+array.
+Description
+Creates a new String object that represents
+the sequence of characters stored in the specified portion of the
+lowbytes array. That is, the portion of the array
+that starts at offset elements from the beginning
+of the array and is count elements long.
+The type of the array elements is byte,
+which is an 8-bit data type, so each element must be converted
+to a char, which is a 16-bit data type. The value
+of the hibyte argument is used to provide the
+value of the high-order byte when the byte values
+in the array are converted to char values.
+More specifically, for each element i in
+the array lowbytes that is included in the String
+object, the character at position i in the created
+String is:
+ ((hibyte &amp; 0xff)&lt;&lt;8) | lowbytes[I]
+This method is deprecated as of JDK 1.1 because it does not 
+convert bytes into characters properly.  You should instead use 
+one of the constructors that takes a specific character encoding
+argument or that uses the default encoding.
+public String(char[] value)
+Parameters
+value
+An array of char values.
+Description
+Creates a new String object that represents
+the sequence of characters stored in the given array.
+public String(char[] value, int offset, int count)
+Parameters
+value
+An array of char values.
+offset
+An offset into the array.
+count
+The number of characters from the array to be included
+in the string.
+Throws
+StringIndexOutOfBoundsException
+If offset or count
+indexes an element that is outside the bounds of the value
+array.
+Description
+Creates a new String object that represents
+the sequence of characters stored in the specified portion of the
+given array. That is, the portion of the given array that starts
+at offset elements from the beginning of the
+array and is count elements long.
+public String(String value)
+Parameters
+value
+A String object.
+Description
+Creates a new String object that represents
+the same sequence of characters as the given String
+object.
+public String(StringBuffer value)
+Parameters
+value
+A StringBuffer object.
+Description
+Creates a new String object that represents
+the same sequence of characters as the given object.
+Class Methods
+copyValueOf
+public static String copyValueOf(char data[])
+Parameters
+data
+An array of char values.
+Returns
+A new String object that represents the
+sequence of characters stored in the given array.
+Description
+This method returns a new String object
+that represents the character sequence contained in the given array.
+The String object produced by this method is
+guaranteed not to refer to the given array, but instead to use a
+copy. Because the String object uses a copy of
+the array, subsequent changes to the array do not change the contents
+of this String object.
+This method is now obsolete. The same result can be obtained
+using the valueOf() method that takes an array
+of char values.
+   public static String copyValueOf(char data[], int offset, int count)  
+Parameters
+data
+An array of char values.
+offset
+An offset into the array.
+count
+The number of characters from the array to be included
+in the string.
+Returns
+A new String object that represents the
+sequence of characters stored in the specified portion of the given
+array.
+Throws
+StringIndexOutOfBoundsException
+If offset or count
+indexes an element that is outside the bounds of the data
+array.
+Description
+This method returns a new String object
+that represents the character sequence contained in the specified
+portion of the given array. That is, the portion of the given array
+that starts at offset elements from the beginning
+of the array and is count elements long. The
+String object produced by this method is guaranteed
+not to refer to the given array, but instead to use a copy. Because
+the String object uses a copy of the array, subsequent
+changes to the array do not change the contents of this String
+object.
+This method is obsolete. The same result can be obtained by
+using the valueOf() method that takes an array
+of char values, an offset, and a count.
+valueOf
+public static String valueOf(boolean b)
+Parameters
+b
+A boolean value.
+Returns
+A new String object that contains
+'true' if b is
+true or 'false' if
+b is false.
+Description
+This method returns a string representation of a
+boolean value. In other words, it returns
+'true' if b is
+true or 'false' if
+b is false.
+public static String valueOf(char c)
+Parameters
+c
+A char value.
+Returns
+A new String object that contains just
+the given character.
+Description
+This method returns a string representation of a char
+value. In other words, it returns a String object
+that contains just the given character.
+public static String valueOf(char[] data)
+Parameters
+data
+An array of char values.
+Returns
+A new String object that contains the sequence
+of characters stored in the given array.
+Description
+This method returns a string representation of an array of
+char values. In other words, it returns a String object that contains the sequence of characters stored
+in the given array.
+   public static String valueOf(char[] data, int offset, int count)  
+Parameters
+data
+An array of char values.
+offset
+An offset into the array.
+count
+The number of characters from the array to be included
+in the string.
+Returns
+A new String object that contains the sequence
+of characters stored in the specified portion of the given array.
+Throws
+StringIndexOutOfBoundsException
+If offset or count
+indexes an element that is outside the bounds of the data
+array.
+Description
+This method returns a string representation of the specified
+portion of an array of char values. In other words, it returns a
+String object that contains the sequence of characters
+in the given array that starts offset elements
+from the beginning of the array and is count
+elements long.
+public static String valueOf(double d)
+Parameters
+d
+A double value.
+Returns
+A new String object that contains a string
+representation of the given double value.
+Description
+This method returns a string representation of a double
+value. In other words, it returns the String
+object returned by Double.toString(d).
+public static String valueOf(float f)
+Parameters
+f
+A float value.
+Returns
+A new String object that contains a string
+representation of the given float value.
+Description
+This method returns a string representation of a float
+value. In other words, it returns the String
+object returned by Float.toString(f).
+public static String valueOf(int i)
+Parameters
+i
+An int value.
+Returns
+A new String object that contains a string
+representation of the given int value.
+Description
+This method returns a string representation of an int
+value. In other words, it returns the String
+object returned by Integer.toString(i).
+public static String valueOf(long l)
+Parameters
+l
+A long value.
+Returns
+A new String object that contains a string
+representation of the given long value.
+Description
+This method returns a string representation of a long
+value. In other words, it returns the String
+object returned by Long.toString(l).
+public static String valueOf (Object obj)
+Parameters
+obj
+A reference to an object.
+Returns
+A new String that contains a string representation
+of the given object.
+Description
+This method returns a string representation of the given object.
+If obj is null, the method
+returns'null'. Otherwise, the method returns the String
+object returned by the toString() method
+of the object.
+Instance Methods
+charAt
+public char charAt(int index)
+Parameters
+index
+An index into the string.
+Returns
+The character at the specified position in this string.
+Throws
+StringIndexOutOfBoundsException
+If index is less than zero or
+greater than or equal to the length of the string.
+Description
+This method returns the character at the specified position
+in the String object; the first character in
+the string is at position 0.
+compareTo
+public int compareTo(String anotherString)
+Parameters
+anotherString
+The String object to be compared.
+Returns
+A positive value if this string is greater than anotherString,
+0 if the two strings are the same, or a negative
+value if this string is less than anotherString.
+Description
+This method lexicographically compares this String
+object to anotherString.
+Here is how the comparison works: the two String
+objects are compared character-by-character, starting at index 0
+and continuing until a position is found in which the two strings
+contain different characters or until all of the characters in the
+shorter string have been compared. If the characters at k
+are different, the method returns:
+this.charAt(k)-anotherString.charAt(k)
+Otherwise, the comparison is based on the lengths of the strings
+and the method returns:
+this.length()-anotherString.length()
+concat
+public String concat(String str)
+Parameters
+str
+The String object to be concatenated.
+Returns
+A new String object that contains the character
+sequences of this string and str concatenated
+together.
+Description
+This method returns a new String object
+that concatenates the characters from the argument string
+str onto
+the characters from this String object. Although
+this is a good way to concatenate two strings, concatenating more
+than two strings can be done more efficiently using a StringBuffer
+object.
+endsWith
+public boolean endsWith(String suffix)
+Parameters
+suffix
+The String object suffix to be
+tested.
+Returns
+true if this string ends with the sequence
+of characters specified by suffix; otherwise
+false.
+Description
+This method determines whether or not this String
+object ends with the specified suffix.
+equals
+public boolean equals(Object anObject)
+Parameters
+anObject
+The Object to be compared.
+Returns
+true if the objects are equal; false
+if they are not.
+Overrides
+Object.equals()
+Description
+This method returns true if anObject
+is an instance of String and it contains the
+same sequence of characters as this String object.
+Note the difference between this method and the ==
+operator, which only returns true if both of
+its arguments are references to the same object.
+equalsIgnoreCase
+public boolean equalsIgnoreCase(String anotherString)
+Parameters
+anotherString
+The String object to be compared.
+Returns
+true if the strings are equal, ignoring
+case; otherwise false.
+Description
+This method determines whether or not this String
+object contains the same sequence of characters, ignoring case,
+as anotherString. More specifically, corresponding
+characters in the two strings are considered equal if any of the
+following conditions are true:
+The two characters compare as equal
+using the == operator.
+The Character.toUppercase() method
+returns the same result for both characters.
+The Character.toLowercase() method
+returns the same result for both characters.
+getBytes
+   public byte[] getBytes()  
+Availability
+New as of JDK 1.1
+Returns
+A byte array that contains the characters of this
+String.
+Description
+This method converts the characters in this String
+object to an array of byte values.  The characters
+in the string are converted to bytes using the system's default character
+encoding scheme.
+   public byte[] getBytes(String enc)  
+Availability
+New as of JDK 1.1
+Parameters
+enc
+The name of an encoding scheme.
+Returns
+A byte array that contains the characters of this
+String.
+Throws
+UnsupportedEncodingException
+If enc is not a supported encoding scheme.
+Description
+This method converts the characters in this String
+object to an array of byte values.  The characters
+in the string are converted to bytes using the specified character 
+encoding scheme.
+   public void getBytes(int srcBegin, int srcEnd, byte[] dst, int dstBegin)  
+Availability
+Deprecated as of JDK 1.1
+Parameters
+srcBegin
+The index of the first character to be copied.
+srcEnd
+The index after the last character to be copied.
+dst
+The destination byte array.
+dstBegin
+An offset into the destination array.
+Throws
+StringIndexOutOfBoundsException
+If srcBegin, srcEnd,
+or dstBegin is out of range.
+Description
+This method copies the low-order byte of each character in
+the specified range of this String object to
+the given array of byte values. More specifically,
+the first character to be copied is at index srcBegin;
+the last character to be copied is at index srcEnd-1.
+The low-order bytes of these characters are copied into dst,
+starting at index dstBegin and ending at index:
+dstBegin + (srcEnd-srcBegin) - 1
+This method is deprecated as of JDK 1.1 because it does not 
+convert characters into bytes properly.  You should instead use 
+the getBytes() method
+that takes a specific character encoding
+argument or the one that uses the default encoding.
+getChars
+   public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin)  
+Parameters
+srcBegin
+The index of the first character to be copied.
+srcEnd
+The index after the last character to be copied.
+dst
+The destination char array.
+dstBegin
+An offset into the destination array.
+Throws
+StringIndexOutOfBoundsException
+If srcBegin, srcEnd,
+or dstBegin is out of range.
+Description
+This method copies each character in the specified range of
+this String object to the given array of char
+values. More specifically, the first character to be copied is at
+index srcBegin; the last character to be copied
+is at index srcEnd-1. These characters are copied
+into dst, starting at index dstBegin
+and ending at index:
+dstBegin + (srcEnd-srcBegin) - 1
+hashCode
+public int hashCode()
+Returns
+A hashcode based on the sequence of characters in this string.
+Overrides
+Object.hashCode()
+Description
+This method returns a hashcode based on the sequence of characters
+this String object represents.
+More specifically, one of two algorithms is used to compute a hash
+code for the string, depending on its length. If
+n is the length of the string and
+S_i is the character at position
+i in the string, then if
+n = 15 the method returns:
+If n &gt; 15, the method returns:
+indexOf
+public int indexOf(int ch)
+Parameters
+ch
+A char value.
+Returns
+The index of the first occurrence of the given character in
+this string or -1 if the character does not
+occur.
+Description
+This method returns the index of the first occurrence of the
+given character in this String object. If there
+is no such occurrence, the method returns the value -1.
+public int indexOf(int ch, int fromIndex)
+Parameters
+ch
+A char value.
+fromIndex
+The index where the search is to begin.
+Returns
+The index of the first occurrence of the given character in
+this string after fromIndex or -1
+if the character does not occur.
+Description
+This method returns the index of the first occurrence of the
+given character in this String object after ignoring
+the first fromIndex characters. If there is no
+such occurrence, the method returns the value -1.
+public int indexOf(String str)
+Parameters
+str
+A String object.
+Returns
+The index of the first occurrence of str
+in this string or -1 if the substring does not
+occur.
+Description
+This method returns the index of the first character of the
+first occurrence of the substring str in this
+String object. If there is no such occurrence,
+the method returns the value -1.
+public int indexOf(String str, int fromIndex)
+Parameters
+str
+A String object.
+fromIndex
+The index where the search is to begin.
+Returns
+The index of the first occurrence of str
+in this string after fromIndex or -1
+if the substring does not occur.
+Description
+This method returns the index of the first character of the
+first occurrence of the substring str in this
+String object after ignoring the first fromIndex
+characters. If there is no such occurrence, the method returns the
+value -1.
+intern
+public native String intern()
+Returns
+A String object that is guaranteed to be
+the same object for every String that contains
+the same character sequence.
+Description
+This method returns a canonical representation for this
+String
+object. The returned String object is guaranteed
+to be the same String object for every
+String object that contains the same character
+sequence. In other words, if:
+s1.equals(s2)
+then:
+s1.intern() == s2.intern()
+The intern() method is used by the Java
+environment to ensure that String literals and
+constant-value String expressions that contain
+the same sequence of characters are all represented by a single
+String object.
+lastIndexOf
+public int lastIndexOf(int ch)
+Parameters
+ch
+A char value.
+Returns
+The index of the last occurrence of the given character in
+this string or -1 if the character does not
+occur.
+Description
+This method returns the index of the last occurrence of the
+given character in this String object. If there
+is no such occurrence, the method returns the value -1.
+public int lastIndexOf(int ch, int fromIndex)
+Parameters
+ch
+A char value.
+fromIndex
+The index where the search is to begin.
+Returns
+The index of the last occurrence of the given character in
+this string after fromIndex or -1
+if the character does not occur.
+Description
+This method returns the index of the last occurrence of the
+given character in this String object after ignoring
+the first fromIndex characters. If there is no
+such occurrence, the method returns the value -1.
+public int lastIndexOf(String str)
+Parameters
+str
+A String object.
+Returns
+The index of the last occurrence of str
+in this string or -1 if the substring does not
+occur.
+Description
+This method returns the index of the first character of the
+last occurrence of the substring str in this
+String object. If there is no such occurrence,
+the method returns the value -1.
+public int lastIndexOf(String str, int fromIndex)
+Parameters
+str
+A String object.
+fromIndex
+The index where the search is to begin.
+Returns
+The index of the last occurrence of str
+in this string after fromIndex or -1
+if the substring does not occur.
+Description
+This method returns the index of the first character of the
+last occurrence of the substring str in this
+String object after ignoring the first fromIndex
+characters. If there is no such occurrence, the method returns the
+value -1.
+length
+public int length()
+Returns
+The length of the character sequence represented by this string.
+Description
+This method returns the number of characters in the character
+sequence represented by this String object.
+regionMatches
+   public boolean regionMatches(int toffset, String other, int ooffset, int len)  
+Parameters
+toffset
+The index of the first character in this string.
+other
+The String object to be used
+in the comparison.
+ooffset
+The index of the first character in other.
+len
+The length of the sub-sequences to be compared.
+Returns
+true if the sub-sequences are identical;
+otherwise false.
+Description
+This method determines whether or not the specified sub-sequences
+in this String object and other are
+identical. The method returns false if toffset
+is negative, if ooffset is negative, if toffset+len
+is greater than the length of this string, or if ooffset+len
+is greater than the length of other.
+Otherwise, the method returns
+true if for all nonnegative integers k
+less than len it is true that:
+this.charAt(toffset+k) == other.charAt(ooffset+k)
+   public boolean regionMatches(boolean ignoreCase, int toffset, String other, int ooffset, int len)  
+Parameters
+ignoreCase
+A boolean value that indicates whether case should
+be ignored.
+toffset
+The index of the first character in this string.
+other
+The String object to be used
+in the comparison.
+ooffset
+The index of the first character in other.
+len
+The length of the sub-sequences to be compared.
+Returns
+true if the sub-sequences are identical;
+otherwise false. The ignoreCase
+argument controls whether or not case is ignored in the comparison.
+Description
+This method determines whether or not the specified sub-sequences
+in this String object and other are
+identical. The method returns false if toffset
+is negative, if ooffset is negative,
+if toffset+len
+is greater than the length of this string, or if ooffset+len
+is greater than the length of other.
+Otherwise, if ignoreCase
+is false, the method returns true
+if for all nonnegative integers k less than
+len it is true that:
+this.charAt(toffset+k) == other.charAt(ooffset+k)
+If ignoreCase is true,
+the method returns true if for all nonnegative
+integers k less than len it
+is true that:
+Character.toLowerCase(this.charAt(toffset+k))
+== Character.toLowerCase(other.charAt(ooffset+k))
+or:
+Character.toUpperCase(this.charAt(toffset+k))
+== Character.toUpperCase(other.charAt(ooffset+k))
+replace
+public String replace(char oldChar, char newChar)
+Parameters
+oldChar
+The character to be replaced.
+newChar
+The replacement character.
+Returns
+A new String object that results from replacing
+every occurrence of oldChar in the string with
+newChar.
+Description
+This method returns a new String object
+that results from replacing every occurrence of oldChar
+in this String object with newChar.
+If there are no occurrences of oldChar, the method
+simply returns this String object.
+startsWith
+public boolean startsWith(String prefix)
+Parameters
+prefix
+The String object prefix to be
+tested.
+Returns
+true if this string begins with the sequence
+of characters specified by prefix; otherwise
+false.
+Description
+This method determines whether or not this String
+object begins with the specified prefix.
+public boolean startsWith(String prefix, int toffset)
+Parameters
+prefix
+The String object prefix to be
+tested.
+toffset
+The index where the search is to begin.
+Returns
+true if this string contains the sequence
+of characters specified by prefix starting at
+the index toffset; otherwise false.
+Description
+This method determines whether or not this String
+object contains the specified prefix at the index
+specified by toffset.
+substring
+public String substring(int beginIndex)
+Parameters
+beginIndex
+The index of the first character in the substring.
+Returns
+A new String object that contains the sub-sequence
+of this string that starts at beginIndex and
+extends to the end of the string.
+Throws
+StringIndexOutOfBoundsException
+If beginIndex is less than zero
+or greater than or equal to the length of the string.
+Description
+This method returns a new String object
+that represents a sub-sequence of this String
+object. The sub-sequence consists of the characters starting at
+beginIndex and extending through the end of this
+String object.
+public String substring(int beginIndex, int endIndex)
+Parameters
+beginIndex
+The index of the first character in the substring.
+endIndex
+The index after the last character in the substring.
+Returns
+A new String object that contains the sub-sequence
+of this string that starts at beginIndex and
+extends to the character at endindex-1.
+Throws
+StringIndexOutOfBoundsException
+If beginIndex or endIndex
+is less than zero or greater than or equal to the length of the
+string.
+Description
+This method returns a new String object
+that represents a sub-sequence of this String
+object. The sub-sequence consists of the characters starting at
+beginIndex and extending through endIndex-1
+of this String object.
+toCharArray
+public char[] toCharArray()
+Returns
+A new char array that contains the same
+sequence of characters as this string.
+Description
+This method returns a new char array that
+contains the same sequence of characters as this Stringobject. The length of the array is the same as the length
+of this String object.
+toLowerCase
+public String toLowerCase()
+Returns
+A new String object that contains the characters
+of this string converted to lowercase.
+Description
+This method returns a new String that represents
+a character sequence of the same length as this String
+object, but with each character replaced by its lowercase equivalent
+if it has one. If no character in the string has a lowercase equivalent,
+the method returns this String object.
+public String toLowerCase(Locale locale)
+Availability
+New as of JDK 1.1
+Parameters
+locale
+The Locale to use.
+Returns
+A new String object that contains the characters
+of this string converted to lowercase using the rules of the
+specified locale.
+Description
+This method returns a new String that represents
+a character sequence of the same length as this String
+object, but with each character replaced by its lowercase equivalent
+if it has one according to the rules of the specified locale.
+If no character in the string has a lowercase equivalent,
+the method returns this String object.
+toString
+public String toString()
+Returns
+This String object.
+Overrides
+Object.toString()
+Description
+This method returns this String object.
+toUpperCase
+public String toUpperCase()
+Returns
+A new String object that contains the characters
+of this string converted to uppercase.
+Description
+This method returns a new String that represents
+a character sequence of the same length as this String
+object, but with each character replaced by its uppercase equivalent
+if it has one. If no character in the string has an uppercase equivalent,
+the method returns this String object.
+public String toUpperCase(Locale locale)
+Availability
+New as of JDK 1.1
+Parameters
+locale
+The Locale to use.
+Returns
+A new String object that contains the characters
+of this string converted to uppercase using the rules of the
+specified locale.
+Description
+This method returns a new String that represents
+a character sequence of the same length as this String
+object, but with each character replaced by its uppercase equivalent
+if it has one according to the rules of the specified locale. 
+If no character in the string has an uppercase equivalent,
+the method returns this String object.
+trim
+public String trim()
+Returns
+A new String object that represents the
+same character sequence as this string, but with leading and trailing
+whitespace and control characters removed.
+Description
+If the first and last character in this String
+object are greater than '\u0020' (the space character),
+the method returns this String object. Otherwise,
+the method returns a new String object that contains
+the same character sequence as this String object,
+but with leading and trailing characters that are less than '\u0020''
+removed.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Character;
+Class;
+Double;
+Exceptions;
+Float;
+Integer;
+Long;
+Object;
+StringBuffer;
+String Concatenation Operator +;
+String literals
+Short
+StringBuffer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

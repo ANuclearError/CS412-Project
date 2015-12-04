@@ -1,0 +1,71 @@
+
+[Chapter 17] Observer
+Chapter 17The java.util Package
+Observer
+Name
+Observer
+Synopsis
+Interface Name:
+java.util.Observer
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The Observer interface is used 
+to implement the view portion of the model-view paradigm. The idea is that 
+an Observable object, the model, 
+represents some data that is being manipulated through a user 
+interface, while Observer objects 
+provide the user with a view of the data. When the Observable 
+object is modified, it tells the Observer 
+objects that the model has been modified by calling notifyObservers(). 
+An Observer object registers 
+with an Observable object to 
+receive notifications when the Observable 
+is modified. The Observer object 
+is then notified of changes via the update() 
+method. 
+Interface Summary
+public abstract interface java.util.Observer {
+  // Methods
+  public abstract void update(Observable o, Object arg);
+}
+Methods
+update
+void update(Observable o, Object arg)
+Parameters
+o
+The object that has been 
+changed.
+arg
+A "hint" 
+object that describes the change. 
+Description
+This method is called to indicate that the data in the model implemented 
+by the specified Observable 
+object has been modified. The arg 
+parameter is used to communicate changed information from the model to 
+its view.
+This "hint" object can be used to efficiently update the views 
+of a model. For example, an Observable 
+object could represent satellite image data. A set of Observer 
+objects would provide different graphical views of the data. If the model 
+data changed, the arg object 
+would describe the part of the data that changed, and the Observer 
+views could use this "hint" to update only parts of their displays. 
+See Also
+Observable 
+Observable
+Properties
+ 
+ 
+ 
+ 
+ 
+ 
+ 

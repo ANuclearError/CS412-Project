@@ -1,0 +1,179 @@
+
+[Chapter 11] ObjectInput
+Chapter 11The java.io Package
+ObjectInput
+Name
+ObjectInput
+Synopsis
+Interface Name:
+java.io.ObjectInput
+Super-interface:
+java.io.DataInput
+Immediate Sub-interfaces:
+None
+Implemented By:
+java.io.ObjectInputStream
+Availability:
+New as of JDK 1.1 
+Description
+The ObjectInput interface extends 
+the DataInput interface for 
+object serialization. While DataInput 
+defines methods for reading primitive types from a stream, ObjectInput 
+defines methods for reading objects and arrays of bytes. 
+Interface Declaration
+public abstract interface java.io.ObjectInput extends java.io.DataInput {
+  // Methods
+  public abstract int available();
+  public abstract void close();
+  public abstract int read();
+  public abstract int read(byte[] b);
+  public abstract int read(byte[] b, int off, int len);
+  public abstract Object readObject();
+  public abstract long skip(long n);
+}
+Methods
+available
+public abstract int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the number of bytes that can be read from the stream 
+without accessing a physical device, like a disk or a network. 
+close
+public abstract void close() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method closes the stream and releases any system resources associated 
+with it. 
+read
+public abstract int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the 
+stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the next byte of data from the stream. The method blocks 
+until the byte is read, the end of stream is detected, or an exception 
+is thrown. 
+public abstract int read(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+be filled from the stream. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads bytes from the stream to fill the given array. The method 
+blocks until some data is available. 
+   public abstract int read(byte[] b, int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to 
+be filled from the stream.
+off
+An offset into the 
+array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads up to len 
+bytes of input into the given array starting at index off. 
+The method blocks until some data is available. 
+readObject
+   public abstract Object readObject() throws ClassNotFoundException, IOException  
+Returns
+An Object that has been deserialized from the stream. 
+Throws
+ClassNotFoundException
+If the class of the serialized object cannot be found in the run-time environment.
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads and returns an object instance from the stream; in 
+other words, it deserializes an object from the stream. The class that 
+implements this interface determines exactly how the object is to be read. 
+skip
+public abstract long skip(long n) throws IOException
+Parameters
+n
+The number of bytes to skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method skips n bytes of input. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+readBoolean() 
+DataInput
+readByte()
+DataInput
+readChar()
+DataInput
+readDouble()
+DataInput
+readFloat(byte[])
+DataInput
+readFully(byte[])
+DataInput
+readFully(byte[], 
+int, int)
+DataInput
+readInt()
+DataInput
+readLine()
+DataInput
+readLong()
+DataInput
+readShort()
+DataInput
+readUnsignedByte()
+DataInput
+readUnsignedChar()
+DataInput
+readUTF()
+DataInput
+skipBytes(int)
+DataInput
+See Also
+DataInput,
+ObjectInputStream
+NotSerializableException
+ObjectInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

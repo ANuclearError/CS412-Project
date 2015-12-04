@@ -1,0 +1,189 @@
+
+[Chapter 11] ByteArrayInputStream
+Chapter 11The java.io Package
+ByteArrayInputStream
+Name
+ByteArrayInputStream
+Synopsis
+Class Name:
+java.io.ByteArrayInputStream
+Superclass:
+java.io.InputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+A ByteArrayInputStream 
+is a stream whose data comes from a byte array. None of the methods of 
+this class throw an IOException 
+because the data comes from an array instead of an actual I/O device. 
+This class does not support the ability to mark a position in the stream. 
+A call to reset(), however, 
+does position the stream at the beginning of the byte array. 
+The position of the end of the stream depends on the constructor used. 
+If the ByteArrayInputStream(byte[] buf) 
+constructor is used, the end of the stream is the end of the byte array. 
+If the ByteArrayInputStream(byte[] buf, int offset, int 
+length) constructor is used, the end of the 
+stream is reached at the index given by offset+length. 
+Class Summary
+public class java.io.ByteArrayInputStream extends java.io.InputStream {
+  // Variables
+  protected byte[] buf;
+  protected int count;
+  protected int pos;
+  // Constructors
+  public ByteArrayInputStream(byte[] buf);
+  public ByteArrayInputStream(byte[] buf, int offset, int length);
+  // Instance Methods
+  public synchronized int available();
+  public synchronized int read();
+  public synchronized int read(byte[] b, int off, int len);
+  public synchronized void reset();
+  public synchronized long skip(long n); 
+}
+Variables
+buf
+protected byte[] buf
+Description
+The buffer represented by this stream. 
+count
+protected int count
+Description
+A placeholder that marks the end of the data this ByteArrayInputStream 
+represents. 
+pos
+protected int pos
+Description
+The current position in the buffer. 
+Constructors
+ByteArrayInputStream
+public ByteArrayInputStream(byte[] buf)
+Parameters
+buf
+The stream source. 
+Description
+This constructor creates a ByteArrayInputStream 
+object that uses the given array of bytes as its data source. The data 
+is not copied, so changes made to the array affect the data the ByteArrayInputStream 
+returns. 
+public ByteArrayInputStream(byte[] buf, int offset, int length)
+Parameters
+buf
+The stream source.
+offset
+An index into the buffer where the stream should begin.
+length
+The number of bytes to read. 
+Description
+This constructor creates a ByteArrayInputStream 
+that uses, as its data source, length 
+bytes in a given array of bytes, starting at offset 
+bytes from the beginning of the array. The data is not copied, so changes 
+made to the array affect the data the ByteArrayInputStream 
+returns. 
+Instance Methods
+available
+public synchronized int available()
+Returns
+The number of bytes remaining to be read in the array. 
+Overrides
+InputStream.available() 
+Description
+This method returns the number of bytes remaining to be read in the byte 
+array. 
+read
+public synchronized int read()
+Returns
+The next byte or -1 if the end of the stream is encountered. 
+Overrides
+InputStream.read() 
+Description
+This method returns the next byte in the array. 
+public synchronized int read(byte[] b, int off, int len)
+Parameters
+b
+An array to read bytes into.
+off
+An offset into b.
+len
+The number of bytes to read. 
+Returns
+The number of bytes read or -1 if the end of the stream is encountered. 
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+This method copies up to len 
+bytes from its internal byte array into the given array b, 
+starting at index off. 
+reset
+public synchronized void reset()
+Overrides
+InputStream.reset() 
+Description
+This method resets the position of the input stream to the beginning of 
+the byte array. If you specified an offset into the array, you might expect 
+this method to reset the position to where you first started reading from 
+the stream, but that is not the case. 
+skip
+public synchronized long skip(long n)
+Parameters
+n
+The number of bytes to skip. 
+Returns
+The number of bytes skipped. 
+Overrides
+InputStream.skip() 
+Description
+This method skips n bytes of input. If you try to skip 
+past the end of the array, the stream is positioned at the end of the array. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+InputStream
+equals (Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+InputStream
+markSupported ()
+InputStream
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+InputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+InputStream, 
+String 
+BufferedWriter
+ByteArrayOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,61 @@
+
+[Chapter 13] 13.2 IllegalComponentStateException
+Chapter 13AWT Exceptions and Errors
+13.2 IllegalComponentStateException
+IllegalComponentStateException 
+is a subclass of IllegalStateException; 
+both are new to Java 1.1. This exception is used when you try to do something 
+with a Component that is not 
+yet appropriate. With the standard AWT components, this can happen only 
+in three instances:
+If you call setCaretPosition() 
+to set the cursor position of a text component before the component's 
+peer exists.
+If you call getLocale() 
+to get the locale of a component that does not have one and is not in 
+a container that has one.
+If you call getLocationOnScreen() 
+for a component that is not showing.
+In these cases, the operation isn't 
+fundamentally illegal; you are just trying to perform it before the component 
+is ready. When you create your own components, you should consider using 
+this exception for similar cases. 
+Since IllegalComponentStateException 
+is a subclass of Run-TimeException, 
+you do not have to enclose method calls that might throw this exception 
+within try/catch blocks. However, catching this exception isn't a bad idea, since it should be fairly easy to correct the problem and retry the operation.
+IllegalComponentStateException MethodConstructor
+public IllegalComponentStateException ()  
+The first constructor creates an IllegalComponentStateException 
+instance with no detail message. 
+public IllegalComponentStateException (String message)   
+This constructor creates an IllegalComponentStateException 
+with a detail message of message. 
+This message can be retrieved using getMessage(), 
+which it inherits from Exception 
+(and is required by the Throwable 
+interface). 
+IllegalComponentStateException Example
+The following code throws an IllegalComponentStateException. 
+The Exception occurs because 
+the TextField peer does not 
+exist when setCaretPosition() 
+is called. setCaretPosition() 
+throws an IllegalComponentStateException, 
+and the next statement never executes. 
+import java.awt.TextField;
+public class illegal {
+    public static void main (String[] args) {
+        new TextField().setCaretPosition (24);
+        System.out.println ("Never gets here");
+    }
+}
+AWTException
+AWTError
+ 
+ 
+ 
+ 
+ 
+ 
+ 

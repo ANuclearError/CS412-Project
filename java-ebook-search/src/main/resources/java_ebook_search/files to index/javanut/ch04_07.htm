@@ -1,0 +1,60 @@
+
+[Chapter 4] 4.7 Object Serialization
+Chapter 4What's New in Java 1.1
+4.7 Object Serialization
+Object serialization is one of the major new features of Java 1.1.
+It refers to the ability to write the complete state of an
+object (including any objects it refers to) to an output
+stream, and then recreate that object at some later time by
+reading its serialized state from an input stream.  You can
+serialize an object simply by passing it to the
+writeObject() method of an
+ObjectOutputStream.  Similarly, you can create an object
+from a serialized object stream by calling the
+readObject() method of an ObjectInputStream.
+Both of these new object stream types are part of the
+java.io package.
+Typically, object serialization is as simple as calling
+writeObject() and readObject().  There are a
+few additional twists, however, that are worth mentioning
+here.  First, only objects that subclass the
+Serializable (or Externalizable)
+interface can be serialized.  The Serializable
+interface does not define
+any methods, but merely acts as a marker that indicates whether
+serialization is allowed on a given object.  Second, fields
+of a class declared transient are not serialized as
+part of an object's state.  The transient modifier
+was legal in Java 1.0, but had no defined behavior.  Third, some
+objects may need to implement custom serialization or
+de-serialization behavior.  They can do this by implementing
+special readObject() and writeObject()
+methods. Chapter 9, Object Serialization describes all
+of these aspects of object serialization in more detail.
+Despite the fact that only a few classes and interfaces are
+part of the Object Serialization API, serialization is a very important
+technology and is used in several places in Java 1.1.  It
+is used as the basis for transferring objects via
+cut-and-paste.  It is used to transfer objects between
+a client and a server for remote method invocation.
+It is used by the JavaBeans API--beans are
+often provided as pre-initialized, serialized objects, rather than
+merely as class files.  Java 1.1 also adds the capability
+for applets to be loaded into an applet viewer or browser as
+serialized objects.  One common use we are likely to see for
+object serialization is as a way to save user preferences
+and other application states--a serialized object is an
+instant file format that works for any application.  Another
+use that should be popular with GUI builder tools is
+saving the complete Component hierarchy of an
+application's GUI as a serialized object, and then later loading
+in that object in order to automatically recreate the GUI.
+Internationalization
+Reflection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

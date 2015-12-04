@@ -1,0 +1,163 @@
+
+[Chapter 12] Reflection
+Chapter 12
+12. Reflection
+Contents:
+Obtaining Class and Member Information
+Invoking a Named Method
+As noted in Chapter 4, What's New in Java 1.1, the
+Reflection API allows a Java program to inspect and
+manipulate itself.  The Reflection API comprises the
+much-expanded Class class in java.lang and
+the java.lang.reflect package, which represents the
+members of a class with
+Method, Constructor, and Field objects.
+Reflection can be used to obtain information about
+a class and its members.  This is the technique that the JavaBeans
+"introspection" mechanism uses to determine the properties,
+events, and methods that are supported by a bean, for example.
+Reflection can also be used to manipulate objects in Java.
+You can use the Field class to query and set the values of
+fields, the Method class to invoke methods,
+and the Constructor class to create new
+objects.  The examples in this chapter demonstrate both techniques
+for using the Reflection API.
+12.1 Obtaining Class and Member Information
+Example 12.1
+shows a program that uses the Class,
+Constructor, Field, and Method
+classes to display information about a specified class.  The
+program's output is similar to the class synopses that
+appear in the reference section of this book.  (You might notice
+that the names of method arguments are not shown;
+argument names are not stored in class files,
+so they are not available through the Reflection API.)
+Here is the output from using ShowClass on itself:
+% java ShowClass ShowClass
+public class ShowClass extends java.lang.Object {
+ // Constructors
+  public ShowClass();
+ // Fields
+ // Methods
+  public static void main(java.lang.String[]);
+  public static void print_class(java.lang.Class);
+  public static java.lang.String typename(java.lang.Class);
+  public static java.lang.String modifiers(int);
+  public static void print_field(java.lang.reflect.Field);
+  public static void print_method_or_constructor(java.lang.reflect.Member);
+}
+The code for this example is quite straightforward.  It uses
+the Class.forName() method to dynamically load the
+named class, and calls various methods of
+Class object to look up the superclass, interfaces, and
+members of the class.  The example uses Constructor,
+Field, and Method objects to obtain
+information about each member of the class.
+Example 12.1: Obtaining Class and Member Information with the Reflection API
+import java.lang.reflect.*;
+/** A program that displays a class synopsis for the named class. */
+public class ShowClass {
+  /** The main method.  Print info about the named class. */
+  public static void main(String[] args) throws ClassNotFoundException {
+    Class c = Class.forName(args[0]);
+    print_class(c);
+  }
+  /** Display the modifiers, name, superclass, and interfaces of a class
+   *  or interface. Then go and list all constructors, fields, and methods. */
+  public static void print_class(Class c)
+  {
+    // Print modifiers, type (class or interface), name, and superclass.
+    if (c.isInterface()) {
+      // The modifiers will include the "interface" keyword here...
+      System.out.print(Modifier.toString(c.getModifiers()) +  c.getName());
+    }
+    else
+      System.out.print(Modifier.toString(c.getModifiers()) + " class " +
+                       c.getName() +
+                       " extends " + c.getSuperclass().getName());
+    // Print interfaces or super-interfaces of the class or interface.
+    Class[] interfaces = c.getInterfaces();
+    if ((interfaces != null) &amp;&amp; (interfaces.length &gt; 0)) {
+      if (c.isInterface()) System.out.println(" extends ");
+      else System.out.print(" implements ");
+      for(int i = 0; i &lt; interfaces.length; i++) {
+        if (i &gt; 0) System.out.print(", ");
+        System.out.print(interfaces[i].getName());
+      }
+    }
+    System.out.println(" {");            // Begin class member listing.
+    // Now look up and display the members of the class.
+    System.out.println(" // Constructors");
+    Constructor[] constructors = c.getDeclaredConstructors();
+    for(int i = 0; i &lt; constructors.length; i++)      // Display constructors.
+      print_method_or_constructor(constructors[i]);
+    System.out.println(" // Fields");
+    Field[] fields = c.getDeclaredFields();           // Look up fields.
+    for(int i = 0; i &lt; fields.length; i++)            // Display them.
+      print_field(fields[i]);
+    System.out.println(" // Methods");
+    Method[] methods = c.getDeclaredMethods();        // Look up methods.
+    for(int i = 0; i &lt; methods.length; i++)           // Display them.
+      print_method_or_constructor(methods[i]);
+    System.out.println("}");             // End class member listing.
+  }
+  /** Return the name of an interface or primitive type, handling arrays. */
+  public static String typename(Class t) {
+    String brackets = "";
+    while(t.isArray()) {
+      brackets += "[]";
+      t = t.getComponentType();
+    }
+    return t.getName() + brackets;
+  }
+  /** Return a string version of modifiers, handling spaces nicely. */
+  public static String modifiers(int m) {
+    if (m == 0) return "";
+    else return Modifier.toString(m) + " ";
+  }
+  /** Print the modifiers, type, and name of a field. */
+  public static void print_field(Field f) {
+    System.out.println("  " +
+                       modifiers(f.getModifiers()) +
+                       typename(f.getType()) + " " + f.getName() + ";");
+  }
+  /** Print the modifiers, return type, name, parameter types, and exception
+   *  type of a method or constructor.  Note the use of the Member interface
+   *  to allow this method to work with both Method and Constructor objects. */
+  public static void print_method_or_constructor(Member member) {
+    Class returntype=null, parameters[], exceptions[];
+    if (member instanceof Method) {
+      Method m = (Method) member;
+      returntype = m.getReturnType();
+      parameters = m.getParameterTypes();
+      exceptions = m.getExceptionTypes();
+    } else {
+      Constructor c = (Constructor) member;
+      parameters = c.getParameterTypes();
+      exceptions = c.getExceptionTypes();
+    }
+    System.out.print("  " + modifiers(member.getModifiers()) +
+                     ((returntype!=null)? typename(returntype)+" " : "") +
+                     member.getName() + "(");
+    for(int i = 0; i &lt; parameters.length; i++) {
+      if (i &gt; 0) System.out.print(", ");
+      System.out.print(typename(parameters[i]));
+    }
+    System.out.print(")");
+    if (exceptions.length &gt; 0) System.out.print(" throws ");
+    for(int i = 0; i &lt; exceptions.length; i++) {
+      if (i &gt; 0) System.out.print(", ");
+      System.out.print(typename(exceptions[i]));
+    }
+    System.out.println(";");
+  }
+}
+Formatted Messages
+Invoking a Named Method
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,419 @@
+
+[Chapter 11] Scrolling
+Chapter 11
+11. Scrolling
+Contents:
+Scrollbar
+Scrolling An Image
+The Adjustable Interface
+ScrollPane
+This chapter describes how Java deals with scrolling. AWT provides two 
+means for scrolling. The first is the fairly primitive Scrollbar 
+object. It really provides only the means to read a value from a slider 
+setting. Anything else is your responsibility: if you want to display the 
+value of the setting (for example, if you're using the scrollbar 
+as a volume control) or want to change the display (if you're using 
+scrollbars to control an area that's too large to display), you have 
+to do it yourself. The Scrollbar 
+reports scrolling actions through the standard event mechanisms; it is 
+up to the programmer to handle those events and perform the scrolling. 
+Unlike other components, which generate an ACTION_EVENT 
+when something exciting happens, the Scrollbar 
+generates five events: SCROLL_LINE_UP, 
+SCROLL_LINE_DOWN, SCROLL_PAGE_UP, 
+SCROLL_PAGE_DOWN, and SCROLL_ABSOLUTE. 
+In Java 1.0, none of these events trigger a default event handler like 
+the action() method. To work 
+with them, you must override the handleEvent() 
+method. With Java 1.1, you handle scrolling events by registering an AdjustmentListener 
+with the Scrollbar.addAdjustmentListener() 
+method; when adjustment events occur, the listener's adjustmentValueChanged() 
+method is called. 
+Release 1.1 of AWT also includes a ScrollPane 
+container object; it is a response to one of the limitations of AWT 1.0. 
+A ScrollPane is like a Panel, 
+but it has scrollbars and scrolling built in. In this sense, it's 
+like TextArea, which contains 
+its own scrollbars. You could use a ScrollPane 
+to implement a drawing pad that could cover an arbitrarily large area. 
+This saves you the burden of implementing scrolling yourself: generating 
+scrollbars, handling their events, and figuring out how to redisplay the 
+screen accordingly. 
+Both Scrollbar and ScrollPane 
+take advantage of the Adjustable 
+interface. Adjustable defines 
+the common scrolling activities of the two classes. The Scrollbar 
+class implements Adjustable; 
+a ScrollPane has two methods 
+that return an Adjustable object, 
+one for each scrollbar. Currently, you can use the ScrollPane's 
+"adjustables" to find out the scrollbar settings in each direction. 
+You can't change the settings or register AdjustmentListeners; 
+the appropriate methods exist, but they don't do anything. It's 
+not clear whether this is appropriate behavior or a bug (remember, an interface 
+only lists methods that must be present but doesn't require them 
+to do anything); it may change in a later release. 
+11.1 Scrollbar
+Scrollbars come in two flavors: horizontal and vertical. Although there 
+are several methods for setting the page size, scrollbar range (minimum 
+and maximum values), and so on, basically all you can do is get and set 
+the scrollbar's value. Scrollbars don't contain any area to 
+display their value, though if you want one, you could easily attach a 
+label. 
+To work with a Scrollbar, you 
+need to understand the pieces from which it is built. Figure 11.1 
+identifies each of the pieces. At both ends are arrows, which are 
+used to change the Scrollbar 
+value the default amount (one unit) in the direction selected. The paging 
+areas are used to change the Scrollbar 
+value one page (ten units by default) at a time in the direction selected. 
+The slider can be moved to set the scrollbar to an arbitrary value within 
+the available range. 
+Figure 11.1: Scrollbar elements
+Scrollbar MethodsConstants
+There are two direction specifiers for Scrollbar. 
+The direction tells the Scrollbar 
+which way to orient itself. They are used in the constructors, as a parameter 
+to setOrientation(), and as 
+the return value for the getOrientation() 
+method. 
+public final static int HORIZONTAL 
+HORIZONTAL is the constant 
+for horizontal orientation. 
+public final static int VERTICAL 
+VERTICAL is the constant for 
+vertical orientation. 
+Constructors
+public Scrollbar (int orientation, int value, int visible, int minimum, 
+int maximum) 
+The Scrollbar constructor creates 
+a Scrollbar with a direction 
+of orientation and initial 
+value of value. visible 
+is the size of the slider. minimum 
+and maximum are the range of 
+values that the Scrollbar can 
+be. If orientation is not HORIZONTAL 
+or VERTICAL, the constructor 
+throws the run-time exception 
+IllegalArgumentException. If 
+maximum is below the value 
+of minimum, the scrollbar's 
+minimum and maximum values are both set to minimum. 
+If value is outside the range 
+of the scrollbar, it is set to the limit it exceeded. The default line 
+scrolling amount is one. The default paging amount is ten. 
+If you are using the scrollbar to control a visual object, visible 
+should be set to the amount of a displayed object that is on the screen 
+at one time, relative to the entire size of the object (i.e., relative 
+to the scrollbar's range: maximum 
+- minimum). Some platforms 
+ignore this parameter and set the scrollbar to a fixed size. 
+public Scrollbar (int orientation) 
+This constructor for Scrollbar 
+creates a Scrollbar with the 
+direction of orientation. In 
+Java 1.0, the initial settings for value, 
+visible, minimum, 
+and maximum are 0. In Java 
+1.1, the default value for visible 
+is 10, and the default for maximum 
+is 100; the other values default to 0. If orientation 
+is not HORIZONTAL or VERTICAL, 
+the constructor throws the run-time 
+exception IllegalArgumentException. 
+This constructor is helpful if you want to reserve space for the Scrollbar 
+on the screen, to be configured later. You would then use the setValues() 
+method to configure the scrollbar. 
+public Scrollbar () 
+This constructor creates a VERTICAL 
+Scrollbar. In Java 1.0, the 
+initial settings for value, 
+visible, minimum, 
+and maximum are 0. In Java 
+1.1, the default value for visible 
+is 10, and the default for maximum 
+is 100; the other values default to 0. You would then use the setValues() 
+method to configure the scrollbar. 
+Figure 11.2 shows both vertical and horizontal 
+scrollbars. It also demonstrates a problem you'll run into if you're not careful. If not constrained by the LayoutManager, 
+scrollbars can get very fat. The result is rarely pleasing. The solution 
+is to place scrollbars in layout managers that restrict width for vertical 
+scrollbars or height for horizontal ones. The side regions (i.e., everything 
+except the center) of a border layout are ideal. In the long term, the solution will be scrollbars that give you their maximum size and layout managers that observe the maximum size.
+Figure 11.2: Vertical and horizontal scrollbars
+Adjustable Methods
+public int getOrientation () 
+The getOrientation() method 
+returns the current orientation of the scrollbar: either Scrollbar.HORIZONTAL 
+or Scrollbar.VERTICAL. 
+public synchronized void setOrientation (int orientation)  
+The setOrientation() method changes the orientation
+of the scrollbar to orientation, which must be
+either Scrollbar.HORIZONTAL or
+Scrollbar.VERTICAL. If
+orientation is not HORIZONTAL or
+VERTICAL, this method throws the run-time exception
+IllegalArgumentException. It was not possible to
+change the orientation of a scrollbar prior to Java 1.1.
+public int getVisibleAmount ()  public int getVisible ()  
+The getVisibleAmount() method gets the
+visible setting of the
+Scrollbar. If the scrollbar's
+Container is resized, the
+visible setting is not automatically changed. getVisible() is the Java 1.0 
+name for this method. 
+public synchronized void setVisibleAmount (int amount)  
+The setVisibleAmount() method 
+changes the current visible 
+setting of the Scrollbar to 
+amount. 
+public int getValue () 
+The getValue() method is probably 
+the most frequently called method of Scrollbar. 
+It returns the current value of the scrollbar queried. 
+public synchronized void setValue (int value) 
+The setValue() method changes 
+the value of the scrollbar to value. 
+If value exceeds a scrollbar 
+limit, the scrollbar's new value is set to that limit. In Java 1.1, 
+this method is synchronized; it was not in earlier versions. 
+public int getMinimum () 
+The getMinimum() method returns 
+the current minimum setting for the scrollbar. 
+public synchronized void setMinimum (int minimum)  
+The setMinimum() method changes 
+the Scrollbar's minimum 
+value to minimum. The current 
+setting for the Scrollbar may 
+change to minimum if minimum 
+increases above getValue(). 
+public int getMaximum () 
+The getMaximum() method returns 
+the current maximum setting for the scrollbar. 
+public synchronized void setMaximum (int maximum)  
+The setMaximum() method changes 
+the maximum 
+value of the Scrollbar to maximum. The current 
+setting for the Scrollbar may 
+change to maximum if maximum 
+decreases below getValue(). 
+public synchronized void setValues (int value, int visible, int minimum, 
+int maximum) 
+The setValues() method changes 
+the value, visible, 
+minimum, and maximum 
+settings all at once. In Java 1.0.2, separate methods do not exist for 
+changing visible, minimum, 
+or maximum. The scrollbar's 
+value is set to value, visible 
+to visible, minimum to minimum, 
+and maximum to maximum. If 
+maximum is below the value 
+of minimum, it is set to minimum. 
+If value is outside the range 
+of the scrollbar, it is set to the limit it exceeded. In Java 1.1, this 
+method is synchronized; it was not in earlier versions. 
+public int getUnitIncrement ()  public int getLineIncrement () 
+The getUnitIncrement() method 
+returns the current line increment. This is the amount the scrollbar will 
+scroll if the user clicks on one of the scrollbar's arrows. 
+getLineIncrement() is the Java 
+1.0 name for this method. 
+public void setUnitIncrement (int amount)  public void setLineIncrement (int amount) 
+The setUnitIncrement() method 
+changes the line increment amount to amount. 
+setLineIncrement() is the Java 
+1.0 name for this method. 
+Changing the line increment amount was not possible in Java 1.0.2. This 
+method acted like it returned successfully, and getLineIncrement() 
+returned the new value, but the Scrollbar 
+changed its value by only one (the default) when you clicked on one of 
+the arrows. However, you could work around this defect by explicitly handling the 
+SCROLL_LINE_UP and SCROLL_LINE_DOWN 
+events: get the correct line increment, adjust the display appropriately, 
+and then set call setValue() 
+to correct the scrollbar's value. This workaround is not needed in 
+Java 1.1. 
+public int getBlockIncrement ()  public int getPageIncrement () 
+The getBlockIncrement() method 
+returns the current paging increment. This is the amount the scrollbar will 
+scroll if the user clicks between the slider and one of the scrollbar's 
+arrows. 
+getPageIncrement() is the Java 
+1.0 name for this method. 
+public void setBlockIncrement (int amount)  public void setPageIncrement (int amount) 
+The setBlockIncrement() method 
+changes the paging increment amount to amount. 
+setPageIncrement() is the Java 
+1.0 name for this method. 
+Changing the paging increment amount was not possible in Java 1.0.2. This method 
+acts like it returns successfully, and getPageIncrement() 
+returns the new value, but the Scrollbar 
+changes its value only by 10 (the default) when you click on one of the 
+paging areas. However, you can work around this defect by explicitly handling the 
+SCROLL_PAGE_UP and SCROLL_PAGE_DOWN 
+events: get the correct page increment, adjust the display appropriately, 
+and then set call setValue() 
+to correct the scrollbar's value. This workaround is not necessary 
+in Java 1.1. 
+Miscellaneous methods
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the Scrollbar's peer. 
+If you override this method, call super.addNotify() 
+first. You will then be able to do everything you need with the information 
+about the newly created peer. 
+protected String paramString ()  
+Scrollbar doesn't have 
+its own toString() method; 
+when you call the toString() 
+method of a Scrollbar, you 
+are actually calling the method Component.toString(). This in turn calls paramString(), 
+which builds the string to display. For a Scrollbar, 
+paramString() puts the scrollbar's 
+value, visibility, minimum, maximum, and direction into the string. In 
+Java 1.0, there is a minor bug in the output. Instead of displaying the 
+scrollbar's visible setting 
+(an integer), paramString() 
+displays the component's 
+visible setting (a boolean). 
+(This is corrected in Java 1.1.) The following String 
+is the result of calling toString() 
+for a horizontal Scrollbar 
+that hasn't been configured yet: 
+java.awt.Scrollbar[0,0,0x0,invalid,val=0,vis=true,min=0,max=0,horz]
+Scrollbar Events
+With the 1.0 event model, scrollbars generate five kinds of events 
+in response to user interaction: SCROLL_LINE_UP, 
+SCROLL_LINE_DOWN, SCROLL_PAGE_UP, 
+SCROLL_PAGE_DOWN, and SCROLL_ABSOLUTE. 
+The event that occurs depends on what the user did, as shown in Table 11.1; 
+the event type is specified in the id 
+field of the Event object passed 
+to handleEvent(). However, 
+as a programmer, you often do not care which of these five events happened. 
+You care only about the scrollbar's 
+new value, which is always passed as the arg 
+field of the Event object. 
+Table 11.1: Scrollbar Events
+Event Type (Event.id)
+Event Meaning
+SCROLL_ABSOLUTE
+User drags slider.
+SCROLL_LINE_DOWN
+User presses down arrow.
+SCROLL_LINE_UP
+User presses up arrow.
+SCROLL_PAGE_DOWN
+User selects down paging area.
+SCROLL_PAGE_UP
+User selects up paging area.
+Because scrollbar events do not trigger any default event handlers (like 
+action()), it is necessary 
+to override the handleEvent() 
+method to deal with them. Unless your version of handleEvent() 
+deals with all conceivable events, you must ensure that the original handleEvent() 
+method is called. The simplest way is to have the return statement call 
+super.handleEvent(). 
+Most handleEvent() 
+methods first identify the type of event that occurred. The following two 
+code blocks demonstrate different ways of checking for the Scrollbar 
+events. 
+if ((e.id == Event.SCROLL_LINE_UP) ||
+    (e.id == Event.SCROLL_LINE_DOWN) ||
+    (e.id == Event.SCROLL_PAGE_UP) ||
+    (e.id == Event.SCROLL_PAGE_DOWN) ||
+    (e.id == Event.SCROLL_ABSOLUTE)) {
+    // Then determine which Scrollbar was selected and act upon it
+}
+Or more simply: 
+if (e.target instanceof Scrollbar) {
+    // Then determine which Scrollbar was selected and act upon it.
+}
+Although the second code block is simpler, the first is the better choice 
+because it is more precise. For example, what would happen if mouse events 
+are passed to scrollbars? Different Java platforms differ most in the types 
+of events passed to different objects; Netscape Navigator 
+3.0 for Windows 95 sends MOUSE_ENTER, MOUSE_EXIT, 
+and MOUSE_MOVE events to the 
+Scrollbar.[1] The second code block executes for 
+all the mouse events--in fact, any event coming from a Scrollbar. 
+Therefore, it executes much more frequently (there can be many MOUSE_MOVE 
+events), leading to poor interactive performance. 
+[1] 
+MOUSE_UP, MOUSE_DOWN, and MOUSE_DRAG are not generated since these operations 
+generate SCROLL events.
+Another platform-specific issue is the way the system generates SCROLL_ABSOLUTE 
+events. Some platforms generate many events while the user drags the scrollbar. 
+Others don't generate the event until the user stops dragging the 
+scrollbar. Some implementations wait until the user stops dragging the 
+scrollbar and then generate a flood of SCROLL_ABSOLUTE 
+events for you to handle. In theory, it does not matter which is happening, 
+as long as your event-processing code is tight. If your event-processing 
+code is time consuming, you may wish to start another thread to perform 
+the work. If the thread is still alive when the next event comes along, 
+flag it down, and restart the operation. Listeners and 1.1 event handling
+With the 1.1 event model, you register an AdjustmentListener 
+by calling the addAdjustmentListener() 
+method. Then when the user moves the Scrollbar 
+slider, the AdjustmentListener.adjustmentValueChanged() 
+method is called through the protected Scrollbar.processAdjustmentEvent() 
+method. Key, mouse, and focus listeners are registered through the three Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. Because you need to register a separate listener for mouse 
+events, you no longer have the problem of distinguishing between mouse 
+events and slider events. An adjustment listener will never receive mouse 
+events. 
+public void addAdjustmentListener(AdjustmentListener listener)  
+The addAdjustmentListener() 
+method registers listener as 
+an object interested in being notified when an AdjustmentEvent 
+passes through the EventQueue 
+with this Scrollbar as its 
+target. The method listener.adjustmentValueChanged() 
+is called when an event occurs. Multiple listeners can be registered. 
+public void removeAdjustmentListener(ItemListener listener)  
+The removeAdjustmentListener() 
+method removes listener as 
+a interested listener. If listener 
+is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+every AWTEvent with this Scrollbar 
+as its target. processEvent() 
+then passes it along to any listeners for processing. When you subclass 
+Scrollbar, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override the processEvent() method, 
+remember to call the super.processEvent(e) method last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processAdjustmentEvent(ItemEvent e)  
+The processAdjustmentEvent() 
+method receives all AdjustmentEvents 
+with this Scrollbar as its 
+target. processAdjustmentEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Scrollbar, overriding processAdjustmentEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+If you override processAdjustmentEvent(), 
+you must remember to call super.processAdjustmentEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+PopupMenu
+Scrolling An Image
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,373 @@
+
+[Chapter 8] 8.2 Synchronizing Multiple Threads
+Chapter 8Threads
+8.2 Synchronizing Multiple Threads
+The correct behavior of a multithreaded program generally
+depends on multiple threads cooperating with each other. This often
+involves threads not doing certain things at the same time or waiting
+for each other to perform certain tasks. This type of  cooperation
+is called synchronization. This section discusses
+some common strategies for synchronization and how they can be implemented
+in Java.
+The simplest strategy for ensuring that threads are correctly
+synchronized is to write code that works correctly when executed
+concurrently by any number of threads. However, this is more easily
+said than done. Most useful computations involve doing some activity,
+such as updating an instance variable or updating a display, that
+must be synchronized in order to happen correctly.
+If a method only updates its local variables and calls other
+methods that only modify their local variables, the method can be
+invoked by multiple threads without any need for synchronization.
+Math.sqrt() and the length()
+method of the String class are examples of such
+methods.
+A method that creates objects and meets the above criterion
+may not require synchronization. If the constructors invoked by
+the method do not modify anything but their own local variables
+and instance variables of the object they are constructing, and
+they only call methods that do not need to be synchronized, the
+method itself does not need to be synchronized. An example of such
+a method is the substring() in the
+String class.
+Beyond these two simple cases, it is impossible to give an
+exhaustive list of rules that can tell you whether or not a method
+needs to be synchronized. You need to consider what the method is
+doing and think about any ill effects of concurrent execution in
+order to decide if synchronization is necessary.
+Single-Threaded Execution
+When more than one thread is trying to update the same data
+at the same time, the result may be wrong or inconsistent. Consider
+the following example:
+class CountIt {
+    int i = 0;
+    void count() {
+        i = i + 1;
+    }
+}
+The method count() is supposed to increment
+the variable i by one. However, suppose that
+there are two threads, A and B,
+that call count() at the same time. In this case,
+it is possible that i could be incremented only
+once, instead of twice. Say the value of i is
+7. Thread A calls the count()
+method and computes i+1 as 8. Then thread
+B
+calls the count() method and computes
+i+1
+as 8 because thread A has not yet assigned the
+new value to i. Next, thread A
+assigns the value 8 to the variable i. Finally,
+thread B assigns the value 8 to the variable
+i. Thus, even though the count()
+method is called twice, the variable has only been incremented once
+when the sequence is finished.
+Clearly, this code can fail to produce its intended result
+when it is executed concurrently by more than one thread. A piece
+of code that can fail to produce its intended result when executed
+concurrently is called a critical section.
+However, a critical section does behave correctly when it is executed
+by only one thread at a time. The strategy of single-threaded execution
+is to allow only one thread to execute a critical section of code
+at a time. If a thread wants to execute a critical section that
+another thread is already executing, the thread has to wait until
+the first thread is done and no other thread is executing that code
+before it can proceed.
+Java provides the synchronized statement
+and the synchronized method modifier for implementing
+single-threaded execution. Before executing the block
+in a synchronized
+statement, the current thread must obtain a lock for the object
+referenced by the expression. If
+a method is declared with the synchronized modifer,
+the current thread must obtain a lock before it can invoke the method.
+If the method is not declared static, the thread
+must obtain a lock associated with the object used to access the
+method. If the method is declared static, the
+thread must obtain a lock associated with the class in which the
+method is declared. Because a thread must obtain a lock before 
+executing a synchronized method, Java guarantees 
+that synchronized methods are executed by only 
+one thread at a time.
+Modifying the count() method to make it
+a synchronized method ensures that it works as
+intended.
+class CountIt {
+    int i = 0;
+    synchronized void count() {
+        i = i + 1;
+    }
+}
+The strategy of single-threaded execution can also be used
+when multiple methods update the same data. Consider the following
+example:
+class CountIt2 {
+    int i = 0;
+    void count() {
+        i = i + 1;
+    }
+    void count2() {
+        i = i + 2;
+    }
+}
+By the same logic used above, if the count()
+and count2() methods are executed concurrently,
+the result could be to increment i by 1, 2, or
+3. Both the count() and count2()
+methods can be declared as synchronized to ensure
+that they are not executed concurrently with themselves or each
+other:
+class CountIt2 {
+    int i = 0;
+    synchronized void count() {
+        i = i + 1;
+    }
+    synchronized void count2() {
+        i = i + 2;
+    }
+}
+Sometimes it's necessary for a thread to make multiple
+method calls to manipulate an object without another thread calling
+that object's methods at the same time.
+Consider the following example:
+System.out.print(new Date());
+System.out.print(" : ");
+System.out.println(foo());
+If the code in the example is executed concurrently by multiple
+threads, the output from the two threads will be interleaved. The
+synchronized keyword provides a way to ensure
+that only one thread at a time can execute a block of code. Before
+executing the block in a synchronized statement,
+the current thread must obtain a lock for the object referenced
+by the expression. The above code can be modified to give a thread
+exclusive access to the OutputStream object referenced
+by System.out:
+synchronized (System.out) {
+    System.out.print(new Date());
+    System.out.print(" : ");
+    System.out.println(foo());
+}
+Note that this approach only works if other code that wants to call
+methods in the same object also uses similar
+synchronized statements, or if the methods in
+question are all synchronized methods. In this
+case, the print() and println()
+methods are synchronized, so other pieces of code
+that need to use these methods do not need to use a
+synchronized statement.
+When an inner class is updating fields in its enclosing instance,
+simply making a method synchronized does not provide the 
+needed single-threaded execution. Consider the following code:
+public class Z extends Frame {
+    int pressCount = 0;
+    ...
+    private class CountButton extends Button
+                              implements ActionListener {
+        public void actionPerformed(ActionEvent evt) {
+            pressCount ++;
+        }
+    } 
+    ...
+} 
+If a Z object instantiates more than one instance 
+of CountButton, you need to use single-threaded 
+execution to ensure that updates to pressCount 
+are done correctly. Unfortunately, declaring the 
+actionPerformed() method of 
+CountButton to be synchronized 
+does not accomplish that goal because it only forces the method 
+to acquire a lock on the instance of CountButton 
+it is associated with before it executes. The object you need to acquire a lock for is the enclosing instance of 
+Z. 
+One way to have a CountButton object capture 
+a lock on its enclosing instance of Z is to 
+update pressCount inside of a 
+synchronized statement. For example:
+synchronized (Z.this) {
+    pressCount ++;
+}
+The drawback to this approach is that every piece of code that
+accesses pressCount in any inner class of 
+Z must be in a similar synchronized 
+statement. Otherwise, it is possible for pressCount to 
+be updated incorrectly. The more pieces of code that need to be 
+inside of synchronized statements, the more places 
+there are to introduce bugs in your program.
+A more robust approach is to have the inner class update a field in its
+enclosing instance by calling a synchronized 
+method in the enclosing instance. For example:
+public class Z extends Frame {
+    int pressCount = 0;
+    synchronized incrementPressCount() {
+        pressCount++;
+    } 
+    ...
+    private class CountButton extends Button
+                              implements ActionListener {
+        public void actionPerformed(ActionEvent evt) {
+            incrementPressCount();
+        } 
+    } 
+    ...
+} 
+References
+Inner Classes;
+Method modifiers;
+The synchronized Statement
+Optimistic Single-Threaded Execution
+When multiple threads are updating a data structure, single-threaded
+execution is the obvious strategy to use to ensure correctness of
+the operations on the data structure. However, single-threaded execution
+can cause some problems of its own. Consider the following example:
+public class Queue extends java.util.Vector {
+    synchronized public void put(Object obj) {
+        addElement(obj);
+    }
+    synchronized public Object get() throws EmptyQueueException {
+        if (size() == 0)
+            throw new EmptyQueueException();
+        Object obj = elementAt(0);
+        removeElementAt(0);
+        return obj;
+    }
+}
+This example implements a first-in, first-out (FIFO) queue.
+If the get() method of a Queue
+object is called when the queue is empty, the method throws an exception.
+Now suppose that you want to write the get()
+method so that when the queue is empty, the method waits for an item
+to be put in the queue, rather than throwing an exception. In order
+for an item to be put in the queue, the put()
+method of the queue must be invoked. But using the single-threaded
+execution strategy, the put() method will never
+be able to run while the get() method is waiting
+for the queue to receive an item. A good way to solve this dilemma
+is to use a strategy called optimistic single-threaded execution.
+The optimistic single-threaded execution strategy is similar
+to the single-threaded execution strategy. They both begin by getting
+a lock on an object to ensure that the currently executing thread
+is the only thread that can execute a piece of code, and they both
+end by releasing that lock. The difference is what happens in between.
+Using the optimistic single-threaded execution strategy, if a piece
+of code discovers that conditions are not right to proceed, the
+code releases the lock it has on the object that enforces single-threaded
+execution and waits. When another piece of code changes things
+in such a way that might allow the first piece of code to proceed,
+it notifies the first piece of code that it should try to regain
+the lock and proceed.
+To implement this strategy, the Object
+class provides methods called wait(),
+notify(),
+and notifyAll(). These methods are inherited
+by every other class in Java. The following example shows how to
+implement a queue that uses the optimistic single-threaded execution
+strategy, so that when the queue is empty, its get()
+method waits for the queue to have an item put in it:
+public class Queue extends java.util.Vector {
+    synchronized public void put(Object obj) {
+        addElement(obj);
+        notify();
+    }
+    synchronized public Object get() throws EmptyQueueException {
+        while (size() == 0)
+            wait();
+        Object obj = elementAt(0);
+        removeElementAt(0);
+        return obj;
+    }
+}
+In the above implementation of the Queue
+class, the get() method calls wait()
+when the queue is empty. The wait() method releases
+the lock that excludes other threads from executing methods in the
+Queue object, and then waits until another thread
+calls the put() method. When put()
+is called, it adds an item to the queue and calls notify().
+The notify() method tells a thread that is waiting
+to return from a wait() method that it should
+attempt to regain its lock and proceed. If there is more than one
+thread waiting to regain the lock on the object, notify()
+chooses one of the threads arbitrarily. The notifyAll()
+method is similar to notify(), but instead of
+choosing one thread to notify, it notifies all of the threads that
+are waiting to regain the lock on the object.
+Notice that the get() method calls
+wait()
+inside a while loop. Between the
+time that wait()
+is notified that it should try to regain its lock and the time
+it actually does regain the lock, another thread may have called
+the get() method and emptied the queue.
+The while loop guards against this situation.
+References
+Method modifiers;
+Object;
+The synchronized Statement
+Rendezvous
+Sometimes it is necessary to have a thread wait to continue
+until another thread has completed its work and died. This type
+of synchronization uses the rendezvous strategy. The Thread
+class provides the join() method for implementing
+this strategy. When the join() method is called
+on a Thread object, the method returns immediately
+if the thread is dead. Otherwise, the method waits until the thread
+dies and then returns.
+References
+Thread
+Balking
+Some methods should not be executed concurrently, and have
+a time-sensitive nature that makes postponing calls to them a bad
+idea. This is a common situation when software is controlling real-world
+devices. Suppose you have a Java program that is embedded in
+an electronic control for a toilet. There is a method called
+flush()
+that is responsible for flushing a toilet, and flush()
+can be called from more than one thread. If a thread calls
+flush()
+while another thread is already executing flush(),
+the second call should do nothing. A toilet is capable of only one
+flush at a time, and having a concurrent call to the flush()
+method result in a second flush would only waste water.
+This scenario suggests the use of the balking strategy. The balking
+strategy allows no more than
+one thread to execute a method at a time. If another thread attempts
+to execute the method, the method simply returns without doing
+anything. Here is an example that shows what such a flush()
+method might look like:
+boolean busy;
+void flush() {
+    synchronized (this) {
+        if (busy)
+            return;
+        busy = true;
+    }
+    // code to make flush happen goes here
+    busy = false;
+}
+Explicit Synchronization
+When the synchronization needs of a thread are not known in
+advance, you can use a strategy called explicit synchronization.
+The explicit synchronization strategy allows you to explicitly tell
+a thread when it can and cannot run. For example, you may want an
+animation to start and stop in response to external events that
+happen at unpredictable times, so you need to be able to tell the
+animation when it can run.
+To implement this strategy, the Thread
+class provides methods called suspend()
+and resume(). You can suspend the execution
+of a thread by calling the suspend()
+method of the Thread object that controls the
+thread. You can later resume execution of the thread by calling
+the resume() method on the
+Thread object.
+References
+Thread
+Using Thread Objects
+Exception Handling
+ 
+ 
+ 
+ 
+ 
+ 
+ 

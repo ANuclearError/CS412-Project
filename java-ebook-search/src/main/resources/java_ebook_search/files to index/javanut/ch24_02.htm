@@ -1,0 +1,35 @@
+
+[Chapter 24] 24.2 java.io.BufferedOutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.2 java.io.BufferedOutputStream (JDK 1.0)
+This class is a FilterOutputStream that provides
+output data buffering--output efficiency is increased by storing values
+to be written in a buffer and actually writing them out only
+when the buffer fills up or when the flush() method
+is called. Create a BufferedOutputStream by
+specifying the OutputStream that is to have
+buffering applied in the call to the constructor.
+See also BufferedWriter.
+public class BufferedOutputStream extends FilterOutputStream {
+    // Public Constructors
+            public BufferedOutputStream(OutputStream out);
+            public BufferedOutputStream(OutputStream out, int size);
+    // Protected Instance Variables
+            protected byte[] buf;
+            protected int count;
+    // Public Instance Methods
+            public synchronized void flush() throws IOException;  // Overrides FilterOutputStream
+            public synchronized void write(int b) throws IOException;  // Overrides FilterOutputStream
+            public synchronized void write(byte[] b, int off, int len) throws IOException;  // Overrides FilterOutputStream
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->BufferedOutputStream
+java.io.BufferedInputStream (JDK 1.0)
+java.io.BufferedReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

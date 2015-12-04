@@ -1,0 +1,68 @@
+
+[Chapter 25] 25.55 java.lang.Short (JDK 1.1)
+Chapter 25The java.lang Package
+25.55 java.lang.Short (JDK 1.1)
+This class provides an object wrapper around the
+short primitive type.  It defines useful constants
+for the minimum and maximum values that can be stored by the
+short type, and also a Class object constant
+that represents the short type.  It also provides
+various methods for converting Short values to and
+from strings and other numeric types.
+Most of the static methods of this class are used to convert
+a String to a Short object or a short
+value: the four parseShort() and valueOf()
+methods parse a number from the specified string, using an
+optionally specified radix, and return it in one of these two
+forms.  The decode() method parses a number specified
+in base 10, base 8, or base 16 and returns it as a
+Short.  If the string begins with "0x" or "#", it is
+interpreted as a hexadecimal number, or if it begins with
+"0", it is interpreted as an octal number. Otherwise, it is
+interpreted as a decimal number.
+Note that this class has two different toString()
+methods.  One is static and converts a short
+primitive value to a String.  The other is the usual
+toString() method that converts a Short
+object to a string.  Most of the remaining methods convert a
+Short to various primitive numeric types.
+public final class Short extends Number {
+    // Public Constructors
+            public Short(short value);
+            public Short(String s) throws NumberFormatException;
+    // Constants
+            public static final short MAX_VALUE;
+            public static final short MIN_VALUE;
+            public static final Class TYPE;
+    // Class Methods
+            public static Short decode(String nm) throws NumberFormatException;
+            public static short parseShort(String s) throws NumberFormatException;
+            public static short parseShort(String s, int radix) throws NumberFormatException;
+            public static String toString(short s);
+            public static Short valueOf(String s, int radix) throws NumberFormatException;
+            public static Short valueOf(String s) throws NumberFormatException;
+    // Public Instance Methods
+            public byte byteValue();  // Overrides Number
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object obj);  // Overrides Object
+            public float floatValue();  // Defines Number
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public long longValue();  // Defines Number
+            public short shortValue();  // Overrides Number
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->Number(Serializable)->Short
+Returned By:
+Short.decode(), 
+Short.valueOf()
+java.lang.SecurityManager (JDK 1.0)
+java.lang.StackOverflowError (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

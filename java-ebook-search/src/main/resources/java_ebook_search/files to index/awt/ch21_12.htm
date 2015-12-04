@@ -1,0 +1,95 @@
+
+[Chapter 21] FocusEvent 
+Chapter 21java.awt.event Reference
+FocusEvent 
+Name
+FocusEvent 
+Description
+Focus events are generated when a component gets or loses input focus. 
+Focus events come in two flavors, permanent and temporary. Permanent focus 
+events occur with explicit focus changes. For example, when the user tabs 
+through components, this causes permanent focus events. An example of a 
+temporary focus event is when a component loses focus as its containing 
+window is deactivated. 
+Class Definition
+public class java.awt.event.FocusEvent
+   extends java.awt.event.ComponentEvent {
+  // Constants
+  public final static int FOCUS_FIRST;
+  public final static int FOCUS_GAINED;
+  public final static int FOCUS_LAST;
+  public final static int FOCUS_LOST;
+  // Constructors
+  public FocusEvent (Component source, int id);
+  public FocusEvent (Component source, int id, boolean temporary);
+  // Instance Methods
+  public boolean isTemporary();
+  public String paramString();
+}
+Constants
+FOCUS_FIRST
+public final static int FOCUS_FIRST
+Specifies the beginning range of focus event ID values. 
+FOCUS_GAINED
+public final static int FOCUS_GAINED
+Event type ID indicating that the component gained the input focus. 
+FOCUS_LAST
+public final static int FOCUS_LAST
+Specifies the ending range of focus event ID values. 
+FOCUS_LOST
+public final static int FOCUS_LOST
+Event type ID indicating that the component lost the input focus. 
+Constructors
+FocusEvent
+public FocusEvent (Component source, int id)
+Parameters
+source
+The object that 
+generated the event.
+id
+The event type ID of 
+the event. 
+Description
+Constructs a non-temporary FocusEvent 
+with the given characteristics. 
+public FocusEvent (Component source, int id, boolean temporary)
+Parameters
+source
+The object that 
+generated the event.
+id
+The event type ID of 
+the event.
+temporary
+A flag indicating 
+whether this is a temporary focus event. 
+Description
+Constructs a FocusEvent with 
+the given characteristics. 
+Instance Methods
+isTemporary
+public boolean isTemporary()
+Returns
+true if this is a temporary 
+focus event; false otherwise. 
+paramString
+public String paramString()
+Returns
+String with current settings of the FocusEvent. 
+Overrides
+ComponentEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+Component, ComponentEvent, 
+FocusAdapter, FocusListener 
+FocusAdapter 
+FocusListener 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

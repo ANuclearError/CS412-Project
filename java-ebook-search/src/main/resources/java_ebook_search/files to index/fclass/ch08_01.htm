@@ -1,0 +1,504 @@
+
+[Chapter 8] Networking
+Chapter 8
+8. Networking
+Contents:
+Sockets
+URL Objects
+The java.net package provides two basic mechanisms
+for accessing data and other resources over a network.  The
+fundamental mechanism is called a socket. A socket allows programs to
+exchange groups of bytes called packets. There are a number of classes
+in java.net that support sockets, including
+Socket, ServerSocket,
+DatagramSocket, DatagramPacket,
+and MulticastSocket. The
+java.net package also includes a
+URL class that provides a higher-level mechanism
+for accessing and processing data over a network.
+8.1 Sockets
+A socket is a mechanism that allows programs to send packets of bytes
+to each other. The programs do not need to be running on the same
+machine, but if they are running on different machines, they do need
+to be connected to a network that allows the machines to exchange
+data. Java's socket implementation is based on the socket
+library that was originally part of BSD UNIX. Programmers who are
+familiar with UNIX sockets or the Microsoft WinSock library should be
+able to see the similarities in the Java implementation.
+When a program creates a socket, an identifying number called a port
+number is associated with the socket. Depending on how the socket is
+used, the port number is either specified by the program or assigned
+by the operating system. When a socket sends a packet, the packet is
+accompanied by two pieces of information that specify the destination
+of the packet:
+A network address that specifies the system that should receive the 
+packet. 
+A port number that tells the receiving system to which socket to deliver 
+the data. 
+Sockets typically work in pairs, where one socket acts as a client and 
+the other functions as a server. A server socket specifies the port number 
+for the network communication and then listens for data that is sent to 
+it by client sockets. The port numbers for server sockets are well-known 
+numbers that are known to client programs. For example, an FTP server uses 
+a socket that listens at port 21. If a client program wants to communicate 
+with an FTP server, it knows to contact a socket that listens at port 21. 
+The operating system normally specifies port numbers for client sockets 
+because the choice of a port number is not usually important. When a client 
+socket sends a packet to a server socket, the packet is accompanied by 
+the port number of the client socket and the client's network address. 
+The server is then able to use that information to respond to the client. 
+When using sockets, you have to decide which type of protocol that you 
+want it to use to transport packets over the network: a connection-oriented 
+protocol or a connectionless protocol. With a connection-oriented protocol, 
+a client socket establishes a connection to a server socket when it is 
+created. Once the connection has been established, a connection-oriented 
+protocol ensures that data is delivered reliably, which means: 
+For every packet that is sent, the packet is delivered. Every time 
+a socket sends a packet, it expects to receive an acknowledgement that 
+the packet has been received successfully. If the socket does not receive 
+that acknowledgement within the time it expects to receive it, the socket 
+sends the packet again. The socket keeps trying until transmission is successful, 
+or it decides that delivery has become impossible. 
+Packets are read from the receiving socket in the same order that 
+they were sent. Because of the way that networks work, packets may arrive 
+at the receiving socket in a different order than they were sent. A reliable, 
+connection-oriented protocol allows the receiving socket to reorder the 
+packets it receives, so that they can be read by the receiving program 
+in the same order that they were sent. 
+A connectionless protocol allows a best-effort delivery of packets. It 
+does not guarantee that packets are delivered or that packets are read 
+by the receiving program in the same order they were sent. A connectionless 
+protocol trades these deficiencies for performance advantages over connection-oriented 
+protocols. Here are two types of situations in which connectionless protocols 
+are frequently preferred over connection-oriented protocols: 
+When only a single packet needs to be sent and guaranteed delivery 
+is not crucial, a connectionless protocol eliminates the overhead involved 
+in creating and destroying a connection. For comparison purposes, the connection-oriented 
+TCP/IP protocol uses seven packets to send a single packet, while 
+the connectionless UDP/IP protocol uses only one. A protocol for 
+getting the current time typically uses a connectionless protocol to request 
+the current time from the server and to return the time to the requester. 
+For extremely time-sensitive applications, such as sending audio in 
+real time, the guarantee of reliable transmission is not an advantage and 
+may be a disadvantage. Pausing until a missing piece of data is received 
+can cause noticeable clicks or pauses in the audio. Techniques for sending 
+audio over a network that use a connectionless protocol have been developed 
+and they work noticeably better. For example, RealAudio uses a protocol 
+that runs on top of a connectionless protocol to transmit sound over a 
+network. 
+Table 8.1 shows the roles of the various socket classes 
+in the java.net package. 
+Table 8.1: Socket Classes in java.net
+Client
+Server
+Connection-oriented Protocol
+Socket
+ServerSocket
+Connectionless Protocol
+DatagramSocket
+DatagramSocket
+As of Java 1.1, the java.net package 
+also contains a MulticastSocket 
+class that supports connectionless, multicast data communication. 
+Sockets for Connection-Oriented Protocols
+When you are writing code that implements the server side of a connection-oriented 
+protocol, your code typically follows this pattern: 
+Create a ServerSocket 
+object to accept connections. 
+When the ServerSocket 
+accepts a connection, it creates a Socket 
+object that encapsulates the connection. 
+The Socket is asked to 
+create InputStream and OutputStream 
+objects that read and write bytes to and from the connection. 
+The ServerSocket can optionally 
+create a new thread for each connection, so that the server can listen 
+for new connections while it is communicating with clients. 
+The code that implements the client side of a connection-oriented
+protocol is quite simple. It creates a Socket
+object that opens a connection with a server, and then it uses that
+Socket object to communicate with the server.
+Now let's look at an example. The example consists of a pair of
+programs that allows a client to get the contents of a file from a
+server. The client requests the contents of a file by opening a
+connection to the server and sending it the name of a file
+followed by a newline character. If the server is able to read the
+named file, it responds by sending the string
+"Good:\n" followed by the contents of the
+file. If the server is not able to read the named file, it responds by
+sending the string "Bad:" followed by the name of
+the file and a newline character. After the server has sent its
+response, it closes the connection.
+Here's the program that implements the server side of this file transfer: 
+public class FileServer extends Thread {
+    public static void main(String[] argv) {
+        ServerSocket s;
+        try {
+            s = new ServerSocket(1234, 10);
+        }catch (IOException e) {
+            System.err.println("Unable to create socket");
+            e.printStackTrace();
+            return;
+        }
+        try {
+            while (true) {
+                new FileServer(s.accept());
+            }
+        }catch (IOException e) {
+        }
+    }
+    private Socket socket; 
+    FileServer(Socket s) {
+        socket = s;
+        start();
+    }
+    public void run() {
+        InputStream in;
+        String fileName = "";
+        PrintStream out = null;
+        FileInputStream f;
+        try {
+            in = socket.getInputStream();
+            out = new PrintStream(socket.getOutputStream());
+            fileName = new DataInputStream(in).readLine();
+            f = new FileInputStream(fileName);
+        }catch (IOException e) {
+            if (out != null)
+              out.print("Bad:"+fileName+"\n");
+            out.close();
+            try {
+                socket.close();
+            }catch (IOException ie) {
+            }
+            return;
+        }
+        out.print("Good:\n");
+        // send contents of file to client.
+        byte[] buffer = new byte[4096];
+        try {
+            int len;
+            while ((len = f.read(buffer)) &gt; 0) {
+                out.write(buffer, 0, len);
+            }// while
+        }catch (IOException e) {
+        }finally {
+            try {
+                in.close();
+                out.close();
+                socket.close();
+            }catch (IOException e) {
+            }
+        }
+    }
+}
+The FileServer class implements the server side of
+the file transfer; it is a subclass of Thread to
+make it easier to write code that can handle multiple connections at
+the same time. The main() method provides the
+top-level logic for the program. The first thing that
+main() does is to create a
+ServerSocket object to listen for connections. The
+constructor for ServerSocket takes two parameters:
+the port number for the socket and a value that specifies the maximum
+length of the pending connections queue. The operating system can
+accept connections on behalf of the socket when the server program is
+busy doing something other than accepting connections. If the second
+parameter is greater than zero, the operating system can accept up to
+that many connections on behalf of the socket and store them in a
+queue. If the second parameter is zero, however, the operating system
+does not accept any connections on behalf of the server program. The
+remainder of the main() method accepts a
+connection, creates a new instance of the
+FileServer class to process the connection, and
+then waits for the next connection.
+Each FileServer object is responsible for handling
+a connection accepted by its main() method. A
+FileServer object uses a private
+variable, socket, to refer to the
+Socket object that allows it to communicate with
+the client program on the other end of the connection. The constructor
+for FileServer sets its socket
+variable to refer to the Socket object that is
+passed to it by the main() method and then calls
+its start() method. The
+FileServer class inherits the
+start() method from the Thread
+class; the start() method starts a new thread that
+calls the run() method. Because the rest of the
+connection processing is done asynchronously in a separate thread, the
+constructor can return immediately. This allows the
+main() method to accept another connection right
+away, instead of having to wait for this connection to be fully
+processed before accepting another.
+The run() method uses the in and
+out variables to refer to
+InputStream and PrintStream
+objects that read from and write to the connection associated with the
+Socket object, respectively.  These streams are
+created by calling the getInputStream() and
+getOutputStream() methods of the
+Socket object. The run() method
+then reads the name of the file that the client program wants to
+receive and creates a FileInputStream to read that
+file. If any of the methods called up to this point have detected a
+problem, they throw some kind of IOException.  In
+this case, the server sends a response to the client that consists of
+the string "Bad:" followed by the filename and then
+closes the socket and returns, which kills the thread.
+If everything up to this point has been fine, the server sends the
+string "Good:" and then copies the
+contents of the file to the socket. The copying is done by repeatedly
+filling a buffer with bytes from the file and writing the buffer to
+the socket. When the contents of the file are exhausted, the streams
+and the socket are closed, the run() method returns,
+and the thread dies.
+Now let's take a look at the client part of this program: 
+public class FileClient {
+    private static boolean usageOk(String[] argv) {
+        if (argv.length != 2) {
+            String msg = "usage is: " + "FileClient server-name file-name";
+            System.out.println(msg);
+            return false;
+        }
+        return true;
+    }
+    public static void main(String[] argv) {
+        int exitCode = 0;
+        if (!usageOk(argv))
+          return;
+        Socket s = null;
+        try {
+            s = new Socket(argv[0], 1234);
+        }catch (IOException e) {
+            String msg = "Unable to connect to server";
+            System.err.println(msg);
+            e.printStackTrace();
+            System.exit(1);
+        }
+        InputStream in = null;
+        try {
+            OutputStream out = s.getOutputStream();
+            new PrintStream(out).print(argv[1]+"\n");
+            in = s.getInputStream();
+            DataInputStream din = new DataInputStream(in);
+            String serverStatus = din.readLine();
+            if (serverStatus.startsWith("Bad")) {
+                exitCode = 1;
+            int ch;
+            while((ch = in.read()) &gt;= 0) {
+                System.out.write((char)ch);
+            }// while
+        }catch (IOException e) {
+        }finally {
+            try {
+                s.close();
+            }catch (IOException e) {
+            }
+        }
+    }
+}
+The usageOk() method is simply a utility method
+that verifies that the correct number of arguments have been passed to
+the client application. It outputs a help message if the number of
+arguments is not what is expected. It is generally a good idea to
+include a method like this in a Java application that uses
+command-line parameters.
+The main() method does the real work of
+FileClient. After it verifies that it has the
+correct number of parameters, it attempts to create a socket connected
+to the server program running on the specified host and listening for
+connections on port number 1234. The socket that it creates is
+encapsulated by a Socket object. The constructor
+for the Socket object takes two arguments: the name
+of the machine the server program is running on and the port
+number. After the socket is successfully opened, the client sends the
+specified filename, followed by a new line character, to the
+server. The client then gets an InputStream from
+the socket to read what the server is sending and reads the
+success/failure code that the server sends back. If the request is a
+success, the client reads the contents of the requested file.
+Note that the finally clause 
+at the end closes the socket. If the program did not explicitly close the 
+socket, it would be closed automatically when the program terminates. However, 
+it is a good programming practice to explicitly close a socket when you 
+are done with it. 
+Sockets for Connectionless Protocols
+Communicating with a connectionless protocol is simpler than using a connection-oriented 
+protocol, as both the client and the server use DatagramSocket objects. 
+The code for the server-side program has the following pattern: 
+Create a DatagramSocket 
+object associated with a specified port number. 
+Create a DatagramPacket 
+object and ask the DatagramSocket 
+to put the next piece of data it receives in the DatagramPacket. 
+On the client-side, the order is simply reversed: 
+Create a DatagramPacket 
+object associated with a piece of data, a destination network address, 
+and a port number. 
+Ask a DatagramSocket object 
+to send the data associated with the DatagramPacket 
+to the destination associated with the DatagramSocket. 
+Let's look at an example that shows how this pattern can be coded 
+into a server that provides the current time and a client that requests 
+the current time. Here's the code for the server class: 
+public class TimeServer {
+    static DatagramSocket socket;
+    public static void main(String[] argv) {
+        try {
+            socket = new DatagramSocket(7654);
+        }catch (SocketException e) {
+            System.err.println("Unable to create socket");
+            e.printStackTrace();
+            System.exit(1);
+        }
+        DatagramPacket datagram;
+        datagram = new DatagramPacket(new byte[1], 1);
+        while (true) {
+            try {
+                socket.receive(datagram);
+                respond(datagram);
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+    static void respond(DatagramPacket request) {
+        ByteArrayOutputStream bs;
+        bs = new ByteArrayOutputStream();
+        DataOutputStream ds = new DataOutputStream(bs);
+        try {
+            ds.writeLong(System.currentTimeMillis());
+        }catch (IOException e) {
+        }
+        DatagramPacket response;
+        byte[] data = bs.toByteArray();
+        response = new DatagramPacket(data, data.length,
+                       request.getAddress(), request.getPort());
+        try {
+            socket.send(response);
+        }catch (IOException e) {
+            // Give up, we've done our best.
+        }
+    }
+}
+The main() method of the
+TimeServer class begins by creating a
+DatagramSocket object that uses port number
+7654. The socket variable refers to this
+DatagramSocket, which is used to communicate with
+clients. Then the main() method creates a
+DatagramPacket object to contain data received by
+the DatagramSocket.  The two-argument constructor
+for DatagramPacket creates objects that
+receive data. The first argument is an array of bytes to contain the
+data, while the second argument specifies the number of bytes to
+read. When a DatagramSocket is asked to receive a
+packet into a DatagramPacket, only the specified
+number of bytes are read. Even though the client is not really sending
+any information to the server, we still create a
+DatagramPacket with a 1-byte buffer. In theory,
+all that the server needs is an empty packet that specifies the
+client's network address and port number, but attempting to
+receive a zero-byte packet does not work. When the
+receive() method of a
+DatagramSocket is called to receive a zero-byte
+packet, it returns immediately, rather than waiting for a packet to
+arrive. Finally, the server enters an infinite loop that receives
+requests from clients using the receive() method of
+the DatagramSocket, and sends responses.
+The respond() method handles sending responses. It
+starts by writing the current time as a long value
+to an array of bytes. Next, the respond() method
+prepares to send the array of bytes by creating a
+DatagramPacket object that encapsulates the array
+and the address and port number of the client that requested the
+time. Notice that the constructor used to create a
+DatagramPacket object for sending a packet takes
+four arguments: an array of bytes, the number of bytes to send, the
+client's network address, and the client's port
+number. The address and port are retrieved from the request
+DatagramPacket with the
+getAddress() and getPort()
+methods. The respond() method finishes its work by
+actually sending the DatagramPacket using the
+send() method of the
+DatagramSocket.
+Now here's the code for the corresponding client program: 
+public class TimeClient {
+    private static boolean usageOk(String[] argv) {
+        if (argv.length != 1) {
+            String msg = "usage is: " + "TimeClient server-name";
+            System.out.println(msg);
+            return false;
+        }
+        return true;
+    }
+    public static void main(String[] argv) {
+        if (!usageOk(argv))
+            System.exit(1);
+        DatagramSocket socket;
+        try {
+            socket = new DatagramSocket();
+        }catch (SocketException e) {
+            System.err.println("Unable to create socket");
+            e.printStackTrace();
+            System.exit(1);
+            return;
+        }
+        long time;
+        try {
+            byte[] buf = new byte[1];
+            socket.send(new DatagramPacket(buf, 1, 
+                            InetAddress.getByName(argv[0]), 7654));
+            DatagramPacket response = new DatagramPacket(new byte[8],8);
+            socket.receive(response);
+            ByteArrayInputStream bs;
+            bs = new ByteArrayInputStream(response.getData());
+            DataInputStream ds = new DataInputStream(bs);
+            time = ds.readLong();
+        }catch (IOException e) {
+            e.printStackTrace();
+            System.exit(1);
+            return;
+        }
+        System.out.println(new Date(time));
+        socket.close();
+    }
+}
+The main() method does the real work of
+TimeClient. After it verifies that it has the
+correct number of parameters with usageOk(), it
+creates a DatagramSocket object for communicating
+with the server. Note that the constructor for this
+DatagramSocket does not specify any parameters; a
+client DatagramSocket is not explicitly connected
+to a specific port. Then the main() method creates
+a DatagramPacket object to contain the request to
+be sent to the server. Since this DatagramPacket is
+being used to send a packet, the code uses the four-argument
+constructor that specifies an array of bytes, the number of bytes to
+send, the specified network address for a time server, and the
+server's port number.  The DatagramPacket is
+then sent to the server with the send() method of
+the DatagramSocket.
+Now the main() method creates another
+DatagramPacket to receive the response from the
+server. The two-argument constructor is used this time because the
+object is being created to receive data. After calling the
+receive() method of the
+DatagramSocket to get the response from the server,
+the main() method gets the data from the response
+DatagramPacket by calling
+getData(). The data is wrapped in a
+DataInputStream so that the data can be read as a
+long value. If everything has gone smoothly, the
+client finishes by printing the current time and closing the socket.
+Versioning of Classes
+URL Objects
+ 
+ 
+ 
+ 
+ 
+ 
+ 

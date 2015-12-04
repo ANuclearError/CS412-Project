@@ -1,0 +1,150 @@
+
+[Chapter 16] CollationElementIterator
+Chapter 16The java.text Package
+CollationElementIterator
+Name
+CollationElementIterator
+Synopsis
+Class Name:
+java.text.CollationElementIterator
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+A RuleBasedCollator object creates
+an instance of the CollationElementIterator 
+class to iterate through the characters of a string and determine
+their relative collation sequence. A
+CollationElementIterator object performs callbacks
+to the RuleBasedCollator that created it to get
+the information it needs to recognize groups of characters that
+are treated as single collation characters.
+For example, a RuleBasedCollator for a
+Spanish language locale would be set up to treat `ch'
+as a single letter.  A CollationElementIterator 
+object also gets information from its RuleBasedCollator
+that is used to determine the collation ordering priority for characters.
+A collation-ordering priority of a character is a composite integer value
+that determines how the character is collated. This priority is comprised
+of:
+A primary order that distinguishes between different letters.
+Characters that are considered to be different letters, such as
+`e' and `f', have different primary orders. 
+Different forms of the same letter, such as `e' 
+and `E', or an accented form of `e', 
+have the same primary order. Primary orders are short values.
+A secondary order that distinguishes between accented forms of
+the same letter. An unaccented `e' has a different
+secondary order than forms of `e' that have different
+accents. `E' and `e' have the same 
+secondary order, as do upper- and lowercase forms of `e' 
+that have the same accent.  Secondary orders are byte values.
+A tertiary order that distinguishes between case differences.
+`E' and `e' have different tertiary 
+orders.  Tertiary orders are byte values. 
+The next() method returns the collation-ordering
+priority of the next logical character. Primary, secondary, and 
+tertiary orders are extracted from an ordering priority
+with the primaryOrder(), 
+secondaryOrder(), and
+tertiaryOrder() methods. 
+Class Summary
+public final class java.text.CollationElementIterator
+                   extends java.lang.Object {
+   // Constants
+   public static final int NULLORDER;
+ 
+  // Class Methods
+   public static final int primaryOrder(int order);
+   public static final short secondaryOrder(int order);
+   public static final short tertiaryOrder(int order);
+ 
+  // Instance Methods
+   public int next();
+   public void reset();
+}
+Constants
+NULLORDER
+public final static int NULLORDER
+Description
+A constant that is returned by next() 
+if the end of the string has been reached. 
+Class Methods
+primaryOrder
+public static final int primaryOrder(int order)
+Returns
+The primary order component of the given order key. 
+Description
+This method extracts the primary order value from the given order key. 
+secondaryOrder
+public static final short secondaryOrder(int order)
+Returns
+The secondary order component of the given order key. 
+Description
+This method extracts the secondary order value from the given order key. 
+tertiaryOrder
+public static final short tertiaryOrder(int order)
+Returns
+The tertiary order component of the given order key. 
+Description
+This method extracts the tertiary order value from the given order key. 
+Instance Methods
+next
+public int next()
+Returns
+The order value of the next character in the string. 
+Description
+This method returns the order key for the next character in the string. 
+The returned value can be broken apart using the primaryOrder(), 
+secondaryOrder(), and tertiaryOrder() 
+methods. 
+reset
+public void reset()
+Description
+This method resets the position of this CollationElementIterator 
+to the beginning of the string. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Collator, 
+RuleBasedCollator, 
+String 
+ChoiceFormat
+CollationKey
+ 
+ 
+ 
+ 
+ 
+ 
+ 

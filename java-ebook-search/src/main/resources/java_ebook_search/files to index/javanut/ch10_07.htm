@@ -1,0 +1,105 @@
+
+[Chapter 10] 10.7 Defining a Complex Property Editor
+Chapter 10Java Beans
+10.7 Defining a Complex Property Editor
+There is another YesNoDialog property value that
+requires a property editor.
+The message property of YesNoDialog
+can specify a multi-line message to be displayed in the
+dialog.  This property requires a property editor because
+the beanbox program does not distinguish
+between single-line and multi-line string types and
+the TextField objects it uses for text input do
+not allow the user to enter multiple lines of text.  For
+this reason, we define the YesNoDialogMessageEditor
+class and register it with the PropertyDescriptor
+for the message property, as shown in
+Example 10.5.
+Example 10.7
+shows the definition of this property editor.  This is a
+more complex editor that supports the creation of a custom
+editor component and graphical display of the value.
+Note that this example implements PropertyEditor
+directly.
+getCustomEditor() returns an editor component for
+multi-line strings.
+Figure 10.2
+shows this custom editor placed within a dialog box created
+by the beanbox program.  Note that the Done
+button in this figure is part of the beanbox dialog,
+not part of the property editor itself.
+Figure 10.2: A custom property editor dialog
+The paintValue() method is responsible for
+displaying the value of the message property.
+This multi-line value does not typically fit in the
+small rectangle of screen space allowed for the property,
+so paintValue() displays instructions for
+popping up the custom editor, which allows the user to
+inspect and edit the property value.  (This example relies
+on the click-to-edit behavior of the beanbox program;
+this paintValue() method may not make sense when the
+bean is used in other beanbox tools.)
+Example 10.7: The YesNoDialogMessageEditor Class
+package oreilly.beans.yesno;
+import java.beans.*;
+import java.awt.*;
+import java.awt.event.*;
+/**
+ * This class is a custom editor for the message property of the
+ * YesNoDialog bean.  It is necessary because the default editor for
+ * properties of type String does not allow multi-line strings to be entered.
+ */
+public class YesNoDialogMessageEditor implements PropertyEditor {
+  protected String value;  // The value we will be editing.
+  public void setValue(Object o) {  value = (String) o; }
+  public Object getValue() { return value; }
+  public void setAsText(String s) { value = s; }
+  public String getAsText() { return value; }
+  public String[] getTags() { return null; }  // not enumerated; no tags
+  // Say that we allow custom editing.
+  public boolean supportsCustomEditor() { return true; }
+  // Return the custom editor.  This just creates and returns a TextArea
+  // to edit the multi-line text.  But it also registers a listener on the
+  // text area to update the value as the user types and to fire the
+  // property change events that property editors are required to fire.
+  public Component getCustomEditor() {
+    final TextArea t = new TextArea(value);
+    t.setSize(300, 150); // TextArea doesn't have a preferred size, so set one.
+    t.addTextListener(new TextListener() {
+      public void textValueChanged(TextEvent e) {
+        value = t.getText();
+        listeners.firePropertyChange(null, null, null);
+      }
+    });
+    return t;
+  }
+  // Visual display of the value, for use with the custom editor.
+  // Just print some instructions and hope they fit in the box.
+  // This could be more sophisticated.
+  public boolean isPaintable() { return true; }
+  public void paintValue(Graphics g, Rectangle r) {
+    g.setClip(r);
+    g.drawString("Click to edit...", r.x+5, r.y+15);
+  }
+  // Important method for code generators.  Note that it
+  // ought to add any necessary escape sequences.
+  public String getJavaInitializationString() { return "\"" + value + "\""; }
+  // This code uses the PropertyChangeSupport class to maintain a list of
+  // listeners interested in the edits we make to the value.
+  protected PropertyChangeSupport listeners = new PropertyChangeSupport(this);
+  public void addPropertyChangeListener(PropertyChangeListener l) {
+    listeners.addPropertyChangeListener(l);
+  }
+  public void removePropertyChangeListener(PropertyChangeListener l) {
+    listeners.removePropertyChangeListener(l);
+  }
+}
+Defining a Simple Property Editor
+Defining a Bean Customizer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

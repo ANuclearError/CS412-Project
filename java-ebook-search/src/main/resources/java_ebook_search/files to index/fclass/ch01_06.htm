@@ -1,0 +1,59 @@
+
+[Chapter 1] 1.6 The java.text Package
+Chapter 1Introduction
+1.6 The java.text Package
+The java.text package is new in Java 1.1.
+It contains classes that support the parsing and formatting of
+data. These classes also support the internationalization of Java
+programs.  Internationalization refers to 
+the process of making a program flexible enough to run 
+correctly in any locale. An internationalized program must,
+however, be localized to enable it to run in a particular
+locale. The internationalization capabilities in Java
+are quite significant, especially in this age of the global
+Internet.
+Many of the classes in java.text are meant
+to handle formatting string representations
+of dates, times, numbers, and messages based on the conventions
+of a locale. 
+The Format class is the superclass of 
+all of the classes that generate and parse string representations 
+of various types of data. 
+The DateFormat class formats and parses dates
+and times according to the customs and language of a particular
+locale. By the same token, the NumberFormat class
+formats and parses numbers, including currency values, 
+in a locale-dependent manner. 
+The MessageFormat 
+class creates a textual message from a pattern
+string, while ChoiceFormat maps numerical
+ranges to strings.
+By themselves, these classes do not provide different results for
+different locales. However, they can be used in conjunction with 
+ResourceBundle objects from java.util
+that generate locale-specific pattern strings.
+The Collator class handles collating strings
+according to the rules of a particular locale.
+Different languages have different
+characters and different rules for sorting those characters; 
+Collator and its subclass, 
+RuleBasedCollator, 
+are designed to take those differences into account when collating
+strings. In addition, 
+the CollationKey class optimizes the sorting of a large collection of strings.
+The BreakIterator class finds various
+boundaries, such as word boundaries and line boundaries, in
+textual data. As you might expect, BreakIterator
+locates these boundaries according to the rules of a
+particular locale.
+See Chapter 16, The java.text Package, for complete reference material on all of the
+classes in the java.text package.
+The java.util Package
+The java.math Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

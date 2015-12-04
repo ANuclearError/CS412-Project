@@ -1,0 +1,60 @@
+
+[Chapter 24] 24.46 java.io.OutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.46 java.io.OutputStream (JDK 1.0)
+This abstract class is the superclass of all output streams.
+It defines the basic output methods that all output stream
+classes provide.
+write() writes a single byte or an array or subarray
+of bytes. flush() forces any buffered output to be
+written. close() closes the stream and frees up any
+system resources associated with it. The stream may not be
+used once close() has been called.
+See also Writer.
+public abstract class OutputStream extends Object {
+    // Default Constructor: public OutputStream()
+    // Public Instance Methods
+            public void close() throws IOException;
+            public void flush() throws IOException;
+            public abstract void write(int b) throws IOException;
+            public void write(byte[] b) throws IOException;
+            public void write(byte[] b, int off, int len) throws IOException;
+}
+Extended By:
+ByteArrayOutputStream, 
+FileOutputStream, 
+FilterOutputStream, 
+ObjectOutputStream, 
+PipedOutputStream
+Passed To:
+BufferedOutputStream(), 
+ByteArrayOutputStream.writeTo(), 
+CheckedOutputStream(), 
+DataOutputStream(), 
+DeflaterOutputStream(), 
+FilterOutputStream(), 
+GZIPOutputStream(), 
+ObjectOutputStream(), 
+OutputStreamWriter(), 
+PrintStream(), 
+PrintWriter(), 
+Properties.save(), 
+Runtime.getLocalizedOutputStream(), 
+ZipOutputStream()
+Returned By:
+Process.getOutputStream(), 
+Runtime.getLocalizedOutputStream(), 
+Socket.getOutputStream(), 
+SocketImpl.getOutputStream(), 
+URLConnection.getOutputStream()
+Type Of:
+FilterOutputStream.out
+java.io.OptionalDataException (JDK 1.1)
+java.io.OutputStreamWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

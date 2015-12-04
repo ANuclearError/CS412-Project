@@ -1,0 +1,181 @@
+
+[Chapter 11] StringBufferInputStream
+Chapter 11The java.io Package
+StringBufferInputStream
+Name
+StringBufferInputStream
+Synopsis
+Class Name:
+java.io.StringBufferInputStream
+Superclass:
+java.io.InputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+Deprecated as of JDK 1.1
+Description
+The StringBufferInputStream 
+class represents a byte stream whose data source is a String. 
+This class is similar to the ByteArrayInputStream 
+class, which uses a byte array 
+as its data source. 
+StringBufferInputStream is 
+deprecated as of JDK 1.1 because it does not correctly convert characters 
+to bytes. The StringReader 
+class should now be used to create a character stream from a 
+String. 
+Class Summary
+public class java.io.StringBufferInputStream extends java.io.InputStream {
+  // Variables
+  protected String buffer;
+  protected int count;
+  protected int pos;
+  // Constructor
+  public StringBufferInputStream(String s);
+  // Instance Methods
+  public synchronized int available();
+  public synchronized int read();
+  public synchronized int read(byte[] b, int off, int len); 
+  public synchronized void reset();
+  public synchronized long skip(long n); 
+}
+Variables
+buffer
+protected String buffer
+Description
+The buffer that stores the data for the input stream. 
+count
+protected int count
+Description
+The size of the buffer, or in other words, the length of the string. 
+pos
+protected int pos
+Description
+The current stream position. 
+Constructors
+StringBufferInputStream
+public StringBufferInputStream(String s)
+Parameters
+s
+The String to use. 
+Description
+This constructor creates a StringBufferInputStream 
+that uses the given String 
+as its data source. Note that the data is not copied, so changes made to 
+the String affect the data 
+that the StringBufferInputStream 
+returns. 
+Instance Methods
+available
+public synchronized int available()
+Returns
+The number of bytes remaining in the string. 
+Overrides
+InputStream.available() 
+Description
+This method returns the number of bytes that are left in the string. This 
+is the length of the string, count, 
+minus the current stream position, pos. 
+read
+public synchronized int read()
+Returns
+The next byte of data or -1 if the end of the string is encountered. 
+Overrides
+InputStream.read() 
+Description
+This method returns the next byte from the string. The method takes the 
+next character from the string and returns the low eight bits of that character 
+as a byte, which is not the correct way to convert characters into bytes. 
+The method cannot block. 
+public synchronized int read(byte b[], int off, int len)
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the string is encountered 
+immediately. 
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+This method copies bytes from the internal buffer into the given array 
+b, starting at index off 
+and continuing for len bytes. 
+The method takes each character from the string and returns the low eight 
+bits of that character as a byte, which is not the correct way to convert 
+characters into bytes. 
+reset
+public synchronized void reset()
+Overrides
+InputStream.reset() 
+Description
+This method sets the position of the StringBufferInputStream 
+back to the beginning of the internal buffer. 
+skip
+public synchronized long skip(long n)
+Parameters
+n
+The number of bytes to skip. 
+Returns
+The actual number of bytes skipped. 
+Overrides
+InputStream.skip() 
+Description
+This method skips n bytes of 
+the string. If you try to skip past the end of the string, the stream is 
+positioned at the end of the string. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+InputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+InputStream
+markSupported()
+InputStream
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+InputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ByteArrayInputStream, 
+InputStream, 
+IOException, 
+String, 
+StringReader 
+StreamTokenizer
+StringReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,212 @@
+
+[Chapter 15] InetAddress
+Chapter 15The java.net Package
+InetAddress
+Name
+InetAddress
+Synopsis
+Class Name:
+java.net.InetAddress
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later 
+Description
+The InetAddress class encapsulates 
+an Internet Protocol (IP) address. InetAddress 
+objects are used by the various classes that 
+are responsible for specifying the destination
+addresses of outbound network packets, 
+such as DatagramSocket, MulticastSocket, 
+and Socket. InetAddress 
+does not provide any public 
+constructors. Instead, you must use the static 
+methods getAllByName(), getByName(), 
+and getLocalHost() to create 
+InetAddress objects. 
+Class Summary
+public final class java.net.InetAddress extends java.lang.Object
+                   implements java.io.Serializable {
+  // Class Methods
+  public static InetAddress[] getAllByName(String host);
+  public static InetAddress getByName(String host);
+  public static InetAddress getLocalHost();
+  // Instance Methods
+  public boolean equals(Object obj); 
+  public byte[] getAddress();
+  public String getHostAddress();                // New in 1.1
+  public String getHostName();
+  public int hashCode();
+  public boolean isMulticastAddress();           // New in 1.1
+  public String toString();
+}
+Class Methods
+getAllByName
+   public static InetAddress[] getAllByName(String host) throws UnknownHostException  
+Parameters
+host
+A String that contains a hostname. 
+Returns
+An array of InetAddress objects 
+that corresponds to the given name. 
+Throws
+SecurityException
+If the application is not allowed to connect to host.
+UnknownHostException
+If host cannot be resolved. 
+Description
+This method finds all of the IP addresses that correspond to the given 
+hostname. The hostname can be a machine name, such as "almond.nuts.com", 
+or a string representation of an IP address, such as "208.25.146.1". 
+getByName
+   public static InetAddress getByName(String host) throws UnknownHostException  
+Parameters
+host
+A String that contains a host name. 
+Returns
+An InetAddress that corresponds 
+to the given name. 
+Throws
+SecurityException
+If the application is not allowed to connect to host.
+UnknownHostException
+If host cannot be resolved. 
+Description
+This method returns the primary IP address that correspond to the given hostname. 
+The hostname can be a machine name, such as "almond.nuts.com", 
+or a string representation of an IP address, such as "208.25.146.1". 
+getLocalHost
+   public static InetAddress getLocalHost() throws UnknownHostException  
+Returns
+An InetAddress 
+that corresponds to the name of the local machine. 
+Throws
+SecurityException
+If the application is not allowed to connect to host.
+UnknownHostException
+If host cannot be resolved. 
+Description
+This method finds the IP address of the local machine. 
+Instance Methods
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equivalent; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of InetAddress 
+that specifies the same IP address as the object this method is associated 
+with. 
+getAddress
+public byte[] getAddress()
+Returns
+A byte array with elements that correspond to the bytes of
+the IP address that this object represents.
+Description
+This method returns the IP address associated with this object as an array 
+of bytes in network order. That means that the first element of the array 
+contains the highest order byte, and the last element of the array contains 
+the lowest order byte. 
+getHostAddress
+public String getHostAddress()
+Availability
+New as of JDK 1.1 
+Returns
+A String that contains the 
+IP address of this object. 
+Description
+This method returns a string representation of the IP address associated 
+with this object. For example: "206.175.64.78". 
+getHostName
+public String getHostName()
+Returns
+The hostname associated with this object. 
+Description
+In most cases, this method returns the hostname that corresponds to the 
+IP address associated with this object. However, there are a few special 
+cases: 
+If the address associated with this object is address of the local
+machine, the method may return null.
+If the method cannot determine a home name to go with the address
+associated with this object, the method returns a string
+representation of the address.
+If the application is not allowed to know the hostname, the method
+returns a string representation of the address.
+hashCode
+public int hashCode()
+Returns
+The hashcode based on the IP address of the 
+object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object, based on the IP address 
+associated with this object. 
+isMulticastAddress
+public boolean isMulticastAddress()
+Availability
+New as of JDK 1.1 
+Returns
+true if this object represents 
+a multicast address; false 
+otherwise. 
+Description
+This method returns a flag that indicates if this object represents an 
+IP multicast address. A multicast address is a Class D address, which means 
+that its four highest-order bits are set to 1110. In other words, multicast 
+addresses are in the range 224.0.0.1 through 239.255.255.255 inclusive. 
+toString
+public String toString()
+Returns
+The string representation of this InetAddress. 
+Overrides
+Object.toString() 
+Description
+This method returns a String that contains both the hostname and IP address of this object. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DatagramSocket, 
+MulticastSocket, 
+SecurityException, 
+Serializable, 
+Socket, 
+UnknownHostException 
+HttpURLConnection
+MalformedURLException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

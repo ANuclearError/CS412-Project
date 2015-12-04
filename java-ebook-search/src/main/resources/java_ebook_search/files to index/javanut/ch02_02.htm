@@ -1,0 +1,259 @@
+
+[Chapter 2] 2.2 The Name Space: Packages, Classes, and Members
+Chapter 2How Java Differs from C
+2.2 The Name Space: Packages, Classes, and Members
+As a language that is designed to support dynamic loading of
+modules over the entire Internet, Java takes special care to avoid
+name space conflicts.  Global variables are simply not part
+of the language.  Neither are "global" functions or
+procedures, for that matter.  
+No Global Variables
+In Java, every field and method is declared within a class
+and forms part of that class.  Also, every class is part of
+a package (in Java 1.1, classes can also be declared
+within other classes).  The fields and methods (and classes in 1.1) of
+a class are known as the members of a class.  Every
+Java field or method may be referred to by its fully
+qualified name, which consists of the package name, the
+class name, and the member name (i.e., the field or the
+method name), all separated by periods.
+Package names are themselves usually composed of
+multiple period-separated components.  Thus, the fully
+qualified name for a method might be:
+david.games.tetris.SoundEffects.play()
+Java Filenames and Directory Structure
+A file of Java source code has the extension .java.
+It consists of an optional package statement
+followed by any number of import statements followed
+by one or more class or interface definitions.  (The
+package and import statements will be
+introduced shortly.)  If more than one class or interface is
+defined in a Java source file, only one of them may be
+declared public (i.e., made available outside of the
+package), and the source file must have the same name as
+that public class or interface, plus the .java
+extension.
+Each class or interface definition in a .java file is
+compiled into a separate file.  These files of compiled Java
+byte-codes are known as "class files," and must have the same
+name as the class or interface they define, with the
+extension .class appended.  For example, the class
+SoundEffects would be stored in the file
+SoundEffects.class.
+Class files are stored in a directory that has the same
+components as the package name. If the fully
+qualified name of a class is
+david.games.tetris.SoundEffects, for example,
+the full path of the class file must be
+david/games/tetris/SoundEffects.class. This filename
+is interpreted relative to the Java "class path," described
+below.
+[2]
+[2] 
+We'll use UNIX-style directory specifications in this book.
+If you are a Windows programmer, simply change all the
+forward slashes in filenames to backward slashes.
+Similarly, in path specifications, change colons to
+semicolons.
+Packages of the Java API
+The Java 1.1 API consists of the classes and
+interfaces defined in the 
+twenty-three packages listed in
+Table 2.1.
+Table 2.1: The Packages of the Java API
+Package name
+Contents
+java.applet
+Applet classes
+java.awt
+Graphics, window, and GUI classes
+java.awt.datatransfer
+Data transfer (e.g., cut-and-paste) classes
+java.awt.event
+Event processing classes and interfaces
+java.awt.image
+Image processing classes
+java.awt.peer
+GUI interfaces for platform independence
+java.beans
+JavaBeans component model API
+java.io
+Various types of input and output classes
+java.lang
+Core language classes
+java.lang.reflect
+Reflection API classes
+java.math
+Arbitrary precision arithmetic
+java.net
+Networking classes
+java.rmi
+Remote Method Invocation classes
+java.rmi.dgc
+RMI-related classes
+java.rmi.registry
+RMI-related classes
+java.rmi.server
+RMI-related classes
+java.security
+Security classes
+java.security.acl
+Security-related classes
+java.security.interfaces
+Security-related classes
+java.sql
+JDBC SQL API for database access
+java.text
+Internationalization classes
+java.util
+Various useful data types
+java.util.zip
+Compression and decompression classes
+The Java Class Path
+The Java interpreter knows where its standard system classes
+are installed, and loads them from that location as needed.
+By default, it looks up user-defined classes in or relative
+to the current directory.  You can set the CLASSPATH
+environment variable to tell the interpreter where to look
+for user-defined classes.  The interpreter always appends
+the location of its system classes to the end of the path
+specified by this environment variable.  The entries in a
+class path specification should be directories or ZIP files
+that contain the classes.  The directories in a class path
+specification should be colon-separated on a UNIX system,
+and semicolon-separated on a Windows system.  For example,
+on a UNIX system, you might use:
+setenv CLASSPATH .:/home/david/classes:/usr/local/javatools/classes.zip
+On a Windows system you could use:
+setenv CLASSPATH .;C:\david\classes;D:\local\javatools\classes.zip
+This tells Java to search in and beneath the specified
+directories for non-system classes.  Note that the current
+directory (.) is included in these paths.
+You can also specify a class path to the Java interpreter
+with the -classpath command-line argument.  Setting
+this option overides any path specified in the
+CLASSPATH environment variable.  Note that the
+interpreter does not append the location of the system
+classes to the end of this path, so you must be sure to
+specify those system classes yourself.  Finally, note that
+the Java compiler also recognizes and honors class paths
+specified with the CLASSPATH environment variable
+and the -classpath command-line argument.
+Globally Unique Package Names
+The Java designers have proposed an
+Internet-wide unique package naming scheme that is based on
+the Internet domain name of the organization at which the package is
+developed.
+Figure 2.1 
+shows some fully qualified names, which include package,
+class, and field components.
+Figure 2.1: Fully qualified names in Java
+Some organizations are following this naming scheme, and
+producing classes with names like
+com.sybase.jdbc.SybDriver.  Another trend that is
+developing, however, is for companies to simply use their
+company name as the first component of their package names,
+and produce classes like
+netscape.javascript.JSObject. 
+The top-level package names java and sun are
+reserved for use by Sun, of course.  Developers should not
+define new classes within these packages.
+The package Statement
+The package statement must appear as the first
+statement (i.e., the first text other than comments and
+whitespace) in a file of Java source code, if it appears at all. 
+It specifies which package the code in the file is
+part of.  Java code that is part of a particular package has
+access to all classes (public and
+non-public) in the package, and to all
+non-private methods and fields in all those classes.
+When Java code is part of a named package, the compiled
+class file must be placed at the appropriate position in the
+CLASSPATH directory
+hierarchy before it can be accessed by
+the Java interpreter or other utilities.
+If the package statement is omitted from a file, the
+code in that file is part of an unnamed default package.
+This is convenient for small test programs, or during
+development, because it means that the code can be
+interpreted from the current directory.
+The import Statement
+The import statement makes Java classes available to
+the current class under an abbreviated name.  Public Java
+classes are always available by their fully qualified names,
+assuming that the appropriate class file can be found (and
+is readable) relative to the CLASSPATH environment
+variable.  import doesn't actually make the class
+available or "read it in"; it simply saves you typing and makes
+your code more legible.
+Any number of import statements may appear in a Java
+program.  They must appear, however, after the optional
+package statement at the top of the file, and before
+the first class or interface definition in the file.
+There are two forms of the import statement:
+import package.class ;
+import package.* ;
+The first form allows the specified class in the specified
+package to be known by its class name alone.  Thus, this
+import statement allows you to type
+Hashtable instead of java.util.Hashtable:
+import java.util.Hashtable;
+The second form of the import statement makes all
+classes in a package available by their class name.  For
+example, the following import statement is implicit
+(you need not specify it yourself) in every Java program:
+import java.lang.*;
+It makes the core classes of the language available by their
+unqualified class names.  If two packages imported with this
+form of the statement contain classes with the same name,
+it is an error to use either of those ambiguous classes
+without using its fully qualified name.
+Access to Packages, Classes, and Class Members
+Java has the following rules about access to packages,
+classes, and class members. (Class members are the
+variables, methods, and, in Java 1.1, nested classes defined
+within a class).  Note that the public,
+private, and protected keywords used in
+these rules will be explained in more detail in the next
+chapter.
+A package is accessible if the appropriate files and
+directories are accessible (e.g., if local files have
+appropriate read permissions, or if they can be downloaded
+via the network).
+All classes and interfaces in a package are accessible to
+all other classes and interfaces in the same package.  It is
+not possible to define classes in Java that are
+visible only within a single file of source code.
+A class declared public in one package is accessible
+within another package, assuming that the package itself is
+accessible.  A non-public class is not accessible
+outside of its package.
+Members of a class are accessible from a different class
+within the same package, as long as they are not declared
+private.  private members are accessible
+only within their own class.
+Af member of a class A is accessible from a class
+B in a different package if A is
+public and the member is public, or if
+A is public, the member is
+protected, and B is a subclass of A.
+All members of a class are always accessible from within
+that class.
+Local Variables
+The name space rules we've been describing apply to
+packages, classes, and the members within classes.  Java
+also supports local variables, declared within method
+definitions.  These local variables behave just like local
+variables in C--they do not have globally unique
+hierarchical names, nor do they have access modifiers like
+public and private.  Local variables are
+quite different from class fields.
+Program Structure and Environment
+Comments
+ 
+ 
+ 
+ 
+ 
+ 
+ 

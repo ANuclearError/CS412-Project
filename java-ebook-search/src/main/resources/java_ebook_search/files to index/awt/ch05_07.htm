@@ -1,0 +1,73 @@
+
+[Chapter 5] 5.7 Cursor
+Chapter 5Components
+5.7 Cursor
+Introduced in Java 1.1, the Cursor 
+class provides the different cursors that can be associated with a Component. 
+Previously, cursors could only be associated with a whole Frame. 
+Now any component can use fancy cursors when the user is interacting with 
+the system. 
+To change the cursor, a component calls its setCursor() 
+method; its argument is a Cursor 
+object, which is defined by this class. 
+NOTE: 
+There is still no way to assign a user-defined cursor to a Component. 
+You are restricted to the 14 predefined cursors. 
+Cursor Constants
+The following is a list of Cursor constants. 
+The cursors corresponding to the constants are shown in Figure 5.6.
+public final static int DEFAULT_CURSOR
+public final static int CROSSHAIR_CURSOR
+public final static int TEXT_CURSOR 
+public final static int WAIT_CURSOR 
+public final static int HAND_CURSOR
+public final static int MOVE_CURSOR
+public final static int N_RESIZE_CURSOR 
+public final static int S_RESIZE_CURSOR 
+public final static int E_RESIZE_CURSOR
+public final static int W_RESIZE_CURSOR 
+public final static int NE_RESIZE_CURSOR 
+public final static int NW_RESIZE_CURSOR 
+public final static int SE_RESIZE_CURSOR 
+public final static int SW_RESIZE_CURSOR 
+Figure 5.6: Standard Java cursors
+Cursor Methods
+public Cursor (int type)   
+The sole constructor creates a Cursor 
+of the specified type. type 
+must be one of the Cursor class 
+constants. If type is not one 
+of the class constants, the constructor throws the run-time exception IllegalArgumentException. 
+This constructor exists primarily to support object serialization; you 
+don't need to call it in your code. It is more efficient to call 
+getPredefinedCursor(), 
+discussed later in this section. 
+Miscellaneous methods
+public int getType()  
+The getType() method returns 
+the cursor type. The value returned is one of the class constants. 
+static public Cursor getPredefinedCursor(int type)  
+The getPredefinedCursor() method 
+returns the predefined Cursor 
+of the given type. If type 
+is not one of the class constants, this method throws the run-time exception 
+IllegalArgumentException. This 
+method checks what Cursor objects 
+already exist and gives you a reference to a preexisting Cursor 
+if it can find one with the appropriate type. Otherwise, it creates a new 
+Cursor for you. This is more 
+efficient than calling the Cursor 
+constructor whenever you need one. 
+static public Cursor getDefaultCursor()  
+The getDefaultCursor() method 
+returns the predefined Cursor 
+for the DEFAULT_CURSOR type. 
+Creating Your Own Component
+Containers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

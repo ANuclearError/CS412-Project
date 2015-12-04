@@ -1,0 +1,71 @@
+
+[Chapter 1] 1.2 New Language Features in Java 1.1
+Chapter 1Introduction
+1.2 New Language Features in Java 1.1
+Although Java 1.1 is a massive new release, there are relatively few
+changes to the Java language in this version. The new features of the
+language are quite significant, however, as they add useful
+functionality and make the Java language even more elegant. Here is a
+brief summary of the new features of the Java language in Java 1.1:
+The addition of inner classes is the largest change to the Java
+language in Java 1.1. With this new feature, classes can be defined as
+members of other classes, just like variables and methods. Classes can
+also be defined within blocks of Java code, just like local variables.
+A class that is declared inside of another class may have access to
+the instance variables of the enclosing class; a class declared within
+a block may have access to the local variables and/or formal parameters
+of that block.
+Inner classes include: nested top-level classes and interfaces, 
+member classes, local classes, and anonymous classes.
+The various types of inner clases are described
+in Inner Classes. The syntax for
+nested top-level and member classes is covered 
+in Nested Top-Level and Member Classes, while the
+syntax for nested top-level interfaces is covered
+in Nested Top-Level Interfaces.
+The syntax for local classes is described 
+in Local Classes.
+The syntax for an anonymous class is part of an allocation
+expression, as covered 
+in Allocation Expressions.
+Java 1.1 provides the ability to declare final
+local variables, method parameters, and catch
+clause parameters. final local variables, method
+parameters, and catch parameters are needed to
+allow local classes to access these entities within the scope of their
+blocks.  The syntax for final local variables is
+described in Local Variables, while
+final method parameters are covered 
+in Method formal parameters. The new syntax 
+for the catch clause is described 
+in The try Statement.
+Instance initializers are blocks of code that execute when an
+instance of a class is created. Instance initializers have been added
+in Java 1.1 to allow anonymous classes to perform any necessary
+initialization, since anonymous classes can not define any
+constructors. The syntax for instance initializers is covered 
+in Instance Initializers.
+As of Java 1.1, final variable declarations 
+do not have to include initializers. A final
+variable declaration that does not include an initializer is
+called a blank final. The functionality of blank finals is
+described in Variable modifiers
+and Final local variables.
+A class literal is a new kind of primary expression that can be
+used to obtain a Class object for a particular
+data type. Class literals have been added to support the new
+Reflection API in Java 1.1. The syntax for class literals is
+covered in Class Literals.
+An anonymous array is an array created and initialized without
+using a variable initializer. The syntax for an anonymous array 
+is part of an allocation expression, as described 
+in Allocation Expressions. 
+A "Hello World" Program
+Compiling a Java Source File
+ 
+ 
+ 
+ 
+ 
+ 
+ 

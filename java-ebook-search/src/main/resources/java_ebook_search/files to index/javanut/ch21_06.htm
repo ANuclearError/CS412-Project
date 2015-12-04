@@ -1,0 +1,66 @@
+
+[Chapter 21] 21.6 java.awt.image.ImageConsumer (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.6 java.awt.image.ImageConsumer (JDK 1.0)
+This interface defines the methods necessary for a class
+that consumes image data to communicate with a class that
+produces image data. The methods defined by this interface
+should never be called by a program directly; instead, they
+are invoked by an ImageProducer to pass the image
+data and other information about the image to the
+ImageConsumer. The constants defined by this
+interface are values passed to the setHints() and
+imageComplete() methods.
+Unless you want to do low-level manipulation of image data,
+you never need to use or implement an ImageConsumer.
+public abstract interface ImageConsumer {
+    // Constants
+            public static final int COMPLETESCANLINES;
+            public static final int IMAGEABORTED;
+            public static final int IMAGEERROR;
+            public static final int RANDOMPIXELORDER;
+            public static final int SINGLEFRAME;
+            public static final int SINGLEFRAMEDONE;
+            public static final int SINGLEPASS;
+            public static final int STATICIMAGEDONE;
+            public static final int TOPDOWNLEFTRIGHT;
+    // Public Instance Methods
+            public abstract void imageComplete(int status);
+            public abstract void setColorModel(ColorModel model);
+            public abstract void setDimensions(int width, int height);
+            public abstract void setHints(int hintflags);
+            public abstract void setPixels(int x, int y, int w, int h, ColorModel model, byte[] pixels, int off, int scansize);
+            public abstract void setPixels(int x, int y, int w, int h, ColorModel model, int[] pixels, int off, int scansize);
+            public abstract void setProperties(Hashtable props);
+}
+Implemented By:
+ImageFilter, 
+PixelGrabber
+Passed To:
+FilteredImageSource.addConsumer(), 
+FilteredImageSource.isConsumer(), 
+FilteredImageSource.removeConsumer(), 
+FilteredImageSource.requestTopDownLeftRightResend(), 
+FilteredImageSource.startProduction(), 
+ImageFilter.getFilterInstance(), 
+ImageProducer.addConsumer(), 
+ImageProducer.isConsumer(), 
+ImageProducer.removeConsumer(), 
+ImageProducer.requestTopDownLeftRightResend(), 
+ImageProducer.startProduction(), 
+MemoryImageSource.addConsumer(), 
+MemoryImageSource.isConsumer(), 
+MemoryImageSource.removeConsumer(), 
+MemoryImageSource.requestTopDownLeftRightResend(), 
+MemoryImageSource.startProduction()
+Type Of:
+ImageFilter.consumer
+java.awt.image.FilteredImageSource (JDK 1.0)
+java.awt.image.ImageFilter (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,82 @@
+
+[Chapter 5] 5.4 Object Destruction
+Chapter 5Objects in Java
+5.4 Object Destruction
+Now that we've seen how to create objects, it's time to talk 
+about their destruction. If you're accustomed to programming in C 
+or C++, you've probably spent time hunting down memory leaks 
+in your code. Java takes care of object destruction for you; you don't 
+have to worry about memory leaks, and you can concentrate on more important 
+programming tasks. 
+Garbage Collection
+Java uses a technique known as garbage collection 
+to remove objects that are no longer needed. The garbage collector 
+is Java's grim reaper. It lingers, usually in a low priority thread, 
+stalking objects and awaiting their demise. It finds them, watches them, 
+and periodically counts references to them to see when their time has come. 
+When all references to an object are gone, and it's no longer 
+accessible, the garbage-collection mechanism reclaims it and returns the 
+space to the available pool of resources. 
+There are many different algorithms for garbage collection; the
+Java virtual machine architecture doesn't specify a particular
+scheme. It's worth noting, though, that current implementations of Java
+use a conservative mark and sweep system. Under this scheme, Java
+first walks through the tree of all accessible object references and
+marks them as alive. Then Java scans the heap looking for identifiable
+objects that aren't so marked. Java finds objects on the heap because
+they are stored in a characteristic way and have a particular
+signature of bits in their handles unlikely to be reproduced
+naturally. This kind of algorithm doesn't suffer from the problem of
+cyclic references, where detached objects can mutually reference each
+other and appear alive.
+ 
+By default, the Java virtual machine is configured to run the garbage
+collector in a low-priority thread, so that the garbage collector runs
+periodically to collect stray objects. With the
+java interpreter that comes with the
+JDK, you can turn off garbage collection by using
+the -noasyncgc command-line option. If you do this,
+the garbage collector will be run only if it's requested explicitly or
+if the Java virtual machine runs out of memory.
+A Java application can prompt the garbage collector to make a sweep explicitly 
+by invoking the System.gc() method. An extremely 
+time-sensitive Java application might use this to its advantage by running 
+in an interpreter with asynchronous garbage collection deactivated and 
+scheduling its own cleanup periods. This issue is necessarily implementation 
+dependent, however, because on different platforms, garbage collection may
+be implemented in different ways.  On some systems it may be continuously
+running in hardware. 
+Finalization
+Before a method is removed by garbage collection, its
+finalize() method is invoked to give it a last
+opportunity to clean up its act and free other kinds of resources
+it may be holding. While the garbage collector can reclaim memory
+resources, it may not take care of things like closing files and
+terminating network connections very gracefully or efficiently. That's what 
+the finalize() method is for.
+An object's finalize() method is guaranteed 
+to be called once and only once before the object is garbage collected.  
+However there's no guarantee as to if or when that will happen.   
+Garbage collection may never run on a system that is not short of memory.
+It is also interesting to note that finalization and collection occur in
+two distinct phases of the garbage-collection process.   First items are
+finalized, then they are collected.  It is therefore possible that 
+finalization could (intentionally or unintentionally) create a 
+lingering reference to the object in question, postponing its garbage
+collection.  The object could, of course, be subject to collection later, 
+if the reference goes away, but its finalize() method would not be 
+called again.
+Lastly, unlike constructors, the finalize() methods of superclasses 
+are not invoked automatically for you.  If you need to chain together
+the finalization of your parent classes, you should invoke the 
+finalize() method of your superclass, using super().finalize().
+See the following sections on inheritance and overridden methods.
+Object Creation
+Subclassing and Inheritance
+ 
+ 
+ 
+ 
+ 
+ 
+ 

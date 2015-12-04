@@ -1,0 +1,117 @@
+
+[Chapter 21] The java.awt.image Package
+Chapter 21
+21. The java.awt.image Package
+Contents:
+java.awt.image.ColorModel (JDK 1.0)
+java.awt.image.CropImageFilter (JDK 1.0)
+java.awt.image.DirectColorModel (JDK 1.0)
+java.awt.image.FilteredImageSource (JDK 1.0)
+java.awt.image.ImageConsumer (JDK 1.0)
+java.awt.image.ImageFilter (JDK 1.0)
+java.awt.image.ImageObserver (JDK 1.0)
+java.awt.image.ImageProducer (JDK 1.0)
+java.awt.image.IndexColorModel (JDK 1.0)
+java.awt.image.MemoryImageSource (JDK 1.0)
+java.awt.image.PixelGrabber (JDK 1.0)
+java.awt.image.RGBImageFilter (JDK 1.0)
+java.awt.image.ReplicateScaleFilter (JDK 1.1)
+The java.awt.image package is, by any standard, a
+confusing one. The purpose of the package is to support
+image processing, and the classes in the package provide a
+powerful infrastructure for that purpose. (see
+Figure 21.1.)
+Most of the classes are part of the infrastructure, however,
+and are not normally used by ordinary applications that have
+only simple image manipulation requirements.
+To understand this package, it is first important to note
+that the Image class itself is part of the
+java.awt package, not the java.awt.image
+package. Furthermore, the java.awt.image classes
+are not the source of images; they simply serve to
+manipulate images that come from somewhere else. The
+Applet.getImage() method is perhaps the most common
+method for obtaining an image in Java--it downloads the
+image from a specified URL.  In a stand-alone application, the
+URL.getContent() method can be used to obtain an
+ImageProducer object, which can then be passed to
+the Component.createImage() method to obtain an
+Image object.
+Figure 21.1: The java.awt.image package
+The ImageProducer interface is one you'll encounter
+frequently in java.awt.image. It represents an
+image source. If you've created an Image object
+with Applet.getImage(), you can obtain the
+ImageProducer for that Image (which has not
+been downloaded yet) with Image.getSource().
+Conversely, given an ImageProducer object, you can
+create an Image from it with the
+createImage() method of any Component (such
+as an Applet). Once you have an
+ImageProducer object, you can manipulate it with the
+other java.awt.image classes.
+FilteredImageSource is the most important class for
+image manipulation. It is itself a type of
+ImageProducer that, when created, applies a
+specified ImageFilter object to some other specified
+ImageProducer object. The
+FilteredImageSource thus configured can be used as
+an ImageProducer to display a filtered image.
+CropImageFilter is a predefined type of
+ImageFilter that you can use to extract a specified
+rectangle out of a larger image.
+RGBImageFilter is another subclass of
+ImageFilter that makes it easy to filter the colors
+of an image. To do so, you must subclass
+RGBImageFilter and provide the definition of a
+single simple method that manipulates the image colors. In
+order to manipulate image colors, you will probably need to
+be familiar with the ColorModel class and its two
+subclasses, DirectColorModel and
+IndexColorModel. An instance of ColorModel
+or of one of its subclasses converts a pixel value to the
+red, green, and blue components of the color it represents.
+Finally, two other classes in the java.awt.image package 
+are worth noting. MemoryImageSource is a type of
+ImageProducer that generates an image from an array
+of bytes or integers in memory. PixelGrabber does the
+reverse--it captures pixels from an ImageProducer
+and stores them into an array. You can use these classes
+separately or together to perform your own custom image
+manipulation.
+21.1 java.awt.image.AreaAveragingScaleFilter (JDK 1.1)
+This class implements an ImageFilter that scales an
+image to a specified pixel size.  It uses a scaling
+algorithm that averages adjacent pixel values when shrinking
+an image, which produces relatively smooth scaled images.
+Its superclass, ReplicateScaleFilter, implements a
+faster, less smooth scaling algorithm.
+The methods of this class are ImageConsumer methods
+intended for communication between the image filter and the
+FilteredImageSource that uses it.  Applications do
+not usually call these methods directly.
+The easiest way to use this filter is to call
+Image.getScaledInstance(), specifying an appropriate
+hint constant.
+public class AreaAveragingScaleFilter extends ReplicateScaleFilter {
+    // Public Constructor
+            public AreaAveragingScaleFilter(int width, int height);
+    // Public Instance Methods
+            public void setHints(int hints);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model, byte[] pixels, int off, int scansize);
+            public void setPixels'u'// Overrides ReplicateScaleFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model, int[] pixels, int off, int scansize);
+            public void setPixels'u'// Overrides ReplicateScaleFilter
+}
+Hierarchy:
+Object->ImageFilter(ImageConsumer, Cloneable)->
+ReplicateScaleFilter->AreaAveragingScaleFilter
+java.awt.event.WindowListener (JDK 1.1)
+java.awt.image.ColorModel (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

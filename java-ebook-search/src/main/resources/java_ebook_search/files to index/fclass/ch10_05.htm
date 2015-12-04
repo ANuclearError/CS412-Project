@@ -1,0 +1,25 @@
+
+[Chapter 10] 10.5 Garbage Collection
+Chapter 10Accessing the Environment
+10.5 Garbage Collection
+The garbage-collection process in Java normally runs continuously in
+the background in a low-priority thread. In an environment that has
+nonpreemptive thread scheduling, you may want to run the Java virtual
+machine with the -noasyncgc option to ensure the
+best possible response from your application. The
+-noasyncgc option prevents garbage collection from
+running in the background. In this case, the only time that garbage
+collection occurs automatically is when the Java virtual machine runs
+out of memory. Since this can cause unexpected pauses in a program,
+you should try to avoid the problem by running the garbage collector
+at convenient or appropriate times by calling
+System.gc().
+External Program Execution
+Self Termination
+ 
+ 
+ 
+ 
+ 
+ 
+ 

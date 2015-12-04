@@ -1,0 +1,25 @@
+
+[Chapter 28] 28.8 java.net.FileNameMap (JDK 1.1)
+Chapter 28The java.net Package
+28.8 java.net.FileNameMap (JDK 1.1)
+This interface defines a single method that is called to
+obtain the MIME type of a file based on the name of a file.  The
+fileNameMap field of the URLConnection class
+refers to an object that implements this interface.  The
+filename-to-file-type map it implements is used by the static
+URLConnection.guessContentTypeFromName() method.
+public abstract interface FileNameMap {
+    // Public Instance Methods
+            public abstract String getContentTypeFor(String fileName);
+}
+Type Of:
+URLConnection.fileNameMap
+java.net.DatagramSocketImpl (JDK 1.1)
+java.net.HttpURLConnection (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

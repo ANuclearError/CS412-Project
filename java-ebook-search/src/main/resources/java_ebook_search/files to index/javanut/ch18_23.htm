@@ -1,0 +1,49 @@
+
+[Chapter 18] 18.23 java.awt.FlowLayout (JDK 1.0)
+Chapter 18The java.awt Package
+18.23 java.awt.FlowLayout (JDK 1.0)
+This class implements the LayoutManager interface to
+lay out Component objects in a Container.
+FlowLayout arranges components in a container
+like words on a page: from left to right and top to bottom.
+It fits as many components as it can in a row before
+moving on to the next row.  The constructor allows you to
+specify one of three constants as an alignment value for
+the rows, and also allows you to specify horizontal spacing
+between components and vertical spacing between rows.
+Note that applications should never call the
+LayoutManager methods of this class directly; the
+Container for which the FlowLayout is
+registered does this.
+public class FlowLayout extends Object implements LayoutManager, Serializable {
+    // Public Constructors
+            public FlowLayout();
+            public FlowLayout(int align);
+            public FlowLayout(int align, int hgap, int vgap);
+    // Constants
+            public static final int CENTER;
+            public static final int LEFT;
+            public static final int RIGHT;
+    // Public Instance Methods
+            public void addLayoutComponent(String name, Component comp);  // From LayoutManager
+        1.1  public int getAlignment();
+        1.1  public int getHgap();
+        1.1  public int getVgap();
+            public void layoutContainer(Container target);  // From LayoutManager
+            public Dimension minimumLayoutSize(Container target);  // From LayoutManager
+            public Dimension preferredLayoutSize(Container target);  // From LayoutManager
+            public void removeLayoutComponent(Component comp);  // From LayoutManager
+        1.1  public void setAlignment(int align);
+        1.1  public void setHgap(int hgap);
+        1.1  public void setVgap(int vgap);
+            public String toString();  // Overrides Object
+}
+java.awt.FileDialog (JDK 1.0)
+java.awt.Font (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,98 @@
+
+[Chapter 18] 18.14 java.awt.Color (JDK 1.0)
+Chapter 18The java.awt Package
+18.14 java.awt.Color (JDK 1.0)
+The Color object describes a color.  The
+Color() constructors describe a color as red, green,
+and blue components between 0 and 255, or as floating-point values
+between 0.0 and 1.0.  The class method
+Color.getHSBColor() creates a color using the
+hue/saturation/brightness color model.
+brighter() and darker() are useful methods
+to create shading effects.  The
+getColor() methods look up a color name in the
+properties database and convert the resulting integer color
+value into a Color object.  Two of these methods
+provide a default value to be used in case the
+specified color name is not found.
+public class Color extends Object implements Serializable {
+    // Public Constructors
+            public Color(int r, int g, int b);
+            public Color(int rgb);
+            public Color(float r, float g, float b);
+    // Constants
+            public static final Color black;
+            public static final Color blue;
+            public static final Color cyan;
+            public static final Color darkGray;
+            public static final Color gray;
+            public static final Color green;
+            public static final Color lightGray;
+            public static final Color magenta;
+            public static final Color orange;
+            public static final Color pink;
+            public static final Color red;
+            public static final Color white;
+            public static final Color yellow;
+    // Class Methods
+            public static int HSBtoRGB(float hue, float saturation, float brightness);
+            public static float[] RGBtoHSB(int r, int g, int b, float[] hsbvals);
+        1.1 public static Color decode(String nm) throws NumberFormatException;
+            public static Color getColor(String nm);
+            public static Color getColor(String nm, Color v);
+            public static Color getColor(String nm, int v);
+            public static Color getHSBColor(float h, float s, float b);
+    // Public Instance Methods
+            public Color brighter();
+            public Color darker();
+            public boolean equals(Object obj);  // Overrides Object
+            public int getBlue();
+            public int getGreen();
+            public int getRGB();
+            public int getRed();
+            public int hashCode();  // Overrides Object
+            public String toString();  // Overrides Object
+}
+Extended By:
+SystemColor
+Passed To:
+Color.getColor(), 
+Component.setBackground(), 
+Component.setForeground(), 
+ComponentPeer.setBackground(), 
+ComponentPeer.setForeground(), 
+Graphics.drawImage(), 
+Graphics.setColor(), 
+Graphics.setXORMode()
+Returned By:
+Color.brighter(), 
+Color.darker(), 
+Color.decode(), 
+Color.getColor(), 
+Color.getHSBColor(), 
+Component.getBackground(), 
+Component.getForeground(), 
+Graphics.getColor()
+Type Of:
+Color.black, 
+Color.blue, 
+Color.cyan, 
+Color.darkGray, 
+Color.gray, 
+Color.green, 
+Color.lightGray, 
+Color.magenta, 
+Color.orange, 
+Color.pink, 
+Color.red, 
+Color.white, 
+Color.yellow
+java.awt.Choice (JDK 1.0)
+java.awt.Component (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

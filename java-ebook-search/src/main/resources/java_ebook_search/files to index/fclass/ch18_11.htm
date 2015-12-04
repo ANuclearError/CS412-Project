@@ -1,0 +1,271 @@
+
+[Chapter 18] Inflater
+Chapter 18The java.util.zip Package
+Inflater
+Name
+Inflater
+Synopsis
+Class Name:
+java.util.zip.Inflater
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The Inflater class provides 
+support for general-purpose data decompression. The class uses the ZLIB 
+compression algorithms described in RFC 1950, RFC 1951, and RFC 1952. These 
+documents can be found at: 
+ftp://ds.internic.net/rfc/rfc1950.txt
+ftp://ds.internic.net/rfc/rfc1951.txt
+ftp://ds.internic.net/rfc/rfc1952.txt
+The Deflater class compresses 
+data that can be uncompressed using Inflater. 
+The InflaterInputStream uses 
+an internal Inflater to decompress 
+data. Typically, you do not need to create a Inflater; 
+instead, you can just use an instance of one of the subclasses of InflaterInputStream: 
+GZIPInputStream or ZipInputStream. 
+Class Summary
+public class java.util.zip.Inflater extends java.lang.Object {
+  // Constructors
+  public Inflater();
+  public Inflater(boolean nowrap);
+  // Public Instance Methods
+  public synchronized native void end();
+  public synchronized boolean finished();
+  public synchronized native int getAdler();
+  public synchronized int getRemaining();
+  public synchronized native int getTotalIn();
+  public synchronized native int getTotalOut();
+  public int inflate(byte[] b);
+  public synchronized native int inflate(byte[] b, int off, int len);
+  public synchronized boolean needsDictionary();
+  public synchronized boolean needsInput();
+  public synchronized native void reset();
+  public void setDictionary(byte[] b);
+  public synchronized native void setDictionary(byte[] b, int off, int len);
+  public void setInput(byte[] b);
+  public synchronized void setInput(byte[] b, int off, int len);
+  // Protected Instance Methods
+  protected void finalize();
+}
+Constructors
+Inflater
+public Inflater()
+Description
+This constructor creates an Inflater 
+that decompresses data in the ZLIB format. 
+public Inflater(boolean nowrap)
+Parameters
+nowrap
+A boolean 
+value that specifies whether or not the ZLIB header and checksum data are 
+expected in the compressed data. 
+Description
+This constructor creates an Inflater 
+that decompresses data. If nowrap 
+is true, the ZLIB header and 
+checksum fields are not expected, which means that the compressed data 
+is in the format used by GZIP and PKZIP. If the parameter is false, 
+the data is decompressed in the ZLIB format. 
+Public Instance Methods
+end
+public synchronized native void end()
+Description
+This method discards any unprocessed input data and frees up internal buffers. 
+finished
+public synchronized boolean finished()
+Returns
+A boolean value that indicates 
+whether or not the end of the compressed data has been reached. 
+Description
+This method returns true if 
+the last of the compressed data has been read using inflate(). 
+Otherwise it returns false. 
+getAdler
+public synchronized native int getAdler()
+Returns
+The Adler32 checksum value of the uncompressed data. 
+Description
+This method returns an Adler32 checksum value that is calculated from the 
+uncompressed data returned by inflate(). 
+getRemaining
+public synchronized int getRemaining()
+Returns
+The number of bytes remaining in the input buffer. 
+Description
+This method returns the number of bytes that are in the input buffer. It 
+can be called to find out how much data remains after a call to inflate(). 
+getTotalIn
+public synchronized native int getTotalIn()
+Returns
+The total number of bytes that have been input so far. 
+Description
+This method returns the number of bytes that have been passed to setInput() 
+since this Inflater was created 
+or since reset() was last called. 
+getTotalOut
+public synchronized native int getTotalOut()
+Returns
+The total number of bytes that have been output so far. 
+Description
+This method returns the number of bytes that have been read from inflate() 
+since this Inflater was created 
+or since reset() was last called. 
+inflate
+public int inflate(byte[] b) throws DataFormatException
+Parameters
+b
+A byte array to be filled. 
+Returns
+The number of decompressed bytes actually written to the array or 0 if 
+more data may be required. 
+Throws
+DataFormatException
+If the data in the input buffer is not in the correct format. 
+Description
+This method decompresses the data passed to
+setInput() and fills the given array with
+decompressed data. If this method returns 0,
+needsInput() and
+needsDictionary() should be called in order to
+determine whether the Inflater needs more data in
+its input buffer or whether it needs a preset dictionary.
+   public synchronized native int inflate(byte[] b, int off, int len) throws DataFormatException  
+Parameters
+b
+A byte array to be filled.
+off
+An offset into the byte array.
+len
+The number of bytes to fill. 
+Returns
+The number of decompressed bytes written to the array or 0 if more data 
+may be required. 
+Throws
+DataFormatException
+If the data in the input buffer is not in the correct format. 
+Description
+This method decompresses the data passed to setInput() 
+and writes len bytes of the 
+decompressed data into the given array, starting at off. 
+If this method returns 0, needsInput() 
+and needsDictionary() should 
+be called in order to determine whether the Inflater 
+needs more data in its input buffer or whether it needs a preset dictionary. 
+needsDictionary
+public synchronized boolean needsDictionary()
+Returns
+A boolean value that indicates 
+whether or not a preset dictionary is needed. 
+Description
+This method returns true if 
+a preset dictionary is needed for decompression. Otherwise it returns false. 
+needsInput
+public synchronized boolean needsInput()
+Returns
+A boolean value that indicates 
+whether or not the input buffer is empty. 
+Description
+This method returns true if 
+the input buffer is empty. Otherwise it returns false. 
+reset
+public synchronized native void reset()
+Description
+This method resets the Inflater 
+to the state it was in when it was created, which means that a new set 
+of data can be decompressed. 
+setDictionary
+public void setDictionary(byte[] b)
+Parameters
+b
+An array of byte values. 
+Description
+This method sets the preset dictionary for decompression using the data 
+in the given array. 
+   public synchronized native void setDictionary(byte[] b, int off, int len)  
+Parameters
+b
+An array of byte values.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Description
+This method sets the preset dictionary for decompression using len 
+bytes from the given array, starting from off. 
+setInput
+public void setInput(byte[] b)
+Parameters
+b
+An array of byte values. 
+Description
+This method places the contents of the given array into the input buffer 
+of this Inflater. 
+public synchronized void setInput(byte[] b, int off, int len)
+Parameters
+b
+An array of byte values.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Description
+This method places len bytes 
+from the given array, starting at off, 
+into the input buffer of this Inflater. 
+Use the inflate() method to 
+decompress the data and retrieve it in decompressed form. 
+Protected Instance Methods
+finalize
+protected void finalize()
+Overrides
+Object.finalize() 
+Description
+This method calls end() when 
+this Inflater is garbage collected. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+Deflater, 
+GZIPInputStream, 
+InflaterInputStream, 
+ZipInputStream 
+GZIPOutputStream
+InflaterInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

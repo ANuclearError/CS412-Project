@@ -1,0 +1,64 @@
+
+[Chapter 30] 30.26 java.util.Vector (JDK 1.0)
+Chapter 30The java.util Package
+30.26 java.util.Vector (JDK 1.0)
+This class implements an array of objects that grows in size
+as necessary. It is useful when you need to keep track of a
+number of objects but do not know in advance how many there
+will be. There are a number of methods for storing objects
+in and removing objects from the Vector. Other
+methods look up the object at specified positions in the
+Vector, or search for specified objects within the
+Vector. elements() returns an
+Enumeration of the objects stored in the
+Vector. size() returns the number of
+objects currently stored in the Vector.
+capacity() returns the number of elements that may
+be stored before the vector's internal storage must be
+reallocated.
+public class Vector extends Object implements Cloneable, Serializable {
+    // Public Constructors
+            public Vector(int initialCapacity, int capacityIncrement);
+            public Vector(int initialCapacity);
+            public Vector();
+    // Protected Instance Variables
+            protected int capacityIncrement;
+            protected int elementCount;
+            protected Object[] elementData;
+    // Public Instance Methods
+            public final synchronized void addElement(Object obj);
+            public final int capacity();
+            public synchronized Object clone();  // Overrides Object
+            public final boolean contains(Object elem);
+            public final synchronized void copyInto(Object[] anArray);
+            public final synchronized Object elementAt(int index);
+            public final synchronized Enumeration elements();
+            public final synchronized void ensureCapacity(int minCapacity);
+            public final synchronized Object firstElement();
+            public final int indexOf(Object elem);
+            public final synchronized int indexOf(Object elem, int index);
+            public final synchronized void insertElementAt(Object obj, int index);
+            public final boolean isEmpty();
+            public final synchronized Object lastElement();
+            public final int lastIndexOf(Object elem);
+            public final synchronized int lastIndexOf(Object elem, int index);
+            public final synchronized void removeAllElements();
+            public final synchronized boolean removeElement(Object obj);
+            public final synchronized void removeElementAt(int index);
+            public final synchronized void setElementAt(Object obj, int index);
+            public final synchronized void setSize(int newSize);
+            public final int size();
+            public final synchronized String toString();  // Overrides Object
+            public final synchronized void trimToSize();
+}
+Extended By:
+Stack
+java.util.TooManyListenersException (JDK 1.1)
+The java.util.zip Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,41 @@
+
+[Chapter 21] 21.9 java.awt.image.ImageProducer (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.9 java.awt.image.ImageProducer (JDK 1.0)
+This interface defines the methods that any class that
+produces image data must define to enable
+communication with ImageConsumer classes. An
+ImageConsumer registers itself as interested in a
+producer's image by calling the addConsumer()
+method.
+Most applications never need to use or implement this
+interface. 
+public abstract interface ImageProducer {
+    // Public Instance Methods
+            public abstract void addConsumer(ImageConsumer ic);
+            public abstract boolean isConsumer(ImageConsumer ic);
+            public abstract void removeConsumer(ImageConsumer ic);
+            public abstract void requestTopDownLeftRightResend(ImageConsumer ic);
+            public abstract void startProduction(ImageConsumer ic);
+}
+Implemented By:
+FilteredImageSource, 
+MemoryImageSource
+Passed To:
+Component.createImage(), 
+ComponentPeer.createImage(), 
+FilteredImageSource(), 
+ImageFilter.resendTopDownLeftRight(), 
+PixelGrabber(), 
+Toolkit.createImage()
+Returned By:
+Image.getSource()
+java.awt.image.ImageObserver (JDK 1.0)
+java.awt.image.IndexColorModel (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

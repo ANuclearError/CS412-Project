@@ -1,0 +1,81 @@
+
+[Chapter 19] The java.awt.datatransfer Package
+Chapter 19
+19. The java.awt.datatransfer Package
+Contents:
+java.awt.datatransfer.Clipboard (JDK 1.1)
+java.awt.datatransfer.ClipboardOwner (JDK 1.1)
+java.awt.datatransfer.DataFlavor (JDK 1.1)
+java.awt.datatransfer.StringSelection (JDK 1.1)
+java.awt.datatransfer.Transferable (JDK 1.1)
+java.awt.datatransfer.UnsupportedFlavorException (JDK 1.1)
+This small package contains classes and interfaces that
+support a generic inter-application data transfer mechanism.
+It also provides support for cut-and-paste data transfer on top of that
+mechanism.  This package, and all of its classes and
+interfaces, are new in Java 1.1.  Future releases of Java
+are likely to extend this package with support for data
+transfer through drag-and-drop.
+Figure 19.1
+shows the class hierarchy for java.datatransfer.
+DataFlavor and Transferable define the basic
+data transfer mechanism.  Clipboard and
+ClipboardOwner provide support for cut-and-paste.
+StringSelection is a convenience class that makes it
+particularly easy to transfer textual data between
+applications.
+Figure 19.1: The java.awt.datatransfer package
+19.1 java.awt.datatransfer.Clipboard (JDK 1.1)
+This class represents a clipboard on which data may be
+transferred using the cut-and-paste metaphor.  When data is
+"cut," it should be encapsulated in a Transferable
+object and registered with a Clipboard object by
+calling setContents().  A Clipboard can only
+hold a single piece of data at a time, so a
+ClipboardOwner object must be specified when data is
+placed on the clipboard.  This object is notified that
+it no longer "owns" the clipboard when the data is
+replaced by other, more recent, data.
+When a "paste" is requested by the user, an application
+requests the data on the Clipboard by calling
+getContents(), which returns a Transferable
+object.  The methods of this object can be used to negotiate
+a mutually-compatible data format and to actually transfer
+the data.
+A clipboard name is passed to the Clipboard()
+constructor, and may be retrieved with getName().
+This name is not actually used in Java 1.1, however.
+Note that while applications can create their own private
+Clipboard objects for intra-application
+cut-and-paste, it is more common for them to use the system
+clipboard to enable cut-and-paste between applications.  You
+can obtain the system clipboard by calling the
+getSystemClipboard() method of the current
+Toolkit object.  Untrusted applet code is not
+allowed to access the system clipboard, so untrusted applets cannot
+participate in inter-application cut-and-paste.
+public class Clipboard extends Object {
+    // Public Constructor
+            public Clipboard(String name);
+    // Protected Instance Variables
+            protected Transferable contents;
+            protected ClipboardOwner owner;
+    // Public Instance Methods
+            public synchronized Transferable getContents(Object requestor);
+            public String getName();
+            public synchronized void setContents(Transferable contents, ClipboardOwner owner);
+}
+Passed To:
+ClipboardOwner.lostOwnership(), 
+StringSelection.lostOwnership()
+Returned By:
+Toolkit.getSystemClipboard()
+java.awt.Window (JDK 1.0)
+java.awt.datatransfer.ClipboardOwner (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

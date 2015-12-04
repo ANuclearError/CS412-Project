@@ -1,0 +1,29 @@
+
+[Chapter 30] 30.22 java.util.Stack (JDK 1.0)
+Chapter 30The java.util Package
+30.22 java.util.Stack (JDK 1.0)
+This class implements a last-in-first-out stack of objects.
+push() puts an object on the top of the stack.
+pop() removes and returns the top object from the
+stack. peek() returns the top object without
+removing it.
+public class Stack extends Vector {
+    // Default Constructor: public Stack()
+    // Public Instance Methods
+            public boolean empty();
+            public synchronized Object peek();
+            public synchronized Object pop();
+            public Object push(Object item);
+            public synchronized int search(Object o);
+}
+Hierarchy:
+Object->Vector(Cloneable, Serializable)->Stack
+java.util.SimpleTimeZone (JDK 1.1)
+java.util.StringTokenizer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

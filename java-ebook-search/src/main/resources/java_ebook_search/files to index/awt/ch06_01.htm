@@ -1,0 +1,557 @@
+
+[Chapter 6] Containers
+Chapter 6
+6. Containers
+Contents:
+Container
+Panel
+Insets
+Window
+Frames
+Dialogs
+FileDialog
+This chapter covers a special type of Component
+called Container. A Container is
+a subclass of Component that can contain other
+components, including other containers. Container
+allows you to create groupings of objects on the screen. This chapter
+covers the methods in the Container class and its
+subclasses: Panel, Window,
+Frame, Dialog, and
+FileDialog.  It also covers the
+Insets class, which provides an internal border
+area for the Container classes.  
+Every container has a layout associated with it that controls how the container 
+organizes the components in it. The layouts are described in Chapter 7, Layouts. 
+Java 1.1 introduces a special Container called
+ScrollPane. Because of the similarities between
+scrolling and ScrollPane, the new
+ScrollPane container is covered with the
+Scrollbar class in Chapter 11, Scrolling.
+6.1 Container
+Container is an abstract class 
+that serves as a general purpose holder of other Component 
+objects. The Container class 
+holds the methods for grouping the components together, laying out the 
+components inside it, and dealing with events occurring within it. Because 
+Container is an abstract class, 
+you never see a pure Container 
+object; you only see subclasses that add specific behaviors to a generic 
+container. 
+Container MethodsConstructors
+The abstract Container class 
+contains a single constructor to be called by its children. Prior to Java 
+1.1, the constructor was package private. 
+protected Container()  
+The constructor for Container 
+creates a new component without a native peer. Since you no longer have 
+a native peer, you must rely on your container to provide a display area. 
+This allows you to create containers that require fewer system resources. 
+For example, if you are creating panels purely for layout management, you 
+might consider creating a LightweightPanel 
+class to let you assign a layout manager to a component group. Using LightweightPanel 
+will speed things up since events do not have to propagate through the 
+panel and you do not have to get a peer from the native environment. The following code creates the LightweightPanel class: 
+import java.awt.*;
+public class LightweightPanel extends Container {
+    LightweightPanel () {}
+    LightweightPanel (LayoutManager lm) {
+        setLayout(lm);
+    }
+}
+Grouping
+A Container holds a set of objects within itself. This set of methods describes 
+how to examine and add components to the set. 
+public int getComponentCount ()  public int countComponents () 
+The getComponentCount() method 
+returns the number of components within the container at this level. getComponentCount() 
+does not count components in any child Container 
+(i.e., containers within the current container). 
+countComponents() is the Java 
+1.0 name for this method. 
+public Component getComponent (int position) 
+The getComponent() method returns 
+the component at the specific position 
+within it. If position is invalid, 
+this method throws the run-time exception ArrayIndexOutOfBoundsException. 
+public Component[] getComponents () 
+getComponents() returns an 
+array of all the components held within the container. Since these are 
+references to the actual objects on the screen, any changes made to the 
+components returned will be reflected on the display. 
+public Component add (Component component, int position) 
+The add() method adds component 
+to the container at position. 
+If position is -1, add() 
+inserts component as the last 
+object within the container. What the container does with position 
+depends upon the LayoutManager 
+of the container. If position 
+is invalid, the add() method throws the 
+run-time exception IllegalArgumentException. 
+If you try to add component's 
+container to itself (anywhere in the containment tree), this method throws 
+an IllegalArgumentException. 
+In Java 1.1, if you try to add a Window 
+to a container, add() throws 
+the run-time exception IllegalArgumentException. 
+If you try to add component 
+to a container that already contains it, the container is removed and re-added, 
+probably at a different position. 
+Assuming that nothing goes wrong, the parent of component 
+is set to the container, and the container is invalidated. add() 
+returns the component just 
+added. 
+Calling this method generates a ContainerEvent 
+with the id COMPONENT_ADDED. 
+public Component add (Component component) 
+The add() method adds component 
+to the container as the last object within the container. This is done 
+by calling the earlier version of add() 
+with a position of -1. If you 
+try to add component's 
+container to itself (anywhere in the containment tree), this method throws 
+the run-time exception IllegalArgumentException. 
+In Java 1.1, if you try to add a Window 
+to a container, add() throws 
+the run-time exception IllegalArgumentException. 
+Calling this method generates a ContainerEvent 
+with the id COMPONENT_ADDED. 
+public void add (Component component, Object constraints)  public Component add (String name, Component component)
+This next version of add() 
+is necessary for layouts that require additional information in order to 
+place components. The additional information is provided by the constraints 
+parameter. This version of the add() 
+method calls the addLayoutComponent() 
+method of the LayoutManager. 
+What the container does with constraints depends upon the actual LayoutManager. 
+It can be used for naming containers within a CardLayout, 
+specifying a screen area for BorderLayout, 
+or providing a set of GridBagConstraints 
+for a GridBagLayout. In the 
+event that this add() is called 
+and the current LayoutManager 
+does not take advantage of constraints, 
+component is added at the end with a position 
+of -1. If you try to add component's 
+container to itself (anywhere in the containment tree), this method throws 
+the run-time exception IllegalArgumentException. 
+In Java 1.1, if you try to add a Window 
+to a container, add() throws 
+the run-time exception IllegalArgumentException. 
+The add(String, Component) 
+method was changed to add(component, object) 
+in Java 1.1 to accommodate the LayoutManager2 
+interface (discussed in Chapter 7, Layouts) and to provide greater flexibility. 
+In all cases, you can just flip the parameters to bring the code up to 
+1.1 specs. The string used as an identifier in Java 1.0 is just treated 
+as a particular kind of constraint. 
+Calling this method generates a ContainerEvent 
+with the id COMPONENT_ADDED. 
+public void add (Component component, Object constraints, int index)  
+This final version of add() 
+is necessary for layouts that require an index 
+and need additional information to place components. The additional information 
+is provided by the constraints 
+parameter. This version of add() 
+also calls the addLayoutComponent() 
+method of the LayoutManager. 
+component is added with a position 
+of index. If you try to add 
+component's container 
+to itself (anywhere in the containment tree), this method throws the run-time 
+exception IllegalArgumentException. 
+In Java 1.1, if you try to add a Window 
+to a Container, add() throws 
+the run-time exception IllegalArgumentException. 
+Some layout managers ignore any index. For example, if you call add(aButton, 
+BorderLayout.NORTH, 3) to add a Button to a BorderLayout 
+panel, the Button appears in the north region of the layout, no matter 
+what the index. 
+Calling this method generates a ContainerEvent 
+with the id COMPONENT_ADDED. 
+protected void addImpl(Component comp, Object constraints, int index)  
+The protected addImpl() method 
+is the helper method that all the others call. It deals with synchronization 
+and enforces all the restrictions on adding components to containers. 
+The addImpl() method tracks the container's components in an 
+internal list. The index with which each component is added determines its 
+position in the list. The lower the component's index, the higher it appears in the 
+stacking order. In turn, the stacking order determines how components are displayed 
+when sufficient space isn't available to display all of them. Components that are 
+added without indices are placed at the end of the list (i.e., at the end of the 
+stacking order) and therefore displayed behind other components. If all components 
+are added without indices, the first component added to the container is first in 
+the stacking order and therefore displayed in front.
+You could override addImpl() 
+to track when components are added to a container. However, the proper 
+way to find out when components are added is to register a ContainerListener 
+and watch for the COMPONENT_ADDED 
+and the COMPONENT_REMOVED events. 
+public void remove (int index)  
+The remove() method deletes 
+the component at position index 
+from the container. If index 
+is invalid, the remove() method throws 
+the run-time exception IllegalArgumentException. 
+This method calls the removeLayoutComponent() 
+method of the container's LayoutManager. 
+removeAll() generates a ContainerEvent 
+with the id COMPONENT_REMOVED. 
+public void remove (Component component) 
+The remove() method deletes 
+component from the container, 
+if the container directly contains component. 
+remove() does not look through 
+nested containers trying to find component. 
+This method calls the removeLayoutComponent() 
+method of the container's LayoutManager. 
+When you call this method, it generates a ContainerEvent 
+with the id COMPONENT_REMOVED. 
+public void removeAll () 
+The removeAll() method removes 
+all components from the container. This is done by looping through all 
+the components, setting each component's parent to null, 
+setting the container's reference to the component to null, 
+and invalidating the container. 
+When you call this method, it generates a ContainerEvent 
+with the id COMPONENT_REMOVED 
+for each component removed. 
+public boolean isAncestorOf(Component component)  
+The isAncestorOf() method checks 
+to see if component is a parent 
+(or grandparent or great grandparent) of this container. It could be 
+used as a helper method for addImpl() 
+but is not. If component is 
+an ancestor of the container, isAncestorOf() 
+returns true; otherwise, it 
+returns false. 
+Layout and sizing
+Every container has a LayoutManager. 
+The LayoutManager is responsible 
+for positioning the components inside the container. The Container 
+methods listed here are used in sizing the objects within the container 
+and specifying a layout. 
+public LayoutManager getLayout () 
+The getLayout() method returns 
+the container's current LayoutManager. 
+public void setLayout (LayoutManager manager) 
+The setLayout() method changes 
+the container's LayoutManager 
+to manager and invalidates 
+the container. This causes the components contained inside to be repositioned 
+based upon manager's 
+rules. If manager is null, 
+there is no layout manager, and you are responsible for controlling the 
+size and position of all the components within the container yourself. 
+public Dimension getPreferredSize ()  public Dimension preferredSize () 
+The getPreferredSize() method 
+returns the Dimension (width 
+and height) for the preferred size of the components within the container. 
+The container determines its preferred size by calling the 
+preferredLayoutSize() method of the current LayoutManager, 
+which says how much space the layout manager needs to arrange the components. 
+If you override this method, you are overriding the default preferred size. 
+preferredSize() is the Java 
+1.0 name for this method. 
+public Dimension getMinimumSize ()  public Dimension minimumSize () 
+The getMinimumSize() method 
+returns the minimum Dimension 
+(width and height) for the size of the components within the container. 
+This container determines its minimum size by calling the 
+minimumLayoutSize() method of the current LayoutManager, 
+which computes the minimum amount of space the layout manager needs to 
+arrange the components. It is possible for getMinimumSize() 
+and getPreferredSize() to return 
+the same dimensions. There is no guarantee that you will get this amount 
+of space for the layout. 
+minimumSize() is the Java 
+1.0 name for this method. 
+public Dimension getMaximumSize ()  
+The getMaximumSize() method 
+returns the maximum Dimension 
+(width and height) for the size of the components within the container. 
+This container determines its maximum size by calling the maximumLayoutSize() method of the current LayoutManager2, 
+which computes the maximum amount of space the layout manager needs to 
+arrange the components. If the layout manager is not an instance of LayoutManager2, 
+this method calls the 
+getMaximumSize() method of the Component, which returns 
+Integer.MAX_VALUE for both 
+dimensions. None of the java.awt 
+layout managers use the concept of maximum size yet. 
+public float getAlignmentX ()  
+The getAlignmentX() method 
+returns the alignment of the components within the container along the 
+x axis. This container determines its alignment by calling the current 
+LayoutManager2's getLayoutAlignmentX() 
+method, which computes it based upon its children. The return value is 
+between 0.0 and 1.0. Values nearer 0 indicate that the component should 
+be placed closer to the left edge of the area available. Values nearer 
+1 indicate that the component should be placed closer to the right. The value 0.5 
+means the component should be centered. If the layout manager is not an 
+instance of LayoutManager2, 
+this method calls Component's 
+getAlignmentX() method, which 
+returns the constant Component.CENTER_ALIGNMENT. 
+None of the java.awt layout 
+managers use the concept of alignment yet. 
+public float getAlignmentY ()  
+The getAlignmentY() method 
+returns the alignment of the components within the container along the 
+y axis. This container determines its alignment by calling the current 
+LayoutManager2's getLayoutAlignmentY() 
+method, which computes it based upon its children. The return value is 
+between 0.0 and 1.0. Values nearer 0 indicate that the component should 
+be placed closer to the top of the area available. Values nearer 1 indicate 
+that the component should be placed closer to the bottom. The value 0.5 means the 
+component should be centered. If the layout manager is not an instance 
+of LayoutManager2, this method 
+calls Component's getAlignmentY() 
+method, which returns the constant Component.CENTER_ALIGNMENT. 
+None of the java.awt layout 
+managers use the concept of alignment yet. 
+public void doLayout ()  public void layout () 
+The doLayout() method of Container 
+instructs the LayoutManager 
+to lay out the container. This is done by calling the  
+layoutContainer() method of the current LayoutManager. 
+layout()is the Java 1.0 name 
+for this method. 
+public void validate () 
+The validate() method sets 
+the container's valid state to true 
+and recursively validates all of its children. If a child is a Container, 
+its children are in turn validated. Some components are not completely 
+initialized until they are validated. For example, you cannot ask a Button 
+for its display dimensions or position until it is validated. 
+protected void validateTree ()  
+The validateTree() method is 
+a helper for validate() that 
+does all the work. 
+public void invalidate ()  
+The invalidate() method invalidates 
+the container and recursively invalidates the children. If the layout manager 
+is an instance of LayoutManager2, 
+its invalidateLayout() method 
+is called to invalidate any cached values. 
+Event delivery
+The event model for Java is described in Chapter 4, Events. These 
+methods help in the handling of the various system events at the container 
+level. 
+public void deliverEvent (Event e) 
+The deliverEvent() method is 
+called by the system when the Java 1.0 Event 
+e happens. deliverEvent() 
+tries to locate a component contained in the container that should receive 
+it. If one is found, the x and y coordinates of e 
+are translated for the new target, and Event 
+e is delivered to this by calling 
+its deliverEvent(). If getComponentAt() 
+fails to find an appropriate target, the event is just posted to the container 
+with postEvent(). 
+public Component getComponentAt (int x, int y)  public Component locate (int x, int y) 
+The container's getComponentAt() 
+method calls each component's contains() 
+method to see if the x and 
+y coordinates are within it. 
+If they are, that component is returned. If the coordinates are not in 
+any child component of this container, the container is returned. It is 
+possible for getComponentAt() 
+to return null if the x 
+and y coordinates are not within 
+the container. The method getComponentAt() 
+can return another Container 
+or a lightweight component. 
+locate()is the Java 1.0 name 
+for this method. 
+public Component getComponentAt (Point p)   
+This getComponentAt() method 
+is identical to the previous method, with the exception that the location is passed 
+as a single point, rather than as separate x and y coordinates. 
+Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners, which are told when events 
+occur. Container events occur when a component is added or removed. 
+public synchronized void addContainerListener(ContainerListener listener)  
+The addContainerListener() 
+method registers listener as 
+an object interested in receiving notifications when an ContainerEvent 
+passes through the EventQueue 
+with this Container as its 
+target. The listener.componentAdded() 
+or listener.componentRemoved() 
+method is called when these events occur. Multiple listeners can be registered. 
+The following code demonstrates how to use a ContainerListener 
+to register action listeners for all buttons added to an applet. It is 
+similar to the ButtonTest11 
+example in Button Events. The trick that makes this 
+code work is the call to enableEvents() 
+in init(). This method makes 
+sure that container events are delivered in the absence of listeners. In 
+this applet, we know there won't be any container listeners, so we 
+must enable container events explicitly before adding any components. 
+// Java 1.1 only
+import java.awt.*;
+import java.applet.*;
+import java.awt.event.*; 
+public class NewButtonTest11 extends Applet implements ActionListener { 
+    Button b; 
+    public void init () { 
+        enableEvents (AWTEvent.CONTAINER_EVENT_MASK); 
+        add (b = new Button ("One")); 
+        add (b = new Button ("Two")); 
+        add (b = new Button ("Three")); 
+        add (b = new Button ("Four")); 
+    } 
+    protected void processContainerEvent (ContainerEvent e) { 
+        if (e.getID() == ContainerEvent.COMPONENT_ADDED) { 
+            if (e.getChild() instanceof Button) { 
+                Button b = (Button)e.getChild(); 
+                b.addActionListener (this); 
+            } 
+        } 
+    } 
+    public void actionPerformed (ActionEvent e) { 
+        System.out.println ("Selected: " + e.getActionCommand()); 
+    } 
+} 
+public void removeContainerListener(ContainerListener listener)  
+The removeContainerListener() 
+method removes listener as 
+an interested listener. If listener 
+is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+all AWTEvents with this Container 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Container, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+There is no equivalent under the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processContainerEvent(ContainerEvent e)  
+The processContainerEvent() 
+method receives all ContainerEvents 
+with this Container as its 
+target. processContainerEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Container, overriding the processContainerEvent() 
+method allows you to process all container events yourself, before sending them 
+to any listeners. There is no equivalent under the 1.0 event model. 
+If you override the processContainerEvent() method, 
+remember to call super.processContainerEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+Painting
+The following methods are early vestiges of an approach to painting 
+and printing. They are not responsible for anything that couldn't 
+be done with a call to paintAll() 
+or printAll(). However, they 
+are available if you wish to call them. 
+public void paintComponents (Graphics g) 
+The paintComponents() method 
+of Container paints the different 
+components it contains. It calls each component's paintAll() 
+method with a clipped graphics context g, 
+which is eventually passed to paint(). 
+public void printComponents (Graphics g) 
+The printComponents() method 
+of Container prints the different 
+components it contains. It calls each component's printAll() 
+method with a clipped graphics context g, 
+which is passed to print(), 
+and eventually works its way to paint(). 
+Since it is the container's responsibility to deal with painting 
+lightweight peers, the paint() 
+and print() methods are overridden 
+in Java 1.1. 
+public void paint(Graphics g)  
+The paint() method of Container 
+paints the different lightweight components it contains. 
+public void print(Graphics g)  
+The print() method of Container 
+prints the different lightweight components it contains.
+NOTE: 
+If you override paint() or print() in your containers (especially applets), call super.paint(g) 
+or super.print(g), respectively, to make sure that lightweight components are rendered. This is a good practice 
+even if you don't currently use any lightweight components; you don't 
+want your code to break mysteriously if you add a lightweight component 
+later. 
+Peers
+The container is responsible for creating and destroying all the peers 
+of the components within it. 
+public void addNotify ()  
+The addNotify() method of Container 
+creates the peer of all the components within it. After addNotify() 
+is called, the Container is 
+invalid. It is useful for top-level containers to call this method explicitly 
+before calling the method setVisible(true) 
+to guarantee that the container is laid out before it is displayed. 
+public void removeNotify ()  
+The removeNotify() method destroys 
+the peer of all the top-level objects contained within it. This in effect 
+destroys the peers of all the components within the container. 
+Miscellaneous methods
+protected String paramString () 
+When you call the toString() 
+method of a container, the default toString() 
+method of Component is called. 
+This in turn calls paramString() 
+which builds up the string to display. At the Container 
+level, paramString() appends 
+the layout manager name, like layout=java.awt.BorderLayout, 
+to the output. 
+public Insets getInsets ()   public Insets insets ()  
+The getInsets() method gets 
+the container's current insets. An inset is the amount of space reserved 
+for the container to use between its edge and the area actually available 
+to hold components. For example, in a Frame, 
+the inset for the top would be the space required for the title bar and 
+menu bar. Insets exist for top, bottom, right, and left. When you override 
+this method, you are providing an area within the container that is reserved 
+for free space. If the container has insets, they would be the default. 
+If not, the default values are all zeroes. 
+The following code shows how to override insets() 
+to provide values other than the default. The top and bottom have 20 pixels 
+of inset. The left and right have 50. Insets 
+describes the Insets class 
+in more detail. 
+public Insets insets () {            // getInsets() for Java 1.1
+        return new Insets (20, 50, 20, 50);
+}
+To find out the current value, just call the method and look at the results. 
+For instance, for a Frame the 
+results could be the following in the format used by toString():
+java.awt.Insets[top=42,left=4,right=4,bottom=4]
+The 42 is the space required for the title and menu bar, while the 4 around 
+the edges are for the window decorations. These results are platform specific 
+and allow you to position items based upon the user's run-time environment. 
+When drawing directly onto the graphics context of a container with a large 
+inset such as Frame, remember 
+to work around the insets. If you do something like g.drawString("Hello 
+World", 5, 5) onto a Frame, 
+the user won't see the text. It will be under the title bar and menu 
+bar. 
+insets() is the Java 1.0 name 
+for this method. 
+public void list (PrintWriter output, int indentation)  public void list (PrintStream output, int indentation) 
+The list() method is very helpful 
+if you need to find out what is inside a container. It recursively calls 
+itself for each container level of objects inside it, increasing the indentation 
+at each level. The results are written to the PrintStream 
+or PrintWriter output. 
+Cursor
+Panel
+ 
+ 
+ 
+ 
+ 
+ 
+ 

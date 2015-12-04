@@ -1,0 +1,522 @@
+
+[Chapter 17] GregorianCalendar
+Chapter 17The java.util Package
+GregorianCalendar
+Name
+GregorianCalendar
+Synopsis
+Class Name:
+java.util.GregorianCalendar
+Superclass:
+java.util.Calendar
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The GregorianCalendar class 
+is a subclass of the abstract 
+Calendar class. GregorianCalendar 
+provides an implementation of the calendar that much of the world uses. 
+GregorianCalendar has two eras, 
+BC and AD. 
+GregorianCalendar provides both Gregorian and
+Julian dates, depending on the date that is represented by the
+object. The Gregorian calendar was instituted in October 15, 1582, so
+any dates before this cut-off time are represented as Julian
+dates. Some countries switched from the Julian and the Gregorian
+calendar after that date, however. The cutoff date can be changed
+using the setGregorianChange() method. When using
+Julian dates, be aware that this class does not account for the fact
+that the Julian calendar used March 25 as the beginning of the
+year. You will have to adjust the year on Julian dates that fall
+between January 1 and March 24.
+You can find a fascinating discussion of the history of Western
+calendars at
+http://barroom.visionsystems.com/serendipity/date/jul_greg.html.
+Class Summary
+public class java.util.GregorianCalendar extends java.util.Calendar {
+  // Constants
+  public final static int AD;
+  public final static int BC;
+  // Constructors
+  public GregorianCalendar();
+  public GregorianCalendar(TimeZone zone);
+  public GregorianCalendar(Locale aLocale);
+  public GregorianCalendar(TimeZone zone, Locale aLocale);
+  public GregorianCalendar(int year, int month, int date);
+  public GregorianCalendar(int year, int month, int date, 
+                          int hour, int minute);
+  public GregorianCalendar(int year, int month, int date, 
+                          int hour, int minute, int second);
+  // Instance Methods
+  public void add(int field, int amount);
+  public boolean after(Object when); 
+  public boolean before(Object when); 
+  public Object clone();
+  public boolean equals(Object obj); 
+  public int getGreatestMinimum(int field); 
+  public final Date getGregorianChange();
+  public int getLeastMaximum(int field); 
+  public int getMaximum(int field); 
+  public int getMinimum(int field); 
+  public synchronized int hashCode();
+  public boolean isLeapYear(int year);
+  public void roll(int field, boolean up);
+  public void setGregorianChange(Date date);
+  // Protected Instance Methods
+  protected void computeFields();
+  protected void computeTime();
+}
+Constants
+AD
+public final static int AD
+Description
+A constant value that represents the AD era, 
+which stands for anno Domini, Latin for
+"the year of the Lord". People who do not 
+want to measure years with a Christian connotation 
+call this era CE the Common Era. 
+BC
+public final static int BC
+Description
+A constant value that represents the BC era, 
+which stands for before Christ, before the 
+birth of Christ. People who do not want to measure years with a Christian 
+connotation call this era BCE, which stands for Before the Common Era. 
+Constructors
+GregorianCalendar
+public GregorianCalendar()
+Description
+This constructor creates a GregorianCalendar 
+that represents the current time using the system's default time 
+zone and locale. The default time zone is that returned by TimeZone.getDefault(). 
+The default locale is that returned by Locale.getDefault(). 
+public GregorianCalendar(TimeZone zone)
+Parameters
+zone
+The TimeZone 
+to use. 
+Description
+This constructor creates a GregorianCalendar 
+that represents the current time using the supplied time zone and the default 
+locale. The default locale is that returned by Locale.getDefault(). 
+public GregorianCalendar(Locale aLocale)
+Parameters
+aLocale
+The Locale 
+to use. 
+Description
+This constructor creates a GregorianCalendar 
+that represents the current time using the supplied locale and the default 
+time zone. The default time zone is that returned by TimeZone.getDefault(). 
+public GregorianCalendar(TimeZone zone, Locale aLocale)
+Parameters
+zone
+The TimeZone 
+to use.
+aLocale
+The Locale 
+to use. 
+Description
+This constructor creates a GregorianCalendar 
+that represents the current time using the supplied time zone and locale. 
+public GregorianCalendar(int year, int month, int date)
+Parameters
+year
+The value for the 
+year field.
+month
+The value for the 
+month field, where 0 represents the first month.
+date
+The value for the 
+day-of-the-month field. 
+Description
+This constructor creates a GregorianCalendar 
+that represents the given date in the default time zone and locale. The 
+default time zone is that returned by TimeZone.getDefault(). 
+The default locale is that returned by Locale.getDefault(). 
+   public GregorianCalendar(int year, int month, int date, int hour, int minute)  
+Parameters
+year
+The value for the 
+year field.
+month
+The value for the 
+month field, where 0 represents the first month.
+date
+The value for the 
+day-of-the-month field.
+hour
+The value for the 
+hour field.
+minute
+The value for the 
+minute field. 
+Description
+This constructor creates a GregorianCalendar 
+that represents the given date and time in the default time zone and locale. 
+The default time zone is that returned by TimeZone.getDefault(). 
+The default locale is that returned by Locale.getDefault(). 
+   public GregorianCalendar(int year, int month, int date, int hour, int minute, int second)  
+Parameters
+year
+The value for the 
+year field.
+month
+The value for the 
+month field, where 0 represents the first month.
+date
+The value for the 
+day-of-the-month field.
+hour
+The value for the 
+hour field.
+minute
+The value for the 
+minute field.
+second
+The value for the 
+second field. 
+Description
+This constructor creates a GregorianCalendar 
+that represents the given data and time in the default time zone and locale. 
+The default time zone is that returned by TimeZone.getDefault(). 
+The default locale is that returned by Locale.getDefault(). 
+Instance Methods
+add
+public void add(int field, int amount)
+Parameters
+field
+The time field to 
+be modified.
+amount
+The amount to add 
+to the specified field value. This value can be negative. 
+Throws
+IllegalArgumentException
+If field is not a valid time field. 
+Overrides
+Calendar.add() 
+Description
+This method adds the given amount to the specified time field. For example, 
+you can compute a date 90 days beyond the current date of this GregorianCalendar 
+by calling add(Calendar.DATE, 
+90). 
+after
+public boolean after(Object when)
+Parameters
+when
+The object to compare 
+to this GregorianCalendar. 
+Returns
+true if this object is after 
+when; false 
+otherwise. 
+Overrides
+Calendar.after() 
+Description
+This method returns true if 
+when is a GregorianCalendar 
+whose value falls before the value of this GregorianCalendar. 
+before
+public boolean before(Object when)
+Parameters
+when
+The object to compare 
+to this GregorianCalendar. 
+Returns
+true if this object is before 
+when; false 
+otherwise. 
+Overrides
+Calendar.before() 
+Description
+This method returns true if 
+when is a GregorianCalendar 
+whose value falls after the value of this GregorianCalendar. 
+clone
+public Object clone()
+Returns
+A copy of this GregorianCalendar. 
+Overrides
+Calendar.clone() 
+Description
+This method creates a copy of this GregorianCalendar 
+and returns it. In other words, the returned GregorianCalendar 
+has the same time field values and raw time value as this GregorianCalendar. 
+equals
+public boolean equals(Object when)
+Parameters
+when
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Calendar.equals() 
+Description
+This method returns true if 
+when is an instance of GregorianCalendar, 
+and it contains the same value as the object this method is associated 
+with. 
+getGreatestMinimum
+public int getGreatestMinimum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The highest minimum value for the given time field. 
+Overrides
+Calendar.getGreatestMinimum() 
+Description
+This method returns the highest minimum value for the given time field, 
+if the field has a range of minimum values. If the field has only one 
+minimum value, this method is equivalent to getMinimum(). 
+All of the fields in GregorianCalendar 
+have only one minimum value. 
+getGregorianChange
+public final Date getGregorianChange()
+Returns
+The date this GregorianCalendar 
+uses as the change date between the Julian and Gregorian calendars. 
+Description
+By default, GregorianCalendar considers midnight
+local time, October 15, 1582, to be the date when the Gregorian
+calendar was adopted. This value can be changed using
+setGregorianChange().
+getLeastMaximum
+public int getLeastMaximum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The lowest maximum value for the given time field. 
+Overrides
+Calendar.getLeastMaximum() 
+Description
+This method returns the lowest maximum value for the given time field, 
+if the field has a range of maximum values. If the field has only one
+maximum value, this method is equivalent to getMaximum(). 
+For example, for a GregorianCalendar, 
+the lowest maximum value of DATE_OF_MONTH 
+is 28. 
+getMaximum
+public int getMaximum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The maximum value for the given time field. 
+Overrides
+Calendar.getMaximum() 
+Description
+This method returns the maximum value for the given time field. For example, 
+for a GregorianCalendar, the 
+maximum value of DATE_OF_MONTH 
+is 31. 
+getMinimum
+public int getMinimum(int field)
+Parameters
+field
+A time field constant. 
+Returns
+The minimum value for the given time field. 
+Overrides
+Calendar.getMinimum() 
+Description
+This method returns the minimum value for the given time field. For example, 
+for a GregorianCalendar, the 
+minimum value of DATE_OF_MONTH 
+is 1. 
+hashCode
+public synchronized int hashCode()
+Returns
+A hashcode for this GregorianCalendar. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object. 
+isLeapYear
+public boolean isLeapYear(int year)
+Parameters
+year
+The year to test. 
+Returns
+true if the given year is a 
+leap year; false otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not the specified year is a leap year. 
+Leap years are those years that are divisible by 
+4, except those that are divisible by 100, unless they are divisible by 
+400. For example, 1900 is not a leap year because it is divisible by 100 
+but not by 400. The year 2000 is a leap year. 
+roll
+public void roll(int field, boolean up)
+Parameters
+field
+The time field to 
+be adjusted.
+up
+A boolean 
+value that indicates if the given field should be incremented. 
+Throws
+IllegalArgumentException
+If field is not a valid time field. 
+Overrides
+Calendar.roll() 
+Description
+ 
+This method adds or subtracts one time unit from the
+given time field.  For example, to increase the current date by one
+day, you can call roll(GregorianCalendar.DATE,
+true).
+The method maintains the field being rolled within its valid range.
+For example, in a calendar system that uses hours and minutes to
+measure time, rolling the minutes up from 59 sets that field to 0.
+By the same token, rolling that field down from 0 sets it to 59.
+The roll() method does not adjust the value
+of any other field than the one specified by its field 
+argument.  In particular, for calendar systems that have months 
+with different numbers of days, it may be necessary to adjust the 
+month and also year when the day of the month is rolled up. For
+example, calling roll(GregorianCalendar.DAY_OF_MONTH, 
+true) on a GregorianCalendar 
+that represents December 31, 1996 changes the date to December 1, 1996. 
+In addition, calling roll() may make the
+fields inconsistent. For example, calling
+roll(GregorianCalendar.MONTH, 
+true) on a GregorianCalendar 
+that represents January 31, 1997 changes the date to February
+31, 1997. It is the responsibility of the caller of 
+roll() to adjust the other fields.
+setGregorianChange
+public void setGregorianChange(Date date)
+Parameters
+date
+A Date 
+object that represents the new time value. 
+Description
+This method sets the date that this GregorianCalendar 
+uses as the change date between the Julian and Gregorian calendars. The 
+default is midnight local time, October 15, 1582. This is the date that 
+Pope Gregory instituted the calendar in many Catholic countries in Europe. 
+Most Catholic countries followed within a few years. Protestant England 
+and America did not adopt the new calendar until September 14, 1752. 
+Protected Instance Methods
+computeFields
+protected void computeFields()
+Overrides
+Calendar.computeFields() 
+Description
+This method calculates the time fields of this GregorianCalendar 
+from its raw time value. 
+computeTime
+protected void computeTime()
+Overrides
+Calendar.computeTime() 
+Description
+This method calculates the raw time value of this GregorianCalendar 
+from its time field values. 
+Inherited Variables
+Variable
+Inherited From
+Variable
+Inherited From
+areFieldsSet
+Calendar
+fields
+Calendar
+isSet
+Calendar
+isTimeSet
+Calendar
+time
+Calendar
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clear()
+Calendar
+clear(int)
+Calendar
+complete()
+Calendar
+finalize()
+Object
+get(int)
+Calendar
+getClass()
+Object
+getFirstDayOfWeek()
+Calendar
+getMinimumDaysInFirstWeek()
+Calendar
+getTime()
+Calendar
+getTimeInMillis()
+Calendar
+getTimeZone()
+Calendar
+internalGet(int)
+Calendar
+isLenient()
+Calendar
+isSet(int)
+Calendar
+notify()
+Object
+notifyAll()
+Object
+set(int, int)
+Calendar
+set(int, int, int)
+Calendar
+set(int, int, int, int, int)
+Calendar
+set(int, int, int, int, int, int)
+Calendar
+setFirstDayOfWeek(int)
+Calendar
+setLenient(boolean)
+Calendar
+setMinimalDaysInFirstWeek(int)
+Calendar
+setTime(Date)
+Calendar
+setTimeInMillis(long)
+Calendar
+setTimeZone(TimeZone)
+Calendar
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+Cloneable, 
+Date, 
+IllegalArgumentException, 
+Locale, 
+Serializable, 
+TimeZone 
+EventObject
+Hashtable
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,98 @@
+
+[Chapter 3] 3.2 The Class Path
+Chapter 3Tools of the Trade
+3.2 The Class Path
+The concept of a path should be familiar to anyone who has worked on a
+DOS or UNIX platform. It's a
+piece of environment information that provides an application with a
+list of places to look for some resource. The most common example is a
+path for executable programs. In a UNIX shell, the
+PATH environment variable is a colon-separated list
+of directories that are searched, in order, when the user types the
+name of a command. The Java CLASSPATH environment
+variable, similarly, is a list of locations that can be searched for
+packages containing Java class files. Both the Java interpreter and
+the Java compiler use CLASSPATH when searching for
+files on the local host platform.
+Classes loaded from the local host via the class path have special
+features. For example, the Java interpreter loads classes in the class
+path just once; after a core class has been loaded, it can't be
+modified or replaced. The interpreter can also be told to trust
+classes in the class path and to load them without passing them
+through the byte-code verification process. This is important because
+certain kinds of optimizations on Java virtual machine instructions
+produce valid byte-code that, nonetheless, can't pass the verification
+process. Byte-code that is precompiled on the native host is an
+extreme example.
+The class path is a list of locations where Java class packages
+are found. A location can be a path such as a directory name
+or the name of a class archive file. Java supports archives of class
+files in the uncompressed ZIP format.[1]
+ It automatically looks inside ZIP archives and
+retrieves classes, which then allows large groups of classes to be
+distributed in a single archive file. The precise means and format for
+setting the class path varies from system to system. On a
+UNIX system, you set the
+CLASSPATH environment variable with a
+colon-separated list of directories and class archive files:
+[1] 
+The ZIP format is an open standard for file
+archiving and compression. There are ZIP utilities
+available for most platforms; you'll need to get one if you want to
+store Java classes in ZIP archives. Use
+ftp://ftp.uu.net/pub/archiving/zip/ 
+to access an archive of freely available ZIP utilities.
+CLASSPATH=/usr/lib/java/classes.zip:/home/vicky/Java/classes:\
+    /home/vicky/.netscape/moz2_0.zip:.
+On a Windows system, the CLASSPATH environment
+variable is set with a semicolon-separated list of directories and
+class archive files:
+CLASSPATH=C:\tools\java\classes.zip;D:\users\vicky\Java\classes;. 
+The class path can also be set with the -classpath 
+option to the Java interpreter java and the 
+Java compiler javac. 
+The above UNIX example specifies a class
+path with four locations: a ZIP archive in
+/usr/lib/java, a directory in the user's
+home, another ZIP file in the user's Netscape
+collection, and the current directory, which is always specified with
+a dot (.). The last component of the class path,
+the current directory, is useful when tinkering with classes, but as a
+general rule, it's bad practice to put the current directory in any
+kind of path.
+The Java interpreter searches each of these four locations in
+order to find classes. java expects to find
+class files in a directory hierarchy or in a directory within a ZIP
+archive that maps to the fully qualified name of the class. The
+components of a class-package name become the components of a
+pathname. Given the above class path, the first time we reference a
+class with the fully qualified name of
+animals.birds.BigBird, for example,
+java begins the search with the
+classes.zip archive in
+/usr/lib/java. It looks for a class archived
+under the path animals/birds/BigBird. If
+java does not find the class there, it looks for
+the class in /home/vicky/Java/classes/animals/birds/BigBird.  If it's not found
+there, java moves on to the archive file
+specified next in the class path, and so on.
+If you don't specify the CLASSPATH
+environment variable or the -classpath option,
+java uses the following default class path:
+.:$JAVA/classes:$JAVA/lib/classes.zip     UNIX systems 
+.;$JAVA\classes;$JAVA\lib\classes.zip     Windows systems 
+In this path, $JAVA is the main Java directory 
+on your system. Notice that the current directory (.) 
+is the first location in the default class path; this means the files 
+in your current directory are always available. If you change the class 
+path and don't include the current directory, these files will no 
+longer be accessible. 
+The Java Interpreter
+The Java Compiler
+ 
+ 
+ 
+ 
+ 
+ 
+ 

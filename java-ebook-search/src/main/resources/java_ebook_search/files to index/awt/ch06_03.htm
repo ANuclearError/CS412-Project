@@ -1,0 +1,87 @@
+
+[Chapter 6] 6.3 Insets
+Chapter 6Containers
+6.3 Insets
+The Insets class provides a 
+way to encapsulate the layout margins of the four different sides of a 
+container. The class helps in laying out containers. The Container 
+can retrieve their values through the getInsets() 
+method, then analyze the settings to position components. The different 
+inset values are measured in pixels. The space reserved by insets can still 
+be used for drawing directly within paint(). 
+Also, if the LayoutManager 
+associated with the container does not look at the insets, the request 
+will be completely ignored. 
+Insets MethodsVariables
+There are four variables for insets, one for each border. 
+public int top 
+This variable contains the border width in pixels for the top of a container. 
+public int bottom 
+This variable contains the border width in pixels for the bottom of a container. 
+public int left 
+This variable contains the border width in pixels for the left edge of a container. 
+public int right 
+This variable contains the border width in pixels for the right edge of a container. 
+Constructors
+public Insets (int top, int left, int bottom, int right) 
+The constructor creates an Insets 
+object with top, left, 
+bottom, and right 
+being the size of the insets in pixels. If this object was the return object 
+from the getInsets() method 
+of a container, these values represent the size of a border inside that 
+container. 
+Miscellaneous methods
+public Object clone ()  
+The clone() method creates 
+a clone of the Insets so the 
+same Insets object can be associated with multiple containers. 
+public boolean equals(Object object)  
+The equals() method defines 
+equality for insets. Two Insets 
+objects are equal if the four settings for the different values are equal. 
+public String toString () 
+The toString() method of Insets 
+returns the current settings. Using the new Insets (10, 
+20, 30, 40) constructor, the results would be: 
+java.awt.Insets[top=10,left=20,bottom=30,right=40]
+Insets Example
+The following source code demonstrates the use of insets within an applet's 
+Panel. The applet displays 
+a button that takes up the entire area of the Panel, 
+less the insets, then draws a rectangle around that area. This 
+is shown visually in Figure 6.1. The example demonstrates 
+that if you add components to a container, the LayoutManager 
+deals with the insets for you in positioning them. But if you are drawing 
+directly to the Panel, you 
+must look at the insets if you want to avoid the requested area within 
+the container. 
+import java.awt.*;
+import java.applet.*;
+public class myInsets extends Applet {
+    public Insets insets () {
+        return new Insets (50, 50, 50, 50);
+    }
+    public void init () {
+        setLayout (new BorderLayout ());
+        add ("Center", new Button ("Insets"));
+    }
+    public void paint (Graphics g) {
+        Insets i = insets();
+        int width  = size().width - i.left - i.right;
+        int height = size().height - i.top - i.bottom;
+        g.drawRect (i.left-2, i.top-2, width+4, height+4);
+        g.drawString ("Insets Example", 25, size().height - 25);
+    }
+}
+Figure 6.1: Insets
+To change the applet's insets from the default, we override the insets() method to return a new Insets object, with the new values.
+Panel
+Window
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,60 @@
+
+[Chapter 6] 6.4 Handling Events
+Chapter 6Applets
+6.4 Handling Events
+The previous two applets have only displayed output. If an
+applet is to be interactive in any way, it has to receive
+and respond to user input.
+Example 6.3
+shows a simple applet that lets the user do a freehand
+sketch (or scribble) with the mouse.
+Figure 6.3
+shows such a scribble.
+Figure 6.3: Scribbling with the scribble applet
+The mouseDown() and mouseDrag() methods are
+called by the system when the user presses a mouse button
+and moves the mouse with the button down, respectively. This
+very simple applet draws lines directly in response to these
+events. It does not have a paint() method, which
+means that the user's scribble is lost any time that the
+applet is redrawn (for example, when a Web browser scrolls
+down a page and then scrolls back up again).
+Note that both mouseDown() and mouseDrag()
+return true. This is to tell the system that
+they've handled the Event object that was passed to
+them, and that the event should not be processed any further.
+The mouseDown() and mouseDrag() methods
+shown here work in both Java 1.0 and Java 1.1, but they (and
+related methods) have been deprecated in Java 1.1 and
+replaced with a new, more flexible, event handling model.
+Event processing is often the central task of applets and of
+GUI-based applications, and is a big topic in its own right.
+Chapter 7, Events explains and demonstrates the Java 1.1 and 1.0
+event processing models in more detail.
+Example 6.3: The Scribble Applet
+import java.applet.*;
+import java.awt.*;
+public class Scribble extends Applet {
+  private int last_x = 0, last_y = 0;  // Fields to store a point in.
+  // Called when the user clicks.
+  public boolean mouseDown(Event e, int x, int y) {
+    last_x = x; last_y = y;            // Remember the location of the click.
+    return true;
+  }
+  // Called when the mouse moves with the button down.
+  public boolean mouseDrag(Event e, int x, int y)  {
+    Graphics g = getGraphics();        // Get a Graphics to draw with.
+    g.drawLine(last_x, last_y, x, y);  // Draw a line from last point to this.
+    last_x = x; last_y = y;            // And update the saved location.
+    return true;
+  }
+}
+Drawing Graphics
+Reading Applet Parameters
+ 
+ 
+ 
+ 
+ 
+ 
+ 

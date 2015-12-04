@@ -1,0 +1,115 @@
+
+[Chapter 9] Security
+Chapter 9
+9. Security
+Contents:
+SecurityManager
+ClassLoader
+Java uses a "sandbox" security model to ensure that applets 
+cannot cause security problems. The idea is that an applet can do whatever 
+it wants within the constraints of its sandbox, but that nothing done 
+inside the sandbox has any consequences outside of the sandbox. 
+9.1 SecurityManager
+Java implements the sandbox model using the
+java.lang.SecurityManager class. An instance of
+SecurityManager is passed to the method
+System.setSecurityManager() to establish the
+security policy for an application. Before
+setSecurityManager() is called, a Java program can
+access any resources available on the system.  After
+setSecurityManager() is called, however, the
+SecurityManager object is responsible for providing
+a security policy. Once a security policy has been set by calling
+setSecurityManager, the method cannot be called
+again. Subsequent calls simply throw a
+SecurityException.
+All methods in the Java API that can access resources outside of the
+Java environment call a SecurityManager method to
+ask permission before doing anything. If the
+SecurityManager method throws a
+SecurityException, the exception is thrown out of
+the calling method, and access to the resource is denied. The
+SecurityManager class defines a number of methods
+for asking for permission to access specific resources. Each of these
+methods has a name that begins with the word "check."
+Table 9.1 shows the names of the
+check methods provided by the
+SecurityManager class.
+Table 9.1: The Check Methods of SecurityManager
+Method Name
+Permission
+checkAccept()
+To accept a network connection
+checkAccess()
+To modify a Thread or ThreadGroup
+checkAwtEventQueueAccess()
+To access the AWT event queue
+checkConnect()
+To establish a network connection or send a datagram
+checkCreateClassLoader()
+To create a ClassLoader object
+checkDelete()
+To delete a file
+checkExec()
+To call an external program
+checkExit()
+To stop the Java virtual machine and exit the Java environment
+checkLink()
+To dynamically link an external library into the Java environment
+checkListen()
+To listen for a network connection
+checkMemberAccess()
+To access the members of a class
+checkMulticast()
+To use a multicast connection
+checkPackageAccess()
+To access the classes in a package
+checkPackageDefinition()
+To define classes in a package
+checkPrintJobAccess()
+To initiate a print job request
+checkPropertiesAccess()
+To get or set the Properties 
+object that defines all of the system properties
+checkPropertyAccess()
+To get or set a system property
+checkRead()
+To read from a file or input stream
+checkSecurityAccess()
+To perform a security action
+checkSetFactory()
+To set a factory class that determines classes to be used for managing 
+network connections and their content
+checkSystemClipboardAccess()
+To access the system clipboard
+checkTopLevelWindow()
+To create a top-level window on the screen
+checkWrite()
+To write to a file or output stream
+The SecurityManager class provides 
+implementations of these methods that always refuse the requested permission. 
+To implement a more permissive security policy, you need to create a subclass 
+of SecurityManager that implements 
+that policy. 
+In Java 1.0, most browsers consider an applet to be trusted or untrusted. 
+An untrusted applet is one that does not come from the local filesystem. 
+An untrusted applet is treated as follows by most popular browsers: 
+It can establish network connections to the network address from which 
+it came. 
+It can create new windows on the screen. However, a notice is displayed 
+on the bottom of the window that the window was created by an untrusted 
+applet. 
+It cannot access any other external resources. In particular, untrusted 
+applets cannot access local files. 
+As of Java 1.1, an applet can have a digital signature attached to it. 
+When an applet has been signed by a trusted entity, a browser may consider 
+the applet to be trusted and relax its security policy. 
+URL Objects
+ClassLoader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

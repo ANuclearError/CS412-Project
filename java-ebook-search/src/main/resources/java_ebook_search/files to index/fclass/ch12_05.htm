@@ -1,0 +1,183 @@
+
+[Chapter 12] Boolean
+Chapter 12The java.lang Package
+Boolean
+Name
+Boolean
+Synopsis
+Class Name:
+java.lang.Boolean
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later
+Description
+The Boolean class provides an object wrapper
+for a boolean value. This is useful when you
+need to treat a boolean value as an object. For
+example, there are a number of utility methods that take a reference
+to an Object as one of their arguments. You cannot
+specify a boolean value for one of these arguments,
+but you can provide a reference to a Boolean object
+that encapsulates the boolean value. Furthermore,
+as of JDK 1.1, the Boolean class is necessary to 
+support the Reflection API and class literals.
+Class Summary
+public final class java.lang.Boolean {
+    // Constants
+    public final static Boolean FALSE;
+    public final static Boolean TRUE;
+    public final static Class TYPE;                    // New in 1.1
+    // Constructors
+    public Boolean(boolean value);
+    public Boolean(String s);
+    // Class Methods
+    public static boolean getBoolean(String name);
+    public static Boolean valueOf(String s);
+    // Instance Methods
+    public boolean booleanValue();
+    public boolean equals(Object obj);
+    public int hashCode();
+    public String toString();
+}
+Constants
+TRUE
+public static final Boolean TRUE
+Description
+A constant Boolean object that has the
+value true.
+FALSE
+public static final Boolean FALSE
+Description
+A constant Boolean object that has the
+value false.
+TYPE
+public static final Class TYPE 
+Availability
+New as of JDK 1.1
+Description
+The Class object that represents the type
+boolean.
+It is always true that Boolean.TYPE 
+== boolean.class.
+Constructors
+Boolean
+public Boolean(boolean value)
+Parameters
+value
+The boolean value to be made into
+a Boolean object.
+Description
+Constructs a Boolean object with the given
+value.
+public Boolean(String s)
+Parameters
+s
+The string to be made into a Boolean
+object.
+Description
+Constructs a Boolean object with the value
+specified by the given string. If the string equals 'true' (ignoring
+case), the value of the object is true; otherwise
+it is false.
+Class Methods
+getBoolean
+public static boolean getBoolean(String name)
+Parameters
+name
+The name of a system property.
+Returns
+The boolean value of the system property.
+Description
+This methods retrieves the boolean value of a named system
+property. 
+valueOf
+public static Boolean valueOf(String s)
+Parameters
+s
+The string to be made into a Boolean
+object.
+Returns
+A Boolean object with the value specified
+by the given string.
+Description
+This method returns a Boolean object with
+the value true if the string equals 
+"true" (ignoring
+case); otherwise the value of the object is false.
+Instance Methods
+booleanValue
+public boolean booleanValue()
+Returns
+The boolean value contained by the object.
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object.
+Returns
+true if the objects are equal; false
+if they are not.
+Overrides
+Object.equals()
+Description
+This method returns true if obj
+is an instance of Boolean, and it contains the
+same value as the object this method is associated with.
+hashCode
+public int hashCode()
+Returns
+A hashcode based on the boolean value
+of the object.
+Overrides
+Object.hashCode()
+toString
+public String toString()
+Returns
+"true" 
+if the value of the object is true;
+"false" otherwise.
+Overrides
+Object.toString()
+Description
+This method returns a string representation of the Boolean
+object.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+Object, 
+Serializable, 
+System
+ArrayStoreException
+Byte
+ 
+ 
+ 
+ 
+ 
+ 
+ 

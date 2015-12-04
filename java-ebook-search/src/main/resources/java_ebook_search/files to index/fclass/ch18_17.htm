@@ -1,0 +1,236 @@
+
+[Chapter 18] ZipOutputStream
+Chapter 18The java.util.zip Package
+ZipOutputStream
+Name
+ZipOutputStream
+Synopsis
+Class Name:
+java.util.zip.ZipOutputStream
+Superclass:
+java.util.zip.DeflaterOutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ZipOutputStream class writes compressed files
+in the ZIP format. To write a ZIP file, construct a
+ZipOutputStream that wraps a regular output
+stream. You have to create a ZipEntry for each
+entry in the file. The putNextEntry() method puts
+the entry in the file, so that you can then use the
+write() method to write data for that entry. When
+you finish writing the data for an entry, call
+closeEntry() to close that entry and
+putNextEntry() to start another entry.
+The setMethod() method specifies whether the data
+is compressed or uncompressed by default;
+setLevel() specifies the level of compression that
+is used by default. These values can be overridden by the method and
+level set for a particular entry. If you are storing compressed
+(deflated) files, you need only specify a name for each
+ZipEntry ; the other fields are filled in
+automatically. If, however, you are placing uncompressed entries, you
+need to specify the size of each entry and provide a CRC-32 checksum
+value.
+Class Summary
+public class java.util.zip.ZipOutputStream
+             extends java.util.zip.DeflaterOutputStream {
+  // Constants
+  public static final int DEFLATED;
+  public static final int STORED;
+  // Constructors
+  public ZipOutputStream(OutputStream out);
+  // Instance Methods
+  public void close();
+  public void closeEntry();
+  public void finish();
+  public void putNextEntry(ZipEntry e);
+  public void setComment(String comment);
+  public void setLevel(int level);
+  public void setMethod(int method);
+  public synchronized void write(byte[] b, int off, int len);
+}
+Constants
+DEFLATED
+public static final int DEFLATED
+Description
+A constant that represents an entry is stored using the deflate algorithm. 
+STORED
+public static final int STORED
+Description
+A constant that represents a ZIP file entry is stored verbatim; in other words, with no compression applied. 
+Constructors
+ZipOutputStream
+public ZipOutputStream(OutputStream out)
+Parameters
+out
+The underlying output stream. 
+Description
+This constructor creates a ZipOutputStream 
+that writes compressed data to the given OutputStream. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Overrides
+DeflaterOutputStream.close() 
+Description
+This method closes the stream and releases any system resources that are 
+associated with it. 
+closeEntry
+public void closeEntry() throws IOException
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method closes the currently open entry in the ZIP file. A subsequent 
+entry can be started with putNextEntry(). 
+finish
+public void finish() throws IOException
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Overrides
+DeflaterOutputStream.finish() 
+Description
+This method finishes writing compressed data to the underlying stream without 
+closing it. 
+putNextEntry
+public void putNextEntry(ZipEntry e) throws IOException
+Parameters
+e
+The new entry. 
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method writes the information in the given ZipEntry 
+to the stream and positions the stream for the entry data. The actual entry 
+data can then be written to the stream using write(). 
+The default compression method and level are used if one is not specified 
+for the entry. When all of the entry data has been written, use closeEntry() 
+to finish the entry.
+If this method is called when there is already an open entry, that entry 
+is closed and this entry is opened. 
+setComment
+public void setComment(String comment)
+Parameters
+comment
+The new comment string. 
+Throws
+IllegalArgumentException
+If comment is longer than 0xFFFF 
+bytes. 
+Description
+This method sets the comment string for this ZIP file. 
+setLevel
+public void setLevel(int level)
+Parameters
+level
+A compression level, 
+from 0 (NO_COMPRESSION) to 
+9 (BEST_COMPRESSION). 
+Throws
+IllegalArgumentException
+If level is not valid. 
+Description
+This method sets the default compression level of subsequent DEFLATED 
+entries. The default value is Deflater.DEFAULT_COMPRESSION. 
+setMethod
+public void setMethod(int method)
+Parameters
+method
+A compression method, 
+either DEFLATED or STORED. 
+Throws
+IllegalArgumentException
+If method is not valid. 
+Description
+This method sets the default compression method of this ZipOutputStream 
+for entries that do not specify a method. 
+write
+   public synchronized void write(byte[] b, int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Overrides
+DeflaterOutputStream.write(byte[], int, int) 
+Description
+This method takes len bytes from
+the given buffer, starting at off, and compresses
+them. The method then writes the compressed data to the underlying
+OutputStream for the current entry. The method
+blocks until all the bytes have been written.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+flush()
+FilterOutputStream
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(int)
+DeflaterOutputStream
+write(byte[])
+FilterOutputStream
+See Also
+Deflater, 
+DeflaterOutputStream, 
+IllegalArgumentException, 
+IOException, 
+OutputStream, 
+ZipEntry, 
+ZipException 
+ZipInputStream
+The Unicode 2.0 Character Set
+ 
+ 
+ 
+ 
+ 
+ 
+ 

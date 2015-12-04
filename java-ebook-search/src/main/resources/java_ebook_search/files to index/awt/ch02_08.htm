@@ -1,0 +1,283 @@
+
+[Chapter 2] 2.8 MediaTracker
+Chapter 2Simple Graphics
+2.8 MediaTracker
+The MediaTracker class assists 
+in the loading of multimedia objects across the network. Tracking is necessary 
+because Java loads images in separate threads. Calls to getImage() 
+return immediately; image loading starts only when you call the method drawImage(). 
+MediaTracker lets you force 
+images to start loading before you try to display them; it also gives you 
+information about the loading process, so you can wait until an image is 
+fully loaded before displaying it. 
+Currently, MediaTracker can 
+monitor the loading of images, but not audio, movies, or anything 
+else. Future versions are rumored to be able to monitor other media types. 
+MediaTracker MethodsConstants
+The MediaTracker class defines 
+four constants that are used as return values from the class's methods. 
+These values serve as status indicators. 
+public static final int LOADING 
+The LOADING variable indicates 
+that the particular image being checked is still loading. 
+public static final int ABORTED 
+The ABORTED variable indicates 
+that the loading process for the image being checked aborted. For example, 
+a timeout could have happened during the download. If something ABORTED 
+during loading, it is possible to flush() the image to force a retry. 
+public static final int ERRORED 
+The ERRORED variable indicates 
+that an error occurred during the loading process for the image being checked. 
+For instance, the image file might not be available from the server (invalid 
+URL) or the file format could be invalid. If an image has ERRORED, 
+retrying it will fail. 
+public static final int COMPLETE 
+The COMPLETE flag means that 
+the image being checked successfully loaded. 
+If COMPLETE, ABORTED, 
+or ERRORED is set, the image 
+has stopped loading. If you are checking multiple images, you can OR 
+several of these values together to form a composite. For example, if you 
+are loading several images and want to find out about any malfunctions, 
+call statusAll() and check 
+for a return value of ABORTED | ERRORED. Constructors
+public MediaTracker (Component component) 
+The MediaTracker constructor 
+creates a new MediaTracker 
+object to track images to be rendered onto component. 
+Adding images
+The addImage() methods add 
+objects for the MediaTracker 
+to track. When placing an object under a MediaTracker's 
+control, you must provide an identifier for grouping purposes. When multiple 
+images are grouped together, you can perform operations on the entire group 
+with a single request. For example, you might want to wait until all the 
+images in an animation sequence are loaded before starting the animation; 
+in this case, assigning the same ID to all the images makes good sense. 
+However, when multiple images are grouped together, you cannot check on 
+the status of a single image. The moral is: if you care about the status 
+of individual images, put each into a group by itself. 
+Folklore has it that the identifier also serves as a loading priority, 
+with a lower ID meaning a higher priority. This is not completely true. 
+Current implementations start loading lower IDs first, but at 
+most, this is implementation-specific functionality for the JDK. Furthermore, 
+although an object with a lower identifier might be told to start loading 
+first, the MediaTracker does 
+nothing to ensure that it finishes first. 
+public synchronized void addImage (Image image, int id, int width, int 
+height) 
+The addImage() method tells 
+the MediaTracker instance that 
+it needs to track the loading of image. 
+The id is used as a grouping. 
+Someone will eventually render the image 
+at a scaled size of width x height. If width 
+and height are both -1, the image will be rendered unscaled. If you forget to notify 
+the MediaTracker that the image 
+will be scaled and ask the MediaTracker 
+to waitForID (id), it is possible 
+that the image may not be fully ready when you try to draw it. 
+public void addImage (Image image, int id) 
+The addImage() method tells 
+the MediaTracker instance that 
+it needs to track the loading of image. 
+The id is used as a grouping. 
+The image will be rendered 
+at its actual size, without scaling. 
+Removing images
+Images that have finished loading are still watched by the MediaTracker. 
+The removeImage() methods, 
+added in Java 1.1, allow you to remove objects from the MediaTracker. 
+Once you no longer care about an image (usually after waiting for it to 
+load), you can remove it from the tracker. Getting rid of loaded images results in better 
+performance because the tracker has fewer objects to check. In Java 1.0, you can't remove an 
+image from MediaTracker.
+public void removeImage (Image image)  
+The removeImage() method tells 
+the MediaTracker to remove 
+all instances of image from 
+its tracking list. 
+public void removeImage (Image image, int id)  
+The removeImage() method tells 
+the MediaTracker to remove 
+all instances of image from 
+group id of its tracking list. 
+public void removeImage (Image image, int id, int width, int height)   
+This removeImage() method tells 
+the MediaTracker to remove 
+all instances of image from 
+group id and scale width x height of 
+its tracking list. 
+Waiting
+A handful of methods let you wait for a particular image, image group, 
+all images, or a particular time period. They enable you to be sure that 
+an image has finished trying to load prior to continuing. The fact that 
+an image has finished loading does not imply it has successfully loaded. 
+It is possible that an error condition arose, which caused loading to stop. 
+You should check the status of the image (or group) for actual success. 
+public void waitForID (int id) throws InterruptedException 
+The waitForID() method blocks 
+the current thread from running until the images added with id 
+finish loading. If the wait is interrupted, waitForID() 
+throws an InterruptedException. 
+public synchronized boolean waitForID (int id, long ms) throws InterruptedException 
+The waitForID() method blocks 
+the current thread from running until the images added with id 
+finish loading or until ms 
+milliseconds have passed. If all the images have loaded, waitForID() 
+returns true; if the timer 
+has expired, it returns false, 
+and one or more images in the id 
+set have not finished loading. If ms 
+is 0, it waits until all images added with id 
+have loaded, with no timeout. If the wait is interrupted, waitForID() 
+throws an InterruptedException. 
+public void waitForAll () throws InterruptedException 
+The waitForAll() method blocks 
+the current thread from running until all images controlled by this MediaTracker 
+finish loading. If the wait is interrupted, waitForAll() 
+throws an InterruptedException. 
+public synchronized boolean waitForAll (long ms) throws InterruptedException 
+The waitForAll() method blocks 
+the current thread from running until all images controlled by this MediaTracker 
+finish loading or until ms 
+milliseconds have passed. If all the images have loaded, waitForAll() 
+returns true; if the timer 
+has expired, it returns false, 
+and one or more images have not finished loading. If ms 
+is 0, it waits until all images have loaded, with no timeout. When you 
+interrupt the waiting, waitForAll() 
+throws an InterruptedException. 
+Checking status
+Several methods are available to check on the status of images loading. 
+None of these methods block, so you can continue working while images 
+are loading. 
+public boolean checkID (int id) 
+The checkID() method determines 
+if all the images added with the id 
+tag have finished loading. The method returns true 
+if all images have completed loading (successfully or unsuccessfully). 
+Since this can return true 
+on error, you should also use isErrorID() 
+to check for errors. If loading has not completed, checkID() 
+returns false. This method 
+does not force images to start loading. 
+public synchronized boolean checkID (int id, boolean load) 
+The checkID() method determines 
+if all the images added with the id 
+tag have finished loading. If the load 
+flag is true, any images in 
+the id group that have not 
+started loading yet will start. The method returns true 
+if all images have completed loading (successfully or unsuccessfully). 
+Since this can return true 
+on error, you should also use isErrorID() 
+to check for errors. If loading has not completed, checkID() 
+returns false. 
+public boolean checkAll () 
+The checkAll() method determines 
+if all images associated with the MediaTracker 
+have finished loading. The method returns true 
+if all images have completed loading (successfully or unsuccessfully). 
+Since this can return true 
+on error, you should also use isErrorAny() 
+to check for errors. If loading has not completed, checkAll() 
+returns false. This method 
+does not force images to start loading. 
+public synchronized boolean checkAll (boolean load) 
+The checkAll() method determines 
+if all images associated with the MediaTracker 
+have finished loading. If the load 
+flag is true, any image that 
+has not started loading yet will start. The method returns true 
+if all images have completed loading (successfully or unsuccessfully). 
+Since this can return true 
+on error, you should also use isErrorAny() 
+to check for errors. If loading has not completed, checkAll() 
+returns false. 
+public int statusID (int id, boolean load) 
+The statusID() method checks 
+on the load status of the images in the id 
+group. If there are multiple images in the group, the results are ORed 
+together. If the load flag 
+is true, any image in the id 
+group that has not started loading yet will start. The return value is 
+some combination of the class constants LOADING, 
+ABORTED, ERRORED, 
+and COMPLETE. 
+public int statusAll (boolean load) 
+The statusAll() method determines 
+the load status of all the images associated with the MediaTracker. 
+If this MediaTracker is watching 
+multiple images, the results are ORed 
+together. If the load flag 
+is true, any image that has 
+not started loading yet will start. The return value is some combination 
+of the class constants LOADING, 
+ABORTED, ERRORED, 
+and COMPLETE. 
+public synchronized boolean isErrorID (int id) 
+The isErrorId() method checks 
+whether any media in the id 
+group encountered an error while loading. If any image resulted in an error, 
+isErrorId() returns true; 
+if there were no errors, it returns false. 
+public synchronized boolean isErrorAny () 
+The isErrorAny() method checks 
+to see if any image associated with the MediaTracker 
+encountered an error. If there was an error, the method returns true; 
+if none, false. 
+public synchronized Object[] getErrorsID (int id) 
+The getErrorsID() method returns 
+an array of the objects that encountered errors in the group ID during 
+loading. If loading caused no errors, the method returns null. The return 
+type is an Object array instead 
+of an Image array because MediaTracker 
+will eventually support additional media types. 
+public synchronized Object[] getErrorsAny () 
+The getErrorsAny() method returns 
+an array of all the objects that encountered an error during loading. If 
+there were no errors, the method returns null. The return type is an Object 
+array instead of an Image array 
+because MediaTracker will eventually 
+support additional media types. 
+Using a MediaTracker
+The init() method improves the AnimateApplet 
+from Example 2.2 to ensure that images load before the 
+animation sequence starts. Waiting for images to load is particularly important 
+if there is a slow link between the computer on which the applet is running 
+and the server for the image files. Note that in a few cases, like 
+interlaced GIF files, you might be willing to display an image before 
+it has completely loaded. However, judicious use of MediaTracker 
+will give you much more control over your program's behavior. 
+The new init() method 
+creates a MediaTracker, puts 
+all the images in the animation sequence under the tracker's control, 
+and then calls waitForAll() 
+to wait until the images are loaded. Once the images are loaded, it calls 
+isErrorsAny() to make sure 
+that the images loaded successfully. 
+public void init () {
+    MediaTracker mt = new MediaTracker (this);
+    im = new Image[numImages];
+    for (int i=0;i&lt;numImages;i++) {
+        im[i] = getImage (getDocumentBase(), "clock"+i+".jpg");
+        mt.addImage (im[i], i);
+    }
+    try {
+        mt.waitForAll();
+        if (mt.isErrorAny())
+            System.out.println ("Error loading images");
+    } catch (Exception e) {
+        e.printStackTrace ();
+    }
+}
+Image
+Fonts and Colors
+ 
+ 
+ 
+ 
+ 
+ 
+ 

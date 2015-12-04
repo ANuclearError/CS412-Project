@@ -1,0 +1,41 @@
+
+[Chapter 25] 25.12 java.lang.ClassLoader (JDK 1.0)
+Chapter 25The java.lang Package
+25.12 java.lang.ClassLoader (JDK 1.0)
+This abstract class defines the necessary hook for Java
+to load classes over the network, or from other
+sources. Normal applications do not need to use or subclass
+this class.
+public abstract class ClassLoader extends Object {
+    // Protected Constructor
+            protected ClassLoader();
+    // Class Methods
+        1.1public static final URL getSystemResource(String name);
+        1.1public static final InputStream getSystemResourceAsStream(String name);
+    // Public Instance Methods
+        1.1public URL getResource(String name);
+        1.1public InputStream getResourceAsStream(String name);
+        1.1public Class loadClass(String name) throws ClassNotFoundException;
+    // Protected Instance Methods
+        #   protected final Class defineClass(byte[] data, int offset, int length);
+        1.1protected final Class defineClass(String name, byte[] data, int offset, int length);
+        1.1protected final Class findLoadedClass(String name);
+            protected final Class findSystemClass(String name) throws ClassNotFoundException;
+            protected abstract Class loadClass(String name, boolean resolve) throws ClassNotFoundException;
+            protected final void resolveClass(Class c);
+        1.1protected final void setSigners(Class cl, Object[] signers);
+}
+Passed To:
+Beans.instantiate()
+Returned By:
+Class.getClassLoader(), 
+SecurityManager.currentClassLoader()
+java.lang.ClassFormatError (JDK 1.0)
+java.lang.ClassNotFoundException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

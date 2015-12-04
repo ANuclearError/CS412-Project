@@ -1,0 +1,104 @@
+
+[Chapter 5] 5.2 Vectors
+Chapter 5Collections
+5.2 Vectors
+The Vector class implements 
+a variable-length array that can hold any kind of object. Like an array, 
+the elements in a Vector are 
+accessed with an integer index. However, unlike an array, the size of a 
+Vector can grow and shrink 
+as needed to accommodate a changing number of objects. Vector 
+provides methods to add and remove elements, as well as ways to search 
+for objects in a Vector and 
+iterate through all of the objects. 
+You can create a Vector object 
+using the constructor that takes no arguments. 
+Vector v = new Vector()
+This constructor creates an empty Vector 
+with an initial capacity of 10. The capacity of a Vector 
+specifies how many objects it can contain before more space must be allocated. 
+You can improve the performance of a Vector 
+by setting its initial capacity to a more appropriate value when you create 
+it. For example, if you know that you are going to be storing close to 
+100 objects in a Vector, you 
+could set the initial capacity as follows: 
+Vector v = new Vector(100)
+It can be time-consuming for a Vector 
+to increase its capacity, so it is better to set the initial capacity based 
+on a rough estimate of the number of objects a Vector 
+will contain than to simply use the default capacity. 
+The capacity increment of a Vector 
+specifies how much more space is allocated each time the Vector 
+needs to increase its capacity. If you do not specify a capacity increment 
+when you create a Vector, it 
+uses the default value of 0, which causes the Vector 
+to double in size every time it needs to increase its capacity. Doubling 
+in size is a good way for a Vector 
+to become large enough quickly when you have no idea what size it needs 
+to be. However, if you do have a rough idea of the final size of a Vector, 
+specifying a positive capacity increment is less wasteful of memory. For 
+example, if you know that you will be putting 100 or so objects in a Vector, 
+you could create it as follows: 
+Vector v = new Vector(110, 20)
+Once you have created an empty Vector 
+object, you can put object references in it using the addElement() 
+and insertElementAt() methods. 
+The addElement() method adds 
+an element to the end of a Vector. 
+The following code fragment shows the use of the addElement() 
+method: 
+Vector v = new Vector();
+v.addElement("abc");
+v.addElement("jkl");
+v.addElement("xyz");
+The insertElementAt() method 
+inserts a new element into a Vector 
+before a given position, so it can be used to insert an element at any 
+position in a Vector except 
+the last. Like arrays, Vector 
+objects are indexed starting at 0. Here's how to insert an object 
+at the beginning of the Vector 
+object created above: 
+v.insertElementAt("123", 0);
+The size() method returns the 
+number of elements in a Vector 
+object. 
+After you have added some elements to a Vector 
+object, you can retrieve elements with a number of different methods. For 
+example, the elementAt() method 
+fetches the object at the specified position in the Vector, 
+while the firstElement() and 
+lastElement() methods return 
+the first and last objects in the Vector, 
+respectively. Finally, the elements() 
+method returns an Enumeration 
+object that accesses the elements in the Vector 
+object. 
+The setElementAt() method allows 
+you to change the object stored at a specified position in the Vector, 
+while the removeElementAt() 
+method removes the object at a specified position from the Vector. 
+The removeElement() method 
+takes an object reference as an argument and removes the first element 
+in the Vector that refers to 
+the given object, if there is such an element. You can also remove all 
+of the elements from the Vector 
+using the removeAllElements() 
+method. 
+The Vector class also provides 
+some methods for searching the contents of a Vector 
+object. For example, the contains() 
+method returns true if a Vector 
+contains a reference to a specified object. The indexOf() 
+and lastIndexOf() methods return the positions of
+the first and last elements, respectively, in a
+Vector that match a specified object.
+Enumerations
+Stacks
+ 
+ 
+ 
+ 
+ 
+ 
+ 

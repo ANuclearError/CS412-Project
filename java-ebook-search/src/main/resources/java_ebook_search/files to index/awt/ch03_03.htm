@@ -1,0 +1,362 @@
+
+[Chapter 3] 3.3 Color
+Chapter 3Fonts and Colors
+3.3 Color
+Not so long ago, color was a luxury; these days, color is a requirement. 
+A program that uses only black and white seems hopelessly old fashioned. 
+AWT's Color class lets 
+you define and work with Color 
+objects. When we discuss the Component 
+class (see Chapter 5, Components), you will see how to use these color objects, 
+and our discussion of the SystemColor 
+subclass (new to Java 1.1; discussed later in this chapter) shows you how to control 
+the colors that are painted on the screen. 
+A few words of warning: while colors give you the opportunity to make visually 
+pleasing applications, they also let you do things that are incredibly 
+ugly. Resist the urge to go overboard with your use of color; it's 
+easy to make something hideous when you are trying to use every color 
+in the palette. Also, realize that colors are fundamentally platform dependent, 
+and in a very messy way. Java lets you use the same Color 
+objects on any platform, but it can't guarantee that every display 
+will treat the color the same way; the result depends on everything from 
+your software to the age of your monitor. What looks pink on 
+one monitor may be red on another. Furthermore, when running in an environment 
+with a limited palette, AWT picks the available color that is closest to 
+what you requested. If you really care about appearance, there is no substitute 
+for testing. 
+Color MethodsConstants
+The Color class has predefined constants 
+(all of type public static final Color) for frequently 
+used colors. These constants, their RGB values, and their HSB values 
+(hue, saturation, brightness) are given in Table 3.1. 
+Table 3.1: Comparison of RGB and HSB Colors
+Color
+Red
+Green
+Blue
+Hue
+Saturation
+Brightness
+black
+0
+0
+0
+0
+0
+0
+blue
+0
+0
+255
+.666667
+1
+1
+cyan
+0
+255
+255
+.5
+1
+1
+darkGray
+64
+64
+64
+0
+0
+.25098
+gray
+128
+128
+128
+0
+0
+.501961
+green
+0
+255
+0
+.333333
+1
+1
+lightGray
+192
+192
+192
+0
+0
+.752941
+magenta
+255
+0
+255
+.833333
+1
+1
+orange
+255
+200
+0
+.130719
+1
+1
+pink
+255
+175
+175
+0
+.313726
+1
+red
+255
+0
+0
+0
+1
+1
+white
+255
+255
+255
+0
+0
+1
+yellow
+255
+255
+0
+.166667
+1
+1
+These constants are used like any other class variable: for example, Color.red 
+is a constant Color object 
+representing the color red. Many other color constants are defined 
+in the SystemColor class. Constructors
+When you're not using a predefined constant, you create Color 
+objects by specifying the color's red, green, and blue components. 
+Depending on which constructor you use, you can specify the components 
+as integers between 0 and 255 (most intense) or as floating point intensities 
+between 0.0 and 1.0 (most intense). The result is a 24-bit quantity that 
+represents a color. The remaining 8 bits are used to represent transparency: 
+that is, if the color is painted on top of something, does whatever was 
+underneath show through? The Color 
+class doesn't let you work with the transparency bits; all Color 
+objects are opaque. However, you can use transparency when working with 
+images; this topic is covered in Chapter 12, Image Processing. 
+public Color (int red, int green, int blue) 
+This constructor is the most commonly used. You provide the specific red, 
+green, and blue 
+values for the color. Valid 
+values for red, green, 
+and blue are between 0 and 
+255. The constructor examines only the low-order byte of the integer and 
+ignores anything outside the range, including the sign bit. 
+public Color (int rgb) 
+This constructor allows you to combine all three variables in one
+parameter, rgb. Bits 16-23 represent the red
+component, and bits 8-15 represent the green component. Bits
+0-7 represent the blue component. Bits 24-31 are
+ignored. Going from three bytes to one integer is fairly easy:
+(((red &amp; 0xFF) &lt;&lt; 16 ) | ((green &amp; 0xFF) &lt;&lt; 8) | ((blue &amp; 0xFF) &lt;&lt; 0))
+public Color (float red, float green, float blue) 
+This final constructor allows you to provide floating point values between 
+0.0 and 1.0 for each of red, 
+green, and blue. 
+Values outside of this range yield unpredictable results. 
+Settings
+public int getRed () 
+The getRed() method retrieves 
+the current setting for the red component of the color. 
+public int getGreen () 
+The getGreen() method retrieves 
+the current setting for the green component of the color. 
+public int getBlue () 
+The getBlue() method retrieves 
+the current setting for the blue component of the color. 
+public int getRGB () 
+The getRGB() method retrieves 
+the current settings for red, green, and blue in one combined value. Bits 
+16-23 represent the red component. Bits 8-15 represent the green component. 
+Bits 0-7 represent the blue component. Bits 24-31 are the transparency 
+bits; they are always 0xff (opaque) when using the default RGB ColorModel. 
+public Color brighter () 
+The brighter() method creates 
+a new Color that is somewhat 
+brighter than the current color. This method is useful if you want to highlight 
+something on the screen. 
+NOTE: 
+Black does not get any brighter. 
+public Color darker () 
+The darker() method returns 
+a new Color that is somewhat 
+darker than the current color. This method is useful if you are trying 
+to de-emphasize an object on the screen. If you are creating your own Component, 
+you can use a darker() Color 
+to mark it inactive. 
+Color properties
+Color properties are very similar 
+to Font properties. You can 
+use system properties (or resource files) to allow users to select colors 
+for your programs. The settings have the form 0xRRGGBB, 
+where RR is the red component 
+of the color, GG represents 
+the green component, and BB 
+represents the blue component. 0x 
+indicates that the number is in hexadecimal. If you (or your user) are 
+comfortable using decimal values for colors (0x112233 is 1122867 in decimal), 
+you can, but then it is harder to see the values of the different components. 
+NOTE: 
+The location of the system properties file depends on the run-time 
+environment and version you are using. Ordinarily, the file will go into 
+a subdirectory of the installation directory or, for environment's 
+where users have home directories, in a subdirectory for the user. Sun's 
+HotJava, JDK, and appletviewer tools use the properties 
+file in the .hotjava 
+directory. 
+Most browsers do not permit modifying properties, so there is no 
+file. 
+Java 1.1 adds the idea of "resource files," which are 
+syntactically similar to properties files. Resource files are then placed 
+on the server or within a directory found in the CLASSPATH. 
+Updating the properties file is no longer recommended. 
+For example, consider a screen that uses four colors: one each for the 
+foreground, the background, inactive components, and highlighted text. 
+In the system properties file, you allow users to select colors by setting 
+the following properties:
+myPackage.myClass.foreground
+myPackage.myClass.background
+myPackage.myClass.inactive
+myPackage.myClass.highlight
+One particular user set two: 
+myPackage.myClass.foreground=0xff00ff        #magenta
+myPackage.myClass.background=0xe0e0e0        #light gray
+These lines tell the program to use magenta as the foreground color and 
+light gray for the background. The program will use its default colors 
+for inactive components and highlighted text. 
+public static Color getColor (String name) 
+The getColor() method gets 
+the color specified by the system property name. 
+If name is not a valid system 
+property, getColor() returns 
+null. If the property value 
+does not convert to an integer, getColor() 
+returns null. 
+For the properties listed above, if you call getColor() 
+with name set to the property myPackage.myClass.foreground, 
+it returns a magenta Color 
+object. If called with name 
+set to myPackage.myClass.inactive, 
+getColor() returns null. 
+public static Color getColor (String name, Color defaultColor) 
+The getColor() method gets 
+the color specified by the system property name. 
+This version of the getColor() 
+method returns defaultColor 
+if name is not a valid system 
+property or the property's value does not convert to an integer. 
+For the previous example, if getColor() is called with 
+name set to myPackage.myClass.inactive, 
+the getColor() method returns the value 
+of defaultColor. This allows 
+you to provide defaults for properties the user doesn't wish to set 
+explicitly. 
+public static Color getColor (String name, int defaultColor) 
+This getColor() method gets 
+the color specified by the system property name. 
+This version of the getColor() 
+method returns defaultColor 
+if name is not a valid system 
+property or the property's value does not convert to an integer. 
+The default color is specified as an integer in which bits 16-23 represent 
+the red component, 8-15 represent the green component, and 0-7 represent 
+the blue component. Bits 24-31 are ignored. If the property value does 
+not convert to an integer, defaultColor 
+is returned. 
+public static Color decode (String name)  
+The decode() method provides 
+an explicit means to decipher color property settings, regardless of where 
+the setting comes from. (The getColor() 
+method can decipher settings but only if they're in the system properties 
+file.) In particular, you can use decode() 
+to look up color settings in a resource file. The format of name 
+is the same as that used by getColor(). 
+If the contents of name do 
+not translate to a 24-bit integer, the NumberFormatException run-time exception is thrown. 
+To perform the equivalent of getColor(`myPackage.myClass.foreground`), 
+without using system properties, see the following example. For a more extensive 
+example using resource files, see Appendix A. 
+// Java 1.1 only
+InputStream is = instance.getClass().getResourceAsStream("propfile");
+Properties p = new Properties();
+try {
+    p.load (is);
+    Color c = Color.decode(p.getProperty("myPackage.myClass.foreground"));
+} catch (IOException e) {
+    System.out.println ("error loading props...");
+}
+Hue, saturation, and brightness
+So far, the methods we have seen work with a color's red, green, and 
+blue components. There are many other ways to represent colors. This group 
+of methods allows you to work in terms of the HSB (hue, saturation, brightness) 
+model. Hue represents the base color to work with: working through the 
+colors of the rainbow, red is represented by numbers immediately above 
+0; magenta is represented by numbers below 1; white is 0; and black is 1. Saturation 
+represents the color's purity, ranging from completely unsaturated 
+(either white or black depending upon brightness) to totally saturated 
+(just the base color present). Brightness is the desired level of luminance, 
+ranging from black (0) to the maximum amount determined by the saturation 
+level. 
+public static float[] RGBtoHSB (int red, int green, int blue, float[] hsbvalues) 
+The RGBtoHSB() method allows 
+you to convert a specific red, 
+green, blue 
+value to the hue, saturation, and brightness equivalent. RGBtoHSB() 
+returns the results in two different ways: the parameter hsbvalues 
+and the method's return value. The values of these are the same. 
+If you do not want to pass an hsbvalues 
+array parameter, pass null. In both the parameter and the return value, 
+the three components are placed in the array as follows: 
+hsbvalues[0]
+contains hue
+hsbvalues[1]
+contains saturation
+hsbvalues[2]
+contains brightness
+public static Color getHSBColor (float hue, float saturation, float brightness) 
+The getHSBColor() method creates 
+a Color object by using hue, 
+saturation, and brightness 
+instead of red, green, and blue values. 
+public static int HSBtoRGB (float hue, float saturation, float brightness) 
+The HSBtoRGB() method converts 
+a specific hue, saturation, 
+and brightness to a Color 
+and returns the red, green, and blue values as an integer. As with the 
+constructor, bits 16-23 represent the red component, 8-15 represent the 
+green component, and 0-7 represent the blue component. Bits 24-31 are ignored. 
+Miscellaneous methods
+public int hashCode ()  
+The hashCode() method returns 
+a hash code for the color. The hash code is used whenever a color is used 
+as a key in a Hashtable. 
+public boolean equals (Object o) 
+The equals() method overrides 
+the equals() 
+method of the Object to define equality for Color 
+objects. Two Color objects 
+are equivalent if their red, green, and blue values are equal. 
+public String toString () 
+The toString() method of Color 
+returns a string showing the color's red, green, and blue settings. 
+For example System.out.println (Color.orange) 
+would result in the following: 
+java.awt.Color[r=255,g=200,b=0]
+FontMetrics
+SystemColor
+ 
+ 
+ 
+ 
+ 
+ 
+ 

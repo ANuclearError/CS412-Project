@@ -1,0 +1,375 @@
+
+[Chapter 9] Pick Me
+Chapter 9
+9. Pick Me
+Contents:
+Choice
+Lists
+Checkbox
+CheckboxGroup
+ItemSelectable
+Three AWT components let you present a list of choices to users: Choice, 
+List, and Checkbox. 
+All three components implement the ItemSelectable 
+interface (Java1.1). These components are comparable to selection mechanisms 
+in modern GUIs so most readers will be able to learn them easily, but 
+I'll point out some special enhancements that they provide. 
+Choice and List 
+are similar; both offer a list of choices for the user to select. Choice 
+provides a pull-down list that offers one selection at a time, whereas 
+List is a scrollable list that 
+allows a user to make one or multiple selections. From a design standpoint, 
+which you choose depends at least partially on screen real estate; 
+if you want the user to select from a large group of alternatives, Choice 
+requires the least space, List 
+requires somewhat more, while Checkbox 
+requires the most. Choice is 
+the only component in this group that does not allow multiple selections. 
+A List allows multiple or single 
+selection; because each Checkbox 
+is a separate component, checkboxes inherently allow multiple selection. 
+In order to create a list of mutually exclusive checkboxes, in which only 
+one box can be selected at a time (commonly known as radio buttons), you 
+can put several checkboxes together into a CheckboxGroup, 
+which is discussed at the end of this chapter. 
+9.1 Choice
+The Choice component provides 
+pop-up/pull-down lists. It is the equivalent of Motif's OptionMenu 
+or Windows MFC's ComboBox. (Java 1.1 departs from the MFC world.) 
+With the Choice component, 
+you can provide a short list of choices to the user, while taking up the 
+space of a single item on the screen. When the component is selected, the 
+complete list of available choices appears on the screen. After the user 
+has selected an option, the list is removed from the screen and the selected 
+item is displayed. Selecting any item automatically deselects the previous 
+selection. 
+Component MethodsConstructors
+public Choice () 
+There is only one constructor for Choice. 
+When you call it, a new instance of Choice 
+is created. The component is initially empty, with no items to select. 
+Once you add some items using addItem() 
+(version 1.0) or add() (version 
+1.1) and display the Choice 
+on the screen, it will look something like the leftmost component in Figure 9.1. The center component shows what a Choice 
+looks like when it is selected, while the one on the right shows what a 
+Choice looks like before any items have been added to it. 
+Figure 9.1: How Choices are displayed
+Items
+public int getItemCount ()  public int countItems () 
+The getItemCount() method returns 
+the number of selectable items in the Choice 
+object. In Figure 9.1, getItemCount() 
+would return 6. 
+countItems() is the Java 1.0 
+name for this method. 
+public String getItem (int index) 
+The getItem() method returns 
+the text for the item at position index 
+in the Choice. If index 
+is invalid--either index 
+&lt; 0 or index &gt;= getItemCount()--the getItem() method 
+throws the ArrayIndexOutOfBoundsException run-time exception. 
+public synchronized void add (String item)  public synchronized void addItem (String item)  
+add() adds item 
+to the list of available choices. If item 
+is already an option in the Choice, 
+this method adds it again. If item 
+is null, add() 
+throws the run-time exception NullPointerException. 
+The first item added to a Choice 
+becomes the initial (default) selection. 
+addItem() is the Java 1.0 name 
+for this method. 
+public synchronized void insert (String item, int index)  
+insert() adds item 
+to the list of available choices at position index. 
+An index of 0 adds the item at the beginning. An index larger than the 
+number of choices adds the item at the end. If item 
+is null, insert() 
+throws the run-time exception NullPointerException. 
+If index is negative, insert() 
+throws the run-time exception IllegalArgumentException. 
+public synchronized void remove (String item)  
+remove() removes item 
+from the list of available choices. If item 
+is present in Choice multiple 
+times, a call to remove() removes 
+the first instance. If item 
+is null, remove() 
+throws the run-time exception NullPointerException. 
+If item is not found in the 
+Choice, remove() 
+throws the IllegalArgumentException run-time exception. 
+public synchronized void remove (int position)  
+remove() removes the item at 
+position from the list of available 
+choices. If position is invalid--either position &lt; 
+0 or position &gt;= getItemCount()--remove() throws the 
+run-time exception ArrayIndexOutOfBoundsException. 
+public synchronized void removeAll ()  
+The removeAll() method removes 
+every option from the Choice. 
+This allows you to refresh the list from scratch, rather than creating 
+a new Choice and repopulating 
+it. 
+Selection
+The Choice has one item selected 
+at a time. Initially, it is the first item that was added to the Choice. 
+public String getSelectedItem () 
+The getSelectedItem() method 
+returns the currently selected item as a String. 
+The text returned is the parameter used in the addItem() 
+or add() call that put the 
+option in the Choice. If Choice 
+is empty, getSelectedItem() 
+returns null. 
+public Object[] getSelectedObjects ()  
+The getSelectedObjects() method 
+returns the currently selected item as an Object 
+array, instead of a String. 
+The array will either be a one-element array, or null 
+if there are no items. This method is required by the ItemSelectable 
+interface and allows you to use the same method to look at the items selected 
+by a Choice, List, 
+or Checkbox. 
+public int getSelectedIndex () 
+The getSelectedIndex() method 
+returns the position of the currently selected item. The Choice 
+list uses zero-based indexing, so the position of the first item is zero. 
+The position of the last item is the value of countItems()-1. 
+If the list is empty, this method returns -1. 
+public synchronized void select (int position) 
+This version of the select() 
+method makes the item at position 
+the selected item in the Choice. 
+If position is too big, select() 
+throws the run-time exception IllegalArgumentException. 
+If position is negative, nothing 
+happens. 
+public void select (String string) 
+This version of select() makes 
+the item with the label string 
+the selected item. If string 
+is in the Choice multiple times, 
+this method selects the first. If string 
+is not in the Choice, nothing 
+happens. 
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Choice's peer. If 
+you override this method, call super.addNotify() 
+first, then add your customizations for the new class. You will then be 
+able to do everything you need with the information about the newly created 
+peer. 
+protected String paramString ()  
+When you call the toString() 
+method of a Choice, the default 
+toString() method of Component 
+gets called. This in turn calls paramString() 
+which builds up the string to display. At the Choice 
+level, paramString() appends 
+the currently selected item (the result of getSelectedItem()) 
+to the output. Using the first Choice 
+instance in Figure 9.1, the results would be: 
+java.awt.Choice[139,5,92x27,current=Dialog]
+Choice Events
+The primary event for a Choice 
+occurs when the user selects an item in the list. With the 1.0 event model, 
+selecting an item generates an ACTION_EVENT, which triggers a call to the 
+action() method. Once the Choice 
+has the input focus, the user can change the selection by using the arrow 
+or keyboard keys. The arrow keys scroll through the list of choices, triggering 
+the KEY_ACTION, ACTION_EVENT, 
+and KEY_ACTION_RELEASE event 
+sequence, which in turn invokes the keyDown(), 
+action(), and keyUp() 
+methods, respectively. If the mouse is used to choose an item, no mouse 
+events are triggered as you scroll over each item, and an ACTION_EVENT 
+occurs only when a specific choice is selected. 
+With the 1.1 event model, you register ItemListener 
+with addItemListener(). Then when the user selects the Choice, 
+the ItemListener.itemStateChanged() 
+method is called through the protected Choice.processItemEvent() 
+method. Key, mouse, and focus listeners are registered through the Component 
+methods of addKeyListener(), 
+addMouseListener(), and addFocusListener(), 
+respectively. Action
+public boolean action (Event e, Object o)
+The action() method for a choice 
+signifies that the user selected an item. e 
+is the Event instance for the 
+specific event, while o is 
+the String from the call to addItem() 
+or add() that represents 
+the current selection. Here's a trivial implementation of the method: 
+public boolean action (Event e, Object o) {
+    if (e.target instanceof Choice) {
+        System.out.println ("Choice is now set to " + o);
+    }
+    return false;
+}
+Keyboard
+The keyboard events for a Choice 
+can be generated once the Choice 
+has the input focus. In addition to the KEY_ACTION 
+and KEY_ACTION_RELEASE events 
+you get with the arrow keys, an ACTION_EVENT 
+is generated over each entry. 
+public boolean keyDown (Event e, int key)
+The keyDown() method is called 
+whenever the user presses a key and the Choice 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyDown() 
+could be either Event.KEY_PRESS 
+for a regular key or Event.KEY_ACTION 
+for an action-oriented key (i.e., arrow or function key). If you check 
+the current selection in this method through the method getSelectedItem() 
+or getSelectedIndex(), you 
+will be given the previously selected item because the Choice's 
+selection has not changed yet. keyDown() 
+is not called when the Choice 
+is changed by using the mouse. 
+public boolean keyUp (Event e, int key)
+The keyUp() method is called 
+whenever the user releases a key. e 
+is the Event instance for the 
+specific event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) for keyUp() 
+could be either KEY_RELEASE 
+for a regular key or KEY_ACTION_RELEASE 
+for an action oriented key (i.e., arrow or function key). 
+Mouse
+Ordinarily, the Choice component 
+does not trigger any mouse events. Focus
+Ordinarily, the Choice component 
+does not trigger any focus events. Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners for different event types; 
+the listeners are told when the event happens. These methods register listeners, 
+and let the Choice component 
+inspect its own events. 
+public void addItemListener(ItemListener listener)  
+The addItemListener() method 
+registers listener as an object 
+interested in being notified when an ItemEvent 
+passes through the EventQueue 
+with this Choice as its target. 
+The listener.itemStateChanged() 
+method is called when an event occurs. Multiple listeners can be registered. 
+public void removeItemListener(ItemListener listener)  
+The removeItemListener() method 
+removes listener as a interested 
+listener. If listener is not 
+registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+all AWTEvents with this Choice 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Choice, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processItemEvent(ItemEvent e)  
+The processItemEvent() method 
+receives all ItemEvents with 
+this Choice as its target. 
+processItemEvent() then passes 
+them along to any listeners for processing. When you subclass Choice, 
+overriding processItemEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processItemEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processItemEvent(), 
+remember to call the method super.processItemEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+The following simple applet below demonstrates how a component can receive its own 
+events by overriding processItemEvent(), 
+while still allowing other objects to register as listeners. MyChoice11 
+is a subclass of Choice that 
+processes its own item events. choice11 
+is an applet that uses the MyChoice11 
+component and registers itself as a listener for item events. 
+// Java 1.1 only
+import java.awt.*;
+import java.applet.*;
+import java.awt.event.*;
+class MyChoice11 extends Choice {
+    MyChoice11 () {
+        super ();
+        enableEvents (AWTEvent.ITEM_EVENT_MASK);
+    }
+    protected void processItemEvent(ItemEvent e) {
+        ItemSelectable ie = e.getItemSelectable();
+        System.out.println ("Item Selected: " + ie.getSelectedObjects()[0]);
+        // If you do not call super.processItemEvent()
+        // no listener will be notified
+        super.processItemEvent (e);
+    }
+}
+public class choice11 extends Applet implements ItemListener {
+    Choice c;
+    public void init () {
+        String []fonts;
+        fonts = Toolkit.getDefaultToolkit().getFontList();
+        c = new MyChoice11();
+        for (int i = 0; i &lt; fonts.length; i++) {
+            c.add (fonts[i]);
+        }
+        add (c);
+        c.addItemListener (this);
+   }
+    public void itemStateChanged(ItemEvent e)  {
+        ItemSelectable ie = e.getItemSelectable();
+        System.out.println ("State Change: " + ie.getSelectedObjects()[0]);
+    }
+}
+A few things are worth noticing. MyChoice11 
+calls enableEvents() in its 
+constructor to make sure that item events are delivered, even if nobody 
+registers as a listener: MyChoice11 
+needs to make sure that it receives events, even in the absence of listeners. 
+Its processItemEvent() method 
+ends by calling the superclass's processItemEvent() 
+method, with the original item event. This call ensures that normal item 
+event processing occurs; super.processItemEvent() 
+is responsible for distributing the event to any registered listeners. 
+The alternative would be to implement the whole registration and event 
+distribution mechanism inside myChoice11, 
+which is precisely what object-oriented programming is supposed to avoid, 
+or being absolutely sure that you will only use MyChoice11 
+in situations in which there won't be any listeners, drastically limiting 
+the usefulness of this class. 
+choice11 doesn't contain 
+many surprises. It implements ItemListener, 
+the listener interface for item events; provides the required itemStateChanged() 
+method, which is called whenever an item event occurs; and calls MyChoice11's method 
+addItemListener() to 
+register as a listener for item events. (MyChoice11 
+inherits this method from the Choice 
+class.) 
+Extending TextField
+Lists
+ 
+ 
+ 
+ 
+ 
+ 
+ 

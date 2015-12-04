@@ -1,0 +1,76 @@
+
+[Chapter 25] 25.54 java.lang.SecurityManager (JDK 1.0)
+Chapter 25The java.lang Package
+25.54 java.lang.SecurityManager (JDK 1.0)
+This abstract class defines the methods necessary to
+implement a security policy for the execution of
+untrusted code. Before performing 
+potentially sensitive operations, Java calls methods of the
+SecurityManager object currently in effect to
+determine whether the operations are permitted. These methods
+throw a SecurityException if the operation is not
+permitted.  
+Normal applications do not need to use or subclass the
+SecurityManager class. It is typically only used
+by Web browsers, applet viewers, and other programs that
+need to run untrusted code in a controlled environment.
+public abstract class SecurityManager extends Object {
+    // Protected Constructor
+            protected SecurityManager();
+    // Protected Instance Variables
+            protected boolean inCheck;
+    // Public Instance Methods
+            public void checkAccept(String host, int port);
+            public void checkAccess(Thread g);
+            public void checkAccess(ThreadGroup g);
+        1.1public void checkAwtEventQueueAccess();
+            public void checkConnect(String host, int port);
+            public void checkConnect(String host, int port, Object context);
+            public void checkCreateClassLoader();
+            public void checkDelete(String file);
+            public void checkExec(String cmd);
+            public void checkExit(int status);
+            public void checkLink(String lib);
+            public void checkListen(int port);
+        1.1public void checkMemberAccess(Class clazz, int which);
+        1.1public void checkMulticast(InetAddress maddr);
+        1.1public void checkMulticast(InetAddress maddr, byte ttl);
+            public void checkPackageAccess(String pkg);
+            public void checkPackageDefinition(String pkg);
+        1.1public void checkPrintJobAccess();
+            public void checkPropertiesAccess();
+            public void checkPropertyAccess(String key);
+            public void checkRead(FileDescriptor fd);
+            public void checkRead(String file);
+            public void checkRead(String file, Object context);
+        1.1public void checkSecurityAccess(String action);
+            public void checkSetFactory();
+        1.1public void checkSystemClipboardAccess();
+            public boolean checkTopLevelWindow(Object window);
+            public void checkWrite(FileDescriptor fd);
+            public void checkWrite(String file);
+            public boolean getInCheck();
+            public Object getSecurityContext();
+        1.1public ThreadGroup getThreadGroup();
+    // Protected Instance Methods
+            protected native int classDepth(String name);
+            protected native int classLoaderDepth();
+            protected native ClassLoader currentClassLoader();
+        1.1protected Class currentLoadedClass();
+            protected native Class[] getClassContext();
+            protected boolean inClass(String name);
+            protected boolean inClassLoader();
+}
+Passed To:
+System.setSecurityManager()
+Returned By:
+System.getSecurityManager()
+java.lang.SecurityException (JDK 1.0)
+java.lang.Short (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

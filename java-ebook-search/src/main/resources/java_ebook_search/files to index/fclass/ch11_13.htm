@@ -1,0 +1,352 @@
+
+[Chapter 11] DataOutputStream
+Chapter 11The java.io Package
+DataOutputStream
+Name
+DataOutputStream
+Synopsis
+Class Name:
+java.io.DataOutputStream
+Superclass:
+java.io.FilterOutputStream
+ 
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.DataOutput
+Availability:
+JDK 1.0 or later
+Description
+The DataOutputStream class 
+defines methods for writing primitive data types to an output stream in 
+a machine-independent manner. Many of the methods of DataOutputStream 
+write a single primitive data type, in binary format, to an underlying 
+output stream. All multibyte quantities are written in a format that stores 
+the most significant byte as the first byte and the least significant byte 
+as the last byte. 
+Class Summary
+public class java.io.DataOutputStream extends java.io.FilterOutputStream
+                                      implements java.io.DataOutput {
+  // Variables
+  protected int written;
+  // Constructors
+  public DataOutputStream(OutputStream out);
+  // Instance Methods
+  public void flush();
+  public final int size();
+  public synchronized void write(int b);
+  public synchronized void write(byte[] b, int off, int len);
+  public final void writeBoolean(boolean v);
+  public final void writeByte(int v);
+  public final void writeBytes(String s);
+  public final void writeChar(int v);
+  public final void writeChars(String s);
+  public final void writeDouble(double v);
+  public final void writeFloat(float v);
+  public final void writeInt(int v);
+  public final void writeLong(long v);
+  public final void writeShort(int v);
+  public final void writeUTF(String str);
+}
+Variables
+written
+protected int written
+Description
+The number of bytes that have been written to this output stream. 
+Constructors
+DataOutputStream
+public DataOutputStream(OutputStream out)
+Parameters
+out
+The output stream to 
+use. 
+Description
+This constructor creates a DataOutputStream 
+that uses out as its underlying 
+stream. 
+Instance Methods
+flush
+public void flush() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.flush() 
+Description
+This method flushes the stream, forcing any buffered output to be written. 
+The method calls the flush() 
+method of the underlying output stream. 
+size
+public final int size()
+Returns
+The number of bytes written. 
+Description
+This method returns the number of bytes that have been written to the stream 
+(i.e., it returns the value of the variable written). 
+write
+public synchronized void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(int) 
+Implements
+DataOutput.write(int) 
+Description
+This method writes the low-order eight bits of b 
+to the underlying stream as a byte. 
+   public synchronized void write(byte b[], int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to write.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(byte[], int, int) 
+Implements
+DataOutput.write(byte[], int, int) 
+Description
+This method writes len bytes from the given array, starting off elements from the beginning of the array, to the 
+underlying stream. 
+writeBoolean
+public final void writeBoolean(boolean v) throws IOException
+Parameters
+v
+The boolean 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeBoolean() 
+Description
+If v is true, 
+this method writes a byte that contains the value 1 
+to the underlying stream. If v 
+is false, the method writes 
+a byte that contains the value 0. 
+writeByte
+public final void writeByte(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeByte() 
+Description
+This method writes an 8-bit byte 
+to the underlying stream, using the low-order eight bits of the given integer 
+v. 
+writeBytes
+public final void writeBytes(String s) throws IOException
+Parameters
+s
+The String to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeBytes() 
+Description
+This method writes the characters in the given String 
+to the underlying stream as a sequence of 8-bit bytes. The high-order 
+bytes of the characters in the string are ignored. 
+writeChar
+public final void writeChar(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeChar() 
+Description
+This method writes a 16-bit char 
+to the underlying stream, using the low-order 16 bits of the given integer 
+v. 
+writeChars
+public final void writeChars(String s) throws IOException
+Parameters
+s
+The String to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeChars() 
+Description
+This method writes the characters in the given String 
+object to the underlying stream as a sequence of 16-bit characters. 
+writeDouble
+public final void writeDouble(double v) throws IOException
+Parameters
+v
+The double 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeDouble() 
+Description
+This method writes a 64-bit double 
+to the underlying stream. The double 
+value is converted to a long 
+using doubleToLongBits() of 
+Double; the long 
+value is then written to the underlying stream as eight bytes with the 
+high-order byte first. 
+writeFloat
+public final void writeFloat(float v) throws IOException
+Parameters
+v
+The float 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeFloat() 
+Description
+This method writes a 32-bit float 
+to the underlying stream. The float 
+value is converted to a int 
+using floatToIntBits() of Float; 
+the int value is then written 
+to the underlying stream as four bytes with the high-order byte first. 
+writeInt
+public final void writeInt(int v) throws IOException
+Parameters
+v
+The int 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeInt() 
+Description
+This method writes a 32-bit int 
+to the underlying stream. The value is written as four bytes with the 
+high-order byte first. 
+writeLong
+public final void writeLong(long v) throws IOException
+Parameters
+v
+The long 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeLong() 
+Description
+This method writes a 64-bit long 
+to the underlying stream. The value is written as eight bytes with the 
+high-order byte first. 
+writeShort
+public final void writeShort(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeShort() 
+Description
+This method writes a 16-bit short 
+to the underlying stream, using the low-order two bytes of the given integer 
+v. 
+writeUTF
+public final void writeUTF(String str) throws IOException
+Parameters
+str
+The String 
+to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeUTF() 
+Description
+This method writes the given String 
+to the underlying stream using the UTF-8 encoding. First, two bytes are 
+written as an unsigned short 
+value; this value specifies the number of bytes to follow. The value is 
+the actual number of bytes in the UTF-8 encoding, not the length of the 
+string. Then each character of the string is written as UTF-8 encoded bytes.
+See Appendix B, The UTF-8 Encoding for more information on the
+UTF-8 encoding.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+FilterOutputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(byte[])
+FilterOutputStream
+See Also
+DataInputStream, 
+DataOutput, 
+Double, 
+FilterOutputStream, 
+Float, 
+IOException, 
+OutputStream 
+DataOutput
+EOFException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

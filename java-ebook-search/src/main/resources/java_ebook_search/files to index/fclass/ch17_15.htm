@@ -1,0 +1,182 @@
+
+[Chapter 17] Observable
+Chapter 17The java.util Package
+Observable
+Name
+Observable
+Synopsis
+Class Name:
+java.util.Observable
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+Subclasses of the Observable 
+class are used to implement the model portion of the model-view paradigm. 
+The idea is that an Observable 
+object, the model, represents some data that is being manipulated 
+through a user interface, while Observer 
+objects provide the user with a view of the data. When the 
+Observable object is modified, 
+it tells the Observer objects 
+that the model has been modified by calling notifyObservers(). 
+An Observer object registers 
+with an Observable object to 
+receive notifications when the Observable 
+is modified. The Observer object 
+is then notified of changes via the update() 
+method. 
+Class Summary
+public class java.util.Observable extends java.lang.Object {
+  // Constructors
+  public Observable();                          
+  // Instance Methods
+  public synchronized void addObserver(Observer o);
+  public synchronized int countObservers();
+  public synchronized void deleteObserver(Observer o);
+  public synchronized void deleteObservers();
+  public synchronized boolean hasChanged();
+  public void notifyObservers();
+  public void notifyObservers(Object arg);
+  // Protected Instance Methods
+  protected synchronized void clearChanged();
+  protected synchronized void setChanged();
+}
+Constructors
+Observable
+public Observable()
+Description
+This constructor creates an Observable 
+object with no registered Observer 
+objects. 
+InstanceMethods
+addObserver
+public synchronized void addObserver(Observer o)
+Parameters
+o
+The Observer 
+to be added. 
+Description
+This method registers the given Observer 
+with this Observable object. 
+The given Observer is then 
+notified when notifyObservers() 
+is called. 
+countObservers
+public synchronized int countObservers()
+Returns
+The number of registered Observer 
+objects for this Observable 
+object. 
+Description
+This method returns the number of Observer 
+objects that are registered with this Observable 
+object. 
+deleteObserver
+public synchronized void deleteObserver(Observer o)
+Parameters
+o
+The Observer 
+to be removed. 
+Description
+This method unregisters the given Observer 
+with this Observable object. 
+The given Observer is no longer 
+notified when notifyObservers() 
+is called. 
+deleteObservers
+public synchronized void deleteObservers()
+Description
+This method unregisters all of the Observer 
+objects of this Observable 
+object. Thus, no objects are notified if notifyObservers() 
+is called. 
+hasChanged
+public synchronized boolean hasChanged()
+Returns
+true if this object has been 
+flagged as changed; false otherwise. 
+Description
+This method returns the value of an internal "dirty" flag. 
+The flag can be modified using the protected 
+methods setChanged() and clearChanged(). 
+notifyObservers
+public void notifyObservers()
+Description
+This method calls the update() 
+method of all registered Observer 
+objects. The value passed as the second argument to each of the update() 
+method calls is null. 
+public void notifyObservers(Object arg)
+Parameters
+arg
+A "hint" 
+object that describes a change. 
+Description
+This method calls the update() 
+method of all registered Observer 
+objects. The value passed as the second argument to each of the update() 
+method calls is the given object arg.
+This "hint" object can be used to efficiently update the views 
+of a model. For example, an Observable 
+object could represent satellite image data. A set of Observer 
+objects would provide different graphical views of the data. If the model 
+data changes, the arg object 
+describes the part of the data that changed, and the Observer 
+views could use this "hint" to update only parts of their displays. 
+Protected Instance Methods
+clearChanged
+protected synchronized void clearChanged()
+Description
+This method sets an internal "dirty" flag to false. 
+After this method is called, this object's hasChanged() 
+method returns false. 
+setChanged
+protected synchronized void setChanged()
+Description
+This method sets an internal "dirty" flag to true. 
+After this method is called, this object's hasChanged() 
+method returns true. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Observer 
+NoSuchElementException
+Observer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

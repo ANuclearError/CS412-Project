@@ -1,0 +1,28 @@
+
+[Chapter 30] 30.16 java.util.Observer (JDK 1.0)
+Chapter 30The java.util Package
+30.16 java.util.Observer (JDK 1.0)
+This interface defines the update() method required
+for an object to "observe" subclasses of Observable.
+An Observer registers interest in an
+Observable() by calling the
+Observable.addObserver() method. Observer
+objects that have been registered in this way will have
+their update() method invoked by the
+Observable when that object has changed.
+public abstract interface Observer {
+    // Public Instance Methods
+            public abstract void update(Observable o, Object arg);
+}
+Passed To:
+Observable.addObserver(), 
+Observable.deleteObserver()
+java.util.Observable (JDK 1.0)
+java.util.Properties (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

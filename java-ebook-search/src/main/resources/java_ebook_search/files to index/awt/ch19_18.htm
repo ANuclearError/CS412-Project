@@ -1,0 +1,177 @@
+
+[Chapter 19] Dialog
+Chapter 19java.awt Reference
+Dialog
+Name
+Dialog
+Description
+The Dialog class provides a 
+special type of display window that is used for pop-up messages and acquiring 
+input from the user. Unlike most other components, dialogs are hidden by 
+default; you must call show() 
+to display them. Dialogs are always associated with a parent Frame. 
+A Dialog may be either modal 
+or non-modal; a modal dialog attracts all input typed by the user. The 
+default layout for a Dialog 
+is BorderLayout. 
+Class Definition
+public class java.awt.Dialog
+    extends java.awt.Window {
+  
+  // Constructors
+  public Dialog (Frame parent); 
+  public Dialog (Frame parent, boolean modal);
+  public Dialog (Frame parent, String title); 
+  public Dialog (Frame parent, String title, boolean modal);
+  
+  // Instance Methods
+  public void addNotify();
+  public String getTitle();
+  public boolean isModal();
+  public boolean isResizable();
+  public void setModal (boolean b); 
+  public synchronized void setResizable (boolean resizable);
+  public synchronized void setTitle (String title);
+  public void show();  
+  
+  // Protected Instance Methods
+  protected String paramString();
+}
+Constructors
+Dialog
+public Dialog (Frame parent) 
+Parameters
+parent
+Frame that 
+is to act as the parent of Dialog. 
+Throws
+IllegalArgumentException
+If 
+parent is null. 
+Description
+Constructs a Dialog object. 
+public Dialog (Frame parent, boolean modal)
+Parameters
+parent
+Frame that 
+is to act as the parent of Dialog. 
+modal
+true if the 
+Dialog is modal; false 
+otherwise. 
+Throws
+IllegalArgumentException
+If 
+parent is null. 
+Description
+Replaced with Dialog(Frame, String, boolean). 
+public Dialog (Frame parent, String title) 
+Parameters
+parent
+Frame that 
+is to act as parent of Dialog. 
+title
+Initial title to use for Dialog.
+Throws
+IllegalArgumentException
+If 
+parent is null. 
+Description
+Constructs a Dialog object 
+with given characteristics. 
+public Dialog (Frame parent, String title, boolean modal)
+Parameters
+parent
+Frame that 
+is to act as parent of Dialog. 
+title
+Initial title to use for Dialog.
+modal
+true if the 
+Dialog is modal; false 
+otherwise. 
+Throws
+IllegalArgumentException
+If 
+parent is null. 
+Description
+Constructs a Dialog object 
+with given characteristics. 
+Instance Methods
+addNotify
+public void addNotify()
+Overrides
+Window.addNotify() 
+Description
+Creates Dialog's peer 
+and peers of contained components. 
+getTitle
+public String getTitle()
+Returns
+The current title for the Dialog. 
+isModal
+public boolean isModal()
+Returns
+true if modal, false 
+otherwise. 
+isResizable
+public boolean isResizable()
+Returns
+true if resizable, false 
+otherwise. 
+setModal
+public void setModal (boolean b) 
+Parameters
+b
+true 
+makes the Dialog modal; false 
+if the Dialog should be modeless. 
+Description
+Changes the modal state of the Dialog. 
+setResizable
+public synchronized void setResizable (boolean resizable)
+Parameters
+resizable
+true 
+makes the Dialog resizable; 
+false if the Dialog 
+cannot be resized. 
+Description
+Changes the resize state of the Dialog. 
+setTitle
+public synchronized void setTitle (String title)
+Parameters
+title
+New title for the Dialog.
+Description
+Changes the title of the Dialog. 
+show
+public void show() 
+Overrides 
+Window.show() 
+Description
+If the dialog is hidden, this method shows it. If the dialog is already 
+visible, this method brings it to the front. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of Dialog. 
+Overrides 
+Container.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+FileDialog, Frame, 
+String, Window, 
+WindowEvent, WindowListener 
+Cursor 
+Dimension
+ 
+ 
+ 
+ 
+ 
+ 
+ 

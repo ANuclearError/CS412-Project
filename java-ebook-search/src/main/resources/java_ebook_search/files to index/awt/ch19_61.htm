@@ -1,0 +1,168 @@
+
+[Chapter 19] Window
+Chapter 19java.awt Reference
+Window
+Name
+Window
+Description
+The Window class serves as 
+a top-level display area that exists outside the browser or applet area 
+you may be working in. A window must have a parent Frame. 
+Class Definition
+public class java.awt.Window
+    extends java.awt.Container {
+  
+  // Constructors
+  public Window (Frame parent);
+  
+  // Instance Methods
+  public void addNotify();
+  public synchronized void addWindowListener (WindowListener l); 
+  public void dispose();
+  public Component getFocusOwner(); 
+  public Locale getLocale(); 
+  public Toolkit getToolkit();
+  public final String getWarningString();
+  public boolean isShowing(); 
+  public void pack();
+  public boolean postEvent (Event e); 
+  public synchronized void remove WindowListener (WindowListener l); 
+  public void show();
+  public void toBack();
+  public void toFront();
+//Protected Instance Methods
+  protected void processEvent (AWTEvent e); 
+  protected void processWindowEvent (WindowEvent e); 
+}
+Constructors
+Window
+public Window (Frame parent)
+Parameters 
+parent
+Frame that 
+is to act as the parent of Window. 
+Description
+Constructs a Window object. 
+Instance Methods
+addNotify
+public void addNotify()
+Overrides 
+Container.addNotify() 
+Description
+Creates Window's peer 
+and peers of contained components. 
+removeWindowListener
+public synchronized void removeWindowListener(WindowListener l) 
+Parameters
+l
+One of this Frame's 
+WindowListeners. 
+Description
+Remove an event listener. 
+addWindowListener
+public synchronized void addWindowListener (WindowListener l) 
+Parameters
+l
+An object that implements the WindowListener interface.
+Description
+Add a listener for windowing events.
+dispose
+public void dispose()
+Returns
+Releases the resources of the Window. 
+getFocusOwner
+public Component getFocusOwner() 
+Returns
+The child component that currently has the input focus. 
+getLocale
+public Locale getLocale() 
+Returns
+The locale for this Window. 
+Overrides 
+Window.getLocale() 
+getToolkit
+public Toolkit getToolkit()
+Returns
+Toolkit of Window. 
+Overrides 
+Component.getToolkit() 
+getWarningString
+public final String getWarningString()
+Returns
+String that will be displayed on the bottom of insecure Window 
+instances. 
+isShowing
+public boolean isShowing()
+Returns
+true if the Window is showing on the screen, false otherwise.
+pack
+public void pack()
+Description
+Resizes Window to getPreferredSize() 
+of contained components. 
+postEvent
+public boolean postEvent (Event e) 
+Parameters 
+e
+Event instance 
+to post to window. 
+Returns
+If Event is handled, true 
+is returned. Otherwise, false 
+is returned. 
+Description
+Tells the Window to deal with 
+Event. 
+removeWindowListener
+public synchronized void removeWindowListener (WindowListener l) 
+Parameters
+l
+One of this Frame's WindowListeners.
+Description
+Remove an event listener.
+show
+public void show()
+Description
+Show the Window and validate its components.
+Overrides
+Component.show()
+toBack
+public void toBack()
+Description
+Puts the Window in the background 
+of the display. 
+toFront
+public void toFront()
+Description
+Brings the Window to the foreground 
+of the display. 
+Protected Instance Methods
+processEvent
+protected void processEvent (AWTEvent e) 
+Parameters
+e
+The event to process. 
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+processWindowEvent
+protected void processWindowEvent (WindowEvent e) 
+Parameters
+e
+The event to process. 
+Description
+Window events are passed to this method for processing. Normally, this 
+method is called by processEvent(). 
+See Also
+Component, Container, 
+Dialog, Frame, 
+String, Toolkit 
+Toolkit
+Clipboard 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

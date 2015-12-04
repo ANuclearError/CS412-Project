@@ -1,0 +1,61 @@
+
+[Chapter 18] 18.61 java.awt.Window (JDK 1.0)
+Chapter 18The java.awt Package
+18.61 java.awt.Window (JDK 1.0)
+This class represents a top-level window with no
+borders or menu bar.  Window is a Container
+with BorderLayout as its default layout manager.
+Window is rarely used directly; its subclasses
+Frame and Dialog are more commonly useful.
+show() (which overrides Component.show())
+makes a Window visible and brings it to the front of
+other windows. toFront() brings a window to the
+front, and toBack() buries a window beneath others.
+pack() is an important method that 
+initiates layout management for the window, and sets the window
+size to match the preferred size of the components contained
+within the window.  getToolkit() returns the
+Toolkit() in use for this window.  Call
+dispose() when a Window is no longer needed
+to free its window system resources.
+public class Window extends Container {
+    // Public Constructor
+            public Window(Frame parent);
+    // Public Instance Methods
+            public void addNotify();  // Overrides Container
+        1.1  public synchronized void addWindowListener(WindowListener l);
+            public void dispose();
+        1.1  public Component getFocusOwner();
+        1.1  public Locale getLocale();  // Overrides Component
+            public Toolkit getToolkit();  // Overrides Component
+            public final String getWarningString();
+        1.1  public boolean isShowing();  // Overrides Component
+            public void pack();
+        1.1  public boolean postEvent(Event e);  // Overrides Component
+        1.1  public synchronized void removeWindowListener(WindowListener l);
+            public void show();  // Overrides Component
+            public void toBack();
+            public void toFront();
+    // Protected Instance Methods
+        1.1  protected void processEvent(AWTEvent e);  // Overrides Container
+        1.1  protected void processWindowEvent(WindowEvent e);
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Container->Window
+Extended By:
+Dialog, 
+Frame
+Passed To:
+Toolkit.createWindow(), 
+WindowEvent()
+Returned By:
+WindowEvent.getWindow()
+java.awt.Toolkit (JDK 1.0)
+The java.awt.datatransfer Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

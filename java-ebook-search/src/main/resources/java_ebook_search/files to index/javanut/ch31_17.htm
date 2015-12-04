@@ -1,0 +1,64 @@
+
+[Chapter 31] 31.17 java.util.zip.ZipOutputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.17 java.util.zip.ZipOutputStream (JDK 1.1)
+This class is a subclass of DeflaterOutputStream
+that writes data in ZIP file format to an output stream.
+Before writing any data to the ZipOutputStream, you
+must begin an entry within the ZIP file with
+putNextEntry().  The ZipEntry object passed
+to this method should specify at least a name for the entry.
+Once you have begun an entry with putNextEntry(),
+you can write the contents of that entry with the
+write() methods.  When you reach the end of an
+entry, you can begin a new one by calling
+putNextEntry() again, or you can close the current
+entry with closeEntry(), or you can close the stream
+itself with close().
+Before beginning an entry with putNextEntry(), you
+can set the compression method and level with
+setMethod() and setLevel().  The constants
+DEFLATED and STORED are the two legal values
+for setMethod().  If you use STORED,
+the entry is stored in the ZIP file without any
+compression.  If you use DEFLATED, you can also
+specify the compression speed/strength trade-off by passing a
+number from 1 to 9 to setLevel(), where 9 gives the
+strongest and slowest level of compression.  You can also
+use the constants Deflater.BEST_SPEED,
+Deflater.BEST_COMPRESSION, and
+Deflater.DEFAULT_COMPRESSION with the
+setLevel() method.
+Note that if you are simply storing an entry without
+compression, the ZIP file format requires that you specify,
+in advance, the entry size and CRC-32 checksum in the
+ZipEntry object for the entry.  An exception is
+thrown if these values are not specified or are incorrectly
+specified.
+public class ZipOutputStream extends DeflaterOutputStream {
+    // Public Constructor
+            public ZipOutputStream(OutputStream out);
+    // Constants
+            public static final int DEFLATED;
+            public static final int STORED;
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides DeflaterOutputStream
+            public void closeEntry() throws IOException;
+            public void finish() throws IOException;  // Overrides DeflaterOutputStream
+            public void putNextEntry(ZipEntry e) throws IOException;
+            public void setComment(String comment);
+            public void setLevel(int level);
+            public void setMethod(int method);
+            public synchronized void write(byte[] b, int off, int len) throws IOException;  // Overrides DeflaterOutputStream
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->DeflaterOutputStream->ZipOutputStream
+java.util.zip.ZipInputStream (JDK 1.1)
+Class, Method, and Field Index
+ 
+ 
+ 
+ 
+ 
+ 
+ 

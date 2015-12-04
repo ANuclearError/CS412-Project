@@ -1,0 +1,53 @@
+
+[Chapter 18] 18.17 java.awt.Cursor (JDK 1.1)
+Chapter 18The java.awt Package
+18.17 java.awt.Cursor (JDK 1.1)
+This class represents a mouse cursor.  It defines a number
+of constants, each of which specify one of the supported
+cursor images.  Pass one of these constants to the
+constructor to create a cursor of the specified type, and
+call getType() to determine the type of an existing
+Cursor object.
+Since there are only a fixed number of available cursors,
+the static method getPredefinedCursor() is more
+efficient than the Cursor() constructor--it
+maintains a cache of Cursor objects that can be
+reused.  The static getDefaultCursor() method
+returns the system default cursor.
+public class Cursor extends Object implements Serializable {
+    // Public Constructor
+            public Cursor(int type);
+    // Cursor Constants
+            public static final int DEFAULT_CURSOR;
+            public static final int CROSSHAIR_CURSOR, HAND_CURSOR, MOVE_CURSOR;
+            public static final int TEXT_CURSOR, WAIT_CURSOR;
+            public static final int N_RESIZE_CURSOR, S_RESIZE_CURSOR;
+            public static final int E_RESIZE_CURSOR, W_RESIZE_CURSOR;
+            public static final int NE_RESIZE_CURSOR, NW_RESIZE_CURSOR;
+            public static final int SE_RESIZE_CURSOR, SW_RESIZE_CURSOR;
+    // Class Variables
+            protected static Cursor[] predefined;
+    // Class Methods
+            public static Cursor getDefaultCursor();
+            public static Cursor getPredefinedCursor(int type);
+    // Public Instance Methods
+            public int getType();
+}
+Passed To:
+Component.setCursor(), 
+ComponentPeer.setCursor()
+Returned By:
+Component.getCursor(), 
+Cursor.getDefaultCursor(), 
+Cursor.getPredefinedCursor()
+Type Of:
+Cursor.predefined
+java.awt.Container (JDK 1.0)
+java.awt.Dialog (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

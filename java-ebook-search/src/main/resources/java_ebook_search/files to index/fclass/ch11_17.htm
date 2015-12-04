@@ -1,0 +1,124 @@
+
+[Chapter 11] FileDescriptor
+Chapter 11The java.io Package
+FileDescriptor
+Name
+FileDescriptor
+Synopsis
+Class Name:
+java.io.FileDescriptor
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The FileDescriptor class encapsulates 
+system-specific handles for files and sockets. Instances of this class 
+can be properly constructed only by native methods of other classes. In 
+other words, you should not be constructing your own file descriptors. 
+Currently, file descriptors are returned by the following methods: 
+DatagramSocketImpl.getFileDescriptor()
+FileInputStream.getFD() 
+FileOutputStream.getFD() 
+RandomAccessFile.getFD() 
+SocketImpl.getFileDescriptor() 
+A file descriptor can be used in the constructors for FileInputStream, 
+FileOutputStream, FileReader, 
+and FileWriter. 
+Class Summary
+public final class java.io.FileDescriptor extends java.lang.Object {
+  // Constants
+  public final static FileDescriptor err;
+  public final static FileDescriptor in;
+  public final static FileDescriptor out;
+  // Instance Methods
+  public native void sync();                     // New in 1.1
+  public native boolean valid();
+}
+Constants
+err
+public final static FileDescriptor err
+Description
+The file descriptor for standard error. See System.err, 
+which is constructed from this constant. 
+in
+public final static FileDescriptor in
+Description
+The file descriptor for standard input. See System.in, 
+which is constructed from this constant. 
+out
+public final static FileDescriptor out
+Description
+The file descriptor for standard output. See System.out, 
+which is constructed from this constant. 
+Instance Methods
+sync
+public native void sync() throws SyncFailedException
+Availability
+New as of JDK 1.1 
+Throws
+SyncFailedException 
+If synchronization cannot be accomplished. 
+Description
+This method causes the underlying device to be updated to a current state,
+which typically involves asking the operating system to flush its
+buffer.
+For example, if this FileDescriptor 
+refers to a file on a physical disk, the disk is physically updated to 
+reflect the current state of the object this descriptor represents. This 
+method allows an application to put a device in a known state, which could 
+be useful for transaction processing. 
+valid
+public native boolean valid()
+Returns
+true if the FileDescriptor represents a valid, open device; false otherwise. 
+Description
+This method returns a boolean 
+value that indicates the validity of the file descriptor. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FileInputStream, 
+FileOutputStream, 
+FileReader, 
+FileWriter, 
+SyncFailedException, 
+System 
+File
+FileInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

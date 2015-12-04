@@ -1,0 +1,412 @@
+
+[Chapter 17] Vector
+Chapter 17The java.util Package
+Vector
+Name
+Vector
+Synopsis
+Class Name:
+java.util.Vector
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.util.Stack
+Interfaces Implemented:
+java.io.Serializable, 
+java.lang.Cloneable
+Availability:
+JDK 1.0 or later 
+Description
+The Vector class implements 
+a variable-length array that can hold any kind of object. Like an array, 
+the elements in a Vector are accessed with an integer index. However, unlike 
+an array, the size of a Vector 
+can grow and shrink as needed to accommodate a changing number of objects. 
+Vector provides methods to 
+add and remove elements, as well as ways to search for objects in a Vector 
+and iterate through all of the objects. 
+The initial capacity of a Vector 
+specifies how many objects it can contain before more space must be allocated. 
+The capacity increment specifies how much more space is allocated each 
+time the Vector needs to increase 
+its capacity. You can fine-tune the performance of a Vector 
+by adjusting the initial capacity and capacity increment. 
+Class Summary
+public class java.util.Vector extends java.lang.Object
+             implements java.io.Serializable, java.lang.Cloneable {
+  // Variables
+  protected int capacityIncrement;
+  protected int elementCount;
+  protected Object[] elementData;
+  // Constructors
+  public Vector();
+  public Vector(int initialCapacity);
+  public Vector(int initialCapacity, int capacityIncrement);
+  // Instance Methods
+  public final synchronized void addElement(Object obj);
+  public final int capacity();
+  public synchronized Object clone();
+  public final boolean contains(Object elem);
+  public final synchronized void copyInto(Object[] anArray);
+  public final synchronized Object elementAt(int index);
+  public final synchronized Enumeration elements();
+  public final synchronized void ensureCapacity(int minCapacity);
+  public final synchronized Object firstElement();
+  public final int indexOf(Object elem);
+  public final synchronized int indexOf(Object elem, int index);
+  public final synchronized void insertElementAt(Object obj, int index);
+  public final boolean isEmpty();
+  public final synchronized Object lastElement();
+  public final int lastIndexOf(Object elem);
+  public final synchronized int lastIndexOf(Object elem, int index);
+  public final synchronized void removeAllElements();
+  public final synchronized boolean removeElement(Object obj);
+  public final synchronized void removeElementAt(int index);
+  public final synchronized void setElementAt(Object obj, int index);
+  public final synchronized void setSize(int newSize);
+  public final int size();
+  public final synchronized String toString();
+  public final synchronized void trimToSize();
+}
+Variables
+capacityIncrement
+protected int capacityIncrement
+Description
+The amount by which the internal array grows when more space is 
+needed. If the value is 0, the internal array doubles 
+in size when more space is needed. 
+elementCount
+protected int elementCount
+Description
+The count of how many objects are contained in 
+this Vector. 
+elementData
+protected Object[] elementData
+Description
+The array that holds the contents of this Vector. 
+Constructors
+Vector
+public Vector()
+Description
+This constructor creates an empty Vector 
+with the default capacity of 10 and the default capacity increment of 0. 
+public Vector(int initialCapacity)
+Parameters
+initialCapacity
+The initial capacity of the Vector. 
+Description
+This constructor creates an empty Vector 
+with the given capacity and the default capacity increment of 0. 
+public Vector(int initialCapacity, int capacityIncrement)
+Parameters
+initialCapacity
+The initial capacity of the Vector.
+CapacityIncrement
+The amount to increase the capacity when more space is needed. 
+Description
+This constructor creates an empty Vector 
+with the given capacity and capacity increment. 
+Instance Methods
+addElement
+public final synchronized void addElement(Object obj)
+Parameters
+obj
+The object to be added. 
+Description
+This method adds the given object to this Vector 
+as its last element
+and increases its size by 1. The capacity of the Vector 
+is increased if its size becomes greater than its capacity. Any kind of 
+object can be added to a Vector. 
+capacity
+public final int capacity()
+Returns
+The capacity of this Vector. 
+Description
+This method returns the size of the internal array of this Vector. 
+clone
+public synchronized Object clone()
+Returns
+A copy of this Vector. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this Vector 
+and returns it. 
+contains
+public final boolean contains(Object elem)
+Parameters
+elem
+The object to be found. 
+Returns
+true if the given object is 
+contained in this Vector; false 
+otherwise. 
+Description
+This method determines whether or not the given object is contained in 
+this Vector. 
+copyInto
+public final synchronized void copyInto(Object[] anArray)
+Parameters
+anArray
+The array to be 
+filled. 
+Throws
+ArrayIndexOutOfBoundsException
+If the given array is too small to hold all of the objects in this Vector. 
+Description
+This method copies the object references in this Vector 
+to the given array. 
+elementAt
+public final synchronized Object elementAt(int index)
+Parameters
+index
+The index of the 
+object to be returned. 
+Returns
+The object at the position given by index. 
+Throws
+ArrayIndexOutOfBoundsException
+If index is less than zero 
+or greater than the size of this Vector. 
+Description
+This method returns the object at the given index in this Vector. 
+elements
+public final synchronized Enumeration elements()
+Returns
+The objects in this Vector 
+as an Enumeration. 
+Description
+This method returns an Enumeration 
+that iterates through the objects in this Vector. 
+ensureCapacity
+public final synchronized void ensureCapacity(int minCapacity)
+Parameters
+minCapacity
+The minimum 
+new capacity. 
+Description
+This method expands the internal array, if necessary, to make the capacity 
+of the Vector at least minCapacity. 
+firstElement
+public final synchronized Object firstElement()
+Returns
+The first object in this Vector. 
+Throws
+NoSuchElementException
+If the Vector is empty. 
+Description
+This method returns the object at index 0 in this Vector. 
+indexOf
+public final int indexOf(Object elem)
+Parameters
+elem
+The object to be found. 
+Returns
+The index of the given object or -1 if it cannot be found. 
+Description
+This method returns the index of the first occurrence of the given object 
+in this Vector. 
+public final int indexOf(Object elem, int index)
+Parameters
+elem
+The object to be found.
+index
+The starting index. 
+Returns
+The index of the next occurrence of the given object after the specified 
+index or -1 if it cannot be found. 
+Description
+This method returns the index of the next occurrence of the given object 
+in this Vector after the given 
+index. 
+insertElementAt
+public final synchronized void insertElementAt(Object obj, int index)
+Parameters
+obj
+The object to be inserted.
+index
+The index at which 
+to insert the object. 
+Throws
+ArrayIndexOutOfBoundsException
+If index is less than zero 
+or greater than the size of this Vector. 
+Description
+This method inserts the given object at the given index in this Vector. 
+Each object in the Vector with 
+an index greater than or equal to index 
+is shifted upward in the Vector, 
+so that it has an index of one greater than it did previously. 
+isEmpty
+public final boolean isEmpty()
+Returns
+true if there are no objects 
+in the Vector; false 
+otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not the Vector 
+is empty. 
+lastElement
+public final synchronized Object lastElement()
+Returns
+The last object in this Vector. 
+Throws
+NoSuchElementException
+If the Vector is empty. 
+Description
+This method returns the last object in this Vector. 
+lastIndexOf
+public final int lastIndexOf(Object elem)
+Parameters
+elem
+The object to be found. 
+Returns
+The index of the given object or -1 if it cannot be found. 
+Description
+This method returns the index of the last occurrence of the given object 
+in this Vector. 
+public final synchronized int lastIndexOf(Object elem, int index)
+Parameters
+elem
+The object to be found.
+index
+The starting index. 
+Returns
+The index of the last occurrence of the given object before the specified 
+index or -1 if it cannot be found. 
+Description
+This method returns the index of the last occurrence of the given object 
+in this Vector before the given 
+index. In other words, the method searches backwards from index 
+for the next occurrence. 
+removeAllElements
+public final synchronized void removeAllElements()
+Description
+This method removes all of the objects from this Vector, 
+but does not change its capacity or capacity increment. 
+removeElement
+public final synchronized boolean removeElement(Object obj)
+Parameters
+obj
+The object to be removed. 
+Returns
+true if the given object is 
+found and removed; false otherwise. 
+Description
+This method searches for the first occurrence of the given object in this 
+Vector and removes it. If the 
+object is found, each object in the Vector 
+with an index greater than or equal to the index of the removed object 
+is shifted downward in the Vector, 
+so that it has an index of one less than it did previously. 
+removeElementAt
+public final synchronized void removeElementAt(int index)
+Parameters
+index
+The index of the 
+object to be removed. 
+Throws
+ArrayIndexOutOfBoundsException
+If index is less than zero 
+or greater than the size of this Vector. 
+Description
+This method removes the object at the given index from this Vector. 
+Each object in the Vector with 
+an index greater than or equal to index 
+is shifted downward in the Vector, 
+so that it has an index of one less than it did previously. 
+setElementAt
+public final synchronized void setElementAt(Object obj, int index)
+Parameters
+obj
+The object to be put 
+in the Vector.
+index
+The index at which 
+to put the object. 
+Throws
+ArrayIndexOutOfBoundsException
+If index is less than zero 
+or greater than the size of this Vector. 
+Description
+This method puts the given object at the given index in this Vector, 
+replacing the object that was previously there. 
+setSize
+public final synchronized void setSize(int newSize)
+Parameters
+newSize
+The new size. 
+Description
+This method sets the size (not the capacity) of this Vector. 
+If the new size is bigger than the current size, null 
+elements are added to the end of the Vector. 
+If the new size is smaller than the current size, elements are discarded 
+from index newSize to the end 
+of the Vector. 
+size
+public final int size()
+Returns
+The size of this Vector. 
+Description
+This method returns the number of objects contained in this Vector. 
+toString
+public final synchronized String toString()
+Returns
+A string that represents this Vector. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Vector. 
+The string includes every object that is contained in the Vector, 
+so the string returned by toString() 
+can be quite long. 
+trimToSize
+public final synchronized void trimToSize()
+Description
+This method sets the capacity of this Vector 
+equal to its size. You can use this method to minimize the storage space 
+used by the Vector, but any 
+subsequent calls to addElement() 
+or insertElement() forces 
+the Vector to allocate more space. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ArrayIndexOutOfBoundsException, 
+Cloneable, 
+Enumeration, 
+NoSuchElementException, 
+Serializable, 
+Stack 
+TooManyListenersException
+Adler32
+ 
+ 
+ 
+ 
+ 
+ 
+ 

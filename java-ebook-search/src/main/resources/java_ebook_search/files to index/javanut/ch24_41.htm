@@ -1,0 +1,29 @@
+
+[Chapter 24] 24.41 java.io.ObjectOutput (JDK 1.1)
+Chapter 24The java.io Package
+24.41 java.io.ObjectOutput (JDK 1.1)
+This interface extends the DataOutput interface and
+adds methods for serializing objects and writing bytes and
+arrays of bytes.
+public abstract interface ObjectOutput extends DataOutput {
+    // Public Instance Methods
+            public abstract void close() throws IOException;
+            public abstract void flush() throws IOException;
+            public abstract void write(int b) throws IOException;   // From DataOutput
+            public abstract void write(byte[] b) throws IOException;  // From DataOutput
+            public abstract void write(byte[] b, int off, int len) throws IOException;  // From DataOutput
+            public abstract void writeObject(Object obj) throws IOException;
+}
+Implemented By:
+ObjectOutputStream
+Passed To:
+Externalizable.writeExternal()
+java.io.ObjectInputValidation (JDK 1.1)
+java.io.ObjectOutputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

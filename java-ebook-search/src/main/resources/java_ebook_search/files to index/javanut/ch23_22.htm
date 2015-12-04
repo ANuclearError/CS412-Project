@@ -1,0 +1,40 @@
+
+[Chapter 23] 23.22 java.beans.VetoableChangeSupport (JDK 1.1)
+Chapter 23The java.beans Package
+23.22 java.beans.VetoableChangeSupport (JDK 1.1)
+VetoableChangeSupport is a convenience class that
+maintains a list of registered
+VetoableChangeListener objects and provides a
+fireVetoableChange() method for sending a
+PropertyChangeEvent to all registered listeners.  If
+any of the registered listeners veto the proposed change,
+fireVetoableChange() send out another
+PropertyChangeEvent notifying previously notified
+listeners that the property has changed back to its original
+value.  
+Because of the extra complexity of correctly handling
+vetoable changes, and because of some tricky thread
+synchronization issues involved in maintaining the list of
+listeners, it is recommended that all Java beans that
+support "constrained" events create a
+VetoableChangeSupport object to which they can
+delegate the tasks of maintaining the list of listeners and
+of firing events.
+public class VetoableChangeSupport extends Object implements Serializable {
+    // Public Constructor
+            public VetoableChangeSupport(Object sourceBean);
+    // Public Instance Methods
+            public synchronized void addVetoableChangeListener(VetoableChangeListener listener);
+            public void fireVetoableChange(String propertyName, Object oldValue, Object newValue)
+            public void fireVetoableChange'u'throws PropertyVetoException;
+            public synchronized void removeVetoableChangeListener(VetoableChangeListener listener);
+}
+java.beans.VetoableChangeListener (JDK 1.1)
+java.beans.Visibility (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

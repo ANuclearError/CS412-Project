@@ -1,0 +1,51 @@
+
+[Chapter 28] 28.18 java.net.SocketImpl (JDK 1.0)
+Chapter 28The java.net Package
+28.18 java.net.SocketImpl (JDK 1.0)
+This abstract class defines the methods necessary to
+implement communication through sockets. Different
+subclasses of this class may provide different
+implementations suitable in different environments (such as
+behind firewalls). These socket implementations are used by
+the Socket and ServerSocket classes.
+Normal applications never need to use or subclass this
+class.
+public abstract class SocketImpl extends Object {
+    // Default Constructor: public SocketImpl()
+    // Protected Instance Variables
+            protected InetAddress address;
+            protected FileDescriptor fd;
+            protected int localport;
+            protected int port;
+    // Public Instance Methods
+            public String toString();  // Overrides Object
+    // Protected Instance Methods
+            protected abstract void accept(SocketImpl s) throws IOException;
+            protected abstract int available() throws IOException;
+            protected abstract void bind(InetAddress host, int port) throws IOException;
+            protected abstract void close() throws IOException;
+            protected abstract void connect(String host, int port) throws IOException;
+            protected abstract void connect(InetAddress address, int port) throws IOException;
+            protected abstract void create(boolean stream) throws IOException;
+            protected FileDescriptor getFileDescriptor();
+            protected InetAddress getInetAddress();
+            protected abstract InputStream getInputStream() throws IOException;
+            protected int getLocalPort();
+            protected abstract OutputStream getOutputStream() throws IOException;
+            protected int getPort();
+            protected abstract void listen(int backlog) throws IOException;
+}
+Passed To:
+Socket(), 
+SocketImpl.accept()
+Returned By:
+SocketImplFactory.createSocketImpl()
+java.net.SocketException (JDK 1.0)
+java.net.SocketImplFactory (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

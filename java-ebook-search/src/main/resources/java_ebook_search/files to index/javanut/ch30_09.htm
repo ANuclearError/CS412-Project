@@ -1,0 +1,60 @@
+
+[Chapter 30] 30.9 java.util.GregorianCalendar (JDK 1.1)
+Chapter 30The java.util Package
+30.9 java.util.GregorianCalendar (JDK 1.1)
+This concrete subclass of Calendar implements the
+"standard" solar calendar with years numbered from the birth
+of Christ, which is used in most locales throughout the world.
+You do not typically use this class directly, but
+instead obtain a Calendar object suitable for the
+default locale by calling Calendar.getInstance().
+See Calendar for details on working with
+Calendar objects.
+There is a discontinuity in the Gregorian calendar that
+represents the historical switch from the Julian calendar to
+the Gregorian calendar.  By default
+GregorianCalendar assumes that this switch occurs on
+October 15, 1582. 
+Most programs need not be concerned with this.
+public class GregorianCalendar extends Calendar {
+    // Public Constructors
+            public GregorianCalendar();
+            public GregorianCalendar(TimeZone zone);
+            public GregorianCalendar(Locale aLocale);
+            public GregorianCalendar(TimeZone zone, Locale aLocale);
+            public GregorianCalendar(int year, int month, int date);
+            public GregorianCalendar(int year, int month, int date, int hour, int minute);
+            public GregorianCalendar(int year, int month, int date, int hour, int minute, int second);
+    // Constants
+            public static final int AD;
+            public static final int BC;
+    // Public Instance Methods
+            public void add(int field, int amount);  // Defines Calendar
+            public boolean after(Object when);  // Defines Calendar
+            public boolean before(Object when);  // Defines Calendar
+            public Object clone();  // Overrides Calendar
+            public boolean equals(Object obj);  // Defines Calendar
+            public int getGreatestMinimum(int field);  // Defines Calendar
+            public final Date getGregorianChange();
+            public int getLeastMaximum(int field);  // Defines Calendar
+            public int getMaximum(int field);  // Defines Calendar
+            public int getMinimum(int field);  // Defines Calendar
+            public synchronized int hashCode();  // Overrides Object
+            public boolean isLeapYear(int year);
+            public void roll(int field, boolean up);  // Defines Calendar
+            public void setGregorianChange(Date date);
+    // Protected Instance Methods
+            protected void computeFields();  // Defines Calendar
+            protected void computeTime();  // Defines Calendar
+}
+Hierarchy:
+Object->Calendar(Serializable, Cloneable)->GregorianCalendar
+java.util.EventObject (JDK 1.1)
+java.util.Hashtable (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

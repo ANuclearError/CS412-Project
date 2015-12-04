@@ -1,0 +1,127 @@
+
+[Chapter 19] Cursor 
+Chapter 19java.awt Reference
+Cursor 
+Name
+Cursor 
+Description
+The Cursor class represents 
+the mouse pointer. It encapsulates information that used to be in java.awt.Frame 
+in the 1.0.2 release. 
+Class Definition
+public class java.awt.Cursor
+    extends java.lang.Object
+    implements java.io.Serializable {
+  // Constants
+  public final static int CROSSHAIR_CURSOR;
+  public final static int DEFAULT_CURSOR;
+  public final static int E_RESIZE_CURSOR;
+  public final static int HAND_CURSOR;
+  public final static int MOVE_CURSOR;
+  public final static int N_RESIZE_CURSOR;
+  public final static int NE_RESIZE_CURSOR;
+  public final static int NW_RESIZE_CURSOR;
+  public final static int S_RESIZE_CURSOR;
+  public final static int SE_RESIZE_CURSOR;
+  public final static int SW_RESIZE_CURSOR;
+  public final static int TEXT_CURSOR;
+  public final static int W_RESIZE_CURSOR;
+  public final static int WAIT_CURSOR;
+  // Class Variables
+  protected static Cursor[] predefined;
+  // Class Methods
+  public static Cursor getDefaultCursor();
+  public static Cursor getPredefinedCursor (int type);
+  // Constructors
+  public Cursor (int type);
+  // Instance Methods
+  public int getType();
+}
+Constants
+CROSSHAIR_CURSOR
+public final static int CROSSHAIR_CURSOR
+Constant representing a cursor that looks like a crosshair. 
+DEFAULT_CURSOR
+public final static int DEFAULT_CURSOR
+Constant representing the platform's default cursor. 
+E_RESIZE_CURSOR
+public final static int E_RESIZE_CURSOR
+Constant representing the cursor for resizing an object on the left. 
+HAND_CURSOR
+public final static int HAND_CURSOR
+Constant representing a cursor that looks like a hand. 
+MOVE_CURSOR
+public final static int MOVE_CURSOR
+Constant representing a cursor used to move an object. 
+N_RESIZE_CURSOR
+public final static int N_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the top. 
+NE_RESIZE_CURSOR
+public final static int NE_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the top left corner. 
+NW_RESIZE_CURSOR
+public final static int NW_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the top right 
+corner. 
+S_RESIZE_CURSOR
+public final static int S_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the bottom. 
+SE_RESIZE_CURSOR
+public final static int SE_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the bottom left 
+corner. 
+SW_RESIZE_CURSOR
+public final static int SW_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the bottom right 
+corner. 
+TEXT_CURSOR
+public final static int TEXT_CURSOR
+Constant representing a cursor used within text. 
+W_RESIZE_CURSOR
+public final static int W_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the right side. 
+WAIT_CURSOR
+public final static int WAIT_CURSOR
+Constant representing a cursor that indicates the program is busy. 
+Class Variables
+predefined
+protected static Cursor[] predefined
+An array of cursor instances corresponding to the predefined cursor types. 
+Class Methods
+getDefaultCursor
+public static Cursor getDefaultCursor()
+Returns
+The default system cursor. 
+getPredefinedCursor
+public static Cursor getPredefinedCursor (int type)
+Parameters
+type
+One of the type constants defined in this class. 
+Returns
+A Cursor object with the specified 
+type. 
+Constructors
+Cursor
+public Cursor (int type)
+Parameters
+type
+One of the type constants defined in this class. 
+Description
+Constructs a Cursor object 
+with the specified type. 
+Instance Methods
+getType
+public int getType()
+Returns
+The type of cursor. 
+See Also
+Frame 
+Container
+Dialog
+ 
+ 
+ 
+ 
+ 
+ 
+ 

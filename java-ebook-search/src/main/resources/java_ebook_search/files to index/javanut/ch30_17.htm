@@ -1,0 +1,62 @@
+
+[Chapter 30] 30.17 java.util.Properties (JDK 1.0)
+Chapter 30The java.util Package
+30.17 java.util.Properties (JDK 1.0)
+This class is an extension of Hashtable that allows
+key/value pairs to be read from and written to a stream.
+The Properties class is used to implement the system
+properties list, which supports user customization by
+allowing programs to look up the value of named resources.
+When you create a Properties object, you may specify
+another Properties object that contains default
+values. Keys (property names) and values are associated in
+a Properties object with the Hashtable
+method put(). Values are looked up with
+getProperty()--if this method does not find the key
+in the current Properties object, it looks in
+the default Properties object that was passed to the
+constructor method. A default value may also be specified
+in case the key is not found at all.
+propertyNames() returns an enumeration of all
+property names (keys) stored in the Properties
+object and (recursively) also all property names stored in
+the default Properties object associated with it.
+list() prints the properties stored in a
+Properties object. It is useful for debugging.
+save() writes a Properties object to a
+stream. load() reads key/value pairs from a stream
+and stores them in a Properties object.
+public class Properties extends Hashtable {
+    // Public Constructors
+            public Properties();
+            public Properties(Properties defaults);
+    // Protected Instance Variables
+            protected Properties defaults;
+    // Public Instance Methods
+            public String getProperty(String key);
+            public String getProperty(String key, String defaultValue);
+            public void list(PrintStream out);
+        1.1public void list(PrintWriter out);
+            public synchronized void load(InputStream in) throws IOException;
+            public Enumeration propertyNames();
+            public synchronized void save(OutputStream out, String header);
+}
+Hierarchy:
+Object->Dictionary->Hashtable(Cloneable, Serializable)->Properties
+Passed To:
+Properties(), 
+System.setProperties(), 
+Toolkit.getPrintJob()
+Returned By:
+System.getProperties()
+Type Of:
+Properties.defaults
+java.util.Observer (JDK 1.0)
+java.util.PropertyResourceBundle (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,61 @@
+
+[Chapter 31] The java.util.zip Package
+Chapter 31
+31. The java.util.zip Package
+Contents:
+java.util.zip.CheckedInputStream (JDK 1.1)
+java.util.zip.CheckedOutputStream (JDK 1.1)
+java.util.zip.Checksum (JDK 1.1)
+java.util.zip.CRC32 (JDK 1.1)
+java.util.zip.DataFormatException (JDK 1.1)
+java.util.zip.Deflater (JDK 1.1)
+java.util.zip.DeflaterOutputStream (JDK 1.1)
+java.util.zip.GZIPInputStream (JDK 1.1)
+java.util.zip.GZIPOutputStream (JDK 1.1)
+java.util.zip.Inflater (JDK 1.1)
+java.util.zip.InflaterInputStream (JDK 1.1)
+java.util.zip.ZipEntry (JDK 1.1)
+java.util.zip.ZipException (JDK 1.1)
+java.util.zip.ZipFile (JDK 1.1)
+java.util.zip.ZipInputStream (JDK 1.1)
+java.util.zip.ZipOutputStream (JDK 1.1)
+The java.util.zip package contains classes for data
+compression and decompression. It is new in Java
+1.1.
+Figure 31.1
+shows the class hierarchy of the package.
+The Deflater and Inflater classes perform
+data compression and decompression.
+DeflaterOutputStream and InflaterInputStream
+apply that functionality to byte streams; the subclasses
+of these streams implement both the GZIP and ZIP compression
+formats.  The Adler32 and CRC32 classes
+implement the Checksum interface and compute the
+checksums required for data compression.
+Figure 31.1: The java.util.zip package
+31.1 java.util.zip.Adler32 (JDK 1.1)
+This class implements the Checksum interface and
+computes a checksum on a stream of data using the Adler-32
+algorithm.  This algorithm is significantly faster than the
+CRC-32 algorithm and is almost as reliable.  
+The CheckedInputStream and
+CheckedOutputStream classes provide a higher-level
+interface to computing checksums on streams of data.
+public class Adler32 extends Object implements Checksum {
+    // Default Constructor: public Adler32()
+    // Public Instance Methods
+            public long getValue();  // From Checksum
+            public void reset();  // From Checksum
+            public void update(int b);  // From Checksum
+            public native void update(byte[] b, int off, int len);  // From Checksum
+            public void update(byte[] b);
+}
+java.util.Vector (JDK 1.0)
+java.util.zip.CheckedInputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

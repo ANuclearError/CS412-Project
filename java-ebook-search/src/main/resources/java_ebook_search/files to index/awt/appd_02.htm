@@ -1,0 +1,95 @@
+
+[Appendix D] D.2 A Brief Tour of sun.awt.image
+Appendix DImage Loading
+D.2 A Brief Tour of sun.awt.image
+The classes in sun.awt.image 
+do the behind-the-scenes work for rendering an image from a file or across 
+the network. This information is purely for the curious; you should never 
+have to work with these classes yourself. 
+Image
+The Image class in this package 
+represents a concrete Image 
+instance. It contains the basis for the Image 
+class that is actually used on the run-time platform, which exists in the 
+package for the specific environment. For instance, the sun.awt.win32 
+package includes the W32Image 
+(Java 1.0), the sun.awt.windows 
+package includes WImage (Java 
+1.1), while the sun.awt.motif 
+package includes the X11Image, 
+and the sun.awt.macos package 
+includes the MacImage. 
+ImageRepresentation
+The ImageRepresentation is 
+the ImageConsumer that watches 
+the creation of the image and notifies the ImageObserver 
+when it is time to update the display. It plays an important part in the 
+overall control of the Image 
+production process. 
+Image sources
+A Java image can come from 
+three different sources: memory (through createImage()), 
+local disk, or the network (through getImage()). 
+ 
+OffScreenImageSource implements
+ImageProducer for a single framed image in
+memory. When an Image created from an
+OffScreenImageSource is drawn with
+drawImage(), the ImageObserver
+parameter can be null since all the image
+information is already in memory and there is no need for periodic
+updating as more is retrieved from disk. You can get the graphics
+context of OffScreenImageSource images and use the
+context to draw on the image area. This is how double buffering works.
+InputStreamImageSource implements
+ImageProducer for an image that comes from disk or
+across the network. When an Image created from an
+InputStreamImageSource is drawn with
+drawImage(), the ImageObserver
+parameter should be the component being drawn on (usually
+this) since the image information will be loaded
+periodically with the help of the ImageObserver
+interface). This class determines how to decode the image type and
+initializes the ImageDecoder to one of
+GifImageDecoder,
+JPEGImageDecoder, or
+XbmImageDecoder, although that can be overridden by
+a subclass. It can use a ContentHandler to work
+with unknown image types.
+FileImageSource is a subclass of
+InputStreamImageSource for images that come from
+the filesystem. It uses the filename to determine the type of image
+to decode and checks the security manager to ensure that access is
+allowed.
+URLImageSource is a subclass of
+InputStreamImageSource for images that are
+specified by a URL.
+ByteArrayImageSource (Java 1.1 only) is a subclass
+of InputStreamImageSource for images that are
+created by calling Toolkit.createImage(byte[]).
+Image decoders
+An ImageDecoder is utilized 
+to convert the image source to an image object. If there is no decoder 
+for an image type, it can be read in with the help of a ContentHandler 
+or your own class that implements ImageProducer, 
+like the PPMImageDecoder shown 
+in Chapter 12, Image Processing. 
+GifImageDecoder reads in an image file in the GIF format.
+JPEGImageDecoder reads in an image file in the JPEG format.
+XbmImageDecoder reads in an image file in the XBM
+format. Although XBM support is not required by the language
+specification, support is provided with Netscape Navigator, Internet
+Explorer, HotJava, and the Java Developer's Kit from Sun.
+ImageFetcher
+The ImageFetcher class fetches 
+the actual image from its source. This class creates a separate daemon 
+thread to fetch each image. The thread is run at a higher priority than 
+the default but not at the maximum priority. 
+How Images are Loaded
+ 
+ 
+ 
+ 
+ 
+ 
+ 

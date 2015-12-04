@@ -1,0 +1,527 @@
+
+[Chapter 17] Date
+Chapter 17The java.util Package
+Date
+Name
+Date
+Synopsis
+Class Name:
+java.util.Date
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+JDK 1.0 or later 
+Description
+The Date class encapsulates a point in time with
+millisecond precision. The value of a Date is
+represented internally by a long value that
+contains the number of milliseconds since midnight, January 1, 1970
+GMT.
+Prior to JDK 1.1, the Date class was used for two
+purposes that are now encapsulated by other classes.  First, the
+Date class included methods for calculating
+calendar values, like months and days of the week.  This functionality
+is now embedded in the Calendar class. Second, the
+Date class included methods for generating and
+parsing a string representation of a date. This functionality is now
+provided by java.text.DateFormat.  Thus, as of JDK
+1.1, most of the methods of Date are deprecated;
+the class is used only to represent a point in time.
+The accurate measurement of time is a subject of considerable
+complexity and multifarious acronyms. There are two main methods of
+measuring time, atomic and astronomical. The U.S. Naval
+Observatory (http://tycho.usno.navy.mil) maintains
+a set of atomic clocks that provide the basis for Coordinated
+Universal Time (UTC). These clocks adhere to precise definitions of
+the second based on atomic decay.
+Outside of the U.S. Navy, people tend to measure time in terms of Greenwich 
+Mean Time (GMT). In the scientific community, GMT is called UT, which is 
+a system of time predicated on the assumption that each rotation of the 
+earth is exactly 24 * 60 * 60 seconds long. Because the earth's rotation 
+is gradually slowing down, the seconds in UT are a little bit longer than 
+the seconds in UTC. Now and then a "leap second" is added in 
+UTC to keep it close to UT. Because the Date 
+class simply measures milliseconds since a point in time, without regard 
+for leap seconds, it is a good representation of UT or GMT. 
+Class Summary
+public class java.util.Date extends java.lang.Object
+             implements java.lang.Cloneable, java.io.Serializable {
+  // Constructors
+  public Date();
+  public Date(long date);
+  public Date(int year, int month, int date);       // Deprecated in 1.1
+  public Date(int year, int month, int date, 
+              int hrs, int min);                    // Deprecated in 1.1
+  public Date(int year, int month, int date, 
+              int hrs, int min, int sec);           // Deprecated in 1.1
+  public Date(String s);                            // Deprecated in 1.1
+  // Class Methods
+  public static long parse(String s);               // Deprecated in 1.1
+  public static long UTC(int year, int month, 
+                         int date, int hrs, 
+                         int min, int sec);         // Deprecated in 1.1
+  // Instance Methods
+  public boolean after(Date when);
+  public boolean before(Date when);
+  public boolean equals(Object obj); 
+  public int getDate();                             // Deprecated in 1.1
+  public int getDay();                              // Deprecated in 1.1
+  public int getHours();                            // Deprecated in 1.1
+  public int getMinutes();                          // Deprecated in 1.1
+  public int getMonth();                            // Deprecated in 1.1
+  public int getSeconds();                          // Deprecated in 1.1
+  public long getTime();
+  public int getTimezoneOffset();                   // Deprecated in 1.1
+  public int getYear();                             // Deprecated in 1.1
+  public int hashCode();
+  public void setDate(int date);                    // Deprecated in 1.1
+  public void setHours(int hours);                  // Deprecated in 1.1
+  public void setMinutes(int minutes);              // Deprecated in 1.1
+  public void setMonth(int month);                  // Deprecated in 1.1
+  public void setSeconds(int seconds);              // Deprecated in 1.1
+  public void setTime(long time);
+  public void setYear(int year);                    // Deprecated in 1.1
+  public String toGMTString();                      // Deprecated in 1.1
+  public String toLocaleString();                   // Deprecated in 1.1
+  public String toString();
+}
+Constructors
+Date
+public Date()
+Description
+This constructor creates a Date 
+object that is initialized to the current time. 
+public Date(long date)
+Parameters
+date
+A time value, measured 
+as the number of milliseconds since midnight, January 1, 1970 GMT. 
+Description
+This constructor creates a Date 
+object that represents the given time. 
+public Date(int year, int month, int day)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+year
+The year specified 
+as a value that is added to 1900 to get the actual year.
+month
+The month specified 
+in the range 0 to 11.
+day
+The day of the month 
+specified in the range 1 to 31. 
+Description
+This constructor creates a Date 
+that represents midnight local time on the specified date. 
+public Date(int year, int month, int day, int hrs, int min)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+year
+The year specified 
+as a value that is added to 1900 to get the actual year.
+month
+The month specified 
+in the range 0 to 11.
+day
+The day of the month 
+specified in the range 1 to 31.
+hrs
+The hours specified 
+in the range 0 to 23.
+min
+The minutes specified 
+in the range 0 to 59. 
+Description
+This constructor creates a Date 
+that represents the given date and time. 
+   public Date(int year, int month, int day, int hrs, int min, int sec)  
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+year
+The year specified 
+as a value that is added to 1900 to get the actual year.
+month
+The month specified 
+in the range 0 to 11.
+day
+The day of the month 
+specified in the range 1 to 31.
+hrs
+The hours specified 
+in the range 0 to 23.
+min
+The minutes specified 
+in the range 0 to 59.
+sec
+The seconds specified 
+in the range 0 to 59. 
+Description
+This constructor creates a Date 
+that represents the given date and time. 
+public Date(String s)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+s
+The string to parse. 
+Description
+This constructor creates a Date 
+that represents the date and time specified by the given string. The syntax 
+of the date in the string must satisfy the requirements of the parse() 
+method. The following is an example of a string that this constructor can 
+understand: 
+Sat, 8 Feb 1997 13:30:00 GMT
+Class Methods
+parse
+public static long parse(String s)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+s
+The string to parse. 
+Returns
+A time value represented as the number of milliseconds since midnight, 
+January 1, 1970 GMT. 
+Throws
+IllegalArgumentException
+If the string cannot be parsed. 
+Description
+This method returns the raw time value specified by the given string. This 
+method understands a number of different formats. The following are examples 
+of strings that this method can understand: 
+Sat, 8 Feb 1997 13:30:00 GMT
+4/6/97
+4/6/1997
+January 5, 1997
+2/4/97 11:03 AM
+2/4/97 10:25 PM
+2/4/97 17:03 GMT-6
+2/4/97 17:03:24
+March 16, 97 17:03 EST
+March (comment)16, 97 (comment) 17:03 EST
+16 march 1996 17:03 pdt
+Sat 16 march 97 17:03 cst
+The JDK 1.0.2 implementation of parse() has a
+serious bug. It incorrectly interprets date formats that specify the
+month as a number by making the month one greater than it should be.
+So 2/4/97 is incorrectly interpreted as March 4,
+1997.  
+ For the purposes of this method, UTC and GMT are
+considered equivalent.
+UTC
+   public static long UTC(int year, int month, int date, int hrs, int min, int sec)  
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+year
+The year specified 
+as a value that is added to 1900 to get the actual year.
+month
+The month specified 
+in the range 0 to 11.
+day
+The day of the month 
+specified in the range 1 to 31.
+hrs
+The hours specified 
+in the range 0 to 23.
+min
+The minutes specified 
+in the range 0 to 59.
+sec
+The seconds specified 
+in the range 0 to 59. 
+Returns
+A time value represented as the number of milliseconds since midnight, 
+January 1, 1970 GMT. 
+Description
+This method returns a raw time value that corresponds to the given parameters. 
+Computations are based on GMT, not the local time zone. 
+Instance Methods
+after
+public boolean after(Date when)
+Parameters
+when
+The object to compare 
+to this Date. 
+Returns
+true if this object is after 
+when; false 
+otherwise. 
+Description
+This method returns true if 
+the value of when falls before 
+the value of this Date. 
+before
+public boolean before(Date when)
+Parameters
+when
+The object to compare 
+to this Date. 
+Returns
+true if this object is before 
+when; false 
+otherwise. 
+Description
+This method returns true if 
+the value of when falls after 
+the value of this Date. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+when is an instance of Date 
+and it contains the same value as the object this method is associated 
+with. In other words, the two Date 
+objects are equal only if they both represent the same point in time, to 
+the millisecond. 
+getDate
+public int getDate()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The day of the month of this Date. 
+Description
+This method returns the day of the month represented by this Date 
+object. The value is in the range 1 to 31. 
+getDay
+public int getDay()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The day of the week of this Date. 
+Description
+This method returns the day of the week represented by this Date 
+object. The value is in the range 0 to 6, where 0 means Sunday. 
+getHours
+public int getHours()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The hour value of this Date. 
+Description
+This method returns the hour represented by this Date 
+object. The value is in the range 0 to 23, where 0 means midnight. 
+getMinutes
+public int getMinutes()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The minute value of this Date. 
+Description
+This method returns the number of minutes after the hour represented by 
+this Date object. The value 
+is in the range 0 to 59. 
+getMonth
+public int getMonth()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The month of this Date. 
+Description
+This method returns the month represented by this Date 
+object. The value is in the range 0 to 11, where 0 means January. 
+getSeconds
+public int getSeconds()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The second value of this Date. 
+Description
+This method returns the number of seconds after the minute represented 
+by this Date object. The value 
+is in the range 0 to 59. 
+getTime
+public long getTime()
+Returns
+The raw time value of this Date. 
+Description
+This method returns the date and time of this Date 
+as the number of milliseconds since midnight, January 1, 1970 GMT. 
+getTimezoneOffset
+public int getTimezoneOffset()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The time zone offset for this Date. 
+Description
+This method returns the number of minutes between the local time zone and 
+GMT for this Date object. 
+getYear
+public int getYear()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+The year of this Date. 
+Description
+This method returns the year represented by this Date 
+object. The value is the number of years since 1990. 
+hashCode
+public int hashCode()
+Returns
+The hashcode for this Date. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object. 
+setDate
+public void setDate(int date)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+date
+The day of the month 
+specified in the range 1 to 31. 
+Description
+This method sets the day of the month of this Date 
+object. 
+setHours
+public void setHours(int hours)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+hours
+The hours specified 
+in the range 0 to 23. 
+Description
+This method sets the hour of this Date 
+object. 
+setMinutes
+public void setMinutes(int minutes)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+minutes
+The minutes specified 
+in the range 0 to 59. 
+Description
+This method sets the minute value of this Date 
+object. 
+setMonth
+public void setMonth(int month)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+month
+The month specified 
+in the range 0 to 11. 
+Description
+This method sets the month of this Date 
+object 
+setSeconds
+public void setSeconds(int seconds)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+seconds
+The seconds specified 
+in the range 0 to 59. 
+Description
+This method sets the second value of this Date 
+object. 
+setTime
+public void setTime(long time)
+Parameters
+time
+A time value specified 
+as the number of milliseconds since midnight, January 1, 1970 GMT. 
+Description
+This method sets the date and time represented by this Date 
+to the given raw time value. 
+setYear
+public void setYear(int year)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+year
+The year specified 
+as a value that is added to 1900 to get the actual year. 
+Description
+This method sets the year of this Date 
+object. 
+toGMTString
+public String toGMTString()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+A string that represents this Date. 
+Description
+The method returns a string representation of this Date 
+object based on Internet GMT conventions. The string is of the form: 
+Sat, 8 Feb 1997 13:30:00 GMT
+The date is the string is either one or two digits; the rest of the fields 
+always have the width shown. The time zone is always GMT. 
+toLocaleString
+public String toLocaleString()
+Availability
+Deprecated as of JDK 1.1 
+Returns
+A string that represents this Date. 
+Description
+The method returns a string representation of this Date 
+based on the conventions of the current locale. 
+toString
+public String toString()
+Returns
+A string that represents this Date. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Date. 
+The string is of the form: 
+Sat Feb 8 2:30:00 MST 1997
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+Cloneable, 
+DateFormat, 
+GregorianCalendar, 
+IllegalArgumentException, 
+Serializable, 
+TimeZone 
+Calendar
+Dictionary
+ 
+ 
+ 
+ 
+ 
+ 
+ 

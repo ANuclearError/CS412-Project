@@ -1,0 +1,66 @@
+
+[Chapter 3] 3.5 Displaying Colors
+Chapter 3Fonts and Colors
+3.5 Displaying Colors
+Example 3.3 displays the predefined colors on
+the screen in a series of filled rectangles. When you press a mouse button, 
+they appear brighter. When you press a key, they appear darker. (Event 
+handling is fully explained in Chapter 4, Events.) Figure 3.4 
+shows the results, although it doesn't look very impressive in black 
+and white. 
+Example 3.3: Color Display
+import java.awt.*;
+public class ColorDisplay extends Frame {
+    int width, height;
+    static Color colors[] =
+                {Color.black, Color.blue, Color.cyan, Color.darkGray,
+                Color.gray, Color.green, Color.lightGray, Color.magenta,
+                Color.orange, Color.pink, Color.red, Color.white,
+                Color.yellow};
+    ColorDisplay () {
+        super ("ColorDisplay");
+        setBackground (Color.white);
+    }
+    static public void main (String args[]) {
+        ColorDisplay f = new ColorDisplay();
+        f.resize (300,300);
+        f.show();
+    }
+    public void paint (Graphics g) {
+        g.translate (insets().left, insets().top);
+        if (width == 0) {
+            Insets inset = insets();
+            width  = (size().width - inset.right - inset.left) / 3;
+            height = (size().height - inset.top - inset.bottom) / 5;
+        }
+        for (int i = 0; i &lt; 3; i++) {
+            for (int j = 0; j &lt; 5; j++) {
+                if ((i == 2) &amp;&amp; (j &gt;= 3)) break;
+                g.setColor (colors[i*5+j]);
+                g.fillRect (i*width, j*height, width, height);
+            }
+        }
+    }
+    public boolean keyDown (Event e, int c) {
+        for (int i=0;i&lt;colors.length;i++)
+            colors[i] = colors[i].darker();
+        repaint();
+        return true;
+    }
+    public boolean mouseDown (Event e, int x, int y) {
+        for (int i=0;i&lt;colors.length;i++)
+            colors[i] = colors[i].brighter();
+        repaint();
+        return true;
+    }
+}
+Figure 3.4: A color display
+SystemColor
+Using Desktop Colors
+ 
+ 
+ 
+ 
+ 
+ 
+ 

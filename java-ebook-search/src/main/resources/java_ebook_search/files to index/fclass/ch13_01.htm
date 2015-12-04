@@ -1,0 +1,564 @@
+
+[Chapter 13] The java.lang.reflect Package
+Chapter 13
+13. The java.lang.reflect Package
+Contents:
+Array
+Constructor
+Field
+InvocationTargetException
+Member
+Method
+Modifier
+The package java.lang.reflect is new as
+of Java 1.1.  It contains 
+classes and interfaces that support the Reflection API.
+Reflection refers to the ability of a class to reflect upon itself,
+or look inside of itself, to see what it can do.
+The Reflection API makes it possible to:
+Discover the variables, methods, and constructors of any class.
+Create an instance of any class using any available constructor of 
+that class, even if the class initiating the creation was not 
+compiled with any information about the class to be instantiated.
+Access the variables of any object, even if the accessing class was not 
+compiled with any information about the class to be accessed.
+Call the methods of any object, even if the calling class was not 
+compiled with any information about the class that contains the methods.
+Create an array of objects that are instances of any class, even if
+the creating class was not compiled with any information about the
+class.
+These capabilities are implemented by the 
+java.lang.Class class and the classes in the 
+java.lang.reflect package.  
+Figure 13.1 shows the class hierarchy for
+the java.lang.reflect package.
+Figure 13.1: The java.lang.reflect package
+Java 1.1 currently uses the Reflection API for two purposes:
+The JavaBeans API supports a mechanism for customizing
+objects that is based on being able to discover their public
+variables, methods, and constructors.  See the forthcoming
+Developing Java Beans from O'Reilly &amp; Associates
+for more information about the JavaBeans API.
+The object serialization functionality in java.io
+is built on top of the Reflection API.  
+Object serialization allows arbitrary objects to be written
+to a stream of bytes and then read back later as objects.
+Array
+Name
+Array
+Synopsis
+Class Name:
+java.lang.reflect.Array
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The Array 
+class provides static methods to manipulate arbitrary 
+arrays in Java. 
+There are methods to set and retrieve elements in an array, determine the 
+size of an array, and create a new instance of an array. 
+The Array 
+class is used to create array objects and 
+manipulate their elements. The Array class is not
+used to represent array types. Because arrays 
+in Java are objects, array 
+types are represented by Class 
+objects. 
+Class Summary
+public final class java.lang.reflect.Array extends java.lang.Object {
+  // Class Methods
+  public static native Object get(Object array, int index);
+  public static native boolean getBoolean(Object array, int index);
+  public static native byte getByte(Object array, int index);
+  public static native char getChar(Object array, int index);
+  public static native double getDouble(Object array, int index);
+  public static native float getFloat(Object array, int index);
+  public static native int getInt(Object array, int index);
+  public static native int getLength(Object array);
+  public static native long getLong(Object array, int index);
+  public static native short getShort(Object array, int index);
+  public static Object newInstance(Class componentType, int length);
+  public static Object newInstance(Class componentType, int[] dimensions);
+  public static native void set(Object array, int index, Object value);
+  public static native void setBoolean(Object array, int index, boolean z);
+  public static native void setByte(Object array, int index, byte b);
+  public static native void setChar(Object array, int index, char c);
+  public static native void setDouble(Object array, int index, double d);
+  public static native void setFloat(Object array, int index, float f);
+  public static native void setInt(Object array, int index, int i);
+  public static native void setLong(Object array, int index, long l);
+  public static native void setShort(Object array, int index, short s);
+}
+Class Methods
+get
+   public static native Object get(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The object at the given index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array. If the 
+array contains values of a primitive type, the value at the given index 
+is wrapped in an appropriate object, and the object is returned. 
+getBoolean
+   public static native boolean getBoolean(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The boolean value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a boolean.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a boolean 
+value. 
+getByte
+   public static native byte getByte(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The byte value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a byte.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a byte 
+value. 
+getChar
+   public static native char getChar(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The char value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a char.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a char 
+value. 
+getDouble
+   public static native double getDouble(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The double value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a double.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a double 
+value. 
+getFloat
+   public static native float getFloat(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The float value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a float.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a float 
+value. 
+getInt
+   public static native int getInt(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The int value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a int.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a int 
+value. 
+getLength
+   public static native int getLength(Object array) throws IllegalArgumentException  
+Parameters
+array
+An array object. 
+Returns
+The length of the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array. 
+Description
+This method returns the length of the array. 
+getLong
+   public static native long getLong(Object array, long index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The long value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a long.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a long 
+value. 
+getShort
+   public static native short getShort(Object array, short index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array. 
+Returns
+The short value at the given 
+index in the specified array. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or the object at the given index cannot 
+be converted to a short.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method returns the object at the given index in the array as a short 
+value. 
+newInstance
+   public static Object newInstance(Class componentType, int length) throws NegativeArraySizeException  
+Parameters
+componentType
+The type of each element in the array.
+length
+The length of the array. 
+Returns
+An array object that contains elements of the given component type and 
+has the specified length. 
+Throws
+NegativeArraySizeException
+If length is negative.
+NullPointerException
+If componentType is null. 
+Description
+This method creates a single-dimension array with the given length and 
+component type. 
+   public static Object newInstance(Class componentType, int[] dimensions) throws IllegalArgumentException, NegativeArraySizeException  
+Parameters
+componentType
+The type of each element in the array.
+dimensions
+An array that 
+specifies the dimensions of the array to be created. 
+Returns
+An array object that contains elements of the given component type and 
+has the specified number of dimensions. 
+Throws
+IllegalArgumentException
+If dimensions has zero dimensions 
+itself, or if it has too many dimensions (typically 255 array dimensions 
+are supported).
+NegativeArraySizeException
+If length is negative.
+NullPointerException
+If componentType is null. 
+Description
+This method creates a multidimensional array with the given dimensions 
+and component type. 
+set
+   public static native void set(Object array, int index, Object value) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+value
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if it represents an array of primitive 
+values, and the given value cannot be unwrapped and converted to that primitive 
+type.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the object at the given index in the array to the specified 
+value. If the array contains values of a primitive type, the given value 
+is automatically unwrapped before it is put in the array. 
+setBoolean
+   public static native void setBoolean(Object array, int index, boolean z) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+z
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+boolean value. 
+setByte
+   public static native void setByte(Object array, int index, byte b) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+b
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+byte value. 
+setChar
+   public static native void setChar(Object array, int index, char c) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+c
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+char value. 
+setDouble
+   public static native void setDouble(Object array, int index, double d) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+d
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+double value. 
+setFloat
+   public static native void setFloat(Object array, int index, float f) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+f
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+float value. 
+setInt
+   public static native void setInt(Object array, int index, int i) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+i
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+int value. 
+setLong
+   public static native void setLong(Object array, int index, long l) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+l
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+long value. 
+setShort
+   public static native void setShort(Object array, int index, short s) throws IllegalArgumentException, ArrayIndexOutOfBoundsException  
+Parameters
+array
+An array object.
+index
+An index into the array.
+s
+The new value. 
+Throws
+IllegalArgumentException
+If the given object is not an array, or if the given value cannot be converted 
+to the component type of the array.
+ArrayIndexOutOfBoundsException
+If the given index is invalid.
+NullPointerException
+If array is null. 
+Description
+This method sets the element at the given index in the array to the given 
+short value. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ArrayIndexOutOfBoundsException, 
+Class, 
+IllegalArgumentException, 
+NegativeArraySizeException, 
+NullPointerException, 
+Object 
+Void
+Constructor
+ 
+ 
+ 
+ 
+ 
+ 
+ 

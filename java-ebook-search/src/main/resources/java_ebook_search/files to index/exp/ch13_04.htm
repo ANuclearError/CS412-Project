@@ -1,0 +1,188 @@
+
+[Chapter 13] 13.4 Images
+Chapter 13Drawing With the AWT
+13.4 Images
+So far, we've worked with methods for drawing simple shapes and
+displaying text. For more complex graphics, we'll be working
+with images. AWT has a powerful set of tools for
+generating and displaying image data that address the problems
+of working in a distributed and multithreaded application
+environment. We'll start with the basics of the
+java.awt.Image class and see how to get an image
+into an Applet and draw it on a display. This job
+isn't quite as simple as it sounds; the browser might have to
+retrieve the image from a networked source when we ask for
+it. Fortunately, if we're just interested in getting the image on the
+screen whenever it's ready, we can let AWT handle
+the details for us. Later in this chapter, we'll discuss how to
+manage image loading ourselves, as well as how to create raw image
+data and feed it efficiently to the rest of an application.
+The Image Class
+The java.awt.Image class represents a view of an
+image. The view is created from an image source that produces pixel
+data. Images can be from a static source, such as
+GIF or JPEG data, or a dynamic
+one, such as a video stream or a graphics engine. The
+Image class in Java 1.1 also handles
+GIF89a animations.
+An applet can ask its viewer to retrieve an image by calling
+the getImage() method. The location of the image to
+be retrieved is given as a URL, either absolute or
+fetched from the applet's resources:
+public class MyApplet extends java.applet.Applet { 
+    public void init() { 
+        try { 
+            // absolute URL 
+            URL monaURL = new URL(
+                "http://myserver/images/mona_lisa.gif"); 
+            Image monaImage = getImage( monaURL ); 
+ 
+            // applet resource URL 
+            URL daffyURL = getClass().getResource("cartoons/images/daffy.gif"); 
+            Image daffyDuckImage = getImage( daffyURL );
+        }  
+        catch ( MalformedURLException e ) { // unintelligable url } 
+We usually want to package an applet's images with the applet itself,
+so the second form, using getResource(), is
+preferred; it looks for the image in the applet's JAR file (if there
+is one), before looking elsewhere in the server's file system.  See
+Chapter 8, Input/Output Facilities (I/O) for more about loading class resources.
+Once we have an Image object, we can draw it into
+a graphics context with the drawImage() method of
+the Graphics class. The simplest form of
+drawImage() takes four parameters: the
+Image object, the x,
+y coordinates at which to draw it, and a reference
+to a special image observer object.
+Image Observers
+Images in AWT are processed asynchronously, which
+means Java performs image operations like loading and scaling on its
+own time. For example, the getImage() method always
+returns immediately, even if the image data has to be retrieved over
+the network from Mars and isn't available yet. In fact, if it's
+a new image, Java won't even begin to fetch it until we try to
+use it. The advantage of this technique is that Java can do the work
+of a powerful, multithreaded image-processing environment for
+us. However, it also introduces several problems. If Java is loading
+an image for us, how do we know when it's completely loaded? What if
+we want to work with the image as it arrives? What if we need to know
+properties of the image (like its dimensions) before we can start
+working with it? What if there's an error in loading the image?
+These problems are handled by image observers--designated
+objects that implement the ImageObserver
+interface. All operations that draw or examine
+Image objects return immediately, but they take an
+image-observer object as a parameter. The
+ImageObserver monitors the image's status and
+can make that information available to the rest of the
+application. When image data is loaded from its source, an image
+observer is notified of its progress, including when new pixels
+are available, when a complete frame of the image is ready, and if
+there is an error during loading. The image observer also receives
+attribute information about the image, such as its dimensions and
+properties, as soon as they are known.
+The drawImage() method, like other image
+operations, takes a reference to an ImageObserver
+object as a parameter. drawImage() returns a
+boolean value specifying whether or not the image
+was painted in its entirety. If the image data has not yet been
+loaded or is only partially available, drawImage()
+paints whatever fraction of the image it can and returns. The
+image-observer object, however, is registered as being interested
+in information about the image. It's then called repeatedly as more
+pixel information is available and again when the entire image is
+complete. The image observer can do whatever it wants with this
+information. Most often it calls repaint() to
+prompt the applet to draw the image again with the updated data; as
+you should recall, a call to repaint() initiates a
+call to paint() to be scheduled. In this way an
+applet can redraw the image as it arrives, for a progressive loading
+effect.  Alternatively, it could wait until the entire image is loaded 
+before displaying it.
+We'll discuss creating image observers a bit later. For
+now, we can avoid the issue by using a prefabricated image
+observer. It just so happens that the Component
+class implements the ImageObserver interface and
+provides some simple repainting behavior for us. This means that every
+component can serve as its own default image observer; we simply pass
+a reference to our applet (or other component) as the image-observer
+parameter of a drawImage() call. Hence the
+mysterious this we've occasionally seen
+when working with graphics:
+class MyApplet extends java.applet.Applet { 
+    ... 
+    public void paint( Graphics g ) { 
+        drawImage( monaImage, x, y, this ); 
+        ... 
+Our applet serves as the image observer and calls
+repaint() for us to redraw the image as
+necessary. If the image arrives slowly, our applet is notified
+repeatedly, as new chunks become available. As a result, the image
+appears gradually, as it's loaded. 
+The awt.image.incrementaldraw and
+awt.image.redrawrate system properties control
+this behavior. redrawrate limits how often
+repaint() is called; the default value is every 100
+milliseconds. incrementaldraw prevents drawing
+until the entire image has arrived. By default, this property is set
+to "true"; set it to "false" to turn off
+incremental redrawing.
+Scaling and Size
+Another version of drawImage() renders a scaled 
+version of the image: 
+drawImage( monaImage, x, y, x2, y2, this ); 
+This draws the entire image within the rectangle formed by the points
+x, y and x2,
+y2, scaling as necessary. (Cool, eh?)
+drawImage() behaves the same as before; the image
+is processed by the component as it arrives and the image observer is
+notified as more pixel data and the completed image are available.
+Several other overloaded versions of drawImage()
+provide more complex options: you can scale, crop, and perform some
+simple transpositions.
+If you want to actually make a scaled copy of an image (as opposed to
+simply painting one at draw time), you can call
+getScaledInstance(). Here's how:
+Image scaledDaffy =
+    daffyImage.getScaledInstance(100,200,SCALE_AREA_AVERAGING);
+This method scales the original image to the given size; in this case,
+100 by 200 pixels. It returns a new Image that you
+can draw like any other image. SCALE_AREA_AVERAGING
+is a constant that tells getScaledImage() what
+scaling algorithm to use. The algorithm used here tries to do a decent
+job of scaling, at the expense of time. Some alternatives that take
+less time are SCALE_REPLICATE, which scales by
+replicating scan lines and columns (which is fast, but probably not
+pretty).  You can also specify either SCALE_FAST,
+or SCALE_SMOOTH and let the implementation choose
+an appropriate algorithm that optimizes for time or quality.  If you
+don't have specific requirements, you should use
+SCALE_DEFAULT which, ideally, would be set by a
+preference in the user's environment.
+Scaling an image before calling
+drawImage() can improve performance, because the
+image loading and scaling can take place before the image is actually
+needed. Of course, the same amount of work takes place, but in most
+situations, prescaling will make the program appear faster because it
+takes place while other things are going on; the user doesn't have to
+wait as long for the image to display.  
+The Image getHeight() and
+getWidth() methods retrieves the dimensions of an
+image. Since this information may not be available until the
+image data is completely loaded, both methods also take an
+ImageObserver object as a parameter. If the
+dimensions aren't yet available, they return values of
+-1 and notify the observer when the true value
+is known. We'll see how to
+deal with these and other problems a bit later. For now, we'll
+use Component as an image observer to get by, and
+move on to some general painting techniques.
+Fonts
+Drawing Techniques
+ 
+ 
+ 
+ 
+ 
+ 
+ 

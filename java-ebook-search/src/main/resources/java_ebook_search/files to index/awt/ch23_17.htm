@@ -1,0 +1,58 @@
+
+[Chapter 23] MenuItemPeer
+Chapter 23java.awt.peer Reference
+MenuItemPeer
+Name
+MenuItemPeer
+Description
+MenuBarPeer is an interface 
+that defines the basis for menu bars. 
+Interface Definition
+public abstract interface java.awt.peer.MenuItemPeer
+   extends java.awt.peer.MenuComponentPeer {
+  // Interface Methods
+  public abstract void disable(); 
+  public abstract void enable(); 
+  public abstract void setEnabled (boolean b); 
+  public abstract void setLabel (String label);
+}
+Interface Methods
+disable
+public abstract void disable() 
+Description
+Disables the menu item's peer so that it is unresponsive to user 
+interactions. Replaced by setEnabled(false). 
+enable
+public abstract void enable() 
+Description
+Enables the menu item's peer so that it is responsive to user interactions. 
+Replaced by setEnabled(true). 
+setEnabled
+public abstract void setEnabled (boolean b) 
+Parameters
+b
+true 
+to enable the peer; false to 
+disable it. 
+Description
+Enables or disables the menu item's peer. 
+setLabel
+public abstract void setLabel (String label)
+Parameters
+label
+New text to appear 
+on the menu item's peer. 
+Description
+Changes the label of the menu item's peer. 
+See Also
+CheckboxMenuItemPeer, MenuComponentPeer, 
+MenuPeer, String 
+MenuComponentPeer
+MenuPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

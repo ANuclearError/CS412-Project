@@ -1,0 +1,296 @@
+
+[Chapter 11] Reader
+Chapter 11The java.io Package
+Reader
+Name
+Reader
+Synopsis
+Class Name:
+java.io.Reader
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.io.BufferedReader, 
+java.io.CharArrayReader,
+java.io.FilterReader, 
+java.io.InputStreamReader,
+java.io.PipedReader, 
+java.io.StringReader
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The Reader class is an abstract
+class that is the superclass of all classes that represent input
+character streams. Reader defines the basic input
+methods that all character streams provide. A similar hierarchy of
+classes, based around InputStream, deals with byte
+streams instead of character streams.
+Reader is designed so that
+read() and read(char[]) both
+call read(char[], int,
+int). Thus, a subclass can simply override
+read(char[], int,
+int), and all of the read
+methods will work. Note that this is different from the design of
+InputStream, where the read()
+method is the catch-all method. The design of
+Reader is cleaner and more efficient.
+Reader also defines a mechanism for marking a
+position in the stream and returning to it later, via the
+mark() and reset()
+methods. Another method, markSupported(), tells
+whether or not this mark-and-reset functionality is available in a
+particular subclass.
+Class Summary
+public abstract class java.io.Reader extends java.lang.Object {
+  // Variables
+  protected Object lock;
+  // Constructors
+  protected Reader();
+  protected Reader(Object lock);
+  // Instance Methods
+  public abstract void close();
+  public void mark(int readAheadLimit);
+  public boolean markSupported();
+  public int read();
+  public int read(char[] cbuf);
+  public abstract int read(char[] cbuf, int off, int len);
+  public boolean ready();
+  public void reset();
+  public long skip(long n) throws IOException;
+}
+Variables
+lock
+protected Object lock
+Description
+The object used to synchronize operations on this Reader 
+object. For efficiency's sake, a particular implementation of a character 
+stream can choose to synchronize its operations on something other than 
+instances of itself. Thus, any subclass should synchronize on the lock 
+object, instead of using a synchronized 
+method or the this object. 
+Constructors
+Reader
+protected Reader()
+Description
+This constructor creates a Reader that synchronizes on the Reader itself, or in other
+words, on the this object.
+protected Reader(Object lock)
+Parameters
+lock
+The object to use 
+for synchronization. 
+Description
+This constructor creates a Reader that 
+synchronizes on the given object. 
+Instance Methods
+close
+public abstract void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method closes the reader and releases any system resources associated 
+with it.
+A subclass of Reader must implement this method. 
+mark
+public void mark(int readheadLimit) throws IOException
+Parameters
+readAheadLimit
+The maximum 
+number of characters that can be read before the saved position becomes 
+invalid. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method tells this Reader 
+object to remember its current position, so that the position can be restored 
+by a call to the reset() method. 
+The Reader can read readAheadLimit 
+characters beyond the marked position before the mark becomes invalid.
+The implementation of the mark() 
+method in Reader simply throws 
+an exception to indicate that the mark-and-reset functionality is not implemented. 
+A subclass must override the method to provide the functionality. 
+markSupported
+public boolean markSupported()
+Returns
+true if this reader supports 
+mark() and reset(); 
+false otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not this object supports mark-and-reset 
+functionality.
+The markSupported() method 
+in Reader always returns false. 
+A subclass that implements the mark-and-reset functionality should override 
+the method to return true. 
+read
+public int read() throws IOException
+Returns
+The next character of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads the next character of input. The character is returned 
+as an integer in the range 0x0000 
+to 0xFFFF. The method blocks 
+until the character is read, the end of stream is encountered, or an exception 
+is thrown.
+The implementation of this method in Reader reads
+the character by calling read(cb, 
+0, 1), where
+cb is a character array, and returning
+cb[0]. Although it is not strictly necessary, a
+subclass that wants to provide efficient single-character reads should
+override this method.
+public int read(char[] cbuf) throws IOException
+Parameters
+cbuf
+An array of characters 
+to be filled from the stream. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads characters of input to fill the given array by
+calling read(cbuf, 0, 
+cbuf.length). The method
+blocks until some data is available.
+A subclass does not usually need to override this method, as it can override 
+read(char[], 
+int, int) 
+and have read(char[]) 
+work automatically. 
+   public abstract int read(char[] cbuf, int off, int len) throws IOException  
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+An offset into the array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads up to len 
+characters of input into the given array starting at index off. 
+The method blocks until some data is available.
+A subclass of Reader must implement 
+this method. 
+ready
+public boolean ready() throws IOException
+Returns
+A boolean value that indicates 
+whether the reader is ready to be read. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns true if 
+the next read() is guaranteed 
+to not block.
+The implementation of the ready() 
+method in Reader always returns 
+false. A subclass should override 
+this method as appropriate. 
+reset
+public void reset() throws IOException
+Throws
+IOException
+If there was 
+no previous call to the mark() 
+method or the saved position has been invalidated. 
+Description
+This method restores the position of the stream to the position that was 
+saved by a previous call to mark().
+The implementation of the reset() 
+method in Reader throws an 
+exception to indicate that mark-and-reset functionality is not supported 
+by default. A subclass must override the method to provide the functionality. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of characters 
+to skip. 
+Returns
+The actual number of characters skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method skips n characters 
+of input. In other words, it moves the position of the stream forward by 
+n characters.
+The implementation of the skip() 
+method in Reader simply calls 
+read(cb, 
+0, n) 
+where cb is a character array 
+that is at least n bytes long. 
+A subclass may want to override this method to implement a more efficient 
+skipping algorithm. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedReader, 
+CharArrayReader, 
+FilterReader, 
+InputStreamReader, 
+IOException, 
+PipedReader, 
+StringReader 
+RandomAccessFile
+SequenceInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

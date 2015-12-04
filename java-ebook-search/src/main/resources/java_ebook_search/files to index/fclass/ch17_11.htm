@@ -1,0 +1,133 @@
+
+[Chapter 17] ListResourceBundle
+Chapter 17The java.util Package
+ListResourceBundle
+Name
+ListResourceBundle
+Synopsis
+Class Name:
+java.util.ListResourceBundle
+Superclass:
+java.util.ResourceBundle
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ListResourceBundle class 
+is an abstract subclass of 
+ResourceBundle that represents 
+a list of resources for a locale. 
+The resources are listed as a set of 
+key/value pairs. Internally, a Hashtable 
+is used for quick lookup of values. To subclass ListResourceBundle, 
+all you need to do is override getContents() 
+to return a two-dimensional array of Objects 
+that contains the key/value pairs. 
+When ResourceBundle.getBundle() 
+is called, it attempts to find a resource bundle that most closely matches 
+a particular locale. This can be either a ListResourceBundle 
+subclass or a property file, represented by a PropertyResourceBundle. 
+Once the resource bundle has been retrieved, its contents can be used by 
+the application to present locale-specific information. 
+PropertyResourceBundle
+inherits a lot of functionality from ResourceBundle;
+see the class description of ResourceBundle for
+more information.
+Class Summary
+public abstract class java.util.ListResourceBundle
+                      extends java.util.ResourceBundle {
+  // Instance Methods
+  public Enumeration getKeys();
+  public final Object handleGetObject(String key);
+  // Protected Instance Methods
+  protected abstract Object[][] getContents();
+}
+Instance Methods
+getKeys
+public Enumeration getKeys()
+Returns
+The keys in the resource bundle as an Enumeration. 
+Overrides
+ResourceBundle.getKeys() 
+Description
+This method returns an Enumeration 
+that iterates through the keys in this ListResourceBundle. 
+handleGetObject
+public final Object handleGetObject(String key)
+Parameters
+key
+The key of the resource 
+to retrieve. 
+Returns
+The resource that corresponds to this key. 
+Overrides
+ResourceBundle.handleGetObject() 
+Description
+This method returns the resource that corresponds to the given key. 
+This method should not be called directly by your code. 
+Your code should call ResourceBundle.getObject(), 
+which may call the handleGetObject() objects 
+of multiple subclasses of ResourceBundle
+looking for a particular resource. Calling handleGetObject()
+directly only finds resources in the object associated with the method.
+Protected Instance Methods
+getContents
+protected abstract Object[][] getContents()
+Returns
+The key/value pairs that represent the 
+resources as a two-dimensional array. 
+Description
+This method returns a two-dimensional Object 
+array that contains all the key/value pairs for this ListResourceBundle. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+getObject(String)
+ResourceBundle
+getString(String)
+ResourceBundle
+getStringArray(String)
+ResourceBundle
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+setParent(ResourceBundle)
+ResourceBundle
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+Hashtable, 
+PropertyResourceBundle, 
+ResourceBundle 
+Hashtable
+Locale
+ 
+ 
+ 
+ 
+ 
+ 
+ 

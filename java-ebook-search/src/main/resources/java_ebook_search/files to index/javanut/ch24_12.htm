@@ -1,0 +1,41 @@
+
+[Chapter 24] 24.12 java.io.DataOutput (JDK 1.0)
+Chapter 24The java.io Package
+24.12 java.io.DataOutput (JDK 1.0)
+This interface defines the methods required for streams
+that can write character data or Java primitive data
+types in a machine-independent binary format. It is
+implemented by DataOutputStream and
+RandomAccessFile. See DataOutputStream for
+more information on the methods.
+public abstract interface DataOutput {
+    // Public Instance Methods
+            public abstract void write(int b) throws IOException;
+            public abstract void write(byte[] b) throws IOException;
+            public abstract void write(byte[] b, int off, int len) throws IOException;
+            public abstract void writeBoolean(boolean v) throws IOException;
+            public abstract void writeByte(int v) throws IOException;
+            public abstract void writeBytes(String s) throws IOException;
+            public abstract void writeChar(int v) throws IOException;
+            public abstract void writeChars(String s) throws IOException;
+            public abstract void writeDouble(double v) throws IOException;
+            public abstract void writeFloat(float v) throws IOException;
+            public abstract void writeInt(int v) throws IOException;
+            public abstract void writeLong(long v) throws IOException;
+            public abstract void writeShort(int v) throws IOException;
+            public abstract void writeUTF(String str) throws IOException;
+}
+Extended By:
+ObjectOutput
+Implemented By:
+DataOutputStream, 
+RandomAccessFile
+java.io.DataInputStream (JDK 1.0)
+java.io.DataOutputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,37 @@
+
+[Chapter 24] 24.43 java.io.ObjectStreamClass (JDK 1.1)
+Chapter 24The java.io Package
+24.43 java.io.ObjectStreamClass (JDK 1.1)
+This class is used to represent a class that is being
+serialized.  An ObjectStreamClass object contains
+the name of a class and its unique version identifier.  This
+class does not have a constructor; you should use the
+static lookup() method to obtain an
+ObjectStreamClass object for a given Class
+object.  The forClass() instance method performs the
+opposite operation--it returns the Class object that
+corresponds to a given ObjectStreamClass.  
+Most applications never need to use this class.
+public class ObjectStreamClass extends Object implements Serializable {
+    // No Constructor
+    // Class Methods
+            public static ObjectStreamClass lookup(Class cl);
+    // Public Instance Methods
+            public Class forClass();
+            public String getName();
+            public long getSerialVersionUID();
+            public String toString();  // Overrides Object
+}
+Passed To:
+ObjectInputStream.resolveClass()
+Returned By:
+ObjectStreamClass.lookup()
+java.io.ObjectOutputStream (JDK 1.1)
+java.io.ObjectStreamException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

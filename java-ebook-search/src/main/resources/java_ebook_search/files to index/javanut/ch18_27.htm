@@ -1,0 +1,104 @@
+
+[Chapter 18] 18.27 java.awt.Graphics (JDK 1.0)
+Chapter 18The java.awt Package
+18.27 java.awt.Graphics (JDK 1.0)
+This abstract class defines a device-independent interface
+to graphics.  It specifies methods for doing 
+line drawing, area filling,
+image painting, area copying, and graphics output clipping.
+Specific subclasses of Graphics are implemented for
+different platforms and different graphics output devices.  A
+Graphics object cannot be created directly through a
+constructor--it must be obtained with the
+getGraphics() method of a Component or an
+Image, or copied from an existing Graphics
+object with create().  When a Graphics
+object is no
+longer needed, you should call dispose() to free up
+the window system resources it uses.
+public abstract class Graphics extends Object {
+    // Protected Constructor
+            protected Graphics();
+    // Public Instance Methods
+            public abstract void clearRect(int x, int y, int width, int height);
+            public abstract void clipRect(int x, int y, int width, int height);
+            public abstract void copyArea(int x, int y, int width, int height, int dx, int dy);
+            public abstract Graphics create();
+            public Graphics create(int x, int y, int width, int height);
+            public abstract void dispose();
+            public void draw3DRect(int x, int y, int width, int height, boolean raised);
+            public abstract void drawArc(int x, int y, int width, int height, int startAngle, int arcAngle);
+            public void drawBytes(byte[] data, int offset, int length, int x, int y);
+            public void drawChars(char[] data, int offset, int length, int x, int y);
+            public abstract boolean drawImage(Image img, int x, int y, ImageObserver observer);
+            public abstract boolean drawImage(Image img, int x, int y, int width, int height, ImageObserver observer);
+            public abstract boolean drawImage(Image img, int x, int y, Color bgcolor, ImageObserver observer);
+            public abstract boolean drawImage(Image img, int x, int y, int width, int height, Color bgcolor, 
+            public abstract boolean drawImage'u'ImageObserver observer);
+        1.1  public abstract boolean drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, 
+        1.1  public abstract boolean drawImage'u'int sx2, int sy2, ImageObserver observer);
+        1.1  public abstract boolean drawImage(Image img, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, 
+        1.1  public abstract boolean drawImage'u'int sx2, int sy2, Color bgcolor, ImageObserver observer);
+            public abstract void drawLine(int x1, int y1, int x2, int y2);
+            public abstract void drawOval(int x, int y, int width, int height);
+            public abstract void drawPolygon(int[] xPoints, int[] yPoints, int nPoints);
+            public void drawPolygon(Polygon p);
+        1.1  public abstract void drawPolyline(int[] xPoints, int[] yPoints, int nPoints);
+            public void drawRect(int x, int y, int width, int height);
+            public abstract void drawRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight);
+            public abstract void drawString(String str, int x, int y);
+            public void fill3DRect(int x, int y, int width, int height, boolean raised);
+            public abstract void fillArc(int x, int y, int width, int height, int startAngle, int arcAngle);
+            public abstract void fillOval(int x, int y, int width, int height);
+            public abstract void fillPolygon(int[] xPoints, int[] yPoints, int nPoints);
+            public void fillPolygon(Polygon p);
+            public abstract void fillRect(int x, int y, int width, int height);
+            public abstract void fillRoundRect(int x, int y, int width, int height, int arcWidth, int arcHeight);
+            public void finalize();  // Overrides Object
+        1.1  public abstract Shape getClip();
+        1.1  public abstract Rectangle getClipBounds();
+        #   public Rectangle getClipRect();
+            public abstract Color getColor();
+            public abstract Font getFont();
+            public FontMetrics getFontMetrics();
+            public abstract FontMetrics getFontMetrics(Font f);
+        1.1  public abstract void setClip(int x, int y, int width, int height);
+        1.1  public abstract void setClip(Shape clip);
+            public abstract void setColor(Color c);
+            public abstract void setFont(Font font);
+            public abstract void setPaintMode();
+            public abstract void setXORMode(Color c1);
+            public String toString();  // Overrides Object
+            public abstract void translate(int x, int y);
+}
+Passed To:
+Canvas.paint(), 
+Component.paint(), 
+Component.paintAll(), 
+Component.print(), 
+Component.printAll(), 
+Component.update(), 
+ComponentPeer.paint(), 
+ComponentPeer.print(), 
+Container.paint(), 
+Container.paintComponents(), 
+Container.print(), 
+Container.printComponents(), 
+PropertyEditor.paintValue(), 
+PropertyEditorSupport.paintValue(), 
+ScrollPane.printComponents()
+Returned By:
+Component.getGraphics(), 
+ComponentPeer.getGraphics(), 
+Graphics.create(), 
+Image.getGraphics(), 
+PrintJob.getGraphics()
+java.awt.Frame (JDK 1.0)
+java.awt.GridBagConstraints (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

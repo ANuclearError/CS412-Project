@@ -1,0 +1,39 @@
+
+[Chapter 18] 18.35 java.awt.Label (JDK 1.0)
+Chapter 18The java.awt Package
+18.35 java.awt.Label (JDK 1.0)
+This class is a Component that displays a single
+specified line of read-only text.  The constant values specify the
+text alignment within the component and may be specified to
+the constructor or to setAlignment().
+public class Label extends Component {
+    // Public Constructors
+            public Label();
+            public Label(String text);
+            public Label(String text, int alignment);
+    // Constants
+            public static final int CENTER;
+            public static final int LEFT;
+            public static final int RIGHT;
+    // Public Instance Methods
+            public void addNotify();  // Overrides Component
+            public int getAlignment();
+            public String getText();
+            public synchronized void setAlignment(int alignment);
+            public synchronized void setText(String text);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Component
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Label
+Passed To:
+Toolkit.createLabel()
+java.awt.ItemSelectable (JDK 1.1)
+java.awt.LayoutManager (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

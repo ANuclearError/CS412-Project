@@ -1,0 +1,278 @@
+
+[Chapter 17] TimeZone
+Chapter 17The java.util Package
+TimeZone
+Name
+TimeZone
+Synopsis
+Class Name:
+java.util.TimeZone
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.util.SimpleTimeZone
+Interfaces Implemented:
+java.io.Serializable, 
+java.lang.Cloneable
+Availability:
+New as of JDK 1.1 
+Description
+The TimeZone class is an abstract 
+class that represents a time zone offset. In addition, the class incorporates 
+knowledge about daylight savings time. Usually, you get a TimeZone 
+object by calling getDefault(). 
+This method creates a TimeZone 
+that is appropriate for the current locale. You can also call getTimeZone() 
+to obtain a TimeZone object 
+for a specific time zone. 
+Class Summary
+public abstract class java.util.TimeZone extends java.lang.Object
+                      implements java.io.Serializable, java.lang.Cloneable {
+  // Class Methods
+  public static synchronized String[] getAvailableIDs();
+  public static synchronized String[] getAvailableIDs(int rawOffset);
+  public static synchronized TimeZone getDefault();
+  public static synchronized TimeZone getTimeZone(String ID);
+  public static synchronized void setDefault(TimeZone zone);
+  // Instance Methods
+  public Object clone();
+  public String getID();
+  public abstract int getOffset(int era, int year, int month, 
+                               int day, int dayOfWeek, int milliseconds);
+  public abstract int getRawOffset();
+  public abstract boolean inDaylightTime(Date date);
+  public void setID(String ID);
+  public abstract void setRawOffset(int offsetMillis);
+  public abstract boolean useDaylightTime();
+}
+Class Methods
+getAvailiableIDs
+public static synchronized String[] getAvailableIDs()
+Returns
+An array of strings that contains the predefined time zone IDs. 
+Description
+This method returns a list of the predefined time zone IDs. Time zones 
+are defined for the following ID values, starting from Greenwich, England, 
+and progressing eastward around the world: 
+GMT
+Greenwich Mean Time
+ECT
+European Central Time
+EET
+Eastern European Time
+ART
+(Arabic) Egypt Standard Time
+EAT
+Eastern African Time
+MET
+Middle East Time
+NET
+Near East Time
+PLT
+Pakistan Lahore Time
+IST
+India Standard Time
+BST
+Bangladesh Standard Time
+VST
+Vietnam Standard Time
+CTT
+China Taiwan Time
+JST
+Japan Standard Time
+ACT
+Australia Central Time
+AET
+Australia Eastern Time
+SST
+Solomon Standard Time
+NST
+New Zealand Standard Time
+MIT
+Midway Islands Time
+HST
+Hawaii Standard Time
+AST
+Alaska Standard Time
+PST
+Pacific Standard Time
+PNT
+Phoenix Standard Time
+MST
+Mountain Standard Time
+CST
+Central Standard Time
+EST
+Eastern Standard Time
+IET
+Indiana Eastern Standard Time
+PRT
+Puerto Rico and U.S. Virgin Islands Time
+CNT
+Canada Newfoundland Time
+AGT
+Argentina Standard Time
+BET
+Brazil Eastern Time
+CAT
+Central African Time
+public static synchronized String[] getAvailableIDs(int rawOffset)
+Returns
+An array of strings that contains the predefined time zone IDs with the 
+given raw offset value. 
+Description
+This method returns a list of the predefined time zone IDs that have the 
+given raw offset value from GMT. 
+For example, both PNT and MST 
+have an offset of GMT-07:00. 
+getDefault
+public static synchronized TimeZone getDefault()
+Returns
+A TimeZone that represents 
+the local time zone. 
+Description
+This method returns the default TimeZone 
+object for the local system. 
+getTimeZone
+public static synchronized TimeZone getTimeZone(String ID)
+Parameters
+ID
+The ID of a time zone. 
+Returns
+A TimeZone that represents 
+the time zone with the given ID. 
+Description
+This method returns the TimeZone 
+object that corresponds to the time zone with the given ID. 
+setDefault
+public static synchronized void setDefault(TimeZone zone)
+Parameters
+zone
+The new default time 
+zone. 
+Description
+This method sets the TimeZone 
+that is returned by getDefault(). 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this TimeZone. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this TimeZone 
+and returns it. 
+getID
+public String getID()
+Returns
+The ID of this TimeZone. 
+Description
+This method returns the ID string of this TimeZone. 
+getOffset
+   public abstract int getOffset(int era, int year, int month, int day, int dayOfWeek, int millis)  
+Parameters
+era
+The era.
+year
+The year.
+month
+The month.
+day
+The day.
+dayOfWeek
+The day of the 
+week.
+millis
+The time of day 
+in milliseconds. 
+Returns
+An offset from GMT, in milliseconds. 
+Description
+This method calculates an offset from GMT for the given date for this TimeZone. 
+In other words, the offset takes daylight savings time into account. The 
+return value should be added to GMT to get local time. 
+getRawOffset
+public abstract int getRawOffset()
+Returns
+An offset from GMT, in milliseconds.
+Description
+This method returns the raw offset from GMT for this TimeZone. 
+In other words, the offset does not take daylight savings time into account. 
+inDaylightTime
+public abstract boolean isDaylightTime(Date date)
+Parameters
+date
+The date to be tested. 
+Returns
+true if the given date is between 
+the start and end of daylight savings time for this TimeZone; 
+false otherwise. 
+Description
+This method returns a boolean 
+value that indicates if the given date is in daylight savings time for 
+this TimeZone. 
+setID
+public void setID(String ID)
+Parameters
+ID
+The new time zone ID. 
+Description
+This method sets the ID of this TimeZone. 
+setRawOffset
+public abstract void setRawOffset(int offsetMillis)
+Parameters
+offsetMillis
+The new raw 
+offset from GMT, in milliseconds. 
+Description
+This method is used to set the raw offset value for this TimeZone. 
+useDaylightTime
+public abstract boolean useDaylightTime()
+Returns
+true if this TimeZone 
+uses daylight savings time; false 
+otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not this TimeZone 
+uses daylight savings time. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+Cloneable, 
+GregorianCalendar, 
+Locale, 
+Serializable, 
+SimpleTimeZone 
+StringTokenizer
+TooManyListenersException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

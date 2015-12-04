@@ -1,0 +1,51 @@
+
+[Chapter 24] 24.17 java.io.FileDescriptor (JDK 1.0)
+Chapter 24The java.io Package
+24.17 java.io.FileDescriptor (JDK 1.0)
+This class is a platform-independent representation of a
+low-level handle to an open file or an open socket.
+The static in, out, and err
+variables are FileDescriptor objects that represent
+the system standard input, output, and error streams,
+respectively. There is no public constructor method to
+create a FileDescriptor object. You can obtain one
+with the getFD() method of FileInputStream,
+FileOutputStream, and RandomAccessFile.
+public final class FileDescriptor extends Object {
+    // Default Constructor: public FileDescriptor()
+    // Constants
+            public static final FileDescriptor err;
+            public static final FileDescriptor in;
+            public static final FileDescriptor out;
+    // Public Instance Methods
+        1.1  public native void sync() throws SyncFailedException;
+            public native boolean valid();
+}
+Passed To:
+FileInputStream(), 
+FileOutputStream(), 
+FileReader(), 
+FileWriter(), 
+SecurityManager.checkRead(), 
+SecurityManager.checkWrite()
+Returned By:
+DatagramSocketImpl.getFileDescriptor(), 
+FileInputStream.getFD(), 
+FileOutputStream.getFD(), 
+RandomAccessFile.getFD(), 
+SocketImpl.getFileDescriptor()
+Type Of:
+DatagramSocketImpl.fd, 
+FileDescriptor.err, 
+FileDescriptor.in, 
+FileDescriptor.out, 
+SocketImpl.fd
+java.io.File (JDK 1.0)
+java.io.FileInputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,50 @@
+
+[Chapter 24] 24.48 java.io.PipedInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.48 java.io.PipedInputStream (JDK 1.0)
+This class is an InputStream that implements one-half of 
+a pipe, and is useful for communication between
+threads. A PipedInputStream must be connected to a
+PipedOutputStream object, which may be specified
+when the PipedInputStream is created or with the
+connect() method. Data read from a
+PipedInputStream object are received from the
+PipedOutputStream to which it is connected.
+See InputStream for information on the low-level
+methods for reading data from a PipedInputStream. A
+FilterInputStream may be used to provide a
+higher-level interface for reading data from a
+PipedInputStream.
+public class PipedInputStream extends InputStream {
+    // Public Constructors
+            public PipedInputStream(PipedOutputStream src) throws IOException;
+            public PipedInputStream();
+    // Constants
+        1.1  protected static final int PIPE_SIZE;
+    // Protected Instance Variables
+        1.1  protected byte[] buffer;
+        1.1  protected int in;
+        1.1  protected int out;
+    // Public Instance Methods
+            public synchronized int available() throws IOException;  // Overrides InputStream
+            public void close() throws IOException;  // Overrides InputStream
+            public void connect(PipedOutputStream src) throws IOException;
+            public synchronized int read() throws IOException;  // Defines InputStream
+            public synchronized int read(byte[] b, int off, int len) throws IOException;  // Overrides InputStream
+    // Protected Instance Methods
+        1.1  protected synchronized void receive(int b) throws IOException;
+}
+Hierarchy:
+Object->InputStream->PipedInputStream
+Passed To:
+PipedOutputStream(), 
+PipedOutputStream.connect()
+java.io.OutputStreamWriter (JDK 1.1)
+java.io.PipedOutputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

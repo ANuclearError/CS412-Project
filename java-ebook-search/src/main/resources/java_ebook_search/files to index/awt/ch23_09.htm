@@ -1,0 +1,54 @@
+
+[Chapter 23] FileDialogPeer
+Chapter 23java.awt.peer Reference
+FileDialogPeer
+Name
+FileDialogPeer
+Description
+FileDialogPeer is an interface 
+that defines the basis for a file dialog box. 
+Interface Definition
+public abstract interface java.awt.peer.FileDialogPeer
+   extends java.awt.peer.DialogPeer {
+  // Interface Methods
+  public abstract void setDirectory (String directory);
+  public abstract void setFile (String file);
+  public abstract void setFilenameFilter (FilenameFilter filter);
+}
+Interface Methods
+setDirectory
+public abstract void setDirectory (String directory)
+Parameters
+directory
+Initial directory 
+for file dialog's peer. 
+Description
+Changes the directory displayed in the file dialog's peer. 
+setFile
+public abstract void setFile (String file)
+Parameters
+file
+Initial filename for 
+the file dialog's peer. 
+Description
+Changes the default file selection for the file dialog's peer. 
+setFilenameFilter
+public abstract void setFilenameFilter (FilenameFilter filter)
+Parameters
+filter
+Initial filter for 
+file dialog's peer. 
+Description
+Changes the current filename filter of the file dialog's peer. 
+See Also
+DialogPeer, FilenameFilter, 
+String 
+DialogPeer
+FontPeer 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

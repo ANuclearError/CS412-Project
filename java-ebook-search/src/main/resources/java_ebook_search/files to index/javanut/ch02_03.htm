@@ -1,0 +1,35 @@
+
+[Chapter 2] 2.3 Comments
+Chapter 2How Java Differs from C
+2.3 Comments
+Java supports three types of comments:
+A standard C-style comment that begins with /* and
+continues until the next */.  As in most
+implementations of C, this style of
+comment cannot be nested.
+A C++-style comment that begins with // and
+continues until the end of the line.
+A special "doc comment" that begins with /** and
+continues until the next */.  These comments may not
+be nested.  Doc comments are specially processed by the
+javadoc program to produce simple online documentation
+from the Java source code.  See Chapter 13, Java Syntax for
+more information on the doc comment syntax, and Chapter 16, JDK Tools for more information on the javadoc
+program.
+Since C-style comments do not nest, it is a good idea to use
+C++-style // comments for most of your short comments
+within method bodies.  This allows you to use /* */
+comments to comment out large blocks of code when you need
+to do that during development.  This is especially important
+because, as you will see, Java does not support a
+preprocessor that allows you to use #if 0 to
+comment out a block.
+The Name Space: Packages, Classes, and Members
+No Preprocessor
+ 
+ 
+ 
+ 
+ 
+ 
+ 

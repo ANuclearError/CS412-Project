@@ -1,0 +1,260 @@
+
+[Chapter 5] 5.3 Buttons
+Chapter 5Components
+5.3 Buttons
+The Button component provides 
+one of the most frequently used objects in graphical applications. When 
+the user selects a button, it signals the program that something needs 
+to be done by sending an action event. The program responds in its handleEvent() 
+method (for Java 1.0) or its actionPerformed() 
+method (defined by Java 1.1's ActionListener 
+interface). Next to Label, 
+which does nothing, Button 
+is the simplest component to understand. Because it is so simple, we will 
+use a lot of buttons in our examples for the next few chapters. 
+Button MethodsConstructors
+public Button () 
+This constructor creates an empty Button. 
+You can set the label later with setLabel(). 
+public Button (String label) 
+This constructor creates a Button 
+whose initial text is label. 
+Button Labels
+public String getLabel () 
+The getLabel() method retrieves 
+the current text of the label on the Button 
+and returns it as a String. 
+public synchronized void setLabel (String label) 
+The setLabel() method changes 
+the text of the label on the Button 
+to label. If the new text is 
+a different size from the old, it is necessary to revalidate the screen 
+to ensure that the button size is correct. 
+Action Commands
+With Java 1.1, every button can have two names. One is what the user sees 
+(the button's label); the other is what the programmer sees and 
+is called the button's action command. 
+Distinguishing between the label and the action command is a major help to 
+internationalization. The label can be localized for the user's environment. 
+However, this means that labels can vary at run-time and are therefore 
+useless for comparisons within the program. For example, you can't 
+test whether the user pushed the Yes button if that button 
+might read Oui or Ja, depending on some run-time 
+environment setting. To give the programmer something reliable for comparisons, 
+Java 1.1 introduces the action command. The action command for our button 
+might be Yes, regardless of the button's actual label. 
+By default, the action command is equivalent to the button's label. 
+Java 1.0 code, which only relies on the label, will continue to work. Furthermore, 
+you can continue to write in the Java 1.0 style as long as you're 
+sure that your program will never have to account for other languages. 
+These days, that's a bad bet. Even if you aren't implementing 
+multiple locales now, get in the habit of testing a button's action 
+command rather than its label; you will have less work to do when internationalization 
+does become an issue. 
+public String getActionCommand ()  
+The getActionCommand() method 
+returns the button's current action command. If no action command 
+was explicitly set, this method returns the label. 
+public void setActionCommand (String command)  
+The setActionCommand() method 
+changes the button's action command to command. 
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Button peer. If 
+you override this method, first call super.addNotify(), 
+then add your customizations. Then you can do everything you need with 
+the information about the newly created peer. 
+protected String paramString () 
+The paramString() method overrides 
+the component's paramString() 
+method. It is a protected method that calls the overridden paramString() 
+to build a String from the 
+different parameters of the Component. 
+When the method paramString() is called for a Button, the 
+button's label is added. Thus, for the Button 
+created by the constructor new Button ("ZapfDingbats"), 
+the results displayed from a call to toString() 
+could be: 
+java.awt.Button[77,5,91x21,label=ZapfDingbats]
+Button Events
+With the 1.0 event model, Button 
+components generate an ACTION_EVENT 
+when the user selects the button. 
+With the version 1.1 event model, you register an ActionListener 
+with the method addActionListener(). When the user selects the Button, 
+the method ActionListener.actionPerformed() 
+is called through the protected Button.processActionEvent() 
+method. Key, mouse, and focus listeners are registered through the Component 
+methods of addKeyListener(), 
+addMouseListener(), or addMouseMotionListener(), 
+and addFocusListener(), respectively. Action
+public boolean action (Event e, Object o)  
+The action() method for a Button 
+is called when the user presses and releases the button. e 
+is the Event instance for the 
+specific event, while o is 
+the button's label. The default implementation of action() 
+does nothing and returns false, 
+passing the event to the button's container for processing. For a 
+button to do something useful, you should override either this method or the container's action() 
+method. Example 5.1 is a simple applet called ButtonTest 
+that demonstrates the first approach; it creates a Button 
+subclass called TheButton, 
+which overrides action(). This 
+simple subclass doesn't do much; it just labels the button and prints 
+a message when the button is pressed. Figure 5.3 
+shows what ButtonTest looks 
+like. 
+Example 5.1: Button Event Handling
+import java.awt.*;
+import java.applet.*;
+class TheButton extends Button {
+    TheButton (String s) {
+        super (s);
+    }
+    public boolean action (Event e, Object o) {
+        if ("One".equals(o)) {
+            System.out.println ("Do something for One");
+        } else if ("Two".equals(o)) {
+            System.out.println ("Ignore Two");
+        } else if ("Three".equals(o)) {
+            System.out.println ("Reverse Three");
+        } else if ("Four".equals(o)) {
+            System.out.println ("Four is the one");
+        } else {
+            return false;
+        }
+        return true;
+    }
+}
+public class ButtonTest extends Applet {
+   public void init () {
+        add (new TheButton ("One"));
+        add (new TheButton ("Two"));
+        add (new TheButton ("Three"));
+        add (new TheButton ("Four"));
+   }
+}
+Figure 5.3: The ButtonTest applet
+Keyboard
+Buttons are able to capture keyboard-related events once the button has 
+the input focus. In order to give a Button 
+the input focus without triggering the action event, call requestFocus(). 
+The button also gets the focus if the user selects it and drags the mouse 
+off of it without releasing the mouse. 
+public boolean keyDown (Event e, int key) 
+The keyDown() method is called 
+whenever the user presses a key while the Button 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) could 
+be either Event.KEY_PRESS for 
+a regular key or Event.KEY_ACTION 
+for an action-oriented key (i.e., an arrow or a function key). There is 
+no visible indication that the user has pressed a key over the button. 
+public boolean keyUp (Event e, int key) 
+The keyUp() method is called 
+whenever the user releases a key while the Button 
+has the input focus. e is the 
+Event instance for the specific 
+event, while key 
+is the integer representation of the character pressed. The identifier 
+for the event (e.id) could 
+be either Event.KEY_RELEASE 
+for a regular key or Event.KEY_ACTION_RELEASE 
+for an action-oriented key (i.e., an arrow or a function key). keyUp() 
+may be used to determine how long key 
+has been pressed. 
+Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners, which are told when the 
+event happens. 
+public void addActionListener(ActionListener listener)  
+The addActionListener() method 
+registers listener as an object 
+interested in receiving notifications when an ActionEvent 
+passes through the EventQueue 
+with this Button as its target. 
+The listener.actionPerformed() 
+method is called when these events occur. Multiple listeners can be registered. 
+The following code demonstrates how to use an ActionListener 
+to handle the events that occur when the user selects a button. This applet 
+has the same display as the previous one, shown in Figure 5.3. 
+// Java 1.1 only 
+import java.awt.*;
+import java.applet.*;
+import java.awt.event.*;
+public class ButtonTest11 extends Applet implements ActionListener {
+    Button b;
+    public void init () {
+        add (b = new Button ("One"));
+        b.addActionListener (this);
+        add (b = new Button ("Two"));
+        b.addActionListener (this);
+        add (b = new Button ("Three"));
+        b.addActionListener (this);
+        add (b = new Button ("Four"));
+        b.addActionListener (this);
+    }
+    public void actionPerformed (ActionEvent e) {
+        String s = e.getActionCommand();
+        if ("One".equals(s)) {
+            System.out.println ("Do something for One");
+        } else if ("Two".equals(s)) {
+            System.out.println ("Ignore Two");
+        } else if ("Three".equals(s)) {
+            System.out.println ("Reverse Three");
+        } else if ("Four".equals(s)) {
+            System.out.println ("Four is the one");
+        }
+    }
+}
+public void removeActionListener(ActionListener listener)  
+The removeActionListener() 
+method removes listener as 
+an interested listener. If listener 
+is not registered, nothing happens. 
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+AWTEvent with this Button 
+as its target. processEvent() 
+then passes them along to any listeners for processing. When you subclass 
+Button, overriding processEvent() 
+allows you to process all events yourself, before sending them to any listeners. 
+In a way, overriding processEvent() 
+is like overriding handleEvent() 
+using the 1.0 event model. 
+If you override processEvent(), 
+remember to call super.processEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+protected void processActionEvent(ActionEvent e)  
+The processActionEvent() method 
+receives ActionEvent with 
+this Button as its target. 
+processActionEvent() then passes 
+them along to any listeners for processing. When you subclass Button, 
+overriding processActionEvent() 
+allows you to process all action events yourself, before sending them to 
+any listeners. In a way, overriding processActionEvent() 
+is like overriding action() using 
+the 1.0 event model. 
+If you override the processActionEvent() method, 
+you must remember to call super.processActionEvent(e) 
+last to ensure that regular event processing can occur. If you want to 
+process your own events, it's a good idea to call enableEvents() 
+(inherited from Component) 
+to ensure that events are delivered even in the absence of registered listeners. 
+Labels
+A Simple Calculator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

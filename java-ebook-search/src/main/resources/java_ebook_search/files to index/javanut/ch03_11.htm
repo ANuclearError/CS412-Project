@@ -1,0 +1,87 @@
+
+[Chapter 3] 3.11 Summary
+Chapter 3Classes and Objects in Java
+3.11 Summary
+This has been a long and detailed chapter. The following
+list summarizes the most important points to remember.
+This summary is not intended to simplify the complex
+material we've covered, but it may allow you to test your
+comprehension of the material now, and may help jog your
+memory later:
+A class is a collection of data and methods
+that operate on that data.
+An object is a particular instance of a class.
+Object members (fields and methods) are accessed with a
+dot between the object name and the member name.
+Instance (non-static) variables occur in each instance of a
+class.
+Class (static) variables are associated with the class.
+There is one copy of a class variable regardless of the
+number of instances of a class.
+Instance (non-static) methods of a class are passed an
+implicit this argument that identifies the object
+being operated on.
+Class (static) methods are not passed a this
+argument and therefore do not have a current instance of the
+class that can be used to implicitly refer to instance
+variables or invoke instance methods.
+Objects are created with the new keyword, which
+invokes a class constructor method with a list of arguments.
+Objects are not explicitly freed or destroyed in any way.
+The Java garbage collector automatically reclaims objects
+that are no longer being used.
+If the first line of a constructor method does not invoke
+another constructor with a this() call, or a
+superclass constructor with a super() call,
+Java automatically inserts a call to the superclass
+constructor that takes no arguments.  This enforces
+"constructor chaining."
+If a class does not define a constructor, Java provides a
+default constructor.  
+A class may inherit the non-private methods and
+variables of another class by "subclassing"--i.e., by
+declaring that class in its extends clause.
+java.lang.Object is the default superclass for a
+class.  It is the root of the Java class hierarchy and has no
+superclass itself.  All Java classes inherit the methods
+defined by Object.
+Method overloading is the practice of defining multiple
+methods which have the same name but have different argument lists.
+Method overriding occurs when a class redefines a method
+inherited from its superclass.  
+Dynamic method lookup ensures that the correct method is
+invoked for an object, even when the object is an instance
+of a class that has overridden the method.
+static, private, and final methods
+cannot be overridden and are not subject to dynamic method
+lookup.  This allows compiler optimizations such as
+inlining.
+From a subclass, you can explicitly invoke an overridden
+method of a superclass with the super keyword.
+You can explicitly refer to a shadowed variable with the
+super keyword.
+Data and methods may be hidden or encapsulated within a
+class by specifying the private
+or protected visibility modifiers.
+Members declared public are visible everywhere.
+Members with no visibility modifiers are visible only within
+the package.
+An abstract method has no method body (i.e., no implementation).
+An abstract class contains abstract methods.  The methods
+must be implemented in a subclass before the subclass can be
+instantiated.
+An interface is a collection of abstract methods and
+constants (static final variables).
+Declaring an interface creates a new data type.
+A class implements an interface by declaring the interface
+in its implements clause and by providing a method
+body for each of the abstract methods in the interface.
+C++ Features Not Found in Java
+What's New in Java 1.1
+ 
+ 
+ 
+ 
+ 
+ 
+ 

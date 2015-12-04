@@ -1,0 +1,257 @@
+
+[Chapter 11] DataInput
+Chapter 11The java.io Package
+DataInput 
+Name
+DataInput 
+Synopsis
+Interface Name:
+java.io.DataInput
+Super-interface:
+None
+Immediate Sub-interfaces:
+java.io.ObjectInput
+Implemented By:
+java.io.DataInputStream, 
+java.io.RandomAccessFile
+Availability:
+JDK 1.0 or later
+Description
+The DataInput interface defines 
+methods for reading primitive data types and lines of text from an input 
+stream in a machine-independent manner. All multibyte quantities are assumed 
+to be in a format that stores the most significant byte as the first byte 
+and the least significant byte as the last byte. 
+Interface Declaration
+public abstract interface java.io.DataInput {
+  // Methods
+  public abstract boolean readBoolean();
+  public abstract byte readByte();
+  public abstract char readChar();
+  public abstract double readDouble();
+  public abstract float readFloat();
+  public abstract void readFully(byte[] b);
+  public abstract void readFully(byte[] b, int off, int len);
+  public abstract int readInt();
+  public abstract String readLine();
+  public abstract long readLong();
+  public abstract short readShort();
+  public abstract int readUnsignedByte();
+  public abstract int readUnsignedShort();
+  public abstract String readUTF();
+  public abstract int skipBytes(int n);
+}
+Methods
+readBoolean
+public abstract boolean readBoolean() throws IOException
+Returns
+The boolean value read from 
+the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+ 
+This method reads a byte as a
+boolean value. A byte that contains a zero is read
+as false; that which contains a nonzero is read as
+true.
+readByte
+public abstract byte readByte() throws IOException
+Returns
+The byte value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a signed 8-bit byte. 
+readChar
+public abstract char readChar() throws IOException
+Returns
+The char value read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 16-bit char. 
+readDouble
+public abstract double readDouble() throws IOException
+Returns
+The double value read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 64-bit double 
+quantity. 
+readFloat
+public abstract float readFloat() throws IOException
+Returns
+The float value read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 32-bit float 
+quantity. 
+readFully
+public abstract void readFully(byte[] b) throws IOException
+Parameters
+b
+The array to fill. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads bytes into the given array b 
+until the array is full. 
+   public abstract void readFully(byte[] b, int off, int len) throws IOException  
+Parameters
+b
+The array to fill.
+off
+An offset into the array.
+len
+The number of bytes to read. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads len bytes into the given array, starting 
+at offset off. 
+readInt
+public abstract int readInt() throws IOException
+Returns
+The int value read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 32-bit int 
+quantity. 
+readLine
+public abstract String readLine() throws IOException
+Returns
+A String that contains the 
+line read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a String from the current
+position through the next line terminator. Implementations of this
+method should take care to look for any line terminator:
+"\n", "\r", or
+"\r\n".
+readLong
+public abstract long readLong() throws IOException
+Returns
+The long value read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 64-bit long quantity. 
+readShort
+public abstract short readShort() throws IOException
+Returns
+The short value read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 16-bit short quantity. 
+readUnsignedByte
+public abstract int readUnsignedByte() throws IOException
+Returns
+The unsigned byte value read 
+from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads an 8-bit byte 
+as an unsigned quantity. 
+readUnsignedShort
+public abstract int readUnsignedShort() throws IOException
+Returns
+The unsigned short value read 
+from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method reads a 16-bit short 
+as an unsigned quantity. 
+readUTF
+public abstract String readUTF() throws IOException
+Returns
+The String read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs.
+UTFDataFormatException
+If the bytes do not represent a valid UTF-8 encoding. 
+Description
+This method reads a UTF-8 format String. 
+See Appendix B, The UTF-8 Encoding, for information on the UTF-8 encoding.
+skipBytes
+public abstract int skipBytes(int n) throws IOException
+Parameters
+n
+The number of bytes to 
+skip. 
+Returns
+The actual number of skipped bytes. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method skips over n bytes. 
+See Also
+DataInputStream, 
+EOFException, 
+IOException, 
+ObjectInput, 
+RandomAccessFile, 
+UTFDataFormatException 
+CharConversionException
+DataInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

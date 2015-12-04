@@ -1,0 +1,273 @@
+
+[Chapter 3] Fonts and Colors
+Chapter 3
+3. Fonts and Colors
+Contents:
+Fonts
+FontMetrics
+Color
+SystemColor
+Displaying Colors
+Using Desktop Colors
+This chapter introduces the java.awt 
+classes that are used to work with different fonts and colors. First, we 
+discuss the Font class, which 
+determines the font used to display text strings, whether they are drawn 
+directly on the screen (with drawString()) 
+or displayed within a component like a text field. The FontMetrics 
+class gives you detailed information about a font, which you can use to 
+position text strings intelligently. Next, the Color 
+class is used to represent colors and can be used to specify the background 
+color of any object, as well as the foreground color used to display a 
+text string or a shape. Finally, the SystemColor 
+class (which is new to Java 1.1) provides access to the desktop color scheme. 
+3.1 Fonts
+An instance of the Font class 
+represents a specific font to the system. Within AWT, a font is specified 
+by its name, style, and point size. Each platform that supports Java provides 
+a basic set of fonts; to find the fonts supported on any platform, call 
+Toolkit.getDefaultToolkit().getFontList(). 
+This method returns a String 
+array of the fonts available. Under Java 1.0, on any platform, the available fonts were: TimesRoman, Helvetica, Courier, Dialog, DialogInput, and ZapfDingbats. For copyright reasons, the list is substantially different in Java 1.1: the available font names are TimesRoman , Serif, Helvetica , SansSerif, Courier , Monospaced, Dialog, and DialogInput. The actual fonts available aren't changing; the deprecated font names are being replaced by non-copyrighted equivalents. Thus, TimesRoman is now Serif, Helvetica is now SansSerif, and Courier is Monospaced. The ZapfDingbats font name has been dropped completely because the characters in this font have official Unicode mappings in the range \u2700 to \u27ff.
+NOTE: 
+If you desire non-Latin font support with Java 1.1, use the Unicode mappings for the characters. The actual font used is specified in a set of font.properties files in the lib subdirectory under java.home. These localized font files allow you to remap the "Serif", "SansSerif", and "Monospaced" names to different fonts.
+The font's style is passed 
+with the help of the class variables Font.PLAIN, 
+Font.BOLD, and Font.ITALIC. 
+The combination Font.BOLD | Font.ITALIC 
+specifies bold italics. 
+A font's size is represented 
+as an integer. This integer is commonly thought of as a point size; although 
+that's not strictly correct, this book follows common usage and talks 
+about font sizes in points. 
+It is possible to add additional font names to the system by setting properties. 
+For example, putting the line below in the properties file or a resource 
+file (resource files are new to Java 1.1) defines the name "AvantGarde" 
+as an alias for the font SansSerif: 
+awt.font.avantgarde=SansSerif
+With this line in the properties file, a Java program can use "AvantGarde" 
+as a font name; when this font is selected, AWT uses the font SansSerif 
+for display. The property name must be all lowercase. Note that we haven't 
+actually added a new font to the system; we've only created a new 
+name for an old font. See the discussion of getFont() 
+and decode() for more on font 
+properties. 
+The Font ClassConstants
+There are four styles for displaying fonts in Java: plain, bold, italic, 
+and bold italic. Three class constants are used to represent font styles: 
+public static final int BOLD 
+The BOLD constant represents 
+a boldface font. 
+public static final int ITALIC 
+The ITALIC constant represents 
+an italic font. 
+public static final int PLAIN 
+The PLAIN constant represents 
+a plain or normal font. 
+The combination BOLD | ITALIC 
+represents a bold italic font. PLAIN 
+combined with either BOLD or 
+ITALIC represents bold or italic, 
+respectively. 
+There is no style for underlined text. If you want underlining, you have 
+to do it manually, with the help of FontMetrics. 
+NOTE: 
+If you are using Microsoft's SDK, the com.ms.awt.FontX 
+class includes direct support for underlined, strike through (line through 
+middle), and outline fonts. 
+Variables
+Three protected variables access the font setting. They are initially set 
+through the Font constructor. 
+To read these variables, use the Font 
+class's "get" methods. 
+protected String name 
+The name of the font. 
+protected int size 
+The size of the font. 
+protected int style 
+The style of the font. The style is some logical combination of the constants 
+listed previously. 
+Constructors
+public Font (String name, int style, int size) 
+There is a single constructor for Font. 
+It requires a name, style, 
+and size. name 
+represents the name of the font to create, case insensitive. 
+setFont (new Font ("TimesRoman", Font.BOLD | Font.ITALIC, 20));
+Characteristics
+public String getName () 
+The getName() method returns 
+the font's logical name. This is the name passed to the constructor 
+for the specific instance of the Font. 
+Remember that system properties can be used to alias font names, so the 
+name used in the constructor isn't necessarily the actual name of 
+a font on the system. 
+public String getFamily () 
+The getFamily() method returns 
+the actual name of the font that is being used to display characters. If 
+the font has been aliased to another font, the getFamily() 
+method returns the name of the platform-specific font, not the alias. For example, 
+if the constructor was new Font ("AvantGarde", 
+Font.PLAIN, 10) and the awt.font.avantgarde=Helvetica 
+property is set, then getName() 
+returns AvantGarde, and getFamily() 
+returns Helvetica. If nobody set the property, both methods return AvantGarde, 
+and the system uses the default font (since AvantGarde is a nonstandard 
+font). 
+public int getStyle () 
+The getStyle() method returns 
+the current style of the font as an integer. Compare this value with the 
+constants Font.BOLD, Font.PLAIN, 
+and Font.ITALIC to see which 
+style is meant. It is easier to use the isPlain(), 
+isBold(), and isItalic() 
+methods to find out the current style. getStyle() 
+is more useful if you want to copy the style of some font when creating 
+another. 
+public int getSize () 
+The getSize() method retrieves 
+the point size of the font, as set by the size parameter in the constructor. 
+The actual displayed size may be different. 
+public FontPeer getPeer ()  
+The getPeer() method retrieves 
+the platform-specific peer object. The object FontPeer 
+is a platform-specific subclass of sun.awt.PlatformFont. 
+For example, on a Windows 95 platform, this would be an instance of sun.awt.windows.WFontPeer. 
+Styles
+public boolean isPlain () 
+The isPlain() method returns 
+true if the current font is 
+neither bold nor italic. Otherwise, it returns false. 
+public boolean isBold () 
+The isBold() method returns 
+true if the current font is 
+either bold or bold and italic. Otherwise, it returns false. 
+public boolean isItalic () 
+The isItalic() method returns 
+true if the current font is 
+either italic or bold and italic. Otherwise, it returns false. 
+Font properties
+Earlier, you saw how to use system properties to add aliases for fonts. 
+In addition to adding aliases, you can use system properties to specify 
+which fonts your program will use when it runs. This allows your users 
+to customize their environments to their liking; your program reads the 
+font settings at run-time, rather than using hard-coded settings. The format 
+of the settings in a properties file is: 
+propname=fontname--style--size
+where propname is the name 
+of the property being set, fontname 
+is any valid font name (including aliases), style 
+is plain, bold, 
+italic, or bolditalic, 
+and size represents the desired 
+size for the font. style and 
+size default to plain 
+and 12 points. Order is important; the font's style must always precede 
+its size. 
+For example, let's say you have three areas on your screen: one for 
+menus, one for labels, and one for input. In the system properties, you 
+allow users to set three properties: myPackage.myClass.menuFont, 
+myPackage.myClass.labelFont, 
+and myPackage.myClass.inputFont. 
+One user sets two: 
+myPackage.myClass.menuFont=TimesRoman-italic-24
+myPackage.myClass.inputFont=Helvetica
+The user has specified a Times font for menus and Helvetica for other 
+input. The property names are up to the developer. The program uses getFont() 
+to read the properties and set the fonts accordingly. 
+NOTE: 
+The location of the system properties file depends on the run-time 
+environment and version you are using. Normally, the file goes into a subdirectory 
+of the installation directory, or for environments where users have home 
+directories, in a subdirectory for the user. Sun's HotJava, JDK, 
+and appletviewer tools use the properties 
+file in the .hotjava 
+directory. 
+Most browsers do not permit modifying properties, so there is no 
+file. 
+Java 1.1 adds the idea of "resource files," which are 
+syntactically similar to properties files. Resource files are then placed 
+on the server or within a directory found in the CLASSPATH. 
+Updating the properties file is no longer recommended. 
+public static Font getFont (String name) 
+The getFont() method gets the 
+font specified by the system property name. 
+If name is not a valid system 
+property, null is returned. 
+This method is implemented by a call to the next version of getFont(), 
+with the defaultFont parameter 
+set to null. 
+Assuming the properties defined in the previous example, 
+if you call the getFont() 
+method with name set to myPackage.myClass.menuFont, 
+the return value is a 24-point, italic, TimesRoman Font 
+object. If called with name 
+set to myPackage.myClass.inputFont, 
+getFont() returns a 12-point, 
+plain Helvetica Font object. 
+If called with myPackage.myClass.labelFont 
+as name, getFont() 
+returns null because this user 
+did not set the property myPackage.myClass.labelFont. 
+public static Font getFont (String name, Font defaultFont) 
+The getFont() method gets the 
+font specified by the system property name. 
+If name is not a valid system 
+property, this version of getFont() 
+returns the Font specified by defaultFont. This version 
+allows you to provide defaults in the event the user does not wish to provide 
+his own font settings. 
+public static Font decode (String name)   
+The decode() method provides 
+an explicit means to decipher font property settings, regardless of where 
+the setting comes from. (The getFont() 
+method can decipher settings, but only if they're in the system properties 
+file.) In particular, you can use decode() 
+to look up font settings in a resource file. The format of name 
+is the same as that used by getFont(). 
+If the contents of name are 
+invalid, a 12-point plain font is returned. To perform the equivalent of 
+getFont(`myPackage.myClass.menuFont`) 
+without using system properties, see the following example. For a more extensive 
+example using resource files, see Appendix A. 
+// Java 1.1 only
+InputStream is = instance.getClass().getResourceAsStream("propfile");
+Properties p = new Properties();
+try {
+    p.load (is);
+    Font f = Font.decode(p.getProperty("myPackage.myClass.menuFont"));
+} catch (IOException e) {
+    System.out.println ("error loading props...");
+}
+Miscellaneous methods
+public int hashCode ()  
+The hashCode() method returns 
+a hash code for the font. This hash code is used whenever a Font 
+object is used as the key in a Hashtable. 
+public boolean equals (Object o) 
+The equals() method overrides 
+the equals() method 
+of Object to define equality for Font 
+objects. Two Font objects are 
+equal if their size, style, and name are equal. The following example demonstrates 
+why this is necessary. 
+Font a = new Font ("TimesRoman", Font.PLAIN, 10);
+Font b = new Font ("TimesRoman", Font.PLAIN, 10);
+// displays false since the objects are different objects
+System.out.println (a == b);
+// displays true since the objects have equivalent settings
+System.out.println (a.equals (b));
+public String toString () 
+The toString() method of Font 
+returns a string showing the current family, name, style, and size settings. 
+For example: 
+java.awt.Font[family=TimesRoman,name=TimesRoman,style=bolditalic,size=20]
+MediaTracker
+FontMetrics
+ 
+ 
+ 
+ 
+ 
+ 
+ 

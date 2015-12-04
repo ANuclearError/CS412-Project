@@ -1,0 +1,222 @@
+
+[Chapter 18] The java.util.zip Package
+Chapter 18
+18. The java.util.zip Package
+Contents:
+CheckedInputStream
+CheckedOutputStream
+Checksum
+CRC32
+DataFormatException
+Deflater
+DeflaterOutputStream
+GZIPInputStream
+GZIPOutputStream
+Inflater
+InflaterInputStream
+ZipEntry
+ZipException
+ZipFile
+ZipInputStream
+ZipOutputStream
+The package java.util.zip is new as of Java 1.1.
+It contains classes that provide support for general-purpose data
+compression and decompression using the ZLIB compression algorithms.
+The important classes in java.util.zip are those
+that provide the means to read and write data that is compatible with
+the popular GZIP and ZIP formats: GZIPInputStream,
+GZIPOutputStream,
+ZipInputStream, and
+ZipOutputStream. Figure 18.1
+shows the class hierarchy for the java.util.zip
+package. 
+Figure 18.1: The java.text package
+It is easy to use the GZIP and ZIP classes because they subclass
+java.io.FilterInputStream and
+java.io.FilterOutputStream.  For example, to
+decompress GZIP data, you simply create a
+GZIPInputStream around the input stream that
+represents the compressed data.  As with any
+InputStream, you could be reading from a file, a
+socket, or some other data source.  You can then read decompressed
+data by calling the read() methods of the
+GZIPInputStream.  The following code fragment
+creates a GZIPInputStream that reads data from the
+file sample.gz :
+FileInputStream inFile;
+try { 
+    inFile = new FileInputStream("sample.gz"); 
+} catch (IOException e) {
+    System.out.println("Couldn't open file.");
+    return;
+}
+GZIPInputStream in = new GZIPInputStream(inFile);
+// Now use in.read() to get decompressed data.
+Similarly, you can compress data using the GZIP format by creating a
+GZIPOutputStream around an output stream and 
+using the write() methods of 
+GZIPOutputStream.  The 
+following code fragment
+creates a GZIPOutputStream that writes data to
+the file sample.gz :
+FileOutputStream outFile;
+try { 
+    outFile = new FileOutputStream("sample.gz"); 
+} catch (IOException e) {
+    System.out.println("Couldn't open file.");
+    return;
+}
+GZIPOutputStream out = new GZIPOutputStream(outFile);
+// Now use out.write() to write compressed data.
+A ZIP file, or archive, is not quite as easy to use because it may
+contain more than one compressed file.  A ZipEntry 
+object represents each compressed file in the archive.  
+When you are reading from a ZipInputStream, 
+you must first call getNextEntry() to access 
+an entry, and then you can read decompressed data from the
+stream, just like with a GZIPInputStream.  
+When you are writing data to a ZipOutputStream, use
+putNextEntry() before you start writing each entry in
+the archive.  The ZipFile
+class is provided as a convenience for reading an archive; it allows
+nonsequential access to the entries in a ZIP file.
+The remainder of the classes in java.util.zip 
+exist to support the GZIP and ZIP classes.  
+The generic Deflater and Inflater 
+classes implement the ZLIB algorithms; they are used by 
+DeflaterOutputStream and 
+InflaterInputStream to 
+decompress and compress data.  The Checksum 
+interface and the classes that implement it, Adler32 
+and CRC32, define algorithms that generate 
+checksums from stream data.  These checksums
+are used by the CheckedInputStream and 
+CheckedOutputStream classes.
+Adler32
+Name
+Adler32
+Synopsis
+Class Name:
+java.util.zip.Adler32
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.util.zip.Checksum
+Availability:
+New as of JDK 1.1 
+Description
+The Adler32 class implements 
+the Checksum interface using 
+the Adler-32 algorithm. This algorithm is significantly faster than 
+CRC-32 and almost as reliable. 
+Class Summary
+public class java.util.zip.Adler32 extends java.lang.Object
+             implements java.util.zip.Checksum {
+  // Constructors
+  public Adler32();
+  
+  // Instance Methods
+  public long getValue();
+  public void reset();
+  public void update(int b);
+  public void update(byte[] b);
+  public native void update(byte[] b, int off, int len);
+}
+Constructors
+Adler32
+public Adler32()
+Description
+This constructor creates an Adler32 
+object. 
+Instance Methods
+getValue
+public long getValue()
+Returns
+The current checksum value. 
+Implements
+Checksum.getValue() 
+Description
+This method returns the current value of this checksum. 
+reset
+public void reset()
+Implements
+Checksum.reset() 
+Description
+This method resets the checksum to its initial value, making it appear as though 
+it has not been updated by any data. 
+update
+public void update(int b)
+Parameters
+b
+The value to be added to the data stream for the checksum calculation. 
+Implements
+Checksum.update(int) 
+Description
+This method adds the specified value to the data stream and updates the 
+checksum value. The method uses only the lowest eight bits of the given 
+int. 
+public void update(byte[] b)
+Parameters
+b
+An array of bytes to 
+be added to the data stream for the checksum calculation. 
+Description
+This method adds the bytes from the specified array to the data stream 
+and updates the checksum value. 
+public native void update(byte[] b, int off, int len)
+Parameters
+b
+An array of bytes to be added to the data stream for the checksum
+calculation.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Implements
+Checksum.update(byte[], int, int) 
+Description
+This method adds len bytes 
+from the specified array, starting at off, 
+to the data stream and updates the checksum value. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+Checksum, 
+CRC32 
+Vector
+CheckedInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

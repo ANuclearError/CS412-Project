@@ -1,0 +1,141 @@
+
+[Chapter 15] The java.net Package
+Chapter 15
+15. The java.net Package
+Contents:
+ConnectException
+ContentHandler
+ContentHandlerFactory
+DatagramPacket
+DatagramSocket
+DatagramSocketImpl
+FileNameMap
+HttpURLConnection
+InetAddress
+MalformedURLException
+MulticastSocket
+NoRouteToHostException
+ProtocolException
+ServerSocket
+Socket
+SocketException
+SocketImpl
+SocketImplFactory
+URL
+URLConnection
+URLEncoder
+URLStreamHandler
+URLStreamHandlerFactory
+UnknownHostException
+UnknownServiceException
+The package java.net contains 
+classes and interfaces that provide a powerful
+infrastructure for networking in Java.  These include:
+The URL class for basic access
+to Uniform Resource Locators (URLs).
+The URLConnection class, which supports
+more complex operations on URLs.
+The Socket class for connecting to particular
+ports on specific Internet hosts 
+and reading and writing data using streams.
+The ServerSocket class for implementing servers
+that accept connections from clients.
+The DatagramSocket, 
+MulticastSocket, 
+and DatagramPacket
+classes for implementing low-level networking.
+The InetAddress class, which represents 
+Internet addresses.
+Figure 15.1 shows the class hierarchy for
+the java.net package.
+Figure 15.1: The java.net package
+BindException
+Name
+BindException
+Synopsis
+Class Name:
+java.net.BindException
+Superclass:
+java.net.SocketException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+A BindException is thrown when 
+a socket cannot be bound to a local address and port, which can occur if 
+the port is already in use or the address is unavailable. 
+Class Summary
+public class java.net.BindException extends java.net.SocketException {
+  // Constructors
+  public BindException();
+  public BindException(String msg);
+}
+Constructors
+BindException
+public BindException()
+Description
+This constructor creates a BindException 
+with no associated detail message. 
+public BindException(String msg)
+Parameters
+msg
+The detail message. 
+Description
+This constructor creates a BindException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Throwable
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+IOException, 
+RuntimeException, 
+SocketException 
+UnknownServiceException
+ConnectException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,902 @@
+
+[Chapter 4] Expressions
+Chapter 4
+4. Expressions
+Contents:
+Allocation Expressions
+Increment/Decrement Operators
+Unary Operators
+Multiplicative Operators
+Additive Operators
+Shift Operators
+Relational Comparison Operators
+Equality Comparison Operators
+Bitwise/Logical Operators
+Boolean Operators
+Conditional Operator
+Assignment Operators
+Order of Operations
+Data Type of an Expression
+Constant Expressions
+Expressions
+in Java are used to fetch, compute, and store values. To fetch a
+value, you use a type of expression called a primary expression.
+To compute and store values, you use the various operators described
+in this chapter. In Java, expressions are most often used in methods
+and constructors; they can also appear in field variable initializers
+and static initializers.
+Most expressions, when they
+are evaluated, produce values that can be used by other expressions.
+The one exception is an expression that calls a method declared
+with the void return type. An expression that
+invokes a void method cannot be embedded in another
+expression. The evaluation of an expression can also produce side
+effects, such as variable assignments and increment and decrement
+operations.
+The value produced by an expression can
+be either a pure value or a variable
+or array element. The distinction is that a pure value
+cannot be used to store a value, while a variable or array element
+can.[1]
+An expression that produces a variable or an array element can be
+used anywhere that an expression that produces a pure value can
+be used.
+[1] 
+Note that Java's distinction between pure values
+and variable and array elements is similar to the distinction in
+C and C++ between rvalues and lvalues.
+This chapter refers to values as being either
+pure values or variables.
+Saying that a value is a pure value means that it is a value such
+as 24 that contains information, but cannot be used as the target
+of an assignment expression. Saying that a value is a variable means
+that it is something like var or ar[i]
+that can be used as the target of an assignment. The generic term
+"value" is used to mean either a variable or a pure value.
+The
+formal definition of an expression is:
+The above diagram may seem
+deceptively simple; why is such a definition even necessary? Expressions
+in Java are defined with a number of mutually recursive railroad
+diagrams. You can think of the Expression definition
+as being both the lowest-level definition and the highest-level
+definition of these mutually recursive diagrams. In other words,
+a=b[i]+c[i] is an expression, as are b[i],
+c[i], a, b,
+c, and i. This first diagram
+defines an expression to be an AssignmentExpression,
+which is the final definition used to describe Java expressions.
+References
+Assignment Operators
+4.1 Primary Expressions
+A primary expression
+is the most elementary type of expression. Primary expressions are
+constructs that fetch or create values, but do not directly perform
+computations on them:
+Terms are those primary expressions that produce values, 
+by doing such things as accessing fields in classes, invoking methods, and accessing
+array elements:
+References
+Allocation Expressions;
+Expression 4;
+FieldExpression 4.1.6;
+Identifiers;
+Index Expressions;
+Literals;
+Method Call Expression;
+Class Literals
+this
+The keyword this
+can be used only in the body of a constructor or an instance method
+(i.e., a method that is not declared static),
+or in the initializer for an instance variable. A static
+method is not associated with an object, so this
+makes no sense in such a method and is treated as an undefined variable.
+If this is used in an inappropriate place, a
+compile-time error occurs.
+The value produced by this
+is a reference to the object associated with the expression that
+is being evaluated. The type of the primary expression this
+is a reference to the class in which it appears.
+One common use for this is to allow
+access to a field variable when there is a local variable with
+the same name. For example:
+int foo;
+void setFoo(int foo) {
+    this.foo = foo;
+}
+Another 
+common usage is to implement a callback mechanism. Passing this
+to another object allows that object to call methods in the object
+associated with the calling code. For example, to allow an object
+inside of an applet to be able to access parameters passed to the
+applet in the HTML &lt;applet&gt; tag, you can
+use code like the following:
+public class MyApplet extends Applet {
+    ...
+    Foo foo;
+    public void init() {
+        foo = new Foo(this);
+    ...
+    }
+}
+class Foo {
+    Applet app;
+    ...
+    Foo(Applet app) {
+        this.app = app;
+    }
+    ...
+    void doIt() {
+        String dir = app.getParameter("direction");
+        ...
+    }
+    ...
+}
+Another use for the keyword this is 
+in a special kind of FieldExpression that 
+refers to an enclosing instance of this
+object. A reference to an enclosing instance is written as the
+class name of the enclosing instance followed by a dot and the keyword
+this (as described in 5.3.7.2 Member classes). Consider the following code:
+public class ImageButton extends Canvas {
+    ...
+    private class MyImage extends Image {
+        Image fileImage;
+        MyImage(String fileName) throws IOException {
+            URL url = new URL(fileName);
+            ImageProducer src = (ImageProducer)url.getContent();
+            Image fileImage = createImage(src);
+            prepareImage(this, ImageButton.this);
+        } 
+    ...
+The call to prepareImage() takes 
+two arguments. The first argument
+is a reference to this instance of the 
+MyImage class. The second
+argument is a reference to this object's enclosing instance, which
+is an instance of the ImageButton class.
+References
+Constructors;
+Constructor implementation;
+FieldExpression 4.1.6;
+Inner Classes;
+Methods
+super
+The keyword super
+can be used only in the body of a constructor or an instance method
+(i.e., a method that is not declared static),
+or in the initializer for an instance variable. In addition, super
+cannot appear in the class Object because Object
+has no superclass. If super is used in an inappropriate
+place, a compile-time error occurs.
+In most cases, the
+primary expression super has a value that is
+equivalent to casting the value of the primary expression this
+to the superclass of the class in which it appears. In other words,
+super causes the object to be treated as an instance
+of its superclass. The type of the primary expression super
+is a reference to the superclass of the class in which it appears.
+There are two situations in which super
+produces a result that is different than what would be produced
+by casting this to its superclass:
+When super is used to explicitly call a constructor
+in the superclass from a constructor in the class, the field variables
+for the class are initialized when the superclass's constructor returns.
+If a class contains a method that overrides a method declared
+in its superclass, calling the method by casting this
+to the superclass results in a call to the overriding method. However,
+calling the method with the special reference provided by
+super calls the overridden method in the superclass.
+The main purpose of super is to allow the behavior of
+methods and constructors to be extended, rather than having to be totally
+replaced. Consider the following example:
+class A {
+    public int foo(int x) {
+        return x*x;
+    }
+    public int bar(int x) {
+        return x*8;
+    }
+}
+class B extends A{
+    public int foo(int x) {
+        return super.foo(x)+x;
+    }
+    public int bar(int x){
+        return x*5;
+    }
+}
+The foo()
+method in class B extends the behavior of the
+foo() method in class A by
+calling that method and performing further computations on its result.
+On the other hand, the bar() method in class
+B totally replaces the behavior of the bar()
+method in class A.
+References
+Constructors;
+Constructor implementation;
+Methods
+null
+The primary expression null
+produces a special object reference value that does not refer to
+any object, but is assignment-compatible with all object reference
+types.
+An operation on an object reference that does
+not attempt to access the referenced object works the same way for
+null as it does for other object reference values.
+For example:
+foo == null
+However, any operation
+that attempts to access an object through a null
+reference throws a NullPointerException. The
+one exception to this rule is the string concatenation operator
+(+), which converts a null
+operand to the string literal "null".
+References
+Runtime exceptions;
+String Concatenation Operator +
+Literal Expressions
+A primary expression
+that consists of a literal produces a pure value. The data type
+of this pure value is the data type of the literal.
+References
+Literals
+Parenthetical Expressions
+A primary expression
+that consists of a parenthesized expression
+produces the same pure value as the expression in parentheses. The
+data type of this pure value is also the same as the data type of
+the expression in parentheses. A parenthetical expression can only
+produce a pure value. Thus, the following code produces an error:
+(x) = 5;          // Illegal
+References
+Expression 4
+Field Expressions
+A field expression
+is a primary expression that fetches such things as local variables,
+formal parameters, and field variables. A field expression can evaluate
+to a pure value or a variable. The data type of a field expression
+is the data type of the pure value, variable, or array element produced
+by the following expression.
+Essentially, a field expression
+can be a simple identifier, a primary expression followed by an
+identifier, or a class or interface name followed by an identifier.
+Here's an example of a field expression that consists of a simple
+Identifier :
+myVar
+Before the Java compiler
+can decide what to do with a lone identifier
+such as this, it must first match it with a declaration. The compiler
+first looks in the method where the identifier appears for a local
+variable or formal parameter with the same name as the identifier.
+If the compiler finds a matching local variable or formal parameter,
+the field expression produces the matching variable or parameter.
+If the identifier does not match a local variable or a formal
+parameter, it is expected to match the name of a field variable
+in the class in which it occurs. 
+If the matching variable is declared
+final, the field expression produces the pure
+value specified by the variable's initializer. Otherwise, the field
+expression produces the matching field variable. If the method that
+the identifier appears in is declared static,
+the matching variable must also be declared static
+or the compiler declares an error.
+A lone identifier that matches the name of a field variable is equivalent
+to:
+this.Identifier
+This form of a field expression can be used to access a field
+variable that is shadowed by a local variable or a formal parameter.
+For example:
+class Shadow {
+    int value;
+    Shadow(int value) {
+        this.value=value;
+    }
+}
+In the above example,
+the identifier value is used as both the name
+of a field variable and the name of a formal parameter in the constructor.
+Within the constructor, the unqualified identifier value
+refers to the formal parameter, not to the field variable. In order
+to access the field variable, you have to qualify value
+with this.
+In addition to allowing an object to refer to itself, the keyword 
+this has another use in field expressions. 
+The construct 
+ClassOrInterfaceName.this
+identifies the enclosing instance of an object that is an 
+instance of an inner class.[2]
+Consider the following
+example:
+[2] 
+Since this construct
+fetches an object reference, you might expect it to be a
+primary expression. However, due to the way in which
+inner classes are implemented, this construct is actually a 
+field expression.
+public class ImageButton extends Canvas {
+    ...
+    private class MyImage extends Image {
+        Image fileImage;
+        MyImage(String fileName) throws IOException {
+            URL url = new URL(fileName);
+            ImageProducer src = (ImageProducer)url.getContent();
+            Image fileImage = createImage(src);
+            prepareImage(this, ImageButton.this);
+        } 
+    ...
+The call to prepareImage() takes 
+two arguments. The first argument
+is a reference to this instance of the 
+MyImage class. The second
+argument is a reference to this object's enclosing instance, which
+is an instance of the ImageButton class.
+Here are some examples
+of field expressions that consist of a PrimaryExpression
+and an Identifier:
+this.myVar
+size().height
+(new Foo()).bar
+A primary expression that appears at the beginning of a field expression must
+produce a reference to an object. The identifier to the right of
+the dot must be the name of a field variable in the object referred
+to by the primary expression. If, at runtime, the primary expression
+in a field expression produces the value null,
+a NullPointerException is thrown.
+Here's an example of a field expression that
+consists of a ClassOrInterfaceName
+and an Identifier:
+Double.POSITIVE_INFINITY
+A field expression that begins with ClassOrInterfaceName
+produces a field variable of the specified class. If the field variable
+is not declared static, the specified class must
+either be the same class in which the field expression appears or
+a superclass of that class.
+Such a field expression is approximately
+equivalent to:
+((ClassOrInterfaceName)this).Identifier
+If ClassOrInterfaceName specifies a class
+or interface defined in a different package than the package in
+which the field expression appears, the class name must be qualified
+by the package in which the class is defined. For example:
+java.awt.Event.MOUSE_UP
+However,
+if an import statement imports the specified class, the package
+name is not necessary.
+ClassOrInterfaceName can refer to an 
+inner class or a nested top-level class or
+interface by qualifying the name of the class or interface with the
+name of the enclosing class. For example, consider the following
+declaration:
+public class A {
+    public class B {
+    } 
+}
+Based on this declaration, you can create a new instance of
+B as follows:
+new A.B()
+Most field expressions produce
+variables when they are evaluated. This means that the field expression
+can be used as the left operand of an assignment operator. A field
+expression produces a pure value, rather than a variable, if the
+identifier at the end of the field expression is a field variable
+that is declared final.
+Such a field expression returns a pure value because the value of
+a final variable cannot be modified. A field
+expression that produces a pure value cannot be the left operand
+of an assignment operator, or the operand of the ++
+or - - operators. Here's an erroneous example:
+final int four=4
+four++
+This is equivalent to:
+4++
+As such, it causes the
+Java compiler to issue an error message.
+When the Java
+compiler detects an expression that uses the value of a local variable
+that may not have been initialized, it issues an error message.
+For example:
+{
+    int x;
+    if (testForSomething())
+        x = 4;
+    System.out.println(x);    // Compiler complains
+}
+The compiler complains
+about the use of x in the println()
+method because x may not have been given an explicit
+value when the program reaches
+that statement. Even though there is an assignment to x
+in the preceding statement, the compiler recognizes that the assignment
+may not have been performed, since it is enclosed within a conditional
+statement. The Java language specification requires that a compiler
+issue an error message when it detects an uninitialized local variable.
+References
+Identifiers;
+Inheritance;
+Inner Classes;
+Interface Variables;
+Local Variables;
+Packages;
+Primary Expressions;
+Runtime exceptions;
+Variables
+Index Expressions
+An index expression
+is a primary expression that produces an array element when it is
+evaluated. The value produced by an index expression is a variable;
+it can be used as the left operand of an assignment expression.
+The data type of an index expression is the data type of the array
+element produced by the expression:
+When the compiler
+evaluates an index expression, the term to the left of the square
+brackets is evaluated before the expression inside of the square
+brackets. If the term produces the value null,
+a NullPointerException
+is thrown.
+Array indexing uses an int-valued
+expression between the square brackets. If the type of the expression
+is byte, char, or short,
+the value is automatically converted to int.
+An array index cannot be of type long. The value
+of the array index must be in the range zero to one less than the
+length of the array. An array object detects an out-of-range index
+value and throws an ArrayIndexOutOfBoundsException.
+Because of the precedence of Java expressions, an array allocation
+expression can only be indexed when the expression is enclosed in
+parentheses. For example:
+(new int[6])[3]
+This expression
+refers to the fourth element of the newly created array. Leaving
+out the parentheses results in the following:
+new int[6][3]
+This is not an
+index expression, but an array allocation expression that allocates
+an array of 3 arrays of 6 integers.
+References
+Array Allocation Expressions;
+Array Types;
+Expression 4;
+Term 4.1;
+Exceptions
+Method Call Expression
+A method call expression is a primary
+expression that invokes a method:
+A method call expression
+produces the pure value returned by the method; the type of this
+value is specified by the return type in the method declaration.
+But if the method has the return type void,
+the expression does not produce a value.
+The PrimaryExpression,
+if present, is evaluated first. Then expressions provided as method
+arguments are evaluated from left to right. Finally, the method
+is invoked.
+When a method call is made to a method that
+is not static, the call is made through an object
+reference:
+If the method call expression does not contain
+a PrimaryExpression or ClassOrInterfaceName
+before the method name, the method call is made implicitly through
+the object referenced by the keyword this. This
+form of a method call expression is treated as if it were written:
+this.Identifier(...)
+If the method call expression contains a PrimaryExpression
+before the method name, the call is made through the object reference
+produced by the PrimaryExpression.
+If the method call expression contains a
+ClassOrInterfaceName
+before the method name, then the specified class must either be the same
+class in which the method call expression appears or a superclass
+of that class. In this case, the method call is made through the
+object referenced by the keyword this. This form
+of a method call expression is treated as if it were written:
+((ClassOrInterfaceName)this).Identifier(...)
+When a method call is made to a static method,
+the call is made through a class or interface type:
+If
+the method call expression does not contain a PrimaryExpression
+or ClassOrInterfaceName before the method name,
+the method call is made implicitly through the class that contains
+the call.
+If the method call expression contains a
+PrimaryExpression before the method name, the
+call is made through the class of the object reference produced
+by the PrimaryExpression.
+If the
+method call expression contains a ClassOrInterfaceName
+before the method name, the method call is made through the specified
+class or interface type.
+The rules for supplying actual
+values for the formal parameters
+of a method are similar to the rules for assignment. A particular
+value can be specified as the actual value of a formal parameter
+if and only if it is assignment-compatible with the type of the
+formal parameter. You can use a type cast to make a value assignment
+compatible with a formal parameter.
+The process that
+the Java compiler uses to select the actual method that will be
+invoked at runtime is rather involved. The compiler begins by finding
+any methods that have the specified name. If the method call has
+been made through an object reference, the compiler searches in
+the class of that object reference. If the call has been made through
+a specific class or interface name, the compiler searches in that
+class or interface. The compiler searches all of the methods defined
+in the particular class or interface, as well as any methods that
+are inherited from superclasses or super-interfaces. At this point,
+the compiler is searching for both static and
+non-static methods, since it does not know which type of method is being called.
+If the compiler finds more than one method, that means the method
+is overloaded. Consider this example:
+public class MyMath {
+    public int square(int x) { return x*x; }
+    public long square(long x) { return x*x; }
+    public float square(float x) { return x*x; }
+    public double square(double x) { return x*x; }
+    public double hypotenuse(double x, double y) {
+        return Math.sqrt(x*x + y*y);
+    }
+}
+In the above example,
+the square() method is overloaded,
+while hypotenuse() is not.
+If the method is overloaded, the compiler then
+determines which of the methods has formal parameters that are compatible
+with the given arguments. If more than one method is compatible
+with the given arguments, the method that most closely matches the
+given parameters is selected. If the compiler cannot select one
+of the methods as a better match than the others, the method selection
+process fails and the compiler issues an error message. Note that
+the return types of overloaded methods play no part in selecting
+which method is to be invoked.
+After the compiler successfully
+selects the method that most closely matches the specified arguments,
+it knows the name and signature of the method that will be invoked
+at runtime. It does not, however, know for certain what class that
+method will come from. Although the compiler may have selected a
+method from MyMath, it is possible that a subclass
+of MyMath could define a method that has the
+same name and the same number and types of parameters as the selected
+method. In this case, the method in the subclass overrides the method
+in MyMath. The compiler cannot know about overriding
+methods, so it generates runtime code that dynamically selects the
+appropriate method.
+Here are the details of the three-step
+method selection process:
+Step One
+The method definitions are searched for methods
+that, taken in isolation, could be called by the method call expression.
+If the method call expression uses an object reference, the search
+takes place in the class of that object reference. If the expression
+uses a specific class or interface name, the search takes place
+in that class or interface. The search includes all of the methods
+defined in the particular class or interface, as well as any methods
+inherited from superclasses or super-interfaces. The search
+also includes both static and non-static methods.
+A method is a candidate if it meets the following
+criteria:
+The
+name of the method is the same as the name specified in the method
+call expression.
+The method is accessible to the method
+call expression, based on any access modifiers specified in the
+method's declaration.
+The number of formal parameters
+declared for the method is the same as the number of actual arguments
+provided in the method call expression.
+The data type
+of each actual parameter is assignment-compatible with the corresponding
+formal parameter.
+Consider the following expression that calls a method
+defined in the preceding example:
+MyMath m;
+m.square(3.4F)
+Here is how the Java compiler uses the above criteria
+to decide which method the expression actually calls:
+The name square matches four methods defined in
+the MyMath class, so the compiler must decide
+which one of those methods to invoke.
+All four methods
+are declared public, so they are all accessible
+to the above expression and are thus all still viable candidates.
+The
+method call expression provides one argument. Since the four methods
+under consideration each take one argument, there are still four
+possible choices.
+The method call expression is passing
+a float argument. Because a float
+value cannot be assigned to an int or a long
+variable, the compiler can eliminate the versions of square()
+that take these types of arguments. That still leaves two possible
+methods for the above expression: the version of square()
+that takes a float argument and the one that
+takes a double argument.
+Step Two
+If more than one method meets the criteria in Step
+One, the compiler tries to determine if one method is a more specific
+match than the others. If there is no method that matches more specifically,
+the selection process fails and the compiler issues an error message.
+Given two methods, A() and B(),
+that are both candidates to be invoked by the same method call expression,
+A() is more specific than B() if:
+The class
+in which the method A() is declared is the same
+class or a subclass of the class in which the method B()
+is declared.
+Each parameter of A()
+is assignment-compatible with the corresponding parameter of B().
+Let's go back to our previous example. We concluded
+by narrowing the possible methods that the expression m.square(3.4F)
+might match to the methods in MyMath named square()
+that take either a float or a double
+argument. Using the criteria of this step, we can further narrow
+the possibilities. These methods are declared in the same class,
+but the version of square() that takes a float
+value is more specific than the one that takes a double
+value. It is more specific because a float value
+can be assigned to a double variable, but a double
+value cannot be assigned to a float variable
+without a type cast.
+There are some cases in which it is not possible
+to choose one method that is more specific than others. When this
+happens, the Java compiler treats the situation as an error and
+issues an appropriate error message. 
+For example, consider a situation
+where the compiler needs to choose between two methods declared
+as follows:
+double foo(float x, double y)
+double foo(double x, float y)
+Neither method is more specific than the other.
+The first method is not more specific because the type of its second
+parameter is double and double
+values cannot be assigned to float variables.
+The second method is not more specific because of a similar problem
+with its first parameter.
+Step Three
+After successfully completing the previous two steps,
+the Java compiler knows that the expression in our example will
+call a method named square() and that the method
+will take one float argument. However, the compiler
+does not know if the method called at runtime will be the one defined
+in the MyMath class. It is possible that a subclass
+of MyMath could define a method that is also
+called square() and takes a single float
+argument. This method in a subclass would override the method in
+MyMath. If the variable m
+in the expression m.square(3.4F) refers to such
+a subclass, the method defined in the subclass is called instead
+of the one defined in MyMath.
+The Java compiler generates code to determine at
+runtime which method named square() that takes
+a single float argument it should call. The Java
+compiler must always generate such runtime code for method call
+expressions, unless it is able to determine at compile time the
+exact method to be invoked at runtime.
+There are four cases in which the compiler can know
+exactly which method is to be called at runtime:
+The method is called through an object reference, and the type of the
+reference is a final class. Since the type of
+the reference is a final class, Java does not
+allow any subclasses of that class to be defined. Therefore,
+the object reference will always refer to an object of the class
+declared final. The Java compiler knows the actual
+class that the reference will refer to, so it can know the actual method
+to be called at runtime.
+The method is invoked through
+an object reference, and the type of the reference is a class that
+defines or inherits a final method that has the
+method name, number of parameters, and types of parameters determined
+by the preceding steps. In this case, the compiler knows the actual
+method to be called at runtime because final
+methods cannot be overridden.
+The method is a static
+method. When a method is declared static, it is also implicitly
+declared final. Thus, the compiler can be sure that the method to
+be called at runtime is the one defined in or inherited by the specified
+class that has the method name, number of parameters, and types
+of parameters determined by the preceding steps.
+The
+compiler is able to deduce that a method is invoked through an object
+reference that will always refer to the same class of object at
+runtime. One way the compiler might deduce this is through
+data flow analysis.
+If none of the above cases applies to a method
+call expression, the Java compiler must generate runtime code to
+determine the actual method to be invoked. The runtime selection
+process begins by getting the class of the object through which
+the method is being invoked. This class is searched for a method
+that has the same name and the same number and types of parameters
+as the method selected in Step Two. If this class does not contain
+such a definition, its immediate superclass is searched. If the
+immediate superclass does not contain an appropriate definition,
+its superclasses are searched, and so on up the inheritance hierarchy.
+This search process is called dynamic method lookup.
+Dynamic method lookup always begins with the class
+of the actual object being referenced. The type of the reference
+being used to access the object does not influence where the search
+for a method begins. The one exception to this rule occurs when
+the keyword super is used as part of the method
+call expression. The form of this type
+of method call expression is:
+super.Identifier(...)
+In this case, dynamic method lookup begins by searching
+the superclass of the class that the calling code appears in.
+Now
+that we've gone through the entire method selection process, let's
+consider an example that illustrates the process:
+class A {}
+class B extends A {}
+class C extends B {}
+class D extends C {}
+class W {
+    void foo(D d) {System.out.println("C");}
+}
+class X extends W {
+    void foo(A a) {System.out.println("A");}
+    void foo(B b) {System.out.println("X.B");}
+}
+class Y extends X {
+    void foo(B b) {System.out.println("Y.B");}
+}
+class Z extends Y {
+    void foo(C c) {System.out.println("D");}
+}
+public class CallSelection {
+    public static void main(String [] argv) {
+        Z z = new Z();
+        ((X) z).foo(new C());
+    }
+}
+In the class CallSelection, the method
+main()
+contains a call to a method named foo(). This
+method is called through an object reference. Although the object
+refers to an instance of the class Z, it is treated
+as an instance of the class X because the reference
+is type cast to the class X. The process of selecting
+which method to call proceeds as follows:
+The compiler
+finds all of the methods named foo() that are
+accessible through an object of class X: foo(A),
+foo(B), and foo(D). However,
+because a reference to an object of class C cannot
+be assigned to a variable of class D, foo(D)
+is not a candidate to be invoked by the method call expression.
+Now the compiler must choose one of the two remaining
+foo() methods as more specific than the other.
+Both methods are defined in the same class, but foo(B)
+is more specific than foo(A) because a reference
+to an object of class B can be assigned to a
+variable declared with a type of class A.
+At runtime, the dynamic method lookup process finds
+that it has a reference to an object of class Z.
+The fact that the reference is cast to class X
+is not significant, since dynamic lookup is concerned with the class
+of an object, not the type of the reference used to access the object.
+The definition of class Z is searched for a method
+named foo() that takes one parameter that is
+a reference to an object of class B. No such
+method is found in the definition of class Z,
+so its immediate superclass, class Y, is searched.
+Such a method is found in class Y, so that method
+is invoked.
+Here is another example that
+shows some ambiguous and erroneous method call expressions:
+class A {}
+class B extends A {}
+class AmbiguousCall {
+    void foo(B b, double x){}
+    void foo(A a, int i){}
+    void doit() {
+        foo(new A(), 8);   // Matches foo(A, int)
+        foo(new A(), 8.0); // Error: doesn't match anything
+        foo(new B(), 8);   // Error: ambiguous, matches both
+        foo(new B(), 8.0); // Matches foo(B, double)
+    }
+}
+References
+Assignment Compatibility;
+ClassOrInterfaceName 4.1.6;
+Casts;
+Expression 4;
+Identifiers;
+Inheritance;
+Interface Methods;
+Methods;
+Primary Expressions
+Class Literals
+A class literal 
+is an expression that produces a reference to a 
+Class object that identifies a specified data 
+type. Class literals are not supported prior to Java 1.1. 
+Here's the syntax for a class literal:
+If the type in a class literal is a reference type, the class literal
+produces a reference to the Class object that 
+defines the specified reference type. The following are some examples of
+this type of class literal:
+String.class
+java.util.Stack.class
+myNewClass.class
+Such a class literal 
+can throw a NoClassDefFoundError if the specified
+class is not available.
+You can also call Class.forName() with the name of a
+specified reference type to retrieve the Class object
+for that type. For example:
+Class.forName("java.util.Stack")
+A class literal and a call to 
+Class.forName() for the same reference type return
+the same Class object. There are certain
+situations when it makes sense to use a class literal, while in other
+cases a call to Class.forName() is more appropriate.
+Here are the differences between the two techniques for retrieving
+a Class object:
+A class literal cannot contain an expression, so it 
+always refers to the same type. However, the argument passed to
+Class.forName() can be an 
+expression that produces different strings that name different classes.
+The class or interface name passed to
+Class.forName() must be fully qualified by its
+package name. The class or interface name in a class literal, however,
+does not typically need to include a package name because the Java
+compiler can use information provided in package and import directives
+to deduce the package name.
+The name of an inner class can be used directly with a class literal.
+Because of the way that inner-class names are encoded, however, 
+when an inner-class name is passed to Class.forName(), 
+the name must contain dollar signs ($) 
+in place of dots (.).
+The efficiency of a class literal is comparable to a field reference; it
+is more efficient than the method call required by 
+Class.forName().
+If the type in a class literal is void 
+or a primitive type, the class literal produces a reference to a 
+unique Class object that 
+represents void or the specified type. 
+The special 
+Class object that represents void 
+or a primitive type can be distinguished from a Class
+object that represents a reference type by calling its 
+isPrimitive() method. This method only returns
+true if the Class
+object represents void or a primitive type. 
+The getName() method of a special Class 
+object returns a string that contains the name of the primitive type 
+represented by the object. The easiest way to determine the
+primitive type of a special Class object is
+to compare it to the TYPE variables of the 
+primitive wrapper classes.
+The following comparisons always produce true:
+boolean.class == Boolean.TYPE
+byte.class == Byte.TYPE
+short.class == Short.TYPE
+int.class == Integer.TYPE
+long.class == Long.TYPE
+char.class == Character.TYPE
+float.class == Float.TYPE
+double.class == Double.TYPE
+void.class == Void.TYPE
+References
+Boolean;
+Byte;
+Character;
+Class;
+Double;
+Errors;
+Float;
+Inner Classes;
+Integer;
+Long;
+Short;
+Void;
+Type 3
+Reference Types
+Allocation Expressions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

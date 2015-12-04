@@ -1,0 +1,84 @@
+
+[Chapter 28] 28.22 java.net.URL (JDK 1.0)
+Chapter 28The java.net Package
+28.22 java.net.URL (JDK 1.0)
+This class represents a URL (a Uniform Resource Locator) 
+and allows the data referred to by the URL
+to be downloaded. A URL may be specified as a single string
+or with separate protocol, host, port, and file
+specifications. Relative URLs may also be specified with a
+String and the URL object that it is
+relative to.
+getFile(), getHost(), getPort(),
+getProtocol(), and getRef() return the
+various portions of the URL specified by a URL
+object. sameFile() determines whether a URL
+object refers to the same file as this one.
+The data or object referred to by a URL may be downloaded
+from the Internet in three ways: through a
+URLConnection created with openConnection(),
+through an InputStream created by
+openStream(), or through getContent(), which
+returns the URL contents directly, if an appropriate
+ContentHandler can be found.
+public final class URL extends Object implements Serializable {
+    // Public Constructors
+            public URL(String protocol, String host, int port, String file) throws MalformedURLException;
+            public URL(String protocol, String host, String file) throws MalformedURLException;
+            public URL(String spec) throws MalformedURLException;
+            public URL(URL context, String spec) throws MalformedURLException;
+    // Class Methods
+            public static synchronized void setURLStreamHandlerFactory(URLStreamHandlerFactory fac);
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+            public final Object getContent() throws IOException;
+            public String getFile();
+            public String getHost();
+            public int getPort();
+            public String getProtocol();
+            public String getRef();
+            public int hashCode();  // Overrides Object
+            public URLConnection openConnection() throws IOException;
+            public final InputStream openStream() throws IOException;
+            public boolean sameFile(URL other);
+            public String toExternalForm();
+            public String toString();  // Overrides Object
+    // Protected Instance Methods
+            protected void set(String protocol, String host, int port, String file, String ref);
+}
+Passed To:
+Applet.getAudioClip(), 
+Applet.getImage(), 
+Applet.play(), 
+AppletContext.getAudioClip(), 
+AppletContext.getImage(), 
+AppletContext.showDocument(), 
+HttpURLConnection(), 
+Toolkit.getImage(), 
+URL(), 
+URL.sameFile(), 
+URLConnection(), 
+URLStreamHandler.openConnection(), 
+URLStreamHandler.parseURL(), 
+URLStreamHandler.setURL(), 
+URLStreamHandler.toExternalForm()
+Returned By:
+Applet.getCodeBase(), 
+Applet.getDocumentBase(), 
+AppletStub.getCodeBase(), 
+AppletStub.getDocumentBase(), 
+Class.getResource(), 
+ClassLoader.getResource(), 
+ClassLoader.getSystemResource(), 
+URLConnection.getURL()
+Type Of:
+URLConnection.url
+java.net.UnknownServiceException (JDK 1.0)
+java.net.URLConnection (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

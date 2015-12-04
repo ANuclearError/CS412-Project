@@ -1,0 +1,134 @@
+
+[Chapter 16] CollationKey
+Chapter 16The java.text Package
+CollationKey
+Name
+CollationKey
+Synopsis
+Class Name:
+java.text.CollationKey
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The CollationKey class optimizes the sorting of many strings. The easiest 
+way to compare strings is using Collator.compare(), 
+but this can be inefficient, especially if the same strings are compared 
+many times. Instead, you can create a CollationKey 
+for each of your strings and compare the CollationKey 
+objects to each other using the compareTo() 
+method. A CollationKey is essentially 
+a bit representation of a String 
+object. Two CollationKey objects 
+can be compared bitwise, which allows for a fast comparison. 
+You cannot create CollationKey 
+objects directly; you must create them through a specific Collator 
+object using Collator.getCollationKey(). 
+You can only compare CollationKey 
+objects that have been generated from the same Collator. 
+Class Summary
+public final class java.text.CollationKey extends java.lang.Object {
+  // Instance Methods
+  public int compareTo(CollationKey target);
+  public boolean equals(Object target); 
+  public String getSourceString();
+  public int hashCode();
+  public byte[] toByteArray();
+}
+Instance Methods
+compareTo
+public int compareTo(CollationKey target)
+Parameters
+target
+The key to compare 
+with this CollationKey. 
+Returns
+-1 if this CollationKey is 
+less than target, 0 if this 
+CollationKey is equal to target, 
+or 1 if this CollationKey is 
+greater than target. 
+Description
+This method returns an integer that indicates the ordering of this CollationKey 
+and the given CollationKey. 
+Only CollationKey objects generated 
+by the same Collator should 
+be compared. 
+equals
+public boolean equals(Object target)
+Parameters
+target
+The object to be 
+compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of CollationKey 
+and is equivalent to this CollationKey. 
+getSourceString
+public String getSourceString()
+Returns
+The string that generated this CollationKey. 
+Description
+This method returns the string that was passed to Collator.getCollationKey() 
+to create this CollationKey. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this CollationKey. 
+toByteArray
+public byte[] toByteArray()
+Returns
+A byte array that represents this CollationKey. 
+Description
+This method returns a byte array that represents the value of this CollationKey, 
+with the most significant byte first. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Collator, 
+RuleBasedCollator, 
+String 
+CollationElementIterator
+Collator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

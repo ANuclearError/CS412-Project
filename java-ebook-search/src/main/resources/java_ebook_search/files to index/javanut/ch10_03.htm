@@ -1,0 +1,237 @@
+
+[Chapter 10] 10.3 A More Complex Bean
+Chapter 10Java Beans
+10.3 A More Complex Bean
+Example 10.2
+shows another bean, YesNoDialog.  This bean creates
+a dialog box that displays a simple message to the user and
+asks the user to respond by clicking the Yes,
+No, or Cancel button.
+Figure 10.1
+shows the bean being manipulated in Sun's beanbox tool
+and also shows a dialog displayed by the bean.
+Figure 10.1: The YesNoDialog bean in the beanbox
+The YesNoDialog bean uses a custom
+AnswerEvent type to notify AnswerListener
+objects when the user has dismissed the dialog by clicking
+on one of its three buttons.  This new event class and
+listener interface are defined in the next section.
+Note that YesNoDialog is a subclass of
+Object, not Dialog.  This is a result of the
+requirement for a bean to have a no-argument constructor.
+Because all dialog boxes must be associated with a
+Frame, Dialog does not have a no-argument
+constructor, and this means that subclasses of
+Dialog cannot have meaningful no-argument
+constructors, either.  As a result, YesNoDialog
+defers creation of its window and associated GUI
+components until it is actually popped up with the
+display() method.  Another beanbox
+shortcoming is that it only recognizes methods with no arguments.
+[1]
+For this reason, the display() method has no
+arguments, and so no Frame can be specified through
+that method either.  Since a parent Frame cannot be
+specified, YesNoDialog cannot create a
+Dialog object, and instead simulates a dialog box
+with a Frame window.  An alternative would have been
+to define a bean property through which the required
+Frame could be specified.
+[1] 
+The beanbox tool shipped with the February 1997
+version of the BDK has a number of shortcomings.  In part, this is
+due to the fact that the BDK is a new technology and not as
+stable or robust as the JDK.  It is also because
+beanbox is intended as a test environment, not an
+actual programmer's tool.
+Since YesNoDialog is not a subclass of
+Component, it has to define its own properties and
+accessor methods for fonts and colors; normally these would
+simply be inherited from Component.  Since this bean
+is not a Component subclass, it is an "invisible"
+bean that does not have a graphical representation of its
+own.  (It pops up a window when the display() method
+is called, but that is not the same as having a graphical
+representation that appears within another window.)
+Different tools treat invisible beans differently.
+beanbox simply displays the classname of invisible
+beans.
+Notice that YesNoDialog does not use any classes
+from the java.beans package.  One of the surprising
+things about beans is that they typically do not have to use
+any classes from this package.  As we'll see in later
+sections, it is the auxiliary classes that are shipped with
+a bean that make heavy use of that package.
+Example 10.2: The YesNoDialog Bean
+package oreilly.beans.yesno;      // Put this bean in its own private package.
+import java.awt.*;
+import java.awt.event.*;
+import java.util.*;
+public class YesNoDialog {
+  // Properties of the bean.
+  protected String message, title;
+  protected String yesLabel, noLabel, cancelLabel;
+  protected int alignment;
+  protected Font font = new Font("Serif", Font.PLAIN, 12);
+  protected Color background = SystemColor.control;
+  protected Color foreground = SystemColor.controlText;
+  // Constants for the alignment property.
+  public static final int LEFT = MultiLineLabel.LEFT;
+  public static final int RIGHT = MultiLineLabel.RIGHT;
+  public static final int CENTER = MultiLineLabel.CENTER;
+  // Methods to query all of the bean properties.
+  public String getMessage() { return message; }
+  public String getTitle() { return title; }
+  public String getYesLabel() { return yesLabel; }
+  public String getNoLabel() { return noLabel; }
+  public String getCancelLabel() { return cancelLabel; }
+  public int getAlignment() { return alignment; }
+  public Font getFont() { return font; }
+  public Color getBackground() { return background; }
+  public Color getForeground() { return foreground; }
+  // Methods to set all of the bean properties.
+  public void setMessage(String m) { message = m; }
+  public void setTitle(String t) { title=t; }
+  public void setYesLabel(String l) { yesLabel = l; }
+  public void setNoLabel(String l) { noLabel = l; }
+  public void setCancelLabel(String l) { cancelLabel = l; }
+  public void setAlignment(int a) { alignment = a; }
+  public void setFont(Font f) { font = f; }
+  public void setBackground(Color bg) { background = bg; }
+  public void setForeground(Color fg) { foreground = fg; }
+  /** This field holds a list of registered ActionListeners.
+   *  Vector is internally synchronized to prevent race conditions. */
+  protected Vector listeners = new Vector();
+  /** Register an action listener to be notified when a button is pressed. */
+  public void addAnswerListener(AnswerListener l) {
+    listeners.addElement(l);
+  }
+  /** Remove an Answer listener from our list of interested listeners. */
+  public void removeAnswerListener(AnswerListener l) {
+    listeners.removeElement(l);
+  }
+  /** Send an event to all registered listeners. */
+  public void fireEvent(AnswerEvent e) {
+    // Make a copy of the list and fire the events using that copy.
+    // This means that listeners can be added or removed from the original
+    // list in response to this event.  We ought to be able to just use an
+    // enumeration for the vector, but that doesn't copy the list internally.
+    Vector list = (Vector) listeners.clone();
+    for(int i = 0; i &lt; list.size(); i++) {
+      AnswerListener listener = (AnswerListener)list.elementAt(i);
+      switch(e.getID()) {
+      case AnswerEvent.YES: listener.yes(e); break;
+      case AnswerEvent.NO:  listener.no(e); break;
+      case AnswerEvent.CANCEL: listener.cancel(e); break;
+      }
+    }
+  }
+  /** The no-argument bean constructor, with default property values */
+  public YesNoDialog() {
+    this("Question", "Your\nMessage\nHere", "Yes", "No", "Cancel", LEFT);
+  }
+  /** A constructor for programmers using this class "by hand". */
+  public YesNoDialog(String title, String message,
+                     String yesLabel, String noLabel, String cancelLabel,
+                     int alignment) {
+    this.title = title;
+    this.message = message;
+    this.yesLabel = yesLabel;
+    this.noLabel = noLabel;
+    this.cancelLabel = cancelLabel;
+    this.alignment = alignment;
+  }
+  /** This method makes the bean display the dialog box. */
+  public void display() {
+    // Create a frame with the specified title.  It would be nice to
+    // use a Dialog, but that needs to be passed a Frame argument, and
+    // the BDK beanbox tool only seems to work with no-argument methods.
+    final Frame frame = new Frame(title);
+    // Specify a LayoutManager for it.
+    frame.setLayout(new BorderLayout(15, 15));
+    // Specify font and colors, if any are specified.
+    if (font != null) frame.setFont(font);
+    if (background != null) frame.setBackground(background);
+    if (foreground != null) frame.setForeground(foreground);
+    // Put the message label in the middle of the window.
+    frame.add("Center", new MultiLineLabel(message, 20, 20, alignment));
+    // Create an action listener for use by the buttons of the dialog.
+    // When a button is pressed, this listener first closes the dialog box.
+    // Then, it creates an AnswerEvent object that corresponds to the
+    // button that was pressed, and sends that new event to all registered
+    // listeners, using the fireEvent() method defined above.
+    ActionListener listener = new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        frame.dispose();     // Pop down window.
+        if (listeners != null) {      // Notify any registered listeners.
+          String cmd = e.getActionCommand();
+          int type;
+          if (cmd.equals("yes")) type = AnswerEvent.YES;
+          else if (cmd.equals("no")) type = AnswerEvent.NO;
+          else type = AnswerEvent.CANCEL;
+          fireEvent(new AnswerEvent(YesNoDialog.this, type));
+        }
+      }
+    };
+    // Create a panel for the dialog buttons and put it at the bottom
+    // of the dialog.  Specify a FlowLayout layout manager for it.
+    Panel buttonbox = new Panel();
+    buttonbox.setLayout(new FlowLayout(FlowLayout.CENTER, 25, 15));
+    frame.add("South", buttonbox);
+    // Create each specified button, specifying the action listener
+    // and action command for each, and adding them to the buttonbox.
+    if ((yesLabel != null) &amp;&amp; (yesLabel.length() &gt; 0)) {
+      Button yes = new Button(yesLabel);        // Create button.
+      yes.setActionCommand("yes");              // Set action command.
+      yes.addActionListener(listener);          // Set listener.
+      buttonbox.add(yes);                       // Add button to the panel.
+    }
+    if ((noLabel != null) &amp;&amp; (noLabel.length() &gt; 0)) {
+      Button no = new Button(noLabel);
+      no.setActionCommand("no");
+      no.addActionListener(listener);
+      buttonbox.add(no);
+    }
+    if ((cancelLabel != null) &amp;&amp; (cancelLabel.length() &gt; 0)) {
+      Button cancel = new Button(cancelLabel);
+      cancel.setActionCommand("cancel");
+      cancel.addActionListener(listener);
+      buttonbox.add(cancel);
+    }
+    // Finally, set the dialog to its preferred size and display it.
+    frame.pack();
+    frame.show();
+  }
+  /**
+   * A main method that demonstrates how to use this class, and allows testing.
+   */
+  public static void main(String[] args) {
+    // Create an instance of InfoDialog, with title and message specified:
+    YesNoDialog d =
+      new YesNoDialog("YesNoDialog Test",
+                      "There are unsaved files.\n" +
+                      "Do you want to save them before quitting?",
+                      "Yes, save and quit",
+                      "No, quit without saving",
+                      "Cancel; don't quit",
+                      YesNoDialog.CENTER);
+    // Register an action listener for the dialog.  This one just prints
+    // the results out to the console.
+    d.addAnswerListener(new AnswerListener() {
+      public void yes(AnswerEvent e) { System.out.println("Yes"); }
+      public void no(AnswerEvent e) { System.out.println("No"); }
+      public void cancel(AnswerEvent e) { System.out.println("Cancel"); }
+    });
+    // Now pop the dialog up.  It will pop itself down automatically.
+    d.display();
+  }
+}
+A Simple Bean
+Custom Events
+ 
+ 
+ 
+ 
+ 
+ 
+ 

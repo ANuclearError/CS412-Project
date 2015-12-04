@@ -1,0 +1,38 @@
+
+[Chapter 24] 24.40 java.io.ObjectInputValidation (JDK 1.1)
+Chapter 24The java.io Package
+24.40 java.io.ObjectInputValidation (JDK 1.1)
+A class implements this interface and defines the
+validateObject() method in order to be able to
+validate itself when it, and all the objects it depends on,
+have been completely deserialized from an ObjectInputStream.
+The validateObject() method is only invoked,
+however, if the object is passed to
+ObjectInputStream.registerValidation(); this must be
+done from the readObject() method of the object.
+Note that if an object is deserialized as part of a larger
+object graph, its validateObject() method is not
+invoked until the entire graph is read, and the original
+call to ObjectInputStream.readObject() is about to
+return.
+validateObject() should throw an
+InvalidObjectException if the object fails
+validation.  This stops object serialization, and causes
+the original call to ObjectInputStream.readObject()
+to terminate with the InvalidObjectException
+exception.
+public abstract interface ObjectInputValidation {
+    // Public Instance Methods
+            public abstract void validateObject() throws InvalidObjectException;
+}
+Passed To:
+ObjectInputStream.registerValidation()
+java.io.ObjectInputStream (JDK 1.1)
+java.io.ObjectOutput (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

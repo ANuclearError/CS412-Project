@@ -1,0 +1,93 @@
+
+[Chapter 7] 7.4 Documentation Comments
+Chapter 7Program Structure
+7.4 Documentation Comments
+Documentation comments are used to
+create stand-alone documentation for classes. Documentation comments
+are processed into Web pages by the javadoc
+program that is part of Sun's Java Development Kit (JDK).
+The javadoc program and the way that it processes
+.java files into Web pages is fully described
+in the documentation for javadoc provided by
+Sun. The remainder of this section describes the special formatting
+information that can be embedded in documentation comments.
+Documentation comments are comments that begin with /**.
+If a documentation comment immediately precedes the declaration
+of a class, interface, method, or field variable, it is assumed
+to describe that class, interface, method, or field variable.
+HTML tags can be included in
+a documentation comment; they are passed directly to the generated
+Web page. In addition to passing HTML tags, javadoc
+recognizes
+special tags that start with an "at" sign (@).
+These tags must appear as the first word on a line in order to be
+recognized. Here is an example of a documentation comment that includes
+these special javadoc tags:
+/**
+ * RomanNumeral is a class similar to Integer, except that
+ * it uses roman numerals for its string based
+ * representation.  It only represents positive numbers.
+ *
+ * @see        Integer
+ * @see        Number
+ * @see        Float
+ * @see        Double
+ * @version    1.1, 9/27/96
+ * @author     Mark Grand
+ */
+Here are the special documentation comment tags recognized
+by javadoc :
+@author author-name
+Formats the given author name. This
+tag can only be used in a class or interface documentation comment.
+@exception name description
+Formats the given exception name and
+its description in the throws section of a method description.
+The name should be the fully qualified class name of the exception.
+This tag can only be used in a method documentation comment.
+@param name description
+Formats the given parameter name and
+its description in the parameters section of a method description.
+This tag can only be used in a method documentation comment.
+@return description
+Formats the given description in the
+returns section of a method description. This tag can only be used
+in a method documentation comment.
+@see classname
+Generates a hypertext link to the specified
+class. The class name may be qualified by its package name.
+@see classname#method-name
+Generates a hypertext link to the specified
+method in the specified class. The class name may be qualified
+by its package name.
+@version text
+Formats the given text as version information.
+This tag can only be used in a class or interface documentation comment.
+@deprecated
+Indicates that a class, method, or variable is deprecated, which means
+that it has been superceded by a newer, preferred class, method, or
+variable. Deprecated features should not be used in new Java programs.
+In addition, you should try to update existing code so that it does
+not rely on deprecated features.  While the
+deprecated features in Java 1.1 are still supported, there is no
+guarantee that they will be supported in future releases. The 
+@deprecated tag is new as of Java 1.1.
+The documentation comment that immediately
+precedes a declaration is associated with the declaration. If two
+comments precede a declaration, only the one immediately preceding
+the declaration is processed by javadoc. The
+first comment is not considered to be associated with a declaration,
+so it is ignored. If there is anything but white space between a
+documentation comment and a declaration, the documentation comment
+is not considered to be associated with the declaration.
+References
+Comments
+The import Directive
+Applications
+ 
+ 
+ 
+ 
+ 
+ 
+ 

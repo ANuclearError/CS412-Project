@@ -1,0 +1,154 @@
+
+[Chapter 11] FileReader
+Chapter 11The java.io Package
+FileReader
+Name
+FileReader
+Synopsis
+Class Name:
+java.io.FileReader
+Superclass:
+java.io.InputStreamReader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The FileReader class represents 
+a character stream that reads data from a file. It is a subclass of InputStreamReader 
+that uses a default buffer size (8192 bytes) to read bytes from a file 
+and the default character encoding scheme to convert the bytes to characters. 
+If you need to specify the character 
+encoding or the buffer size, wrap an InputStreamReader 
+around a FileInputStream. 
+The file can be specified using a FileDescriptor, 
+a File object, or a String 
+that represents a pathname. All of the constructors can throw a SecurityException 
+if the application does not have permission to read from the specified 
+file. 
+FileReader provides a low-level 
+interface for reading character data from a file. You should think about 
+wrapping a FileReader with 
+a BufferedReader to increase 
+reading efficiency. 
+If you need to read binary data from a file, you should use a FileInputStream 
+wrapped by a DataInputStream 
+instead. 
+Class Summary
+public class java.io.FileReader extends java.io.InputStreamReader {
+  // Constructors
+  public FileReader(String fileName);
+  public FileReader(File file);
+  public FileReader(FileDescriptor fd);
+}
+Constructors
+FileInputStream
+public FileReader(String fileName) throws FileNotFoundException
+Parameters
+fileName
+A String that contains the pathname 
+of the file to be accessed. The path must conform to the requirements of 
+the native operating system. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to read the named file. 
+Description
+This constructor creates a FileReader 
+that gets its input from the file named by the specified String. 
+public FileReader(File file) throws FileNotFoundException
+Parameters
+file
+The File 
+to use as input. 
+Throws
+FileNotFoundException
+If the named file cannot be found.
+SecurityException
+If the application does not have permission to read the named file. 
+Description
+This constructor creates a FileReader 
+that gets its input from the file represented by the specified File. 
+public FileReader(FileDescriptor fdObj)
+Parameters
+fdObj
+The FileDescriptor of the file to use as input. 
+Throws
+SecurityException
+If the application does not have permission to read the specified file.
+NullPointerException
+If FileDescriptor is null. 
+Description
+This constructor creates a FileReader 
+that gets its input from the file identified by the given FileDescriptor. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+InputStreamReader
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+getEncoding()
+InputStreamReader
+hashCode()
+Object
+mark(int)
+Reader
+markSupported()
+Reader
+notify()
+Object
+notifyAll()
+Object
+read()
+InputStreamReader
+read(char[])
+Reader
+read(char[], int, int)
+InputStreamReader
+ready()
+InputStreamReader
+reset()
+Reader
+skip(long)
+Reader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedReader, 
+DataInputStream, 
+File, 
+FileDescriptor, 
+FileInputStream, 
+FileNotFoundException, 
+InputStreamReader, 
+IOException, 
+NullPointerException, 
+Reader, 
+SecurityException 
+FileOutputStream
+FileWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

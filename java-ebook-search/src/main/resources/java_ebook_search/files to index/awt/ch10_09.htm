@@ -1,0 +1,118 @@
+
+[Chapter 10] 10.9 PopupMenu
+Chapter 10Would You Like to Choose from the Menu?
+10.9 PopupMenu
+The PopupMenu class is new 
+to Java 1.1; it allows you to associate context-sensitive menus with Java 
+components. To associate a pop-up menu with a component, create the menu, 
+and add it to the component using the add(PopupMenu) 
+method, which all components inherit from the Component 
+class. 
+In principle, any GUI object can have a pop-up menu. In practice, there 
+are a few exceptions. If the component's peer has its own pop-up 
+menu (i.e., a pop-up menu provided by the run-time platform), that pop-up 
+menu effectively overrides the pop-up menu provided by Java. For example, 
+under Windows NT/95, a TextArea has 
+a pop-up menu provided by the Windows NT/95 platforms. Java can't 
+override this menu; although you can add a pop-up menu to a TextArea, 
+you can't display that menu under Windows NT/95 with the usual mouse sequence. 
+PopupMenu MethodsConstructors
+public PopupMenu()  
+The first PopupMenu constructor 
+creates an untitled PopupMenu. 
+Once created, the menu can be populated with menu items like any other 
+menu. 
+public PopupMenu(String label)  
+This constructor creates a PopupMenu 
+with a title of label. The 
+title appears only on platforms that support titles for context menus. 
+Once created, the menu can be populated with menu items like any other 
+menu. 
+Miscellaneous methods
+public void show(Component origin, int x, int y)  
+Call the show() method to display 
+the PopupMenu. x 
+and y specify the location 
+at which the pop-up menu should appear; origin 
+specifies the Component whose 
+coordinate system is used to locate x 
+and y. In most cases, you'll 
+want the menu to appear at the point where the user clicked the mouse; 
+to do this, set origin to the 
+Component that received the 
+mouse event, and set x and 
+y to the location of the mouse 
+click. It is easy to extract this information from an old-style (1.0) Event 
+or a Java 1.1 MouseEvent. In 
+Java 1.1, the platform-independent way to say "give me the mouse 
+events that are supposed to trigger pop-up menus" is to call MouseEvent.isPopupTrigger(). 
+If this method returns true, 
+you should show the pop-up menu if one is associated with the event source. 
+(Note that the mouse event could also be used for some other purpose.) 
+If the PopupMenu is not associated 
+with a Component, show() 
+throws the run-time exception NullPointerException. 
+If origin is not the MenuContainer 
+for the PopupMenu and origin 
+is not within the Container 
+that the pop-up menu belongs to, show() 
+throws the run-time exception IllegalArgumentException. 
+Finally, if the Container of 
+origin does not exist or is 
+not showing, show() throws 
+a run-time exception. 
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the PopupMenu peer 
+with all the MenuItems on it. 
+Example 10.3 is a simple applet that raises a pop-up 
+menu if the user clicks the appropriate mouse button anywhere within the 
+applet. Although the program could use the 1.0 event model, under the 1.0 
+model, it is impossible to tell which mouse event is appropriate to display 
+the pop-up menu. 
+Example 10.3: Using a PopupMenu
+// Java 1.1 only
+import java.awt.*;
+import java.applet.*;
+import java.awt.event.*;
+public class PopupTest extends Applet implements ActionListener {
+    PopupMenu popup;
+    public void init() {
+        MenuItem mi;
+        popup = new PopupMenu("Title Goes Here");
+        popup.add(mi = new MenuItem ("Undo"));
+        mi.addActionListener (this);
+        popup.addSeparator();
+        popup.add(mi = new MenuItem("Cut")).setEnabled(false);
+        mi.addActionListener (this);
+        popup.add(mi = new MenuItem("Copy")).setEnabled(false);
+        mi.addActionListener (this);
+        popup.add(mi = new MenuItem ("Paste"));
+        mi.addActionListener (this);
+        popup.add(mi = new MenuItem("Delete")).setEnabled(false);
+        mi.addActionListener (this);
+        popup.addSeparator();
+        popup.add(mi = new MenuItem ("Select All"));
+        mi.addActionListener (this);
+        add (popup);
+        resize(200, 200);
+        enableEvents (AWTEvent.MOUSE_EVENT_MASK);
+    }
+    protected void processMouseEvent (MouseEvent e) {
+        if (e.isPopupTrigger())
+            popup.show(e.getComponent(), e.getX(), e.getY());
+        super.processMouseEvent (e);
+    }
+    public void actionPerformed(ActionEvent e) {
+        System.out.println (e);
+    }
+}
+Putting It All Together
+Scrolling
+ 
+ 
+ 
+ 
+ 
+ 
+ 

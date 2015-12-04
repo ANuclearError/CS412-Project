@@ -1,0 +1,85 @@
+
+[Chapter 7] 7.8 Combining Layouts
+Chapter 7Layouts
+7.8 Combining Layouts
+If you can't create the display you want with any of the standard 
+layout managers, or you are unable to figure out GridBagLayout, 
+you may want to try combining several different layouts. This technique 
+can often help you build the display you want. Figure 7.12 
+shows a display that uses three panels and three different layouts. 
+Here's the source code to generate the display in Figure 7.12: 
+import java.awt.*;
+public class multi extends java.applet.Applet {
+    public void init() {
+        Panel s = new Panel();
+        Panel e = new Panel();
+        setLayout (new BorderLayout ());
+        add ("North", new Label ("Enter text", Label.CENTER));
+        add ("Center", new TextArea ());
+        e.setLayout (new GridLayout (0,1));
+        e.add (new Button ("Reformat"));
+        e.add (new Button ("Spell Check"));
+        e.add (new Button ("Options"));
+        add ("East", e);
+        s.setLayout (new FlowLayout ());
+        s.add (new Button ("Save"));
+        s.add (new Button ("Cancel"));
+        s.add (new Button ("Help"));
+        add ("South", s);
+    }
+}
+Figure 7.12: Multipanel screen using several layouts
+The display in Figure 7.12 is created by adding four sections to a single BorderLayout. 
+The north region contains a panel with a single Label 
+in it. The panel uses its default LayoutManager, 
+which is a FlowLayout. Why 
+bother with this panel? Why not just add a label at the north
+position in the BorderLayout? 
+Our strategy gives the label the position and size we want: the label is 
+centered and displayed at its preferred size. If we had added the label 
+directly to the BorderLayout, 
+it would have been left justified and resized to fill the region. 
+The TextArea has no special 
+requirements, so we added it directly to the center of the 
+BorderLayout. 
+The three buttons on the right of the screen were arranged in a panel with 
+a GridLayout; then this panel 
+was placed in the east region of the BorderLayout. 
+To create the buttons at the bottom of the screen, we used another Panel 
+with a FlowLayout. It centers 
+the three buttons and displays them at their preferred size, with a gap 
+between them. 
+With a little work, we could have created this display using a single Panel 
+with a GridBagLayout. The result 
+would have been more efficient; placing panels within panels has performance 
+implications. Each container in the display has its own peer object, which 
+uses up system resources. Furthermore, in the 1.0 version of AWT, nesting 
+containers complicates event handling. However, using a GridBagLayout 
+would have required much more work: figuring out the right GridBagConstraints 
+for each component would be time consuming and result in code that is 
+harder to understand. Sometimes, it's best to settle for the easy 
+solution: a hybrid layout composed of several simple panels, rather than 
+a single very complex panel. 
+In Java 1.1, you can make this program even more efficient in its resource 
+usage by using a lightweight component instead of panels. This is particularly 
+easy because the panels in the multipanel screen exist strictly to help 
+with layout and not for partitioning event handling. Therefore, you can 
+define a LightweightPanel that 
+extends Container, with no 
+methods. Use this class instead of Panel. 
+The LightweightPanel allows 
+you to lay out areas without creating unnecessary peers. Here's all 
+the code for the LightweightPanel: 
+// Java 1.1 only
+import java.awt.*;
+public class LightweightPanel extends Container {
+}
+GridBagConstraints
+Disabling the LayoutManager
+ 
+ 
+ 
+ 
+ 
+ 
+ 

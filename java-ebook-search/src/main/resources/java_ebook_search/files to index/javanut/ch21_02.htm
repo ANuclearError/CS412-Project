@@ -1,0 +1,68 @@
+
+[Chapter 21] 21.2 java.awt.image.ColorModel (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.2 java.awt.image.ColorModel (JDK 1.0)
+This abstract class defines a color model--i.e., a scheme for
+representing a color. Subclasses
+implement the methods of this interface to convert their particular
+representation of a pixel value into the default RGB color
+model. The static method getRGBDefault() returns a
+ColorModel object that implements the default color
+model--RGB plus alpha transparency.
+You generally never
+need to call the instance methods of a
+ColorModel--they are called internally by other
+image manipulation classes.
+See also DirectColorModel and IndexColorModel.
+public abstract class ColorModel extends Object {
+    // Public Constructor
+            public ColorModel(int bits);
+    // Protected Instance Variables
+            protected int pixel_bits;
+    // Class Methods
+            public static ColorModel getRGBdefault();
+    // Public Instance Methods
+            public void finalize();  // Overrides Object
+            public abstract int getAlpha(int pixel);
+            public abstract int getBlue(int pixel);
+            public abstract int getGreen(int pixel);
+            public int getPixelSize();
+            public int getRGB(int pixel);
+            public abstract int getRed(int pixel);
+}
+Extended By:
+DirectColorModel, 
+IndexColorModel
+Passed To:
+AreaAveragingScaleFilter.setPixels(), 
+CropImageFilter.setPixels(), 
+ImageConsumer.setColorModel(), 
+ImageConsumer.setPixels(), 
+ImageFilter.setColorModel(), 
+ImageFilter.setPixels(), 
+MemoryImageSource(), 
+MemoryImageSource.newPixels(), 
+PixelGrabber.setColorModel(), 
+PixelGrabber.setPixels(), 
+ReplicateScaleFilter.setPixels(), 
+RGBImageFilter.setColorModel(), 
+RGBImageFilter.setPixels(), 
+RGBImageFilter.substituteColorModel()
+Returned By:
+ColorModel.getRGBdefault(), 
+Component.getColorModel(), 
+ComponentPeer.getColorModel(), 
+PixelGrabber.getColorModel(), 
+Toolkit.getColorModel()
+Type Of:
+RGBImageFilter.newmodel, 
+RGBImageFilter.origmodel
+java.awt.image.AreaAveragingScaleFilter (JDK 1.1)
+java.awt.image.CropImageFilter (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

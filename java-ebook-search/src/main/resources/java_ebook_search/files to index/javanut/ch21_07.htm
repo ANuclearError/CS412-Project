@@ -1,0 +1,52 @@
+
+[Chapter 21] 21.7 java.awt.image.ImageFilter (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.7 java.awt.image.ImageFilter (JDK 1.0)
+This class is used in conjunction with a
+FilteredImageSource. It accepts image data through
+the ImageConsumer interface and passes it on to an
+ImageConsumer specified by the controlling
+FilteredImageSource. ImageFilter is the
+superclass of all image filters, and performs no filtering
+itself. You must subclass it to perform the desired
+filtering. See CropImageFilter and
+RGBImageFilter. The ImageFilter methods are
+the ImageConsumer methods invoked by an
+ImageProducer. You should not call them directly.
+See FilteredImageSource for an example of using an
+ImageFilter.
+public class ImageFilter extends Object implements ImageConsumer, Cloneable {
+    // Default Constructor: public ImageFilter()
+    // Protected Instance Variables
+            protected ImageConsumer consumer;
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public ImageFilter getFilterInstance(ImageConsumer ic);
+            public void imageComplete(int status);  // From ImageConsumer
+            public void resendTopDownLeftRight(ImageProducer ip);
+            public void setColorModel(ColorModel model);  // From ImageConsumer
+            public void setDimensions(int width, int height);  // From ImageConsumer
+            public void setHints(int hints);  // From ImageConsumer
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'byte[] pixels, int off, int scansize);  // From ImageConsumer
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'int[] pixels, int off, int scansize);  // From ImageConsumer
+            public void setProperties(Hashtable props);  // From ImageConsumer
+}
+Extended By:
+CropImageFilter, 
+ReplicateScaleFilter, 
+RGBImageFilter
+Passed To:
+FilteredImageSource()
+Returned By:
+ImageFilter.getFilterInstance()
+java.awt.image.ImageConsumer (JDK 1.0)
+java.awt.image.ImageObserver (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,134 @@
+
+[Chapter 4] 4.7 Shift Operators
+Chapter 4Expressions
+4.7 Shift Operators
+The shift operators in
+Java are used for left shift (&lt;&lt;), right
+shift (&gt;&gt;), and unsigned right shift (&gt;&gt;&gt;)
+operations. The shift operators may appear in a shift expression:
+The shift operators are equal in precedence and are evaluated from left
+to right.
+References
+Additive Operators;
+Order of Operations
+Left Shift Operator &lt;&lt;
+The left shift operator &lt;&lt;
+produces a pure value that is its left operand left-shifted by the
+number of bits specified by its right operand. The &lt;&lt;
+operator may appear in a shift expression. The left shift operator
+never throws an exception.
+Here are some examples of
+the left shift operator:
+(3&lt;&lt;2) == 12
+(-3&lt;&lt;2) == -12
+(0x01234567&lt;&lt;4) == 0x12345670
+(0xF1234567&lt;&lt;4) == 0x12345670
+The type of each operand of
+the left shift operator must be an integer data type, or a compile-time
+error occurs. The &lt;&lt; operator may perform
+type conversions on its operands; unlike arithmetic binary operators,
+each operand is converted independently. If the type of an operand
+is byte, short, or char,
+that operand is converted to an int before the
+value of the operator is computed. The type of the value produced
+by the left shift operator is the type of its left operand.
+If the converted type of the left operand is int,
+only the five least significant bits of the value of the right operand
+are used as the shift distance. Therefore, the shift distance is
+in the range 0 through 31.
+In this case, the value produced by r
+&lt;&lt; s is mathematically equivalent to:
+If the type of the left operand is long,
+only the six least significant bits of the value of the right operand
+are used as the shift distance. Therefore, the shift distance is
+in the range 0 through 63. In this case, the value produced by r
+&lt;&lt; s is mathematically equivalent to:
+References
+Integer types
+Right Shift Operator &gt;&gt;
+The right shift operator &gt;&gt;
+produces a pure value that is its left operand right-shifted with
+sign extension by the number of bits specified by its right operand.
+Right-shifting with sign extension means that shifting a value
+n places to the right causes the n
+high order
+bits to contain the same value as the sign bit of the unshifted
+value. The &gt;&gt; operator may appear as part of a shift expression.
+The right shift operator never throws an exception.
+Here are some examples of the right shift operator:
+(0x01234567&gt;&gt;4) == 0x00123456
+(0xF1234567&gt;&gt;4) == 0xFF123456
+The type of each operand of
+the right shift operator must be an integer data type, or a compile-time
+error occurs. The &gt;&gt; operator may perform type
+conversions on its operands; unlike arithmetic binary operators, each
+operand is converted independently. If the type of an operand is
+byte, short, or char,
+that operand is converted to an int before the
+value of the operator is computed. The type of the value produced
+by the right shift operator is the type of its left operand.
+If the converted type of the left operand is int,
+only the five least significant bits of the value of the right operand
+are used as the shift distance. Therefore, the shift distance is
+in the range 0 through 31.
+In this case, the value produced by r
+&gt;&gt; s is mathematically equivalent to:
+The notation  means
+the greatest integer less than or equal to x ;
+this is called the floor operation.
+If the type of the
+left operand is long, only the six least significant
+bits of the value of the right operand are used as the shift distance.
+Therefore, the shift distance is in the range 0 through 63. In this
+case, the value produced by r &gt;&gt; s is mathematically
+equivalent to:
+References
+Integer types
+Unsigned Right Shift Operator &gt;&gt;&gt;
+The unsigned right shift operator &gt;&gt;&gt;
+produces a pure
+value that is its left operand right-shifted with zero extension
+by the number of bits specified by its right operand. Right-shifting
+with zero extension means that shifting a value n
+places to the right causes the n high order
+bits to contain zero. The &gt;&gt;&gt; operator may appear
+as part of a shift expression. The unsigned right shift operator
+never throws an exception.
+Here are some examples of
+the unsigned right shift operator:
+(0x01234567&gt;&gt;&gt;4) == 0x00123456
+(0xF1234567&gt;&gt;&gt;4) == 0x0F123456
+The type of each operand of
+the unsigned right shift operator must be an integer data type,
+or a compile-time error occurs. The &gt;&gt;&gt; operator
+may perform type conversions on its operands; unlike arithmetic binary
+operators, each operand is converted independently. If the type
+of an operand is byte, short,
+or char, that operand is converted to an int
+before the value of the operator is computed. The type of the value
+produced by the unsigned right shift operator is the type of its
+left operand.
+If the converted type of the left operand
+is int, only the five least significant bits
+of the value of the right operand are used as the shift distance.
+So, the shift distance is in the range 0 through 31. Here,
+the value produced by r &gt;&gt;&gt; s is the same as:
+s==0 ? r : (r &gt;&gt; s) &amp; ~(-1&lt;&lt;(32-s))
+If the type of the left operand is long,
+then only the six least significant bits of the value of the right operand
+are used as the shift distance. So, the shift distance is
+in the range 0 through 63.
+Here, the value produced by r
+&gt;&gt;&gt; s is the same as the following:
+s==0 ? r : (r &gt;&gt; s) &amp; ~(-1&lt;&lt;(64-s))
+References
+Integer types
+Additive Operators
+Relational Comparison Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

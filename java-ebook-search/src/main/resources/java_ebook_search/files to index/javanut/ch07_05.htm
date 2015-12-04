@@ -1,0 +1,68 @@
+
+[Chapter 7] 7.5 Scribbling with Inner Classes
+Chapter 7Events
+7.5 Scribbling with Inner Classes
+The Java 1.1 event model was designed to work well with
+another new Java 1.1 feature: inner classes.
+Example 7.3
+shows what the applet looks like when the event listeners
+are implemented as anonymous inner classes.  Note how
+succinct this representation is. This is perhaps
+the most common way to use the Java 1.1 event model, so
+you'll probably
+see a lot of code that looks like this.  In this case, our
+simple applet is nothing but event-handling code, so this
+version of it consists almost entirely of anonymous class
+definitions.
+Note that we've added a feature to the applet.  It now
+includes a Clear button.  An
+ActionListener object is registered with the button; it
+clears the
+scribble when the appropriate event occurs.
+Example 7.3: Scribble: Using Inner Classes
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Scribble3 extends Applet {
+  int last_x, last_y;
+  public void init() {
+    // Define, instantiate, and register a MouseListener object.
+    this.addMouseListener(new MouseAdapter() {
+      public void mousePressed(MouseEvent e) {
+        last_x = e.getX();
+        last_y = e.getY();
+      }
+    });
+    // Define, instantiate, and register a MouseMotionListener object.
+    this.addMouseMotionListener(new MouseMotionAdapter() {
+      public void mouseDragged(MouseEvent e) {
+        Graphics g = getGraphics();
+        int x = e.getX(), y = e.getY();
+        g.setColor(Color.black);
+        g.drawLine(last_x, last_y, x, y);
+        last_x = x; last_y = y;
+      }
+    });
+    // Create a clear button.
+    Button b = new Button("Clear");
+    // Define, instantiate, and register a listener to handle button presses.
+    b.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {  // clear the scribble
+        Graphics g = getGraphics();
+        g.setColor(getBackground());
+        g.fillRect(0, 0, getSize().width, getSize().height);
+      }
+    });
+    // And add the button to the applet.
+    this.add(b);
+  }
+}
+Scribbling in Java 1.1
+Inside the Java 1.1 Event Model
+ 
+ 
+ 
+ 
+ 
+ 
+ 

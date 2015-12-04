@@ -1,0 +1,235 @@
+
+[Chapter 7] 7.5 CardLayout
+Chapter 7Layouts
+7.5 CardLayout
+The CardLayout layout manager 
+is significantly different from the other layouts. Whereas the other layout 
+managers attempt to display all the components within the container at 
+once, a CardLayout displays 
+only one component at a time. (That component could be a Component 
+or another Container.) The 
+result is similar to Netscape Navigator's Property sheets or a tabbed 
+Dialog, without the tabs. You can flip through the cards (components) in 
+the layout in order or jump to a specific card if you know its name. The 
+following call to setLayout() 
+changes the LayoutManager of 
+the current container to CardLayout: 
+lm = new CardLayout();
+setLayout (lm);
+Unlike most other layout managers, CardLayout 
+has a number of instance methods that programs have to call. Therefore, 
+you usually have to retain a reference to the layout manager. In addition, 
+you usually have some other component to control the CardLayout 
+(i.e., select which card to view). Most simply, you could put some buttons 
+in a panel and stick this panel in the north region of a BorderLayout; 
+then make another panel with a CardLayout, 
+and place that in the center. A more complex task would be to build a set 
+of tabs to control the CardLayout. 
+A CardLayout allows you to assign names to the components it manages. You 
+can use the name to jump to an arbitrary component by calling the manager's 
+show() method. In Java 1.0, 
+naming was optional; you could call add(Component) 
+to put a component in the layout with a null name. A null name meant 
+only that you couldn't flip to the component at will; you could only display 
+the component by calling next() 
+or previous() (or first() 
+or last()), which cycle through 
+all the components in order. In Java 1.1, all components added to a CardLayout 
+must be named. 
+CardLayout MethodsConstructors
+public CardLayout () 
+This constructor creates a CardLayout 
+using a horizontal and vertical gap of zero pixels. With CardLayout, 
+there is no space between components because only one component is visible 
+at a time; think of the gaps as insets. 
+public CardLayout (int hgap, int vgap) 
+This version of the constructor allows you to create a CardLayout 
+with a horizontal gap of hgap 
+and vertical gap of vgap to 
+add some space around the outside of the component that is displayed. The 
+units for gaps are pixels. Using negative gaps chops off components at 
+the edges of the container. 
+Informational methods
+public int getHgap ()  
+The getHgap() method retrieves 
+the current horizontal gap setting. 
+public void setHgap (int hgap)  
+The setHgap() method changes 
+the current horizontal gap setting to hgap. 
+After changing the gaps, you must validate() 
+the Container. 
+public int getVgap ()  
+The getVgap() method retrieves 
+the current vertical gap setting. 
+public void setVgap (int hgap)  
+The setVgap() method changes 
+the current vertical gap setting to vgap. 
+After changing the gaps, you must validate() 
+the Container. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component) 
+This version of addLayoutComponent() 
+has been deprecated and replaced by the addLayoutComponent(Component, 
+Object) method of the LayoutManager2 
+interface. 
+public void removeLayoutComponent (Component component)  
+The removeLayoutComponent() 
+method of CardLayout removes 
+component from the container. 
+If component is not in the 
+container already, nothing happens. 
+public Dimension preferredLayoutSize (Container target)  
+The preferredLayoutSize() method 
+of CardLayout retrieves the 
+preferred size for all the components within it. The preferredLayoutSize() 
+method then determines the widest and tallest size of all components (not 
+necessarily from the same one), adds the appropriate insets and gaps, and 
+uses that as the preferred size for the layout. 
+public Dimension minimumLayoutSize (Container target)  
+The minimumLayoutSize() method 
+of CardLayout calculates the 
+minimum size for all the components within it. The minimumLayoutSize() 
+method then determines the widest and tallest minimum size of all components 
+(not necessarily from the same one), adds the appropriate insets and gaps, 
+and uses that as the minimum size for the layout. 
+public void layoutContainer (Container target)  
+The layoutContainer() method 
+draws target's visible 
+components one on top of another. Initially, all components are visible. 
+Components do not become invisible until you select one for display, by 
+calling the first(), last(), 
+next(), previous(), 
+or show() methods. Where possible, 
+CardLayout reshapes all components 
+to fit the target container. 
+LayoutManager2 methods
+public void addLayoutComponent (Component component, Object name)  
+This addLayoutComponent() method 
+of CardLayout puts component 
+into an internal table with a key of name. 
+The name comes from the version 
+of add() that has a constraints 
+object as a parameter. The name allows you to refer to the component when 
+you call other card layout methods, like show(). 
+If you call the version of add() 
+that only takes a Component 
+parameter, you cannot call the show() 
+method to flip to the specific component. 
+If name is not a String, 
+the run-time exception IllegalArgumentException 
+is thrown. 
+public abstract Dimension maximumLayoutSize(Container target)  
+The maximumLayoutSize() method 
+returns a Dimension object 
+with a width and height of Integer.MAX_VALUE. 
+In practice, this means that CardLayout 
+doesn't support the concept of maximum size. 
+public abstract float getLayoutAlignmentX(Container target)  
+The getLayoutAlignmentX() method 
+says that CardLayout containers 
+should be centered horizontally within the area available. 
+public abstract float getLayoutAlignmentY(Container target)  
+The getLayoutAlignmentY() method 
+says that CardLayout containers 
+should be centered vertically within the area available. 
+public abstract void invalidateLayout(Container target)  
+The invalidateLayout() method 
+of CardLayout does nothing. 
+CardLayout methods
+This group of methods controls which component the CardLayout 
+displays. The show() is only 
+usable if you assigned components names when adding them to the container. 
+The others can be used even if the components are unnamed; they cycle through 
+the components in the order in which they were added. All of these methods 
+require the parent Container 
+(i.e., the container being managed by this layout manager) as an argument. 
+If the layout manager of the parent 
+parameter is anything other than the container using this instance of the 
+CardLayout, the method throws 
+the run-time exception IllegalArgumentException. 
+public void first (Container parent) 
+The first() method flips to 
+the initial component in parent. 
+public void next (Container parent) 
+The next() method flips to 
+the following component in parent, 
+wrapping back to the beginning if the current component is the last. 
+public void previous (Container parent) 
+The previous() method flips 
+to the prior component in parent, 
+wrapping to the end if the current component is the first. 
+public void last (Container parent) 
+The last() method flips to 
+the final component in parent. 
+public void show (Container parent, String name) 
+The show() method displays 
+the component in parent that was assigned the given name 
+when it was added to the container. If there is no component with name 
+contained within parent, nothing 
+happens. 
+Miscellaneous methods
+public String toString () 
+The toString() method of CardLayout 
+returns the a string showing the current horizontal and vertical gap settings. 
+The result for a typical CardLayout 
+would be: 
+java.awt.CardLayout[hgap=0,vgap=0]
+CardLayout Example
+Figure 7.7 shows a simple CardLayout. 
+This layout has three cards that cycle when you make a selection. 
+The first card (A) contains some Checkbox 
+items within a Panel, the second 
+card (B) contains a single Button, 
+and the third (C) contains a List 
+and a Choice within another 
+Panel. 
+Figure 7.7: Different views of CardLayout
+Example 7.1 is the code that generated Figure 7.7.
+Example 7.1: The CardExample Class
+import java.awt.*;
+import java.applet.*;
+public class CardExample extends Applet {
+    CardLayout cl = new CardLayout();
+    public void init () {
+        String fonts[] = Toolkit.getDefaultToolkit().getFontList();
+        setLayout (cl);
+        Panel pA = new Panel();
+        Panel pC = new Panel ();
+        p1.setLayout (new GridLayout (3, 2));
+        List l = new List(4, false);
+        Choice c = new Choice ();
+        for (int i=0;i&lt;fonts.length;i++) {
+            pA.add (new Checkbox (fonts[i]));
+            l.addItem (fonts[i]);
+            c.addItem (fonts[i]);
+        }
+        pC.add (l);
+        pC.add (c);
+        add ("One", pA);
+        add ("Two", new Button ("Click Here"));
+        add ("Three", pC);
+    }
+    public boolean action (Event e, Object o) {
+        cl.next(this);
+        return true;
+    }
+}
+Each panel within the CardLayout 
+has its own layout manager. Panel 
+A uses a GridLayout; panel C uses its default layout manager, which is a FlowLayout. 
+When the user takes any action (i.e., clicking on a checkbox or button, 
+or selecting an item from the List 
+or Choice components), the 
+system generates a call to action(), 
+which calls the CardLayout's 
+next() method, thus displaying 
+the next card in the sequence. 
+GridLayout
+GridBagLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

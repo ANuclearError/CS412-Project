@@ -1,0 +1,95 @@
+
+[Chapter 24] 24.53 java.io.PrintWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.53 java.io.PrintWriter (JDK 1.1)
+This class is a character output stream that implements a
+number of print() and println() methods that
+output textual representations of primitive values and
+objects.  When you create a PrintWriter object, you
+specify a character or byte output stream that it should
+write its characters to, and also optionally specify whether
+the PrintWriter stream should be automatically
+flushed whenever println() is called.  If you specify
+a byte output stream as the destination, the
+PrintWriter() constructor automatically creates
+the necessary OutputStreamWriter object to convert
+characters to bytes using the default encoding.
+PrintWriter implements the normal write(),
+flush(), and close() methods that all
+Writer subclasses do. It is more common to use
+the higher-level print() and println()
+methods, each of which converts its argument to a string
+before outputting it.  println() has the additional
+behavior of terminating the line (and optionally flushing
+the buffer) after printing its argument.
+The methods of PrintWriter never throw exceptions.
+Instead, when errors occur, they set an internal flag that
+you can check by calling checkError().
+checkError() first flushes the internal stream, and
+then returns true if any exception has occurred
+while writing values to that stream. Once an error has
+occurred on a PrintWriter object, all subsequent
+calls to checkError() return true;
+there is no way to reset the error flag.
+PrintWriter is the character stream analog to
+PrintStream, which it supersedes.  You can usually
+trivially replace any PrintStream objects in a
+program with PrintWriter objects.  This is
+particularly important for internationalized programs.  The
+only valid remaining use for the PrintStream class
+is for the System.out and System.err
+standard output streams.  See PrintStream for
+details.
+public class PrintWriter extends Writer {
+    // Public Constructors
+            public PrintWriter(Writer out);
+            public PrintWriter(Writer out, boolean autoFlush);
+            public PrintWriter(OutputStream out);
+            public PrintWriter(OutputStream out, boolean autoFlush);
+    // Public Instance Methods
+            public boolean checkError();
+            public void close();  // Defines Writer
+            public void flush();  // Defines Writer
+            public void print(boolean b);
+            public void print(char c);
+            public void print(int i);
+            public void print(long l);
+            public void print(float f);
+            public void print(double d);
+            public void print(char[] s);
+            public void print(String s);
+            public void print(Object obj);
+            public void println();
+            public void println(boolean x);
+            public void println(char x);
+            public void println(int x);
+            public void println(long x);
+            public void println(float x);
+            public void println(double x);
+            public void println(char[] x);
+            public void println(String x);
+            public void println(Object x);
+            public void write(int c);  // Overrides Writer
+            public void write(char[] buf, int off, int len);  // Defines Writer
+            public void write(char[] buf);  // Overrides Writer
+            public void write(String s, int off, int len);  // Overrides Writer
+            public void write(String s);  // Overrides Writer
+    // Protected Instance Methods
+            protected void setError();
+}
+Hierarchy:
+Object->Writer->PrintWriter
+Passed To:
+Component.list(), 
+Container.list(), 
+Properties.list(), 
+Throwable.printStackTrace()
+java.io.PrintStream (JDK 1.0)
+java.io.PushbackInputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

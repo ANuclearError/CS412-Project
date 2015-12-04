@@ -1,0 +1,74 @@
+
+[Chapter 24] 24.39 java.io.ObjectInputStream (JDK 1.1)
+Chapter 24The java.io Package
+24.39 java.io.ObjectInputStream (JDK 1.1)
+ObjectInputStream is used to deserialize objects,
+arrays, and other values from a stream that was previously
+created with an ObjectOutputStream.  The
+readObject() method deserializes objects and arrays
+(which should then be cast to the appropriate type);
+various other methods are used to read primitive data values
+from the stream.  Note that only objects that implement the
+Serializable interface or the Externalizable
+interface can be serialized and deserialized.
+The defaultReadObject() method may only be called
+from the readObject() method of an object that is
+currently being deserialized.  It allows an object to
+perform additional processing after deserializing itself.
+The registerValidation() method may also only be
+called from the readObject() method of an object
+being deserialized.  It registers an
+ObjectInputValidation object (typically the object
+being deserialized) to be notified when a complete tree of
+objects has been deserialized and the original call to the
+readObject() method of the ObjectInputStream
+is about to return to its caller.
+The remaining methods include miscellaneous stream manipulation
+methods and several protected methods for use by subclasses
+that want to customize the deserialization behavior of
+ObjectInputStream.
+public class ObjectInputStream extends InputStream implements ObjectInput {
+    // Public Constructor
+            public ObjectInputStream(InputStream in) throws IOException, StreamCorruptedException;
+    // Public Instance Methods
+            public int available() throws IOException;  // Overrides InputStream
+            public void close() throws IOException;  // Overrides InputStream
+            public final void defaultReadObject() throws IOException, ClassNotFoundException, NotActiveException;
+            public int read() throws IOException;  // Defines InputStream
+            public int read(byte[] data, int offset, int length) throws IOException;  // Overrides InputStream
+            public boolean readBoolean() throws IOException;  // From DataInput
+            public byte readByte() throws IOException;  // From DataInput
+            public char readChar() throws IOException;  // From DataInput
+            public double readDouble() throws IOException;  // From DataInput
+            public float readFloat() throws IOException;  // From DataInput
+            public void readFully(byte[] data) throws IOException;  // From DataInput
+            public void readFully(byte[] data, int offset, int size) throws IOException;  // From DataInput
+            public int readInt() throws IOException;  // From DataInput
+            public String readLine() throws IOException;  // From DataInput
+            public long readLong() throws IOException;  // From DataInput
+            public final Object readObject() throws OptionalDataException,
+            public final Object readObject() 'u'ClassNotFoundException, IOException;  // From ObjectInput
+            public short readShort() throws IOException;  // From DataInput
+            public String readUTF() throws IOException;  // From DataInput
+            public int readUnsignedByte() throws IOException;  // From DataInput
+            public int readUnsignedShort() throws IOException;  // From DataInput
+            public synchronized void registerValidation(ObjectInputValidation obj, int prio)
+            public synchronized void registerValidation'u'throws NotActiveException, InvalidObjectException;
+            public int skipBytes(int len) throws IOException;  // From DataInput
+    // Protected Instance Methods
+            protected final boolean enableResolveObject(boolean enable) throws SecurityException;
+            protected void readStreamHeader() throws IOException, StreamCorruptedException;
+            protected Class resolveClass(ObjectStreamClass v) throws IOException, ClassNotFoundException;
+            protected Object resolveObject(Object obj) throws IOException;
+}
+Hierarchy:
+Object->InputStream->ObjectInputStream(ObjectInput(DataInput))
+java.io.ObjectInput (JDK 1.1)
+java.io.ObjectInputValidation (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,420 @@
+
+[Chapter 6] 6.2 Output Streams and Writers
+Chapter 6I/O
+6.2 Output Streams and Writers
+The OutputStream class is an 
+abstract class that defines 
+methods to write a stream of bytes sequentially. Java provides subclasses 
+of the OutputStream class for 
+writing to files and byte arrays, among other things. Other subclasses 
+of OutputStream can be chained 
+together to provide additional logic, such as writing multibyte data types 
+or converting data to a string representation. It is also easy to define 
+a subclass of OutputStream 
+that writes to another kind of destination. 
+In Java 1.1, the Writer class is an
+abstract class that defines methods to write to a
+stream of characters sequentially. Many of the byte-oriented
+subclasses of OutputStream have counterparts in the
+character-oriented world of Writer objects. Thus,
+there are subclasses of Writer for writing to files
+and character arrays.
+OutputStream
+The OutputStream class is the
+abstract superclass of all other byte output stream
+classes. It defines three write() methods for
+writing to a raw stream of bytes:
+write(int b)
+write(byte[] b)
+write(byte[] b, int off, int len)
+Some OutputStream subclasses 
+may implement buffering to increase efficiency. OutputStream 
+provides a method, flush(), 
+that tells the OutputStream 
+to write any buffered output to the underlying device, which may be a disk 
+drive or a network. 
+Because the OutputStream class 
+is abstract, you cannot create 
+a "pure" OutputStream. 
+However, the various subclasses of OutputStream 
+can be used interchangeably. For example, methods often take OutputStream 
+parameters. This means that such a method accepts any subclass of OutputStream 
+as an argument. 
+OutputStream is designed so that
+write(byte[]) and write(byte[],
+int, int) call
+write(int). Thus, when you subclass
+OutputStream, you only need to define the
+write() method. However, for efficiency's sake, you
+should also override write(byte[],
+int, int) with a method that can
+write a block of data more efficiently than writing each byte
+separately.
+Writer
+The Writer class is the abstract 
+parent class of all other character output stream classes. It defines nearly 
+the same methods as OutputStream, 
+except that the write() methods 
+deal with characters instead of bytes: 
+write(int c)
+write(char[] cbuf)
+write(char[] cbuf, int off, int len)
+write(String str)
+write(String str, int off, int len)
+Writer also includes a flush() 
+method that forces any buffered data to be written to the stream. 
+Writer is designed so that
+write(int) and write(char[])
+both call write(char[], int,
+int).  Thus, when you subclass
+Writer, you only need to define the
+write(char[], int,
+int) method. Note that this design is different
+from, and more efficient than, that of
+OutputStream.
+OutputStreamWriter
+The OutputStreamWriter class 
+serves as a bridge between Writer 
+objects and OutputStream objects. 
+Although an OutputStreamWriter 
+acts like a character stream, it converts its characters to bytes using 
+a character encoding scheme and writes them to an underlying OutputStream. 
+This class is the output counterpart of InputStreamReader. 
+When you create an OutputStreamWriter, specify the underlying OutputStream 
+and, optionally, the name of an encoding scheme. The following example 
+shows how to construct an OutputStreamWriter 
+that writes characters to a file, encoded using the ISO 8859-5 encoding: 
+String fileName = "encodedfile.txt";
+String encodingName = "8859_5";
+OutputStreamWriter out;
+try {
+    FileOutputStream fileOut = new FileOutputStream (fileName);
+    out = new OutputStreamWriter (fileOut, encodingName);
+} catch (UnsupportedEncodingException e1) {
+    System.out.println(encodingName + " is not a supported encoding scheme.");
+} catch (IOException e2) {
+    System.out.println("The file " + fileName + " could not be opened.");
+}
+FileWriter and FileOutputStream
+The FileOutputStream class 
+is a subclass of OutputStream 
+that writes a stream of bytes to a file. The FileOutputStream 
+class has no explicit open method. Instead, the file is implicitly opened, 
+if appropriate, when you create the FileOutputStream 
+object. There are several ways to create a FileOutputStream: 
+You can create a FileOutputStream 
+by passing the name of a file to be written: 
+FileOutputStream f1 = new FileOutputStream("foo.txt");
+Another constructor is available in Java 1.1 that allows you to specify 
+whether you want to append to the file or overwrite it. The following example 
+constructs a FileOutputStream 
+that appends the given file: 
+FileOutputStream f1 = new FileOutputStream("foo.txt", true);
+You can create a FileOutputStream 
+with a File object: 
+File f = new File("foo.txt");
+FileOutputStream f2 = new FileOutputStream(f);
+You can create a FileOutputStream 
+with a FileDescriptor object. 
+A FileDescriptor encapsulates 
+the native operating system's representation of an open file. You 
+can get a FileDescriptor from 
+a RandomAccessFile by calling 
+its getFD() 
+method. You create a FileOutputStream 
+that writes to the open file associated with a RandomAccessFile 
+as follows: 
+RandomAccessFile raf;
+raf = new RandomAccessFile("z.txt","rw");
+FileInputStream f3 = new FileOutputStream(raf.getFD());
+The FileWriter class is a subclass 
+of Writer that writes a stream of characters to a file. The characters to be written 
+are converted to bytes using the default character encoding scheme. If 
+you do not want to use the default encoding scheme, you need to wrap an 
+OutputStreamWriter around a 
+FileOutputStream as shown above. 
+You can create a FileWriter 
+from a filename, a File object, 
+or a FileDescriptor object, 
+as described above for FileOutputStream. 
+StringWriter
+The StringWriter class is a 
+subclass of Writer that stores 
+its data in a String object. 
+Internally, it uses a StringBuffer, 
+which can be examined using getBuffer(). 
+A String containing the data 
+that has been written can be obtained with toString(). 
+The following example creates a StringWriter 
+and writes data into it: 
+StringWriter out = new StringWriter();
+char[] buffer = {'b', 'o', 'o', '!', 'h', 'a'};
+out.write('B');
+out.write("uga");
+out.write(buffer, 0, 4);
+System.out.println(out.toString());
+This example produces the following output: 
+Bugaboo!
+CharArrayWriter and ByteArrayOutputStream
+The CharArrayWriter class is 
+a subclass of Writer that writes 
+characters to an internal array. There are three ways to retrieve the data 
+that has been written to the CharArrayWriter: 
+The toCharArray() 
+method returns a reference to a copy of the internal array. 
+The toString() method 
+returns a String constructed 
+from the internal array. 
+The writeTo() method writes 
+the internal array to another Writer. 
+This example demonstrates how to create a CharArrayWriter, 
+write data into it, and retrieve the data: 
+CharArrayWriter out = new CharArrayWriter();
+try {
+    out.write("Daphne"); 
+}catch (IOException e) {}
+char[] buffer = out.toCharArray();
+System.out.println(buffer);
+String result = out.toString();
+System.out.println(result);
+This example produces the following output: 
+Daphne
+Daphne
+The internal buffer of the CharArrayWriter 
+is expanded as needed when data is written. If you know how many characters 
+you will be writing, you can make your CharArrayWriter 
+a little more efficient by passing an initial size to its constructor. 
+ByteArrayOutputStream is the 
+byte-oriented equivalent of CharArrayWriter. 
+It works in much the same way, with the following exceptions: 
+The write() methods 
+deal with bytes, not characters. Additionally, ByteArrayOutputStream 
+does not have the write(String) 
+methods that CharArrayWriter 
+defines. 
+Instead of toCharArray(), 
+ByteArrayOutputStream has a 
+toByteArray() method. 
+Three toString() methods are provided. The one with
+no arguments converts the bytes in the internal array to characters
+using the default encoding scheme.[1]
+In Java 1.1, the toString(int) method is
+deprecated, since it does not convert bytes to characters
+appropriately.  Instead, pass an encoding name to
+toString(String); this method correctly converts
+the internal byte array to a character string.
+[1] 
+In Java 1.1, the default encoding scheme is used for the
+conversion. In earlier versions, characters are simply created using
+the eight bits of each byte as the low eight bits of the character.
+PipedOutputStream and PipedWriter
+The PipedOuputStream class 
+is a subclass of OutputStream 
+that facilitates communication between threads. A PipedOutputStream 
+must be connected to a PipedInputStream 
+to be useful, as it writes bytes that can be read by a connected PipedInputStream. 
+There are a few ways to connect a PipedOutputStream 
+to a PipedInputStream. You 
+can first create the PipedInputStream 
+and pass it to the PipedOutputStream 
+constructor like this: 
+PipedInputStream pi = new PipedInputStream();
+PipedOutputStream po = new PipedOutputStream(pi);
+You can also create the PipedOutputStream 
+first and pass it to the PipedInputStream 
+constructor like this: 
+PipedOutputStream po = new PipedOutputStream();
+PipedInputStream pi = new PipedInputStream(po);
+The PipedOutputStream and
+  PipedInputStream classes each have a
+  connect() method you can use to explicitly
+  connect a PipedOutputStream and a
+  PipedInputStream as follows:
+PipedOutputStream po = new PipedOutputStream();
+PipedInputStream pi = new PipedInputStream();
+po.connect(pi);
+Or you can use connect() as 
+follows: 
+PipedOutputStream po = new PipedOutputStream();
+PipedInputStream pi = new PipedInputStream();
+pi.connect(po);
+Only one PipedInputStream can 
+be connected to a PipedOutputStream 
+at a time. If you use a connect() 
+method to connect a PipedOutputStream 
+to an already connected PipedInputStream, 
+any unread bytes from the previously connected PipedOutputStream 
+are lost. 
+PipedWriter is the character-based 
+equivalent of PipedOutputStream. 
+It works in the same way, except that a PipedWriter 
+is connected to a PipedReader 
+to complete the pipe, using either the appropriate constructor or the connect() 
+method. 
+FilterOutputStream and FilterWriter
+The FilterOutputStream class 
+is a wrapper class for OutputStream 
+objects. Conceptually, objects that belong to a subclass of FilterOutputStream 
+are wrapped around another OutputStream 
+object. The constructor for this class requires an OutputStream. 
+The constructor sets the object's out 
+instance variable to reference the specified OutputStream, 
+so from that point on, the FilterOutputStream 
+is associated with the given OutputStream. 
+All of the methods of FilterOutputStream 
+work by calling the corresponding methods in the underlying OutputStream. 
+Because the close() 
+method of a FilterOutputStream 
+calls the close() 
+method of the OutputStream 
+that it wraps, you do not need to explicitly close the underlying OutputStream. 
+A FilterOutputStream does not 
+add any functionality to the object that it wraps, so by itself it is not 
+very useful. However, subclasses of the FilterOutputStream 
+class do add functionality to the objects that they wrap in two ways: 
+Some subclasses add logic to the methods of OutputStream. 
+For example, the BufferedOutputStream 
+class adds logic that buffers write operations. 
+Other subclasses add new methods. An example of this is DataOutputStream, 
+which provides methods for writing primitive Java data types to the stream. 
+The FilterWriter class is the 
+character-based equivalent of FilterOutputStream. 
+A FilterWriter is wrapped around 
+an underlying Writer object; 
+the methods of FilterWriter 
+call the corresponding methods of the underlying Writer. 
+However, unlike FilterOutputStream, 
+FilterWriter is an abstract 
+class, so you cannot instantiate it directly. 
+DataOutputStream
+The DataOutputStream class 
+is a subclass of the FilterOutputStream 
+class that provides methods for writing a variety of data types to an OutputStream. 
+The DataOutputStream class 
+implements the DataOutput interface, 
+so it defines methods for writing all of the primitive Java data types. 
+You create a DataOutputStream 
+by passing a reference to an underlying OutputStream 
+to the constructor. Here is an example that creates a DataOutputStream 
+and uses it to write the length of an array as an int 
+and then to write the values in array as long 
+values: 
+void writeLongArray(OutputStream out, long[] a) throws IOException {
+    DataOutputStream dout = new DataOutputStream(out);
+    dout.writeInt(a.length);
+    for (int i = 0; i &lt; a.length; i++) {
+        dout.writeLong(a[i]);
+    }
+}
+BufferedWriter and BufferedOutputStream
+The BufferedWriter class is 
+a subclass of Writer that stores 
+output destined for an underlying Writer 
+in an internal buffer. When the buffer fills up, the entire buffer is written, 
+or flushed, to the underlying Writer. 
+Using a BufferedWriter is usually 
+faster than using a regular Writer 
+because it reduces the number of calls that must be made to the underlying 
+device, be it a disk or a network. You can use the flush() 
+method to force a BufferedWriter 
+to write the contents of the buffer to the underlying Writer. 
+The following example shows how to create a BufferedWriter 
+around a network socket's output stream: 
+public Writer getBufferedWriter(Socket s) throws IOException {
+    OutputStreamWriter converter = new OutputStreamWriter(s.getOutputStream());
+    return new BufferedWriter(converter);
+}
+First, create an OutputStreamWriter 
+that converts characters to bytes using the default encoding scheme. After 
+they are converted, the bytes are written to the socket. Then simply 
+wrap a BufferedWriter around 
+the OutputStreamWriter to buffer 
+the output. 
+The BufferedOutputStream class 
+is the byte-based equivalent of BufferedWriter. 
+It works in the same way as BufferedWriter, 
+except that it buffers output for an underlying OutputStream. 
+Here's how you would rewrite the previous example to create a BufferedOutputStream 
+around a socket: 
+public OutputStream getBufferedOutputStream(Socket s) throws IOException {
+    return new BufferedOutputStream(s.getOutputStream());
+}
+PrintWriter and PrintStream
+The PrintWriter class is a 
+subclass of Writer that provides a set of methods for printing string representations 
+of every Java data type. A PrintWriter 
+can be wrapped around an underlying Writer 
+object or an underlying OutputStream 
+object. In the case of wrapping an OutputStream, any characters written 
+to the PrintWriter are converted 
+to bytes using the default encoding scheme.[2]
+Additional constructors allow you to specify if the underlying stream should 
+be flushed after every line-separator character is written. 
+[2] 
+You can achieve the same effect using an
+OutputStreamWriter, but it is easier to use the
+PrintWriter(OutputStream) constructor. However, if
+you want to use an encoding scheme other than the default one, you
+need to create your own OutputStreamWriter.
+The PrintWriter class provides a
+print() and a println() method
+for every primitive Java data type. As their names imply, the
+println() methods do the same thing as their
+print() counterparts, but also append a line
+separator character.
+The following example demonstrates how to wrap a
+PrintWriter around an
+OutputStream:
+boolean b = true;
+char c = '%'
+double d = 8.31451
+int i = 42;
+String s = "R = ";
+PrintWriter out = new PrintWriter(System.out, true);
+out.print(s);
+out.print(d);
+out.println();
+out.println(b);
+out.println(c);
+out.println(i);
+This example produces the following output: 
+R = 8.31451
+true
+%
+42
+PrintWriter objects are often 
+used to report errors. For this reason, the methods of this class do not 
+throw exceptions. Instead, the methods catch any exceptions thrown by any 
+downstream OutputStream or 
+Writer objects and set an internal 
+flag, so that the object can remember that a problem occurred. You can 
+query the internal flag by calling the checkError() 
+method. 
+Although you can create a PrintWriter 
+that flushes the underlying stream every time a line-separator character 
+is written, this may not always be exactly what you want. Suppose that 
+you are writing a program that has a character-based user interface, and 
+that you want the program to output a prompt and then allow the user to 
+input a response on the same line. In order to make this work with a PrintWriter, 
+you need to get the PrintWriter 
+to write the characters in its buffer without writing a line separator. 
+You can do this by calling the flush() method. 
+PrintWriter is new as of Java 
+1.1; it is more capable than the PrintStream 
+class. You should use PrintWriter instead of PrintStream 
+because it uses the default encoding scheme to convert characters to bytes 
+for an underlying OutputStream. 
+The constructors for PrintStream 
+are deprecated in Java 1.1. In fact, the whole class probably would have 
+been deprecated, except that it would have generated a lot of compilation 
+warnings for code that uses System.out 
+and System.err. 
+Input Streams and Readers
+File Manipulation
+ 
+ 
+ 
+ 
+ 
+ 
+ 

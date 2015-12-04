@@ -1,0 +1,171 @@
+
+[Chapter 10] Throwable
+Chapter 10The java.lang Package
+Throwable
+Name
+Throwable
+Synopsis
+Class Name:
+java.lang.Throwable
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.lang.Error, java.lang.Exception
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later
+Description
+The Throwable class is the superclass of
+all objects that can be thrown by the throw statement
+in Java. This is a requirement of the throw statement.
+A Throwable object can have an associated 
+message that provides more detail about the particular error or exception
+that is being thrown.
+The Throwable class provides a method that
+outputs information about the state of the system when an exception
+object is created. This method can be useful in debugging Java
+programs.
+The subclasses of Throwable that are provided
+with Java do not add functionality to Throwable.
+Instead, they offer
+more specific classifications of errors and exceptions.
+Class Summary
+public class java.lang.Throwable extends java.lang.Object 
+                                 implements java.lang.Serializable {
+    // Constructors
+    public Throwable();
+    public Throwable(String message);
+    // Instance Methods
+    public native Throwable fillInStackTrace();
+    public String getLocalizedMessage();               // New in 1.1
+    public String getMessage();
+    public void printStackTrace();
+    public void printStackTrace(PrintStream s);
+    public void printStackTrace(PrintWriter s);        // New in 1.1
+    public String toString();
+}
+Constructors
+Throwable
+public Throwable()
+Description
+Creates a Throwable object with no associated
+message. This constructor calls fillInStackTrace()
+so that information is available for printStackTrace().
+public Throwable(String message)
+Parameters
+message
+A message string to be associated with the object.
+Description
+Create a Throwable object with an associated
+message. This constructor calls fillInStackTrace()
+so that information is available for printStackTrace().
+Instance Methods
+fillInStackTrace
+public native Throwable fillInStackTrace()
+Returns
+A reference to this object.
+Description
+This method puts stack trace information in this Throwable
+object. It is not usually necessary to explicitly call this method,
+since it is called by the constructors of the class. However, this
+method can be useful when rethrowing an object. If the stack trace
+information in the object needs to reflect the location that the
+object is rethrows from, fillInStackTrace() should
+be called.
+getLocalizedMessage
+public String getLocalizedMessage()
+Availability
+New as of JDK 1.1
+Returns
+A localized version of the String object 
+associated with this Throwable object, 
+or null if
+there is no message associated with this object.
+Description
+This method creates a localized version of the message 
+that was associated with this object by its constructor.
+The getLocalizedMessage() method in
+Throwable always returns the same
+result as getMessage().  
+A subclass must override
+this method to produce a locale-specific message.  
+getMessage
+public String getMessage()
+Returns
+The String object associated with this
+Throwable object, or null if
+there is no message associated with this object.
+Description
+This method returns any string message that was associated
+with this object by its constructor.
+printStackTrace
+public void printStackTrace()
+Description
+This method outputs the string representation of this Throwable
+object and a stack trace to System.err.
+public void printStackTrace(PrintStream s)
+Parameters
+s
+A java.io.PrintStream object.
+Description
+This method outputs the string representation of this Throwable
+object and a stack trace to the specified PrintStream
+object.
+public void printStackTrace(PrintStream w)
+Availability
+New as of JDK 1.1
+Parameters
+s
+A java.io.PrintWriter object.
+Description
+This method outputs the string representation of this Throwable
+object and a stack trace to the specified PrintWriter
+object.
+toString
+public String toString()
+Returns
+A string representation of this object.
+Overrides
+Object.toString()
+Description
+This method returns a string representation of this Throwable
+object.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Errors;
+Exceptions;
+Object
+ThreadGroup
+Void
+ 
+ 
+ 
+ 
+ 
+ 
+ 

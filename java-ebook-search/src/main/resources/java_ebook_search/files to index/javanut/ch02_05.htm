@@ -1,0 +1,80 @@
+
+[Chapter 2] 2.5 Unicode and Character Escapes
+Chapter 2How Java Differs from C
+2.5 Unicode and Character Escapes
+Java characters, strings, and identifiers (e.g., variable,
+method, and class names) are composed of 16-bit Unicode
+characters.  This makes Java programs relatively easy to
+internationalize for non-English-speaking users. It also
+makes the language easier to work with for non-English-speaking
+programmers--a Thai programmer could use the Thai alphabet
+for class and method names in her Java code.  
+If two-byte characters seem confusing or intimidating to you,
+fear not.  The Unicode character set is compatible with
+ASCII and the first 256 characters (0x0000 to 0x00FF) are
+identical to the ISO8859-1 (Latin-1) characters 0x00 to
+0xFF.  Furthermore, the Java language design and the Java
+String API make the character representation
+entirely transparent to you.  If you are using only Latin-1
+characters, there is no way that you can even
+distinguish a Java 16-bit character from the 8-bit
+characters you are familiar with. For more information on 
+Unicode, see Chapter 11, Internationalization.
+Most platforms cannot display all 38,885 currently defined Unicode characters,
+so Java programs may be written (and Java output may appear)
+with special Unicode escape sequences.  Anywhere within a
+Java program (not only within character and string
+literals), a Unicode character may be represented with the
+Unicode escape sequence \uxxxx, where xxxx is a sequence of four hexadecimal digits.
+Java also supports all of the standard C character escape
+sequences, such as \n, \t, and
+\xxx 
+(where \xxxis three octal digits).
+Note, however, that Java does not support line continuation
+with \ at the end of a line.  Long strings must
+either be specified on a single long line, or they must be
+created from shorter strings using the string concatenation
+(+) operator.  
+(Note that the concatenation of two
+constant strings is done at compile-time rather than at
+run-time, so using the + operator in this way is not
+inefficient.)
+There are two important differences between Unicode escapes
+and C-style escape characters.  First, as we've noted,
+Unicode escapes can appear anywhere within a Java program,
+while the other escape characters can appear only in
+character and string constants.
+The second, and more subtle, difference is that Unicode
+\u escape sequences are processed before the other
+escape characters, and thus the two types of escape
+sequences can have very different semantics.  A Unicode
+escape is simply an alternative way to represent a character
+that may not be displayable on certain (non-Unicode)
+systems.  Some of the character escapes, however, represent
+special characters in a way that prevents the usual
+interpretation of those characters by the compiler.  The
+following examples make this difference clear.  Note that
+\u0022 and \u005c are the Unicode escapes
+for the double-quote character and the backslash character.
+// \" represents a " character, and prevents the normal
+// interpretation of that character by the compiler.
+// This is a string consisting of a double-quote character.
+String quote = "\"";
+// We can't represent the same string with a single Unicode escape.
+// \u0022 has exactly the same meaning to the compiler as ".
+// The string below turns into """: an empty string followed
+// by an unterminated string, which yields a compilation error.
+String quote = "\u0022";
+// Here we represent both characters of an \" escape as
+// Unicode escapes. This turns into "\"", and is the same
+// string as in our first example.
+String quote = "\u005c\u0022";
+No Preprocessor
+Primitive Data Types
+ 
+ 
+ 
+ 
+ 
+ 
+ 

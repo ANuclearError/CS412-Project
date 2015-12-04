@@ -1,0 +1,70 @@
+
+[Chapter 24] 24.57 java.io.Reader (JDK 1.1)
+Chapter 24The java.io Package
+24.57 java.io.Reader (JDK 1.1)
+This abstract class is the superclass of all character input
+streams.  It is an analog to InputStream, which is
+the superclass of all byte input streams.  Reader
+defines the basic methods that all character output streams
+provide.
+read() returns a single character or an array (or
+subarray) of characters, blocking if necessary.  It returns
+-1 if the end of the stream has been reached.
+ready() returns true if there are characters
+available for reading.  If ready() returns
+true, the next call to read() is
+guaranteed not to block.  close() closes the
+character input stream.  skip() skips a specified
+number of characters in the input stream.  If
+markSupported() returns true, then
+mark() "marks" a position in the stream and, if
+necessary, creates a look-ahead buffer of the specified size.
+Future calls to reset() restore the stream to
+the marked position, if they occur within the specified
+look-ahead limit.  Note that not all stream  types support
+this mark-and-reset functionality.
+To create a subclass of Reader, you need only
+implement the three-argument version of read() and
+close().  Most subclasses implement additional
+methods as well, however.
+public abstract class Reader extends Object {
+    // Protected Constructors
+            protected Reader();
+            protected Reader(Object lock);
+    // Protected Instance Variables
+            protected Object lock;
+    // Public Instance Methods
+            public abstract void close() throws IOException;
+            public void mark(int readAheadLimit) throws IOException;
+            public boolean markSupported();
+            public int read() throws IOException;
+            public int read(char[] cbuf) throws IOException;
+            public abstract int read(char[] cbuf, int off, int len) throws IOException;
+            public boolean ready() throws IOException;
+            public void reset() throws IOException;
+            public long skip(long n) throws IOException;
+}
+Extended By:
+BufferedReader, 
+CharArrayReader, 
+FilterReader, 
+InputStreamReader, 
+PipedReader, 
+StringReader
+Passed To:
+BufferedReader(), 
+FilterReader(), 
+LineNumberReader(), 
+PushbackReader(), 
+StreamTokenizer()
+Type Of:
+FilterReader.in
+java.io.RandomAccessFile (JDK 1.0)
+java.io.SequenceInputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,52 @@
+
+[Chapter 6] 6.7 JAR Files
+Chapter 6Applets
+6.7 JAR Files
+The Soundmap applet defined in the previous section
+requires five files to operate: the class file for the
+applet itself, the class files for the two nested classes it
+contains, the image file, and the sound clip file.  It can be
+loaded using an &lt;APPLET&gt; tag like this:
+&lt;APPLET code="Soundmap.class" width=288 height=288&gt;
+   ...
+&lt;/APPLET&gt;
+When the applet is loaded in this manner, however, each of the
+five files is transferred in uncompressed form using a
+separate HTML request.  As you might imagine, this is quite
+inefficient.
+In Java 1.1, you can instead combine the five files into a
+single JAR (Java ARchive) file.  This single, compressed file
+(it is a ZIP file) can be transferred from Web server to browser much
+more efficiently.  To create a JAR file, use the jar
+tool, which has a syntax reminiscent of the UNIX tar command:
+% jar cf soundmap.jar *.class image.gif sound.au
+This command creates a new file, soundmap.jar, that
+contains all the .class files in the current
+directory, and also contains the files image.gif and
+sound.au.  jar can also be used to list and
+extract the contents of a JAR file.  See Chapter 16, JDK Tools for complete documentation.
+To use a JAR file, you specify it as the value of the
+archive attribute of the &lt;APPLET&gt; tag:
+&lt;APPLET archive="soundmap.jar" code="Soundmap.class" width=288 height=288&gt;
+   ...
+&lt;/APPLET&gt;
+Note that the archive attribute does not replace the
+code attribute.  archive specifies where to
+look for files, but code is still required to tell
+the browser which of the files in the archive is the applet
+class file to be executed.  The archive attribute
+may actually specify a comma-separated list of JAR files.
+The Web browser or applet viewer searches these archives for
+any files the applet requires.  If a file is not found in an
+archive, however, the browser falls back upon its old
+behavior and attempts to load the file from the Web server
+using a new HTTP request.
+Images and Sounds
+Applet Security Restrictions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,49 @@
+
+[Chapter 18] 18.13 java.awt.Choice (JDK 1.0)
+Chapter 18The java.awt Package
+18.13 java.awt.Choice (JDK 1.0)
+This class represents an "option menu" or "dropdown list."
+The addItem() method adds an item with the
+specified label to a Choice menu.
+getSelectedIndex() returns the numerical position of
+the selected item in the menu, and getSelectedItem()
+returns the label of the selected item.
+public class Choice extends Component implements ItemSelectable {
+    // Public Constructor
+            public Choice();
+    // Public Instance Methods
+        1.1 public synchronized void add(String item);
+            public synchronized void addItem(String item);
+        1.1 public synchronized void addItemListener(ItemListener l);  // From ItemSelectable
+            public void addNotify();  // Overrides Component
+        #   public int countItems();
+            public String getItem(int index);
+        1.1 public int getItemCount();
+            public int getSelectedIndex();
+            public synchronized String getSelectedItem();
+        1.1 public synchronized Object[] getSelectedObjects();  // From ItemSelectable
+        1.1 public synchronized void insert(String item, int index);
+        1.1 public synchronized void remove(String item);
+        1.1 public synchronized void remove(int position);
+        1.1 public synchronized void removeAll();
+        1.1 public synchronized void removeItemListener(ItemListener l);  // From ItemSelectable
+            public synchronized void select(int pos);
+            public synchronized void select(String str);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Component
+        1.1 protected void processEvent(AWTEvent e);  // Overrides Component
+        1.1 protected void processItemEvent(ItemEvent e);
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Choice(ItemSelectable)
+Passed To:
+Toolkit.createChoice()
+java.awt.CheckboxMenuItem (JDK 1.0)
+java.awt.Color (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

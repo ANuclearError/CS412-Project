@@ -1,0 +1,641 @@
+
+[Chapter 12] Math
+Chapter 12The java.lang Package
+Math
+Name
+Math
+Synopsis
+Class Name:
+java.lang.Math
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Math class contains constants for the
+mathematical values pi and e. The class also
+defines methods that compute various mathematical functions, such
+as trigonometric and exponential functions. All of these constants
+and methods are static. In other words, it
+is not necessary to create an instance of the Math
+class in order to use its constants and methods. In fact, the Math
+class does not define any public constructors,
+so it cannot be instantiated.
+To ensure that the methods in this class return consistent
+results under different implementations of Java, all of the methods
+use the algorithms from the well-known Freely-Distributable Math
+Library package, fdlibm. This package is part
+of the network library netlib. The library
+can be obtained through the URL http://netlib.att.com.
+The algorithms used in this class are from the version of fdlibm
+dated January 4, 1995. fdlibm provides more
+than one definition for some functions. In those cases, the "IEEE
+754 core function" version is used.
+Class Summary
+public final class java.lang.Math extends java.lang.Object {
+    // Constants
+    public static final double E;
+    public static final double PI;
+    // Class Methods
+    public static int abs(int a);
+    public static long abs(long a);
+    public static float abs(float a);
+    public static double abs(double a);
+    public static native double acos(double a);
+    public static native double asin(double a);
+    public static native double atan(double a);
+    public static native double atan2(double a, double b);
+    public static native double ceil(double a);
+    public static native double cos(double a);
+    public static native double exp(double a);
+    public static native double floor(double a);
+    public static native double IEEEremainder(double f1, double f2);
+    public static native double log(double a);
+    public static int max(int a, int b);
+    public static long max(long a, long b);
+    public static float max(float a, float b);
+    public static double max(double a, double b);
+    public static int min(int a, int b);
+    public static long min(long a, long b);
+    public static float min(float a, float b);
+    public static double min(double a, double b);
+    public static native double pow(double a, double b);
+    public static synchronized double random();
+    public static native double rint(double a);
+    public static int round(float a);
+    public static long round(double a);
+    public static native double sin(double a);
+    public static native double sqrt(double a);
+    public static native double tan(double a);
+}
+Constants
+E
+public static final double E = 2.7182818284590452354
+Description
+The value of this constant is e, the
+base for natural logarithms.
+PI
+public static final double PI = 3.14159265358979323846
+Description
+The value for this constant is pi.
+Class Methods
+abs
+public static double abs(double a)
+Parameters
+a
+A double value.
+Returns
+The absolute value of its argument.
+Description
+This method returns the absolute value of its argument.
+If the argument to this method is negative or positive zero,
+the method should return positive zero. 
+If the argument is positive or negative infinity,
+the method returns positive infinity. If the argument is NaN, the
+method returns NaN.
+public static float abs(float a)
+Parameters
+a
+A float value.
+Returns
+The absolute value of its argument.
+Description
+This method returns the absolute value of its argument.
+If the argument to this method is negative or positive zero,
+the method should return positive zero. 
+If the argument is positive or negative infinity,
+the method returns positive infinity. If the argument is NaN, the
+method returns NaN.
+public static int abs(int a)
+Parameters
+a
+An int value.
+Returns
+The absolute value of its argument.
+Description
+This method returns the absolute value of its argument.
+If the argument is Integer.MIN_VALUE, the
+method actually returns Integer.MIN_VALUE because
+the true absolute value of Integer.MIN_VALUE
+is one greater than the largest positive value that can be represented
+by an int.
+public static long abs(long a)
+Parameters
+a
+A long value.
+Returns
+The absolute value of its argument.
+Description
+This method returns the absolute value of its argument.
+If the argument is Long.MIN_VALUE, the method
+actually returns Long.MIN_VALUE because the true
+absolute value of Long.MIN_VALUE is one greater
+than the largest positive value represented by a long.
+acos
+public static native double acos(double a)
+Parameters
+a
+A double value greater than or
+equal to -1.0 and less than or equal to 1.0.
+Returns
+The arc cosine measured in radians; the result is greater
+than or equal to 0.0 and less than or equal to pi.
+Description
+This method returns the arc cosine of the given value.
+If the value is NaN or its absolute value is greater than
+1.0, the method returns NaN.
+asin
+public static native double asin(double a)
+Parameters
+a
+A double value greater than or
+equal to -1.0 and less than or equal to 1.0.
+Returns
+The arc sine measured in radians; the result is greater than
+or equal to -pi/2 and less than or equal to pi/2.
+Description
+This method returns the arc sine of the given value.
+If the value is NaN or its absolute value is greater than
+1.0, the method returns NaN. If the value is
+positive zero, the method returns positive zero. If the value is
+negative zero, the method returns negative zero.
+atan
+public static native double atan(double a)
+Parameters
+a
+A double value greater than or
+equal to -1.0 and less than or equal to 1.0.
+Returns
+The arc tangent measured in radians; the result is greater
+than or equal to -pi/2 and less than or equal to pi/2.
+Description
+This method returns the principle value of the arc tangent
+of the given value.
+If the value is NaN, the method returns NaN. If the value
+is positive zero, the method returns positive zero. If the value
+is negative zero, the method returns negative zero.
+atan2
+public static native double atan2(double a, double b)
+Parameters
+a
+A double value.
+b
+A double value.
+Returns
+The theta component of the polar coordinate (r,theta)
+that corresponds to the cartesian coordinate (a,b);
+the result is measured in radians and is greater than or equal to
+-pi and less than or equal to pi.
+Description
+This method returns the theta component of the polar coordinate
+(r,theta) that corresponds to the cartesian coordinate
+(a,b). It computes theta as the
+principle value of the arc tangent of b/a,
+using the signs of both arguments to determine the quadrant (and
+sign) of the return value.
+If either argument is NaN, the method returns NaN.
+If the first argument is positive zero and the second argument
+is positive, then the method returns positive zero. If the first argument
+is positive zero and the second argument is negative, then the method
+returns the double value closest to pi.
+If the first argument is negative zero and the second argument
+is positive, the method returns negative zero. If the first argument
+is negative zero and the second argument is negative, the method
+returns the double value closest to -pi.
+If the first argument is positive and finite and the second
+argument is positive infinity, the method returns positive zero.
+If the first argument is positive and finite and the second argument
+is negative infinity, the method returns the double
+value closest to pi.
+If the first argument is negative and finite and the second
+argument is positive infinity, the method returns negative zero.
+If the first argument is negative and finite and the second argument
+is negative infinity, the method returns the double
+value closest to -pi.
+If the first argument is positive and the second argument
+is positive zero or negative zero, the method returns the double
+value closest to pi/2. If the first argument is negative and the
+second argument is positive or negative zero, the method returns
+the double value closest to -pi/2.
+If the first argument is positive infinity and the second
+argument is finite, the method returns the double
+value closest to pi/2. If the first argument is negative infinity
+and the second argument is finite, the method returns the double
+value closest to -pi/2.
+If both arguments are positive infinity, the method returns
+the double value closest to pi/4. If the first
+argument is positive infinity and the second argument is negative
+infinity, the method returns the double value
+closest to 3pi/4. If the first argument is negative infinity and
+the second argument is positive infinity, the method returns the
+double value closest to -pi/4. If both arguments
+are negative infinity, the method returns the double
+value closest to -3pi/4.
+ceil
+public static native double ceil(double a)
+Parameters
+a
+A double value.
+Returns
+The smallest integer greater than or equal to the given value.
+Description
+This method performs the ceiling operation. It returns the
+smallest integer that is greater than or equal to its argument.
+If the argument is NaN, an infinity value, or a zero value,
+the method returns that same value. If the argument is less than
+zero but greater than -1.0, the method returns
+negative zero.
+cos
+public static native double cos(double a)
+Parameters
+a
+A double value that's an angle
+measured in radians.
+Returns
+The cosine of the given angle.
+Description
+This method returns the cosine of the given angle measured
+in radians.
+If the angle is NaN or an infinity value, the method returns
+NaN.
+exp
+public static native double exp(double a)
+Parameters
+a
+A double value.
+Returns
+e^a
+Description
+This method returns the exponential function of a.
+In other words, e is raised to the value specified
+by the parameter a, where e
+is the base of the natural logarithms.
+If the value is NaN, the method returns NaN. If the value
+is positive infinity, the method returns positive infinity. If the
+value is negative infinity, the method returns positive zero.
+floor
+public static native double floor(double a)
+Parameters
+a
+A double value.
+Returns
+The greatest integer less than or equal to the given value.
+Description
+This method performs the floor operation. It returns the largest
+integer that is less than or equal to its argument.
+If the argument is NaN, an infinity value, or a zero value,
+the method returns that same value.
+IEEEremainder
+public static native double IEEEremainder(double a, double b)
+Parameters
+a
+A double value.
+b
+A double value.
+Returns
+The remainder of a divided by b
+as defined by the IEEE 754 standard.
+Description
+This method returns the remainder of a
+divided by b as defined by the IEEE 754 standard.
+This operation involves first determining the mathematical quotient
+of a/b rounded to the nearest
+integer. If the quotient is equally close to two integers, it is
+rounded to the even integer. The method then returns a-(b x Q),
+where Q is the rounded quotient.
+If either argument is NaN, the method returns NaN. If the
+first argument is positive or negative infinity and the second argument
+is positive or negative zero, the method also returns NaN. If the
+first argument is a finite value and the second argument is positive
+or negative infinity, the method returns its first argument.
+log
+public static native double log(double a)
+Parameters
+a
+A double value that is greater
+than 0.0.
+Returns
+The natural logarithm of a.
+Description
+This method returns the natural logarithm (base e)
+of its argument.
+In particular, if the argument is positive infinity, the method
+returns positive infinity. If the argument is positive or negative
+zero, the method returns negative infinity. If the argument is less
+than zero, the method returns NaN. If the argument is NaN, the method
+returns NaN.
+max
+public static double max(double a, double b)
+Parameters
+a
+A double value.
+b
+A double value.
+Returns
+The greater of a and b.
+Description
+This method returns the greater of its two arguments. In other
+words, it returns the one that is closer to positive infinity.
+If one argument is positive zero and the other is negative
+zero, the method returns positive zero. If either argument is NaN,
+the method returns NaN.
+public static float max(float a, float b)
+Parameters
+a
+A float value.
+b
+A float value.
+Returns
+The greater of a and b.
+Description
+This method returns the greater of its two arguments. In other
+words, it returns the one that is closer to positive infinity.
+If one argument is positive zero and the other is negative
+zero, the method returns positive zero. If either argument is NaN,
+the method returns NaN.
+public static int max(int a, int b)
+Parameters
+a
+An int value.
+b
+An int value.
+Returns
+The greater of a and b.
+Description
+This method returns the greater of its two arguments. In other
+words, it returns the one that is closer to Integer.MAX_VALUE.
+public static long max(long a, long b)
+Parameters
+a
+A long value.
+b
+A long value.
+Returns
+The greater of a and b.
+Description
+This method returns the greater of its two arguments. In other
+words, it returns the one that is closer to Long.MAX_VALUE.
+min
+public static double min(double a, double b)
+Parameters
+a
+A double value.
+b
+A double value.
+Returns
+The lesser of a and b.
+Description
+This method returns the lesser of its two arguments. In other
+words, it returns the one that is closer to negative infinity.
+If one argument is positive zero and the other is negative
+zero, the method returns negative zero. If either argument is NaN,
+the method returns NaN.
+public static float min(float a, float b)
+Parameters
+a
+A float value.
+b
+A float value.
+Returns
+The lesser of a and b.
+Description
+This method returns the lesser of its two arguments. In other
+words, it returns the one that is closer to negative infinity.
+If one argument is positive zero and the other is negative
+zero, the method returns negative zero. If either argument is NaN,
+the method returns NaN.
+public static int min(int a, int b)
+Parameters
+a
+An int value.
+b
+An int value.
+Returns
+The lesser of a and b.
+Description
+This method returns the lesser of its two arguments. In other
+words, it returns the one that is closer to Integer.MIN_VALUE.
+public static long min(long a, long b)
+Parameters
+a
+A long value.
+b
+A long value.
+Returns
+The lesser of a and b.
+Description
+This method returns the lesser of its two arguments. In other
+words, it returns the one that is closer to Long.MIN_VALUE.
+pow
+public static native double pow(double a, double b)
+Parameters
+a
+A double value.
+b
+A double value.
+Returns
+a^b
+Description
+This method computes the value of raising a
+to the power of b.
+If the second argument is positive or negative zero, the method
+returns 1.0. If the second argument is 1.0,
+the method returns its first argument. If the second argument is
+NaN, the method returns NaN. If the first argument is NaN and the
+second argument is nonzero, the method returns NaN.
+If the first argument is positive zero and the second argument
+is greater than zero, the method returns positive zero. If the first
+argument is positive zero and the second argument is less than zero,
+the method returns positive infinity.
+If the first argument is positive infinity and the second
+argument is less than zero, the method returns positive zero. If
+the first argument is positive infinity and the second argument
+is greater than zero, the method returns positive infinity.
+If the absolute value of the first argument is greater than
+1 and the second argument is positive infinity,
+the method returns positive infinity. If the absolute value of the
+first argument is greater than 1 and the second
+argument is negative infinity, the method returns positive zero.
+If the absolute value of the first argument is less than 1
+and the second argument is negative infinity, the method returns
+positive infinity. If the absolute value of the first argument is
+less than 1 and the second argument is positive
+infinity, the method returns positive zero. If the absolute value
+of the first argument is 1 and the second argument
+is positive or negative infinity, the method returns NaN.
+If the first argument is negative zero and the second argument
+is greater than zero but not a finite odd integer, the method returns
+positive zero. If the first argument is negative zero and the second
+argument is a positive finite odd integer, the method returns negative
+zero. If the first argument is negative zero and the second argument
+is less than zero but not a finite odd integer, the method returns
+positive infinity. If the first argument is negative zero and the
+second argument is a negative finite odd integer, the method returns
+negative infinity.
+If the first argument is negative infinity and the second
+argument is less than zero but not a finite odd integer, the method
+returns positive zero. If the first argument is negative infinity
+and the second argument is a negative finite odd integer, the method
+returns negative zero. If the first argument is negative infinity
+and the second argument is greater than zero but not a finite odd
+integer, the method returns positive infinity. If the first argument
+is negative infinity and the second argument is a positive finite
+odd integer, the method returns negative infinity.
+If the first argument is less than zero and the second argument
+is a finite even integer, the method returns the result of the absolute
+value of the first argument raised to the power of the second argument.
+If the first argument is less than zero and the second argument
+is a finite odd integer, the method returns the negative of the
+result of the absolute value of the first argument raised to the
+power of the second argument. If the first argument is finite and
+less than zero and the second argument is finite and not an integer,
+the method returns NaN.
+If both arguments are integer values, the method returns the
+first argument raised to the power of the second argument.
+random
+public static synchronized double random()
+Returns
+A random number between 0.0 and 1.0.
+Description
+This method returns a random number greater than or equal to 0.0
+and less than 1.0. The implementation of this method uses
+the java.util.Random class. You may prefer to
+use the Random class directly, in order to gain
+more control over the distribution, type, and repeatability of the
+random numbers you are generating.
+rint
+public static native double rint(double a)
+Parameters
+a
+A double value.
+Returns
+The value of its argument rounded to the nearest integer.
+Description
+This method returns its argument rounded to the nearest integer;
+the result is returned as a double value. If
+the argument is equidistant from two integers (e.g., 1.5),
+the method returns the even integer.
+If the argument is an infinity value, a zero value, or NaN,
+the method returns that same value.
+round
+public static long round(double a)
+Parameters
+a
+A double value.
+Returns
+The value of its argument rounded to the nearest long.
+Description
+This method returns its double argument
+rounded to the nearest integral value and converted to a long.
+If the argument is equidistant from two integers, the method returns
+the greater of the two integers.
+If the argument is positive infinity or any other value greater
+than Long.MAX_VALUE, the method returns Long.MAX_VALUE.
+If the argument is negative infinity or any other value less than
+Long.MIN_VALUE, the method returns Long.MIN_VALUE.
+If the argument is NaN, the method returns 0.
+public static int round(float a)
+Parameters
+a
+A float value.
+Returns
+The value of its argument rounded to the nearest int.
+Description
+This method returns its float argument
+rounded to the nearest integral value and converted to an int.
+If the argument is equidistant from two integers, the method returns
+the greater of the two integers.
+If the argument is positive infinity or any other value greater
+than the Integer.MAX_VALUE, the method returns Integer.MAX_VALUE.
+If the argument is negative infinity or any other value less than
+Integer.MIN_VALUE, the method returns Integer.MIN_VALUE.
+If the argument is NaN, the method returns 0.
+sin
+public static native double sin(double a)
+Parameters
+a
+A double value that's an angle
+measured in radians.
+Returns
+The sine of the given angle.
+Description
+This method returns the sine of the given angle measured in
+radians.
+If the angle is NaN or an infinity value, the method returns
+NaN. If the angle is positive zero, the method returns positive
+zero. If the angle is negative zero, the method returns negative
+zero.
+sqrt
+public static native double sqrt(double a)
+Parameters
+a
+A double value.
+Returns
+The square root of its argument.
+Description
+This method returns the square root of its argument.
+If the argument is negative or NaN, the method returns NaN.
+If the argument is positive infinity, the method returns positive
+infinity. If the argument is positive or negative zero, the method
+returns that same value.
+tan
+public static native double tan(double a)
+Parameters
+a
+A double value that is an angle
+measured in radians.
+Returns
+The tangent of the given angle.
+Description
+This method returns the tangent of the given angle measured
+in radians.
+If the angle is NaN or an infinity value, the method returns
+NaN. If the angle is positive zero, the method returns positive
+zero. If the angle is negative zero, the method returns negative
+zero.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Double, 
+Float, 
+Integer, 
+Long, 
+Object
+Long
+NegativeArraySizeException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,161 @@
+
+[Chapter 2] 2.6 Primitive Data Types
+Chapter 2How Java Differs from C
+2.6 Primitive Data Types
+Java adds byte and boolean primitive types
+to the standard set of C types.  In addition, it strictly
+defines the size and signedness of its types.  In
+C, an int may be 16, 32, or 64 bits, and a
+char may act signed or unsigned depending on the
+platform.  Not so in Java.  In C, an uninitialized local
+variable usually has garbage as its value.  
+In Java, all variables have guaranteed default values, though the
+compiler may warn you in places where you rely, accidentally
+or not, on these default values.
+Table 2.2
+lists Java's primitive data types.  The subsections below provide
+details about these types.
+Table 2.2: Java Primitive Data Types
+Min Value
+Type
+Contains
+Default
+Size
+Max Value
+boolean
+true or false
+false
+1 bit
+N.A.
+N.A.
+char
+Unicode character
+\u0000
+16 bits
+\u0000
+\uFFFF
+byte
+signed integer
+0
+8 bits
+-128
+127
+short
+signed integer
+0
+16 bits
+-32768
+32767
+int
+signed integer
+0
+32 bits
+-2147483648
+2147483647
+long
+signed integer
+0
+64 bits
+-9223372036854775808
+9223372036854775807
+float
+IEEE 754
+0.0
+32 bits
++/-3.40282347E+38
+floating-point
++/-1.40239846E-45
+double
+IEEE 754
+0.0
+64 bits
++/-1.79769313486231570E+308
+floating-point
++/-4.94065645841246544E-324
+The boolean Type
+boolean values are not integers, may not be treated
+as integers, and may never be cast to or from any other
+type.  To perform C-style conversions between a
+boolean value b and an int
+i, use the following code:
+b = (i != 0);   // integer-to-boolean: non-0 -&gt; true; 0 -&gt; false; 
+i = (b)?1:0;    // boolean-to-integer: true -&gt; 1; false -&gt; 0;
+The char Type
+char values represent characters.  Character
+literals may appear in a Java program between single
+quotes.  For example:
+char c = 'A';
+All of the standard C character escapes, as well as Unicode
+escapes, are also supported in character literals.  For
+example:
+char newline = '\n', apostrophe = '\", delete = '\377', aleph='\u05D0';
+Values of type char do not have a sign.  If a
+char is cast to a byte or a short, a
+negative value may result.
+The char type in Java holds a two-byte Unicode
+character.  While this may seem intimidating to those not
+familiar with Unicode and the techniques of program
+internationalization, it is in fact totally transparent.
+Java does not provide a way to compute the size of a
+variable, nor does it allow any sort of pointer arithmetic.
+What this means is that if you are only using ASCII or Latin-1
+characters, there is no way to distinguish a Java
+char from a C char.
+Integral Types
+The integral types in Java are byte, short,
+char, int, and long.  Literals for
+these types are written just as they are in C.
+All integral types, other than char, are signed.
+There is no unsigned keyword as there is in C.
+It is not legal to write long int or
+short int as it is in C.
+A long constant may be
+distinguished from other
+integral constants by appending the character l or
+L to it.  
+Integer division by zero or modulo zero causes an
+ArithmeticException to be thrown.
+[3]
+[3] 
+Exceptions signal errors in Java.  Exception handling is described later in this chapter.
+Floating-Point Types
+The floating-point types in Java are float and
+double.  Literals for these types are written just
+as they are in C.
+Literals may be specified to be of type
+float by appending an f or F to the
+value; they may be specified to be of type
+double by appending a d or D.
+float and double types have special values
+that may be the result of certain floating-point
+operations: positive infinity, negative infinity, negative
+zero and not-a-number.  The java.lang.Float and
+java.lang.Double classes define some of these values
+as constants: POSITIVE_INFINITY,
+NEGATIVE_INFINITY, and NaN.
+NaN is unordered--comparing it to any other number,
+including itself, yields false.  Use
+Float.isNaN() or Double.isNaN() to test for
+NaN.
+Negative zero compares equal to regular zero (positive zero),
+but the two zeros may be distinguished by division: one
+divided by negative zero yields negative infinity; one
+divided by positive zero yields positive infinity.
+Floating-point arithmetic never causes exceptions, even in
+the case of division by zero.
+String Literals
+Strings in Java are not a primitive type, but are instances
+of the String class.  However, because they are so
+commonly used, string literals may appear between quotes in
+Java programs, just as they do in C.  When the compiler
+encounters such a string literal, it automatically creates the
+necessary String object.
+Unicode and Character Escapes
+Reference Data Types
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,60 @@
+
+[Chapter 13] AWT Exceptions and Errors
+Chapter 13
+13. AWT Exceptions and Errors
+Contents:
+AWTException
+IllegalComponentStateException
+AWTError
+This chapter describes AWTException, 
+IllegalComponentStateException, 
+and AWTError. AWTException 
+is a subclass of Exception. 
+It is not used by any of the public classes in java.awt; 
+you may, however, find it convenient to throw AWTException 
+within your own code. IllegalComponentStateException 
+is another Exception subclass, 
+which is new to Java 1.1. This exception is used when you try to do something 
+with a Component that is not 
+yet appropriate. AWTError is 
+a subclass of Error that is 
+thrown when a serious problem occurs in AWT--for example, the environment 
+is unable to get the platform's Toolkit. 
+13.1 AWTException
+AWTException is a generic exception 
+that can be thrown when an exceptional condition has occurred within AWT. 
+None of the AWT classes throw this. If you subclass any of the AWT classes, 
+you can throw an AWTException 
+to indicate a problem. Using AWTException 
+is slightly preferable to creating your own Exception 
+subclass because you do not have to generate another class file. Since it is a part of Java, AWTException 
+is guaranteed to exist on the run-time platform. 
+If 
+you throw an instance of AWTException, like any other Exception,
+it must be caught in a catch clause 
+or declared in the throws clause 
+of the method. 
+AWTException MethodConstructor
+public AWTException (String message) 
+The sole constructor creates an AWTException 
+with a detailed message of message. 
+This message can be retrieved using getMessage(), 
+which it inherits from Exception 
+(and which is required by the Throwable 
+interface). If you do not want a detailed message, message may be null. 
+Throwing an AWTException
+An AWTException is used the 
+same way as any other Throwable 
+object. Here's an example: 
+if (someProblem) {
+    throw new AWTException ("Problem Encountered While Initializing");
+}
+ImageFilter
+IllegalComponentStateException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

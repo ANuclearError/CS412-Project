@@ -1,0 +1,47 @@
+
+[Chapter 18] 18.48 java.awt.Polygon (JDK 1.0)
+Chapter 18The java.awt Package
+18.48 java.awt.Polygon (JDK 1.0)
+This class defines a polygon as an
+array of points.  The points of the polygon may be specified
+by the constructor, or with the addPoint() method.
+getBoundingBox() returns the smallest
+Rectangle that contains the polygon, and
+inside() tests whether a specified point is within
+the Polygon.  Note that the arrays of X and Y points
+and the number of points in the polygon (not necessarily the
+same as the array size) are defined as public variables.
+Polygon objects are used when drawing polygons with
+the Graphics.drawPolygon() and
+Graphics.fillPolygon() methods.
+public class Polygon extends Object implements Shape, Serializable {
+    // Public Constructors
+            public Polygon();
+            public Polygon(int[] xpoints, int[] ypoints, int npoints);
+    // Public Instance Variables
+            public int npoints;
+            public int[] xpoints;
+            public int[] ypoints;
+    // Protected Instance Variables
+        1.1  protected Rectangle bounds;
+    // Public Instance Methods
+            public void addPoint(int x, int y);
+        1.1  public boolean contains(Point p);
+        1.1  public boolean contains(int x, int y);
+        #   public Rectangle getBoundingBox();
+        1.1  public Rectangle getBounds();  // From Shape
+        #   public boolean inside(int x, int y);
+        1.1  public void translate(int deltaX, int deltaY);
+}
+Passed To:
+Graphics.drawPolygon(), 
+Graphics.fillPolygon()
+java.awt.Point (JDK 1.0)
+java.awt.PopupMenu (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

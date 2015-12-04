@@ -1,0 +1,353 @@
+
+[Chapter 18] Deflater
+Chapter 18The java.util.zip Package
+Deflater
+Name
+Deflater
+Synopsis
+Class Name:
+java.util.zip.Deflater
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The Deflater class provides 
+support for general-purpose data compression. The class uses the ZLIB compression 
+algorithms described in RFC 1950, RFC 1951, and RFC 1952. These documents 
+can be found at: 
+ftp://ds.internic.net/rfc/rfc1950.txt
+ftp://ds.internic.net/rfc/rfc1951.txt
+ftp://ds.internic.net/rfc/rfc1952.txt
+The Inflater class uncompresses 
+data that has been compressed using Deflater. 
+The DeflaterOutputStream uses 
+an internal Deflater to compress 
+data. Typically, you do not need to create a Deflater; 
+instead, you can just use an instance of one of the subclasses of DeflaterOutputStream : 
+GZIPOutputStream or ZipOutputStream. 
+Class Summary
+public class java.util.zip.Deflater extends java.lang.Object {
+  // Constants
+  public static final int BEST_COMPRESSION;
+  public static final int BEST_SPEED;
+  public static final int DEFAULT_COMPRESSION;
+  public static final int DEFAULT_STRATEGY;
+  public static final int DEFLATED;
+  public static final int FILTERED;
+  public static final int HUFFMAN_ONLY;
+  public static final int NO_COMPRESSION;
+  // Constructors
+  public Deflater();
+  public Deflater(int level);
+  public Deflater(int level, boolean nowrap);
+  // Public Instance Methods
+  public int deflate(byte[] b);
+  public synchronized native int deflate(byte[] b, int off, int len);
+  public synchronized native void end();
+  public synchronized void finish();
+  public synchronized boolean finished();
+  public synchronized native int getAdler();
+  public synchronized native int getTotalIn();
+  public synchronized native int getTotalOut();
+  public boolean needsInput();
+  public synchronized native void reset();
+  public void setDictionary(byte[] b);
+  public synchronized native void setDictionary(byte[] b, int off, int len);
+  public void setInput(byte[] b);
+  public synchronized void setInput(byte[] b, int off, int len);
+  public synchronized void setLevel(int level);
+  public synchronized void setStrategy(int strategy);
+  // Protected Instance Methods
+  protected void finalize();
+}
+Constants
+BEST_COMPRESSION
+public static final int BEST_COMPRESSION = 9
+Description
+A constant that represents a compression level that sacrifices speed for 
+the smallest compressed data size. The compression level for a Deflater 
+object can be set with setLevel(), 
+where the level ranges from 0 to 9. 
+BEST_SPEED
+public static final int BEST_SPEED = 1
+Description
+A constant that represents a compression level that sacrifices compressed 
+data size for speed. The compression level for a Deflater 
+object can be set with setLevel(), 
+where the level ranges from 0 to 9. 
+DEFAULT_COMPRESSION
+public static final int DEFAULT_COMPRESSION = -1
+Description
+A constant that represents the default compression level. 
+DEFAULT_STRATEGY
+public static final int DEFAULT_STRATEGY
+Description
+A constant that represents the default compression strategy. 
+DEFLATED
+public static final int DEFLATED
+Description
+A constant that represents a compression method that uses the deflate algorithm. 
+FILTERED
+public static final int FILTERED
+Description
+A constant that represents a compression strategy that works well for small 
+values with a random distribution. 
+HUFFMAN_ONLY
+public static final int HUFFMAN_ONLY
+Description
+A constant that represents a compression strategy that uses only Huffman 
+coding. 
+NO_COMPRESSION
+public static final int NO_COMPRESSION = 0
+Description
+A constant that represents a compression level that does not compress data 
+at all. The compression level for a Deflater 
+object can be set with setLevel(), 
+where the level ranges from 0 to 9. 
+Constructors
+Deflater
+public Deflater()
+Description
+This constructor creates a Deflater 
+that generates compressed data in the ZLIB format using the DEFAULT_COMPRESSION 
+level. 
+public Deflater(int level)
+Parameters
+level
+The compression level, 
+from 0 (NO_COMPRESSION) to 
+9 (BEST_COMPRESSION). 
+Description
+This constructor creates a Deflater 
+that generates compressed data in the ZLIB format using the given compression 
+level. 
+public Deflater(int level, boolean nowrap)
+Parameters
+level
+The compression level, 
+from 0 (NO_COMPRESSION) to 
+9 (BEST_COMPRESSION).
+nowrap
+A boolean 
+value that specifies whether or not the ZLIB header and checksum data are 
+omitted from the compressed data. 
+Description
+This constructor creates a Deflater 
+that generates compressed data using the given compression level. If nowrap 
+is true, the ZLIB header and 
+checksum fields are not used, which means that the compressed data is in 
+the format used by GZIP and PKZIP. If the parameter is false, 
+the data is compressed into ZLIB format. 
+Public Instance Methods
+deflate
+public int deflate(byte[] b)
+Parameters
+b
+A byte array to be filled. 
+Returns
+The number of compressed bytes actually written to the array or 0 if more 
+data may be required. 
+Description
+This method compresses the data passed to setInput() 
+and fills the given array with the compressed data. If this method returns 
+zero, needsInput() should be called 
+to determine whether the Deflater 
+needs more data in its input buffer. 
+public synchronized native int deflate(byte[] b, int off, int len)
+Parameters
+b
+A byte array to be filled.
+off
+An offset into the byte array.
+len
+The number of bytes to fill. 
+Returns
+The number of compressed bytes actually written to the array or 0 if more 
+data may be required. 
+Description
+This method compresses the data passed to setInput() 
+and writes len bytes of the 
+compressed data into the given array, starting at off. 
+If this method returns 0, needsInput() 
+should be called to determine whether the Deflater 
+needs more data in its input buffer. 
+end
+public synchronized native void end()
+Description
+This method discards any uncompressed input data and frees up internal 
+buffers. 
+finish
+public synchronized void finish()
+Description
+This method tells the Deflater 
+that the compression should end with the data that currently occupies the 
+input buffer. 
+finished
+public synchronized boolean finished()
+Returns
+A boolean value that indicates 
+whether or not the end of the compressed data has been reached. 
+Description
+This method returns true if 
+the last of the compressed data has been read using deflate(). 
+Otherwise it returns false. 
+getAdler
+public synchronized native int getAdler()
+Returns
+The Adler-32 checksum value of the uncompressed data. 
+Description
+This method returns an Adler32 checksum value that is calculated on the 
+uncompressed data passed to setInput(). 
+getTotalIn
+public synchronized native int getTotalIn()
+Returns
+The total number of bytes that have been input so far. 
+Description
+This method returns the number of bytes that have been passed to setInput() 
+since this Deflater was created 
+or since reset()was last called. 
+getTotalOut
+public synchronized native int getTotalOut()
+Returns
+The total number of bytes that have been output so far. 
+Description
+This method returns the number of bytes that have been read from deflate() 
+since this Deflater was created, 
+or since reset() was last called. 
+needsInput
+public boolean needsInput()
+Returns
+A boolean value that indicates 
+whether or not the input buffer is empty. 
+Description
+This method returns true if 
+the input buffer is empty. Otherwise it returns false. 
+reset
+public synchronized native void reset()
+Description
+This method resets the Deflater 
+to the state it was in when it was created, which means that a new set 
+of data can be compressed. 
+setDictionary
+public void setDictionary(byte[] b)
+Parameters
+b
+An array of byte values. 
+Description
+This method sets the preset dictionary for compression using the data in 
+the given array. 
+   public synchronized native void setDictionary(byte[] b, int off, int len)  
+Parameters
+b
+An array of byte values.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Description
+This method sets the preset dictionary for compression using len 
+bytes from the given array, starting from off. 
+setInput
+public void setInput(byte[] b)
+Parameters
+b
+An array of byte values. 
+Description
+This method places the contents of the given array into the input buffer 
+of this Deflater. Use the deflate() 
+method to compress the data and retrieve it in compressed form. 
+public synchronized void setInput(byte[] b, int off, int len)
+Parameters
+b
+An array of byte values.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Description
+This method places len bytes 
+from the given array, starting at off, 
+into the input buffer of this Deflater. 
+Use the deflate() method to 
+compress the data and retrieve it in compressed form. 
+setLevel
+public synchronized void setLevel(int level)
+Parameters
+level
+The compression level, 
+from 0 (NO_COMPRESSION) to 
+9 (BEST_COMPRESSION). 
+Throws
+IllegalArgumentException
+If level is not valid. 
+Description
+This method sets the compression level of this Deflater. 
+A value of 0 corresponds to NO_COMPRESSION. 
+A value of 1 indicates the fastest, least space-efficient compression level 
+(BEST_SPEED). A value of 9 
+indicates the slowest, most space-efficient compression level (BEST_COMPRESSION). 
+setStrategy
+public synchronized void setStrategy(int strategy)
+Parameters
+strategy
+The compression strategy. 
+Throws
+IllegalArgumentException
+If strategy is not valid. 
+Description
+This method sets the compression strategy of this Deflater, 
+which should be one of FILTERED, 
+HUFFMAN_ONLY, or DEFAULT_STRATEGY. 
+Protected Instance Methods
+finalize
+protected void finalize()
+Overrides
+Object.finalize() 
+Description
+This method calls end() when 
+this Deflater is garbage collected. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+DeflaterOutputStream, 
+Inflater, 
+GZIPOutputStream, 
+ZipOutputStream 
+DataFormatException
+DeflaterOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

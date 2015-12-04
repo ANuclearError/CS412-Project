@@ -1,0 +1,104 @@
+
+[Chapter 15] ContentHandler
+Chapter 15The java.net Package
+ContentHandler
+Name
+ContentHandler
+Synopsis
+Class Name:
+java.net.ContentHandler
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The ContentHandler class is 
+an abstract class that defines 
+a method to read data from a URLConnection 
+and then create an Object appropriate 
+for the type of content it has read. Each subclass of ContentHandler 
+handles a specific type of content (i.e., MIME type). 
+You do not create ContentHandler 
+objects directly; they are created by an object that implements the ContentHandlerFactory 
+interface. A ContentHandlerFactory 
+object selects and creates an appropriate ContentHandler 
+for the content type. If you write your own ContentHandler 
+subclasses, you should also write your own ContentHandlerFactory. 
+The content handler factory for an application is set by a call to URLConnection.setContentHandlerFactory(). 
+An application does not normally call the getContent() 
+method of a ContentHandler 
+directly; it should call URL.getContent() 
+or URLConnection.getContent() 
+instead. 
+A ContentHandler works in conjunction 
+with a URLStreamHandler, but 
+their roles do not overlap. The URLStreamHandler 
+deals with the specifics of a protocol, such as negotiating with a server 
+to retrieve a resource, while the ContentHandler 
+expects a data stream from which it can construct an object. 
+Class Summary
+public abstract class java.net.ContentHandler extends java.lang.Object {
+  // Instance Methods
+  public abstract Object getContent(URLConnection urlc) throws IOException;
+}
+Instance Methods
+getContent
+   public abstract Object getContent(URLConnection urlc) throws IOException  
+Parameters
+urlc
+A URLConnection that is the data source. 
+Returns
+The Object created from the 
+data source. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method reads data from the given URLConnection 
+and returns the object that is represented by the data. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+int hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ContentHandlerFactory, 
+IOException, 
+URL, 
+URLConnection, 
+URLStreamHandler 
+ConnectException
+ContentHandlerFactory
+ 
+ 
+ 
+ 
+ 
+ 
+ 

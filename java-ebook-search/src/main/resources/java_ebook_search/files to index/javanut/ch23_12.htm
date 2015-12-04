@@ -1,0 +1,51 @@
+
+[Chapter 23] 23.12 java.beans.PropertyChangeEvent (JDK 1.1)
+Chapter 23The java.beans Package
+23.12 java.beans.PropertyChangeEvent (JDK 1.1)
+The PropertyChangeEvent class is a subclass of
+java.util.EventObject.  An event of this type is
+sent to interested PropertyChangeListener objects
+whenever a Java bean changes a "bound" property, or whenever
+a PropertyEditor or Customizer changes a
+property value.  A PropertyChangeEvent is also sent
+to registered VetoableChangeListener objects when a
+bean attempts to change the value of a "constrained"
+property.
+When creating a PropertyChangeEvent, you normally
+specify the bean that generated the event, the programmatic
+(locale-independent) name of the property that changed, and
+the old and new values of the property.  If the values cannot
+be determined, null should be passed instead.
+If the event is a notification that more than one property
+value changed, the name should also be null.
+While Java beans must generate and send
+PropertyChangeEvent objects, it is typically only
+application builders and similar tools that are
+interested in receiving them.
+public class PropertyChangeEvent extends EventObject {
+    // Public Constructor
+            public PropertyChangeEvent(Object source, String propertyName, Object oldValue, Object newValue);
+    // Public Instance Methods
+            public Object getNewValue();
+            public Object getOldValue();
+            public Object getPropagationId();
+            public String getPropertyName();
+            public void setPropagationId(Object propagationId);
+}
+Hierarchy:
+Object->EventObject(Serializable)->PropertyChangeEvent
+Passed To:
+PropertyChangeListener.propertyChange(), 
+PropertyVetoException(), 
+VetoableChangeListener.vetoableChange()
+Returned By:
+PropertyVetoException.getPropertyChangeEvent()
+java.beans.ParameterDescriptor (JDK 1.1)
+java.beans.PropertyChangeListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

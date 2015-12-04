@@ -1,0 +1,154 @@
+
+[Chapter 10] Number
+Chapter 10The java.lang Package
+Number
+Name
+Number
+Synopsis
+Class Name:
+java.lang.Number
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.lang.Byte, java.lang.Double,
+java.lang.Float, java.lang.Integer,
+java.lang.Long, java.lang.Short,
+java.math.BigDecimal,
+java.math.BigInteger
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later
+Description
+The Number class is an abstract
+class that serves as the superclass for all of the classes
+that provide object wrappers for primitive numeric values:
+byte, short, 
+int, long,
+float, and double.
+Wrapping a primitive value is useful when you need to treat such
+a value as an object. For example, there are a number of utility
+methods that take a reference to an Object as
+one of their arguments. You cannot specify a primitive value for
+one of these arguments, but you can provide a reference to an object
+that encapsulates the primitive value.  Furthermore,
+as of JDK 1.1, these wrapper classes are necessary to 
+support the Reflection API and class literals.
+The Number class defines six methods that
+must be implemented by its subclasses: byteValue(),
+shortValue(), intValue(),
+longValue(), floatValue(),
+and doubleValue(). This means that a 
+Number
+object can be fetched as an byte, 
+short, int, long,
+float, or double value, without
+regard for its actual class.
+Class Summary
+public abstract class java.lang.Number extends java.lang.Number
+                                       implements java.io.Serializable {
+    // Instance Methods
+    public abstract byte byteValue();                  // New in 1.1
+    public abstract double doubleValue();
+    public abstract float floatValue();
+    public abstract int intValue();
+    public abstract long longValue();
+    public abstract short shortValue();                // New in 1.1
+}
+Instance Methods
+byteValue
+public abstract byte byteValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a byte.
+Description
+This method returns the value of this object as a byte.
+If the data type of the value is not byte,
+rounding may occur.
+doubleValue
+public abstract double doubleValue()
+Returns
+The value of this object as a double.
+Description
+This method returns the value of this object as a double.
+If the data type of the value is not double,
+rounding may occur.
+floatValue
+public abstract float floatValue()
+Returns
+The value of this object as a float.
+Description
+This method returns the value of this object as a float.
+If the data type of the value is not float, rounding
+may occur.
+intValue
+public abstract int intValue()
+Returns
+The value of this object as an int.
+Description
+This method returns the value of this object as an int.
+If the type of value is not an int, rounding
+may occur.
+longValue
+public abstract long longValue()
+Returns
+The value of this object as a long.
+Description
+This method returns the value of this object as a long.
+If the type of value is not a long, rounding
+may occur.
+shortValue
+public abstract short shortValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a short.
+Description
+This method returns the value of this object as a short.
+If the type of value is not a short, rounding
+may occur.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Byte;
+Double;
+Float;
+Integer;
+Long;
+Object;
+Short
+Math
+Object
+ 
+ 
+ 
+ 
+ 
+ 
+ 

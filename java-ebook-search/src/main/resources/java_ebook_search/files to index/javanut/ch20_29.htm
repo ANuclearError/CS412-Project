@@ -1,0 +1,90 @@
+
+[Chapter 20] 20.29 java.awt.event.WindowEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.29 java.awt.event.WindowEvent (JDK 1.1)
+An event of this type indicates that an important action has
+occurred for a Window object.
+Call getWindow() to determine the Window
+object that is the source of this event.  Call
+getID() to determine the specific type of event that
+has occurred.  Each of the following seven constants
+corresponds to one of the methods of the
+WindowListener interface:
+WINDOW_OPENED
+This type indicates that the window has been created and
+opened; it is only delivered the first time that a window is
+opened.
+WINDOW_CLOSING
+This type indicates that the user has requested that the
+window be closed through the system menu, or through a close
+button on the window's border, or by invoking a
+platform-defined keystroke, such as Alt-F4 in
+Windows.  The application should respond to this event by
+calling hide() or destroy() on the
+Window object.
+WINDOW_CLOSED
+This event type is delivered after a window is closed by a
+call to hide() or destroy().
+WINDOW_ICONIFIED
+This event type is delivered when the user iconifies the window.
+WINDOW_DEICONIFIED
+This event type is delivered when the user de-iconifies the window.
+WINDOW_ACTIVATED
+This event type is delivered when the window is
+activated--that is, when it is given the keyboard focus and
+becomes the "active" window.
+WINDOW_DEACTIVATED
+This event type is delivered when the window ceases to be
+the active window, typically when the user activates some
+other window.
+public class WindowEvent extends ComponentEvent {
+    // Public Constructor
+            public WindowEvent(Window source, int id);
+    // Constants
+            public static final int WINDOW_ACTIVATED;
+            public static final int WINDOW_CLOSED;
+            public static final int WINDOW_CLOSING;
+            public static final int WINDOW_DEACTIVATED;
+            public static final int WINDOW_DEICONIFIED;
+            public static final int WINDOW_FIRST;
+            public static final int WINDOW_ICONIFIED;
+            public static final int WINDOW_LAST;
+            public static final int WINDOW_OPENED;
+    // Public Instance Methods
+            public Window getWindow();
+            public String paramString();  // Overrides ComponentEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->WindowEvent
+Passed To:
+AWTEventMulticaster.windowActivated(), 
+AWTEventMulticaster.windowClosed(), 
+AWTEventMulticaster.windowClosing(), 
+AWTEventMulticaster.windowDeactivated(), 
+AWTEventMulticaster.windowDeiconified(), 
+AWTEventMulticaster.windowIconified(), 
+AWTEventMulticaster.windowOpened(), 
+Window.processWindowEvent(), 
+WindowAdapter.windowActivated(), 
+WindowAdapter.windowClosed(), 
+WindowAdapter.windowClosing(), 
+WindowAdapter.windowDeactivated(), 
+WindowAdapter.windowDeiconified(), 
+WindowAdapter.windowIconified(), 
+WindowAdapter.windowOpened(), 
+WindowListener.windowActivated(), 
+WindowListener.windowClosed(), 
+WindowListener.windowClosing(), 
+WindowListener.windowDeactivated(), 
+WindowListener.windowDeiconified(), 
+WindowListener.windowIconified(), 
+WindowListener.windowOpened()
+java.awt.event.WindowAdapter (JDK 1.1)
+java.awt.event.WindowListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

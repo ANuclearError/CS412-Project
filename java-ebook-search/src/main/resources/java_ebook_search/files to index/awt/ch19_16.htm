@@ -1,0 +1,502 @@
+
+[Chapter 19] Container
+Chapter 19java.awt Reference
+Container
+Name
+Container
+Description
+The Container class serves 
+as a general purpose holder of other Component 
+objects. 
+Class Definition
+public abstract class java.awt.Container
+    extends java.awt.Component {
+  // Constructors
+  protected Container(); 
+  
+  // Instance Methods
+  public Component add (Component component);
+  public Component add (Component component, int position);
+  public void add (Component comp, Object constraints); 
+  public void add (Component comp, Object constraints, 
+      int position); 
+  public Component add (String name, Component component); 
+  public void addContainerListener (ContainerListener l); 
+  public void addNotify();
+  public int countComponents();
+  public void deliverEvent (Event e); 
+  public void doLayout(); 
+  public float getAlignmentX(); 
+  public float getAlignmentY(); 
+  public Component getComponent (int n);
+  public Component getComponentAt (int x, int y);  
+  public Component getComponentAt (Point p);  
+  public int getComponentCount(); 
+  public Component[] getComponents();
+  public Insets getInsets(); 
+  public LayoutManager getLayout();
+  public Dimension getMaximumSize(); 
+  public Dimension getMinimumSize();  
+  public Dimension getPreferredSize();  
+  public Insets insets();
+  public void invalidate(); 
+  public boolean isAncestorOf (Component c); 
+  public void layout(); 
+  public void list (PrintStream out, int indentation);
+  public void list (PrintWriter out, int indentation); 
+  public Component locate (int x, int y); 
+  public Dimension minimumSize(); 
+  public void paint (Graphics g); 
+  public void paintComponents (Graphics g);
+  public Dimension preferredSize(); 
+  public void print (Graphics g); 
+  public void printComponents (Graphics g);
+  public void remove (int index); 
+  public void remove (Component component);
+  public void removeAll();
+  public void removeContainerListener (ContainerListener l); 
+  public void removeNotify();
+  public void setLayout (LayoutManager manager);
+  public void validate();
+  // Protected Instance Methods
+  protected void addImpl (Component comp, Object constraints, 
+      int index); 
+  protected String paramString();
+  protected void processContainerEvent (ContainerEvent e); 
+  protected void processEvent (AWTEvent e); 
+  protected void validateTree(); 
+}
+Constructors
+Container
+protected Container() 
+Description
+This constructor creates a "lightweight" container. This constructor 
+allows Container to be subclassed using code written entirely in Java. 
+Instance Methods
+add
+public Component add (Component component)
+Parameters
+component
+Component 
+to add to container. 
+Returns
+Component just added. 
+Throws
+IllegalArgumentException if you
+add component to itself. 
+Description
+Adds component as the last 
+component in the container. 
+public Component add (Component component, int position)
+Parameters
+component
+Component 
+to add to container. 
+position
+Position of component; -1 adds the component as the last 
+in the container. 
+Returns
+Component just added. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+position invalid. 
+IllegalArgumentException
+If 
+you add Component to itself. 
+Description
+Adds component to container 
+at a certain position. 
+public void add (Component component, Object constraints) 
+Parameters
+component
+Component 
+to add to container. 
+constraints
+An object describing constraints on the component being 
+added. 
+Description
+Adds component to container 
+subject to contraints. 
+public void add (Component component, Object constraints, int index) 
+Parameters
+component
+Component 
+to add to container. 
+constraints
+An object describing constraints on the component being 
+added. 
+index
+The position of the component in the container's 
+list. 
+Description
+Adds component to container 
+subject to contraints at position 
+index. 
+public Component add (String name, Component component) 
+Parameters
+name
+Name of component being added. This parameter is often 
+significant to the layout manager of the container (e.g "North", 
+"Center"). 
+component
+Component 
+to add to container. 
+Returns
+Component just added. 
+Throws
+IllegalArgumentException
+If 
+you add component 
+to itself. 
+Description
+Adds the component to the container with the given name. 
+Replaced by the more general add(Component, Object). 
+addContainerListener
+public void addContainerListener (ContainerListener l) 
+Parameters
+l
+An object that implements the ContainerListener 
+interface. 
+Description
+Add a listener for the container events. 
+addNotify
+public void addNotify()
+Overrides
+Component.addNotify() 
+Description
+Creates Container's peer and 
+peers of contained components. 
+countComponents
+public int countComponents()
+Returns
+Number of components within Container. 
+deliverEvent
+public void deliverEvent (Event e) 
+Parameters
+e
+Event instance 
+to deliver. 
+Overrides 
+Component.deliverEvent(Event) 
+Description
+Tries to locate the component contained in the container that should receive 
+the event. 
+doLayout
+public void doLayout() 
+Description
+Lays out the container. This method is a replacement for layout(). 
+getAlignmentX
+public float getAlignmentX() 
+Returns
+A number between 0 and 1 representing the horizontal alignment of this 
+component. 
+Overrides
+Component.getAlignmentX() 
+Description
+If the container's layout manager implements LayoutManager2, 
+this method returns the getLayoutAlignmentX() 
+value of the layout manager. Otherwise the getAlignmentX() 
+value of Component is returned. 
+getAlignmentY
+public float getAlignmentY() 
+Returns
+A number between 0 and 1 representing the vertical alignment of this component. 
+Overrides 
+Component.getAlignmentY() 
+Description
+If the container's layout manager implements LayoutManager2, 
+this method returns the getLayoutAlignmentY() 
+value of the layout manager. Otherwise the getAlignmentY() 
+value of Component is returned. 
+getComponent
+public synchronized Component getComponent (int position)
+Parameters
+position
+Position of component to get. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+position is invalid. 
+Returns
+Component at designated position 
+within Container. 
+getComponentAt
+public Component getComponentAt (int x, int y) 
+Parameters
+x
+The x coordinate, in this Container's 
+coordinate system. 
+y
+The y coordinate, in this Container's 
+coordinate system. 
+Returns
+Returns the Component containing 
+the give point. 
+public Component getComponentAt (Point p) 
+Parameters
+p
+The point to be tested, in this Container's 
+coordinate system. 
+Returns
+Returns the Component containing 
+the give point. 
+getComponentCount
+public int getComponentCount() 
+Returns
+Returns the number of components in the container. 
+getComponents
+public Component[] getComponents()
+Returns
+Array of components within the container. 
+getInsets
+public Insets getInsets()
+Returns
+The insets of the container. 
+getLayout
+public LayoutManager getLayout()
+Returns
+LayoutManager of Container. 
+getMaximumSize
+public Dimension getMaximumSize() 
+Overrides 
+Component.getMaximumSize() 
+Returns
+The maximum dimensions of the component. 
+getMinimumSize
+public Dimension getMinimumSize() 
+Overrides 
+Component.getMinimumSize() 
+Returns
+The minimum dimensions of the component. 
+getPreferredSize
+public Dimension getPreferredSize() 
+Returns
+The preferred dimensions of the component. 
+insets
+public Insets insets() 
+Returns
+Current Insets of Container. 
+Replaced by getInsets(). 
+invalidate
+public void invalidate()
+Overrides 
+Component.invalidate() 
+Description
+Sets the container's valid state to false. 
+isAncestorOf
+public boolean isAncestorOf (Component c) 
+Parameters
+c
+The component in question. 
+Returns
+If c is contained in the container's 
+hierarchy, returns true; otherwise 
+false. 
+layout
+public void layout() 
+Overrides 
+Component.layout() 
+Description
+Replaced by doLayout(). 
+list
+public void list (PrintStream out, int indentation)
+Parameters
+out
+Output Stream 
+to send results to. 
+indentation
+Indentation to use when printing. 
+Overrides 
+Component.list(PrintStream, 
+int) 
+Description
+Recursively lists all components in Container. 
+public void list (PrintWriter out, int indentation)
+Parameters
+out
+Output Writer 
+to send results to. 
+indentation
+Indentation to use when printing. 
+Overrides
+Component.list(PrintWriter, 
+int) 
+Description
+Recursively lists all components in Container. 
+locate
+public Component locate (int x, int y) 
+Parameters
+x
+Horizontal position to check. 
+y
+Vertical position to check. 
+Returns
+Component within Container 
+at given coordinates, or Container. 
+Overrides
+Component.locate(int, int) 
+Description
+Replaced by getComponentAt(int, int). 
+minimizeSize
+public Dimension minimumSize() 
+Returns
+Minimum dimensions of contained objects. 
+Overrides
+Component.minimumSize() 
+Description
+Replaced by getMinimumSize(). 
+paint
+public void paint (Graphics g)
+Parameters
+g
+Graphics context of container. 
+Overrides
+Component.paint() 
+Description
+This method tells any lightweight components that are children of this 
+container to paint themselves. 
+paintComponents
+public void paintComponents (Graphics g)
+Parameters
+g
+Graphics context of Container. 
+Description
+Paints the different components in Container. 
+preferredSize
+public Dimension preferredSize() 
+Returns
+Preferred dimensions of contained objects. 
+Overrides
+Component.preferredSize() 
+Description
+Replaced by getPreferredSize(). 
+print
+public void print (Graphics g)
+Parameters
+g
+Graphics context of container. 
+Overrides
+Component.print() 
+Description
+This method tells any lightweight components that are children of this 
+container to print themselves. 
+printComponents
+public void printComponents (Graphics g)
+Parameters
+g
+Graphics context of Container. 
+Description
+Prints the different components in Container. 
+remove
+public void remove (int index) 
+Parameters
+index
+Index of the component to remove. 
+Description
+Removes the component in position index 
+from Container. 
+public void remove (Component component)
+Parameters
+component
+Component 
+to remove. 
+Description
+Removes component from Container. 
+removeAll
+public void removeAll()
+Description
+Removes all components from Container. 
+removeContainerListener
+public void removeContainerListener (ContainerListener l) 
+Parameters
+l
+One of this Container's 
+ContainerListeners. 
+Description
+Remove a container event listener. 
+removeNotify
+public void removeNotify()
+Overrides
+Component.removeNotify() 
+Description
+Removes Container's peer and 
+peers of contained components. 
+setLayout
+public void setLayout (LayoutManager manager)
+Parameters
+manager
+New LayoutManager 
+for Container. 
+Description
+Changes LayoutManager of Container. 
+validate
+public void validate()
+Overrides 
+Component.validate() 
+Description
+Sets Container's valid 
+state to true and recursively 
+validates its children. 
+Protected Instance Methods
+addImpl
+protected void addImpl (Component comp, Object constraints, int index) 
+Parameters
+comp
+The component to add. 
+constraints
+Constraints on the component. 
+index
+Position at which to add this component. Pass -1 to add 
+the component at the end. 
+Description
+This method adds a component subject to the given constraints at a specific 
+position in the container's list of components. It is a helper method 
+for the various overrides of add(). 
+paramString
+protected String paramString()
+Returns
+String with current settings of Container. 
+Overrides
+Component.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+processContainerEvent
+protected void processContainerEvent (ContainerEvent e) 
+Parameters
+e
+The event to process. 
+Description
+Container events are passed to this method for processing. Normally, this 
+method is called by processEvent(). 
+processEvent
+protected void processEvent (AWTEvent e) 
+Parameters
+e
+The event to process. 
+Overrides
+Component.processEvent() 
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+validateTree
+protected void validateTree() 
+Description
+Descends recursively into the Container's 
+components and recalculates layout for any subtrees that are marked invalid. 
+See Also
+Component, Dimension, 
+Event, Graphics, 
+Insets, LayoutManager, 
+Panel, PrintStream, 
+String, Window
+Component
+Cursor 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

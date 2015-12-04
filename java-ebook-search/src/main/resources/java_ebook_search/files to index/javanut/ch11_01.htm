@@ -1,0 +1,83 @@
+
+[Chapter 11] Internationalization
+Chapter 11
+11. Internationalization
+Contents:
+A Word About Locales
+Unicode
+Character Encodings
+Handling Local Customs
+Localizing User-Visible Messages
+Formatted Messages
+Internationalization is the process of making a program
+flexible enough to run correctly in any locale,
+as discussed in Chapter 4, What's New in Java 1.1.
+The required corollary to internationalization is
+localization--the process of arranging for a program to run in
+a specific locale.
+There are several distinct steps to the task of
+internationalization.  Java 1.1 addresses these steps
+with several different mechanisms:
+A program must be able to read, write, and manipulate
+localized text.  Java uses the Unicode character encoding,
+which by itself is a huge step towards internationalization.  In
+addition, in Java 1.1 the InputStreamReader and
+OutputStreamWriter classes convert text from a
+locale-specific encoding to Unicode and from Unicode to a
+locale-specific encoding, respectively.
+A program must conform to local customs when
+displaying dates and times, formatting numbers, and sorting
+strings.  Java addresses these issues with the classes in the
+new java.text package.
+A program must display all user-visible text in the local
+language.  Translating the messages a program displays is
+always one of the main tasks in localizing a program.  A
+more important task is writing the program so that all
+user-visible text is fetched at runtime, rather than
+hard-coded directly into the program.  Java 1.1 facilitates
+this process with the ResourceBundle class and its
+subclasses in the java.util package.
+This chapter discusses all three of these aspects of
+internationalization.
+11.1 A Word About Locales
+A locale represents a geographic, political, or cultural
+region.  In Java 1.1, locales are represented by the
+java.util.Locale class.  A locale is frequently defined
+by a language, which is represented by its standard
+lowercase two-letter code, such as en (English) or fr (French).  
+Sometimes, however, language alone is not sufficient
+to uniquely specify a locale, and a country is added to the
+specification.  A country is represented by
+an uppercase two-letter code.
+For example, the United States English locale (en_US) is
+distinct from the British English locale (en_GB), and the
+French spoken in Canada (fr_CA) is different from the French
+spoken in France (fr_FR).  Occasionally, the scope of a
+locale is further narrowed with the addition of a
+system-dependent "variant" string.
+The Locale class maintains a static default locale,
+which can be set and queried with
+Locale.setDefault() and Locale.getDefault().
+Locale-sensitive methods in Java 1.1 typically come in two
+forms.  One uses the default locale and the other uses
+a Locale object that is explicitly specified
+as an argument.  A program can create and use any number of
+non-default Locale objects, although it is more
+common simply to rely on the default locale, which is
+inherited from the underlying default locale on the native
+platform.  Locale-sensitive classes in Java often
+provide a method to query the list of locales that they
+support.
+Finally, note that AWT components in Java 1.1 have a locale
+property, so it is possible for different components to use
+different locales.  (Most components, however, are not
+locale-sensitive; they behave the same in any locale.)
+Naming Patterns and Conventions
+Unicode
+ 
+ 
+ 
+ 
+ 
+ 
+ 

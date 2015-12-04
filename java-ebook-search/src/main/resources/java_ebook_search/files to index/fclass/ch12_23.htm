@@ -1,0 +1,102 @@
+
+[Chapter 12] IllegalAccessException
+Chapter 12The java.lang Package
+IllegalAccessException
+Name
+IllegalAccessException
+Synopsis
+Class Name:
+java.lang.IllegalAccessException 
+Superclass:
+java.lang.Exception 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+An IllegalAccessException is 
+thrown when a program tries to dynamically load a class (i.e., uses the 
+forName() method of the Class 
+class, or the findSystemClass() 
+or the loadClass() method of 
+the ClassLoader class) and 
+the currently executing method does not have access to the specified class 
+because it is in another package and not public. 
+This exception is also thrown when a program tries to create an instance 
+of a class (i.e., uses the newInstance() 
+method of the Class class) 
+that does not have a zero-argument constructor accessible to the caller. 
+Class Summary
+public class java.lang.IllegalAccessException extends java.lang.Exception {
+  // Constructors
+  public IllegalAccessException();
+  public IllegalAccessException(String s);
+}
+Constructors
+IllegalAccessException
+public IllegalAccessException()
+Description
+This constructor creates an IllegalAccessException 
+with no associated detail message. 
+public IllegalAccessException(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an IllegalAccessException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+ClassLoader, 
+Exception, 
+Throwable 
+IllegalAccessError
+IllegalArgumentException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

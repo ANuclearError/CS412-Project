@@ -1,0 +1,106 @@
+
+[Chapter 12] LinkageError
+Chapter 12The java.lang Package
+LinkageError
+Name
+LinkageError
+Synopsis
+Class Name:
+java.lang.LinkageError 
+Superclass:
+java.lang.Error 
+Immediate Subclasses: 
+java.lang.ClassCircularityError,
+java.lang.ClassFormatError, 
+java.lang.ExceptionInInitializerError, 
+java.lang.IncompatibleClassChangeError, 
+java.lang.NoClassDefFoundError, 
+java.lang.UnsatisfiedLinkError,
+java.lang.VerifyError 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+The appropriate subclass of LinkageError 
+is thrown when there is a problem resolving a reference to a class. Reasons 
+for this may include a difficulty in finding the definition of the class 
+or an incompatibility between the current definition and the expected definition 
+of the class. 
+Class Summary
+public class java.lang.LinkageError extends java.lang.Error {
+  // Constructors
+  public LinkageError();
+  public LinkageError(String s);
+}
+Constructors
+LinkageError
+public LinkageError()
+Description
+This constructor creates a LinkageError 
+with no associated detail message. 
+public LinkageError(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor create a LinkageError 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ClassCircularityError, 
+ClassFormatError, 
+Error, 
+ExceptionInInitializerError, 
+IncompatibleClassChangeError, 
+NoClassDefFoundError, 
+Throwable, 
+UnsatisfiedLinkError, 
+VerifyError 
+InterruptedException
+Long
+ 
+ 
+ 
+ 
+ 
+ 
+ 

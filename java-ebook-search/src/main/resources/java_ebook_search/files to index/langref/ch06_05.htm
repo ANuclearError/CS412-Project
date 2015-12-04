@@ -1,0 +1,55 @@
+
+[Chapter 6] 6.5 The if Statement
+Chapter 6Statements and Control Structures
+6.5 The if Statement
+An if
+statement determines which of two statements is executed, based
+on the value of a Boolean expression:
+In Java, the expression
+in parentheses must produce a boolean value.
+This is different from C/C++, which allows any type of expression.
+If the expression in parentheses evaluates to true,
+the statement after the parentheses is executed. After that statement
+has been executed, the statement following the entire if
+statement is executed. If the expression between the parentheses
+evaluates to false, the next statement to be
+executed depends on whether or not the if statement
+has an else clause. If there is an else
+clause, the statement after the else is executed.
+Otherwise, the statement after the entire if statement
+is executed.
+When if statements are
+nested, each else clause is matched with the
+last preceding if statement in the same block
+that has not yet been matched with an if statement.
+Here is an example of an if statement:
+if (j == 4) {
+    if (x &gt; 0 ) {
+        x *= 7;
+    } else {
+        x *= -7;
+    }
+}
+return;
+The outer if statement has no else
+clause. If j is not 4, the return
+statement is executed. Otherwise, the inner if
+statement is executed. This if statement does
+have an else clause. If x
+is greater than zero, the value of x is multiplied
+by 7. Otherwise, the value of x is multiplied
+by -7. Regardless of the value of x, the
+return statement is executed.
+References
+Boolean Type;
+Expression 4;
+Statement 6
+Expression Statements
+The switch Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

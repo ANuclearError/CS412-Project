@@ -1,0 +1,118 @@
+
+[Chapter 9] 9.4 Web Browsers and Handlers
+Chapter 9Network Programming
+9.4 Web Browsers and Handlers
+The content- and protocol-handler mechanisms I've introduced can
+be used by any application that accesses data via
+URLs. This mechanism is extremely flexible; to
+handle a URL, you need only the appropriate
+protocol and content handlers. To extend a Java-built Web browser so
+that it can handle new and specialized kinds of
+URLs, you need only supply additional content
+and protocol handlers. Furthermore, Java's ability to load new
+classes over the Net means that the handlers don't even need to
+be a part of the browser. Content and protocol handlers could be
+downloaded over the Net, from the same site that supplies the data,
+and used by the browser. If you wanted to supply some completely new
+data type, using a completely new protocol, you could make your data
+file plus a content handler and a protocol handler available on your
+Web server; anyone using a Web browser built in Java would
+automatically get the appropriate handlers whenever they access your
+data. In short, Java lets you build automatically extendible Web
+browsers; instead of being a gigantic do-everything application, the
+browser becomes a lightweight scaffold that dynamically incorporates
+extensions as needed. Figure 9.3 shows the
+conceptual operation of a content handler; Figure 9.4 does the same for a protocol handler.
+Figure 9.3: A content handler at work
+Figure 9.4: A protocol handler at work
+Sun's HotJava was the first browser to demonstrate these
+features. When HotJava encounters a type of content or a protocol it
+doesn't understand, it searches the remote server for an appropriate
+handler class. HotJava also interprets HTML data as
+a type of content; that is, HTML isn't a
+privileged data type built into the browser. HTML
+documents use the same content- and protocol-handler mechanisms as other
+data types.
+Unfortunately, a few nasty flies are stuck in this
+ointment. Content and protocol handlers are part of the Java
+API: they're an intrinsic part of the mechanism
+for working with URLs. However, specific content
+and protocol handlers aren't part of the API;
+the ContentHandler class and the two classes that
+make up protocol handlers, URLStreamHandler and
+URLConnection, are all abstract
+classes. They define what an implementation must provide, but they
+don't actually provide an implementation. This is not as
+paradoxical as it sounds. After all, the API
+defines the Applet class, but doesn't include any
+specific applets. Likewise, the standard Java classes don't
+include content handlers for HTML,
+GIF, MPEG, or other common data
+types. Even this isn't a real problem, although a library of
+standard content handlers would be useful. (JDK provides some content and protocol handlers in the
+sun.net.www.content and
+sun.net.www.protocol packages, but these are
+undocumented and subject to change.) There are two real issues here:
+There isn't any standard that tells you what
+kind of object the content handler should return. I danced around the
+issue just above, but it's a real problem. It's common sense
+that GIF data should be turned into an
+Image object, but at the moment, that's an
+application-level decision. If you're writing your own
+application and your own content handlers, that isn't an issue:
+you can make any decision you want. But if you're writing
+content handlers that interface to arbitrary Web browsers, you need a
+standard that defines what the browser expects. You can use the
+sun.net classes to make a guess, but a real
+standard hasn't been worked out yet. 
+There isn't any standard that tells you where
+to put content and protocol handlers so that an application (like a
+Web browser) can find them. Again, you can make application-level
+decisions about where to place your own handlers, but that
+doesn't solve the real problem: we want our content and protocol
+handlers to be usable by any browser. It's possible to make an
+educated guess about what the standard will be, but it's still a
+guess. 
+The next release of Sun's HotJava Web browser should certainly
+take full advantage of handlers,[4]
+ but current versions of Netscape Navigator do not. When the next
+release of HotJava appears, it may resolve these questions, at least
+on a de facto basis. (It would certainly be in Sun's interest to
+publish some kind of standard as soon as possible.) Although we
+can't tell you what standards will eventually evolve, we can
+discuss how to write handlers for standalone applications. When the
+standards issues are resolved, revising these handlers to work with
+HotJava and other Web browsers should be simple.
+[4] 
+Downloadable handlers will be part of HotJava 1.0, though they are not
+supported by the "pre-beta 1" release. The current release
+does support local content and protocol
+handlers. HotJava 1.0 also promises additional classes to support
+network applications.
+The most common Java-capable platform, Netscape Navigator,
+doesn't use the content- and protocol-handler mechanisms to
+render Net resources. It's a classic monolithic application: knowledge
+about certain kinds of objects, like HTML and
+GIF files, is built-in. It can be extended via a
+plug-in mechanism, but plug-ins aren't portable (they're
+written in C) and can't be downloaded dynamically over the
+Net. Applets running in Netscape can use a limited version of the
+URL mechanism, but the browser imposes many
+restrictions. As I said earlier, you can construct
+URLs relative to the applet's code base, and
+use the openStream() method to get a raw input
+stream from which to read data, but that's it. For the time
+being, you can't use your own content or protocol handlers to
+work with applets loaded over the Net. Allowing this would be a simple
+extension, even without content- and protocol-handler support
+integrated into Netscape itself. We can only hope they add this
+support soon.
+Working with URLs
+Writing a Content Handler
+ 
+ 
+ 
+ 
+ 
+ 
+ 

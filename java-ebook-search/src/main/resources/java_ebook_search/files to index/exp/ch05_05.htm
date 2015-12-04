@@ -1,0 +1,596 @@
+
+[Chapter 5] 5.5 Subclassing and Inheritance
+Chapter 5Objects in Java
+5.5 Subclassing and Inheritance
+Classes in Java exist in a class hierarchy. A class in Java can be declared 
+as a subclass of another class using the extends 
+keyword. A subclass inherits variables and 
+methods from its superclass and uses them as 
+if they're declared within the subclass itself: 
+class Animal { 
+    float weight; 
+    ... 
+    void eat() { 
+        ... 
+    } 
+    ... 
+} 
+ 
+class Mammal extends Animal { 
+    int heartRate; 
+    // inherits weight 
+    ... 
+    void breathe() { 
+        ... 
+    } 
+    // inherits eat() 
+} 
+In the above example, an object of type Mammal has
+both the instance variable weight and the method
+eat(). They are inherited from
+Animal.
+A class can extend only one other class. To use the proper
+terminology, Java allows single inheritance of
+class implementation. Later we'll talk about interfaces, which
+take the place of multiple inheritance as it's
+primarily used in C++.
+A subclass can, of course, be further subclassed. Normally,
+subclassing specializes or refines a class by adding
+variables and methods:
+class Cat extends Mammal { 
+    boolean longHair; 
+    // inherits weight and heartRate 
+    ... 
+    void purr() { 
+        ... 
+    } 
+    // inherits eat() and breathe()  
+} 
+The Cat class is a type of
+Mammal that is ultimately a type of
+Animal. Cat objects inherit all
+the characteristics of Mammal objects and, in turn,
+Animal objects. Cat also
+provides additional behavior in the form of the
+purr() method and the longHair
+variable. We can denote the class relationship in a diagram, as shown
+in Figure 5.3.
+Figure 5.3: A class hierarchy
+A subclass inherits all members of its superclass not designated 
+as private. As we'll discuss shortly, other 
+levels of visibility affect what inherited members of the class can be 
+seen from outside of the class and its subclasses, but at a minimum, a 
+subclass always has the same set of visible members as its parent. For 
+this reason, the type of a subclass can be considered a subtype of its 
+parent, and instances of the subtype can be used 
+anywhere instances 
+of the supertype are allowed. For example: 
+Cat simon = new Cat(); 
+Animal creature = simon; 
+The Cat simon in the 
+above example can be assigned to the Animal type 
+variable creature because Cat 
+is a subtype of Animal. 
+Shadowed Variables
+In the previous section on methods, we saw that a local variable of the 
+same name as an instance variable hides the instance variable. Similarly, 
+an instance variable in a subclass can shadow an instance variable of 
+the same name in its parent class, as shown in Figure 5.4. 
+Figure 5.4: The scope of shadowed variables
+In Figure 5.4, the variable
+weight is declared in three places: as a local
+variable in the method foodConsumption() of the
+class Mammal, as an instance variable of the class
+Mammal, and as an instance variable of the class
+Animal. The actual variable selected depends on the
+scope in which we are working.
+In the above example, all variables were of the same type. About 
+the only reason for declaring a variable with the same type in a subclass 
+is to provide an alternate initializer. A more important use of shadowed 
+variables involves changing their types. We could, for example, shadow 
+an int variable with a double 
+variable in a subclass that needs decimal values instead 
+of integer values. We do this without changing the existing code because, 
+as its name suggests, when we shadow variables, we don't replace them 
+but instead mask them. Both variables still exist; methods of the 
+superclass see the original variable, and methods of the subclass see the 
+new version. The determination of what variables the various methods see 
+is static and happens at compile-time. 
+Here's a simple example: 
+class IntegerCalculator { 
+    int sum; 
+    ... 
+} 
+ 
+class DecimalCalculator extends IntegerCalculator { 
+    double sum; 
+    ... 
+} 
+In this example, we override the instance variable
+sum to change its type from int
+to double.[3]
+ Methods
+defined in the class IntegerCalculator see the
+integer variable sum, while methods defined in
+DecimalCalculator see the decimal variable
+sum. However, both variables actually exist for a
+given instance of DecimalCalculator, and they can
+have independent values. In fact, any methods that
+DecimalCalculator inherits from
+IntegerCalculator actually see the integer variable
+sum.
+[3] 
+Note that a better way to design our calculators would be to have an
+abstract Calculator class with two subclasses:
+IntegerCalculator and
+DecimalCalculator.
+Since both variables exist in
+DecimalCalculator, we need to reference
+the variable inherited from IntegerCalculator. We
+do that using the super reference:
+int s = super.sum 
+Inside of DecimalCalculator, the super 
+keyword used in this manner refers to the sum 
+variable defined in the superclass. I'll explain the use of super 
+more fully in a bit. 
+Another important point about shadowed variables has to do with how they 
+work when we refer to an object by way of a less derived type. For example, 
+we can refer to a DecimalCalculator object as 
+an IntegerCalculator. If we do so and then access 
+the variable sum, we get the integer variable, 
+not the decimal one: 
+DecimalCalculator dc = new DecimalCalculator(); 
+IntegerCalculator ic = dc; 
+ 
+int s = ic.sum;                  // Accesses IntegerCalculator sum 
+After this detailed explanation, you may still be wondering what
+shadowed variables are good for. Well, to be honest, the usefulness of
+shadowed variables is limited, but it's important to understand the
+concepts before we talk about doing the same thing with
+methods. We'll see a different and more dynamic type
+of behavior with method shadowing, or more correctly,
+method overriding.
+Overriding Methods
+In a previous section, we saw we could declare overloaded methods
+(i.e., methods with the same name but a different number or type of
+arguments) within a class. Overloaded method selection works the way I
+described on all methods available to a class, including
+inherited ones. This means that a subclass can define some overloaded
+methods that augment the overloaded methods provided by a superclass.
+But a subclass does more than that; it can define a method
+that has exactly the same method signature
+(arguments and return type) as a method in its superclass. In that
+case, the method in the subclass overrides the
+method in the superclass and effectively replaces its implementation,
+as shown in Figure 5.5. Overriding methods to
+change the behavior of objects is another form of
+polymorphism (sub-type polymorphism): the one most people think of when they 
+talk about the power of object-oriented languages.
+Figure 5.5: Method overriding
+In Figure 5.5, Mammal
+overrides the reproduce() method of
+Animal, perhaps to specialize the method for the
+peculiar behavior of Mammals giving live
+birth.[4]
+ The Cat object's
+sleeping behavior is overridden to be different from that of a general
+Animal, perhaps to accommodate cat naps. The
+Cat class also adds the more unique behaviors of
+purring and hunting mice.
+[4] 
+We'll ignore the platypus, which is an obscure nonovoviviparous
+mammal.
+From what you've seen so far, overridden methods probably
+look like they shadow methods in superclasses, just as variables
+do. But overridden methods are actually more powerful than that. An
+overridden method in Java acts like a virtual
+method in C++. When there are multiple implementations of a method in
+the inheritance hierarchy of an object, the one in the most derived
+class always overrides the others, even if we refer to
+the object by way of a less derived type. In other words, if we have a
+Cat instance assigned to a variable of the more
+general type Animal and we call its
+sleep() method, we get the
+sleep() method implemented in the
+Cat class, not the one in
+Animal:
+Cat simon = new Cat(); 
+Animal creature = simon; 
+ 
+creature.sleep();          // Accesses Cat sleep(); 
+In other respects, the variable creature looks
+like an Animal. For example, access to a shadowed
+variable would find the implementation in the
+Animal class, not the Cat
+class. However, because methods are virtual, the appropriate method in
+the Cat class can be located, even though we are
+dealing with an Animal object. This means we
+can deal with specialized objects as if they were more general types
+of objects and still take advantage of their specialized
+implementations of behavior.
+Much of what you'll be doing when you're writing a
+Java applet or application is overriding methods defined by
+various classes in the Java API. For example, think
+back to the applets we developed in the tutorial in Chapter 2, A First Applet. Almost all of the methods we implemented for
+those applets were overridden methods. Recall that we created a
+subclass of Applet for each of the examples. Then
+we overrode various methods: init() set up our
+applet, mouseDrag()
+to handle mouse movement, and paint() to draw our
+applet.
+A common programming error in Java (at least for me) is to miss
+and accidentally overload a method when trying to override it. Any
+difference in the number or type of arguments or the return type of a
+method produces two overloaded methods instead of a single, overridden
+method. Make it a habit to look twice when overriding methods.
+Overridden methods and dynamic binding
+In a previous section, I mentioned that overloaded methods are
+selected by the compiler at compile-time. Overridden methods, on the
+other hand, are selected dynamically at run-time. Even if we create an 
+instance of a subclass our code has never seen before (perhaps a new object 
+type loaded from the network), any overridden methods that it contains will 
+be located and invoked at run-time to replace those that existed when we 
+last compiled our code.
+In contrast, if we load a new class that implements an
+additional, more specific overloaded method, our code will continue to
+use the implementation it discovered at compile-time. Another
+effect of this is that casting (i.e., explicitly telling the compiler
+to treat an object as one of its assignable types) affects the selection
+of overloaded methods, but not overridden methods.
+Static method binding
+Static methods do not belong to any object instance, they are accessed directly
+through a class name, so they are not dynamically selected at run-time like
+instance methods.  That is why static methods are called "static"--they are
+always bound at compile time.  
+A static method in a superclass can be shadowed
+by another static method in a subclass, as long as
+the original method was not declared final.
+However, you can't override a static method with
+a nonstatic method. In other words, you can't
+change a static method into an instance method
+in a subclass.
+Dynamic method selection and peformance
+When Java has to dynamically search for overridden methods in
+subclasses, there's a small performance penalty. In languages like
+C++, the default is for methods to act like shadowed variables, so you
+have to explicitly declare the methods you want to be virtual.  Java
+is more dynamic, and the default is for all instance methods to be
+virtual.  In Java you can, however, go the other direction and
+explicitly declare that an instance method can't be overridden, so
+that it will not be subject to dynamic binding and will not suffer in
+terms of performance.
+This is done with the final modifier. We have seen
+final used with variables to effectively make them
+constants. When final is applied to a method, it
+means that that method can't be overridden (in some sense, its
+implementation is constant). final can also be
+applied to an entire class, which means the class can't be subclassed.
+Compiler optimiziations
+When javac, the Java compiler, is run with the 
+-O switch, it performs certain optimizations. 
+It can inline final methods to improve 
+performance (while slightly increasing the size of the resulting class file). 
+private methods, which are effectively
+final, can also be inlined, and
+final classes may also benefit from more 
+powerful optimizations.
+Another kind of optimization allows you to include debugging code 
+in your Java source without penalty.  Java doesn't have a pre-processor, 
+to explicitly control what source is included, but you can get some of the 
+same effects by making a block of code conditional on a constant (i.e.,
+static and final) 
+variable. 
+The Java compiler is smart enough to remove this code when it 
+determines that it won't be called.  For example:
+static final boolean DEBUG = false;
+...
+static void debug (String message) { 
+    if (DEBUG) {
+        System.err.println(message); 
+        // do other stuff
+        ...
+    }
+}
+ 
+If we compile the above code using the -O switch, the compiler will recognize
+that the condition on the DEBUG variable is always false, and the body of 
+the debug() method will be optimized away.  But that's not all--since 
+debug() itself is also final it can be inlined, and an empty inlined method
+generates no code at all.  So, when we compile with DEBUG set to false, 
+calls to the debug() method will generate no residual code at all.
+Method selection revisited
+By now you should have a good, intuitive idea as to how methods are selected 
+from the pool of potentially overloaded and overridden method names 
+of a class. If, however, you are dying for a dry definition, I'll 
+provide one now. If you are satisfied with your understanding, you may 
+wish to skip this little exercise in logic. 
+In a previous section, I offered an inductive rule for
+overloaded method resolution. It said that a method is considered more
+specific than another if its arguments are polymorphically
+assignable to the arguments of the second method. We can now expand
+this rule to include the resolution of overridden methods by adding
+the following condition: to be more specific than another method, the
+type of the class containing the method must also be assignable to the
+type of the class holding the second method.
+What does that mean? Well, the only classes whose types are
+assignable are classes in the same inheritance hierarchy. So, what
+we're talking about now is the set of all methods of the same name in
+a class or any of its parent or child classes. Since subclass types
+are assignable to superclass types, but not vice versa, the resolution
+is pushed, in the way that we expect, down the chain, towards the
+subclasses. This effectively adds a second dimension to the search,
+in which resolution is pushed down the inheritance tree towards more
+refined classes and, simultaneously, towards the most specific
+overloaded method within a given class.
+Exceptions and overridden methods
+When we talked about exception handling in Chapter 4, The Java Language,
+there's one thing I didn't mention because it
+wouldn't have made sense then. An important restriction on
+overridden methods is that they must adhere to the
+throws clause of the parent method's
+signature.  If an overridden method throws an exception, the exception must 
+be of the type specified by the parent or a subtype of that exception.
+Because the exception can be a subtype of the one specified by the parent,
+the overridden method can refine the type of exception thrown to go along
+with its new behavior.  For example:
+// A more refined exception 
+class MeatInedibleException extends InedibleException { ...
+}
+        
+class Animal {
+    void eat( Food f ) throws InedibleException { ...
+}
+class Herbivore extends Animal {
+    void eat( Food f ) throws InedibleException { 
+        if ( f instanceof Meat )
+            throw new MeatInedibleException();
+        ....
+    }
+}
+In the example above, Animal specifies that it can throw an
+InedibleException from its eat() method.  Herbivore is a subclass
+Animal, so it must be able to do this too.  However, Herbivore's eat()
+method actually throws a more specific exception:
+MeatInedibleException.  It can do this because MeatInedibleException
+is a subtype of InedibleException (remember that Exceptions are
+classes too).  Our calling code's catch clause
+can therefore be more specific:
+Animal creature = ...
+try {
+    creature.eat( food );
+} catch ( MeatInedibleException ) {
+    // creature can't eat this food because it's meat
+} catch ( InedibleException ) {
+    // creature can't eat this food
+}
+this and super
+The special references this and
+super allow you to refer to the members of the
+current object instance or those of the superclass, respectively.  We
+have seen this used elsewhere to pass a reference
+to the current object and to refer to shadowed instance variables.
+The reference super does the same for the parents
+of a class.  You can use it to refer to members of a superclass that
+have been shadowed or overridden.  A common arrangement is for an
+overridden method in a subclass to do some preliminary work and then
+defer to the method of the superclass to finish the job.
+class Animal { 
+    void eat( Food f ) throws InedibleException { 
+        // consume food
+    }
+} 
+ 
+class Herbivore extends Animal { 
+    void eat( Food f ) throws InedibleException { 
+        // check if edible
+        ...
+        super.eat( f ); 
+    } 
+} 
+In the above example, our Herbivore class overrides 
+the Animal eat() method 
+to first do some checking on the food object.
+After doing its job it simply calls the (otherwise overridden) implementation
+of eat() in its superclass, using super. 
+super prompts a search for the method or
+variable to begin in the scope of the immediate superclass rather than the 
+current class.  The inherited method or variable found may reside in the 
+immediate superclass, or in a more distant one.  
+The usage of the super
+reference when applied to overridden methods of a superclass is
+special; it tells the method resolution system to stop the dynamic method 
+search at the superclass, instead of in the most derived class (as it 
+otherwise does).  Without super, there would be no 
+way to access overridden methods.
+Casting
+As in C++, a cast explicitly tells the compiler
+to change the apparent type of an object reference. Unlike in C++,
+casts in Java are checked both at compile- and at run-time to make
+sure they are legal. Attempting to cast an object to an incompatible
+type at run-time results in a
+ClassCastException. Only casts between objects in
+the same inheritance hierarchy (and as we'll see later, to
+appropriate interfaces) are legal in Java and pass the scrutiny of the
+compiler and the run-time system.
+Casts in Java affect only the treatment of references; they never change 
+the form of the actual object. This is an important rule to keep in mind. 
+You never change the object pointed to by a reference by casting it; you 
+change only the compiler's (or run-time system's) notion of 
+it. 
+A cast can be used to narrow the type of a 
+reference--to make it more specific. Often, we'll do this when we have to 
+retrieve an object 
+from a more general type of collection or when it has been previously used 
+as a less derived type. (The prototypical example is using an object in 
+a Vector or Hashtable, 
+as you'll see in Chapter 7, Basic Utility Classes.) Continuing with our Cat 
+example: 
+Animal creature = ...
+Cat simon = ...
+ 
+creature = simon;        // Okay
+// simon = creature;     // Compile time error, incompatible type 
+simon = (Cat)creature;   // Okay 
+We can't reassign the reference in creature to the
+variable simon even though we know it holds an
+instance of a Cat (Simon). 
+We have to perform the indicated cast. 
+This is also called downcasting the reference.
+Note that an implicit cast was performed when we went the other way to 
+widen the reference simon 
+to type Animal during the first assignment. In this 
+case, an explicit cast would have been legal, but superfluous. 
+If casting seems complicated, here's a simple way to
+think about it. Basically, you can't lie about what an object is. If
+you have a Cat object, you can cast it to a less
+derived type (i.e., a type above it in the class hierarchy) such as
+Animal or even Object, since all
+Java classes are a subclass of Object. If you have
+an Object you know is a
+Cat, you can downcast the Object
+to be an Animal or a
+Cat. However, if you aren't sure if the
+Object is a Cat or a
+Dog at run-time, you should check it with
+instanceof before you perform the cast. If you get
+the cast wrong, Java throws a ClassCastException.
+As I mentioned earlier, casting can affect the selection of
+compile-time items like variables and overloaded methods, but not the
+selection of overridden methods. Figure 5.6 shows
+the difference. As shown in the top half of the diagram,
+casting the reference simon to type
+Animal (widening it) affects the selection of
+the shadowed variable weight within it. However, as
+the lower half of the diagram indicates, the cast doesn't affect the
+selection of the overridden method sleep().
+Figure 5.6: Casting and its effect on method and variable selection
+Using superclass constructors
+When we talked earlier about constructors, we discussed how the
+special statement this() invokes an
+overloaded constructor upon entry to another constructor. Similarly,
+the statement super() explicitly
+invokes the constructor of a superclass. Of course, we also talked
+about how Java makes a chain of constructor calls that includes the
+superclass's constructor, so why use
+super() explicitly?  When Java makes an implicit
+call to the superclass constructor, it calls the default
+constructor. So, if we 
+want to invoke a superclass constructor that
+takes arguments, we have to do so explicitly using
+super().
+If we are going to call a superclass constructor with
+super(), it must be the first statement of our
+constructor, just as this() must be the first call
+we make in an overloaded constructor. Here's a simple example:
+class Person { 
+    Person ( String name ) { 
+        //  setup based on name 
+        ... 
+    } 
+    ... 
+} 
+ 
+class Doctor extends Person { 
+    Doctor ( String name, String specialty ) { 
+        super( name ); 
+        // setup based on specialty 
+        ... 
+    } 
+    ... 
+} 
+In this example, we use super() to take
+advantage of the implementation of the superclass constructor and
+avoid duplicating the code to set up the object based on its name. In
+fact, because the class Person doesn't define a
+default (no arguments) constructor, we have no choice but to call
+super() explicitly. Otherwise, the compiler would
+complain that it couldn't find an appropriate default constructor to
+call. Said another way, if you subclass a class that has only
+constructors that take arguments, you have to invoke one of the
+superclass's constructors explicitly from your subclass
+constructor.
+Instance variables of the class are initialized upon return
+from the superclass constructor, whether that's due to an explicit
+call via super() or an implicit call to the default
+superclass constructor.
+We can now give the full story of how constructors are chained together 
+and when instance variable initialization occurs. The rule has three parts 
+and is applied repeatedly for each successive constructor invoked. 
+If the first statement of a constructor is an ordinary 
+statement--i.e., not a call to this() or
+super()--Java inserts an implicit call to
+super() to invoke the default constructor of the
+superclass. Upon returning from that call, Java initializes the
+instance variables of the current class and proceeds to execute
+the statements of the current constructor.
+If the first statement of a constructor is a call to a superclass
+constructor via super(), Java invokes the selected
+superclass constructor. Upon its return, Java initializes the current
+class's instance variables and proceeds with the statements
+of the current constructor.
+If the first statement of a constructor is a call to an overloaded
+constructor via this(), Java invokes the selected
+constructor and upon its return simply proceeds with the statements of
+the current constructor. The call to the superclass's constructor
+has happened within the overloaded constructor, either explicitly or
+implicitly, so the initialization of instance variables has already
+occurred.
+Abstract Methods and Classes
+As in C++, a method can be declared with the
+abstract modifier to indicate that it's just a
+prototype.  An abstract method has no body; it's simply a signature 
+definition followed by a semicolon. You can't directly use a class that
+contains an abstract method; you must instead create a subclass that
+implements the abstract method's body.
+abstract vaporMethod( String name ); 
+In Java, a class that contains one or more abstract
+methods must be explicitly declared as an abstract
+class, also using the abstract modifier:
+abstract class vaporClass { 
+    ... 
+    abstract vaporMethod( String name ); 
+    ... 
+} 
+An abstract class can contain other,
+nonabstract methods and ordinary variable
+declarations; however, it can't be instantiated. To be used, it must
+be subclassed and its abstract methods must be
+overridden with methods that implement a body. Not all
+abstract methods have to be implemented in a single
+subclass, but a subclass that doesn't override all its
+superclass's abstract methods with actual,
+concrete implementations must also be declared
+abstract.
+Abstract classes provide a framework for classes that are to be "filled in"
+by the implementor.  
+The java.io.InputStream class, for example, has a
+single abstract method called
+read(). Various subclasses of
+InputStream implement read() in
+their own ways to read from their own sources. The rest of the
+InputStream class, however, provides extended
+functionality built on the simple read()
+method. A subclass of InputStream inherits
+these nonabstract methods that provide
+functionality based on the simple read() method
+that the subclass implements.
+It's often desirable to specify only the prototypes for a
+whole set of methods and provide no implementation. In C++,
+this would be a purely abstract class. In Java, you
+should instead use an interface. An interface is
+like a purely abstract class; it defines a set of
+methods a class must implement (i.e., the behavior of a
+class). However, unlike in C++, a class in Java can simply say that it
+implements an interface and go about implementing
+those methods. As we'll discuss later, a class that implements
+an interface doesn't have to inherit from any particular part of
+the inheritance hierarchy or use a particular implementation.
+Object Destruction
+Packages and Compilation Units
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,59 @@
+
+[Chapter 4] 4.3 The New AWT Event Model
+Chapter 4What's New in Java 1.1
+4.3 The New AWT Event Model
+The Java 1.1 change that will probably affect Java
+programmers the most is the new event processing model
+adopted for the AWT windowing and graphical user interface
+(GUI) toolkit.  If you created applets or GUIs with Java
+1.0, you know that it was necessary to subclass GUI
+components in order to handle events.  This model worked okay
+for simple programs, but proved increasingly awkward as
+programs became more complex.  Furthermore, with the
+development of the JavaBeans API, the AWT package needed an
+event model that would allow AWT GUI components to serve as
+beans.  For these reasons, Java 1.1 defines a new model
+for dispatching and handling events.
+As explained in Chapter 7, Events,
+the new event handling model is essentially a "callback"
+model.  When you create a GUI component, you tell it what
+method or methods it should invoke when a particular event
+occurs on it (e.g., when the user clicks on a button or selects
+an item from a list).  This model is very easy
+to use in C and C++ because those languages allow you to
+manipulate method pointers--to specify a callback, all you
+need to do is pass a pointer to the appropriate function.
+In Java, however, methods are not data and cannot be
+manipulated in this way.  Only objects can be passed like this
+in Java, so to define a Java callback, you must define a
+class that implements some particular interface.  Then, you
+can pass an instance of that class to a GUI component as a
+way of specifying the callback.  When the desired event
+occurs, the GUI component invokes the appropriate method
+of the object you have specified.
+As you might imagine, this new event handling model can lead
+to the creation of many small helper classes.  (Sometimes
+these helper classes are known as "adaptor classes" because
+they serve as the interface between the body of an
+application and the GUI for that application.  They are the
+"adaptors" that allow the GUI to be "plugged in" to the
+application.)  This proliferation of small classes could
+become quite a burden, were it not for the introduction of
+inner classes, which, as noted above, allows this kind of
+special-purpose class to be nested and defined exactly where
+it is needed within your program.
+Despite the major AWT event-handling changes, Java 1.1 does
+retain backwards compatibility with the event-handling model
+of Java 1.0.  It is an all-or-nothing type of backwards
+compatibility, however--the two models are so different from
+each other that it is not really possible to mix them within
+the same application.
+Inner Classes
+Deprecated Features
+ 
+ 
+ 
+ 
+ 
+ 
+ 

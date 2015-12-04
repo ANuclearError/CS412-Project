@@ -1,0 +1,476 @@
+
+[Chapter 11] DataInputStream
+Chapter 11The java.io Package
+DataInputStream
+Name
+DataInputStream
+Synopsis
+Class Name:
+java.io.DataInputStream
+Superclass:
+java.io.FilterInputStream 
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.DataInput
+Availability:
+JDK 1.0 or later
+Description
+The DataInputStream class provides 
+methods for reading primitive data types and lines of text from an underlying 
+input stream in a machine-independent manner. Many of the methods of DataInputStream 
+read a single primitive data type, in binary format, from an underlying 
+input stream. All multibyte quantities are assumed to be in a format that 
+stores the most significant byte as the first byte and the least significant 
+byte as the last byte. 
+Class Summary
+public class java.io.DataInputStream extends java.io.FilterInputStream
+                                     implements java.io.DataInput {
+  // Constructors
+  public DataInputStream(InputStream in);
+  // Class Methods
+  public final static String readUTF(DataInput in);
+  // Instance Methods
+  public final int read(byte[] b);
+  public final int read(byte[] b, int off, int len);
+  public final boolean readBoolean();
+  public final byte readByte();
+  public final char readChar();
+  public final double readDouble();
+  public final float readFloat();
+  public final void readFully(byte[] b);
+  public final void readFully(byte[] b, int off, int len);
+  public final int readInt();
+  public final String readLine();                // Deprecated in 1.1
+  public final long readLong();
+  public final short readShort();
+  public final int readUnsignedByte();
+  public final int readUnsignedShort();
+  public final String readUTF() throws IOException;
+  public final int skipBytes(int n) throws IOException;
+}
+Constructors
+DataInputStream
+public DataInputStream(InputStream in)
+Parameters
+in
+The input stream to 
+use. 
+Description
+This constructor creates a DataInputStream 
+object that reads from, or wraps, the given input stream. 
+Class Methods
+readUTF
+   public final static String readUTF(DataInput in) throws IOException  
+Parameters
+in
+The data input stream 
+to use. 
+Returns
+The String 
+read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException 
+If any other kind of I/O error occurs.
+UTFDataFormatException
+If the bytes do not represent a valid UTF-8 encoding. 
+Description
+This method reads a UTF-8 encoded string from the
+given DataInput object. To get the number of bytes
+in the encoded string, the first two bytes are read as an unsigned
+short value. Then the following bytes are read and
+interpreted as UTF-8 encoded bytes; these bytes are converted into
+characters for the resulting String.  This method
+blocks until all of the bytes in the encoded string have been read,
+the end of the stream is encountered, or an exception is thrown.
+For details on the UTF-8 encoding, see Appendix B, The UTF-8 Encoding.
+Instance Methods
+read
+public final int read(byte b[]) throws IOException
+Parameters
+b
+An array of bytes to 
+be filled from the stream. 
+Returns
+The number of bytes read, or -1 if the end of file is encountered immediately. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+FilterInputStream.read(byte[]) 
+Description
+This method reads bytes of input into the given array by calling the read() 
+method of the underlying stream. The method reads up to b.length 
+bytes of data from the stream. The method blocks until there is some input 
+available. 
+   public final int read(byte b[], int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The number of bytes read, or -1 if the end of file is encountered immediately. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.read(byte[], int, int) 
+Description
+This method reads up to len 
+bytes of input into the given array starting at index off. 
+The method reads the bytes by calling the read() 
+method of the underlying stream and blocks until there is some 
+input available. 
+readBoolean
+public final boolean readBoolean() throws IOException
+Returns
+The boolean value read from 
+the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readBoolean() 
+Description
+This method reads a byte as a boolean 
+value from the underlying input stream. A byte that contains a zero is 
+read as false; that which 
+contains any other value is read as true. 
+The method blocks until the byte is read, the end of the stream is encountered, 
+or an exception is thrown. 
+readByte
+public final byte readByte() throws IOException
+Returns
+The byte value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readByte() 
+Description
+This method reads a signed 8-bit value--a byte--from the underlying input stream. The method blocks until the byte is read, 
+the end of the stream is encountered, or an exception is thrown. 
+readChar
+public final char readChar() throws IOException
+Returns
+The char value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readChar() 
+Description
+This method reads a 16-bit Unicode character from the stream. The method 
+reads two bytes from the underlying input stream and then creates a char 
+value, using the first byte read as the most significant byte. The method 
+blocks until the two bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readDouble
+public final double readDouble() throws IOException
+Returns
+The double value read from 
+the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readDouble() 
+Description
+This method reads a 64-bit double 
+quantity from the stream. The method reads a long 
+value from the underlying input stream as if using the readLong() 
+method. The long value is then 
+converted to a double using 
+the longBitsToDouble() method 
+in Double. The method blocks 
+until the necessary eight bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readFloat
+public final float readFloat() throws IOException
+Returns
+The float value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readFloat() 
+Description
+This method reads a 32-bit float 
+quantity from the stream. The method reads an int 
+value from the underlying input stream as if using the readInt() 
+method. The int value is then 
+converted to a float using 
+the intBitsToFloat() method 
+in Float. The method blocks 
+until the necessary four bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readFully
+public final void readFully(byte b[]) throws IOException
+Parameters
+b
+The array to fill. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readFully(byte[]) 
+Description
+This method reads bytes into the given array b 
+until the array is full. The method reads repeatedly from the underlying 
+stream to fill the array. The method blocks until all of the bytes are 
+read, the end of the stream is encountered, or an exception is thrown. 
+   public final void readFully(byte b[], int off, int len) throws IOException  
+Parameters
+b
+The array to fill.
+off
+An offset into the array.
+len
+The number of bytes to read. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readFully(byte[], int, int) 
+Description
+This method reads len bytes into the given array, starting 
+at offset off. The method reads repeatedly from the underlying 
+stream to fill the array. The method blocks until all the bytes are 
+read, the end of the stream is encountered, or an exception is thrown. 
+readInt
+public final int readInt() throws IOException
+Returns
+The int value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readInt() 
+Description
+This method reads a signed 32-bit int 
+quantity from the stream. The method reads four bytes from the underlying 
+input stream and then creates an int 
+quantity, using the first byte read as the most significant byte. The method 
+blocks until the four bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readLine
+public final String readLine() throws IOException
+Availability
+Deprecated as of JDK 1.1 
+Returns
+A String that contains the 
+line read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other I/O error occurs. 
+Implements
+DataInput.readLine() 
+Description
+This method reads the next line of text from the stream. The method reads 
+bytes of data from the underlying input stream until it encounters a line 
+terminator. A line terminator is a carriage return ("\r"), 
+a newline character ("\n"), 
+a carriage return immediately followed by a newline character, or the end 
+of the stream. The method blocks until a line terminator is read, the end 
+of the stream is encountered, or an exception is thrown.
+This method is deprecated as of JDK 1.1 because it does not convert bytes 
+to characters correctly. It's replaced by BufferedReader.readLine(). 
+readLong
+public final long readLong() throws IOException
+Returns
+The long value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readLong() 
+Description
+This method reads a signed 64-bit long 
+quantity from the stream. The method reads eight bytes from the underlying 
+input stream and then creates a long 
+quantity, using the first byte read as the most significant byte. The method 
+blocks until the eight bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readShort
+public final short readShort() throws IOException
+Returns
+The short value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readShort() 
+Description
+This method reads a signed 16-bit short 
+quantity from the stream. The method reads two bytes from the underlying 
+input stream and then creates a short 
+quantity, using the first byte read as the most significant byte. The method 
+blocks until the two bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readUnsignedByte
+public final int readUnsignedByte() throws IOException
+Returns
+The unsigned byte value read 
+from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readUnsignedByte() 
+Description
+This method reads an unsigned 8-bit quantity from the stream. The method 
+reads a byte from the underlying input stream and returns that byte, and blocks until the byte is read, the end of the stream is encountered, 
+or an exception is thrown. 
+readUnsignedShort
+public final int readUnsignedShort() throws IOException
+Returns
+The unsigned short value read 
+from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readUnsignedShort() 
+Description
+This method reads an unsigned 16-bit quantity from the stream. The method 
+reads two bytes from the underlying input stream and creates an unsigned 
+short quantity, using the first 
+byte read as the most significant byte. The method blocks until the two 
+bytes are read, the end of the stream is encountered, or an exception is 
+thrown. 
+readUTF
+public final String readUTF() throws IOException
+Returns
+The String 
+read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs.
+UTFDataFormatException
+If the bytes do not represent a valid UTF-8 encoding. 
+Implements
+DataInput.readUTF() 
+Description
+This method reads a UTF-8 encoded string from the stream. 
+See the description 
+of the readUTF(DataInput) class method for more 
+information. 
+skipBytes
+public final int skipBytes(int n) throws IOException
+Parameters
+n
+The number of bytes to 
+skip. 
+Returns
+The actual number of skipped bytes. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind I/O error occurs. 
+Implements
+DataInput.skipBytes() 
+Description
+This method skips over n bytes 
+in the underlying input stream. The method blocks until all of the bytes 
+are skipped, the end of the stream is encountered, or an exception is thrown. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+available ()
+FilterInputStream
+clone()
+Object
+close()
+FilterInputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+FilterInputStream
+markSupported()
+FilterInputStream
+notify()
+Object
+notifyAll()
+Object
+read()
+FilterInputStream
+reset()
+FilterInputStream
+skip(long)
+FilterInputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DataOutputStream, 
+Double, 
+EOFException, 
+FilterInputStream, 
+Float, 
+InputStream, 
+IOException, 
+String, 
+UTFDataFormatException 
+DataInput
+DataOutput
+ 
+ 
+ 
+ 
+ 
+ 
+ 

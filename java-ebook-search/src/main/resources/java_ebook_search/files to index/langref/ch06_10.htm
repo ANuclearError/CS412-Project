@@ -1,0 +1,73 @@
+
+[Chapter 6] 6.10 The return Statement
+Chapter 6Statements and Control Structures
+6.10 The return Statement
+A return statement returns
+control of the current method or constructor to the caller:
+If a return statement
+does not contain an expression, the statement must be in a method
+declared with the void return type or in a constructor.
+Otherwise, the compiler issues an error message. When a
+return
+statement does not contain an expression, the statement simply attempts
+to transfer control back to the method or constructor that invoked
+the current method or constructor.
+If a return
+statement contains an expression, it must be in a method that returns
+a value or the compiler issues an error message. The type of the
+expression must be assignment-compatible with the declared return
+type of the method. The return statement attempts
+to transfer control back to the method or constructor that invoked
+the current method. The value produced by the expression is the
+return value of the current method.
+Here's an example of a return statement:
+int doubleIt (int k) {
+    return k*2;
+}
+If a return statement occurs inside a try
+statement, control may not immediately transfer to the invoking
+method or constructor. If a try statement has
+a finally clause, the finally
+block is executed before control leaves the try
+statement for any reason. This means that if a return
+statement occurs inside a try statement (but
+not in its finally block), the finally
+block is executed first, before the control transfer can take place.
+If the finally block contains a
+break, continue,
+return,
+or throw statement, the pending control transfer
+for the previously executed return statement
+is forgotten. Instead, control is transferred to the target of the
+break, continue,
+return, or throw statement
+in the finally block.
+If the finally block does not contain a
+break, continue,
+return,
+or throw statement, the pending control transfer
+happens after the finally block is done executing,
+unless there is another enclosing try statement.
+If there is such a try statement and it has a
+finally clause, that finally block
+is also executed before the control transfer can take place. Execution
+proceeds in this manner until control is transferred to the invoking
+method or constructor.
+References
+Constructors;
+Expression 4;
+Identifiers;
+Methods;
+The break Statement;
+The continue Statement;
+The throw Statement;
+The try Statement
+The continue Statement
+The throw Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

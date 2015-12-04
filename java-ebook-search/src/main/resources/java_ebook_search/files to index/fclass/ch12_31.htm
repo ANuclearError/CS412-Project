@@ -1,0 +1,95 @@
+
+[Chapter 12] InstantiationError
+Chapter 12The java.lang Package
+InstantiationError
+Name
+InstantiationError
+Synopsis
+Class Name:
+java.lang.InstantiationError 
+Superclass:
+java.lang.IncompatibleClassChangeError 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+An InstantiationError is thrown 
+in response to an attempt to instantiate an abstract 
+class or interface. Usually this error is caught by the compiler; this 
+error can occur at run-time if the definition of a class is changed after 
+the class that references it was last compiled. 
+Class Summary
+public class java.lang.InstantiationError
+             extends java.lang.IncompatibleClassChangeError {
+  // Constructors
+  public InstantiationError();
+  public InstantiationError(String s);
+}
+Constructors
+InstantiationError
+public InstantiationError()
+Description
+This constructor creates an InstantiationError 
+with no associated detail message. 
+public InstantiationError(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an InstantiationError 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Error, 
+IncompatibleClassChangeError, 
+Throwable 
+Integer
+InstantiationException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

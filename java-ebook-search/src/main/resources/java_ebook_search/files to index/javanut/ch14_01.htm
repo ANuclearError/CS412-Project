@@ -1,0 +1,120 @@
+
+[Chapter 14] System Properties
+Chapter 14
+14. System Properties
+Contents:
+Standard System Properties
+Working with System Properties
+Java programs cannot read environment variables the way that
+native programs can.  The reason is that environment
+variables are platform dependent. Similar mechanisms exist,
+however, that allow applications to read the
+value of a named resource.  These resource values allow
+customization of an application's behavior based
+on site-specific parameters, such as the type of host, or
+based on user preferences.
+These named resource values are specified for applications
+in the "system properties" list.  Applications
+can read these "system
+properties" with the System.getProperty() method, or
+can read the entire list of properties with
+System.getProperties().
+System.getProperty() returns the property value as a
+string.  Applications can also read properties in parsed
+form using methods that are based on System.getProperty(),
+such as Font.getFont(), Color.getColor(),
+Integer.getInteger(), and
+Boolean.getBoolean().
+14.1 Standard System Properties
+When the Java interpreter starts, it inserts a number of standard
+properties into the system properties list.  These
+properties, and the meaning of their values, are listed in
+Table 14.1.
+The table also specifies whether untrusted applets are
+allowed (at least by default) to read the value of these
+properties.  For reasons of security, untrusted code is only
+allowed to read the values of properties to which it has
+explicitly been granted access.  (Untrusted applets are not
+allowed to set the value of system properties, nor are they
+allowed to call System.getProperties() to obtain the
+entire list of properties.) 
+Table 14.1: Standard System Properties
+Name
+Value
+Applet Access
+java.version
+Version of the Java interpreter
+yes
+java.vendor
+Vendor-specific identifier string
+yes
+java.vendor.url
+Vendor's URL
+yes
+java.class.version
+The version of the Java API
+yes
+java.class.path
+The classpath value
+no
+java.home
+The directory Java is installed in
+no
+java.compiler
+The JIT compiler to use, if any (Java 1.1)
+no
+os.name
+The name of the operating system
+yes
+os.arch
+The host hardware architecture
+yes
+os.version
+Version of the host operating system
+yes
+file.separator
+Platform-dependent file separator
+(e.g., / or #)
+yes
+path.separator
+Platform-dependent path separator
+(e.g., : or ;)
+yes
+line.separator
+Platform-dependent line separator
+(e.g., #n or #r#n)
+yes 
+user.name
+The username of the current user
+no
+user.home
+The home directory of the current user
+no
+user.dir
+The current working directory
+no
+user.language
+The 2-letter language code of the default locale (Java 1.1)
+no
+user.region
+The 2-letter country code of the default locale (Java 1.1)
+no
+user.timezone
+The default time zone (Java 1.1)
+no
+file.encoding
+The character encoding for the default locale (Java 1.1)
+no
+file.encoding.pkg
+The package that contains converters between local
+encodings and Unicode (Java 1.1)
+no
+Java Documentation Comment Syntax
+Working with System Properties
+ 
+ 
+ 
+ 
+ 
+ 
+ 

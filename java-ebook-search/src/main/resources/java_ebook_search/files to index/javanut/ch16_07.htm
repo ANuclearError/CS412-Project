@@ -1,0 +1,147 @@
+
+[Chapter 16] javakey
+Chapter 16JDK Tools
+javakey
+Name
+javakey---Key Management and Digital Signatures
+Availability
+JDK 1.1 and later.
+Synopsis
+javakey options
+Description
+javakey provides a command-line interface to a number
+of complex key and certificate generation and management
+tasks, including the generation of digital signatures.
+There are quite a few options that perform a number of
+distinct operations.  javakey manages a system
+database of entities.  Each entity may have public and
+private keys and/or certificates associated with it, and
+in addition, each entity may be declared to be trusted or not.  Any
+entity in the database may be an "identity" or a "signer."
+Identities have only a public key associated with them,
+while signers have both a public and private key, and thus
+may sign files.
+The different javakey operations are specified with
+the various options described below.
+Options
+-c identity-name [true|false]
+Create.  Create and add a new identity to the database,
+using the specified name.  If the identity name is followed
+by true, declare the identity to be trusted.
+Otherwise make it untrusted.
+-cs signer-name [true|false]
+Create signer.  Create and add a new signer entity to the
+database, using the specified name.  If the name is followed
+by true, declare the signer to be trusted.
+Otherwise make it untrusted.
+-t entity-name true|false
+Assign trust.  Specify whether the named entity is trusted
+(true) or not (false).
+-l
+List.  List the names of all entities in the security database.
+-ld
+List details.  List the names and other details about all
+entities in the security database.
+-li entity-name
+List information.  List detailed information about the named
+entity from the security database.
+-r entity-name
+Remove.  Remove the named entity from the security database.
+-ik identity-name keyfile
+Import key.  Read a public key from the specified file and
+associate it with the named identity.  The key must be in
+X.509 format.
+-ikp signer-name pubkeyfile privkeyfile
+Import key pair.  Read the specified public key and private
+key files and associate them with the named signer entity.
+The keys must be in X.509 format.
+-ic entity-name certificate-file
+Import certificate.  Read a certificate from the named
+certificate file and associate it with the named entity.  If
+the entity already has a public key, compare it to the key
+in the certificate and issue a warning if they do not
+match.  If the entity has not had a public key assigned,
+use the public key from the certificate.
+-ii entity-name
+Import information.  This command allows you to enter
+arbitrary textual information about an entity into the
+database.
+-gk signer algorithm size [pubfile [privfile]]
+Generate key.  Generate a public and private key and
+associate them with the named signer.  Use the specified
+algorithm.  Currently, the only supported algorithm is
+"DSA."  Generates keys of the specified number of bits, which
+must be between 512 and 1024.  If pubfile is
+specified, write the public key to the specified file.  If
+privfile is specified, write the private key to the
+specified file.
+-g signer algorithm size [pubfile [privfile]]
+A synonym for the -gk command.
+-gc directivefile
+Generate certificate.  Generate a certificate according to
+the parameters specified in the directive file.  The
+directive file is a Properties file that must
+provide values for the following named properties:
+issuer.name.  The name of the entity issuing the certificate.
+issuer.cert.  The issuer's certificate number to be
+used to sign the generated certificate (unless the
+certificate will be self-signed.)
+subject.name.  The database name of the entity
+that the certificate is being issued to.
+subject.real.name.  The real name of the entity that
+the certificate is being issued to.
+subject.country.  The country that the subject
+entity is in.
+subject.org.  The organization that the subject
+entity is affiliated with.
+subject.org.unit.  A division within the subject's
+organization.
+start.date.  The starting date (and time) of the certificate.
+end.date.  The ending date (and time) of the certificate.
+serial.number.  A serial number for the certificate.
+This number must be unique among all certificates generated
+by the issuer.
+out.file.  An optional filename that specifies what
+file the certificate should be written to.
+-dc certfile
+Display certificate.  Display the contents of the
+certificate stored in certfile.
+-ec entity certificate-number file
+Export certificate.  Output the numbered certificate of the
+specified entity into the specified file.  Use the
+-li command to inspect the certificate numbers for a
+given entity.
+-ek entity pubfile [privfile]
+Export key.  Output the public key of the specified entity
+into the specified file.  If the entity is a signer, and the
+privfile is specified, additionally export the
+private key of the entity to that file.
+-gs directivefile jarfile
+Generate signature.  Apply a digital signature to the
+specified JAR file using the directives in the specified
+directive file.  The directive file is a Properties
+file that must provide values for the following named properties:
+signer. The entity name of the signer.
+cert.  The certificate number to use for the
+signature.
+chain.  The length of a chain of certificates to
+include.  This is not currently supported; specify 0.
+signature.file.  The basename of the signature file
+and signature block to be inserted into the JAR file.  It
+must be 8 characters or less.  This name should not conflict
+with any other digital signatures that may be inserted into
+the JAR file.
+out.file.  This optional property specifies the name
+that should be used for the signed JAR file that is
+generated.
+See Also
+jar
+javah
+javap
+ 
+ 
+ 
+ 
+ 
+ 
+ 

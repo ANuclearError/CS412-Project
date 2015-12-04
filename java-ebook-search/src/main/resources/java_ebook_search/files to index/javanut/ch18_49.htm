@@ -1,0 +1,48 @@
+
+[Chapter 18] 18.49 java.awt.PopupMenu (JDK 1.1)
+Chapter 18The java.awt Package
+18.49 java.awt.PopupMenu (JDK 1.1)
+PopupMenu is a simple subclass of Menu that
+represents a popup menu rather than a pulldown menu.  You
+create a PopupMenu just as you would create a
+Menu object.  The main difference is that a popup
+menu must be "popped up" in response to a user event by
+calling its show() method.
+Another difference is that, unlike a Menu, which can
+only appear within a MenuBar or another
+Menu, a PopupMenu can be associated with any
+component in a graphical user interface.  A PopupMenu is
+associated with a component by calling the add()
+method of the component.
+Popup menus are popped up by the user in different ways on different
+platforms.  In order to hide this platform-dependency, the
+MouseEvent class defines the
+isPopupTrigger() method.  If this method returns
+true, the specified MouseEvent
+represents the platform-specific popup menu trigger event,
+and you should use the show() method to pop your
+PopupMenu up.  Note that the X and Y coordinates
+passed to show() should be in the coordinate system
+of the specified Component.
+public class PopupMenu extends Menu {
+    // Public Constructors
+            public PopupMenu();
+            public PopupMenu(String label);
+    // Public Instance Methods
+            public synchronized void addNotify();  // Overrides Menu
+            public void show(Component origin, int x, int y);
+}
+Hierarchy:
+Object->MenuComponent(Serializable)->MenuItem->Menu(MenuContainer)->PopupMenu
+Passed To:
+Component.add(), 
+Toolkit.createPopupMenu()
+java.awt.Polygon (JDK 1.0)
+java.awt.PrintGraphics (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

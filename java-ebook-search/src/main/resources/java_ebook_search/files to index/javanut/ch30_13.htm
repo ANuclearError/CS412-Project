@@ -1,0 +1,37 @@
+
+[Chapter 30] 30.13 java.util.MissingResourceException (JDK 1.1)
+Chapter 30The java.util Package
+30.13 java.util.MissingResourceException (JDK 1.1)
+This exception signals that no ResourceBundle could
+be located for the desired locale, or that a named resource
+could not be found within a given ResourceBundle.
+getClassName() returns the name of the
+ResourceBundle class in question, and
+getKey() returns the name of the resource that could
+not be located.
+public class MissingResourceException extends RuntimeException {
+    // Public Constructor
+            public MissingResourceException(String s, String className, String key);
+    // Public Instance Methods
+            public String getClassName();
+            public String getKey();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->RuntimeException->MissingResourceException
+Thrown By:
+Locale.getISO3Country(), 
+Locale.getISO3Language(), 
+ResourceBundle.getBundle(), 
+ResourceBundle.getObject(), 
+ResourceBundle.getString(), 
+ResourceBundle.getStringArray(), 
+ResourceBundle.handleGetObject()
+java.util.Locale (JDK 1.1)
+java.util.NoSuchElementException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,189 @@
+
+[Chapter 3] Classes and Objects in Java
+Chapter 3
+3. Classes and Objects in Java
+Contents:
+Introduction to Classes and Objects
+Object Creation
+Class Variables
+Class Methods
+Object Destruction
+Subclasses and Inheritance
+Overriding Methods
+Data Hiding and Encapsulation
+Abstract Classes and Interfaces
+C++ Features Not Found in Java
+Summary
+Java is an object-oriented language.  "Object-oriented" is a
+term that has become so commonly used as to have practically
+no concrete meaning.  This chapter explains just what "object-oriented"
+means for Java.  It covers:
+Classes and objects in Java
+Creating objects
+Garbage collection to free up unused objects
+The difference between class (or static) variables and
+instance variables, and the difference between class (or
+static) methods and instance methods
+Extending a class to create a subclass
+Overriding class methods and dynamic method lookup
+Abstract classes
+Interface types and their implementation by classes
+If you are a C++ programmer, or have other object-oriented
+programming experience, many of the concepts in this
+list should be familiar to you.  If you do not have
+object-oriented experience, don't fear: This chapter assumes
+no knowledge of object-oriented concepts.
+We saw in the last chapter that close
+analogies can be drawn between Java and C.  Unfortunately for C++
+programmers, the same is not true for Java and C++.  Java
+uses object-oriented programming concepts that are familiar
+to C++ programmers, and it even borrows from C++ syntax in a
+number of places, but the analogies between Java and C++ are
+not nearly as strong as those between Java and C.
+[1]
+C++ programmers may have an easier time with this chapter
+than C programmers will, but they should still read it
+carefully and try not to form preconceptions about Java
+based on their knowledge of C++.
+[1] 
+As we'll see, Java supports garbage collection and dynamic
+method lookup. This actually makes it a closer relative,
+beneath its layer of C-like syntax, to languages like
+Smalltalk than to C++.
+3.1 Introduction to Classes and Objects
+A class is a collection of data and methods that operate 
+on that data.
+[2]
+The data and methods, taken
+together, usually serve to define the contents and
+capabilities of some kind of object.
+[2] 
+A method is the object-oriented term for a procedure
+or a function.  You'll see it used a lot in this book.
+Treat it as a synonym for "procedure."
+For example, a circle can be described by the x, y
+position of its center and by its radius.  There are a
+number of things we can do with circles: compute their
+circumference, compute their area, check whether points are
+inside them, and so on.  Each circle is different (i.e., has
+a different center or radius), but as a class, circles
+have certain intrinsic properties that we can capture in a
+definition.
+Example 3.1
+shows how we could partially define the class of circles
+in Java.  Notice that the class definition contains
+data and methods (procedures) within the same pair of
+curly brackets.
+[3]
+[3] 
+C++ programmers should note that methods go inside the class
+definition in Java, not outside with the ::
+operator as they usually do in C++.
+Example 3.1: The Class of Circles, Partially Captured in Java Code
+public class Circle {
+    public double x, y;   // The coordinates of the center
+    public double r;      // The radius
+    // Methods that return the circumference and area of the circle
+    public double circumference() { return 2 * 3.14159 * r; }
+    public double area() { return 3.14159 * r*r; }
+}
+Objects Are Instances of a Class
+Now that we've defined (at least partially) the class
+Circle, we want to do something with it.
+We can't do anything with the class of circles itself--we
+need a particular circle to work with.  We need an
+instance of the class, a single circle object.
+By defining the Circle class in Java, we have
+created a new data type.  We can declare variables of that
+type:
+Circle c;
+But this variable c is simply a name that refers
+to a circle object; it is not an object itself.
+In Java, all objects must be created dynamically.  This is
+almost always done with the new keyword:
+Circle c;
+c = new Circle();
+Now we have created an instance of our Circle
+class--a circle object--and have assigned it to the variable
+c, which is of type Circle.
+Accessing Object Data
+Now that we've created an object, we can use its data
+fields.  The syntax should be familiar to C programmers:
+Circle c = new Circle();
+c.x = 2.0;  // Initialize our circle to have center (2, 2) and radius 1.0.
+c.y = 2.0;
+c.r = 1.0;
+Using Object Methods
+This is where things get interesting!  To access the
+methods of an object, we use the same syntax as
+accessing the data of an object:
+Circle c = new Circle();
+double a;
+c.r = 2.5;
+a = c.area();
+Take a look at that last line.  We did not say:
+a = area(c);
+We said:
+a = c.area();
+This is why it is called "object-oriented" programming; the
+object is the focus here, not the function call.  This is
+probably the single most important feature of the
+object-oriented paradigm.
+Note that we don't have to pass an argument to
+c.area().  The object we are operating on,
+c, is implicit in the syntax.  Take a look at
+Example 3.1
+again: you'll notice the same thing in the definition of the
+area() method--it doesn't take an argument.  It is
+implicit in the language that a method operates on an
+instance of the class within which it is defined.  Thus our
+area() method can use the r field of the
+class freely--it is understood that it is referring to the
+radius of whatever Circle instance invokes the
+method.
+How It Works
+What's going on here?  How can a method that takes no
+arguments know what data to operate on?  In fact, the
+area() method does have an argument!  area()
+is implemented with an implicit argument that is not shown
+in the method declaration.  The implicit argument is named
+this, and refers to "this object"--the
+Circle object through which the method is invoked.
+this is often called the "this pointer."
+[4]
+[4] 
+"this pointer" is C++ terminology.  Since Java does not
+support pointers, I prefer the term "this reference."
+The implicit this argument is not shown in method
+signatures because it is usually not needed--whenever a Java
+method accesses the fields in its class, it is implied that
+it is accessing fields in the object referred to by the
+this argument.  The same is true, as we'll see, when
+a method in a class invokes other methods in the class--it
+is implicit that the methods are being invoked for the
+this object.
+We can use the this keyword explicitly when we want
+to make explicit that a method is accessing its own
+variables and/or methods.  For example, we could rewrite the
+area() method like this:
+public double area() { return 3.14159 * this.r * this.r; }
+In a method this simple, it is not necessary to be explicit.
+In more complicated cases, however, you may find that it
+increases the clarity of your code to use an explicit
+this where it is not strictly required.
+An instance where the this keyword is required
+is when a method argument or a local variable in a method
+has the same name as one of the fields of the class.  In
+this case, you must use this to access the field.
+If you used the field name alone, you would end up accessing
+the argument or local variable with the same name.  We'll
+see examples of this in the next section.
+Miscellaneous Differences
+Object Creation
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,77 @@
+
+[Chapter 25] 25.32 java.lang.Integer (JDK 1.0)
+Chapter 25The java.lang Package
+25.32 java.lang.Integer (JDK 1.0)
+This class provides an immutable object wrapper around the
+int primitive data type.  This
+class also contains useful minimum and maximum
+constants and useful conversion methods.
+parseInt() and valueOf() convert a string
+to an int or to an Integer,
+respectively. Each can take a radix argument to
+specify the base that the value is represented in.
+decode() also converts a String to an
+Integer.  It assumes a hexadecimal number if the
+string begins with "0X" or "0x," or an octal
+number if the string begins with "0". Otherwise, a decimal number is assumed.
+toString() converts in the other direction, and the
+static version takes a radix
+argument. toBinaryString(), toOctalString(),
+and toHexString() convert an int to a string
+using base 2, base 8, and base 16.  These methods treat the
+integer as an unsigned value.
+Other routines return the value of an Integer as
+various primitive types, and finally, the
+getInteger() methods
+return the integer value of a named property from the system
+property list or the specified default value.
+public final class Integer extends Number {
+    // Public Constructors
+            public Integer(int value);
+            public Integer(String s) throws NumberFormatException;
+    // Constants
+            public static final int MAX_VALUE;
+            public static final int MIN_VALUE;
+        1.1public static final Class TYPE;
+    // Class Methods
+        1.1public static Integer decode(String nm) throws NumberFormatException;
+            public static Integer getInteger(String nm);
+            public static Integer getInteger(String nm, int val);
+            public static Integer getInteger(String nm, Integer val);
+            public static int parseInt(String s, int radix) throws NumberFormatException;
+            public static int parseInt(String s) throws NumberFormatException;
+            public static String toBinaryString(int i);
+            public static String toHexString(int i);
+            public static String toOctalString(int i);
+            public static String toString(int i, int radix);
+            public static String toString(int i);
+            public static Integer valueOf(String s, int radix) throws NumberFormatException;
+            public static Integer valueOf(String s) throws NumberFormatException;
+    // Public Instance Methods
+        1.1public byte byteValue();  // Overrides Number
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object obj);  // Overrides Object
+            public float floatValue();  // Defines Number
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public long longValue();  // Defines Number
+        1.1public short shortValue();  // Overrides Number
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->Number(Serializable)->Integer
+Passed To:
+Integer.getInteger()
+Returned By:
+Integer.decode(), 
+Integer.getInteger(), 
+Integer.valueOf()
+java.lang.InstantiationException (JDK 1.0)
+java.lang.InternalError (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

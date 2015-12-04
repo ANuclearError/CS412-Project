@@ -1,0 +1,36 @@
+
+[Chapter 25] 25.16 java.lang.Compiler (JDK 1.0)
+Chapter 25The java.lang Package
+25.16 java.lang.Compiler (JDK 1.0)
+The static methods of this class provide an interface to the
+just-in-time (JIT) byte-code to native code compiler in use
+by the Java interpreter.  If no JIT compiler is in use by
+the VM, these methods do nothing.  
+compileClass() asks the JIT compiler to compile the
+specified class.  compileClasses() asks the JIT
+compiler to compile all classes that match the specified
+name.  These methods return true if the compilation
+was successful, or false if it failed or if there is
+no JIT compiler on the system.  enable() and
+disable() turn just-in-time compilation on and off.
+command() asks the JIT compiler to perform some
+compiler-specific operation.  This is a hook for vendor
+extensions.  No standard operations have been defined.
+public final class Compiler extends Object {
+    // No Constructor
+    // Class Methods
+            public static native Object command(Object any);
+            public static native boolean compileClass(Class clazz);
+            public static native boolean compileClasses(String string);
+            public static native void disable();
+            public static native void enable();
+}
+java.lang.Cloneable (JDK 1.0)
+java.lang.Double (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,53 @@
+
+[Chapter 18] 18.22 java.awt.FileDialog (JDK 1.0)
+Chapter 18The java.awt Package
+18.22 java.awt.FileDialog (JDK 1.0)
+This class represents a file selection dialog box.  The
+constants LOAD and SAVE are values of an
+optional constructor argument that specifies whether the
+dialog should be an Open File dialog or a Save As
+dialog.    You may
+specify a FilenameFilter object to control which
+files are displayed in the dialog.
+The inherited show() method pops the dialog up.  For
+dialogs of this type, show() blocks, not returning
+until the user has selected a file and dismissed the dialog
+(which pops down automatically--you don't have to call
+hide()).  Once show() has returned, use
+getFile() to get the name of the file the user
+selected. 
+public class FileDialog extends Dialog {
+    // Public Constructors
+        1.1  public FileDialog(Frame parent);
+            public FileDialog(Frame parent, String title);
+            public FileDialog(Frame parent, String title, int mode);
+    // Constants
+            public static final int LOAD;
+            public static final int SAVE;
+    // Public Instance Methods
+            public void addNotify();  // Overrides Dialog
+            public String getDirectory();
+            public String getFile();
+            public FilenameFilter getFilenameFilter();
+            public int getMode();
+            public synchronized void setDirectory(String dir);
+            public synchronized void setFile(String file);
+            public synchronized void setFilenameFilter(FilenameFilter filter);
+        1.1  public void setMode(int mode);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Dialog
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->
+Container->Window->Dialog->FileDialog
+Passed To:
+Toolkit.createFileDialog()
+java.awt.EventQueue (JDK 1.1)
+java.awt.FlowLayout (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

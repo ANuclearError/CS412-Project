@@ -1,0 +1,1298 @@
+
+[Chapter 19] Component
+Chapter 19java.awt Reference
+Component
+Name
+Component
+Description
+The Component class is the 
+parent of all non-menu GUI components. 
+Class Definition
+public abstract class java.awt.Component
+    extends java.lang.Object
+    implements java.awt.image.ImageObserver
+    implements java.awt.MenuContainer
+    implements java.io.Serializable {
+  // Constants
+  public final static float BOTTOM_ALIGNMENT; 
+  public final static float CENTER_ALIGNMENT; 
+  public final static float LEFT_ALIGNMENT; 
+  public final static float RIGHT_ALIGNMENT; 
+  public final static float TOP_ALIGNMENT; 
+  // Variables
+  protected Locale locale; 
+  // Constructors
+  protected Component(); 
+  
+  // Instance Methods
+  public boolean action (Event e, Object o); 
+  public synchronized void add (PopupMenu popup); 
+  public synchronized void addComponentListener 
+      (ComponentListener l); 
+  public synchronized void addFocusListener (FocusListener l); 
+  public synchronized void addKeyListener (KeyListener l); 
+  public synchronized void addMouseListener (MouseListener l); 
+  public synchronized void addMouseMotionListener 
+      (MouseMotionListener l); 
+  public void addNotify();
+  public Rectangle bounds(); 
+  public int checkImage (Image image, ImageObserver observer);
+  public int checkImage (Image image, int width, int height, 
+      ImageObserver observer);
+  public boolean contains (int x, int y); 
+  public boolean contains (Point p); 
+  public Image createImage (ImageProducer producer);
+  public Image createImage (int width, int height);
+  public void deliverEvent (Event e); 
+  public void disable(); 
+  public final void dispatchEvent (AWTEvent e) 
+  public void doLayout(); 
+  public void enable(); 
+  public void enable (boolean condition); 
+  public float getAlignmentX(); 
+  public float getAlignmentY(); 
+  public Color getBackground();
+  public Rectangle getBounds(); 
+  public synchronized ColorModel getColorModel();
+  public Component getComponentAt (int x, int y); 
+  public Component getComponentAt (Point p); 
+  public Cursor getCursor(); 
+  public Font getFont();
+  public FontMetrics getFontMetrics (Font f);
+  public Color getForeground();
+  public Graphics getGraphics();
+  public Locale getLocale(); 
+  public Point getLocation(); 
+  public Point getLocationOnScreen(); 
+  public Dimension getMaximumSize(); 
+  public Dimension getMinimumSize(); 
+  public String getName(); 
+  public Container getParent();
+  public ComponentPeer getPeer(); 
+  public Dimension getPreferredSize(); 
+  public Dimension getSize(); 
+  public Toolkit getToolkit();
+  public final Object getTreeLock(); 
+  public boolean gotFocus (Event e, Object o); 
+  public boolean handleEvent (Event e); 
+  public void hide(); 
+  public boolean imageUpdate (Image image, int infoflags, int x, int y, 
+      int width, int height);
+  public boolean inside (int x, int y); 
+  public void invalidate();
+  public boolean isEnabled();
+  public boolean isFocusTraversable(); 
+  public boolean isShowing();
+  public boolean isValid();
+  public boolean isVisible();
+  public boolean keyDown (Event e, int key); 
+  public boolean keyUp (Event e, int key); 
+  public void layout(); 
+  public void list();
+  public void list (PrintStream out);
+  public void list (PrintStream out, int indentation);
+  public void list (PrintWriter out); 
+  public void list (PrintWriter out, int indentation); 
+  public Component locate (int x, int y); 
+  public Point location(); 
+  public boolean lostFocus (Event e, Object o); 
+  public Dimension minimumSize(); 
+  public boolean mouseDown (Event e, int x, int y); 
+  public boolean mouseDrag (Event e, int x, int y); 
+  public boolean mouseEnter (Event e, int x, int y); 
+  public boolean mouseExit (Event e, int x, int y); 
+  public boolean mouseMove (Event e, int x, int y); 
+  public boolean mouseUp (Event e, int x, int y); 
+  public void move (int x, int y); 
+  public void nextFocus(); 
+  public void paint (Graphics g);
+  public void paintAll (Graphics g);
+  public boolean postEvent (Event e); 
+  public Dimension preferredSize(); 
+  public boolean prepareImage (Image image, ImageObserver observer);
+  public boolean prepareImage (Image image, int width, int height, 
+      ImageObserver observer);
+  public void print (Graphics g);
+  public void printAll (Graphics g);
+  public synchronized void remove (MenuComponent popup); 
+  public synchronized void removeComponentListener 
+      (ComponentListener l); 
+  public synchronized void removeFocusListener (FocusListener l); 
+  public synchronized void removeKeyListener (KeyListener l); 
+  public synchronized void removeMouseListener (MouseListener l); 
+  public synchronized void removeMouseMotionListener 
+      (MouseMotionListener l); 
+  public void removeNotify();
+  public void repaint();
+  public void repaint (long tm);
+  public void repaint (int x, int y, int width, int height);
+  public void repaint (long tm, int x, int y, int width, int height);
+  public void requestFocus();
+  public void reshape (int x, int y, int width, int height); 
+  public void resize (Dimension d); 
+  public void resize (int width, int height); 
+  public void setBackground (Color c);
+  public void setBounds (int x, int y, int width, int height); 
+  public void setBounds (Rectangle r); 
+  public synchronized void setCursor (Cursor cursor); 
+  public void setEnabled (boolean b); 
+  public synchronized void setFont (Font f);
+  public void setForeground (Color c);
+  public void setLocale (Locale l); 
+  public void setLocation (int x, int y); 
+  public void setLocation (Point p); 
+  public void setName (String name); 
+  public void setSize (int width, int height); 
+  public void setSize (Dimension d); 
+  public void setVisible (boolean b); 
+  public void show(); 
+  public void show (boolean condition); 
+  public Dimension size(); 
+  public String toString();
+  public void transferFocus(); 
+  public void update (Graphics g);
+  public void validate();
+  
+  // Protected Instance Methods
+  protected final void disableEvents (long eventsToDisable); 
+  protected final void enableEvents (long eventsToEnable); 
+  protected String paramString();
+  protected void processComponentEvent (ComponentEvent e); 
+  protected void processEvent (AWTEvent e); 
+  protected void processFocusEvent (FocusEvent e); 
+  protected void processKeyEvent (KeyEvent e); 
+  protected void processMouseEvent (MouseEvent e); 
+  protected void processMouseMotionEvent (MouseEvent e); 
+}
+Constants
+BOTTOM_ALIGNMENT
+public final static float BOTTOM_ALIGNMENT 
+Constant representing bottom alignment in getAlignmentY(). 
+CENTER_ALIGNMENT
+public final static float CENTER_ALIGNMENT 
+Constant representing center alignment in getAlignmentX() and getAlignmentY(). 
+LEFT_ALIGNMENT
+public final static float LEFT_ALIGNMENT 
+Constant representing left alignment in getAlignmentX(). 
+RIGHT_ALIGNMENT
+public final static float RIGHT_ALIGNMENT 
+Constant representing right alignment in getAlignmentX(). 
+TOP_ALIGNMENT
+public final static float TOP_ALIGNMENT 
+Constant representing top alignment in getAlignmentY(). 
+Variables
+locale
+protected Locale locale 
+Description
+The locale for the component. Used for internationalization support. 
+Constructors
+Component
+protected Component() 
+Description
+This constructor creates a "lightweight" component. This constructor 
+allows Component to be directly 
+subclassed using code written entirely in Java. 
+Instance Methods
+action
+public boolean action (Event e, Object o) 
+Parameters
+e
+Event 
+instance identifying what triggered the call to this method. 
+o
+Argument specific to the 
+component subclass that generated the event. 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when user performs some action in Component. 
+This method is a relic of the old 1.0.2 event model and is replaced by 
+the process...Event() methods. 
+add
+public synchronized void add (PopupMenu popup) 
+Parameters
+popup
+The menu to add. 
+Description
+After the PopupMenu is added 
+to a component, it can be shown in the component's coordinate space. 
+addComponentListener
+public void addComponentListener (ComponentListener l) 
+Description
+Adds a listener for the ComponentEvent 
+objects this Component generates. 
+addFocusListener
+public void addFocusListener (FocusListener l) 
+Description
+Adds a listener for the FocusEvent 
+objects this Component generates. 
+addKeyListener
+public void addKeyListener (KeyListener l) 
+Description
+Adds a listener for the KeyEvent 
+objects this Component generates. 
+addMouseListener
+public void addMouseListener (MouseListener l) 
+Description
+Adds a listener for the MouseEvent 
+objects this Component generates. 
+addMouseMotionListener
+public void addMouseMotionListener (MouseMotionListener l) 
+Description
+Adds a listener for the motion MouseEvent 
+objects this Component generates. 
+addNotify
+public void addNotify()
+Description
+Creates peer of Component's 
+subclass. 
+bounds
+public Rectangle bounds() 
+Returns
+Gets bounding rectangle of Component. 
+Description
+A Rectangle that returns the 
+outer limits of the Component. 
+Replaced by getBounds() in 1.1. 
+checkImage
+public int checkImage (Image image, ImageObserver observer)
+Parameters
+image
+Image 
+to check. 
+observer
+The object an image will 
+be rendered onto. 
+Returns
+ImageObserver Flags ORed together 
+indicating the image's status. 
+Description
+Checks status of image construction. 
+public int checkImage (Image image, int width, int height, ImageObserver observer)
+Parameters
+image
+Image to check. 
+width
+Horizontal size image will be scaled to. 
+height
+Vertical size image will be scaled to. 
+observer
+Object image will be rendered onto. 
+Returns
+ImageObserver flags ORed together 
+indicating the image's status. 
+Description
+Checks status of image construction. 
+contains
+public boolean contains (int x, int y) 
+Parameters
+x
+The x coordinate, in this Component's 
+coordinate system. 
+y
+The y coordinate, in this Component's 
+coordinate system. 
+Returns
+true if the Component 
+contains the point; false otherwise. 
+public boolean contains (Point p) 
+Parameters
+p
+The point to be tested, in this Component's 
+coordinate system. 
+Returns
+true if the Component 
+contains the point; false otherwise. 
+createImage
+public Image createImage (ImageProducer producer)
+Parameters
+producer
+Class that implements ImageProducer 
+interface to create the new image. 
+Returns
+Newly created image instance. 
+Description
+Creates an Image based upon 
+an ImageProducer. 
+public Image createImage (int width, int height)
+Parameters
+width
+Horizontal size for in-memory Image. 
+height
+Vertical size for in-memory Image. 
+Returns
+Newly created image instance. 
+Description
+Creates an empty in-memory Image 
+for double buffering; to draw on the image, use its graphics context. 
+deliverEvent
+public void deliverEvent (Event e) 
+Parameters
+e
+Event instance 
+to deliver. 
+Description
+Delivers event to the component for processing. 
+disable
+public void disable() 
+Description
+Disables component so that it is unresponsive to user interactions. Replaced 
+by setEnabled(false). 
+dispatchEvent
+public final void dispatchEvent (AWTEvent e) 
+Parameters
+e
+The AWTEvent to process. 
+Description
+Tells the component to deal with the AWTEvent e.
+doLayout
+public void doLayout() 
+Description
+Lays out component. This method is a replacement for layout(). 
+enable
+public void enable() 
+Description
+Enables component so that it is responsive to user interactions. Use setEnabled(true) 
+instead. 
+public void enable (boolean condition) 
+Parameters
+condition
+true to enable 
+the component; false to disable 
+it. 
+Description
+Enables or disables the component based upon condition. 
+Use setEnabled(boolean) instead. 
+getAlignmentX
+public float getAlignmentX() 
+Returns
+A number between 0 and 1 representing the horizontal alignment of this 
+component. 
+Description
+One of the constants LEFT_ALIGNMENT, 
+CENTER_ALIGNMENT, or RIGHT_ALIGNMENT 
+may be returned. CENTER_ALIGNMENT 
+is returned by default. 
+getAlignmentY
+public float getAlignmentY() 
+Returns
+A number between 0 and 1 representing the vertical alignment of this component. 
+Description
+One of the constants TOP_ALIGNMENT, 
+CENTER_ALIGNMENT, or BOTTOM_ALIGNMENT 
+may be returned. CENTER_ALIGNMENT 
+is returned by default. 
+getBackground
+public Color getBackground()
+Returns
+Background color of the component. 
+getBounds
+public Rectangle getBounds() 
+Returns
+Gets bounding rectangle of Component. 
+Description
+Returns a Rectangle that returns 
+the outer limits of the Component. 
+getColorModel
+public synchronized ColorModel getColorModel()
+Returns
+ColorModel used to display 
+the current component. 
+getComponentAt
+public Component getComponentAt (int x, int y) 
+Parameters
+x
+The x coordinate, in this 
+Component's coordinate system. 
+y
+The y coordinate, in this Component's 
+coordinate system. 
+Returns
+Returns the Component containing 
+the given point. 
+public Component getComponentAt (Point p) 
+Parameters
+p
+The point to be tested, in this Component's 
+coordinate system. 
+Returns
+Returns the Component containing 
+the given point. 
+getCursor
+public Cursor getCursor() 
+Returns
+Current cursor of the component. 
+getFont
+public Font getFont()
+Returns
+Current font of the component. 
+getFontMetrics
+public FontMetrics getFontMetrics (Font f)
+Parameters
+f
+A Font object, 
+whose platform specific information is desired. 
+Returns
+Size information for the given Font. 
+getForeground
+public Color getForeground()
+Returns
+Foreground color of component. 
+getGraphics
+public Graphics getGraphics()
+Throws
+InternalException
+If acquiring 
+graphics context is unsupported. 
+Returns
+Component's graphics context. 
+getLocale
+public Locale getLocale() 
+Throws
+IllegalComponentStateException
+If 
+the component does not have a locale or it has not been added to a hierarchy 
+that does. 
+Returns
+Component's locale. 
+getLocation
+public Point getLocation() 
+Returns
+Position of component. 
+Description
+Gets the current position of this Component 
+in its parent's coordinate space. 
+getLocationOnScreen
+public Point getLocationOnScreen() 
+Returns
+Position of component. 
+Description
+Gets the current position of this Component 
+in the screen's coordinate space. 
+getMaximumSize
+public Dimension getMaximumSize() 
+Returns
+The maximum dimensions of the component. 
+Description
+By default, a maximal Dimension 
+is returned. 
+getMinimumSize
+public Dimension getMinimumSize() 
+Returns
+The minimum dimensions of the component. 
+getName
+public String getName() 
+Returns
+This component's name. 
+getParent
+public Container getParent()
+Returns
+Parent Container of Component. 
+Description
+Gets container that this Component 
+is held in. 
+getPeer
+public ComponentPeer getPeer() 
+Returns
+Peer of Component. 
+getPreferredSize
+public Dimension getPreferredSize() 
+Returns
+The preferred dimensions of the component. 
+getSize
+public Dimension getSize() 
+Returns
+Dimensions of component. 
+Description
+Gets width and height of component. 
+getToolkit
+public Toolkit getToolkit()
+Returns
+Toolkit of Component. 
+getTreeLock
+public final Object getTreeLock() 
+Returns
+The AWT tree locking object. 
+Description
+Returns the object used for tree locking and layout operations. 
+gotFocus
+public boolean gotFocus (Event e, Object o) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+o
+Argument specific to the component subclass that generated 
+the event. 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Called when Component gets 
+input focus. This method is not used in the 1.1 event model. 
+handleEvent
+public boolean handleEvent (Event e) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+High-level event handling routine that calls helper routines. Replaced 
+by processEvent(AWTEvent). 
+hide
+public void hide() 
+Description
+Hides component from view. Replaced by setVisible(false). 
+imageUpdate
+public boolean imageUpdate (Image image, int infoflags, int x, int y, int width, int height)
+Parameters
+image
+Image being 
+loaded. 
+infoflags
+ImageObserver 
+flags ORed together of available information. 
+x
+x coordinate of upper-left corner of Image. 
+y
+y coordinate of upper-left corner of Image. 
+width
+Horizontal dimension of Image. 
+height
+Vertical dimension of Image. 
+Returns
+true if Image 
+fully loaded, false otherwise. 
+Implements
+ImageObserver.imageUpdate() 
+Description
+An asynchronous update interface for receiving notifications about Image 
+information as it is loaded. Meaning of parameters changes with values 
+of flags. 
+inside
+public boolean inside (int x, int y) 
+Parameters
+x
+Horizontal position. 
+y
+Vertical position. 
+Returns
+true if the point (x, 
+y) falls within the component's 
+bounds, false otherwise. 
+Description
+Checks if coordinates are within bounding box of Component. 
+Replaced by contains(int, int). 
+invalidate
+public void invalidate()
+Description
+Sets the component's valid state to false. 
+isEnabled
+public boolean isEnabled()
+Returns
+true if enabled, false 
+otherwise. 
+Description
+Checks to see if the Component 
+is currently enabled. 
+isFocusTraversable
+public boolean isFocusTraversable() 
+Returns
+true if this Component 
+can be traversed using Tab and Shift-Tab, false 
+otherwise. 
+Description
+Checks to see if the Component 
+is navigable using the keyboard. 
+isShowing
+public boolean isShowing()
+Returns
+true if showing, false 
+otherwise. 
+Description
+Checks to see if the Component 
+is currently showing. 
+isValid
+public boolean isValid()
+Returns
+true if valid, false 
+otherwise. 
+Description
+Checks to see if the Component 
+is currently valid. 
+isVisible
+public boolean isVisible()
+Returns
+true if visible, false 
+otherwise. 
+Description
+Checks to see if the Component 
+is currently visible. 
+keyDown
+public boolean keyDown (Event e, int key) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+key
+Integer representation of key pressed. 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called whenever the user presses a key. Replaced by processKeyEvent(KeyEvent). 
+keyUp
+public boolean keyUp (Event e, int key) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+key
+Integer representation of key released. 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called whenever the user releases a key. Replaced by processKeyEvent(KeyEvent). 
+layout
+public void layout() 
+Description
+Lays out component. Replaced by doLayout(). 
+list
+public void list()
+Description
+Prints the contents of the Component 
+to System.out. 
+public void list (PrintStream out)
+Parameters
+out
+Output stream to send results to. 
+Description
+Prints the contents of the Component 
+to a PrintStream. 
+public void list (PrintStream out, int indentation)
+Parameters
+out
+Output stream to send results to. 
+indentation
+Indentation to use when printing. 
+Description
+Prints the contents of the Component 
+indented to a PrintStream. 
+public void list (PrintWriter out)
+Parameters
+out
+Output stream to send results to. 
+Description
+Prints the contents of the Component 
+to a PrintWriter. 
+public void list (PrintWriter out, int indentation)
+Parameters
+out
+Output stream to send results to. 
+indentation
+Indentation to use when printing. 
+Description
+Prints the contents of the Component 
+indented to a PrintWriter. 
+locate
+public Component locate (int x, int y) 
+Parameters
+x
+Horizontal position. 
+y
+Vertical position. 
+Returns
+Component if the point (x, 
+y) falls within the component, 
+null otherwise. 
+Description
+Replaced by getComponentAt(int, int). 
+location
+public Point location() 
+Returns
+Position of component. 
+Description
+Gets the current position of this Component 
+in its parent's coordinate space. Replaced by getLocation(). 
+lostFocus
+public boolean lostFocus (Event e, Object o) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+o
+Argument specific to the 
+component subclass that generated the event. 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when Component 
+loses input focus. Replaced by processFocusEvent(FocusEvent). 
+minimizeSize
+public Dimension minimumSize() 
+Returns
+The minimum dimensions of the component. Replaced by getMinimumSize(). 
+mouseDown
+public boolean mouseDown (Event e, int x, int y) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+x
+Horizontal position of the mouse within Component 
+when Event initiated 
+y
+Vertical position of the mouse within Component 
+when Event initiated 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when the user presses a mouse button over Component. 
+Replaced by processMouseEvent(MouseEvent). 
+mouseDrag
+public boolean mouseDrag (Event e, int x, int y) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+x
+Horizontal position of the mouse within Component 
+when Event initiated 
+y
+Vertical position of the mouse within Component 
+when Event initiated 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when the user is pressing a mouse button and moves the mouse. Replaced 
+by processMouseMotionEvent(MouseEvent). 
+mouseEnter
+public boolean mouseEnter (Event e, int x, int y) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+x
+Horizontal position of the mouse within Component 
+when Event initiated 
+y
+Vertical position of the mouse within Component 
+when Event initiated 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when the mouse enters Component. 
+Replaced by processMouseEvent(MouseEvent). 
+mouseExit
+public boolean mouseExit (Event e, int x, int y) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+x
+Horizontal position of the mouse within Component 
+when Event initiated 
+y
+Vertical position of the mouse within Component 
+when Event initiated 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when the mouse exits Component. 
+Replaced by processMouseEvent(MouseEvent). 
+mouseMove
+public boolean mouseMove (Event e, int x, int y) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+x
+Horizontal position of the mouse within Component 
+when Event initiated 
+y
+Vertical position of the mouse within Component 
+when Event initiated 
+Returns
+true if event handled, false 
+to propagate it to parent container. 
+Description
+Method called when the user is not pressing a mouse button and moves the mouse. Replaced 
+by processMouseMotionEvent(MouseEvent). 
+mouseUp
+public boolean mouseUp (Event e, int x, int y) 
+Parameters
+e
+Event instance 
+identifying what triggered the call to this method. 
+x
+Horizontal position of the mouse within Component 
+when Event initiated 
+y
+Vertical position of the mouse within Component 
+when Event initiated 
+Returns
+true if event is handled, false 
+to propagate it to the parent container. 
+Description
+Method called when user releases mouse button over Component. 
+Replaced by processMouseEvent(MouseEvent). 
+move
+public void move (int x, int y) 
+Parameters
+x
+New horizontal position for component. 
+y
+New vertical position for component. 
+Description
+Relocates component. Replaced by setLocation(int, int). 
+nextFocus
+public void nextFocus() 
+Description
+Moves focus from current component to next one in parent container. Replaced 
+by transferFocus(). 
+paint
+public void paint (Graphics g)
+Parameters
+g
+Graphics context of component. 
+Description
+Empty method to be overridden to draw something in the graphics context. 
+paintAll
+public void paintAll (Graphics g)
+Parameters
+g
+Graphics context of component. 
+Description
+Method to validate component and paint its peer if it is visible. 
+postEvent
+public boolean postEvent (Event e) 
+Parameters
+e
+Event instance 
+to post to component 
+Returns
+If Event is handled, true 
+is returned. Otherwise, false 
+is returned. 
+Description
+Tells Component to deal with 
+Event. 
+preferredSize
+public Dimension preferredSize() 
+Returns
+The preferred dimensions of the component. Replaced by getPreferredSize(). 
+prepareImage
+public boolean prepareImage (Image image, ImageObserver observer)
+Parameters
+image
+Image to 
+start loading. 
+observer
+Component on which image will be rendered. 
+Returns
+true if Image is fully loaded, 
+false otherwise. 
+Description
+Forces Image to start loading. 
+public boolean prepareImage (Image image, int width, int height, ImageObserver observer)
+Parameters
+image
+Image to 
+start loading. 
+width
+Horizontal size of the Image 
+after scaling. 
+height
+Vertical size of the Image 
+after scaling. 
+observer
+Component on which image will be rendered. 
+Returns
+true if Image is fully loaded, 
+false otherwise. 
+Description
+Forces Image to start loading. 
+print
+public void print (Graphics g)
+Parameters
+g
+Graphics context. 
+Description
+Empty method to be overridden to print something into the graphics context. 
+printAll
+public void printAll (Graphics g)
+Parameters
+g
+Graphics context. 
+Description
+Method to print this component and its children. 
+remove
+public void remove (MenuComponent popup) 
+Parameters
+popup
+The menu to remove. 
+Description
+After adding a PopupMenu, you 
+can use this method to remove it. 
+removeComponentListener
+public void removeComponentListener (ComponentListener l) 
+Description
+Removes the specified ComponentListener 
+from this Component. 
+removeFocusListener
+public void removeFocusListener (FocusListener l) 
+Description
+Removes the specified FocusListener 
+from this Component. 
+removeKeyListener
+public void removeKeyListener (KeyListener l) 
+Description
+Removes the specified KeyListener 
+from this Component. 
+removeMouseListener
+public void removeMouseListener (MouseListener l) 
+Description
+Removes the specified MouseListener 
+from this Component. 
+removeMouseMotionListener
+public void removeMouseMotionListener (MouseMotionListener l) 
+Description
+Removes the specified MouseMotionListener 
+from this Component. 
+removeNotify
+public void removeNotify()
+Description
+Removes peer of Component's 
+subclass. 
+repaint
+public void repaint()
+Description
+Requests scheduler to redraw the component as soon as possible. 
+public void repaint (long tm)
+Parameters
+tm
+Millisecond delay allowed before repaint. 
+Description
+Requests scheduler to redraw the component within a time period. 
+public void repaint (int x, int y, int width, int height)
+Parameters
+x
+Horizontal origin of bounding box to redraw. 
+y
+Vertical origin of bounding box to redraw. 
+width
+Width of bounding box to redraw. 
+height
+Height of bounding box to redraw. 
+Description
+Requests scheduler to redraw a portion of component as soon as possible. 
+public void repaint (long tm, int x, int y, int width, int height)
+Parameters
+tm
+Millisecond delay allowed before repaint. 
+x
+Horizontal origin of bounding box to redraw. 
+y
+Vertical origin of bounding box to redraw. 
+width
+Width of bounding box to redraw. 
+height
+Height of bounding box to redraw. 
+Description
+Requests scheduler to redraw a portion of component within a time period. 
+requestFocus
+public void requestFocus()
+Description
+Requests the input focus for this Component.
+reshape
+public void reshape (int x, int y, int width, int height) 
+Parameters
+x
+New horizontal position for component. 
+y
+New vertical position for component. 
+width
+New width for component. 
+height
+New height for component. 
+Description
+Relocates and resizes component. Replaced by setBounds(int, 
+int, int, int). 
+resize
+public void resize (Dimension d) 
+Parameters
+d
+New dimensions for the component. 
+Description
+Resizes component. Replaced by setSize(Dimension). 
+public void resize (int width, int height) 
+Parameters
+width
+New width for component. 
+height
+New height for component. 
+Description
+Resizes component. Replaced by setSize(int, int). 
+setBackground
+public void setBackground (Color c)
+Parameters
+c
+New background color. 
+Description
+Changes the component's background color. 
+setBounds
+public void setBounds (int x, int y, int width, int height) 
+Parameters
+x
+New horizontal position for component. 
+y
+New vertical position for component. 
+width
+New width for component. 
+height
+New height for component. 
+Description
+Relocates and resizes the component. 
+public void setBounds (Rectangle r) 
+Parameters
+r
+New coordinates for component. 
+Description
+Relocates and resizes component. 
+setCursor
+public synchronized void setCursor (Cursor cursor) 
+Parameters
+cursor
+The new cursor for the component. 
+Description
+Changes the component's cursor. 
+setEnabled
+public void setEnabled (boolean b) 
+Parameters
+b
+true to enable 
+the component, false to disable 
+it. 
+Description
+Enables or disables the component. Replaces enable(), 
+enable(boolean), and disable(). 
+setFont
+public synchronized void setFont (Font f)
+Parameters
+f
+Font to change component to. 
+Description
+Changes the font of the component. 
+setForeground
+public void setForeground (Color c)
+Parameters
+c
+New foreground color. 
+Description
+Changes the foreground color of component's area. 
+setLocale
+public void setLocale (Locale l) 
+Parameters
+l
+The locale object for the component. 
+Description
+Sets the Component's 
+locale. 
+setLocation
+public void setLocation (int x, int y) 
+Parameters
+x
+New horizontal position for component. 
+y
+New vertical position for component. 
+Description
+Relocates the component. 
+public void setLocation (Point p) 
+Parameters
+p
+New position for component. 
+Description
+Relocates the component. 
+setName
+public void setName (String name) 
+Parameters
+name
+New name for component. 
+Description
+Sets the component's name. 
+setSize
+public void setSize (int width, int height) 
+Parameters
+width
+New width for component. 
+height
+New height for component. 
+Description
+Resizes the component. 
+public void setSize (Dimension d) 
+Parameters
+d
+New dimensions for the component.
+Description
+Resizes the component. 
+setVisible
+public void setVisible (boolean b) 
+Parameters
+b
+true
+to show component, false to hide it.
+Description
+Shows or hides the component based on the b 
+parameter. 
+show
+public void show() 
+Description
+Replaced by setVisible(true). 
+public void show (boolean condition) 
+Parameters
+condition
+true to show 
+the component, false to hide it.
+Description
+Replaced by setVisible(boolean). 
+size
+public Dimension size() 
+Returns
+Dimensions of the component.
+Description
+Gets width and height of the component. Replaced by getSize(). 
+toString
+public String toString()
+Returns
+A string representation of the Component object. 
+Overrides
+Object.toString()
+transferFocus
+public void transferFocus() 
+Description
+Transfers focus to the next component in the container hierarchy. 
+update
+public void update (Graphics g)
+Parameters
+g
+Graphics context of component.
+Description
+Called to update the component's display area. 
+validate
+public void validate()
+Description
+Sets the component's valid state to true. 
+Protected Instance Methods
+disableEvents
+protected final void disableEvents (long eventsToDisable) 
+Parameters
+eventsToDisable
+A value 
+representing certain kinds of events.  This can be constructed by
+ORing the event mask constants defined in 
+java.awt.AWTEvent.
+Description
+By default, a component receives events corresponding to the event listeners 
+that have registered. If a component should not receive events of a certain 
+type, even if there is a listener registered for that type of event, this 
+method can be used to disable that event type. 
+enableEvents
+protected final void enableEvents (long eventsToEnable) 
+Parameters
+eventsToEnable
+A value representing certain kinds of events.  This can be constructed by ORing the event mask constants defined in 
+java.awt.AWTEvent.
+Description
+By default, a component receives events corresponding to the event listeners 
+that have registered. If a component should receive other types of events 
+as well, this method can be used to request them. 
+paramString
+protected String paramString()
+Returns
+A String with the current settings of the
+Component.
+Description
+Helper method for toString() 
+to generate a string of current settings. 
+processComponentEvent
+protected void processComponentEvent(ComponentEvent e) 
+Parameters
+e
+The event to process.
+Description
+Component events are passed to this method for processing. Normally, this 
+method is called by processEvent(). 
+processEvent
+protected void processEvent(AWTEvent e) 
+Parameters
+e
+The event to process.
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+processFocusEvent
+protected void processFocusEvent(FocusEvent e) 
+Parameters
+e
+The event to process.
+Description
+Focus events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+processKeyEvent
+protected void processKeyEvent(KeyEvent e) 
+Parameters
+e
+The event to process.
+Description
+Key events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+processMouseEvent
+protected void processMouseEvent(MouseEvent e) 
+Parameters
+e
+The event to process.
+Description
+Mouse events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+processMouseMotionEvent
+protected void processMouseMotionEvent(MouseEvent e) 
+Parameters
+e
+The event to process.
+Description
+Mouse motion events are passed to this method for processing. Normally, 
+this method is called by processEvent(). 
+See Also
+Button, Canvas, 
+Checkbox, Choice, 
+Color, ColorModel, 
+ComponentPeer, Container, 
+Dimension, Event, 
+Font, FontMetrics, 
+Graphics, ImageObserver, 
+ImageProducer, Label, 
+List, MenuContainer, 
+Object, Point, 
+PrintStream, Rectangle, 
+Scrollbar, Serializable, 
+String, TextComponent, 
+Toolkit 
+Color
+Container
+ 
+ 
+ 
+ 
+ 
+ 
+ 

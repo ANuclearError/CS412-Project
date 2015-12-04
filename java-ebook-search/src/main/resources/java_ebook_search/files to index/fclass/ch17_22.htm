@@ -1,0 +1,178 @@
+
+[Chapter 17] Stack
+Chapter 17The java.util Package
+Stack
+Name
+Stack
+Synopsis
+Class Name:
+java.util.Stack
+Superclass:
+java.util.Vector
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+Stack represents a last-in-first-out 
+(LIFO) object stack. The push() 
+method places an object on the top of the stack, while the pop() 
+method retrieves the top object from the stack. The peek() 
+method returns the top object without removing it from the stack. 
+Class Summary
+public class java.util.Stack extends java.util.Vector {
+  // Instance Methods
+  public boolean empty();
+  public synchronized Object peek();
+  public synchronized Object pop();
+  public Object push(Object item);
+  public synchronized int search(Object o);
+}
+Instance Methods
+empty
+public boolean empty()
+Returns
+true if there are no objects 
+on the Stack; false 
+otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not the Stack 
+is empty. 
+peek
+public Object peek()
+Returns
+A reference to the object that is returned by the next call 
+to pop(). 
+Throws
+EmptyStackException
+If the stack is empty. 
+Description
+This method returns a reference to the object on the top of this Stack 
+without removing it. 
+pop
+public Object pop()
+Returns
+The object on top of this Stack. 
+Throws
+EmptyStackException
+If the stack is empty. 
+Description
+This method returns the object on top of this Stack. 
+push
+public Object push(Object item)
+Parameters
+item
+The object to be added 
+to the top of the stack. 
+Returns
+The object just pushed. 
+Description
+This method places the object on the top of this Stack. 
+search
+public synchronized int search(Object o)
+Parameters
+o
+The object to be found. 
+Returns
+The object's distance from the top of the stack or -1 if it cannot 
+be found. 
+Description
+This method is used to determine if an object is on this Stack. 
+Inherited Variables
+Method
+Inherited From
+Method
+Inherited From
+capacityIncrement
+Vector
+elementCount
+Vector
+elementData
+Vector
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+addElement()
+Vector
+capacity()
+Vector
+clone()
+Vector
+contains(Object)
+Vector
+copyInto(Object[])
+Vector
+elementAt(int)
+Vector
+elements()
+Vector
+ensureCapacity(int)
+Vector
+equals()
+Object
+finalize()
+Object
+firstElement()
+Vector
+getClass()
+Object
+hashCode()
+Object
+indexOf(Object)
+Vector
+indexOf(Object, int)
+Vector
+insertElementAt(Object, int)
+Vector
+isEmpty()
+Vector
+lastElement()
+Vector
+lastIndexOf(Object)
+Vector
+lastIndexOf(Object, 
+int)
+Vector
+notify()
+Object
+notifyAll()
+Object
+removeAllElements()
+Vector
+removeElement(Object)
+Vector
+removeElementAt(int)
+Vector
+setElementAt(Object, int)
+Vector
+setSize()
+Vector
+size()
+Vector
+toString()
+Vector
+trimToSize()
+Vector
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+EmptyStackException, 
+Vector 
+SimpleTimeZone
+StringTokenizer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

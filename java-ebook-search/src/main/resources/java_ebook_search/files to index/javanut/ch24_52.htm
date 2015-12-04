@@ -1,0 +1,85 @@
+
+[Chapter 24] 24.52 java.io.PrintStream (JDK 1.0)
+Chapter 24The java.io Package
+24.52 java.io.PrintStream (JDK 1.0)
+This class is a FilterOutputStream that implements a
+number of methods for displaying textual representation of
+Java primitive data types. The print() methods
+output a standard textual representation of each data type.
+The println() methods do the same, and follow that
+representation with a newline. The methods convert various
+Java primitive types to String representations and
+then output the resulting string. When an Object is
+passed to a print() or println(), it is
+converted to a String by calling its
+toString() method.
+PrintStream is the OutputStream type that
+makes it easiest to output text. As such, it is the most
+commonly used of the output streams. The System.out
+variable is a PrintStream.
+Note that in Java 1.0 this class does not handle Unicode
+characters correctly--it discards the top 8 bits of all
+16-bit characters, and thus works only with Latin-1
+(ISO8859-1) characters.  Although this problem has been
+fixed in Java 1.1, PrintStream has been superseded
+in Java 1.1 with PrintWriter.  The constructors of
+this class have been deprecated, but the class itself has
+not, because it is still used by the System.out
+and System.err standard output streams.
+PrintStream and its PrintWriter
+replacement output textual representations of Java data
+types.  Use DataOutputStream to output binary
+representations of data.
+public class PrintStream extends FilterOutputStream {
+    // Public Constructors
+        #   public PrintStream(OutputStream out);
+        #   public PrintStream(OutputStream out, boolean autoFlush);
+    // Public Instance Methods
+            public boolean checkError();
+            public void close();  // Overrides FilterOutputStream
+            public void flush();  // Overrides FilterOutputStream
+            public void print(boolean b);
+            public void print(char c);
+            public void print(int i);
+            public void print(long l);
+            public void print(float f);
+            public void print(double d);
+            public void print(char[] s);
+            public void print(String s);
+            public void print(Object obj);
+            public void println();
+            public void println(boolean x);
+            public void println(char x);
+            public void println(int x);
+            public void println(long x);
+            public void println(float x);
+            public void println(double x);
+            public void println(char[] x);
+            public void println(String x);
+            public void println(Object x);
+            public void write(int b);  // Overrides FilterOutputStream
+            public void write(byte[] buf, int off, int len);  // Overrides FilterOutputStream
+    // Protected Instance Methods
+        1.1  protected void setError();
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->PrintStream
+Passed To:
+Component.list(), 
+Container.list(), 
+Properties.list(), 
+System.setErr(), 
+System.setOut(), 
+Throwable.printStackTrace()
+Type Of:
+System.err, 
+System.out
+java.io.PipedWriter (JDK 1.1)
+java.io.PrintWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

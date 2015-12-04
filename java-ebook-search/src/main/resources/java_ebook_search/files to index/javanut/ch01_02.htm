@@ -1,0 +1,242 @@
+
+[Chapter 1] 1.2 A Simple Example
+Chapter 1Getting Started with Java
+1.2 A Simple Example
+By now you should have a pretty good idea of why Java is
+such an interesting language.  So we'll stop talking about
+abstract concepts and look at some concrete Java code.
+Before we look at an interesting applet, however, we are
+going to pay tribute to that ubiquitous favorite, "Hello
+World."
+Hello World
+Example 1.1
+shows the simplest possible Java program: "Hello World."
+Example 1.1: Hello World
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+This program, like every Java program, consists of a public
+class definition.  The class contains a method named
+main(), which is the main entry point for all Java
+applications--that is, the point at which the interpreter
+starts executing the program.  The body of main()
+consists of only a single line, which prints out the
+message:
+Hello World!
+This program must be saved in a file with the same name as
+the public class plus a .java extension.  To compile
+it, you would use javac:
+[1]
+[1] 
+Assuming you're using Sun's Java Development Kit (JDK).  If
+you're using a Java development environment from some other
+vendor, follow your vendor's instructions.
+% javac HelloWorld.java
+This command produces the HelloWorld.class file in the
+current directory.  To run the program, you use the Java
+interpreter, java:
+% java HelloWorld
+Note that when you invoke the interpreter, you do not supply
+the .class extension for the file you want to run.
+A Scribble Applet
+Example 1.2
+shows a less trivial Java program.  This program is an
+applet, rather than a standalone Java application like the
+"Hello World" program above.  Because this example is an
+applet, it has a different structure than a standalone
+application; notably, it does not have a main()
+method.  Like all applets, this one runs inside an applet
+viewer or Web browser, and lets the user draw (or scribble)
+with the mouse, as illustrated in Figure 1.1.
+Figure 1.1: A Java applet running in a Web browser
+One of the major changes between Java 1.0 and Java 1.1 is in
+the way that Java programs are notified of "events", such as
+mouse motion.
+Example 1.2
+uses the Java 1.0 event model rather than the preferred Java
+1.1 event model.  This is because the current generation of
+Web browsers (as this is written) still use Java 1.0.  In
+order for this applet to be widely usable, it is coded with
+the old, "deprecated" event model.
+[2]
+[2] 
+If you are interested in updating this program to use Java 1.1,
+see Chapter 7, Events for information on how to use the new 1.1 event model.
+In addition, you need
+to change the call to bounds() in the action()
+method to a call to getBounds(), if you want to avoid
+a compilation warning about using a deprecated method.
+Example 1.2: A Java Applet
+import java.applet.*;
+import java.awt.*;
+public class Scribble extends Applet {
+  private int last_x, last_y;                // Store the last mouse position.
+  private Color current_color = Color.black; // Store the current color.
+  private Button clear_button;               // The clear button.
+  private Choice color_choices;              // The color dropdown list.
+  // This method is called to initialize the applet.
+  // Applets don't have a main() method.
+  public void init() {
+    // Set the background color.
+    this.setBackground(Color.white);
+    // Create a button and add it to the applet.  Set the button's colors.
+    clear_button = new Button("Clear");
+    clear_button.setForeground(Color.black);
+    clear_button.setBackground(Color.lightGray);
+    this.add(clear_button);
+    // Create a menu of colors and add it to the applet.
+    // Also set the menu's colors and add a label.
+    color_choices = new Choice();
+    color_choices.addItem("black");
+    color_choices.addItem("red");
+    color_choices.addItem("yellow");
+    color_choices.addItem("green");
+    color_choices.setForeground(Color.black);
+    color_choices.setBackground(Color.lightGray);
+    this.add(new Label("Color: "));
+    this.add(color_choices);
+  }
+  // This method is called when the user clicks the mouse to start a scribble.
+  public boolean mouseDown(Event e, int x, int y)
+  {
+    last_x = x; last_y = y;
+    return true;
+  }
+  // This method is called when the user drags the mouse.
+  public boolean mouseDrag(Event e, int x, int y)
+  {
+    Graphics g = this.getGraphics();
+    g.setColor(current_color);
+    g.drawLine(last_x, last_y, x, y);
+    last_x = x;
+    last_y = y;
+    return true;
+  }
+  // This method is called when the user clicks the button or chooses a color.
+  public boolean action(Event event, Object arg) {
+    // If the Clear button was clicked on, handle it.
+    if (event.target == clear_button) {
+      Graphics g = this.getGraphics();
+      Rectangle r = this.bounds();
+      g.setColor(this.getBackground());
+      g.fillRect(r.x, r.y, r.width, r.height);
+      return true;
+    }
+    // Otherwise if a color was chosen, handle that.
+    else if (event.target == color_choices) {
+      if (arg.equals("black")) current_color = Color.black;
+      else if (arg.equals("red")) current_color = Color.red;
+      else if (arg.equals("yellow")) current_color = Color.yellow;
+      else if (arg.equals("green")) current_color = Color.green;
+      return true;
+    }
+    // Otherwise, let the superclass handle it.
+    else return super.action(event, arg);
+  }
+}
+Don't expect to be able to understand the entire applet at
+this point. It is here to give you the flavor of the
+language. In Chapter 2, How Java Differs from C and
+Chapter 3, Classes and Objects in Java we'll explain
+the language constructs you need to understand the example.
+Then, in Chapter 6, Applets and Chapter 7, Events
+we'll explain the applet and event-handling
+concepts used in this example.
+The first thing you should notice when browsing through the
+code is that it looks reassuringly like C and C++.  The
+if and return statements are familiar.
+Assignment of values to variables uses the expected syntax.
+Procedures (called "methods" in Java) are recognizable as
+such.
+The second thing to notice is the object-oriented nature of
+the code.  As you can see at the top of the example, the
+program consists of the definition of a public class.  The
+name of the class we are defining is Scribble; it is
+an extension, or subclass, of the Applet class.
+(The full name of the Applet class is
+java.applet.Applet.  One of the import
+statements at the top of the example allows us to refer to
+Applet by this shorter name.)
+Classes are said to "encapsulate" data and methods.  As you
+can see, our Scribble class contains both variable
+and method declarations.  The methods are actually defined
+inside of the class.  The methods of a class are often
+invoked through an instance of the class.  Thus you see
+lines like:
+color_choices.addItem("black");
+This line of code invokes the addItem() method of
+the object referred to by the color_choices
+variable.  If you're a C programmer, but not a C++
+programmer, this syntax may take a little getting used to.
+We'll see lots more of it in Chapters 2 and 3.  Note that
+this is a keyword, not a variable name.  It refers
+to the current object; in this example, it refers to the
+Scribble object.
+The init() method of an applet is called by the Web
+browser or applet viewer when it is starting the applet up.
+In our example, this method creates a Clear button and
+a menu of color choices, and then adds these GUI components
+to the applet.
+The mouseDown() and mouseDrag() methods are
+called when the user clicks and drags the mouse.  These are
+the methods that are responsible for drawing lines as the
+user scribbles.  The action() method is invoked when
+the user clicks on the Clear button or selects 
+a color from the menu of colors.  The body of the method determines
+which of these two "events" has occurred and handles the
+event appropriately.  Recall that these methods are
+part of the Java 1.0 event model.  Chapter 7, Events explains this
+model and also explains the Java 1.1 event model that
+replaces it.
+To compile this example, you'd save it in a file named
+Scribble.java and use javac:
+% javac Scribble.java
+This example is an applet, not a standalone program like our
+"Hello World" example.  It does not have a main()
+method, and therefore cannot be run directly by the Java
+interpreter.  Instead, we must reference it in an HTML file
+and run the applet in an applet viewer or Web browser.  It
+is the applet viewer or Web browser that loads the applet
+class into its running Java interpreter and invokes the
+various methods of the applet at the appropriate times.  To
+include the applet in a Web page, we'd use an HTML fragment
+like the following:
+&lt;APPLET code="Scribble.class" width=500 height=300&gt;
+&lt;/APPLET&gt;
+Example 1.3
+shows a complete HTML file that we might use to display the
+applet.  Chapter 15, Java-Related HTML Tags explains
+the HTML syntax for applets in full detail.
+Example 1.3: An HTML File that Contains an Applet
+&lt;HTML&gt;
+&lt;HEAD&gt;
+&lt;TITLE&gt;The Scribble Applet&lt;/TITLE&gt;
+&lt;/HEAD&gt;
+&lt;BODY&gt;
+Please scribble away in the applet below.
+&lt;P&gt;
+&lt;APPLET code="Scribble.class" width=500 height=300&gt;
+Your browser does not support Java, or Java is not enabled. Sorry!
+&lt;/APPLET&gt;
+&lt;/BODY&gt;
+&lt;/HTML&gt;
+Suppose we save this example HTML file as
+Scribble.html.  Then to run this applet, you could use
+Sun's appletviewer command like this:
+% appletviewer Scribble.html
+You could also display the applet by viewing the
+Scribble.html file in your Web browser, if your
+browser supports Java applets.
+Figure 1.1
+showed the Scribble applet running in Netscape Navigator.
+Why Is Java Interesting?
+How Java Differs from C
+ 
+ 
+ 
+ 
+ 
+ 
+ 

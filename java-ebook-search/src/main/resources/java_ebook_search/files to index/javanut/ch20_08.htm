@@ -1,0 +1,27 @@
+
+[Chapter 20] 20.8 java.awt.event.ContainerAdapter (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.8 java.awt.event.ContainerAdapter (JDK 1.1)
+This class is a trivial implementation of
+ContainerListener; it provides empty bodies for each
+of the methods of that interface.  When you are not
+interested in all of these methods, it is often
+easier to subclass ContainerAdapter than it is to implement
+ContainerListener from scratch.
+public abstract class ContainerAdapter extends Object implements ContainerListener {
+    // Default Constructor: public ContainerAdapter()
+    // Public Instance Methods
+            public void componentAdded(ContainerEvent e);  // From ContainerListener
+            public void componentRemoved(ContainerEvent e);  // From ContainerListener
+}
+Hierarchy:
+Object->ContainerAdapter(ContainerListener(EventListener))
+java.awt.event.ComponentListener (JDK 1.1)
+java.awt.event.ContainerEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,123 @@
+
+[Chapter 28] 28.23 java.net.URLConnection (JDK 1.0)
+Chapter 28The java.net Package
+28.23 java.net.URLConnection (JDK 1.0)
+This abstract class defines a network connection to an
+object specified by a URL. URL.openConnection()
+returns a URLConnection instance. You would use a
+URLConnection object when you want more control over
+the downloading of data than is available through the
+simpler URL methods.
+connect() actually performs the network connection.
+Other methods that depend on being connected will call this
+method. getContent() returns the data referred to
+by the URL, parsed into an appropriate type of
+Object. If the URL protocol supports read and write
+operations, then getInputStream() and
+getOutputStream() respectively return input and
+output streams to the object referred to by the URL.
+getContentLength(), getContentType(),
+getContentEncoding(), getExpiration(),
+getDate(), and getLastModified()
+return the appropriate information about the object referred
+to by the URL, if that information can be determined
+(e.g., from HTTP header fields). getHeaderField()
+returns an HTTP header field specified by name or by number.
+getHeaderFieldInt() and getHeaderFieldDate()
+return the value of a named header field parsed as an
+integer or a date.
+There are a number of options that you may specify to
+control how the URLConnection behaves. These
+options are set with the various set() methods, and may be
+queried with corresponding get() methods. The
+options must be set before the connect() method is
+called.
+setDoInput() and setDoOutput()
+allow you to specify whether you  use the
+URLConnection for input and/or output. The default
+is input-only.  
+setAllowUserInteraction() specifies whether
+user interaction (such as typing a password) is allowed
+during the data transfer. The initial default is
+false. setDefaultAllowUserInteraction() is a
+class method that allows you to change the default value
+for user interaction.
+setUseCaches() allows you to specify whether a
+cached version of the URL may be used. You can set this to
+false to force a URL to be reloaded.
+setDefaultUseCaches() sets the default value for
+setUseCaches(). 
+setIfModifiedSince() allows you to specify that a
+URL should not be fetched (if it is possible to determine
+its modification date) unless it has been modified since a
+specified time.
+public abstract class URLConnection extends Object {
+    // Protected Constructor
+            protected URLConnection(URL url);
+    // Class Variables
+        1.1public static FileNameMap fileNameMap;
+    // Protected Instance Variables
+            protected boolean allowUserInteraction;
+            protected boolean connected;
+            protected boolean doInput;
+            protected boolean doOutput;
+            protected long ifModifiedSince;
+            protected URL url;
+            protected boolean useCaches;
+    // Class Methods
+            public static boolean getDefaultAllowUserInteraction();
+            public static String getDefaultRequestProperty(String key);
+            protected static String guessContentTypeFromName(String fname);
+            public static String guessContentTypeFromStream(InputStream is) throws IOException;
+            public static synchronized void setContentHandlerFactory(ContentHandlerFactory fac);
+            public static void setDefaultAllowUserInteraction(boolean defaultallowuserinteraction);
+            public static void setDefaultRequestProperty(String key, String value);
+    // Public Instance Methods
+            public abstract void connect() throws IOException;
+            public boolean getAllowUserInteraction();
+            public Object getContent() throws IOException;
+            public String getContentEncoding();
+            public int getContentLength();
+            public String getContentType();
+            public long getDate();
+            public boolean getDefaultUseCaches();
+            public boolean getDoInput();
+            public boolean getDoOutput();
+            public long getExpiration();
+            public String getHeaderField(String name);
+            public String getHeaderField(int n);
+            public long getHeaderFieldDate(String name, long Default);
+            public int getHeaderFieldInt(String name, int Default);
+            public String getHeaderFieldKey(int n);
+            public long getIfModifiedSince();
+            public InputStream getInputStream() throws IOException;
+            public long getLastModified();
+            public OutputStream getOutputStream() throws IOException;
+            public String getRequestProperty(String key);
+            public URL getURL();
+            public boolean getUseCaches();
+            public void setAllowUserInteraction(boolean allowuserinteraction);
+            public void setDefaultUseCaches(boolean defaultusecaches);
+            public void setDoInput(boolean doinput);
+            public void setDoOutput(boolean dooutput);
+            public void setIfModifiedSince(long ifmodifiedsince);
+            public void setRequestProperty(String key, String value);
+            public void setUseCaches(boolean usecaches);
+            public String toString();  // Overrides Object
+}
+Extended By:
+HttpURLConnection
+Passed To:
+ContentHandler.getContent()
+Returned By:
+URL.openConnection(), 
+URLStreamHandler.openConnection()
+java.net.URL (JDK 1.0)
+java.net.URLEncoder (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

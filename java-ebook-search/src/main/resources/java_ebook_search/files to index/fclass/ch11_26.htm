@@ -1,0 +1,241 @@
+
+[Chapter 11] FilterReader
+Chapter 11The java.io Package
+FilterReader
+Name
+FilterReader
+Synopsis
+Class Name:
+java.io.FilterReader
+Superclass:
+java.io.Reader
+Immediate Subclasses:
+java.io.PushbackReader
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The FilterReader class is the 
+superclass of all of the reader classes that filter input. A subclass of 
+FilterReader works by wrapping 
+an existing reader, called the underlying reader, and providing additional 
+functionality. The methods of FilterReader 
+simply override the methods of Reader 
+with versions that call the corresponding methods of the underlying reader. 
+FilterReader cannot be instantiated 
+directly; it must be subclassed. An instance of a subclass of FilterReader 
+is constructed with another Reader 
+object. The methods of a subclass of FilterReader 
+should override some methods in order to extend their behavior or 
+provide some sort of filtering. 
+FilterReader is like 
+FilterInputStream, except that 
+it deals with a character stream instead of a byte stream. 
+Class Summary
+public abstract class java.io.FilterReader extends java.io.Reader {
+  // Variables
+  protected Reader in;
+  // Constructors
+  protected FilterReader(Reader in);
+  // Instance Methods
+  public void close();
+  public void mark(int readAheadLimit);
+  public boolean markSupported();
+  public int read();
+  public int read(char[] cbuf, int off, int len);
+  public boolean ready();
+  public void reset();
+  public long skip(long n);
+}
+Variables
+in
+protected Reader in
+Description
+The underlying reader that this FilterReader 
+wraps or filters. 
+Constructors
+FilterReader
+protected FilterReader(Reader in)
+Parameters
+in
+The input reader to 
+filter. 
+Description
+This constructor creates a FilterReader 
+that gets data from in. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.close() 
+Description
+This method calls the close() 
+method of the underlying reader, which releases any system resources associated 
+with this object. 
+mark
+public void mark(int readAheadLimit) throws IOException
+Parameters
+readAheadLimit
+The maximum number of characters that can be read before the saved position 
+becomes invalid. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.mark() 
+Description
+This method calls the mark() 
+method of the underlying reader. If the underlying reader supports mark() 
+and reset(), this method causes 
+the FilterReader to remember 
+its current position. A subsequent call to reset() 
+causes the object to return to that saved position, and thus re-read a 
+portion of the input. 
+markSupported
+public boolean markSupported()
+Returns
+true if this reader supports 
+mark() and reset(); 
+false otherwise. 
+Overrides
+Reader.markSupported() 
+Description
+This method calls the markSupported() 
+method of the underlying reader and returns the result. 
+read
+public int read() throws IOException
+Returns
+The next character of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.read() 
+Description
+This method calls the read() 
+method of the underlying reader and returns the result. The method blocks 
+until data is available, the end of the stream is detected, or an exception 
+is thrown. 
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+An offset into the array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.read(char[], int, int) 
+Description
+This method reads up to len 
+characters of input into the given array starting at index off. 
+It does this by calling the read(char[], int, int) 
+method of the underlying reader and returning the result. The method blocks 
+until some data is available. 
+ready
+public boolean ready() throws IOException
+Returns
+A boolean value that indicates 
+whether the reader is ready to be read. 
+Throws
+IOException
+If the stream 
+is closed. 
+Overrides
+Reader.ready() 
+Description
+This method calls the ready() 
+method of the underlying reader and returns the result. If the underlying 
+stream is ready, this method returns true. 
+The underlying stream is ready if the next read() 
+is guaranteed not to block. 
+reset
+public void reset() throws IOException
+Throws
+IOException
+If the stream 
+is closed, mark() has not been 
+called, or the saved position has been invalidated. 
+Overrides
+Reader.reset() 
+Description
+This method calls the reset() 
+method of the underlying reader. If the underlying reader supports mark() 
+and reset(), this method sets 
+the position of the FilteredReader 
+to a position that was saved by a previous call to mark(). 
+Subsequent characters read from this FilteredReader 
+will begin from the saved position and continue normally. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of characters 
+to skip. 
+Returns
+The actual number of characters skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Reader.skip() 
+Description
+This method skips n characters 
+of input. It calls the skip() 
+method of the underlying reader. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FilterInputStream, 
+IOException, 
+PushbackReader, 
+Reader 
+FilterOutputStream
+FilterWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

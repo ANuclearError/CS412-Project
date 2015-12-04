@@ -1,0 +1,43 @@
+
+[Chapter 17] 17.4 Printing Example
+Chapter 17Printing
+17.4 Printing Example
+Now that you know about the different classes necessary to print, let's 
+put it all together. Printing takes four steps: 
+Get the PrintJob: 
+PrintJob pjob = getToolkit().getPrintJob(this, "Job Title", (Properties)null);
+Get the graphics context from the PrintJob: 
+Graphics pg = pjob.getGraphics();
+Print by calling printAll() 
+or print(). When this method 
+returns, you can call dispose() 
+to send the page to the printer: 
+printAll(pg);
+pg.dispose(); // This is like sending a form feed
+Clean up after yourself: 
+pjob.end();
+The following code summarizes how to print: 
+// Java 1.1 only
+PrintJob pjob = getToolkit().getPrintJob(this, "Print?", (Properties)null);
+if (pjob != null) {
+        Graphics pg = pjob.getGraphics();
+        if (pg != null) {
+            printAll(pg);
+            pg.dispose();
+        }
+    pjob.end();
+}
+This code prints the current component: what you get from the printer should 
+be a reasonable rendition of what you see on the screen. Note that we didn't 
+need to modify paint() at all. 
+That should always be the case if you want your printer output to look 
+like your onscreen component. 
+Component Methods
+Printing Arbitrary Content
+ 
+ 
+ 
+ 
+ 
+ 
+ 

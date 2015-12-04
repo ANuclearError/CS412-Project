@@ -1,0 +1,213 @@
+
+[Chapter 18] Applet
+Chapter 18java.applet Reference
+Applet
+Name
+Applet
+Description
+The Applet class provides the 
+framework for delivering Java programs within web pages. 
+Class Definition
+public class java.applet.Applet
+    extends java.awt.Panel {
+  // Constructors
+  public Applet();
+  // Instance Methods
+  public void destroy();
+  public AppletContext getAppletContext();
+  public String getAppletInfo();
+  public AudioClip getAudioClip (URL url);
+  public AudioClip getAudioClip (URL url, String filename);
+  public URL getCodeBase();
+  public URL getDocumentBase();
+  public Image getImage (URL url);
+  public Image getImage (URL url, String filename);
+  public Locale getLocale(); 
+  public String getParameter (String name);
+  public String[][] getParameterInfo();
+  public void init();
+  public boolean isActive();
+  public void play (URL url);
+  public void play (URL url, String filename);
+  public void resize (int width, int height);
+  public void resize (Dimension dim);
+  public final void setStub (AppletStub stub);
+  public void showStatus (String message);
+  public void start();
+  public void stop();
+}
+Constructors
+Applet
+public Applet()
+Description
+Constructs an Applet object. 
+Instance Methods
+destroy
+public void destroy()
+Description
+Called when the browser determines that it doesn't need to keep the 
+applet around anymore. 
+getAppletContext
+public AppletContext getAppletContext()
+Returns
+The current AppletContext of 
+the applet. 
+getAppletInfo
+public String getAppletInfo()
+Returns
+A short information string about the applet to be shown to the user. 
+getAudioClip
+public AudioClip getAudioClip (URL url)
+Parameters
+url
+URL of an audio file. 
+Returns
+Object that implements the AudioClip 
+interface for playing audio files. 
+Description
+Fetches an audio file to play with the AudioClip 
+interface. 
+public AudioClip getAudioClip (URL url , String filename)
+Parameters
+url
+Base URL of an audio file.
+filename
+Specific file, relative to url, that 
+contains an audio file. 
+Returns
+Object that implements AudioClip 
+interface for playing audio file. 
+Description
+Fetches an audio file to play with the AudioClip 
+interface. 
+getCodeBase
+public URL getCodeBase()
+Returns
+The complete URL of the .class 
+file that contains the applet. 
+getDocumentBase
+public URL getDocumentBase()
+Returns
+The complete URL of the .html 
+file that loaded the applet. 
+getImage
+public Image getImage (URL url)
+Parameters
+url
+URL of an image file. 
+Returns
+Image to be displayed. 
+Description
+Initiates the image loading process for the file located at the specified 
+location. 
+public Image getImage (URL url, String filename)
+Parameters
+url
+Base URL of an image file.
+filename
+Specific file, relative to url, that contains an image file. 
+Returns
+Image to be displayed. 
+Description
+Initiates the image loading process for the file located at the specified 
+location. 
+getLocale
+public Locale getLocale() 
+Returns
+Applet's locale. 
+Overrides
+Component.getLocale() 
+Description
+Used for internationalization support. 
+getParameter
+public String getParameter (String name)
+Parameters
+name
+Name of parameter to get. 
+Returns
+The value associated with the given parameter in the HTML file, or null. 
+Description
+Allows you to get parameters from within the &lt;APPLET&gt; 
+tag of the .html file that 
+loaded the applet. 
+getParameterInfo
+public String[][] getParameterInfo()
+Returns
+Overridden to provide a series of three-string arrays that describes the parameters this applet 
+reads. 
+init
+public void init()
+Description
+Called by the system when the applet is first loaded. 
+isActive
+public boolean isActive()
+Returns
+true if the applet is active, 
+false otherwise. 
+play
+public void play (URL url)
+Parameters
+url
+URL of an audio file . 
+Description
+Plays an audio file once. 
+public void play (URL url, String filename)
+Parameters
+url
+Base URL of an audio file .
+filename
+Specific file, relative to url, that contains an audio file. 
+Description
+Plays an audio file once. 
+resize
+public void resize(int width, int height)
+Parameters
+width
+New width for the Applet.
+height
+New height for the Applet. 
+Description
+Changes the size of the applet. 
+public void resize (Dimension dim)
+Parameters
+dim
+New dimensions for the applet. 
+Description
+Changes the size of the applet. 
+setStub
+public final void setStub (AppletStub stub)
+Parameters
+stub
+Platform specific stubfor environment. 
+Description
+Called by the system to setup AppletStub. 
+showStatus
+public void showStatus (String message)
+Parameters
+message
+Message to display to user. 
+Description
+Displays a message on the status line of the browser. 
+start
+public void start()
+Description
+Called by the system every time the applet is displayed. 
+stop
+public void stop()
+Description
+Called by the system when it wants the applet to stop execution; typically, 
+every time the user leaves the page that includes the applet. 
+See Also
+AppletContext, AppletStub, 
+AudioClip, Container, Dimension, Image, 
+Locale, Panel, 
+String, URL 
+Package diagrams
+AppletContext
+ 
+ 
+ 
+ 
+ 
+ 
+ 

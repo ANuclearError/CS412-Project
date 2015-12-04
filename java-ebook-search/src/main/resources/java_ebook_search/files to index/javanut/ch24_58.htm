@@ -1,0 +1,34 @@
+
+[Chapter 24] 24.58 java.io.SequenceInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.58 java.io.SequenceInputStream (JDK 1.0)
+This class provides a way of seamlessly concatenating the
+data from two or more input streams. It provides an
+InputStream interface to a sequence of
+InputStream objects. Data are read from the streams
+in the order in which the streams are specified. When the end
+of one stream is reached, data are automatically read from
+the next stream. This class might be useful, for example,
+when implementing an "include file" facility for a parser of
+some sort.
+public class SequenceInputStream extends InputStream {
+    // Public Constructors
+            public SequenceInputStream(Enumeration e);
+            public SequenceInputStream(InputStream s1, InputStream s2);
+    // Public Instance Methods
+        1.1  public int available() throws IOException;  // Overrides InputStream
+            public void close() throws IOException;  // Overrides InputStream
+            public int read() throws IOException;  // Defines InputStream
+            public int read(byte[] buf, int pos, int len) throws IOException;  // Overrides InputStream
+}
+Hierarchy:
+Object->InputStream->SequenceInputStream
+java.io.Reader (JDK 1.1)
+java.io.Serializable (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,68 @@
+
+[Chapter 4] 4.8 Reflection
+Chapter 4What's New in Java 1.1
+4.8 Reflection
+Reflection in Java 1.1 refers to the ability of Java classes
+to reflect upon themselves, or to "look inside themselves."
+The java.lang.Class class has been greatly enhanced
+in Java 1.1.  It now includes methods that return
+the fields, methods, and constructors defined by a class.
+These items are returned as objects of type Field,
+Method, and Constructor, respectively.
+These new classes are part of the new
+java.lang.reflect package, and they each provide
+methods to obtain complete information about the field,
+method, or constructor they represent.  For example, the
+Method object has methods to query the name,
+the parameter types, and the return type
+of the method it represents. Chapter 12, Reflection
+provides some examples of using the Reflection API.
+Besides allowing a program to inspect the members
+of a class, the java.lang.reflect package
+also allows a program to manipulate these fields and
+methods.  The Field class defines methods that get
+and set the value of the represented field for any given
+object of the appropriate
+type.  Similarly, the Method object defines an
+invoke() method
+that allows the represented method to be invoked, and the
+Constructor class defines a newInstance()
+method that creates a
+new object and invokes the represented constructor on it.
+java.lang.reflect also defines an Array
+class.  It does not represent a specific
+array, but defines static methods that read and write array
+elements and dynamically create new arrays.
+With the addition of reflection, the Class class has
+been
+expanded to represent not just Java classes, but any Java
+type, including primitive types and array types.  There is a
+special Class object that represents each of the eight
+Java primitive types, and another special Class object that
+represents the void type.  These special
+Class objects are available as constants in the
+wrapper objects for the primitive types.
+Integer.TYPE is a Class object that
+represents the int type, for example, and
+Void.TYPE is a Class object that represents
+the void type.
+Finally, new Java language syntax makes it easier to
+obtain a Class object that represents a Java class.
+If you follow the name of a class, interface, or other type
+with .class, Java evaluates that expression and
+returns the corresponding Class object.  So, for
+example, the following two expressions are equivalent:
+String.class
+Class.forName("java.lang.String")
+Note that this syntax also works with primitive type names:
+you can write short.class, for example, which
+returns the same value as Short.TYPE.
+Object Serialization
+Java Beans
+ 
+ 
+ 
+ 
+ 
+ 
+ 

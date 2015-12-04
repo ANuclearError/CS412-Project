@@ -1,0 +1,260 @@
+
+[Chapter 18] ZipEntry
+Chapter 18The java.util.zip Package
+ZipEntry
+Name
+ZipEntry
+Synopsis
+Class Name:
+java.util.zip.ZipEntry
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ZipEntry class represents 
+a single entry in a ZIP file, which is either a compressed file or an uncompressed 
+file. ZipEntry provides methods 
+that set and retrieve various pieces of information about an entry. 
+When you are reading a ZIP file, you use ZipInputStream.getNextEntry() 
+to return the next entry in the file. Then you can retrieve information 
+about that particular entry. You can also read the entries in a ZIP file 
+in a nonsequential order using the ZipFile 
+class. 
+When you are writing a ZIP file, you use ZipOutputStream.putNextEntry() 
+to write an entry, and you must create your own ZipEntry 
+objects. If you are storing compressed (deflated) files, you need only 
+specify a name for the ZipEntry ; 
+the other fields are filled in automatically. If, however, you are placing 
+uncompressed entries, you need to specify the size of each entry and provide 
+a CRC-32 checksum value. 
+Class Summary
+public class java.util.zip.ZipEntry extends java.lang.Object {
+  // Constants
+  public static final int DEFLATED;
+  public static final int STORED;
+  // Constructors
+  public ZipEntry(String name);
+  // Instance Methods
+  public String getComment();
+  public long getCompressedSize();
+  public long getCrc();
+  public byte[] getExtra();
+  public int getMethod();
+  public String getName();
+  public long getSize();
+  public long getTime();
+  public boolean isDirectory();
+  public void setComment(String comment);
+  public void setCrc(long crc);
+  public void setExtra(byte[] extra);
+  public void setMethod(int method);
+  public void setSize(long size);
+  public void setTime(long time);
+  public String toString();
+}
+Constants
+DEFLATED
+public static final int DEFLATED
+Description
+A constant that represents an entry that is stored using the deflate algorithm. 
+STORED
+public static final int STORED
+Description
+A constant that represents an entry that is stored verbatim; in other 
+words, with no compression applied. 
+Constructors
+ZipEntry
+public ZipEntry(String name)
+Parameters
+name
+The name of the entry. 
+Throws
+NullPointerException
+If name is null.
+IllegalArgumentException
+If name is longer than 0xFFFF 
+bytes. 
+Description
+This constructor creates a ZipEntry 
+with the given name. 
+Instance Methods
+getComment
+public String getComment()
+Returns
+The comment of this entry or null 
+if one has not been specified. 
+Description
+This method returns the comment string for this ZipEntry. 
+getCompressedSize
+public long getCompressedSize()
+Returns
+The compressed size of this entry or -1 is the compressed size is not known. 
+Description
+This method returns the compressed size of this ZipEntry. 
+getCrc
+public long getCrc()
+Returns
+The checksum value for this entry. 
+Description
+This method returns the CRC-32 checksum value for this ZipEntry. 
+getExtra
+public byte[] getExtra()
+Returns
+The extra field data for this entry or null 
+if there is none. 
+Description
+This method returns the bytes in the extra field data for this ZipEntry. 
+getMethod
+public int getMethod()
+Returns
+The compression method of this entry or -1 if it has not been specified. 
+Description
+This method returns the compression method of this ZipEntry. 
+Valid values are DEFLATED and 
+STORED. 
+getName
+public String getName()
+Returns
+The name of this entry. 
+Description
+This method returns the string name of this ZipEntry. 
+getSize
+public long getSize()
+Returns
+The uncompressed size of this entry or -1 if the uncompressed size is not 
+known. 
+Description
+This method returns the uncompressed size of this ZipEntry. 
+getTime
+public long getTime()
+Returns
+The modification date of this entry. 
+Description
+This method returns the modification date of this ZipEntry 
+as the number of milliseconds since midnight, January 1, 1970 GMT. 
+isDirectory
+public boolean isDirectory()
+Returns
+A boolean value that indicates 
+whether or not this entry is a directory. 
+Description
+This method returns true if 
+this ZipEntry represents a 
+directory. 
+setComment
+public void setComment(String comment)
+Parameters
+comment
+The new comment string. 
+Throws
+IllegalArgumentException
+If comment is longer than 0xFFFF 
+bytes. 
+Description
+This method sets the comment string of this ZipEntry. 
+setCrc
+public void setCrc(long crc)
+Parameters
+crc
+The new checksum value. 
+Description
+This method sets the CRC-32 checksum value for this ZipEntry. 
+setExtra
+public void setExtra(byte[] extra)
+Parameters
+extra
+The extra field data. 
+Throws
+IllegalArgumentException
+If extra is longer than 0xFFFF 
+bytes. 
+Description
+This method sets the extra field data for this ZipEntry. 
+setMethod
+public void setMethod(int method)
+Parameters
+method
+The new compression method. 
+Throws
+IllegalArgumentException
+If method is not DEFLATED 
+or STORED. 
+Description
+This method sets the compression method of this ZipEntry. 
+This corresponds to the compression level of Deflater. 
+setSize
+public void setSize(long size)
+Parameters
+size
+The new uncompressed 
+entry size. 
+Throws
+IllegalArgumentException
+If size is less than 0 or greater 
+than 0xFFFFFFFF bytes. 
+Description
+This method sets the uncompressed size of this ZipEntry. 
+setTime
+public void setTime(long time)
+Parameters
+time
+The new modification 
+date, expressed as the number of seconds since midnight, January 1, 1970 
+GMT. 
+Description
+This method sets the modification date of this ZipEntry. 
+toString
+public String toString()
+Returns
+A string representation of this object. 
+Overrides
+Object.toString() 
+Description
+This method returns the name of this ZipEntry. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+Deflater, 
+IllegalArgumentException, 
+Inflater, 
+NullPointerException, 
+ZipInputStream, 
+ZipOutputStream 
+InflaterInputStream
+ZipException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

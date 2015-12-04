@@ -1,0 +1,77 @@
+
+[Chapter 8] 8.3 Printing
+Chapter 8New AWT Features
+8.3 Printing
+The popup menu visible in Example 8.1 
+shows that that example application supports a Print
+command.  One of the most exciting new features of Java 1.1
+is the ability of programs to generate hardcopy.  You draw
+on a page in Java just as you draw on the screen: by
+invoking methods of a Graphics object.  The
+difference, of course, is in the Graphics object.
+When drawing to the screen, you are given an instance of one
+subclass of Graphics, and when printing, you are
+given an instance of some other subclass.  The two
+subclasses implement the necessary functionality for
+on-screen drawing and printing, respectively.
+To print in Java 1.1, follow these steps:
+First, you must begin the "print job."  You do this by
+calling the getPrintJob() method of the
+Toolkit object.  This method displays a dialog box
+to the user to request information about the print job, such
+as the name of the printer it should be sent to.
+getPrintJob() returns a PrintJob object.
+You can pass a Properties object to
+getPrintJob() and the user's printing preferences
+are stored in it.  If the Properties object is
+used in a subsequent call to getPrintJob(), those
+preferences are reused in the dialog box.
+To begin printing a page, you call the getGraphics()
+method of the PrintJob object.  This returns a
+Graphics object that implements the
+PrintGraphics interface to distinguish it from an
+on-screen Graphics object.
+Now you can use the various methods of the Graphics
+object to draw your desired output on the page.
+When you are done drawing the page, you call the
+dispose() method of the Graphics object to
+send that page description to the printer.  If you need to
+print another page, you can call the getGraphics()
+method of the PrintJob again to obtain a new
+Graphics object for the next page, and repeat the
+process of drawing and calling dispose().
+When you have printed all of your pages, you end the print job
+itself by calling the end() method of the
+PrintJob object.
+Printing AWT components and hierarchies of components is
+particularly easy.  You simply pass a print Graphics
+object to the print() method of the component you
+want to print.  By default, print() simply passes
+this Graphics object to the paint() method.  If a
+component wants to display itself differently on paper than
+it does on screen, however, it might implement a custom
+print() method.  To print a complete hierarchy of
+components, you simply call the printAll() method of
+the root component of the hierarchy.
+An important restriction on printing is that applets cannot
+initiate print jobs.  This does not mean that they cannot
+define custom print() methods to allow themselves to
+be printed; merely that the Web browser or applet viewer
+must initiate the print job, and invoke the
+printAll() method of the applet.
+The print() method of
+Example 8.1 shows how to generate hardcopy.  Note that this
+Scribble.print() method happens to have the same
+name as the Component.print() method discussed
+above.  The two methods have different arguments, however,
+so Scribble.print() does not override
+Component.print().
+Popup Menus and Menu Shortcuts
+Data Transfer with Cut-and-Paste
+ 
+ 
+ 
+ 
+ 
+ 
+ 

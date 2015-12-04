@@ -1,0 +1,58 @@
+
+[Chapter 18] 18.18 java.awt.Dialog (JDK 1.0)
+Chapter 18The java.awt Package
+18.18 java.awt.Dialog (JDK 1.0)
+This class represents a dialog box window.  A Dialog
+may be modal so that it blocks user input to all other
+windows until dismissed, may optionally have a title, and
+may be resizable.  A Dialog object is a
+Container and Component objects can be added
+to it in the normal way with the add() method.  The
+default LayoutManager for Dialog is
+BorderLayout.  You may specify a different
+LayoutManager object with setLayout().
+Call the pack() method of Window to initiate
+layout management of the dialog and set its initial size
+appropriately. 
+Call show() to pop a dialog up, and hide()
+to pop it down.  For modal dialogs, show()
+blocks until the dialog is dismissed.  Event handling
+continues while show() is blocked, using a new event
+dispatcher thread.  In Java 1.0, show() is inherited
+from Window.  Call the Window.dispose() method
+when the Dialog is no longer needed so that its
+window system resources may be reused.
+public class Dialog extends Window {
+    // Public Constructors
+        1.1  public Dialog(Frame parent);
+            public Dialog(Frame parent, boolean modal);
+        1.1  public Dialog(Frame parent, String title);
+            public Dialog(Frame parent, String title, boolean modal);
+    // Public Instance Methods
+            public void addNotify();  // Overrides Window
+            public String getTitle();
+            public boolean isModal();
+            public boolean isResizable();
+        1.1  public void setModal(boolean b);
+            public synchronized void setResizable(boolean resizable);
+            public synchronized void setTitle(String title);
+        1.1  public void show();  // Overrides Window
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Container
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->
+Container->Window->Dialog
+Extended By:
+FileDialog
+Passed To:
+Toolkit.createDialog()
+java.awt.Cursor (JDK 1.1)
+java.awt.Dimension (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

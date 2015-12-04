@@ -1,0 +1,532 @@
+
+[Chapter 2] 2.2 Tokenization
+Chapter 2Lexical Analysis
+2.2 Tokenization
+The tokenization phase of lexical analysis in Java handles breaking
+down the lines of Unicode source code into comments, white space,
+and tokens. The rule that defines the overall lexical organization
+of Java programs is TokenStream:
+References
+Comments;
+Identifiers;
+Keywords;
+Literals;
+Operators;
+Separators;
+White Space
+Identifiers
+An identifier
+is generally used as the name for a thing in a program. A few identifiers
+are reserved by Java for special uses; these are called keywords.
+From the viewpoint of lexical analysis, an identifier
+is a sequence of one or more Unicode characters. The first character
+must be a letter, underscore, or dollar sign. The other characters
+must be letters, numbers, underscores, or dollar signs. An identifier
+can't have the same Unicode character sequence as a keyword:
+For example, foo21, _foo,
+and $foo
+are all valid identifiers; 3foo is not a valid
+identifier. There is no limit to the length of an identifier in
+Java. Although $ is a legal character in an identifier, you should avoid using it to eliminate confusion with compiler-generated identifiers.
+A UnicodeDigit
+is a Unicode character that is classified as a digit by
+Character.isDigit().
+A UnicodeLetter
+is a Unicode character code that is classified as a letter
+by Character.isLetter().
+Two identifiers are the same if they have
+the same length and if corresponding characters in each identifier
+have the same Unicode character code. It is possible, however, to
+have identifiers that are distinct to a Java compiler, but not to
+the human eye. For example, the Java compiler recognizes lowercase
+Latin `a' (\u0061) and lowercase Cyrillic `a'
+(\u0430) as different characters, although they
+may well be visually indistinguishable.
+References
+Character;
+Keywords
+Keywords
+Keywords are identifiers that
+have a special meaning to Java. Because of their special meanings,
+keywords are not available for use as names of things defined in
+programs. A Keyword is one of the following:
+abstract
+default
+goto
+null
+synchronized
+boolean
+do
+if
+package
+this
+break
+double
+implements
+private
+throw
+byte
+else
+import
+protected
+throws
+case
+extends
+instanceof
+public
+transient
+catch
+false
+int
+return
+true
+char
+final
+interface
+short
+try
+class
+finally
+long
+static
+void
+const
+float
+native
+super
+volatile
+continue
+for
+new
+switch
+while
+The keywords const and
+goto are not currently used for any purpose in
+Java, although they may be assigned meaning in future versions of
+the Java language.
+References
+Identifiers
+Literals
+A literal
+is a token that represents a constant value of a primitive data
+type or a String object:
+References
+Boolean literals;
+Character literals;
+Floating-point literals;
+Integer literals;
+String literals
+Integer literals
+An integer literal represents
+an integer constant:
+NonZeroDigit
+is defined as one of the following characters: 1,
+2, 3, 4,
+5, 6, 7,
+8, or 9.
+OctalDigit
+is defined as one of the following characters: 0,
+1, 2, 3,
+4, 5, 6,
+or 7.
+Integer literals that begin
+with a non-zero digit are in base 10 and are called decimal
+literals. Integer
+literals that begin with 0x are in base 16 and
+are called hexadecimal literals.
+Integer literals that begin with 0 followed by
+0-7 are in base 8 and are called octal
+literals.
+If an integer literal ends with L or l,
+its type is long; otherwise its type is
+int.
+Integer literals cannot begin with a +
+or a -. If either of these characters precedes
+an integer literal, it is treated as a unary operator, a separate
+token in its own right.
+Here are some examples of int
+literals:
+0
+92
+0642
+0xDeadBeef
+Here are some examples of long literals:
+0L
+1414213562373l
+0x2000000000L
+075204l
+Note that the preceding examples end with either an uppercase
+or lowercase "L". They do not end with the digit 1 (one).
+Decimal literals of type int may not be greater than
+2147483647, which represents 2^31-1.
+Decimal literals of type long
+may not be greater than 9223372036854775807L, which represents
+2^63-1.
+Decimal literals cannot be used directly to represent negative values.
+To represent negative values using a decimal literal, you must use
+the decimal literal in conjunction with the unary minus operator.
+For example, representing -321 requires the use of a unary minus
+and a decimal literal. To represent the int -2147483648,
+use 0x80000000. To represent the long
+-9223372036854775808L, use 0x8000000000000000L.
+Hexadecimal and octal literals may be positive or negative
+because they represent either a 32-bit (int)
+or 64-bit (long) two's-complement quantity. Two's
+complement is a binary encoding technique that represents both positive
+and negative values. The range of values that can be represented
+by int hexadecimal and octal literals is shown
+in Table 2-1.
+Table 2.1: Minimum and Maximum int Literals
+Representation
+Minimum Value
+Maximum Value
+Hexadecimal
+0x80000000
+0x7fffffff
+Octal
+020000000000
+017777777777
+Base 10 equivalent
+-2147483648
+2147483647
+The range of values that can be represented
+by long hexadecimal and octal literals is shown
+in Table 2-2.
+Table 2.2: Minimum and Maximum long Literals
+Representation
+Minimum Value
+Maximum Value
+Hexadecimal
+0x8000000000000000L
+0x7fffffffffffffffL
+Octal
+01000000000000000000000L
+0777777777777777777777L
+Base 10 equivalent
+-9223372036854775808
+9223372036854775807
+References
+**UNKNOWN XREF**;
+**UNKNOWN XREF**;
+Integer types;
+Conversion to Unicode;
+Unary Operators
+Floating-point literals
+A floating-point
+literal represents a constant value of type float
+or double :
+A floating-point literal must minimally contain at least one digit
+and either a decimal point or an exponent.
+The data
+type of a floating-point literal is float if
+and only if the suffix f or F
+appears at the end of the literal. If there is no suffix or the
+suffix is d or D, the data
+type is double.
+Floating-point literals
+cannot begin with a + or a -.
+If either of these precedes a floating-point literal, it is treated
+as a separate token, a unary operator.
+Here are some
+examples of float literals:
+23e4f
+1.E2f
+.31416e1F
+2.717f
+7.63e+9f
+Here are some examples of double literals:
+23e4
+1.E2
+.31415e1D
+2.717
+7.53e+9d
+The ranges of values that can be represented by float and
+double literals are shown in Table 2-3.
+Table 2.3: Minimum and Maximum Floating-Point Literals
+Representation
+Minimum Value
+Maximum Value
+float
+1.40239846e-45f
+3.40282347e38f
+double
+4.94065645841246544e-324
+1.79769313486231570e308
+Floating-point literals that exceed these
+limits are treated as errors by the Java compiler. The special floating-point
+values positive infinity, negative infinity, and not-a-number are
+available as predefined constants in Java, as part of the
+Float and Double classes.
+References
+**UNKNOWN XREF**;
+Floating-point types;
+Unary Operators;
+Double;
+Float
+Boolean literals
+There are two boolean
+literal values, represented by the keywords true
+and false:
+References
+Boolean Type
+Character literals
+A character literal
+represents a constant value of type char
+(an unsigned 16-bit quantity). A character
+literal consists of either the character being represented, or an
+equivalent escape sequence, enclosed in single quotes:
+Here are some examples of character literals:
+'c'
+'n'
+'\\'
+'\u0138'
+The character sequence \uxxxx
+is not defined above as a valid Escape, even though it can
+be used as a legal character literal. This sequence of characters
+is defined as an EscapedSourceCharacter, which
+is handled during the pre-processing phase, before tokenization
+takes place. As a result, the tokenization phase never sees an EscapedSourceCharacter.
+Tokenization sees only the single Unicode character that replaces
+the EscapedSourceCharacter during pre-processing.
+The translations of the different types of escape sequences
+supported in Java are shown in Table 2-4.
+Table 2.4: Java Escape Sequences
+Escape Sequence
+Unicode Equivalent
+Meaning
+\b
+\u0008
+Backspace
+\t
+\u0009
+Horizontal tab
+\n
+\u000a
+Linefeed
+\f
+\u000c
+Form feed
+\r
+\u000d
+Carriage return
+\"
+\u0022
+Double quote
+\'
+\u0027
+Single quote
+\\
+\u005c
+Backslash
+\xxx
+\u0000 to \u00ff
+The character corresponding to the octal value xxx
+A character literal representing a carriage
+return character can be written only as '\r';
+a character literal representing a linefeed character can be written
+only as '\n'. During the pre-processing that
+precedes token recognition, these characters are classified as line
+terminators, so neither carriage return (\u000d)
+nor linefeed (\u000a) characters in Java source
+code can ever be seen by the Java compiler as being part of a character
+literal.
+If a backslash that is not part of a legal
+Escape appears in a character literal, it is
+flagged as an error. This is different from languages like C++ that
+ignore backslashes in character literals that are not part of an
+escape.
+References
+Conversion to Unicode;
+Integer types;
+**UNKNOWN XREF**
+String literals
+A string literal represents
+a constant string value and consists of the characters in the string
+or the equivalent escapes:
+Here are some examples of string literals:
+""                         // the empty string
+"Hello World"
+"This has \"escapes\"\n"   // a string literal with escapes
+There is no primitive type for
+representing strings in Java. Instead, each string literal becomes
+a reference to a String object. If two or more
+string literals consist of the same sequence of characters, they
+refer to the same String object. Using one String
+object to represent multiple string literals works because, once
+created, the contents of a String object cannot
+be changed.
+For a string literal to contain a carriage
+return or linefeed character, the carriage return or linefeed must
+be written as \r or \n. Neither
+carriage return (\u000d) nor linefeed (\u000a)
+characters in Java source code can ever be seen by the Java compiler
+as part of a string literal. These characters are classified as
+line terminators during the pre-processing phase that precedes token
+recognition. For the same reason, \u Unicode
+escapes for carriage return and linefeed characters cannot be directly
+used in string literals.
+If a backslash that is not
+part of a legal Escape appears in a string
+literal it is flagged as an error. This is different from languages
+like C++ that ignore backslashes in string literals that are not
+part of an escape.
+Because operations on strings are
+generally based on the length of the string, Java does not automatically
+supply a NUL character (\u0000) at the end of
+a string literal. For the same reason, it is not customary for Java
+programs to put a NUL character at the end of a string.
+References
+Escape 2.2.3.4;
+Specially supported classes;
+String;
+StringBuffer;
+String Concatenation Operator +
+Separators
+A separator
+is any one of the punctuation tokens in the following railroad diagram:
+Separator tokens are used to separate other types of tokens. Thus,
+separators are a part
+of a higher-level syntactic construct. Although separators have
+syntactic significance, they do not imply any operation on data.
+Operators
+An operator is a token that
+implies an operation on data. Java has both assignment and non-assignment
+operators:
+A NonAssignmentOperator is one of the following:
++
+-
+&lt;=
+^
+++
+&lt;
+*
+&gt;=
+%
+--
+/
+!=
+?
+&gt;&gt;
+!
+&amp;
+==
+:
+&gt;&gt;
+~
+|
+&amp;&amp;
+&gt;&gt;&gt;
+An AssignmentOperator is one of the following:
+=
+-=
+*=
+/=
+|=
+&amp;=
+^=
++=
+%=
+&lt;&lt;=
+&gt;&gt;=
+&gt;&gt;&gt;=
+Unlike C/C++, Java does not have a comma
+operator. Java does allow a comma to be used as a separator in the
+header portion of for statements, however. Java
+also omits a number of other operators found in C and C++. Most
+notably, Java does not include operators for accessing physical
+memory as an array of bytes, such as sizeof,
+unary &amp; (address of),
+unary * (contents of),
+or -&gt; (contents of field).
+Comments
+Java supports three styles of
+comments:
+A standard C-style comment, where all of the
+characters between /* and */
+are ignored.
+A single-line comment, where all of the
+characters from // to the end of the line are
+ignored.
+A documentation comment that begins with /**
+and ends with */. These comments are similar
+to standard C-style comments, but the contents of a documentation
+comment can be extracted to produce automatically generated documentation.
+The formal definition of a comment is:
+C-style comments and documentation
+comments do not nest. For example, consider the following arrangement
+of comments:
+/*   ...   /*   ...   */   ...   */
+The Java compiler interprets the first */
+to be the end of the comment, so that what follows is a syntax error.
+However, in a single-line comment (i.e., one that starts with
+// ), the sequences /*,
+/**,
+and */ have no special meaning. Similarly, in
+a C-style comment or a documentation comment (i.e., comments that
+begin with /* or /**), the
+sequence // has no special meaning.
+In
+order to comment out large chunks of code, you need to adopt a commenting
+style. The C/C++ practice of using #if to comment
+out multiple lines of code is not available for Java programs because
+Java does not have a conditional compilation mechanism. If you use C-style comments in your code, you'll need to use
+the // style of comment to comment out multiple
+lines of code:
+///*
+// * Prevent instantiation of RomanNumeral objects without
+// * parameters.
+// */
+//    private RomanNumeral() {
+//        super();
+//    }
+The
+/* */ style of comment cannot
+be used to comment out the lines in the above example because the
+example already contains that style of comment, and these comments
+do not nest.
+If, however, you stick to using the //
+style of comment in your code, you can use C-style comments to comment
+out large blocks of code:
+/*
+ *// Prevent instantiation of RomanNumeral objects without
+ *// parameters.
+ *    private RomanNumeral() {
+ *        super();
+ *     }
+ */
+Which style you
+choose is less important than using it consistently, so that you
+avoid inadvertently nesting comments in illegal ways.
+References
+Documentation Comments;
+Division of the Input Stream into Lines
+White Space
+White space denotes characters such
+as space, tab, and form feed that do not have corresponding glyphs,
+but alter the position of following glyphs. White space and
+comments are discarded. The purpose of white space is to separate
+tokens from each other:
+SpaceCharacter
+is equivalent to \u0020.
+HorizontalTabCharacter
+is equivalent to \u0009 or \t.
+FormFeedCharacter
+is equivalent to \u000C or \f.
+EndOfFileMarker is defined as
+\u001A. Also known
+as Control-Z, this is the last character in a pre-processed compilation
+unit. It is treated as white space if it is the last character in a file,
+to enhance compatibility with
+older MS-DOS programs and other operating environments that recognize
+\u001A as an end-of-file marker.
+References
+Division of the Input Stream into Lines
+Pre-Processing
+Data Types
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,39 @@
+
+[Chapter 21] 21.4 java.awt.image.DirectColorModel (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.4 java.awt.image.DirectColorModel (JDK 1.0)
+This class is a ColorModel that extracts the red,
+green, blue, and alpha values directly from the bits of the
+pixel. The arguments to the constructor methods specify the
+number of significant bits in the pixel and the mask used to
+extract each of the color components from the pixel. The
+default RGB color model is a DirectColorModel.
+You should not need to instantiate any kind of
+ColorModel object unless you are processing image
+data that does not use the standard RGB color format.
+public class DirectColorModel extends ColorModel {
+    // Public Constructors
+            public DirectColorModel(int bits, int rmask, int gmask, int bmask);
+            public DirectColorModel(int bits, int rmask, int gmask, int bmask, int amask);
+    // Public Instance Methods
+            public final int getAlpha(int pixel);  // Defines ColorModel
+            public final int getAlphaMask();
+            public final int getBlue(int pixel);  // Defines ColorModel
+            public final int getBlueMask();
+            public final int getGreen(int pixel);  // Defines ColorModel
+            public final int getGreenMask();
+            public final int getRGB(int pixel);  // Overrides ColorModel
+            public final int getRed(int pixel);  // Defines ColorModel
+            public final int getRedMask();
+}
+Hierarchy:
+Object->ColorModel->DirectColorModel
+java.awt.image.CropImageFilter (JDK 1.0)
+java.awt.image.FilteredImageSource (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

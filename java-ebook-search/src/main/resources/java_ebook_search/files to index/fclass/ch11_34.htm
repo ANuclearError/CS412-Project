@@ -1,0 +1,235 @@
+
+[Chapter 11] LineNumberInputStream
+Chapter 11The java.io Package
+LineNumberInputStream
+Name
+LineNumberInputStream
+Synopsis
+Class Name:
+java.io.LineNumberInputStream
+Superclass:
+java.io.FilterInputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+Deprecated as of JDK 1.1
+Description
+The LineNumberInputStream class is an
+InputStream that keeps track of line numbers. The
+line number starts at 0 and is incremented each time an end-of-line
+character is encountered. LineNumberInputStream
+recognizes "\n", "\r", or
+"\r\n" as the end of a line. Regardless of
+the end-of-line character it reads,
+LineNumberInputStream returns only
+"\n".  The current line number is
+returned by getLineNumber().  The
+mark() and reset() methods are
+supported, but only work if the underlying stream supports
+mark() and reset().
+The LineNumberInputStream class 
+is deprecated as of JDK 1.1 because it does not perform any byte to character 
+conversions. Incoming bytes are directly compared to end-of-line characters. 
+If you are developing new code, you should use LineNumberReader 
+instead. 
+Class Summary
+public class java.io.LineNumberInputStream 
+             extends java.io.FilterInputStream {
+  // Constructors
+  public LineNumberInputStream(InputStream in);
+  // Instance Methods
+  public int available();
+  public int getLineNumber();
+  public void mark(int readlimit);
+  public int read();
+  public int read(byte[] b, int off, int len);
+  public void reset();
+  public void setLineNumber(int lineNumber);
+  public long skip(long n);
+}
+Constructors
+LineNumberInputStream
+public LineNumberInputStream(InputStream in)
+Parameters
+in
+The input stream to 
+use. 
+Description
+This constructor creates a LineNumberInputStream 
+that gets its data from in. 
+Instance Methods
+available
+public int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.available() 
+Description
+This method returns the number of bytes of input that can be read without 
+having to wait for more input to become available. 
+getLineNumber
+public int getLineNumber()
+Returns
+The current line number. 
+Description
+This method returns the current line number. 
+mark
+public void mark(int readlimit)
+Parameters
+readlimit
+The maximum number 
+of bytes that can be read before the saved position becomes invalid. 
+Overrides
+FilterInputStream.mark() 
+Description
+This method tells the LineNumberInputStream 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position and thus reread a 
+portion of the input. The method calls the mark() 
+method of the underlying stream, so it only works if the underlying stream 
+supports mark() and reset(). 
+read
+public int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.read() 
+Description
+This method reads a byte of input from the underlying stream. 
+If "\n", 
+"\r", or "\r\n" 
+is read from the stream, "\n" 
+is returned. Otherwise, the byte read from the underlying stream is returned 
+verbatim. The method blocks until the byte is read, the end of stream is 
+encountered, or an exception is thrown. 
+public int read(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.read(byte[], int, int) 
+Description
+This method reads up to len bytes of input into the
+given array starting at index off.  If
+"\n", "\r", or
+"\r\n" is read from the stream,
+"\n" is returned. The method does this by
+repeatedly calling read(), which is not efficient,
+especially if the underlying stream is not buffered.  The method
+blocks until some data is available.
+reset
+public void reset() throws IOException
+Throws
+IOException
+If there was 
+no previous call to this FilterInputStream's 
+mark() method or the saved 
+position has been invalidated. 
+Overrides
+FilterInputStream.reset() 
+Description
+This method calls the reset() 
+method of the underlying stream. If the underlying stream supports mark() 
+and reset(), this method sets 
+the position of the stream to a position that was saved by a previous call 
+to mark(). Subsequent bytes 
+read from this stream will begin from the saved position and continue normally. 
+The method also restores the line number to its correct value for the mark 
+location. The method only works if the underlying stream supports mark() 
+and reset(). 
+setLineNumber
+public void setLineNumber(int lineNumber)
+Parameters
+lineNumber
+The new line 
+number. 
+Description
+This method sets the current line number of the LineNumberInputStream. 
+The method does not change the position of the stream. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of bytes to skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.skip() 
+Description
+This method skips n bytes of 
+input. Note that since LineNumberInputStream 
+returns "\r\n" 
+as a single character, "\n", 
+this method may skip over more bytes than you expect. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+FilterInputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+markSupported()
+FilterInputStream
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+FilterInputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FilterInputStream, 
+InputStream, 
+IOException, 
+LineNumberReader 
+IOException
+LineNumberReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

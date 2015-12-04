@@ -1,0 +1,102 @@
+
+[Chapter 6] 6.6 The switch Statement
+Chapter 6Statements and Control Structures
+6.6 The switch Statement
+A switch
+statement selects a specially labeled statement in its block as
+the next statement to be executed, based on the value of an expression:
+In Java, the type of the expression in parentheses must be
+byte,
+char, short, or int.
+This is unlike C/C++, which allows the type of a switch
+statement to be any integer type, including long.
+The body of a switch statement must be
+a block. The top-level statements inside a switch
+may contain case labels. The expression following
+a case label must be a constant expression that
+is assignable to the type of the switch expression.
+No two case labels in a switch
+can contain the same value. At most one of the top-level statements
+in a switch can contain a default
+label.
+A switch statement does the following:
+Evaluates the expression in parentheses.
+If the type of the expression is not int, the
+value produced by the expression is converted to int.
+Compares the value produced by the expression to the values
+in the case labels. Prior to comparison, the
+value in the case label is converted to
+int if it is not already int.
+If a case label is found that has the same value as the expression,
+that label's statement is the next statement to be executed.
+If no case label is found with the same
+value as the expression, and a statement in the block has a
+default label, that statement is the
+next one to be executed.
+If there is no statement in the block that has a default 
+label, the statement after the switch
+statement is the next statement to be executed.
+Here's an example of a switch statement:
+switch (rc) {
+  case 1:
+    msg = "Syntax error";
+    break;
+  case 2:
+    msg = "Undefined variable";
+    break;
+  default:
+    msg = "Unknown error";
+    break;
+}
+After the switch statement has transferred control
+to a case-labeled statement, statements are executed
+sequentially in the normal manner. Any case labels
+and the default label have no further effect
+on the flow of control. If no statement inside the block alters
+the flow of control, each statement is executed in sequence with
+control flowing past each case label and out
+the bottom of the block. The following example illustrates this
+behavior:
+void doInNTimes(int n){
+    switch (n &gt; 5 ? 5 : n) {
+      case 5:
+        doIt();
+      case 4:
+        doIt();
+      case 3:
+        doIt();
+      case 2:
+        doIt();
+      case 1:
+        doIt();
+    }
+}
+The above method calls the doIt() method
+up to 5 times.
+To prevent control from flowing through
+case labels, it is common to end each
+case with a flow-altering statement such as a
+break
+statement. Other statements used for this purpose include the
+continue
+statement and the return statement.
+References
+Constant Expressions;
+Expression 4;
+Identifiers;
+Integer types;
+Local Classes;
+Local Variables;
+Statement 6;
+The break Statement;
+The continue Statement;
+The return Statement
+The if Statement
+Iteration Statements
+ 
+ 
+ 
+ 
+ 
+ 
+ 

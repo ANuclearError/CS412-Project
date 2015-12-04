@@ -83,7 +83,6 @@ public class SearchController implements Initializable {
 			e.printStackTrace();
 		}
 
-
 	}
 
 	/**
@@ -94,6 +93,7 @@ public class SearchController implements Initializable {
 		String path = result.getPath();
 		path = path.replace("src/main/resources", "");
 		System.out.println(path);
+		
 		webEngine.load(getClass().getResource(path).toString());
 	}
 

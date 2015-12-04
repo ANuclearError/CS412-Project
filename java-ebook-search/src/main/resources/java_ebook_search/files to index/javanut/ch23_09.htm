@@ -1,0 +1,46 @@
+
+[Chapter 23] 23.9 java.beans.Introspector (JDK 1.1)
+Chapter 23The java.beans Package
+23.9 java.beans.Introspector (JDK 1.1)
+The Introspector is a class that is never
+instantiated.  Its static getBeanInfo() methods
+provide a way to obtain information about a Java bean, and
+are typically only invoked by application builders or
+similar tools.  getBeanInfo() first looks for a
+BeanInfo class for the specified Java bean class.
+For a class named x, it looks for a BeanInfo
+class named xBeanInfo, first in the current
+package, and then in each of the packages in the
+BeanInfo search path.
+If no BeanInfo class is found, or if the
+BeanInfo class found does not provide complete
+information about the bean properties, events, and methods,
+getBeanInfo() "introspects" on the bean
+class by using the java.lang.reflect package to fill
+in the missing information.  When explicit information is
+provided by a BeanInfo class, getBeanInfo()
+treats it as definitive.  When determining information
+through introspection, however, it examines each of the
+bean's superclasses in turn, looking for a BeanInfo
+class at that level or using introspection.  When calling
+getBeanInfo(), you may optionally specify a second
+class argument that specifies a superclass for which, and
+above which, getBeanInfo() does not introspect.
+public class Introspector extends Object {
+    // No Constructor
+    // Class Methods
+            public static String decapitalize(String name);
+            public static BeanInfo getBeanInfo(Class beanClass) throws IntrospectionException;
+            public static BeanInfo getBeanInfo(Class beanClass, Class stopClass) throws IntrospectionException;
+            public static String[] getBeanInfoSearchPath();
+            public static void setBeanInfoSearchPath(String[] path);
+}
+java.beans.IntrospectionException (JDK 1.1)
+java.beans.MethodDescriptor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,49 @@
+
+[Chapter 23] MenuPeer
+Chapter 23java.awt.peer Reference
+MenuPeer
+Name
+MenuPeer
+Description
+MenuPeer is an interface that 
+defines the basis for menus. 
+Interface Definition
+public abstract interface java.awt.peer.MenuPeer
+   extends java.awt.peer.MenuItemPeer {
+  // Interface Methods
+  public abstract void addItem (MenuItem item);
+  public abstract void addSeparator();
+  public abstract void delItem (int index);
+}
+Interface Methods
+addItem
+public abstract void addItem (MenuItem item)
+Parameters
+item
+MenuItem 
+to add to the menu's peer 
+Description
+Adds a menu item to the menu's peer. 
+addSeparator
+public abstract void addSeparator()
+Description
+Adds a menu separator to the menu's peer. 
+delItem
+public abstract void delItem (int index)
+Parameters
+index
+MenuItem 
+position to delete from the menu's peer. 
+Description
+Deletes a menu item from the menu's peer. 
+See Also
+MenuItem, MenuItemPeer 
+MenuItemPeer
+PanelPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

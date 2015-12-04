@@ -1,0 +1,293 @@
+
+[Chapter 4] 4.6 Additive Operators
+Chapter 4Expressions
+4.6 Additive Operators
+The additive operators
+in Java are binary operators that are used for addition and string
+concatenation (+) and subtraction (-).
+The additive operators appear in additive expressions.
+The additive operators are equal in precedence and are evaluated from
+left to right.
+References
+Multiplicative Operators;
+Order of Operations
+Arithmetic Addition Operator +
+The binary arithmetic addition operator +
+produces a pure value that is the sum of its operands. The arithmetic
++ operator may appear in an additive expression.
+The arithmetic addition operator never throws an exception.
+Here is an example that uses the arithmetic addition operator:
+int addThree (int x, int y, int z) {
+    return x + y + z;
+}
+If the
+type of either operand of + is a reference to
+a String object, the operator is the string concatenation
+operator, not the arithmetic addition operator. The string concatenation
+operator is described in String Concatenation Operator +.
+Otherwise, the
+types of both operands of the arithmetic addition operator must
+be arithmetic types, or a compile-time error occurs. The +
+operator may perform type conversions on its operands:
+If
+either operand is of type double, the other operand
+is converted to double and the operation produces
+a double value.
+Otherwise, if either
+operand is of type float, the other operand is
+converted to float and the operation produces
+a float value.
+Otherwise, if either
+operand is of type long, the other operand is
+converted to long and the operation produces
+a long value.
+Otherwise, both operands
+are converted to int and the operation produces
+an int value.
+If the addition of
+integer data overflows, the value produced by +
+contains the low order bits of the sum and the sign of the value
+is the opposite of the mathematically correct sign, due to the limitations
+of the two's complement representation used for integer data.
+The addition of floating-point data is governed by the following
+rules:
+If either operand is not-a-number (NaN), the
+sum is NaN.
+If one operand is positive infinity and
+the other is negative infinity, the sum is NaN.
+If both
+of the operands are positive infinity, the sum is positive infinity.
+If both of the operands are negative infinity, the
+sum is negative infinity.
+If one of the operands is
+an infinity value and the other operand is a finite value, the sum
+is the same infinity value as the operand.
+If one operand is positive zero and the other is negative zero;
+the sum is positive zero.
+If both operands are positive zero, the sum is
+positive zero.
+If both operands are negative zero,
+the sum is negative zero.
+If neither operand is NaN
+nor an infinity value, the sum is rounded to the nearest representable
+value. If the magnitude of the sum is too large to be represented,
+the operation overflows and an infinity value of the appropriate
+sign is produced. If the magnitude of the sum is too small to be
+represented, the operation underflows and a zero value of the appropriate
+sign is produced.
+References
+Arithmetic Types;
+String Concatenation Operator +
+Arithmetic Subtraction Operator -
+The binary subtraction operator -
+produces a pure value that is the difference between its operands;
+it subtracts its right operand from its left operand. The arithmetic
+- operator may appear in an additive expression.
+The arithmetic subtraction operator never throws an exception.
+Here is an example that uses the arithmetic subtraction operator:
+int subThree (int x, int y, int z) {
+    return x - y - z;
+}
+The types
+of both operands of the arithmetic subtraction operator must be
+arithmetic types, or a compile-time error occurs. The -
+operator may perform type conversions on its operands:
+If
+either operand is of type double, the other operand
+is converted to double and the operation produces
+a double value.
+Otherwise, if either
+operand is of type float, the other operand is
+converted to float and the operation produces
+a float value.
+Otherwise, if either
+operand is of type long, the other operand is
+converted to long and the operation produces
+a long value.
+Otherwise, both operands
+are converted to int and the operation produces
+an int value.
+For both integer and
+floating-point data, a-b always produces the
+same result as a-(+b).
+If the subtraction
+of integer data overflows, the value produced by -
+contains the low order bits of the difference and the sign of the
+value is the opposite of the mathematically correct sign, due to
+the limitations of the two's complement representation used for
+integer data.
+The subtraction of floating-point data
+is governed by the following rules:
+If either operand
+is not-a-number (NaN), the difference is NaN.
+If the
+left operand is positive infinity and the right operand is negative
+infinity, the difference is positive infinity.
+If the
+left operand is negative infinity and the right operand is positive
+infinity, the difference is negative infinity.
+If both
+operands are positive infinity, the difference is NaN.
+If
+both operands are negative infinity, the difference is NaN.
+If the left operand is an infinity value and the right operand
+is a finite value, the difference is the same infinity value as
+the left operand.
+If the left operand is a finite value
+and the right argument is an infinity value, the difference is the
+opposite infinity value of the right operand.
+If both
+operands are either positive zero or negative zero, the difference
+is positive zero.
+If the left operand is positive zero
+and the right operand is negative zero, the difference is positive
+zero.
+If the left operand is negative zero and the
+right operand is positive zero, the difference is negative zero.
+If neither operand is NaN nor an infinity value, the difference
+is rounded to the nearest representable value. If the magnitude
+of the difference is too large to be represented, the operation
+overflows and an infinity value of the appropriate sign is produced.
+If the magnitude of the difference is too small to be represented,
+the operation underflows and a zero value of the appropriate sign
+is produced.
+References
+Arithmetic Types
+String Concatenation Operator +
+The string concatenation operator + produces
+a pure value that is a reference to a String
+object that it creates. The String
+object contains the concatenation of the operands; the characters of the
+left operand precede the characters of the right operand in the
+newly created string. The string concatenation +
+operator may appear in an additive expression.
+Here
+is an example of some code that uses the string concatenation operator:
+// format seconds into hours, minutes, and seconds
+String formatTime(int t) {
+    int minutes, seconds;
+    seconds = t%60;
+    t /= 60;
+    minutes = t%60;
+    return t/60 + ":" + minutes + ":" + seconds;
+}
+If neither
+operand of + is a reference to a String
+object, the operator is the arithmetic addition operator, not the
+string concatenation operator. Note that Java does not allow a program
+to define overloaded operators. However, the language defines the
++ operator to have a meaning that is fundamentally
+different from arithmetic addition if at least one of its operands
+is a String object.
+The way in which
+Java decides if + means arithmetic addition or
+string concatenation means that the use of parentheses can alter
+the meaning of the + operator. Consider the following
+code:
+int x = 3, y = 4;
+System.out.println("x = " + x + ", y = " + y);
+System.out.println("\"??\" + x + y ==&gt; " + "??" + x + y);
+System.out.println("\"??\" + (x + y) ==&gt; " + "??"+ (x + y));
+In the output
+from this code, you can see that the addition of parentheses
+changes the meaning of the last + from string
+concatenation to arithmetic addition:
+x = 3, y = 4
+"??" + x + y ==&gt; ??34
+"??" + (x + y) ==&gt; ??7
+If one of the operands of
++ is a String object and the
+other is not, the operand that is not a String object
+is converted to one using the following rules:
+If the operand is an object reference that is null,
+it is converted to the string literal "null".
+If the operand is a non-null reference
+to an object that is not a string, the object's toString()
+method is called. The result of the conversion is the string value
+returned by the object's toString() method, unless
+the return value is null, in which case the result
+of the conversion is the string literal "null".
+Since the Object class defines a
+toString() method, every class in Java has such a method.
+If the
+type of the operand is char, the operand is converted
+to a reference to a String object that has a
+length of one and contains that character.
+If the type
+of the operand is an integer type other than char,
+the operand is converted to a base 10 string representation of its
+value. If the value is negative, the string value starts with a
+minus sign; if it is positive there is no sign character. If the
+value is zero, the result of the conversion is "0".
+Otherwise, the string representation of the integer does not have
+any leading zeros.
+If the type of the operand is a floating-point
+type, the exact string representation depends on the value being
+converted. If the absolute value of d
+is greater than or equal to 10^-3 
+or less than or equal to 10^7, it
+is converted to a string with an optional minus sign (if the
+value is negative) followed by up to eight digits
+before the decimal point, a decimal point, and the necessary number
+of digits after the decimal point (but no trailing zero if there is 
+more than one significant digit).  There is always a minimum of
+one digit after the decimal point.
+Otherwise, the value is converted to a string with an optional
+minus sign (if the value is negative), followed by a single digit,
+a decimal point, the necessary number of digits after the decimal
+point (but no trailing zero if there is more than one significant digit),
+and the letter E followed by a plus or a minus 
+sign and a base 10 exponent of at least one digit.  Again, there is always 
+a minimum of one digit after the decimal point.
+In addition, 
+the values NaN, NEGATIVE_INFINITY,
+POSITIVE_INFINITY, -0.0, and
++0.0 are represented by 
+the strings "NaN", "--Infinity", 
+"Infinity", "--0.0", 
+and "0.0", respectively.
+Note that the specification for this conversion has changed as of Java 
+1.1. Prior to that release, the conversion provided a string representation
+that was equivalent to the %g format of 
+the printf function in C. In addition, the string
+representations of the infinity values, the zero values, and NaN are
+not specified prior to Java 1.1.
+If the type of the operand is boolean,
+the value is converted to a reference to either the string literal
+"true" or the string literal "false".
+Java uses the StringBuffer object to implement
+string concatenation. Consider the following code:
+String s, s1,s2;
+s = s1 + s2;
+To compute the string concatenation, Java compiler generates
+code equivalent to:
+s = new StringBuffer().append(s1).append(s2).toString();
+Consider another expression:
+s = 1 + s1 + 2
+In this case,
+the Java compiler generates code equivalent to:
+s = new StringBuffer().append(1).append(s1).append(2).toString()
+No matter how many strings are being concatenated in an expression,
+the expression always produces exactly one StringBuffer
+object and one String object.[3] From an efficiency
+standpoint, if you concatenate more than two strings, it
+may be more efficient to do so in a single expression, rather than
+in multiple expressions.
+[3] 
+Although an optimizing compiler should be smart enough to combine
+multiple concatenation expressions when it is advantageous, the
+compiler provided with Sun's reference implementation of Java does not do this.
+References
+Arithmetic Addition Operator +;
+Object;
+String;
+StringBuffer
+Multiplicative Operators
+Shift Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

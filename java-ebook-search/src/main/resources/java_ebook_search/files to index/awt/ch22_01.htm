@@ -1,0 +1,124 @@
+
+[Chapter 22] java.awt.image Reference
+Chapter 22
+22. java.awt.image Reference
+Contents:
+ColorModel
+CropImageFilter
+DirectColorModel
+FilteredImageSource
+ImageConsumer
+ImageFilter
+ImageObserver
+ImageProducer
+IndexColorModel
+MemoryImageSource
+PixelGrabber
+ReplicateScaleFilter 
+RGBImageFilter
+AreaAveragingScaleFilter 
+Name
+AreaAveragingScaleFilter 
+Description
+The AreaAveragingScaleFilter class 
+scales an image using a simple smoothing algorithm. 
+Class Definition
+public class java.awt.image.AreaAveragingScaleFilter
+    extends java.awt.image.ReplicateScaleFilter {
+  // Constructor
+  public AreaAveragingScaleFilter (int width, int height);
+  // Instance Methods
+  public void setHints (int hints);
+  public void setPixels (int x, int y, int w, int h, ColorModel model, 
+    byte[] pixels, int off, int scansize);
+  public void setPixels (int x, int y, int w, int h, ColorModel model, 
+    int[] pixels, int off, int scansize);
+}
+Constructor
+AreaAveragingScaleFilter
+public AreaAveragingScaleFilter (int width, int height)
+Parameters
+width
+Width of scaled image.
+height
+Height of scaled image. 
+Description
+Constructs an AverageScaleFilter 
+that scales the original image to the specified size. 
+Instance Methods
+setHints
+public void setHints (int hints)
+Parameters
+hints
+Flags indicating how data will be delivered. 
+Overrides
+ImageFilter.setHints(int) 
+Description
+Gives this filter hints about how data will be delivered. 
+setPixels
+public void setPixels (int x, int y, int w, int h, ColorModel model, byte[] pixels, int off, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+w
+Width of the rectangle of pixel data delivered with 
+this method call.
+h
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+off
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ReplicateScaleFilter.setPixels(int, int, int, int, 
+ColorModel, byte[], int, int) 
+Description
+Receives a rectangle of image data from the ImageProducer; 
+scales these pixels and delivers them to any ImageConsumers. 
+public void setPixels (int x, int y, int w, int h, ColorModel model, int[] pixels, int off, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+w
+Width of the rectangle of pixel data delivered with 
+this method call.
+h
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+off
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ReplicateScaleFilter.setPixels(int, int, int, int, ColorModel, int[], int, int) 
+Description
+Receives a rectangle of image data from the ImageProducer; 
+scales these pixels and delivers them to any ImageConsumers. 
+See Also
+ColorModel, ReplicateScaleFilter 
+WindowListener 
+ColorModel
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,260 @@
+
+[Chapter 4] 4.3 Types
+Chapter 4The Java Language
+4.3 Types
+The type system of a programming language describes how its data
+elements (variables and constants) are associated with actual
+storage. In a statically typed language, such as C or C++, the type of
+a data element is a simple, unchanging attribute that often
+corresponds directly to some underlying hardware phenomenon, like a
+register value or a pointer indirection. In a more dynamic language
+like Smalltalk or Lisp, variables can be assigned arbitrary elements
+and can effectively change their type throughout their lifetime. A
+considerable amount of overhead goes into validating what happens in
+these languages at run-time. Scripting languages like Tcl and awk
+achieve ease of use by providing drastically simplified type systems
+in which only certain data elements can be stored in variables, and
+values are unified into a common representation such as strings.
+As I described in Chapter 1, Yet Another Language?, Java combines the
+best features of both statically and dynamically typed languages. As
+in a statically typed language, every variable and programming element
+in Java has a type that is known at compile-time, so the interpreter
+doesn't normally have to check the type validity of assignments while
+the code is executing. Unlike C or C++ though, Java also maintains
+run-time information about objects and uses this to allow safe
+run-time polymorphism.
+Java data types fall into two categories. Primitive
+types represent simple values that have built-in
+functionality in the language; they are fixed elements like literal
+constants and numeric expressions. Reference
+types (or class types) include objects and arrays; they are
+called reference types because they are passed "by
+reference" as I'll explain shortly.
+Primitive Types
+Numbers, characters, and boolean values are fundamental elements in Java. 
+Unlike some other (perhaps more pure) object-oriented languages, they are 
+not objects. For those situations where it's desirable to treat a primitive 
+value as an object, Java provides "wrapper" classes 
+(see Chapter 7, Basic Utility Classes). One major advantage of 
+treating primitive values as such is that the Java compiler can more
+readily optimize their usage. 
+Another advantage of working with the Java virtual-machine
+architecture is that primitive types are precisely defined. For
+example, you never have to worry about the size of an
+int on a particular platform; it's always a
+32-bit, signed, two's complement number.  Table 4.2 summarizes Java's primitive types.
+Table 4.2: Java Primitive Data Types
+Type
+Definition
+boolean
+true or false
+char
+16-bit Unicode character
+byte
+8-bit signed two's complement integer
+short
+16-bit signed two's complement integer
+int
+32-bit signed two's complement integer
+long
+64-bit signed two's complement integer
+float
+32-bit IEEE 754 floating-point value
+double
+64-bit IEEE 754 floating-point value
+If you think the primitive types look like an idealization of C
+scalar types on a byte-oriented 32-bit machine, you're
+absolutely right.  That's how they're supposed to
+look. The 16-bit characters were forced by Unicode, and generic pointers were
+deleted for other reasons we'll touch on later, but in general
+the syntax and semantics of Java primitive types are meant to fit a C
+programmer's mental habits. If you're like most of this
+book's readers, you'll probably find this saves you a lot
+of mental effort in learning the language.
+Declaration and initialization
+Variables are declared inside of methods or classes in C style. For example: 
+int foo; 
+double d1, d2; 
+boolean isFun; 
+Variables can optionally be initialized with an appropriate expression 
+when they are declared: 
+int foo = 42; 
+double d1 = 3.14, d2 = 2 * 3.14; 
+boolean isFun = true; 
+Variables that are declared as instance variables in a class are set to 
+default values if they are not initialized. In this case, they act much 
+like static variables in C or C++. Numeric types 
+default to the appropriate flavor of zero, characters are set to the null 
+character "\0," and boolean variables 
+have the value false. Local variables declared 
+in methods, on the other hand, must be explicitly initialized before they 
+can be used. 
+Integer literals
+Integer literals can be specified in octal (base 8), decimal (base 10), 
+or hexadecimal (base 16). A decimal integer is specified by a sequence 
+of digits beginning with one of the characters 1-9: 
+int i = 1230; 
+Octal numbers are distinguished from decimal by a leading zero: 
+int i = 01230;             // i = 664 decimal 
+(An interesting, but meaningless, observation is that this would make the 
+number 0 an octal value in the eyes of the compiler.) 
+As in C, a hexadecimal number is denoted by the leading characters
+0x or 0X (zero "x"), followed by
+digits and the characters a-f or A-F, which represent the decimal
+values 10-15 respectively:
+int i = 0xFFFF;            // i = 65535 decimal 
+Integer literals are of type int unless they are
+suffixed with an L, denoting that they are to be
+produced as a long value:
+long l = 13L; 
+long l = 13;               // equivalent--13 is converted from type int 
+(The lowercase character l ("el") is also
+acceptable, but should be avoided because it often looks like the
+numeral 1).
+When a numeric type is used in an assignment or an expression involving 
+a type with a larger range, it can be promoted to the larger type. For 
+example, in the second line of the above example, the number 13 has the 
+default type of int, but it's promoted to type 
+long for assignment to the long 
+variable. Certain other numeric and comparison operations also cause this 
+kind of arithmetic promotion. A numeric value can never be assigned to a type 
+with a smaller range without an explicit (C-style) cast, however: 
+int i = 13; 
+byte b = i;                // Compile time error--explicit cast needed 
+byte b = (byte) i;         // Okay 
+Conversions from floating point to integer types always require an explicit 
+cast because of the potential loss of precision. 
+Floating-point literals
+Floating-point values can be specified in decimal or scientific
+notation.  Floating-point literals are of type
+double unless they are suffixed with an
+f denoting that they are to be
+produced as a float value:
+double d = 8.31; 
+double e = 3.00e+8; 
+float f = 8.31F; 
+float g = 3.00e+8F; 
+Character literals
+A literal character value can be specified either as a single-quoted character 
+or as an escaped ASCII or Unicode sequence: 
+char a = 'a'; 
+char newline = '\n'; 
+char octalff = \u00ff; 
+Reference Types
+In C, you can make a new, complex data type by creating a
+structure.  In Java (and other object-oriented
+languages), you instead create a class that defines
+a new type in the language. For instance, if we create a new class
+called Foo in Java, we are also implicitly creating
+a new type called Foo. The type of an item governs
+how it's used and where it's assigned. An item of type
+Foo can, in general, be assigned to a variable of
+type Foo or passed as an argument to a method that
+accepts a Foo value.
+In an object-oriented language like Java, a type is not
+necessarily just a simple attribute. Reference types are related in
+the same way as the classes they represent. Classes exist in a
+hierarchy, where a subclass is a specialized kind of its parent
+class. The corresponding types have a similar relationship, where the
+type of the child class is considered a subtype of the parent
+class. Because child classes always extend their parents and have, at
+a minimum, the same functionality, an object of the
+child's type can be used in place of an object of the
+parent's type. For example, if I create a new class,
+Bar, that extends Foo, there is
+a new type Bar that is considered a subtype of
+Foo. Objects of type Bar can
+then be used anywhere an object of type Foo
+could be used; An object of type Bar is said to be
+assignable to a variable of type Foo. This is
+called subtype polymorphism and is one of the
+primary features of an object-oriented language. We'll look more
+closely at classes and objects in Chapter 5, Objects in Java.
+Primitive types in Java are used and passed "by
+value." In other words, when a primitive value is assigned or
+passed as an argument to a method, it's simply copied. Reference
+types, on the other hand, are always accessed "by
+reference." A reference is simply a handle
+or a name for an object. What a variable of a reference type
+holds is a reference to an object of its type (or of a subtype).  A
+reference is like a pointer in C or C++, except that its type is
+strictly enforced and the reference value itself is a primitive entity
+that can't be examined directly. A reference value can't be created
+or changed other than through assignment to an appropriate
+object. When references are assigned or passed to methods, they are
+copied by value. You can think of a reference as a pointer type that
+is automatically dereferenced whenever it's mentioned.
+Let's run through an example. We specify a variable of
+type Foo, called myFoo, and
+assign it an appropriate object:
+Foo myFoo = new Foo(); 
+Foo anotherFoo = myFoo; 
+myFoo is a reference type variable that holds a
+reference to the newly constructed Foo object.  For
+now, don't worry about the details of creating an object;
+we'll cover that in Chapter 5, Objects in Java. We designate a
+second Foo type variable,
+anotherFoo, and assign it to the same object. There are
+now two identical references: myFoo and
+anotherFoo. If we change things in the state of
+the Foo object itself, we will see the same 
+effect by looking at it with
+either reference. The comparable code in C++ would be:
+// C++ 
+Foo&amp; myFoo = *(new Foo()); 
+Foo&amp; anotherFoo = myFoo; 
+We can pass one of the variables to a method, as in: 
+myMethod( myFoo ); 
+An important, but sometimes confusing distinction to make at this
+point is that the reference itself is passed by value. That is, the
+argument passed to the method (a local variable from the method's
+point of view) is actually a third copy of the reference.  The method
+can alter the state of the Foo object itself
+through that reference, but it can't change the caller's reference to
+myFoo.  That is, the method can't change the
+caller's myFoo to point to a different Foo object.
+For the times we want a method to change a reference for us, we have
+to pass a reference to the object that contains it, as shown in 
+Chapter 5, Objects in Java.
+Reference types always point to objects, and objects are always
+defined by classes. However, there are two special kinds of reference
+types that specify the type of object they point to in a slightly
+different way. Arrays in Java have a special place in the type
+system. They are a special kind of object automatically created to
+hold a number of some other type of object, known as the base
+type. Declaring an array-type reference implicitly creates the new
+class type, as you'll see in the next section.
+Interfaces are a bit sneakier. An interface defines a set of methods
+and a corresponding type. Any object that implements all methods of
+the interface can be treated as an object of that type. Variables and
+method arguments can be declared to be of interface types, just like
+class types, and any object that implements the interface can be
+assigned to them. This allows Java to cross the lines of the class
+hierarchy in a type safe way, as you'll see in Chapter 5, Objects in Java.
+A Word About Strings
+Strings in Java are objects; they are therefore a reference
+type. String objects do, however, have some special
+help from the Java compiler that makes them look more
+primitive. Literal string values in Java source code are turned into
+String objects by the compiler.  They can be used
+directly, passed as arguments to methods, or assigned to
+String type variables:
+System.out.println( "Hello World..." ); 
+String s = "I am the walrus..."; 
+String t = "John said: \"I am the walrus...\""; 
+The + symbol in Java is overloaded to provide
+string concatenation; this is the only overloaded operator in Java:
+String quote = "Four score and " + "seven years ago,"; 
+String more = quote + " our" + " fathers" +  " brought..."; 
+Java builds a single String object from the concatenated 
+strings and provides it as the result of the expression. We will discuss 
+the String class in Chapter 7, Basic Utility Classes. 
+Comments
+Statements and Expressions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

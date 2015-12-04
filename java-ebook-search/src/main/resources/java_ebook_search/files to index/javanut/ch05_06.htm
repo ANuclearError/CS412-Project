@@ -1,0 +1,132 @@
+
+[Chapter 5] 5.6 Other New Features of Java 1.1
+Chapter 5Inner Classes and Other New Language Features
+5.6 Other New Features of Java 1.1
+While the addition of inner classes is by far the most
+important and far-reaching change to the Java language in
+Java 1.1, there have been several other changes to the language as
+well.  They are:
+final local variables, method parameters and
+catch statement parameters
+Instance initializers
+"Blank finals"--final variable and field
+declarations without initializer expressions
+Anonymous arrays
+Class literals
+As you can see, the first two items in this list are
+language changes that are related to, though not exclusively
+used by, the inner class changes.  We covered final
+local variables and parameters in our discussion of local classes
+above.  And we covered instance initializers in the
+discussion of anonymous classes.  The following subsections
+discuss the remaining three changes.
+Blank Finals
+We've already seen that local variables, method parameters,
+and exception parameters of catch statements may
+be declared final.  A related change is that final
+fields do not require initializers.  In Java 1.0, any
+final field had to be initialized as part of the
+field declaration.  In Java 1.1, this restriction has been
+relaxed.  A field or local variable can be declared
+final without specifying an intial value as part of
+the declaration.  These "blank finals," as they are called,
+must have a value assigned to them before they are ever
+used, of course.  And, once a value has been assigned to a
+blank final, that value can never be changed.  This allows
+you, for example, to use an instance initializer or a
+constructor to compute a value for a final field.
+Blank finals are particularly useful in defining immutable
+data types.  They allow a class to have immutable fields
+that are initialized based on run-time arguments to a
+constructor.  Once assigned, these fields cannot be
+accidentally or maliciously changed.
+Anonymous Arrays
+In Java 1.0, you can create and initialize an array with
+code like the following:
+int[] a = {1, 2, 3, 4, 5};
+Unfortunately, this syntax is only allowed in initializer
+expressions that follow the declaration of a field or
+variable of array type.  That is, you cannot write
+code like this:
+int[] a;
+a = {1, 2, 3, 4, 5};           // Error
+int total = sum({1,2,3,4,5});  // Error
+You cannot write code like that in Java 1.1 either, but
+you can write code using a similar array initializer syntax.
+When you use the 
+new operator to create an array, you may omit the
+dimension that specifies the number of array elements to
+create and instead follow the empty square bracket pair
+([]) with a list of initial values in curly braces.
+Such an expression creates an array large enough to hold
+all of the elements specified between the braces, and
+initializes the array to contain those elements.  The
+elements in braces must all be of the type specified
+after the new keyword, of course.
+Code that uses anonymous arrays looks like this:
+int[] a;
+a = new int[] {1, 2, 3, 4, 5};
+int total = sum(new int[] {1, 2, 3, 4, 5});
+System.out.println(new char[] {'h', 'e', 'l', 'l', 'o'});
+As you can see, this new syntax allows you to create and
+initialize arrays without using a variable initializer, or
+without even assigning the array to a variable at all.
+That is why arrays created and initialized this way are
+called anonymous arrays.
+Class Literals
+Another major change in Java 1.1 is the introduction of the
+Reflection API in the java.lang.reflect package.  As
+part of this new package, the java.lang.Class class
+has been broadened to represent not just Java classes, but
+all Java data types. In other words, there are now special
+Class objects that represent each of the
+Java primitive types.  
+You can access these special
+Class objects through the TYPE field of each
+of the primitive wrapper classes.  For example, the static
+variable Boolean.TYPE holds the Class object that
+represents the boolean data type.  And the
+Float.TYPE static variable holds the Class
+object that represents the float data type.  A new class
+Void has been added, and Void.TYPE
+represents the type void.
+The changes described in the paragraph above are all changes
+to the Java class libraries, rather than changes to the Java
+language itself.  The language change is a related one,
+however.  In Java 1.1, you can obtain the Class
+object for any class or primitive type by following the
+class name or type name by a period and the class
+keyword.  For example, String.class evaluates to the
+Class object that represents the java.lang.String
+class.  Similarly, int.class evaluates to the
+special class object Integer.TYPE that represents
+the int data type.
+In Java 1.0, it is much more cumbersome (and less
+efficient) to obtain a Class object--you have to use the
+static Class.forName() method, so you end up with
+expressions like:
+Class c = Class.forName("java.util.Vector");
+Where in Java 1.1 you can simply write:
+Class c = java.util.Vector.class;
+Remember that class is a keyword in Java, so this
+syntax does not simply constitute a reference to a static
+variable pre-defined in each class.
+This new syntax is meant to simplify use of the new
+reflection facilities in Java 1.1.  It is also necessary
+because using Class.forName() with inner classes
+requires knowledge of the way the compiler transforms the
+names of inner classes (i.e., where it replaces "."
+with "$").  While compiler writers need to know
+about these transformation rules, Java programmers should
+not.  Thus the new .class syntax provides a way to
+obtain a Class object that works with inner classes,
+as well as with top-level classes and interfaces.
+Anonymous Classes
+Applets
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,38 @@
+
+[Chapter 19] 19.4 java.awt.datatransfer.StringSelection (JDK 1.1)
+Chapter 19The java.awt.datatransfer Package
+19.4 java.awt.datatransfer.StringSelection (JDK 1.1)
+This convenience class implements the Transferable
+and ClipboardOwner interfaces in order to make it
+very easy to transfer String values through the AWT
+data transfer mechanism.  It is able to transfer
+String values using either the
+DataFlavor.stringFlavor or
+DataFlavor.plainTextFlavor data flavors.
+To create a StringSelection object, simply pass the
+String you want to transfer to the
+StringSelection() constructor.  You can then make
+the StringSelection available for transfer by passing
+it to the setContents() method of the
+Clipboard.  You need never call the methods of
+StringSelection yourself.
+public class StringSelection extends Object implements Transferable, ClipboardOwner {
+    // Public Constructor
+            public StringSelection(String data);
+    // Public Instance Methods
+            public synchronized Object getTransferData(DataFlavor flavor)
+            public synchronized Object getTransferData'u'throws UnsupportedFlavorException, IOException;
+            public synchronized Object getTransferData'u'// From Transferable
+            public synchronized DataFlavor[] getTransferDataFlavors();  // From Transferable
+            public boolean isDataFlavorSupported(DataFlavor flavor);  // From Transferable
+            public void lostOwnership(Clipboard clipboard, Transferable contents);  // From ClipboardOwner
+}
+java.awt.datatransfer.DataFlavor (JDK 1.1)
+java.awt.datatransfer.Transferable (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

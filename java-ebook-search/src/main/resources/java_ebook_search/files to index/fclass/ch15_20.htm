@@ -1,0 +1,449 @@
+
+[Chapter 15] URL
+Chapter 15The java.net Package
+URL
+Name
+URL
+Synopsis
+Class Name:
+java.net.URL
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later 
+Description
+The URL class represents a 
+Uniform Resource Locator, or URL. The class provides methods for retrieving 
+the various parts of a URL and also access to the resource itself. 
+An absolute URL consists of a protocol, a hostname, a port number, a filename, 
+and an optional reference, or anchor. For example, consider the following 
+URL: 
+http://www.woolf.net:81/books/Orlando/chapter4.html#p6
+This URL consists of the following parts: 
+Part
+Value
+Protocol
+http
+Hostname
+www.woolf.net
+Port number
+81
+Filename
+/books/Orlando/chapter4.html
+Reference
+p6
+A relative URL specifies only enough information to locate the resource 
+relative to another URL. The filename component is the only part that must 
+be specified for a relative URL. If the protocol, hostname, or port number 
+is not specified, the value is taken from a fully specified URL. For example, 
+the following is a relative URL based on the absolute URL above: 
+chapter6.html
+This relative URL is equivalent to the following absolute URL: 
+http://www.woolf.net:81/books/Orlando/chapter6.html
+The URL class also provides 
+access to the resource itself, through the getContent(), 
+openConnection(), and openStream() 
+methods. However, these are all convenience functions: other classes 
+do the actual work of accessing the resource. 
+A protocol handler is an object that knows how to deal with a specific 
+protocol. For example, an http 
+protocol handler opens a connection to an http 
+host. In java.net, subclasses 
+of URLStreamHandler deal with 
+different protocols. A URLStreamHandlerFactory 
+selects a subclass of URLStreamHandler 
+based on a MIME type. Once the URLStreamHandler 
+has established a connection with a host using a specific protocol, a subclass 
+of ContentHandler retrieves resource data from the host and creates an object from it. 
+Class Summary
+public final class java.net.URL extends java.lang.Object
+                                implements java.io.Serializable {
+  // Constructors
+  public URL(String spec);
+  public URL(URL context, String spec);
+  public URL(String protocol, String host, String file);
+  public URL(String protocol, String host, int port, String file);
+  // Class Methods
+  public static synchronized void setURLStreamHandlerFactory(
+                                  URLStreamHandlerFactory fac);
+  // Instance Methods
+  public boolean equals(Object obj);
+  public final Object getContent();
+  public String getFile();
+  public String getHost();
+  public int getPort();
+  public String getProtocol();
+  public String getRef();
+  public int hashCode();
+  public URLConnection openConnection();
+  public final InputStream openStream();
+  public boolean sameFile(URL other);
+  public String toExternalForm();
+  public String toString();
+  // Protected Instance Methods
+  protected void set(String protocol, String host, int port, 
+                     String file, String ref);
+}
+Constructors
+URL
+public URL(String spec) throws MalformedURLException
+Parameters
+spec
+A String 
+that represents a URL. 
+Throws
+MalformedURLException
+If the string is incorrectly constructed or specifies an unknown protocol. 
+Description
+This constructor creates a URL 
+by parsing the given string. The string should specify an absolute URL. 
+Calling this constructor is equivalent to calling URL(null, 
+spec). 
+public URL(URL context, String spec) throws MalformedURLException
+Parameters
+context
+A base URL 
+that provides the context for parsing spec.
+spec
+A String 
+that represents a URL. 
+Throws
+MalformedURLException
+If the string is incorrectly constructed or specifies an unknown protocol. 
+Description
+This constructor creates a URL 
+relative to the base URL specified by context. 
+If context is not null, 
+and spec specifies a partial 
+URL, the missing parts of spec 
+are inherited from context.
+The given string is first parsed to see if it specifies a protocol. If 
+the string contains a colon (:) 
+before the first occurrence of a slash (/), 
+the characters before the colon comprise the protocol.
+If spec does not specify a protocol, and
+context is not null, the
+protocol is inherited from context, as are the
+hostname, port number, and filename. If context is
+null in this situation, the constructor throws a
+MalformedURLException.
+If spec does specify a protocol, and
+context is null or specifies a
+different protocol, the context argument is ignored
+and spec should specify an absolute URL. If
+context specifies the same protocol as
+spec, the hostname, port number, and filename from
+context are inherited.
+Once the constructor has created a fully specified
+URL object, it searches for an appropriate protocol
+handler of type URLStreamHandler, as described for
+URL(String, String,
+int, String). Then the
+parseURL() method of the URLStreamHandleris called to parse the remainder of the URL so that the
+fields in spec can override any values inherited
+from context.
+   public URL(String protocol, String host, String file) throws MalformedURLException  
+Parameters
+protocol
+A protocol.
+host
+A hostname.
+file
+A filename. 
+Throws
+MalformedURLException
+If an unknown protocol is specified. 
+Description
+This constructor creates a URL 
+with the given protocol, hostname, and filename. The port number is set 
+to the default port for the given protocol. Calling this constructor is 
+equivalent to calling URL(protocol, 
+host, -1, 
+file). 
+   public URL(String protocol, String host, int port, String file) throws MalformedURLException  
+Parameters
+protocol
+A protocol.
+host
+A hostname.
+port
+A port number or 
+-1 to use the default port for the protocol.
+file
+A filename. 
+Throws
+MalformedURLException
+If an unknown protocol is specified. 
+Description
+This constructor creates a URL 
+with the given protocol, hostname, port number, and filename.
+If this is the first URL object 
+being created with the specified protocol, a protocol handler of type URLStreamHandler 
+is created for the protocol. Here are the steps that are taken to create 
+a protocol handler: 
+If an application has set up a URLStreamHandlerFactory
+by calling setURLStreamHandlerFactory(), the
+constructor calls the createURLStreamHandler()
+method of that object to create the protocol handler.  The protocol is passed as a 
+String argument to that method.
+If no URLStreamHandlerFactory has been established, or the 
+createURLStreamHandler() method returns 
+null, the constructor retrieves the value of the 
+system property java.protocol.handler.pkgs.  If this
+value is not null, it is interpreted as a list of 
+packages separated by vertical bar (|) 
+characters.  The constructor then tries to load the class named 
+package.protocol.Handler, 
+where package is the name of the first package in 
+the list and protocol
+is the name of the protocol.  If the class exists, and is a subclass of 
+URLStreamHandler, it is used as the 
+URLStreamHandler
+ for the protocol.  If the class does not exist, or if it exists 
+but is not a subclass of URLStreamHandler, the 
+constructor tries the next package in the list.
+If the previous step fails to find an appropriate protocol handler, the constructor tries to load the class named 
+sun.net.www.protocol.protocol.Handler,
+where protocol is the name of the protocol.  If the 
+class exists and is a subclass of URLStreamHandler, it 
+is used as the URLStreamHandler
+ for the protocol.  If the class does not exist, or if it exists 
+but is not a subclass of URLStreamHandler, a 
+MalformedURLException is thrown.
+Class Methods
+setURLStreamHandlerFactory
+   public static synchronized void setURLStreamHandlerFactory(URLStreamHandlerFactory fac)  
+Parameters
+fac
+An object that implements 
+URLStreamHandlerFactory. 
+Throws
+Error
+If the factory has 
+already been defined.
+SecurityException
+If the application does not have permission to set the factory. 
+Description
+This method tells the URL class 
+to use the given URLStreamHandlerFactory 
+object for handling all URL 
+objects. The purpose of this mechanism is to allow a program that hosts 
+applets, such as a web browser, control over the creation of URLStreamHandler 
+objects. 
+Instance Methods
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true
+if the objects are equivalent;
+false
+if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of URL 
+with the same protocol, hostname, port number, and filename as this URL. 
+The reference is only compared if it is not null 
+in this URL. 
+getContent
+public Object getContent() throws IOException
+Returns
+The Object 
+created from the resource represented by this URL. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the content of the URL, 
+encapsulated in an object that is appropriate for the type of the content. 
+The method is shorthand for calling openConnection().getContent(), 
+which uses a ContentHandler 
+object to retrieve the content. 
+getFile
+public String getFile()
+Returns
+The filename of the URL. 
+Description
+This method returns the name of the file of this URL. 
+Note that the file can be misleading; although the resource represented 
+by this URL may be a file, 
+it can also be generated on the fly by the server. 
+getHost
+public String getHost()
+Returns
+The hostname of the URL. 
+Description
+This method returns the hostname from this URL. 
+getPort
+public int getPort()
+Returns
+The port number of the URL. 
+Description
+This method returns the port number of this URL. 
+If a port number is not specified for this URL, 
+meaning it uses the default port for the protocol, -1 is returned. 
+getProtocol
+public String getProtocol()
+Returns
+The protocol of the URL. 
+Description
+This method returns the protocol of this URL. 
+Some examples of protocols are: http, 
+ftp, and mailto. 
+getRef
+public String getRef()
+Returns
+The reference of the URL. 
+Description
+This method returns the reference, or anchor, of this URL. 
+hashCode
+public int hashCode()
+Returns
+The hashcode of the URL. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object. 
+openConnection
+public URLConnection openConnection() throws IOException
+Returns
+A URLConnection object for the URL. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns a URLConnection 
+than manages a connection to the resource represented by 
+this URL. If there is not already 
+an open connection, the method opens a connection by calling the openConnection() 
+method of the URLStreamHandler for 
+this URL. A URLStreamHandler 
+for the protocol of the URL 
+is created by the constructor of the URL. 
+openStream
+public final InputStream openStream() throws IOException
+Returns
+A InputStream that reads from this URL. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns an InputStream 
+object that reads the content of the given URL. 
+The method is shorthand for calling openConnection().getInputStream(). 
+sameFile
+public boolean sameFile(URL other)
+Parameters
+other
+The URL 
+to compare. 
+Returns
+A boolean value that indicates 
+if this URL is equivalent to 
+other with the exception of 
+references. 
+Description
+This method returns true if 
+this object and the given URL 
+object specify the same protocol, specify hosts that have the same IP address, 
+specify the same port number, and specify the same filename. The filename 
+comparison is case-sensitive. References specified by the URLs are not 
+considered by this method. This method is a helper method for equals(). 
+toExternalForm
+public String toExternalForm)
+Returns
+A string representation of the URL. 
+Description
+This method returns a string representation of this URL. 
+The string representation is determined by the protocol of the URL. 
+The method calls the toExternalForm() 
+method of the URLStreamHandler for 
+this URL. A URLStreamHandler 
+for the protocol of the URL 
+is created by the constructor of the URL. 
+toString
+public String toString()
+Returns
+A string representation of the URL. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this URL 
+by calling toExternalForm(). 
+Protected Instance Methods
+set
+   protected void set(String protocol, String host, int port, String file, String ref)  
+Parameters
+protocol
+A protocol.
+host
+A hostname.
+port
+A port number.
+file
+A filename.
+ref
+A reference. 
+Description
+This method sets the protocol, hostname, port number, filename, and reference 
+of this URL. The method is 
+called by a URLStreamHandler 
+to set the parts of the URL. 
+A URLStreamHandler for the 
+protocol of the URL is created 
+by the constructor of the URL. 
+It is this URLStreamHandler 
+that parses the URL string. This method is used after parsing to set the 
+values of the URL. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ContentHandler, 
+Error, 
+InputStream, 
+IOException, 
+MalformedURLException, 
+SecurityException, 
+URLConnection, 
+URLStreamHandler, 
+URLStreamHandlerFactory 
+SocketImplFactory
+URLConnection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,303 @@
+
+[Chapter 19] TextArea
+Chapter 19java.awt Reference
+TextArea
+Name
+TextArea
+Description
+The TextArea class provides 
+a multi-line Component for 
+textual user input. 
+Class Definition
+public class java.awt.TextArea
+    extends java.awt.TextComponent {
+  // Constants
+  public final static int SCROLLBARS_BOTH; 
+  public final static int SCROLLBARS_HORIZONTAL_ONLY; 
+  public final static int SCROLLBARS_NONE; 
+  public final static int SCROLLBARS_VERTICAL_ONLY; 
+  
+  // Constructors
+  public TextArea();
+  public TextArea (int rows, int columns);
+  public TextArea (String text);
+  public TextArea (String text, int rows, int columns);
+  public TextArea (String text, int rows, int columns, int scrollbars); 
+  
+  // Instance Methods
+  public void addNotify();
+  public synchronized void append (String string); 
+  public void appendText (String string); 
+  public int getColumns();
+  public Dimension getMinimumSize(); 
+  public Dimension getMinimumSize (int rows, int columns); 
+  public Dimension getPreferredSize();    
+  public Dimension getPreferredSize (int rows, int columns); 
+  public int getRows();
+  public int getScrollbarVisibility(); 
+  public synchronized void insert (String string, int position); 
+  public void insertText (String string, int position); 
+  public Dimension minimumSize(); 
+  public Dimension minimumSize (int rows, int columns); 
+  public Dimension preferredSize(); 
+  public Dimension preferredSize (int rows, int columns); 
+  public synchronized void replaceRange (String str, int start, int end); 
+  public void replaceText (String string, int startPosition, int endPosition); 
+  public void setColumns (int columns); 
+  public void setRows (int rows); 
+  
+  // Protected Instance Methods
+  protected String paramString();
+}
+Constants
+SCROLLBARS_BOTH
+public final static int SCROLLBARS_BOTH 
+Show both the horizontal and vertical scrollbars. 
+SCROLLBARS_HORIZONTAL_ONLY
+public final static int SCROLLBARS_HORIZONTAL_ONLY 
+Show the horizontal scrollbar. 
+SCROLLBARS_NONE
+public final static int SCROLLBARS_NONE 
+Show no scrollbars. 
+SCROLLBARS_VERTICAL_ONLY
+public final static int SCROLLBARS_VERTICAL_ONLY 
+Show the vertical scrollbar. 
+Constructors
+TextArea
+public TextArea()
+Description
+Constructs a TextArea object 
+with the default size and no initial content. The default size of a text 
+area varies widely from platform to platform, so it's best to avoid 
+this constructor. 
+public TextArea (int rows, int columns)
+Parameters 
+rows
+Requested number of displayed rows. 
+columns
+Requested number of displayed columns. 
+Description
+Constructs a TextArea object 
+of the given size and no initial content.
+public TextArea (String text)
+Parameters 
+text
+Initial text for TextArea. 
+Description
+Constructs a TextArea object 
+with the given initial content. 
+public TextArea (String text, int rows, int columns)
+Parameters 
+text
+Initial text for TextArea. 
+rows
+Requested number of displayed rows. 
+columns
+Requested number of displayed columns. 
+Description
+Constructs a TextArea object 
+with the given content and size. 
+public TextArea (String text, int rows, int columns, int scrollbars) 
+Parameters 
+text
+Initial text for TextArea. 
+rows
+Requested number of displayed rows. 
+columns
+Requested number of displayed columns. 
+scrollbars
+Requested scrollbar visibility. Use one of the constants 
+defined. 
+Description
+Constructs a TextArea object 
+with the given content, size, and scrollbar visibility. 
+Instance Methods
+addNotify
+public void addNotify()
+Overrides 
+Component.addNotify() 
+Description
+Creates TextArea's peer. 
+append
+public synchronized void append (String string) 
+Parameters 
+string
+Content to append to the end of the TextArea. 
+Description
+Appends the given text string to the text already displayed in the TextArea. 
+appendText
+public void appendText (String string) 
+Parameters 
+string
+Content to append to end of TextArea. 
+Description
+Replaced by append(String). 
+getColumns
+public int getColumns()
+Returns
+The width of the TextArea in 
+columns. 
+getMinimumSize
+public Dimension getMinimumSize() 
+Returns
+The minimum dimensions of the TextArea. 
+public Dimension getMinimumSize (int rows, int columns) 
+Parameters 
+rows
+Number of rows within TextArea 
+to size. 
+columns
+Number of columns within TextArea 
+to size. 
+Returns
+The minimum dimensions of a TextArea 
+of the given size. 
+getPreferredSize
+public Dimension getPreferredSize() 
+Returns
+The preferred dimensions of the TextArea. 
+public Dimension getPreferredSize (int rows, int columns) 
+Parameters 
+rows
+Number of rows within TextArea 
+to size. 
+columns
+Number of columns within TextArea 
+to size. 
+Returns
+The preferred dimensions of a TextArea 
+of the given size. 
+getRows
+public int getRows()
+Returns
+The height of the TextArea 
+in rows. 
+getScrollbarVisibility
+public int getScrollbarVisibility() 
+Returns
+One of the SCROLLBAR_ constants 
+indicating which scrollbars are visible. 
+insert
+public synchronized void insert (String string, int position) 
+Parameters 
+string
+Content to place within TextArea 
+content. 
+position
+Location to insert content. 
+Description
+Places additional text within the TextArea 
+at the given position. 
+insertText
+public void insertText (String string, int position) 
+Parameters 
+string
+Content to place within TextArea 
+content. 
+position
+Location to insert content. 
+Description
+Places additional text within the TextArea 
+at the given position. Replaced by insert(String, int). 
+minimumSize
+public Dimension minimumSize() 
+Returns
+The minimum dimensions of the TextArea. 
+Replaced by getMinimumSize(). 
+public Dimension minimumSize (int rows, int columns) 
+Parameters 
+rows
+Number of rows within TextArea 
+to size. 
+columns
+Number of columns within TextArea 
+to size. 
+Returns
+The minimum dimensions of a TextArea 
+of the given size. Replaced by getMinimumSize(int, int). 
+preferredSize
+public Dimension preferredSize() 
+Returns
+The preferred dimensions of the TextArea. 
+Replaced by getPreferredSize(). 
+public Dimension preferredSize (int rows, int columns) 
+Parameters 
+rows
+Number of rows within TextArea 
+to size. 
+columns
+Number of columns within TextArea 
+to size. 
+Returns
+The preferred dimensions of a TextArea 
+of the given size. Replaced by getPreferredSize(int, 
+int). 
+replaceRange
+public synchronized void replaceRange (String str, int start, int end) 
+Parameters 
+str
+New content to place in TextArea. 
+start
+Starting position of content to replace. 
+end
+Ending position of content to replace. 
+Description
+Replaces a portion of the TextArea's 
+content with the given text. 
+replaceText
+public void replaceText (String string, int startPosition, int endPosition) 
+Parameters 
+string
+New content to place in TextArea. 
+startPosition
+Starting position of content to replace. 
+endPosition
+Ending position of content to replace. 
+Description
+Replaces a portion of the TextArea's 
+content with the given text. Replaced by replaceRange(String, 
+int, int). 
+setColumns
+public void setColumns (int columns) 
+Parameters 
+columns
+New number of columns. 
+Throws
+IllegalArgumentException
+If 
+columns is less than zero. 
+Description
+Changes the number of columns. 
+setRows
+public void setRows (int rows) 
+Parameters
+rows
+New number of columns. 
+Throws
+IllegalArgumentException
+If 
+rows is less than zero. 
+Description
+Changes the number of rows. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of TextArea. 
+Overrides
+TextComponent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+Dimension, TextComponent, 
+String 
+SystemColor 
+TextComponent
+ 
+ 
+ 
+ 
+ 
+ 
+ 

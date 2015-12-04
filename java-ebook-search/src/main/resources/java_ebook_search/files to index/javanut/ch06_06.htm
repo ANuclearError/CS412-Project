@@ -1,0 +1,185 @@
+
+[Chapter 6] 6.6 Images and Sounds
+Chapter 6Applets
+6.6 Images and Sounds
+Example 6.5
+shows a Java applet that implements a simple client-side
+imagemap, which has the capability to highlight the "hot
+spots" in the image and play a sound clip when the user
+clicks on the image.
+Figure 6.4
+shows what this applet might look like, when configured with
+an appropriate image.
+Figure 6.4: An imagemap applet
+This applet demonstrates quite a few important applet
+techniques:
+getParameter() looks up the name of the
+image to display and the audio clip to play when the user clicks, and
+it also reads a list of rectangles and URLs that define the
+hot spots and hyperlinks of the imagemap.
+The getImage() and getDocumentBase() methods
+load the image in the init() method, and
+Graphics.drawImage() displays the image
+in the paint() method.
+getAudioClip() loads a sound file in the
+init() method, and AudioClip.play() plays the
+sound in the mousePressed() method.
+Events are handled by an "event listener" object, which is
+defined by an inner class (see Chapter 5, Inner Classes and Other New Language Features).  This is an
+example of the Java 1.1 event handling model (see Chapter 7, Events).
+Therefore, this applet only runs in Web browsers that support Java
+1.1.
+The showStatus() method displays the
+destination URL when the user presses the mouse button over
+a hot spot, while the
+AppletContext.showDocument() method makes the
+browser display that URL when the user releases the mouse
+button.
+The applet uses "XOR mode" of the Graphics class to
+highlight an area of the image in a way that can be easily
+"un-highlighted" by redrawing.
+The individual hot spots are represented by instances of a nested top-level
+class.  The java.util.Vector class stores
+the list of hot spot objects, and
+java.util.StringTokenizer parses the descriptions
+of those hot spots.
+The following HTML fragment shows an example of the
+properties read by this applet:
+&lt;APPLET code="Soundmap.class" width=288 height=288&gt;
+&lt;PARAM name="image" value="image.gif"&gt;
+&lt;PARAM name="sound" value="sound.au"&gt;
+&lt;PARAM name="rect0" value="114,95,151,33,#part1"&gt;
+&lt;PARAM name="rect1" value="114,128,151,33,#part2"&gt;
+&lt;PARAM name="rect2" value="114,161,151,33,#part3"&gt;
+&lt;PARAM name="rect3" value="114,194,151,33,#part4"&gt;
+&lt;PARAM name="rect4" value="114,227,151,33,#part5"&gt;
+&lt;/APPLET&gt;
+Example 6.5: An Imagemap Applet
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+import java.net.*;
+import java.util.*;
+/**
+ * A Java applet that simulates a client-side imagemap.
+ * Plays a sound whenever the user clicks on one of the hyperlinks.
+ */
+public class Soundmap extends Applet {
+  protected Image image;      // The image to display.
+  protected Vector rects;     // A list of rectangles in it.
+  protected AudioClip sound;  // A sound to play on user clicks in a rectangle.
+  /** Initialize the applet. */
+  public void init() {
+    // Look up the name of the image, relative to a base URL, and load it.
+    // Note the use of three Applet methods in this one line.
+    image = this.getImage(this.getDocumentBase(), this.getParameter("image"));
+    // Lookup and parse a list of rectangular areas and the URLs they map to.
+    // The convenience routine getRectangleParameter() is defined below.
+    rects = new Vector();
+    ImagemapRectangle r;
+    for(int i = 0; (r = getRectangleParameter("rect" + i)) != null; i++)
+      rects.addElement(r);
+    // Look up a sound to play when the user clicks one of those areas.
+    sound = this.getAudioClip(this.getDocumentBase(),
+                  this.getParameter("sound"));
+    // Specify an "event listener" object to respond to mouse button
+    // presses and releases.  Note that this is the Java 1.1 event model.
+    // Note that it also uses a Java 1.1 inner class, defined below.
+    this.addMouseListener(new Listener());
+  }
+  /** Called when the applet is being unloaded from the system.
+   * We use it here to "flush" the image we no longer need. This may
+   * result in memory and other resources being freed more quickly. */
+  public void destroy() { image.flush(); }
+  /** To display the applet, we simply draw the image. */
+  public void paint(Graphics g) { g.drawImage(image, 0, 0, this); }
+  /** We override this method so that it doesn't clear the background
+   * before calling paint().  No clear is necessary, since paint() overwrites
+   * everything with an image.  Causes less flickering this way. */
+  public void update(Graphics g) { paint(g); }
+  /** Parse a comma-separated list of rectangle coordinates and a URL.
+   * Used to read the imagemap rectangle definitions from applet parameters. */
+  protected ImagemapRectangle getRectangleParameter(String name) {
+    int x, y, w, h;
+    URL url;
+    String value = this.getParameter(name);
+    if (value == null) return null;
+    try {
+      StringTokenizer st = new StringTokenizer(value, ",");
+      x = Integer.parseInt(st.nextToken());
+      y = Integer.parseInt(st.nextToken());
+      w = Integer.parseInt(st.nextToken());
+      h = Integer.parseInt(st.nextToken());
+      url = new URL(this.getDocumentBase(), st.nextToken());
+    }
+    catch (NoSuchElementException e) { return null; }
+    catch (NumberFormatException e) { return null; }
+    catch (MalformedURLException e) { return null; }
+    return new ImagemapRectangle(x, y, w, h, url);
+  }
+  /**
+   * An instance of this inner class is used to respond to mouse events.
+   */
+  class Listener extends MouseAdapter {
+    /** The rectangle that the mouse was pressed in. */
+    private ImagemapRectangle lastrect;
+    /** Called when a mouse button is pressed. */
+    public void mousePressed(MouseEvent e) {
+      // On button down, check if we're inside one of the specified rectangles.
+      // If so, highlight the rectangle, display a message, and play a sound.
+      // The utility routine findrect() is defined below.
+      ImagemapRectangle r = findrect(e);
+      if (r == null) return;
+      Graphics g = Applet.this.getGraphics();
+      g.setXORMode(Color.red);
+      g.drawRect(r.x, r.y, r.width, r.height);  // highlight rectangle
+      Applet.this.showStatus("To: " + r.url);   // display URL
+      sound.play();                             // play the sound
+      lastrect = r;   // Remember the rectangle so it can be un-highlighted.
+    }
+    /** Called when a mouse button is released. */
+    public void mouseReleased(MouseEvent e) {
+      // When the button is released, un-highlight the rectangle.  If the
+      // mouse is still inside it, ask the browser to go to the URL.
+      if (lastrect != null) {
+    Graphics g = Applet.this.getGraphics();
+    g.setXORMode(Color.red);
+    g.drawRect(lastrect.x, lastrect.y, lastrect.width, lastrect.height);
+    Applet.this.showStatus("");   // Clear the message.
+    ImagemapRectangle r = findrect(e);
+    if ((r != null) &amp;&amp; (r == lastrect))  // If still in the same rectangle
+      Applet.this.getAppletContext().showDocument(r.url); // Go to the URL
+    lastrect = null;
+      }
+    }
+    /** Find the rectangle we're inside. */
+    protected ImagemapRectangle findrect(MouseEvent e) {
+      int i, x = e.getX(), y = e.getY();
+      for(i = 0; i &lt; rects.size(); i++)  {
+    ImagemapRectangle r = (ImagemapRectangle) rects.elementAt(i);
+    if (r.contains(x, y)) return r;
+      }
+      return null;
+    }
+  }
+  /**
+   * A helper class.  Just like java.awt.Rectangle, but with a URL field.
+   * Note the use of a nested top-level class for neatness.
+   */
+  static class ImagemapRectangle extends Rectangle {
+    URL url;
+    public ImagemapRectangle(int x, int y, int w, int h, URL url) {
+      super(x, y, w, h);
+      this.url = url;
+    }
+  }
+}
+Reading Applet Parameters
+JAR Files
+ 
+ 
+ 
+ 
+ 
+ 
+ 

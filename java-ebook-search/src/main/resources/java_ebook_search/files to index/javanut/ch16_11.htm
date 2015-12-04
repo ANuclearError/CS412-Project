@@ -1,0 +1,46 @@
+
+[Chapter 16] serialver
+Chapter 16JDK Tools
+serialver
+Name
+serialver---Class Version Number Generator
+Availability
+JDK 1.1 and later.
+Synopsis
+serialver [-show] classname...
+Description
+serialver displays the version number, or
+serialization-unique identifier, for a named class or
+classes.  If the class declares a long
+serialVersionUID constant, the value of that field
+is displayed.  Otherwise, a unique version number is
+computed by applying the Secure Hash Algorithm (SHA) to the
+API defined by the class.  This program is primarily useful
+for computing an initial unique version number for a class,
+which is then declared as a constant in the class.  The
+output of serialver is a line of legal Java code,
+suitable for pasting into a class definition.
+Options
+-show
+When the -show option is specified, serialver
+displays a simple graphical interface that allows the user
+to type in a single classname at a time and obtain its
+serialization UID.  When using -show, no class names
+may be specified on the command-line.
+Environment
+CLASSPATH
+serialver is written in Java, and so it is sensitive
+to the CLASSPATH environment variable in the same
+way that the java interpreter is.  The specified
+classes are looked up relative to this class path.
+See Also
+java.io.ObjectStreamClass
+native2ascii
+How To Use This Quick Reference
+ 
+ 
+ 
+ 
+ 
+ 
+ 

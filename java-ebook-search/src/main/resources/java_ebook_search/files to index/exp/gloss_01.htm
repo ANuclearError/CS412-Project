@@ -1,0 +1,624 @@
+
+ Glossary
+Glossary
+Glossary
+abstract
+The abstract keyword is used to declare abstract
+methods and classes. An abstract method has no implementation
+defined; it is declared with arguments and a return type as usual, but
+the body enclosed in curly braces is replaced with a semicolon. The
+implementation of an abstract method is provided by a subclass of the
+class in which it is defined. If an abstract method appears in a
+class, the class is also abstract.
+API (Application Programming Interface)
+An API consists of the functions and variables
+programmers are use in their applications.  The Java
+API consists of all public and
+protected methods of all public
+classes in the java.applet,
+java.awt, java.awt.image,
+java.awt.peer, java.io,
+java.lang, java.net, and
+java.util packages.
+applet
+An embedded Java application that runs in the context of an applet
+viewer, such as a Web browser.
+&lt;applet&gt; tag
+HTML tag that specifies an applet run within a Web
+document.
+applet viewer
+An application that implements the additional structure
+needed to run and display Java applets. An applet viewer can be a
+Web browser like HotJava or Netscape Navigator, or a separate
+program like Sun's appletviewer.
+application
+A Java program that runs standalone; i.e., it doesn't require an applet viewer.
+AWT (Abstract Windowing Toolkit)
+Java's platform-independent windowing, graphics, and user-interface
+toolkit.
+boolean
+A primitive Java data type that contains a truth value. The two
+possible values of a boolean variable are
+true and false.
+byte
+A primitive Java data type that's an 8-bit two's-complement signed
+number (in all implementations).
+callback
+A behavior that is defined by one object and then later invoked by
+another object when a particular event occurs.
+cast
+A technique that explicitly converts one data type to another.
+catch
+The catch statement introduces an exception-handling
+block of code following a try statement. The
+catch keyword is followed by an exception type
+and argument name in parentheses, and a block of code within
+curly braces.
+char
+A primitive Java data type; a variable of type char
+holds a single 16-bit Unicode character.
+class
+a) An encapsulated collection of data and methods to operate on
+the data. A class may be instantiated to produce an
+object that's an instance of the class.
+b) The class keyword is used to declare a class,
+thereby defining a new object type. Its syntax is similar
+to the struct keyword in C.
+class loader
+An object in the Java security model that is responsible for loading
+Java binary classes from the network into the local interpreter. A
+class loader keeps its classes in a separate namespace, so that loaded
+classes cannot interact with system classes and breach system
+security.
+class method
+A method declared static. Methods of this type are
+not passed implicit this references and may
+refer only to class variables and invoke other class methods of
+the current class. A class method may be invoked through
+the class name, rather than through an instance of the
+class.
+class path
+The directory path specifying the location of compiled Java class files
+on the local system.
+class variable
+A variable declared static. Variables of this type
+are associated with the class, rather than with a particular
+instance of the class. There is only one copy of a static
+variable, regardless of the number of instances of the class
+that are created.
+client
+The application that initiates a conversation as part of a networked
+client/server application. See server.
+compilation unit
+The source code for a Java class.  A compilation unit normally
+contains a single class definition, and in most current development
+environments is just a file with a .java
+extension.
+compiler
+A program that translates source code into executable code.
+component
+Any of the GUI primitives implemented in the
+java.awt package as subclasses of Component.
+The classes Button, Choice, and
+TextField (among many others) are components.
+composition
+Using objects as part of another, more complex object. When you
+compose a new object, you create complex behavior by delegating tasks
+to the internal objects. Composition is different from inheritance,
+which defines a new object by changing or refining the behavior of an
+old object. See inheritance.
+constructor
+A method that is invoked automatically when a new instance
+of a class is created. Constructors are used to initialize
+the variables of the newly created object. The constructor 
+method has the same name as the class.
+container
+One of the java.awt classes that "contain"
+GUI components. Components in a container appear
+within the boundaries of the container. The classes
+Dialog, Frame,
+Panel, and Window are
+containers.
+content handler
+A class that recognizes the content type of particular
+data, parses it, and converts it to an appropriate object.
+datagram
+A packet of data sent to a receiving computer without
+warning, error checking, or other control information.
+data hiding
+See encapsulation.
+double
+A Java primitive data type;a double value is a
+64-bit (double-precision) floating-point number.
+encapsulation
+An object-oriented programming technique that makes an object's data
+private or protected (i.e.,
+hidden) and allows programmers to access and manipulate that data only
+through method calls. Done well, encapsulation reduces bugs and
+promotes reusability and modularity of classes. This technique is also
+known as data hiding.
+event
+A user's action, such as a mouse click or key press.
+exception
+A signal that some unexpected condition has occurred in the
+program. In Java, exceptions are objects that are subclasses of
+Exception or Error (which
+themselves are subclasses of Throwable). Exceptions
+in Java are "raised" with the throw keyword and
+received with the catch keyword. See
+throw, throws, and
+catch.
+extends
+The extends keyword is used in a
+class declaration to specify the superclass of the
+class being defined. The class being defined has access to all the
+public and protected variables
+and methods of the superclass (or, if the class being defined is in
+the same package, it has access to all non-private
+variables and methods). If a class definition omits the
+extends clause, its superclass is taken to be
+java.lang.Object.  
+final
+The final keyword is a modifier that may be applied
+to classes, methods, and variables. It has a similar, but not
+identical meaning in each case. When final is
+applied to a class, it means that the class may never be
+subclassed. java.lang.System is an example of a
+final class. When final is
+applied to a variable, the variable is a constant; i.e., it can't be
+modified.
+finalize
+finalize is not actually a Java keyword, but a
+reserved method name. The finalizer is called when an object is no
+longer being used (i.e., when there are no further references to it),
+but before the object's memory is actually reclaimed by the system. A
+finalizer should perform cleanup tasks and free system resources not
+handled by Java's garbage-collection system.
+finally
+This keyword introduces the finally block of a
+try/catch/finally
+construct.  catch and finally
+blocks provide exception handling and routine cleanup for code in
+a try block. The finally block
+is optional, and appears after the try block, and
+after zero or more catch blocks. The code in a
+finally block is executed once, regardless of how
+the code in the try block executes. In normal
+execution, control reaches the end of the try block
+and proceeds to the finally block, which
+generally performs any necessary cleanup.
+float
+A Java primitive data type; a float value is a
+32-bit (single-precision) floating-point number represented in
+IEEE 754 format.
+garbage collection
+The process of reclaiming the memory of objects no
+longer in use. An object is no longer in use when there are
+no references to it from other objects in the system and
+no references in any local variables on the method call
+stack.
+GC
+An abbreviation for garbage collection or garbage collector (or
+occasionally "graphics context").
+graphics context
+A drawable surface represented by the java.awt.Graphics
+class.  A graphics context contains contextual information about the
+drawing area and provides methods for performing drawing operations in
+it.
+GUI (graphical user interface)
+A GUI is a user interface constructed from
+graphical push buttons, text fields, pull-down menus, dialog boxes,
+and other standard interface components.  In Java,
+GUIs are implemented with the classes in the
+java.awt package.
+hashcode
+An arbitrary-looking identifying number used as a kind of signature
+for an object. A hashcode stores an object in a hashtable.  See
+hashtable.
+hashtable
+An object that is like a dictionary or an associative array.  A
+hashtable stores and retrieves elements using key values called
+hashcodes.  See hashcode.
+hostname
+The name given to an individual computer attached to the Internet.
+HotJava
+A WWW browser written in Java that is capable of
+downloading and running Java applets.
+ImageConsumer
+An interface for receiving image data from an image source. Image
+consumers are usually implemented by the awt.peer
+interface, so they are largely invisible to programmers.
+ImageObserver
+An interface in the java.awt.image package that
+receives information about the status of an image being
+constructed by a particular ImageConsumer.
+ImageProducer
+An interface in the java.awt.image package that
+represents an image source (i.e., a source of pixel data).
+implements
+The implements keyword is used in class
+declarations to indicate that the class implements the named interface
+or interfaces. The implements clause is optional in
+class declarations; if it appears, it must follow the
+extends clause (if any). If an
+implements clause appears in the declaration of a
+non-abstract class, every method from each
+specified interface must be implemented by the class or by one of its
+superclasses.
+import
+The import statement makes Java classes available
+to the current class under an abbreviated name. (Java classes are
+always available by their fully qualified name, assuming the
+appropriate class file can be found relative to the
+CLASSPATH environment variable and that the class
+file is readable. import doesn't make the class
+available; it just saves typing and makes your code more legible). Any
+number of import statements may appear in a Java
+program. They must appear, however, after the optional
+package statement at the top of the file, and
+before the first class or interface definition in the file.
+inheritance
+An important feature of object-oriented programming that involves
+defining a new object by changing or refining the behavior of an
+existing object. That is, an object implicitly contains all the
+non-private variables of its superclass and can
+invoke all the non-private methods of its
+superclass. Java supports single inheritance of classes and multiple
+inheritance of interfaces.
+instance
+An object. When a class is instantiated to produce an object, we say
+the object is an instance of the class.
+instance method
+A non-static method of a class. Such a method is
+passed an implicit this reference to the object that
+invoked it. See also class method and static.
+instanceof
+instanceof is a Java operator that returns
+true if the object on its left-hand side is an
+instance of the class (or implements the interface)
+specified on its right-hand side. instanceof
+returns false if the object is not an instance of
+the specified class or does not implement the specified
+interface. It also returns false if the specified
+object is null.
+instance variable
+A non-static variable of a class. Copies of such
+variables occur in every instance of the created class. See also class
+variable and static.
+int
+A primitive Java data type that's a 32-bit two's-complement signed
+number (in all implementations).
+interface
+The interface keyword is used to declare an
+interface. More generally, an interface defines a list of methods that enables
+a class to implement the interface itself.
+interpreter
+The module that decodes and executes Java bytecode.
+ISO8859-1
+An 8-bit character encoding standardized by the
+ISO. This encoding is also known as Latin-1 and
+contains characters from the Latin alphabet suitable for English and
+most languages of western Europe.
+ISO10646
+A 4-byte character encoding that includes all of the world's national
+standard character encodings. Also known as
+UCS. The 2-byte Unicode character set maps to the
+range 0x00000000 to 0x0000FFFF of ISO 10646.
+Java WorkShop
+Sun's Web browser-based tool written in Java for the development
+of Java applications.
+JDK (Java Development Kit)
+A package of software distributed by Sun Microsystems for Java
+developers. It includes the Java interpreter, Java classes, and Java
+development tools: compiler, debugger, disassembler, appletviewer,
+stub file generator, and documentation generator.
+JavaScript
+A language for creating dynamic Web pages developed by Netscape. From
+a programmer's point of view, it's unrelated to Java, although some of
+its capabilities are similar. Internally, there may be a relationship,
+but even that is unclear.
+layout manager
+An object that controls the arrangement of components within the
+display area of a container.  The java.awt package
+contains a number of layout managers that provide different layout
+styles.
+Latin-1
+A nickname for ISO8859-1.
+local variable
+A variable that is declared inside a single method.  A local variable
+can be seen only by code within that method.
+long
+A primitive Java data type that's a 64-bit
+two's-complement signed number (in all implementations).
+method
+The object-oriented programming term for a function or
+procedure. 
+method overloading
+Providing definitions of more than one method with the same name but
+with different argument lists or return values. When an overloaded
+method is called, the compiler determines which one is intended by
+examining the supplied argument types.
+method overriding
+Defining a method that exactly matches (i.e., same name,
+same argument types, and same return type) a method defined
+in a superclass. When an overridden method is invoked, the
+interpreter uses "dynamic method lookup" to determine which
+method definition is applicable to the current object.
+modifier
+A keyword placed before a class, variable, or method that alters
+the item's accessibility, behavior, or semantics.  See
+abstract, final,
+native, private,
+private protected, protected,
+public, static, and
+synchronized.
+Model/View/Controller (MVC)
+framework
+A user-interface design that originated in Smalltalk.  In
+MVC, the data for a display item is called the
+"model." A "view" displays a particular representation of the model,
+and a "controller" provides user interaction with both. Java
+incorporates many MVC concepts.
+NaN (not-a-number)
+This is a special value of the double and
+float data types that represents an undefined
+result of a mathematical operation, such as zero divided by zero.
+native
+native is a modifier that may be applied to method
+declarations. It indicates that the method is implemented
+(elsewhere) in C, or in some other platform-dependent
+fashion. A native method should have a semicolon
+instead of a body. A native method cannot be
+abstract, but all other method modifiers may be used
+with native methods.
+native method
+A method that is implemented in a native language on a host
+platform, rather than being implemented in Java.  Native methods
+provide access to such resources as the network, the windowing
+system, and the host filesystem.
+new
+new is a unary operator that creates a new object or
+array (or raises an OutOfMemoryException if there is
+not enough memory available).
+null
+null is a special value that indicates a variable
+doesn't refer to any object. The value null may be
+assigned to any class or interface variable. It cannot be cast to any
+integral type, and should not be considered equal to zero, as in C.
+object
+An instance of a class. A class models a group
+of things; an object models a particular member of that
+group.
+package
+The package statement specifies which package the
+code in the file is part of. Java code that is part of a particular
+package has access to all classes (public and
+non-public) in the package, and all
+non-private methods and fields in all those
+classes. When Java code is part of a named package, the compiled class
+file must be placed at the appropriate position in the
+CLASSPATH directory hierarchy before it can be
+accessed by the Java interpreter or other utilities.  If the
+package statement is omitted from a file, the code
+in that file is part of an unnamed default package.  This is
+convenient for small test programs, or during development because it
+means the code can be interpreted from the current directory.
+&lt;param&gt; tag
+HTML tag used within
+&lt;applet&gt;
+... &lt;/applet&gt; to specify a named parameter
+and string value to an applet within a Web page.
+peer
+ 
+The actual implementation of a GUI component on a
+specific platform.  Peer components reside within a
+Toolkit object. See Toolkit.
+primitive type
+One of the Java data types: boolean,
+char, byte,
+short, int,
+long, float,
+double. Primitive types are manipulated, assigned,
+and passed to methods "by value" (i.e., the actual bytes of the data
+are copied).  See also reference type.
+private
+The private keyword is a visibility modifier that
+can be applied to method and field variables of classes. A
+private field is not visible outside its class
+definition.
+private protected
+When the private and protected
+visibility modifiers are both applied to a variable or method in a
+class, they indicate the field is visible only within the class
+itself and within subclasses of the class. Note that subclasses can
+access only private protected fields within
+themselves or within other objects that are subclasses; they cannot
+access those fields within instances of the superclass.
+protected
+The protected keyword is a visibility modifier that
+can be applied to method and field variables of classes. A
+protected field is visible only within its class,
+within subclasses, or within the package of which its class is a
+part. Note that subclasses in different packages can access only
+protected fields within themselves or within other
+objects that are subclasses; they cannot access protected fields
+within instances of the superclass.
+protocol handler
+Software that describes and enables the use of a new protocol. A
+protocol handler consists of two classes: a
+StreamHandler and a
+URLConnection.
+public
+The public keyword is a visibility modifier that
+can be applied to classes and interfaces and to the method and field
+variables of classes and interfaces. A public class
+or interface is visible everywhere. A non-public
+class or interface is visible only within its package. A
+public method or variable is visible everywhere its
+class is visible. When none of the private,
+protected or public modifiers is
+specified, a field is visible only within the package of which its
+class is a part.
+reference type
+Any object or array. Reference types are manipulated,
+assigned, and passed to methods "by reference." In other words, the
+underlying value is not copied; only a reference to it is.
+See also primitive type.
+root
+The base of a hierarchy, such as a root class, whose descendants are
+subclasses. The java.lang.Object class serves as
+the root of the Java class hierarchy.
+SecurityManager
+The Java class that defines the methods the system calls to check
+whether a certain operation is permitted in the current environment.
+server
+The application that accepts a request for a conversation as part of a
+networked client/server application.  See client.
+shadow
+To declare a variable with the same name as a variable defined in a
+superclass. We say the variable "shadows" the superclass's
+variable. Use the super keyword to refer to the
+shadowed variable, or refer to it by casting the object to the type of
+the superclass.
+short
+A primitive Java data type that's a 16-bit two's-complement signed
+number (in all implementations).
+socket
+An interface that listens for connections from clients on a data port
+and connects the client data stream with the receiving application.
+static
+The static keyword is a modifier applied to method
+and variable declarations within a class. A static
+variable is also known as a class variable as opposed to
+non-static instance variables.  While each instance
+of a class has a full set of its own instance variables, there is only
+one copy of each static class variable, regardless
+of the number of instances of the class (perhaps zero) that are
+created.  static variables may be accessed by class
+name or through an instance. Non-static variables
+can be accessed only through an instance.
+stream
+A flow of data, or a channel of communication. All fundamental I/O
+in Java is based on streams.
+String
+A class used to represent textual information. The
+String class includes many methods for operating on
+string objects. Java overloads the + operator for string
+concatenation.
+subclass
+A class that extends another. The subclass inherits the
+public and protected methods and
+variables of its superclass. See extends.
+super
+The keyword super refers to the same value as
+this: the instance of the class for which the
+current method (these keywords are valid only within
+non-static methods) was invoked. While the type of
+this is the type of the class in which the method
+appears, the type of super is the type of the
+superclass of the class in which the method appears.
+super is usually used to refer to superclass
+variables shadowed by variables in the current class. Using
+super in this way is equivalent to casting
+this to the type of the superclass.
+superclass
+A class extended by some other class. The superclass's
+public and protected methods and
+variables are available to the subclass. See
+extends.
+synchronized
+The synchronized keyword is used in two related
+ways in Java: as a modifier and as a statement. First, it is a
+modifier applied to class or instance methods.  It indicates that the
+method modifies the internal state of the class or the internal state
+of an instance of the class in a way that is not thread-safe. Before
+running a synchronized class method, Java obtains a
+lock on the class, to ensure that no other threads can modify the
+class concurrently. Before running a synchronized
+instance method, Java obtains a lock on the instance that invoked the
+method, ensuring that no other threads can modify the object at the
+same time.
+Java also supports a synchronized statement that 
+serves to specify a "critical section" of code. The
+synchronized keyword is followed by an expression in
+parentheses, and a statement or block of statements. The
+expression must evaluate to an object or array. Java
+obtains a lock on the specified object or array before
+executing the statements.
+TCP
+Transmission Control Protocol. A connection-oriented, reliable
+protocol. One of the protocols on which the Internet is based.
+this
+Within an instance method or constructor of a class,
+this refers to "this object"--the instance currently
+being operated on. It is useful to refer to an instance
+variable of the class that has been shadowed by a local
+variable or method argument. It is also useful to pass the
+current object as an argument to static methods or
+methods of other classes.
+There is one additional use of this: when it
+appears as the first statement in a constructor method, it refers to
+one of the other constructors of the class.
+thread
+A single, independent stream of execution within a program.
+Since Java is a "multithreaded" programming language, more
+than one thread may be running within the Java interpreter
+at a time. Threads in Java are represented and controlled
+through the Thread object.
+throw
+The throw statement signals that an exceptional
+condition has occurred by throwing a specified exception
+object. This statement stops program execution and
+resumes it at the nearest containing catch statement
+that can handle the specified exception object. Note that
+the throw keyword must be followed by an exception
+object, not an exception class.
+throws
+The throws keyword is used in a method declaration
+to list the exceptions the method can throw. Any exceptions a method
+can raise that are not subclasses of Error or
+RuntimeException must either be caught within the
+method or declared in the method's throws clause.
+Toolkit
+The property of the Java API that defines the look
+and feel of the user interface on a specific platform.
+try
+The try keyword indicates a block of code to which
+subsequent catch and finally
+clauses apply. The try statement itself performs no
+special action. See the entries for catch and
+finally for more information on the
+try/catch/finally
+construct.
+UCS (universal character set)
+A synonym for ISO10646.  
+UDP
+User Datagram Protocol. A connectionless unreliable
+protocol. UDP describes a network data connection
+based on datagrams with little packet control.
+Unicode
+A 16-bit character encoding that includes all of the world's commonly
+used alphabets and ideographic character sets in a "unified" form
+(i.e., a form from which duplications among national standards have
+been removed). ASCII and Latin-1 characters may be
+trivially mapped to Unicode characters. Java uses Unicode for its
+char and String types.
+UTF-8 (UCS transformation format 8-bit form)
+An encoding for Unicode characters (and more generally,
+UCS characters) commonly used for transmission and
+storage. It is a multibyte format in which different characters
+require different numbers of bytes to be represented.
+vector
+A dynamic array of elements.
+verifier
+A theorem prover that steps through the Java byte-code before it
+is run and makes sure that it is well-behaved.  The byte-code
+verifier is the first line of defense in Java's security model.
+Working with Audio
+ 
+ 
+ 
+ 
+ 
+ 
+ 

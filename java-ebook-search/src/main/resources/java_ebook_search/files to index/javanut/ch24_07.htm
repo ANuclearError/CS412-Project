@@ -1,0 +1,49 @@
+
+[Chapter 24] 24.7 java.io.CharArrayReader (JDK 1.1)
+Chapter 24The java.io Package
+24.7 java.io.CharArrayReader (JDK 1.1)
+This class is a character input stream that uses a character
+array as the source of the characters it returns.  You
+create a CharArrayReader by specifying the character
+array, or portion of an array, that it is to read from.
+CharArrayReader defines the usual Reader
+methods, and supports the mark() and reset()
+methods.
+Note that the character array you pass to the
+CharArrayReader is not copied by this class.  This
+means that changes you make to the elements of the array
+after you create the input stream do affect the values
+read from the array.
+CharArrayReader() is the character-array analog of
+ByteArrayInputStream, and is similar to
+StringReader.
+public class CharArrayReader extends Reader {
+    // Public Constructors
+            public CharArrayReader(char[] buf);
+            public CharArrayReader(char[] buf, int offset, int length);
+    // Protected Instance Variables
+            protected char[] buf;
+            protected int count;
+            protected int markedPos;
+            protected int pos;
+    // Public Instance Methods
+            public void close();  // Defines Reader
+            public void mark(int readAheadLimit) throws IOException;  // Overrides Reader
+            public boolean markSupported();  // Overrides Reader
+            public int read() throws IOException;  // Overrides Reader
+            public int read(char[] b, int off, int len) throws IOException;  // Defines Reader
+            public boolean ready() throws IOException;  // Overrides Reader
+            public void reset() throws IOException;  // Overrides Reader
+            public long skip(long n) throws IOException;  // Overrides Reader
+}
+Hierarchy:
+Object->Reader->CharArrayReader
+java.io.ByteArrayOutputStream (JDK 1.0)
+java.io.CharArrayWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,53 @@
+
+[Chapter 29] 29.10 java.text.DecimalFormatSymbols (JDK 1.1)
+Chapter 29The java.text Package
+29.10 java.text.DecimalFormatSymbols (JDK 1.1)
+This class defines the various characters and strings, such
+as the decimal point, percent sign, and thousands separator,
+used by DecimalFormat when formatting numbers. You
+do not typically use this class directly unless you are
+formatting dates for an unsupported locale or in some highly
+customized way.
+public final class DecimalFormatSymbols extends Object implements Cloneable, Serializable {
+    // Public Constructors
+            public DecimalFormatSymbols();
+            public DecimalFormatSymbols(Locale locale);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public boolean equals(Object obj);  // Overrides Object
+            public char getDecimalSeparator();
+            public char getDigit();
+            public char getGroupingSeparator();
+            public String getInfinity();
+            public char getMinusSign();
+            public String getNaN();
+            public char getPatternSeparator();
+            public char getPerMill();
+            public char getPercent();
+            public char getZeroDigit();
+            public int hashCode();  // Overrides Object
+            public void setDecimalSeparator(char decimalSeparator);
+            public void setDigit(char digit);
+            public void setGroupingSeparator(char groupingSeparator);
+            public void setInfinity(String infinity);
+            public void setMinusSign(char minusSign);
+            public void setNaN(String NaN);
+            public void setPatternSeparator(char patternSeparator);
+            public void setPerMill(char perMill);
+            public void setPercent(char percent);
+            public void setZeroDigit(char zeroDigit);
+}
+Passed To:
+DecimalFormat(), 
+DecimalFormat.setDecimalFormatSymbols()
+Returned By:
+DecimalFormat.getDecimalFormatSymbols()
+java.text.DecimalFormat (JDK 1.1)
+java.text.FieldPosition (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

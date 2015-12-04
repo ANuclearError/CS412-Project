@@ -1,0 +1,62 @@
+
+[Chapter 11] FilenameFilter
+Chapter 11The java.io Package
+FilenameFilter
+Name
+FilenameFilter
+Synopsis
+Interface Name:
+java.io.FilenameFilter
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented by:
+None
+Availability:
+JDK 1.0 or later
+Description
+The FilenameFilter interface 
+is implemented by a class that wants to filter the filenames that should 
+be included in a list of filenames. For example, the list() 
+method of the File class can 
+take a FilenameFilter object 
+to filter the filenames that are listed. The java.awt.FileDialog 
+class also uses a FilenameFilter 
+to limit the choices that are presented to the user. 
+Interface Declaration
+public abstract interface java.io.FilenameFilter {
+  // Methods
+  public abstract boolean accept(File dir, String name);
+}
+Methods
+accept
+public abstract boolean accept(File dir, String name)
+Parameters
+dir
+The directory that contains the file.
+name
+The name of the file. 
+Returns
+true if the file should be 
+shown; false otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not a file should be included in a list 
+of filenames. The method should return true 
+if a file should be included; otherwise it should return false. 
+A simple filter might return true 
+for filenames with a certain extension, like .java. 
+A more complex filter could check the directory name, the file's 
+readability, and last modification time, for example. 
+See Also
+File 
+FileInputStream
+FileNotFoundException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

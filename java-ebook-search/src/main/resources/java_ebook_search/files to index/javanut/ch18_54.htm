@@ -1,0 +1,60 @@
+
+[Chapter 18] 18.54 java.awt.Scrollbar (JDK 1.0)
+Chapter 18The java.awt Package
+18.54 java.awt.Scrollbar (JDK 1.0)
+This Component represents a graphical scrollbar.
+setValue() sets the displayed value of the
+scrollbar.  setValues() sets the displayed value,
+the page size, and the minimum and maximum values.  The
+constants HORIZONTAL and VERTICAL are legal
+values for the scrollbar orientation.
+public class Scrollbar extends Component implements Adjustable {
+    // Public Constructors
+            public Scrollbar();
+            public Scrollbar(int orientation);
+            public Scrollbar(int orientation, int value, int visible, int minimum, int maximum);
+    // Constants
+            public static final int HORIZONTAL;
+            public static final int VERTICAL;
+    // Public Instance Methods
+        1.1  public synchronized void addAdjustmentListener(AdjustmentListener l);  // From Adjustable
+            public void addNotify();  // Overrides Component
+        1.1  public int getBlockIncrement();  // From Adjustable
+        #   public int getLineIncrement();
+            public int getMaximum();  // From Adjustable
+            public int getMinimum();  // From Adjustable
+            public int getOrientation();  // From Adjustable
+        #   public int getPageIncrement();
+        1.1  public int getUnitIncrement();  // From Adjustable
+            public int getValue();  // From Adjustable
+        #   public int getVisible();
+        1.1  public int getVisibleAmount();  // From Adjustable
+        1.1  public synchronized void removeAdjustmentListener(AdjustmentListener l);  // From Adjustable
+        1.1  public synchronized void setBlockIncrement(int v);  // From Adjustable
+        #   public void setLineIncrement(int v);
+        1.1  public synchronized void setMaximum(int newMaximum);  // From Adjustable
+        1.1  public synchronized void setMinimum(int newMinimum);  // From Adjustable
+        1.1  public synchronized void setOrientation(int orientation);
+        #   public void setPageIncrement(int v);
+        1.1  public synchronized void setUnitIncrement(int v);  // From Adjustable
+            public synchronized void setValue(int newValue);  // From Adjustable
+            public synchronized void setValues(int value, int visible, int minimum, int maximum);
+        1.1  public synchronized void setVisibleAmount(int newAmount);  // From Adjustable
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Component
+        1.1  protected void processAdjustmentEvent(AdjustmentEvent e);
+        1.1  protected void processEvent(AWTEvent e);  // Overrides Component
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Scrollbar(Adjustable)
+Passed To:
+Toolkit.createScrollbar()
+java.awt.ScrollPane (JDK 1.1)
+java.awt.Shape (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,131 @@
+
+[Chapter 9] 9.2 Custom Serialization
+Chapter 9Object Serialization
+9.2 Custom Serialization
+Not every piece of program state can, or should be,
+serialized.  Some things, like FileDescriptor
+objects, are inherently platform-specific or
+virtual-machine-dependent.  If a FileDescriptor were
+serialized, it would have no meaning when deserialized in a
+different virtual machine.
+For this reason, and also for important security reasons,
+not all objects can be serialized.
+Only classes that
+implement the Serializable or Externalizable
+interface can be written to or read from an object stream.
+Serializable is a marker interface, like
+Cloneable: it doesn't define any methods and serves
+only to specify whether an object is allowed to be
+serialized.  The Externalizable interface does
+define methods, and is used by objects that want advanced
+control over the way they are written and read.  We'll see
+more about Externalizable objects later in this
+chapter.  It is worth noting at this point that
+Component implements Serializable, which
+means that all AWT components can be serialized.
+Even when an object is serializable, it may not make sense
+for it to serialize all of its state.  For example, in the
+Scribble example shown in Chapter 8, New AWT Features, the
+last_x and last_y fields store the current
+position of the mouse and only contain valid data while the
+user has a mouse button pressed.
+The values of these fields will never be of interest (or use)
+when such an object is deserialized, so
+there is no need to bother saving the values of these
+fields as part of the Scribble object's state.  To
+tell the serialization mechanism that a field should not be
+saved, simply declare it transient:
+protected transient short last_x, last_y; // Temporary fields for mouse pos.
+The transient modifier keyword has always been a
+legal part of the Java language, but it was not assigned any
+meaning until Java 1.1.
+There are situations where a field is not transient--i.e.,
+it does contain an important part of an object's state--but
+for some reason it cannot be successfully serialized.  One
+example is a custom AWT component that computes its
+preferred size based on the size of the text it displays.
+Because fonts have slight size variations from platform to
+platform, this pre-computed preferred size will not be
+valid if the component is serialized on one type of
+platform and deserialized on another.  Since the preferred
+size fields will not be valid when deserialized, they should be
+declared transient so that they don't take up space
+in the serialized object.  But in this case, their values
+should be re-computed when the object is deserialized.
+A class can define custom serialization and
+deserialization behavior for its objects by implementing
+writeObject() and readObject() methods.
+Suprisingly, these methods are not defined by any interface.
+The methods must be declared
+private, which is also suprising if you think about it,
+as they are called from outside of the class during
+serialization and deserialization.
+If a class defines these
+methods, the appropriate one is invoked by the
+ObjectOutputStream or ObjectInputStream when
+an object is serialized or deserialized.
+For example, our custom
+component might define a readObject() method to give
+it an opportunity to re-compute its preferred size upon
+deserialization.  The method might look like this:
+private void readObject(ObjectInputStream in)
+             throws IOException, ClassNotFoundException {
+  in.defaultReadObject();      // Deserialize the component in the usual way.
+  this.computePreferredSize(); // But then go recompute its size.
+}
+This method calls the defaultReadObject() method of
+the ObjectInputStream to deserialize the object as
+normal, and then takes care of the post-processing it needs to
+perform.
+Example 9.2
+is a more complete example of custom serialization.  It
+shows a class that implements a growable array of numbers.
+This class defines a writeObject() method to do some
+pre-processing before being serialized and a
+readObject() method to do post-processing after
+deserialization.
+Example 9.2: Serialization with Pre- and Post-Processing
+import java.io.*;
+/** A simple class that implements a growable array or ints, and knows
+ *  how to serialize itself as efficiently as a non-growable array. */
+public class IntList implements Serializable
+{
+  private int[] nums = new int[8]; // An array to store the numbers.
+  private transient int size = 0;  // Index of next unused element of nums[].
+  /** Return an element of the array */
+  public int elementAt(int index) throws ArrayIndexOutOfBoundsException {
+    if (index &gt;= size) throw new ArrayIndexOutOfBoundsException(index);
+    else return nums[index];
+  }
+  /** Add an int to the array, growing the array if necessary. */
+  public void add(int x) {
+    if (nums.length == size) resize(nums.length*2); // Grow array, if needed.
+    nums[size++] = x;                               // Store the int in it.
+  }
+  /** An internal method to change the allocated size of the array. */
+  protected void resize(int newsize) {
+    int[] oldnums = nums;
+    nums = new int[newsize];                     // Create a new array.
+    System.arraycopy(oldnums, 0, nums, 0, size); // Copy array elements.
+  }
+  /** Get rid of unused array elements before serializing the array. */
+  private void writeObject(ObjectOutputStream out) throws IOException {
+    if (nums.length &gt; size) resize(size);  // Compact the array.
+    out.defaultWriteObject();              // Then write it out normally.
+  }
+  /** Compute the transient size field after deserializing the array. */
+  private void readObject(ObjectInputStream in)
+          throws IOException, ClassNotFoundException {
+    in.defaultReadObject();                // Read the array normally.
+    size = nums.length;                    // Restore the transient field.
+  }
+}
+Simple Serialization
+Serialization and Class Versioning
+ 
+ 
+ 
+ 
+ 
+ 
+ 

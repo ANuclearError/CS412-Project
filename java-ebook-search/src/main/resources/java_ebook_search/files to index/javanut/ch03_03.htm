@@ -1,0 +1,125 @@
+
+[Chapter 3] 3.3 Class Variables
+Chapter 3Classes and Objects in Java
+3.3 Class Variables
+In our Circle class definition, we declared three
+"instance" variables: x, y, and r.  Each
+instance of the class--each circle--has its own copy of
+these three variables.  These variables are like the fields
+of a struct in C--each instance of the
+struct has a copy of the fields.  Sometimes,
+though, we want a variable of which there is only one
+copy--something like a global variable in C.
+The problem is that Java doesn't allow global variables.
+(Actually, those in the know consider this is feature!)
+Every variable in Java must be declared inside a class.  
+So Java uses the static keyword to indicate that a
+particular variable is a class variable rather than an
+instance variable.  That is, that there is only one
+copy of the variable, associated with the class, rather than
+many copies of the variable associated with each instance of
+the class.  The one copy of the variable exists regardless
+of the number of instances of the class that are created--it
+exists and can be used even if the class is never actually
+instantiated.
+This kind of variable, declared with the static
+keyword, is often called a static variable. I prefer
+(and recommend) the name "class variable" because it is
+easily distinguished from its opposite, "instance
+variable." We'll use both terms in this book.
+An Example
+As an example (a somewhat contrived one), suppose that while
+developing the Circle class we wanted to do some testing on
+it and determine how much it gets used.  One way to do this
+would be to count the number of Circle objects that
+are instantiated.  To do this we obviously need a variable
+associated with the class, rather than with any particular
+instance.  
+Example 3.4
+shows how we can do it--we declare a static variable
+and increment it each time we create a Circle.
+Example 3.4: Static Variable Example
+public class Circle {
+    static int num_circles = 0; // class variable: how many circles created
+    public double x, y, r;      // instance vars: the center and the radius
+    public Circle(double x, double y, double r) {
+        this.x = x; this.y = y; this.r = r;
+        num_circles++;
+    }
+    public Circle(double r) { this(0.0, 0.0, r); }
+    public Circle(Circle c) { this(c.x, c.y, c.r); }
+    public Circle() { this(0.0, 0.0, 1.0); }
+    public double circumference() { return 2 * 3.14159 * r; }
+    public double area() { return 3.14159 * r*r; }
+}
+Accessing Class Variables
+Now that we are keeping track of the number of Circle
+objects created, how can we access this
+information?  Because static variables are
+associated with the class rather than with an instance, we
+access them through the class rather than through the
+instance.  Thus, we might write:
+[5]
+[5] 
+Recall that System.out.println() prints a line of
+text, and that the string concatenation operator, +,
+converts non-string types to strings as necessary.
+System.out.println("Number of circles created: " + Circle.num_circles);
+Notice that in our definition of the constructor method in
+Example 3.4,
+we just used num_circles instead of
+Circle.num_circles.  We're allowed to do this within
+the class definition of Circle itself.  Anywhere
+else, though, we must use the class name as well.
+Global Variables?
+Earlier we said that Java does not support global variables.
+In a sense, though, Circle.num_circles behaves just
+like one.  What is different from a global variable in C is
+that there is no possibility of name conflicts.  If we use
+some other class with a class variable named
+num_circles, there won't be a "collision" between
+these two "global" variables, because they must both be
+referred to by their class names.  Since each class variable
+must be part of a class and must be referred to with its
+class name, each has a unique name.  Furthermore, each class
+has a unique name because, as we saw in Chapter 2, How Java Differs from C, 
+it is part of a package with a unique name.
+Constants: Another Class Variable Example
+Let's try a less forced example of why you might want to use
+a class variable with the Circle class.  When
+computing the area and circumference of circles, we use the
+value pi.  Since we use the value frequently, we don't want 
+to keep typing out 3.14159, so we'll define it as a class variable 
+that has a convenient name:
+public class Circle {
+    public static final double PI = 3.14159265358979323846;
+    public double x, y, r;
+    // ... etc....
+}
+Besides the static keyword that we've already seen,
+we use the final keyword, which means that this
+variable can never have its value changed.  This prevents
+you from doing something stupid like:
+Circle.PI = 4;
+which would tend to give you some pretty square-looking
+circles. 
+The Java compiler is smart about variables declared both
+static and final--it knows that they have
+constant values.  So when you write code like this:
+double circumference = 2 * Circle.PI * radius;
+the compiler precomputes the value 2 * Circle.PI
+, instead of leaving it for the interpreter.
+Java does not have a preprocessor with a C-style
+#define directive.  static final
+variables are Java's substitute for C's #define'd
+constants.  Note that the C convention
+of capitalizing constants has been carried over into Java.
+Object Creation
+Class Methods
+ 
+ 
+ 
+ 
+ 
+ 
+ 

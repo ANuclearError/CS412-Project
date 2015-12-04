@@ -1,0 +1,40 @@
+
+[Chapter 31] 31.15 java.util.zip.ZipFile (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.15 java.util.zip.ZipFile (JDK 1.1)
+This class reads the contents of ZIP files.  It uses a
+random access file internally so that the entries of the ZIP
+file do not have to be read sequentially as they do with the
+ZipInputStream class.
+A ZipFile object can be created by specifying the
+ZIP file to be read either as a String filename or
+as a File object.  Once created, the
+getEntry() method returns a ZipEntry object
+for a named entry, and the entries() method returns
+an Enumeration object that allows you to loop
+through all the ZipEntry objects for the file.  To
+read the contents of a specific ZipEntry within the
+ZIP file, pass the ZipEntry to
+getInputStream()--this returns an
+InputStream object from which you can read the
+entry's contents.
+public class ZipFile extends Object {
+    // Public Constructors
+            public ZipFile(String name) throws IOException;
+            public ZipFile(File file) throws ZipException, IOException;
+    // Public Instance Methods
+            public void close() throws IOException;
+            public Enumeration entries();
+            public ZipEntry getEntry(String name);
+            public InputStream getInputStream(ZipEntry ze) throws IOException;
+            public String getName();
+}
+java.util.zip.ZipException (JDK 1.1)
+java.util.zip.ZipInputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

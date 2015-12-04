@@ -1,0 +1,50 @@
+
+[Chapter 25] 25.5 java.lang.Boolean (JDK 1.0)
+Chapter 25The java.lang Package
+25.5 java.lang.Boolean (JDK 1.0)
+This class provides an immutable object wrapper around the
+boolean primitive type. 
+Note that the TRUE
+and FALSE constants are Boolean
+objects; they are not the same as the true and
+false boolean values. In Java 1.1, this class
+defines a Class constant that represents the boolean
+type.
+booleanValue() returns the boolean value of
+a Boolean object. The class method
+getBoolean() retrieves the boolean value of
+a named property from the system property list. 
+The class method valueOf() parses
+a string and returns the Boolean value it
+represents.
+public final class Boolean extends Object implements Serializable {
+    // Public Constructors
+            public Boolean(boolean value);
+            public Boolean(String s);
+    // Constants
+            public static final Boolean FALSE;
+            public static final Boolean TRUE;
+        1.1public static final Class TYPE;
+    // Class Methods
+            public static boolean getBoolean(String name);
+            public static Boolean valueOf(String s);
+    // Public Instance Methods
+            public boolean booleanValue();
+            public boolean equals(Object obj);  // Overrides Object
+            public int hashCode();  // Overrides Object
+            public String toString();  // Overrides Object
+}
+Returned By:
+Boolean.valueOf()
+Type Of:
+Boolean.FALSE, 
+Boolean.TRUE
+java.lang.ArrayStoreException (JDK 1.0)
+java.lang.Byte (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,48 @@
+
+[Chapter 31] 31.16 java.util.zip.ZipInputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.16 java.util.zip.ZipInputStream (JDK 1.1)
+This class is a subclass of InflaterInputStream that
+reads the entries of a ZIP file in sequential order.  A
+ZipInputStream is created by specifying the
+InputStream from which it is to read the contents of the ZIP
+file.  Once the ZipInputStream is created, the
+getNextEntry() method is used to begin reading of
+data from the next entry in the ZIP file.  This method must
+be called before read() is called to begin reading
+of the first entry.  Note that getNextEntry()
+returns a ZipEntry object that describes the entry
+being read.  Also note that getNextEntry() returns
+null when there are no more entries to be read from
+the ZIP file.
+The read() methods of ZipInputStream read
+until the end of the current entry and then return
+-1 indicating that there are no more data to read.
+To continue with the next entry in the ZIP file, you must
+call getNextEntry() again.  Similarly, the
+skip() method only skips bytes within the current
+entry.  closeEntry() can be called to skip the
+remaining data in the current entry, but it is usually
+easier simply to call getNextEntry() to begin the
+next entry.
+public class ZipInputStream extends InflaterInputStream {
+    // Public Constructor
+            public ZipInputStream(InputStream in);
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides FilterInputStream
+            public void closeEntry() throws IOException;
+            public ZipEntry getNextEntry() throws IOException;
+            public int read(byte[] b, int off, int len) throws IOException;  // Overrides InflaterInputStream
+            public long skip(long n) throws IOException;  // Overrides InflaterInputStream
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->InflaterInputStream->ZipInputStream
+java.util.zip.ZipFile (JDK 1.1)
+java.util.zip.ZipOutputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

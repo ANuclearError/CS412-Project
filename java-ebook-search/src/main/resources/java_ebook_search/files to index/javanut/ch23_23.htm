@@ -1,0 +1,33 @@
+
+[Chapter 23] 23.23 java.beans.Visibility (JDK 1.1)
+Chapter 23The java.beans Package
+23.23 java.beans.Visibility (JDK 1.1)
+This interface is intended to be implemented by advanced
+beans that may run either with or without a GUI (graphical
+user interface) present.  The
+methods it defines allow a bean to specify whether it
+requires a GUI and allows the environment to notify the bean
+whether a GUI is available.
+If a bean absolutely requires a GUI, it should return
+true from needsGui().  If a bean is running
+without a GUI, it should return true from
+avoidingGui().  If no GUI is available, the bean may
+be notified through a call to dontUseGui(), and if a
+GUI is available, the bean may be notified through a call to
+okToUseGui().
+public abstract interface Visibility {
+    // Public Instance Methods
+            public abstract boolean avoidingGui();
+            public abstract void dontUseGui();
+            public abstract boolean needsGui();
+            public abstract void okToUseGui();
+}
+java.beans.VetoableChangeSupport (JDK 1.1)
+The java.io Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

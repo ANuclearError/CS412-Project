@@ -1,0 +1,272 @@
+
+[Chapter 22] IndexColorModel
+Chapter 22java.awt.image Reference
+IndexColorModel
+Name
+IndexColorModel
+Description
+The IndexColorModel class is 
+a ColorModel that uses a color 
+map lookup table (with a maximum size of 256) to convert pixel values into 
+their alpha, red, green, and blue component parts. 
+Class Definition
+public class java.awt.image.IndexColorModel
+    extends java.awt.image.ColorModel {
+  // Constructors
+  public IndexColorModel (int bits, int size, 
+      byte[] colorMap, int start, boolean hasalpha);
+  public IndexColorModel (int bits, int size, 
+      byte[] colorMap, int start, boolean hasalpha, int transparent);
+  public IndexColorModel (int bits, int size, 
+      byte[] red, byte[] green, byte[] blue);
+  public IndexColorModel (int bits, int size, 
+      byte[] red, byte[] green, byte[] blue, byte[] alpha);
+  public IndexColorModel (int bits, int size, 
+      byte[] red, byte[] green, byte[] blue, int transparent);
+  // Instance Methods
+  public final int getAlpha (int pixel);
+  public final void getAlphas (byte[] alphas);
+  public final int getBlue (int pixel);
+  public final void getBlues (byte[] blues);
+  public final int getGreen (int pixel);
+  public final void getGreens (byte[] greens);
+  public final int getMapSize();
+  public final int getRed (int pixel);
+  public final void getReds (byte[] reds);
+  public final int getRGB (int pixel);
+  public final int getTransparentPixel();
+}
+Constructors
+IndexColorModel
+public IndexColorModel (int bits, int size, byte[] colorMap, int start, boolean hasalpha)
+Parameters
+bits
+The number of bits in a pixel.
+size
+The number of entries in the color map. Note: this 
+is not the size of the colorMap 
+parameter.
+colorMap
+Color component values in red, green, blue, alpha order; 
+the alpha component is optional, and may not be present.
+start
+The starting position in colorMap 
+array.
+hasalpha
+If hasalpha 
+is true, alpha components are present in colorMap 
+array. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+size is invalid. 
+Description
+Constructs an IndexColorModel 
+object with the given component settings. The size of colorMap 
+must be at least 3*size+start, 
+if hasalpha is false; if hasalpha 
+is true, colorMap.length must 
+be at least 4*size+start. 
+public IndexColorModel (int bits, int size, byte[] colorMap, int start, boolean hasalpha, int transparent)
+Parameters
+bits
+The number of bits in a pixel.
+size
+The number of entries in the color map. Note: this 
+is not the size of the colorMap 
+parameter.
+colorMap
+Color component values in red, green, blue, alpha order; 
+the alpha component is optional, and may not be present.
+start
+The starting position in colorMap 
+array.
+hasalpha
+If hasalpha 
+is true, alpha components are present in colorMap 
+array.
+transparent
+Position of colorMap 
+entry for transparent pixel entry. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+size invalid. 
+Description
+Constructs an IndexColorModel 
+object with the given component settings. The size of colorMap 
+must be at least 3*size+start, 
+if hasalpha is false; if hasalpha 
+is true, colorMap.length must 
+be at least 4*size+start. The 
+color map has a transparent pixel; its location is given by transparent. 
+public IndexColorModel (int bits, int size, byte[] red, byte[] green, byte[] blue)
+Parameters
+bits
+The number of bits in a pixel.
+size
+The number of entries in the color map.
+red
+Red color component values.
+green
+Green color component values.
+blue
+Blue color component values. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+size invalid. 
+Description
+Constructs an IndexColorModel 
+object with the given component settings. There is no alpha component. 
+The length of the red, green, 
+and blue arrays must be greater 
+than size. 
+public IndexColorModel (int bits, int size, byte[] red, byte[] green, byte[] blue, byte[] alpha)
+Parameters
+bits
+The number of bits in a pixel.
+size
+The number of entries in the color map.
+red
+Red color component values.
+green
+Green color component values.
+blue
+Blue color component values.
+alpha
+Alpha component values. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+size is invalid.
+NullPointerException
+If 
+size is positive and alpha 
+array is null. 
+Description
+Constructs an IndexColorModel 
+object with the given component settings. The length of the red, 
+green, blue, 
+and alpha arrays must be greater 
+than size. 
+public IndexColorModel (int bits, int size, byte[] red, byte[] green, byte[] blue, int transparent)
+Parameters
+bits
+The number of bits in a pixel.
+size
+The number of entries in the color map.
+red
+Red color component values.
+green
+Green color component values.
+blue
+Blue color component values.
+transparent
+Position of transparent pixel entry. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+size is invalid. 
+Description
+Constructs an IndexColorModel 
+object with the given component settings. The length of the red, 
+green, blue, 
+and alpha arrays must be greater 
+than size. The color map has 
+a transparent pixel; its location is given by transparent. 
+Instance Methods
+getAlpha
+public final int getAlpha (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current alpha setting of the pixel. 
+Overrides
+ColorModel.getAlpha(int) 
+getAlphas
+public final void getAlphas (byte[] alphas)
+Parameters
+alphas
+The alpha values of the pixels in the color model. 
+Description
+Copies the alpha values from the color map into the array alphas[]. 
+getBlue
+public final int getBlue (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current blue setting of the pixel. 
+Overrides
+ColorModel.getBlue(int) 
+getBlues
+public final void getBlues (byte[] blues)
+Parameters
+blues
+The blue values of the pixels in the color model. 
+Description
+Copies the blue values from the color map into the array blues[]. 
+getGreen
+public final int getGreen (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current green setting of the pixel. 
+Overrides
+ColorModel.getGreen(int) 
+getGreens
+public final void getGreens (byte[] greens)
+Parameters
+greens
+The green values of the pixels in the color model. 
+Description
+Copies the green values from the color map into the array greens[]. 
+getMapSize
+public final int getMapSize()
+Returns
+The current size of the color map table. 
+getRed
+public final int getRed (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current red setting of the pixel. 
+Overrides
+ColorModel.getRed(int) 
+getReds
+public final void getReds (byte[] reds)
+Parameters
+reds
+The red values of the pixels in the color model. 
+Description
+Copies the red values from the color map into the array reds[]. 
+getRGB
+public final int getRGB (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current combined red, green, and blue settings of the pixel. 
+Overrides
+ColorModel.getRGB(int) 
+Description
+Gets the color of pixel in the default RGB color model. 
+getTransparentPixel
+public final int getTransparentPixel()
+Returns
+The array index for the transparent pixel in the color model. 
+See Also
+ColorModel 
+ImageProducer
+MemoryImageSource
+ 
+ 
+ 
+ 
+ 
+ 
+ 

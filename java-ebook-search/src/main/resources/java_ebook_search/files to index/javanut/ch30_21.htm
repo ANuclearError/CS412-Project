@@ -1,0 +1,45 @@
+
+[Chapter 30] 30.21 java.util.SimpleTimeZone (JDK 1.1)
+Chapter 30The java.util Package
+30.21 java.util.SimpleTimeZone (JDK 1.1)
+This concrete subclass of TimeZone is a simple
+implementation of that abstract class, and is suitable for
+use in locales that use the Gregorian calendar.  Programs do
+not usually need to instantiate this class directly;
+instead, they use one of the static "factory" methods of
+TimeZone to obtain a suitable TimeZone
+subclass.
+You would instantiate this class directly only if you needed
+to support a time zone with nonstandard daylight savings
+time rules.  In that case, you would use call
+setStartRule() and setEndRule() to specify
+the starting and ending dates of daylight savings time for
+the time zone.
+public class SimpleTimeZone extends TimeZone {
+    // Public Constructors
+            public SimpleTimeZone(int rawOffset, String ID);
+            public SimpleTimeZone(int rawOffset, String ID, int startMonth, int startDayOfWeekInMonth, int startDayOfWeek, int startTime, int endMonth, int endDayOfWeekInMonth, int endDayOfWeek, int endTime);
+    // Public Instance Methods
+            public Object clone();  // Overrides TimeZone
+            public boolean equals(Object obj);  // Overrides Object
+            public int getOffset(int era, int year, int month, int day, int dayOfWeek, int millis);  // Defines TimeZone
+            public int getRawOffset();  // Defines TimeZone
+            public synchronized int hashCode();  // Overrides Object
+            public boolean inDaylightTime(Date date);  // Defines TimeZone
+            public void setEndRule(int month, int dayOfWeekInMonth, int dayOfWeek, int time);
+            public void setRawOffset(int offsetMillis);  // Defines TimeZone
+            public void setStartRule(int month, int dayOfWeekInMonth, int dayOfWeek, int time);
+            public void setStartYear(int year);
+            public boolean useDaylightTime();  // Defines TimeZone
+}
+Hierarchy:
+Object->TimeZone(Serializable, Cloneable)->SimpleTimeZone
+java.util.ResourceBundle (JDK 1.1)
+java.util.Stack (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

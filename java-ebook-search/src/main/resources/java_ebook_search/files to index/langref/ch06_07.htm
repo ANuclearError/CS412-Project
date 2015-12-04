@@ -1,0 +1,195 @@
+
+[Chapter 6] 6.7 Iteration Statements
+Chapter 6Statements and Control Structures
+6.7 Iteration Statements
+Iteration statements
+are used to specify the logic of a loop. Java has three varieties
+of iteration statement:
+while, do, and for.
+References
+The do Statement;
+The for Statement;
+The while Statement
+The while Statement
+A while statement evaluates
+a Boolean expression. If the expression is true,
+a given statement is repeatedly executed for as long as the expression
+continues to evaluate to true.
+In Java, the expression in parentheses must produce a boolean value. This is different from C/C++, which allows any
+type of expression.
+If the expression in parentheses
+evaluates to true, the statement contained in
+the while statement is executed and the expression
+in parentheses is evaluated again. This process continues until
+the expression evaluates to false.
+If the expression in parentheses evaluates to false,
+the statement following the while statement is
+the next statement to be executed. The expression in parentheses
+is evaluated before the contained statement is executed, so it is
+possible for the contained statement not to be executed even once.
+Here is an example of a while statement:
+while ( (c = in.read()) &gt;= 0) {
+    out.write(c);
+}
+References
+Boolean Type;
+Expression 4;
+Statement 6
+The do Statement
+A do statement executes a given statement
+and then evaluates a Boolean expression. If the expression evaluates
+to true, the statement is executed repeatedly
+as long as the expression continues to evaluate to true:
+In Java, the expression in parentheses must produce a
+boolean
+value. This is unlike C/C++, which allows any type of expression.
+The statement contained in the do statement
+is executed and then the expression in parentheses is evaluated.
+If the expression evaluates to true, the process
+is repeated.
+If the expression evaluates to false, the
+statement following the do statement is the next
+statement to be executed. Because the expression is evaluated after
+the contained statement is executed, the statement is always executed
+at least once.
+Here's an example of a do statement:
+do {
+    c = in.read();
+    out.write(c);
+} while (c != ';');
+References
+Boolean Type;
+Expression 4;
+Statement 6
+The for Statement
+A for
+statement is a more structured form of a while
+statement. A for statement performs an initialization
+step and then evaluates a Boolean expression. If the expression
+evaluates to true, a given statement is executed
+and an increment expression is evaluated repeatedly as long as the
+expression continues to evaluate to true:
+Here is an example of a for statement:
+for (i = 0; i &lt; a.length; i++) {
+    a[i] = i;
+}
+The initialization
+part of the for statement is executed first.
+If the initialization part contains nothing, no initialization is
+performed. The expression that follows must produce a
+boolean
+value. Before the body of the for statement is
+executed, the expression is evaluated. If the expression portion
+of the for statement is omitted, the default
+expression true is used. If the expression evaluates
+to true, the body of the for
+statement is executed and then the increment portion of the
+for
+statement is evaluated. Finally, the expression is evaluated again
+to determine if there should be another iteration. This process
+continues until the expression evaluates to false,
+at which point the statement following the for
+statement is the next statement to be executed.
+The for statement in the above example can be rewritten
+as a while statement as follows:
+i = 0;
+while (i &lt; a.length) {
+    a[i] = i;
+    i++;
+}
+One difference between
+comparable for and while loops
+is that a continue statement in the body of a
+for statement causes the increment portion of
+the statement to be evaluated. However, this may not be the case
+in a comparable while statement.
+Here's a new
+version of our for example:
+for (i = 0; i &lt; a.length; i++) {
+    a[i] = i;
+    continue;
+}
+The added continue statement at the end
+of the for loop
+does not change the behavior of the loop. In particular, i++
+is still evaluated after each iteration through the body of the
+loop. Now let's add a continue statement at the
+equivalent place in our while example:
+i = 0;
+while (i &lt; a.length) {
+    a[i] = i;
+    continue;
+    i++;
+}
+The continue
+statement in this while loop prevents the statement
+i++ from being executed. The continue
+statement would have to be moved after the increment operation to
+match the logic of the for statement.
+If the expression portion of a for statement is
+omitted, the default expression true is supplied.
+Take, for example, the following for statement:
+for ( FileInputStream in = new FileInputStream(fname);;) {
+    c = in.read();
+    if (c &lt; 0)
+        return;
+    System.out.print((char)c);
+}
+This example uses a local variable declaration in the initialization
+portion of the for statement. Local variable
+declarations in a for
+statement are subject to the same restrictions as local variable
+declarations in a block. In particular, a for
+statement cannot declare a local variable with the same name as
+a local variable or formal parameter that is defined in an enclosing
+block.
+The above for statement is
+equivalent to the following while statement:
+{
+    FileInputStream in = new FileInputStream(fname);
+    while (true) {
+        c = in.read();
+        if (c &lt; 0)
+            return;
+        System.out.print((char)c);
+    }
+}
+The enclosing block in the above example is provided to limit
+the scope of the local variable in to just the
+while statement.
+The initialization
+portion of a for statement can also be empty.
+The following statement is a legal way of specifying an infinite loop:
+for (;;) {...}
+This is equivalent
+to the following while statement:
+while (true) {...}
+Unlike C/C++,
+there is no comma operator in Java. However, commas are explicitly
+allowed in the initialization portion of a for statement.
+For example, a for initialization can consist
+of multiple expressions separated by commas:
+i=2, j=5, k=44
+When the initialization
+portion of a for statement contains local variable
+declarations, commas are also allowed because the syntax for declarations
+allows multiple variables, separated by commas, to be declared in one declaration. For
+example:
+int i=2, j=5, k=44
+References
+Boolean Type;
+Expression 4;
+Statement 6;
+Local Variables;
+TopLevelExpression 6.4;
+The continue Statement;
+The while Statement
+The switch Statement
+The break Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

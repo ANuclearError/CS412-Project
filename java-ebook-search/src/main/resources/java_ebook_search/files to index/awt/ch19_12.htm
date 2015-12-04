@@ -1,0 +1,145 @@
+
+[Chapter 19] CheckboxMenuItem
+Chapter 19java.awt Reference
+CheckboxMenuItem
+Name
+CheckboxMenuItem
+Description
+The CheckboxMenuItem class 
+represents a menu item with a boolean state. 
+Class Definition
+public class java.awt.CheckboxMenuItem
+    extends java.awt.MenuItem
+    implements java.awt.ItemSelectable {
+  
+  // Constructors
+  public CheckboxMenuItem(); 
+  public CheckboxMenuItem (String label);
+  public CheckboxMenuItem (String label, boolean state); 
+  
+  // Instance Methods
+  public void addItemListener (ItemListener l); 
+  public void addNotify();
+  public Object[] getSelectedObjects(); 
+  public boolean getState();
+  public String paramString();
+  public void removeItemListener (ItemListener l); 
+  public synchronized void setState (boolean condition);
+  
+  // Protected Instance Methods
+  protected void processEvent (AWTEvent e); 
+  protected void processItemEvent (ItemEvent e); 
+}
+Constructors
+CheckboxMenuItem
+public CheckboxMenuItem() 
+Description
+Constructs a CheckboxMenuItem object with no label. 
+public CheckboxMenuItem (String label)
+Parameters
+label
+Text that appears on 
+CheckboxMenuItem. 
+Description
+Constructs a CheckboxMenuItem 
+object whose value is initially false. 
+public CheckboxMenuItem (String label, boolean state) 
+Parameters
+label
+Text that appears on 
+CheckboxMenuItem. 
+state
+The initial state of 
+the menu item. 
+Description
+Constructs a CheckboxMenuItem 
+object with the specified label 
+and state. 
+Instance Methods
+addItemListener
+public void addItemListener (ItemListener l) 
+Parameters
+l
+The listener to be added. 
+Implements
+ItemSelectable.addItemListener(ItemListener l) 
+Description
+Adds a listener for the ItemEvent 
+objects this CheckboxMenuItem 
+fires off. 
+addNotify
+public void addNotify()
+Overrides
+MenuItem.addNotify() 
+Description
+Creates CheckboxMenuItem's peer. 
+getSelectedObjects
+public Object[] getSelectedObjects() 
+Implements
+ItemSelectable.getSelectedObjects() 
+Description
+If the CheckboxMenuItem is 
+checked, returns an array with length 1 containing the label of the CheckboxMenuItem; 
+otherwise returns null. 
+getState
+public boolean getState()
+Returns
+The current state of the CheckboxMenuItem.
+paramString
+public String paramString()
+Returns
+A string with current settings of CheckboxMenuItem. 
+Overrides
+MenuItem.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+removeItemListener
+public void removeItemListener (ItemListener l) 
+Parameters
+l
+The listener to be removed. 
+Implements
+ItemSelectable.removeItemListener (ItemListener l) 
+Description
+Removes the specified ItemListener 
+so it will not receive ItemEvent 
+objects from this CheckboxMenuItem. 
+setState
+public synchronized void setState (boolean condition)
+Parameters
+condition
+New state for the CheckboxMenuItem. 
+Description
+Changes the state of the CheckboxMenuItem. 
+Protected Instance Methods
+processEvent
+protected void processEvent(AWTEvent e) 
+Parameters
+e
+The event to process. 
+Overrides
+MenuItem.processEvent(AWTEvent) 
+Description
+Low level AWTEvents are passed 
+to this method for processing. 
+processItemEvent
+protected void processItemEvent(ItemEvent e) 
+Parameters
+e
+The item event to process. 
+Description
+Item events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+See Also
+ItemEvent, ItemSelectable, 
+MenuItem, String 
+CheckboxGroup
+Choice
+ 
+ 
+ 
+ 
+ 
+ 
+ 

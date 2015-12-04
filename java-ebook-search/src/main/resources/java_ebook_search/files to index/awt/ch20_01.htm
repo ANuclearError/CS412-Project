@@ -1,0 +1,100 @@
+
+[Chapter 20] java.awt.datatransfer Reference
+Chapter 20
+20. java.awt.datatransfer Reference
+Contents:
+Clipboard 
+ClipboardOwner 
+DataFlavor 
+StringSelection 
+Transferable 
+UnsupportedFlavorException 
+Clipboard 
+Name
+Clipboard 
+Description
+The Clipboard class is a repository for a
+Transferable object and can be used for cut, copy,
+and paste operations. The system clipboard can be accessed by calling
+Toolkit.getDefaultToolkit().getSystemClipboard().
+You can use this technique if you are interested in exchanging data
+between your application and other applications (Java or non-Java)
+running on the system. In addition, Clipboard can
+be instantiated directly, if "private" clipboards are
+needed.
+Class Definition
+public class java.awt.datatransfer.Clipboard
+   extends java.lang.Object {
+  // Variables
+  protected Transferable contents;
+  protected ClipboardOwner owner;
+  // Constructors
+  public Clipboard (String name);
+  // Instance Methods
+  public synchronized Transferable getContents (Object requestor);
+  public String getName();
+  public synchronized void setContents (Transferable contents, ClipboardOwner owner);
+}
+Variables
+contents
+protected Transferable contents
+The object that the Clipboard 
+contains, i.e., the object that has been cut or copied. 
+owner
+protected ClipboardOwner owner
+The object that owns the contents. 
+When something else is placed on the clipboard, owner 
+is notified via lostOwnership(). 
+Constructors
+Clipboard
+public Clipboard (String name)
+Parameters
+name
+The 
+name for this Clipboard. 
+Description
+Constructs a Clipboard object 
+with the given name. 
+Instance Methods
+getContents
+public synchronized Transferable getContents (Object requestor)
+Parameters
+requestor
+The 
+object asking for the contents. 
+Returns
+An object that implements the Transferable 
+interface. 
+Description
+Returns the current contents of the Clipboard. 
+You could use this method to paste data from the clipboard into your application. 
+getName
+public String getName()
+Returns
+Clipboard's name. 
+Description
+Returns the name used when this clipboard was constructed. Toolkit.getSystemClipboard() 
+returns a Clipboard named "System". 
+setContents
+public synchronized void setContents (Transferable contents, ClipboardOwner owner)
+Parameters
+contents
+New contents.
+owner
+Owner of the new contents. 
+Description
+Changes the contents of the Clipboard. 
+You could use this method to cut or copy data from your application to 
+the clipboard. 
+See Also
+ClipboardOwner, Toolkit, 
+Transferable 
+Window
+ClipboardOwner 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

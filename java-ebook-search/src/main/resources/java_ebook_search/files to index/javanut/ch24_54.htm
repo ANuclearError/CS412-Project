@@ -1,0 +1,39 @@
+
+[Chapter 24] 24.54 java.io.PushbackInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.54 java.io.PushbackInputStream (JDK 1.0)
+This class is a FilterInputStream that implements a
+one-byte pushback buffer or, in Java 1.1, a pushback buffer of a
+specified length. The unread() methods
+"push" bytes back into the stream--these bytes
+are the first ones read by the next call to a
+read() method. This class is sometimes useful when
+writing parsers.
+See also PushbackReader.
+public class PushbackInputStream extends FilterInputStream {
+    // Public Constructors
+        1.1  public PushbackInputStream(InputStream in, int size);
+            public PushbackInputStream(InputStream in);
+    // Protected Instance Variables
+        1.1  protected byte[] buf;
+        1.1  protected int pos;
+    // Public Instance Methods
+            public int available() throws IOException;  // Overrides FilterInputStream
+            public boolean markSupported();  // Overrides FilterInputStream
+            public int read() throws IOException;  // Overrides FilterInputStream
+            public int read(byte[] b, int off, int len) throws IOException;  // Overrides FilterInputStream
+            public void unread(int b) throws IOException;
+        1.1  public void unread(byte[] b, int off, int len) throws IOException;
+        1.1  public void unread(byte[] b) throws IOException;
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->PushbackInputStream
+java.io.PrintWriter (JDK 1.1)
+java.io.PushbackReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

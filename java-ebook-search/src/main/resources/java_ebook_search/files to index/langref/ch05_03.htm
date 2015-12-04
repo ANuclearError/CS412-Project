@@ -1,0 +1,779 @@
+
+[Chapter 5] 5.3 Object-Orientation Java Style
+Chapter 5Declarations
+5.3 Object-Orientation Java Style
+Before considering class and interface declarations in Java, it is
+essential that you understand the object-oriented model used by the
+language. No useful programs can be written in Java without using
+objects.  Java deliberately omits certain C++ features that promote a
+less object-oriented style of programming. Thus, all executable code
+in a Java program must be part of an object (or a class to be more precise).
+The two main characteristics of objects in Java are:
+Objects are always dynamically allocated. The
+lifetime of the storage occupied by an object is determined by the
+program's logic, not by the lifetime of a procedure call or the
+boundaries of a block. The lifetime of the storage occupied by an
+object refers to the span of time that begins when the object is
+created and ends at the earliest time it can be freed by the garbage
+collector.
+Objects are not contained by variables. Instead,
+a variable contains a reference to an object. A reference is similar
+to what is called a pointer in some other languages.  If there are two
+variables of the same reference type and one of the variables is
+assigned to the other, both variables refer to the same object. If the
+information in that object is changed, the change is visible through
+both variables.
+Classes
+An object is a collection of
+variables, associated methods, and other associated 
+classes. Objects in Java are described
+by classes; a particular object is an instance
+of a particular class. A class describes the data an object can
+contain by defining variables to contain the data in each instance
+of the class. A class describes the behavior of an object by defining
+methods for the class and possibly other auxiliary classes. 
+Methods are named pieces of executable code;
+they are similar to what other programming languages call functions
+or procedures. Collectively, the variables, methods, and auxiliary
+classes of a class are called its members.
+A class can define multiple methods with the same name if the number
+or type of parameters for each method is different. Multiple methods
+with the same name are called overloaded
+methods. Like C++, Java supports overloaded methods, but
+unlike C++, Java does not support overloaded operators. Overloaded
+methods are useful when you want to describe similar operations on
+different types of data. For example, Java provides a class called
+java.io.OutputStream that is used to write
+data. The OutputStream class defines three
+different write() methods: one to write a single
+byte of data, another to write some of the bytes in an array, and
+another to write all of the bytes in an array.
+References
+Class Declarations
+Encapsulation
+Encapsulation is the technique of hiding the
+details of the implementation of an object, while making its
+functionality available to other objects. When encapsulation is used
+properly, you can change an object's implementation without worrying
+that any other object can see, and therefore depend on, the
+implementation details.
+The portion of an object that is accessible to other types of objects
+is called the object's
+interface.[1]
+For example, consider a class called Square.
+The interface for this class might consist of:
+[1] 
+The notion
+of an object's interface is a commonly accepted concept
+in the object-oriented community. Later in this chapter, a Java
+construct called an interface is described. A Java interface is
+not the same thing as the interface of an object, so there is some
+potential for confusion. Outside of this section, the term "interface" is only used to mean the Java interface construct.
+Methods to get and set the size of a square.
+A method to tell a square to draw itself at a particular location on
+the screen.
+The implementation of this Square class
+would include executable code that implements the various methods,
+as well as an internal variable that an object would use to remember
+its size. Variables that an object uses to remember things about
+itself are called state variables.
+The point of the distinction between the interface and the
+implementation of a class is that it makes programs easier to
+maintain. The implementation of a class may change, but as long as the
+interface remains the same, these changes do not require changes to
+any other classes that may use the class.
+In Java, encapsulation is implemented using the
+public, protected, and
+private access modifiers. If a field of a class is
+part of the interface for the class, the field should be declared with
+the public modifier or with no access modifier. The
+private and protected modifiers
+limit the accessibility of a field, so these modifiers should be used
+for state variables and other implementation-specific functionality.
+Here's a partial definition of a Square
+class that has the interface just described:
+class Square {
+    private int sideLength;
+    public void setSideLength(int len) {
+        sideLength = len;
+    }
+    public int getSideLength() {
+        return sideLength;
+    }
+    public void draw(int x, int y) {
+        // code to draw the square
+        ...
+    }
+}
+References
+Method modifiers;
+Inner class modifiers;
+Variable modifiers
+Object Creation
+An object is typically created using an allocation expression. The
+newInstance() methods of the
+Class or java.lang.reflect.Contructor class can also be used to create an instance of a
+class. In either case, the storage needed for the object is allocated
+by the system.
+When a class is instantiated, a special kind of method called a
+constructor is invoked. A constructor for a class
+does not have its own name; instead it has the same name as the class
+of which it is a part.  Constructors can have parameters, just like
+regular methods, and they can be overloaded, so a class can have
+multiple constructors.  A constructor does not have a return type. The main purpose of
+a constructor is to do any initialization that is necessary for an
+object.
+If a class declaration does not define any constructors, Java supplies
+a default public constructor that takes no parameters.
+You can prevent a class from being instantiated by methods in other
+classes by defining at least
+one private constructor for the class without
+defining any public constructors.
+References
+Class;
+Constructors;
+Object Allocation Expressions
+Object Destruction
+Java does not provide
+any way to explicitly destroy an object. Instead, an object is automatically
+destroyed when the garbage collector detects that it is safe to
+do so. The idea behind garbage collection
+is that if it is possible to prove that a piece of storage
+will never be accessed again, that piece of storage can be freed
+for reuse. This is a more reliable way of managing storage than
+having a program explicitly deallocate its own storage. Explicit
+memory allocation and deallocation is the single largest source
+of programming errors in C/C++. Java eliminates this source of errors
+by handling the deallocation of memory for you.
+Java's garbage collector runs continuously in a low priority
+thread. You can cause the garbage collector to take a single pass
+through allocated storage by calling System.gc().
+Garbage collection will never free storage before it is safe
+to do so. However, garbage collection usually does not free storage
+as soon as it would be freed using explicit deallocation. The logic
+of a program can sometimes help the garbage collector recognize
+that it is safe to free some storage sooner rather than later. Consider
+the following code:
+class G {
+    byte[] buf;
+    String readIt(FileInputStream f) throws IOException {
+        buf = new byte[20000];
+        int length = f.read(buf);
+        return new String(buf, 0, 0, length);
+    }
+}
+The first time readIt() is called, it allocates an
+array that is referenced by the instance variable
+buf.  The variable buf continues
+to refer to the array until the next time that
+readIt() is called, when buf is
+set to a new array. Since there is no longer any reference to the old
+array, the garbage collector will free the storage on its next
+pass. This situation is less than optimal. It would be better if the
+garbage collector could recognize that the array is no longer needed
+once  a call to readIt() returns. Defining the
+variable buf as a local variable in
+readIt() solves this problem:
+class G {
+    String readIt(FileInputStream f) throws IOException {
+        byte[] buf;
+        buf = new byte[20000];
+        int length = f.read(buf);
+        return new String(buf, 0, 0, length);
+    }
+}
+Now the reference to the array is in a local variable that disappears
+when readIt() returns. After
+readIt() returns, there is no longer any reference
+to the array, so the garbage collector will free the storage on its
+next pass.
+Just as a constructor is called when an object is created, there is a
+special method that is called before an object is destroyed by the
+garbage collector. This method is called a
+finalizer ; it has the name
+finalize(). A finalize() method
+is similar to a destructor in C++. The finalize()
+method for a class must be declared with no parameters, the
+void return type, and no modifiers. A finalizer can
+be used to clean up after a class, by doing such things as closing
+files and terminating network connections.
+If an object has a finalize() method, it is
+normally called by the garbage collector before the object is
+destroyed. A program can also explicitly call an object's
+finalize() method, but in this case, the garbage
+collector does not call the method during the object destruction
+process. If the garbage collector does call an object's
+finalize() method, the garbage collector does not
+immediately destroy the object because the
+finalize() method might do something that causes a variable
+to refer to the object again.[2]
+Thus the garbage collector waits to destroy the object until it
+can again prove it is safe to do so. The next time the garbage collector
+decides it is safe to destroy the object, it does so without calling
+the finalizer again. In any case, a finalize()
+method is never called more than once for a particular object.
+[2] 
+A finalize()
+method should not normally
+do something that results in a reference to the object being destroyed,
+but Java does not do anything to prevent this situation from happening.
+The garbage collector guarantees that the thread it uses to call a
+finalize() method will not be holding any
+programmer-visible synchronization locks when the method is
+called. This means that a finalize() method never
+has to wait for the garbage collector to release a lock. If the
+garbage collector calls a finalize() method and the
+finalize() method throws any kind of exception, the
+garbage collector catches and ignores the exception.
+References
+System;
+The finalize method
+Inheritance
+One of the most important benefits of object-oriented programming is
+that it promotes the reuse of code, particularly by means of
+inheritance. Inheritance is a way of organizing
+related classes so that they can share common code and state
+information.  Given an existing class declaration, you can create a
+similar class by having it inherit all of the fields in the existing
+definition.  Then you can add any fields that are needed in the new
+class. In addition, you can replace any methods that need to behave
+differently in the new class.
+To illustrate the way that inheritance
+works, let's start with the following class definition:
+class RegularPolygon {
+    private int numberOfSides;
+    private int sideLength;
+    RegularPolygon(int n, int len) {
+        numberOfSides = n;
+        sideLength = len;
+    }
+    public void setSideLength(int len) {
+        sideLength = len;
+    }
+    public int getSideLength() {
+        return sideLength;
+    }
+    public void draw(int x, int y) {
+        // code to draw the regular polygon
+        ...
+    }
+}
+The RegularPolygon class defines a constructor,
+methods to set and get the side length of the regular polygon, and a
+method to draw the regular polygon.  Suppose that after writing this
+class you realize that you have been using it to draw a lot of
+squares. You can use inheritance to build a more specific
+Square class from the existing
+RegularPolygon class as follows:
+class Square extends   RegularPolygon {
+    Square(int len) {
+        super(4,len);
+    }
+}
+The extends clause indicates that the
+Square class is a subclass of
+the RegularPolygon class, or looked at another way,
+RegularPolygon is a superclass
+of Square.  When one class is a subclass of another
+class, the subclass inherits all of the
+fields of its superclass that are not private. Thus Square inherits
+setSideLength(),
+getSideLength(), and draw()
+methods from RegularPolygon. These methods work
+fine without any modification, which is why the definition of
+Square is so short. All the
+Square class needs to do is define a constructor,
+since constructors are not inherited.
+There is no limit to the depth to which you can carry subclassing.
+For example, you could choose to write a class called
+ColoredSquare that is a subclass of the
+Square class. The ColoredSquare
+class would inherit the public methods from both
+Square and
+RegularPolygon. However,
+ColoredSquare would need to override the
+draw() method with an implementation that handles
+drawing in color.
+Having defined the three classes RegularPolygon,
+Square, and ColoredSquare, it is
+correct to say that RegularPolygon and
+Square are superclasses of
+ColoredSquare and ColoredSquare
+and Square are subclasses of
+RegularPolygon.  To describe a relationship between
+classes that extends through exactly one level of inheritance, you can
+use the terms immediate superclass and
+immediate subclass. For example,
+Square is an immediate subclass of
+RegularPolygon, while
+ColoredSquare is an immediate subclass of
+Square.  By the same token,
+RegularPolygon is the immediate superclass of
+Square, while Square is the
+immediate superclass of ColoredSquare.
+A class can have any number of subclasses or superclasses.
+However, a class can only have one immediate superclass. This constraint
+is enforced by the syntax of the extends clause;
+it can only specify the name of one superclass. This style of inheritance
+is called single inheritance ; it is different
+from the multiple inheritance scheme that is used in C++.
+Every class in Java (except Object) has the class
+Object as its ultimate superclass. The class
+Object has no superclass. The subclass
+relationships between all of the Java classes can be drawn as a tree
+that has the Object class as its root. Another
+important difference between Java and C++ is that C++ does not have a
+class that is the ultimate superclass of all of its classes.
+References
+Class Inheritance;
+Interfaces;
+Object
+Abstract classes
+If a class is declared with the abstract modifier,
+the class cannot be instantiated. This is different than C++, which
+has no way of explicitly specifying that a class cannot be instantiated.  An
+abstract class is typically used to declare a
+common set of methods for a group of classes when there are no
+reasonable or useful implementations of the methods at that level of
+abstraction.
+For example, the java.lang package includes classes
+called Byte, Short,
+Integer, Long,
+Float, and Double. These classes
+are subclasses of the abstract class
+Number, which declares the following methods:
+byteValue(), shortValue(),
+intValue(), longValue(),
+floatValue(), and
+doubleValue(). The purpose of these methods is to
+return the value of an object converted to the type implied by the
+method's name. Every subclass of Number implements
+all of these methods. The advantage of the abstraction is that it
+allows you to write code to extract whatever type of value you need
+from a Number object, without knowing the actual
+type of the underlying object.
+Methods defined in an abstract class can be
+declared abstract. An abstract
+method is declared without any implementation; it must be overridden
+in a subclass to provide an implementation.
+References
+Class Modifiers;
+Inner class modifiers;
+Local class modifiers;
+Method modifiers;
+Number
+Final classes
+If a class is declared with the final modifier, the
+class cannot be subclassed. Declaring a class final
+is useful if you need to ensure the exact properties and behavior of
+that class. Many of the classes in the java.lang
+package are declared final for that reason.
+Methods defined in a non-abstract class can be
+declared final. A final method
+cannot be overridden by any subclasses of the class in which it
+appears.
+References
+Class Modifiers;
+Inner class modifiers;
+Local class modifiers;
+Method modifiers
+Interfaces
+Java provides a construct called an interface to support certain
+multiple inheritance features that are desirable in an object-oriented
+language. An interface is similar to a class, in that an interface
+declaration can define both variables and methods. But unlike a class, an
+interface cannot provide implementations for its methods.
+A class declaration can include an implements
+clause that specifies the name of an interface. When a class
+declaration specifies that it implements an interface, the class
+inherits all of the variables and methods declared in that
+interface. The class declaration must then provide implementations for
+all of the methods declared in the interface, unless the class is
+declared as an abstract class. Unlike the
+extends clause, which can only specify one class,
+the implements clause can specify any number of
+interfaces. Thus a class can implement an unlimited number of
+interfaces.
+Interfaces are most
+useful for declaring that an otherwise unrelated set of classes
+have a common set of methods, without needing to provide a common
+implementation. For example, if you want to store a variety of objects
+in a database, you might want all of the those objects to have a
+common set of methods for storing and fetching. Since the fetch
+and store methods for each object need to be different, it is appropriate
+to declare these methods in an interface. Then any class that needs
+fetch and store methods can implement the interface.
+Here is a simplistic example that illustrates such an interface:
+public interface Db {
+    void dbStore(Database d, Object key);
+    Object dbFetch(Database d, Object key);
+}
+The Db interface declaration contains two methods,
+dbStore() and dbFetch().
+Here is a partial class definition for a class that implements the
+Db interface:
+class DbSquare extends Square implements Db {
+    public void dbStore(Database d, Object key) {
+        // Perform database operation to store Square
+        ...
+    }
+    public Square dbFetch(Database d, Object key) {
+        // Perform database operation to fetch Square
+        ...
+    }
+    ...
+}
+The DbSquare class defines implementations
+for both of the methods declared in the Db interface.
+The point of this interface is that it provides a uniform way for
+unrelated objects to arrange to be stored in a database. The following
+code shows part of a class that encapsulates database operations:
+class Database {
+    ...
+    public void store(Object o, Object key) {
+        if (o instanceof Db)
+          ((Db)o).dbStore(this, key);
+    }
+    ...
+}
+When the database is asked to store an object, it does so only if the
+object implements the Db interface, in which case
+it can call the dbStore() of the object.
+References
+Interface Declarations
+Inner Classes
+Java 1.1 provides a new feature that allows programmers to encapsulate
+even more functionality within objects. With the addition of inner
+classes to the Java language, classes can be defined as members of
+other classes, just like variables and methods. Classes can also be
+defined within blocks of Java code, just like local variables.  The
+ability to declare a class inside of another class allows you to
+encapsulate auxiliary classes inside of a class, thereby limiting
+access to the auxiliary classes. A class that is declared inside of
+another class may have access to the instance variables of the
+enclosing class; a class declared within a block may have access to
+the local variable and/or formal parameters of that block.
+Nested top-level classes and interfaces
+A nested top-level class or
+interface is declared
+as a static member of an enclosing top-level class
+or interface. The declaration of a nested top-level class uses the
+static modifier, so you may also see these classes
+called static classes. A nested interface is
+implicitly static, but you can declare it to be
+static to make it explicit. 
+Nested top-level classes and interfaces are typically used to 
+group related classes in a convenient way.
+A nested top-level class or
+interface functions like a normal top-level class or interface,
+except that the name of the nested entity includes the name of the
+class in which it is defined. For example, consider the
+following declaration:
+public class Queue {
+    ...
+    public static class EmptyQueueException extends Exception {
+    } 
+    ...
+}
+Code that calls a method in Queue 
+that throws an EmptyQueueException can catch 
+that exception with a try statement like this:
+try {
+    ...
+} catch (Queue.EmptyQueueException e) {
+    ...
+}
+A nested top-level class cannot access the instance variables of its
+enclosing class. It also cannot call any non-static
+methods of the enclosing class without an explicit reference to an
+instance of that class. However, a nested top-level class can
+use any of the static variables and methods of
+its enclosing class without qualification.
+Only top-level classes in Java can contain nested top-level classes.
+In other words, a static class can only be
+declared as a direct member of a class that is declared at the
+top level, directly as a member of a package. In addition, 
+a nested top-level class cannot declare any static
+variables, static methods, or static initializers.
+References
+Class Declarations;
+Methods;
+Nested Top-Level and Member Classes;
+Variables
+Member classes
+A member class is an inner class that is declared
+within an enclosing class without the static
+modifier. Member classes are analogous to the other members of a
+class, namely the instance variables and methods. The code within a
+member class can refer to any of the variables and methods of its
+enclosing class, including private variables and
+methods.
+Here is a partial definition of a Queue
+class that uses a member class:
+public class Queue {
+    private QueueNode queue;
+    ...
+    public Enumeration elements() {
+        return new QueueEnumerator();
+    } 
+    ...
+    private class QueueEnumerator implements Enumeration {
+        private QueueNode start, end;
+        QueueEnumerator() {
+            synchronized (Queue.this) {
+                if (queue != null) {
+                    start = queue.next;
+                    end = queue;
+                } 
+            } 
+        } 
+        public boolean hasMoreElements() {
+            return start != null;
+        } 
+        public synchronized Object nextElement() {
+            ...
+        } 
+    } 
+    private static class QueueNode {
+        private Object obj;
+        QueueNode next;
+        QueueNode(Object obj) {
+            this.obj = obj;
+        }
+        Object getObject() {
+            return obj;
+        }
+    } 
+}
+The QueueEnumerator class is a
+private member class that implements the
+java.util.Enumeration interface. The advantage of
+this approach is that the QueueEnumerator class can
+access the private instance variable
+queue of the enclosing Queue
+class. If QueueEnumerator were declared outside of
+the Queue class, this queue
+variable would need to be public, which would
+compromise the encapsulation of the Queue class.
+Using a member class that implements the
+Enumeration interface provides a means to offer
+controlled access to the data in a Queue without
+exposing the internal data structure of the class.
+An instance of a member class has access to the instance variables of
+exactly one instance of its enclosing class. That instance of the
+enclosing class is called the enclosing instance.
+Thus, every QueueEnumerator object has exactly one
+Queue object that is its enclosing instance.  To
+access an enclosing instance, you use the construct
+ClassName.this. The
+QueueEnumerator class uses this construct in the
+synchronized statement in its constructor to
+synchronize on its enclosing instance. This synchronization is
+necessary to ensure that the newly created
+QueueEnumerator object
+has exclusive access to the internal data of the
+Queue object.
+The Queue class also contains a nested top-level,
+or static, class,
+QueueNode. However, this class is also declared
+private, so it is not accessible outside of
+Queue. The main difference between
+QueueEnumerator and QueueNode is
+that QueueNode does not need access to any instance
+data of Queue.
+A member class cannot declare any static
+variables, static methods, 
+static classes, or static initializers.
+Although member classes are often declared private,
+they can also be public or
+protected or have the default accessibility. To
+refer to a class declared inside of another class from outside of that
+class, you prefix the class name with the names of the enclosing
+classes, separated by dots. For example, consider the following
+declaration:
+public class A {
+    public class B {
+        public class C {
+            ...
+        } 
+        ...
+    } 
+    ...
+} 
+Outside of the class named A, you can refer to the 
+class named C as A.B.C. 
+References
+Class Declarations;
+Field Expressions;
+Methods;
+Nested Top-Level and Member Classes;
+Variables
+Local classes
+A local class is an inner class that is declared
+inside of a block of Java code. A local class is only visible within
+the block in which it is declared, so it is analogous to a local
+variable. However, a local class can access the variables and methods
+of any enclosing classes. In addition, a local class can access any
+final local variables or method parameters that are
+in the scope of the block that declares the class.
+Local classes are most often used for adapter
+classes.  An adapter class is a class that implements a
+particular interface, so that another class can call a particular
+method in the adapter class when a certain event occurs. In other
+words, an adapter class is Java's way of implementing a "callback"
+mechanism. Adapter classes are commonly used with the new
+event-handling model required by the Java 1.1 AWT and by the JavaBeans
+API.
+Here is an example of a local class functioning as an adapter class:
+public class Z extends Applet {
+    public void init() {
+        final Button b = new Button("Press Me");
+        add(b);
+        class ButtonNotifier implements ActionListener {
+            public void actionPerformed(ActionEvent e) {
+                b.setLabel("Press Me Again");
+                doIt();
+            } 
+        } 
+        b.addActionListener(new ButtonNotifier());
+    } 
+    ...
+} 
+The above example is from an applet that has a
+Button in its user interface. To tell a
+Button object that you want to be notified when it
+is pressed, you pass an instance of an adapter class that implements
+the ActionListener interface to its
+addActionListener() method.  A class that
+implements the ActionListener interface is required
+to implement the actionPerformed() method. When the
+Button is pressed, it calls the adapter object's
+actionPerformed() method. The main advantage of
+declaring the ButtonNotifier class in the method
+that creates the Button is that it puts all of the
+code related to creating and setting up the Button
+in one place.
+As the preceding example shows, a local class can access local variables of the
+block in which it is declared. However, any local variables that are
+accessed by a local class must be declared final.
+A local class can also access method parameters and the exception
+parameter of a catch statement that are accessible
+within the scope of its block, as long as the parameter is declared
+final.
+The Java compiler complains if a local class uses a 
+non-final local variable or parameter. The lifetime of a parameter or local variable is extended indefinitely, as long as there is an instance of a local class that refers to it.
+References
+Blocks;
+Class Declarations;
+Local Classes;
+Local Variables;
+Method formal parameters;
+Methods;
+The try Statement;
+Variables
+Anonymous classes
+An anonymous class is a kind of local class
+that does not have a name and is declared inside of an allocation
+expression. As such, an anonymous class is a more 
+concise declaration of a local class that combines the declaration
+of the class with its instantiation.
+Here is how you can rewrite the previous adapter class example to 
+use an anonymous class instead of a local class:
+public class Z extends Applet {
+    public void init() {
+        final Button b = new Button("Press Me");
+        add(b);
+        b.addActionListener(new ActionListener () {
+            public void actionPerformed(ActionEvent e) {
+                b.setLabel("Press Me Again");
+            } 
+        } );
+    } 
+    ...
+} 
+As you can see, an anonymous class is declared as part of an
+allocation expression.
+If the name after new is the name of an interface,
+as is the case in the preceding example, the anonymous class is an
+immediate subclass of Object that implements the
+given interface. If the name after new is the name
+of a class, the anonymous class is an immediate subclass of the named
+class. 
+Obviously, an anonymous class doesn't have a name. The other
+restriction on an anonymous class is it can't have any
+constructors other than the default constructor. Any constructor-like
+initialization must be done using an instance initializer.  Other than
+these differences, anonymous classes function just like local classes.
+References
+Allocation Expressions;
+Class Declarations;
+Instance Initializers;
+Object
+Implementation of inner classes
+It is possible to use inner classes without knowing anything about how
+they are implemented. However, a high-level understanding can help you
+comprehend the filenames that the compiler produces, and also some of
+the restrictions associated with inner classes.  The implementation of
+inner classes is less than transparent in a number of ways, primarily
+because the Java virtual machine does not know about inner
+classes. Instead, the Java compiler implements inner classes by
+rewriting them in a form that does not use inner classes. The
+advantage of this approach is that the Java virtual machine does not
+require any new features to be able to run programs that use inner
+classes.
+Since a class declared inside another class is rewritten by the
+compiler as an external class, the compiler must give it a name
+unique outside of the class in which it is declared.
+The unique name is formed by prefixing the name
+of the inner class with the name of the class in which it is declared 
+and a dollar sign ($). Thus, when the 
+Queue class is compiled, the Java compiler produces 
+four .class files:
+Queue.class
+Queue$EmptyQueueException.class
+Queue$QueueEnumerator.class
+Queue$QueueNode.class
+Because anonymous classes do not have names, the Java compiler 
+gives each anonymous class a number for a name; the numbers start at 1. 
+When the version of the Z applet that uses 
+an anonymous class is compiled, the Java compiler produces 
+two .class files:
+Z.class
+Z$1.class
+In order to give an inner class access to the variables of its
+enclosing instance, the compiler adds a private
+variable to the inner class that references the enclosing
+instance. The compiler also inserts a formal parameter into each
+constructor of the inner class and passes the reference to
+the enclosing instance using this parameter.
+Therefore, the QueueEnumerator class is rewritten
+as follows:
+class Queue$QueueEnumerator implements Enumeration {
+    private Queue this$0;
+    private QueueNode start, end;
+    QueueEnumerator(Queue this$0) {
+        this.this$0 = this$0;
+        synchronized (this$0) {
+            if (queue != null) {
+                start = queue.next;
+                end = queue;
+            } 
+        } 
+    }
+    ...
+}
+As you can see, the compiler rewrites all references to the enclosing
+instance as this$0. One implication of this
+implementation is that you cannot pass the enclosing instance as an
+argument to its superclass's constructor because
+this$0 is not available until after the superclass's
+constructor returns.
+Lexical Scope of Declarations
+Class Declarations
+ 
+ 
+ 
+ 
+ 
+ 
+ 

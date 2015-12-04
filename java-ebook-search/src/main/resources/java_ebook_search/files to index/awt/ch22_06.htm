@@ -1,0 +1,175 @@
+
+[Chapter 22] ImageConsumer
+Chapter 22java.awt.image Reference
+ImageConsumer
+Name
+ImageConsumer
+Description
+ImageConsumer is an interface 
+that provides the means to consume pixel data and render it for display. 
+Interface Definition
+public abstract interface java.awt.image.ImageConsumer {
+  // Constants
+  public final static int COMPLETESCANLINES;
+  public final static int IMAGEABORTED;
+  public final static int IMAGEERROR;
+  public final static int RANDOMPIXELORDER;
+  public final static int SINGLEFRAME;
+  public final static int SINGLEFRAMEDONE;
+  public final static int SINGLEPASS;
+  public final static int STATICIMAGEDONE;
+  public final static int TOPDOWNLEFTRIGHT;
+  // Interface Methods
+  public abstract void imageComplete (int status);
+  public abstract void setColorModel (ColorModel model);
+  public abstract void setDimensions (int width, int height);
+  public abstract void setHints (int hints);
+  public abstract void setPixels (int x, int y, int width, int height, 
+      ColorModel model, byte[] pixels, int offset, int scansize);
+  public abstract void setPixels (int x, int y, int width, int height, 
+      ColorModel model, int[] pixels, int offset, int scansize);
+  public abstract void setProperties (Hashtable properties);
+}
+Constants
+COMPLETESCANLINES
+public final static int COMPLETESCANLINES
+Hint flag for the setHints(int) 
+method; indicates that the image will be delivered one or more scanlines 
+at a time. 
+IMAGEABORTED
+public final static int IMAGEABORTED
+Status flag for the imageComplete(int) 
+method indicating that the loading process for the image aborted. 
+IMAGEERROR
+public final static int IMAGEERROR
+Status flag for the imageComplete(int) 
+method indicating that an error happened during image loading. 
+RANDOMPIXELORDER
+public final static int RANDOMPIXELORDER
+Hint flag for the setHints(int) 
+method; indicates that the pixels will be delivered in no particular order. 
+SINGLEFRAME
+public final static int SINGLEFRAME
+Hint flag for the setHints(int) 
+method; indicates that the image consists of a single frame. 
+SINGLEFRAMEDONE
+public final static int SINGLEFRAMEDONE
+Status flag for the imageComplete(int) 
+method indicating a single frame of the image has loaded. 
+SINGLEPASS
+public final static int SINGLEPASS
+Hint flag for the setHints(int) 
+method; indicates that each pixel will be delivered once (i.e., the producer 
+will not make multiple passes over the image). 
+STATICIMAGEDONE
+public final static int STATICIMAGEDONE
+Status flag for the imageComplete(int) 
+method indicating that the image has fully and successfully loaded, and 
+that there are no additional frames. 
+TOPDOWNLEFTRIGHT
+public final static int TOPDOWNLEFTRIGHT
+Hint flag for the setHints(int) 
+method; indicates that pixels will be delivered in a top to bottom, left 
+to right order. 
+Interface Methods
+imageComplete
+public abstract void imageComplete (int status)
+Parameters
+status
+Image loading status flags. 
+Description
+Called when the image, or a frame of an image sequence, is complete to 
+report the completion status. 
+setColorModel
+public abstract void setColorModel (ColorModel model)
+Parameters
+model
+The color model for the image. 
+Description
+Tells the ImageConsumer the 
+color model used for most of the pixels in the image. 
+setDimensions
+public abstract void setDimensions (int width, int height)
+Parameters
+width
+Width for image.
+height
+Height for image. 
+Description
+Tells the consumer the image's dimensions. 
+setHints
+public abstract void setHints (int hints)
+Parameters
+hints
+Image consumption hints. 
+Description
+Gives the consumer information about how pixels will be delivered. 
+setPixels
+public abstract void setPixels (int x, int y, int width, int height, ColorModel model, byte[] pixels, int offset, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+width
+Width of the rectangle of pixel data delivered with 
+this method call.
+height
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+offset
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Description
+Delivers a rectangular block of pixels to the image consumer. 
+public abstract void setPixels (int x, int y, int width, int height, ColorModel model, int[] pixels, int offset, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+width
+Width of the rectangle of pixel data delivered with 
+this method call.
+height
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+offset
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Description
+Delivers a rectangular block of pixels to the image consumer. 
+setProperties
+public abstract void setProperties (Hashtable properties)
+Parameters
+properties
+The properties for the image. 
+Description
+Delivers a Hashtable that contains the image's properties. 
+See Also
+ColorModel, Hashtable, 
+ImageFilter, PixelGrabber, 
+Object 
+FilteredImageSource
+ImageFilter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,95 @@
+
+[Chapter 12] NoSuchFieldError
+Chapter 12The java.lang Package
+NoSuchFieldError
+Name
+NoSuchFieldError
+Synopsis
+Class Name:
+java.lang.NoSuchFieldError 
+Superclass:
+java.lang.IncompatibleClassChangeError
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+A NoSuchFieldError is thrown 
+in response to an attempt to reference an instance or class variable that 
+is not defined in the current definition of a class. Usually this error 
+is caught by the compiler; it can occur at run-time if the definition 
+of a class is changed after the class that references it was last compiled. 
+Class Summary
+public class java.lang.NoSuchFieldError
+             extends java.lang.IncompatibleClassChangeError {
+  // Constructors
+  public NoSuchFieldError();
+  public NoSuchFieldError(String s);
+}
+Constructors
+NoSuchFieldError
+public NoSuchFieldError()
+Description
+This constructor creates a NoSuchFieldError 
+with no associated detail message. 
+public NoSuchFieldError(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates a NoSuchFieldError 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Error, 
+IncompatibleClassChangeError, 
+Throwable 
+NoClassDefFoundError
+NoSuchFieldException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,87 @@
+
+[Appendix B] The UTF-8 Encoding
+Appendix B
+B. The UTF-8 Encoding
+Internally, Java always represents Unicode characters with 16
+bits. However, this is an inefficient use of bits when most of the
+characters being used only need eight bits or less to be represented,
+which is the case for text written in English and a number of other
+languages. The UTF-8 encoding provides a more compact way of
+representing sequences of Unicode when most of the characters are
+7-bit ASCII characters. Therefore, UTF-8 is often a more efficient
+way of storing or transmitting text than using 16 bits for every
+character.
+The UTF-8 encoding is a variable-width encoding of Unicode characters.
+Seven-bit ASCII characters
+(\u0000-\u007F) are
+represented in one byte, so they remain untouched by the encoding
+(i.e., a string of ASCII characters is a legal UTF-8
+string). Characters in the range
+\u0080-\u07FF are
+represented in two bytes, and characters in the range
+\u0800-\uFFFF are
+represented in three bytes. Java actually uses a slightly modified
+version of UTF-8, since it encodes \u0000
+using two bytes. The advantage of this approach is that a UTF-8
+encoded string never contains a null character.
+Java provides support for reading characters in the UTF-8 encoding
+with the readUTF() methods in
+RandomAccessFile,
+DataInputStream, and
+ObjectInputStream . The
+writeUTF() methods in
+RandomAccessFile,
+DataOutputStream, and
+ObjectOutputStream handle writing characters in the
+UTF-8 encoding.
+The UTF-8 encoding begins with an unsigned 16-bit quantity that
+indicates the number of bytes of data that follow. This length value
+is in the format read by the readUnsignedShort()
+methods the above input classes and written by the
+writeUnsignedShort() methods in the above output
+classes.
+The rest of the bytes are variable-length characters. A 1-byte
+character always has its high-order bit set to 0. A 2-byte character
+always begins with the high-order bits 110, while a
+3-byte character starts with the high-order bits
+1110. The second and third bytes of 2- and 3-byte
+characters always have their high-order bits set to
+10, which makes them easy to distinguish from
+1-byte characters and the initial bytes of 2- and 3-byte
+characters. This encoding scheme leaves room for seven bits of data in
+1-byte characters, 11 bits of data in 2-byte characters, and 16 bits
+of data in 3-byte characters.
+The table below summarizes the UTF-8 encoding:
+Bytes in
+Minimum
+Maximum
+# of
+Binary Byte Sequence
+Character
+Character
+Character
+Data Bits
+(x = data bit)
+1
+\u0000
+\u007F
+7
+0xxxxxxx
+2
+\u0080
+\u07FF
+11
+110xxxxx 10xxxxxx
+3
+\u0800
+\uFFFF
+16
+1110xxxx 10xxxxxx 10xxxxxx
+The Unicode 2.0 Character Set
+ 
+ 
+ 
+ 
+ 
+ 
+ 

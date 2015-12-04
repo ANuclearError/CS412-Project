@@ -1,0 +1,87 @@
+
+[Chapter 18] 18.29 java.awt.GridBagLayout (JDK 1.0)
+Chapter 18The java.awt Package
+18.29 java.awt.GridBagLayout (JDK 1.0)
+This class implements the LayoutManager interface to
+lay out Component objects in a Container.
+It is the most complicated and most powerful
+LayoutManager in the java.awt package.  It
+divides the container into a grid of rows and columns (which
+need not have the same width and height) and places the
+components into this grid, adjusting the size of the grid
+cells as necessary to ensure that components do not overlap.
+Each component controls how it is positioned within this
+grid by specifying a number of variables (or "constraints")
+in a GridBagConstraints object.
+Do not confuse this class with the much simpler
+GridLayout which arranges components in a grid of
+equally sized cells.
+Use setConstraints() to specify a
+GridBagConstraints object for each of the components
+in the container.  Or, in Java 1.1, specify the
+GridBagConstraints object when adding the component
+to the container with add().
+The variables in this object specify the
+position of the component in the grid, the number of
+horizontal and vertical grid cells that the component
+occupies, and also control other important aspects of
+component layout.  See GridBagConstraints for more
+information on these "constraint" variables.
+setConstraints() makes a copy of the constraints
+object, so you may reuse a single object in your code.
+Note that applications should never call the
+LayoutManager methods of this class directly; the
+Container for which the GridBagLayout is
+registered does this.
+public class GridBagLayout extends Object implements LayoutManager2, Serializable {
+    // Public Constructor
+            public GridBagLayout();
+    // Constants
+            protected static final int MAXGRIDSIZE;
+            protected static final int MINSIZE;
+            protected static final int PREFERREDSIZE;
+    // Public Instance Variables
+            public double[] columnWeights;
+            public int[] columnWidths;
+            public int[] rowHeights;
+            public double[] rowWeights;
+    // Protected Instance Variables
+            protected Hashtable comptable;
+            protected GridBagConstraints defaultConstraints;
+            protected GridBagLayoutInfo layoutInfo;
+    // Public Instance Methods
+            public void addLayoutComponent(String name, Component comp);  // From LayoutManager
+        1.1  public void addLayoutComponent(Component comp, Object constraints);  // From LayoutManager2
+            public GridBagConstraints getConstraints(Component comp);
+        1.1  public float getLayoutAlignmentX(Container parent);  // From LayoutManager2
+        1.1  public float getLayoutAlignmentY(Container parent);  // From LayoutManager2
+            public int[][] getLayoutDimensions();
+            public Point getLayoutOrigin();
+            public double[][] getLayoutWeights();
+        1.1  public void invalidateLayout(Container target);  // From LayoutManager2
+            public void layoutContainer(Container parent);  // From LayoutManager
+            public Point location(int x, int y);
+        1.1  public Dimension maximumLayoutSize(Container target);  // From LayoutManager2
+            public Dimension minimumLayoutSize(Container parent);  // From LayoutManager
+            public Dimension preferredLayoutSize(Container parent);  // From LayoutManager
+            public void removeLayoutComponent(Component comp);  // From LayoutManager
+            public void setConstraints(Component comp, GridBagConstraints constraints);
+            public String toString();  // Overrides Object
+    // Protected Instance Methods
+            protected void AdjustForGravity(GridBagConstraints constraints, Rectangle r);
+            protected void ArrangeGrid(Container parent);
+            protected GridBagLayoutInfo GetLayoutInfo(Container parent, int sizeflag);
+            protected Dimension GetMinSize(Container parent, GridBagLayoutInfo info);
+            protected GridBagConstraints lookupConstraints(Component comp);
+}
+Hierarchy:
+Object->GridBagLayout(LayoutManager2(LayoutManager), Serializable)
+java.awt.GridBagConstraints (JDK 1.0)
+java.awt.GridLayout (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,218 @@
+
+[Chapter 15] MulticastSocket
+Chapter 15The java.net Package
+MulticastSocket
+Name
+MulticastSocket
+Synopsis
+Class Name:
+java.net.MulticastSocket
+Superclass:
+java.net.DatagramSocket
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The MulticastSocket class implements 
+packet-oriented, connectionless, multicast data communication. In Internet 
+parlance, this is the User Datagram Protocol (UDP) 
+with additional functionality 
+for joining and leaving groups of other multicast hosts on the Internet. 
+A multicast group is specified by a Class D address, which means that the 
+four highest-order bits are set to 1110. In other words, multicast addresses 
+are in the range 224.0.0.1 through 239.255.255.255 inclusive. 
+MulticastSocket inherits most 
+of its functionality from DatagramSocket; 
+it adds the ability to join and leave multicast groups. When a MulticastSocket 
+joins a group, it receives all of the packets destined for the group. Any 
+DatagramSocket or MulticastSocket 
+can send packets to a multicast group. 
+Class Summary
+public final class java.net.MulticastSocket 
+                   extends java.net.DatagramSocket {
+  // Constructors
+  public MulticastSocket();
+  public MulticastSocket(int port);
+  // Instance Methods
+  public InetAddress getInterface();
+  public byte getTTL();
+  public void joinGroup(InetAddress mcastaddr);
+  public void leaveGroup(InetAddress mcastaddr) 
+  public synchronized void send(DatagramPacket p, byte ttl);
+  public void setInterface(InetAddress inf);
+  public void setTTL(byte ttl);
+}
+Constructors
+MulticastSocket
+public MulticastSocket() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to listen on the port. 
+Description
+This constructor creates a MulticastSocket 
+that is bound to any available port on the local host machine. 
+public MulticastSocket(int port) throws IOException
+Parameters
+port
+A port number.
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to listen on the given port. 
+Description
+This constructor creates a MulticastSocket 
+that is bound to the given port on the local host machine. 
+Instance Methods
+getInterface
+public InetAddress getInterface() throws SocketException
+Returns
+The address of the network interface used for 
+outgoing multicast packets. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method returns the IP address that this MulticastSocket 
+uses to send out packets to multicast destinations. 
+getTTL
+public byte getTTL() throws IOException
+Returns
+The time-to-live (TTL) value for this socket. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method returns the TTL value for this socket. This value is the number 
+of hops an outgoing packet can traverse before it is discarded. 
+joinGroup
+public void joinGroup(InetAddress mcastaddr) throws IOException
+Parameters
+mcastaddr
+The IP address of the group to join. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to access the given multicast address. 
+Description
+This method is used to join a multicast group. An exception is thrown if 
+the given address is not a multicast address. While the socket is part 
+of a group, it receives all the packets that are sent to the group. 
+leaveGroup
+public void leaveGroup(InetAddress mcastaddr) throws IOException
+Parameters
+mcastaddr
+The IP address of the group to leave. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to access the given multicast address. 
+Description
+This method is used to leave a multicast group. An exception is thrown 
+if the given address is not a multicast address. 
+send
+   public synchronized void send(DatagramPacket p, byte ttl) throws IOException  
+Parameters
+p
+The DatagramPacket to be sent.
+ttl
+The time-to-live (TTL) value for this packet. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to send data to the packet's destination. 
+Description
+This method sends a packet from this socket using the given TTL value. 
+The packet data, packet length, destination address, and destination port 
+number are specified by the given DatagramPacket.
+Generally, it is easier to use setTTL() 
+to set the TTL value for the socket, then use send(DatagramPacket) 
+to send data. This method is provided for special cases. 
+setInterface
+public void setInterface(InetAddress inf) throws SocketException
+Parameters
+inf
+The new address of the network interface for multicast packets. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method is used to set the address that is used for outgoing multicast 
+packets. 
+setTTL
+public void setTTL(byte ttl) throws IOException
+Parameters
+ttl
+The new time-to-live (TTL) value for this socket. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method is used to set the TTL value of the socket. The TTL value is 
+the number of hops an outgoing packet can traverse before it is discarded. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+DatagramSocket
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+getLocalAddress()
+DatagramSocket
+getLocalPort()
+DatagramSocket
+getSoTimeout()
+DatagramSocket
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+receive(DatagramPacket)
+DatagramSocket
+send(DatagramPacket)
+DatagramSocket
+setSoTimeout(int)
+DatagramSocket
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DatagramPacket, 
+DatagramSocket, 
+DatagramSocketImpl, 
+InetAddress, 
+IOException, 
+SecurityException, 
+SocketException 
+MalformedURLException
+NoRouteToHostException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

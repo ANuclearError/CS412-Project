@@ -1,0 +1,27 @@
+
+[Chapter 22] 22.24 java.awt.peer.TextComponentPeer (JDK 1.0)
+Chapter 22The java.awt.peer Package
+22.24 java.awt.peer.TextComponentPeer (JDK 1.0)
+public abstract interface TextComponentPeer extends ComponentPeer {
+    // Public Instance Methods
+        1.1  public abstract int getCaretPosition();
+            public abstract int getSelectionEnd();
+            public abstract int getSelectionStart();
+            public abstract String getText();
+            public abstract void select(int selStart, int selEnd);
+        1.1  public abstract void setCaretPosition(int pos);
+            public abstract void setEditable(boolean editable);
+            public abstract void setText(String l);
+}
+Extended By:
+TextAreaPeer, 
+TextFieldPeer
+java.awt.peer.TextAreaPeer (JDK 1.0)
+java.awt.peer.TextFieldPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,226 @@
+
+[Chapter 11] CharArrayWriter
+Chapter 11The java.io Package
+CharArrayWriter
+Name
+CharArrayWriter
+Synopsis
+Class Name:
+java.io.CharArrayWriter
+Superclass:
+java.io.Writer
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The CharArrayWriter class represents 
+a stream whose data is written to an internal 
+character array. This class is similar 
+to ByteArrayOutputStream, but 
+it operates on an array of Java characters instead of a byte array. 
+The data from a CharArrayWriter 
+can be sent to another Writer 
+using the writeTo() method. 
+A copy of the array can be obtained using the toCharArray() 
+method. 
+Class Summary
+public class java.io.CharArrayWriter extends java.io.Writer {
+  // Variables
+  protected char[] buf;
+  protected int count;
+  // Constructors
+  public CharArrayWriter();
+  public CharArrayWriter(int initialSize);
+  // Instance Methods
+  public void close();
+  public void flush();
+  public void reset();
+  public int size();
+  public char[] toCharArray();
+  public String toString();
+  public void write(int c);
+  public void write(char[] c, int off, int len);
+  public void write(String str, int off, int len);
+  public void writeTo(Writer out);
+}
+Variables
+buf
+protected char[] buf
+Description
+The buffer that holds data for this stream. 
+count
+protected int count
+Description
+A placeholder that marks the end of the data in the buffer. 
+Constructors
+CharArrayWriter
+public CharArrayWriter()
+Description
+This constructor creates a CharArrayWriter 
+with an internal buffer that has a default size of 32 characters. The buffer 
+grows automatically as data is written to the stream. 
+public CharArrayWriter(int initialSize)
+Parameters
+initialSize
+The initial 
+buffer size. 
+Description
+This constructor creates a CharArrayWriter 
+with an internal buffer that has a size of initialSize 
+characters. The buffer grows automatically as data is written to the stream. 
+Instance Methods
+close
+public void close()
+Overrides
+Writer.close() 
+Description
+This method does nothing. For most subclasses of Writer,
+this method releases any system resources 
+that are associated with the Writer 
+object. However, the CharArrayWriter's 
+internal array may be needed for subsequent calls to toCharArray() 
+or writeTo(). For this reason, 
+close() does nothing, and the 
+internal array is not released until the CharArrayWriter 
+is garbage collected. 
+flush
+public void flush()
+Overrides
+Writer.flush() 
+Description
+This method does nothing. The CharArrayWriter 
+writes data directly into its internal array; thus it is never necessary 
+to flush the stream. 
+reset
+public void reset()
+Description
+This method discards the current contents of the buffer and
+resets the position of the stream to zero. Subsequent data 
+is written starting at the beginning of the array. 
+size
+public int size()
+Description
+This method returns the number of characters currently stored in this object's 
+internal buffer. It is a count of the number of characters that have been 
+written to the stream. 
+toCharArray
+public char[] toCharArray()
+Returns
+A copy of the data that has been written to this CharArrayWriter 
+in the form of a char array. 
+Description
+This method copies the data in the internal array and returns a reference 
+to the copy. The returned array is as long as the data that has been written 
+to the stream, i.e., the same as size(). 
+toString
+public String toString()
+Returns
+A copy of the data that has been written to this CharArrayWriter 
+in the form of a String. 
+Overrides
+Object.toString() 
+Description
+This method returns a reference to a String object created 
+from the characters stored in this object's internal buffer. 
+write
+public void write(int c)
+Parameters
+c
+The value to write. 
+Overrides
+Writer.write(int) 
+Description
+This method writes the low-order 16 bits of the 
+given value into the internal array. If the array 
+is full, a larger array is allocated. 
+public void write(char[] c, int off, int len)
+Parameters
+c
+An array of characters to write to the stream.
+off
+An offset into the character array.
+len
+The number of characters to write. 
+Overrides
+Writer.write(char[], int, int) 
+Description
+This method copies len characters 
+to this object's internal array from c, 
+starting off elements from 
+the beginning of the array. If the internal array is full, a larger array 
+is allocated. 
+public void write(String str, int off, int len)
+Parameters
+str
+A String to write to the stream.
+off
+An offset into the string.
+len
+The number of characters to write. 
+Overrides
+Writer.write(String, int, int) 
+Description
+This method copies len characters 
+to this object's internal array from str, 
+starting off characters from 
+the beginning of the given string. If the internal array is full, a larger 
+array is allocated. 
+writeTo
+public void writeTo(Writer out) throws IOException
+Parameters
+out
+The destination stream. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes the contents of this object's internal buffer 
+to the given Writer. All the 
+data that has been written to this CharArrayWriter 
+is written to out. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(char[])
+Writer
+write(String)
+Writer
+See Also
+IOException, 
+String, 
+Writer 
+CharArrayReader
+CharConversionException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

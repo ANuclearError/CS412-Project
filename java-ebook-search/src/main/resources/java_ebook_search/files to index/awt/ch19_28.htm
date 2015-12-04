@@ -1,0 +1,180 @@
+
+[Chapter 19] GridBagConstraints
+Chapter 19java.awt Reference
+GridBagConstraints
+Name
+GridBagConstraints
+Description
+The GridBagConstraints class 
+provides the means to control the layout of components within a Container 
+whose LayoutManager is GridBagLayout. 
+Class Definition
+public class java.awt.GridBagConstraints
+    extends java.lang.Object
+    implements java.lang.Cloneable, java.io.Serializable {
+  
+  // Constants
+  public final static int BOTH;
+  public final static int CENTER;
+  public final static int EAST;
+  public final static int HORIZONTAL;
+  public final static int NONE;
+  public final static int NORTH;
+  public final static int NORTHEAST;
+  public final static int NORTHWEST;
+  public final static int RELATIVE;
+  public final static int REMAINDER;
+  public final static int SOUTH;
+  public final static int SOUTHEAST;
+  public final static int SOUTHWEST;
+  public final static int VERTICAL;
+  public final static int WEST;
+  
+  // Variables
+  public int anchor;
+  public int fill;
+  public int gridheight;
+  public int gridwidth;
+  public int gridx;
+  public int gridy;
+  public Insets insets;
+  public int ipadx;
+  public int ipady;
+  public double weightx
+  public double weighty
+  
+  // Constructors
+  public GridBagConstraints();
+  
+  // Instance Methods
+  public Object clone();
+}
+Constants
+BOTH
+public final static int BOTH
+Constant for possible fill 
+value. 
+CENTER
+public final static int CENTER
+Constant for possible anchor 
+value. 
+EAST
+public final static int EAST
+Constant for possible anchor 
+value. 
+HORIZONTAL
+public final static int HORIZONTAL
+Constant for possible fill 
+value. 
+NONE
+public final static int NONE
+Constant for possible fill 
+value. 
+NORTH
+public final static int NORTH
+Constant for possible anchor 
+value. 
+NORTHEAST
+public final static int NORTHEAST
+Constant for possible anchor 
+value. 
+NORTHWEST
+public final static int NORTHWEST
+Constant for possible anchor 
+value. 
+RELATIVE
+public final static int RELATIVE
+Constant for possible gridx, 
+gridy, gridwidth, 
+or gridheight value. 
+REMAINDER
+public final static int REMAINDER
+Constant for possible gridwidth 
+or gridheight value. 
+SOUTH
+public final static int SOUTH
+Constant for possible anchor 
+value. 
+SOUTHEAST
+public final static int SOUTHEAST
+Constant for possible anchor 
+value. 
+SOUTHWEST
+public final static int SOUTHWEST
+Constant for possible anchor 
+value. 
+VERTICAL
+public final static int VERTICAL
+Constant for possible fill 
+value. 
+WEST
+public final static int WEST
+Constant for possible anchor 
+value. 
+Variables
+anchor
+public int anchor
+Specifies the alignment of the component in the event that it is smaller 
+than the space allotted for it by the layout manager; e.g., CENTER 
+centers the object within the region. 
+fill
+public int fill
+The component's resize policy if additional space available. 
+gridheight
+public int gridheight
+Number of columns a component occupies. 
+gridwidth
+public int gridwidth
+Number of rows a component occupies. 
+gridx
+public int gridx
+Horizontal grid position at which to add component. 
+gridy
+public int gridy
+Vertical grid position at which to add component. 
+insets
+public Insets insets
+Specifies the outer padding around the component. 
+ipadx
+public int ipadx
+Serves as the internal padding within the component in both the right and 
+left directions. 
+ipady
+public int ipady
+Serves as the internal padding within the component in both the top and 
+bottom directions. 
+weightx
+public double weightx
+Represents the percentage of extra horizontal space that will be given 
+to this component if there is additional space available within the container. 
+weighty
+public double weighty
+Represents the percentage of extra vertical space that will be given to 
+this component if there is additional space available within the container. 
+Constructors
+GridBagConstraints
+public GridBagConstraints()
+Description
+Constructs a GridBagConstraints 
+object. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A new instance of GridBagConstraints 
+with same values for constraints. 
+Overrides 
+Object.clone() 
+See Also
+Cloneable, GridBagLayout, 
+Insets, Object, 
+Serializable 
+Graphics
+GridBagLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

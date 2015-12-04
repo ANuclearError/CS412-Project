@@ -1,0 +1,76 @@
+
+[Chapter 11] ObjectInputValidation
+Chapter 11The java.io Package
+ObjectInputValidation
+Name
+ObjectInputValidation
+Synopsis
+Interface Name:
+java.io.ObjectInputValidation
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ObjectInputValidation interface 
+defines a callback for object validation. A class implements this interface 
+if it needs to validate deserialized objects. A class that needs to perform 
+object validation on deserialized instances should pass a validation object 
+to ObjectInputStream.registerValidation() 
+at the beginning of its private 
+readObject() method. When an 
+object of that class is deserialized, the validateObject() 
+method in the validation object is called. If the method is satisfied with 
+the state of the deserialized object, it returns quietly; otherwise it 
+should throw an InvalidObjectException. 
+The simplest case is to have a class do its own validation by implementing 
+ObjectInputValidation itself 
+and passing this to the registerValidation() 
+method. For example, the following code fragment shows how to register 
+for validation in readObject(). 
+The validateObject() method 
+always throws an exception: 
+public class ValidateMe
+    implements Serializable, ObjectInputValidation {
+    private void readObject(ObjectInputStream in)
+                 throws IOException, ClassNotFoundException {
+        in.registerValidation(this, 0);
+        in.defaultReadObject();
+    }
+    public void validateObject() throws InvalidObjectException {
+        // if (this object is not valid)
+            throw new InvalidObjectException("Object not valid!");
+    }
+...
+}
+Interface Declaration
+public abstract interface java.io.ObjectInputValidation {
+  // Methods
+  public abstract void validateObject();
+}
+Methods
+validateObject
+public void validateObject() throws InvalidObjectException
+Throws
+InvalidObjectException
+If the method is not satisfied with its state. 
+Description
+This method allows an object to check its own 
+validity. An InvalidObjectException 
+should be thrown if anything is invalid. 
+See Also
+ObjectInput, 
+ObjectInputStream
+ObjectInputStream
+ObjectOutput
+ 
+ 
+ 
+ 
+ 
+ 
+ 

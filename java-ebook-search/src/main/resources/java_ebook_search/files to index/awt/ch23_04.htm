@@ -1,0 +1,55 @@
+
+[Chapter 23] CheckboxPeer
+Chapter 23java.awt.peer Reference
+CheckboxPeer
+Name
+CheckboxPeer
+Description
+CheckboxPeer is an interface 
+that defines the basis for checkbox components. 
+Interface Definition
+public abstract interface java.awt.peer.CheckboxPeer
+   extends java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract void setCheckboxGroup (CheckboxGroup group);
+  public abstract void setLabel (String label);
+  public abstract void setState (boolean state);
+}
+Interface Methods
+setCheckboxGroup
+public abstract void setCheckboxGroup (CheckboxGroup group)
+Parameters
+group
+New group to put 
+the checkbox peer in. 
+Description
+Changes the checkbox group to which the checkbox peer belongs; implicitly 
+removes the peer from its old group, if any. 
+setLabel
+public abstract void setLabel (String label)
+Parameters
+label
+New text for label 
+of checkbox's peer. 
+Description
+Changes the text of the label of the checkbox's peer. 
+setState
+public abstract void setState (boolean state)
+Parameters
+state
+New state for the 
+checkbox's peer. 
+Description
+Changes the state of the checkbox's peer. 
+See Also
+CheckboxGroup, ComponentPeer, 
+String 
+CheckboxMenuItemPeer
+ChoicePeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

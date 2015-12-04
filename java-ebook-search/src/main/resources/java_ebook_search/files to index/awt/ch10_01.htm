@@ -1,0 +1,186 @@
+
+[Chapter 10] Would You Like to Choose from the Menu?
+Chapter 10
+10. Would You Like to Choose from the Menu?
+Contents:
+MenuComponent
+MenuContainer
+MenuShortcut
+MenuItem
+Menu
+CheckboxMenuItem
+MenuBar
+Putting It All Together
+PopupMenu
+In Chapter 6, Containers, 
+I mentioned that a Frame can 
+have a menu. Indeed, to offer a menu in the AWT, you have to attach it 
+to a Frame. With versions 1.0.2 
+and 1.1, Java does not support menu bars within an applet or any other 
+container. We hope that future versions of Java will allow menus to be 
+used with other containers. Java 1.1 goes partway toward solving this 
+problem by introducing a PopupMenu 
+that lets you attach context menus to any Component. 
+Java 1.1 also adds MenuShortcut 
+events, which represent keyboard accelerator events for menus. 
+Implementing a menu in a Frame 
+involves connections among a number of different objects: MenuBar, 
+Menu, MenuItem, 
+and the optional CheckboxMenuItem. 
+Several of these classes implement the MenuContainer 
+interface. Once you've created a few menus, you'll probably 
+find the process quite natural, but it's hard to describe until you 
+see what all the objects are. So this chapter describes most of the menu 
+classes first and then shows an example demonstrating their use. 
+All the components covered in previous chapters were subclasses of Component. 
+Most of the objects in this chapter subclass MenuComponent, 
+which encapsulates the common functionality of menu objects. The MenuComponent 
+class hierarchy is shown in Figure 10.1. 
+Figure 10.1: MenuComponent class hierarchy
+To display a Menu, you must first put it in a MenuBar, which you add to a Frame. (Pop-up menus are different in that they don't need a Frame.) A Menu can contain MenuItem 
+as well as other menus that 
+form submenus. CheckboxMenuItem 
+is a specialized MenuItem that 
+(as you might guess) the user can toggle like a Checkbox. 
+One way to visualize how all these things work together is to imagine a 
+set of curtains. The different MenuItem 
+components are the fabrics and panels that make up the curtains. The Menus 
+are the curtains. They get hung from the MenuBar, 
+which is like a curtain rod. Then you place the MenuBar 
+curtain rod into the Frame 
+(the window, in our metaphor), curtains and all. 
+It might puzzle you that a Menu is a subclass of 
+MenuItem, not the other way 
+around. This is because a Menu 
+can appear on a Menu just like 
+another MenuItem, which would 
+not be possible if the hierarchy was the other way around. Figure 10.2 
+points out the different pieces involved in the creation of a menu: the MenuBar and various kinds of menu items, including a submenu.
+Figure 10.2: The pieces that make up a Menu
+10.1 MenuComponent
+MenuComponent is an abstract 
+class that is the parent of all menu-related objects. You will never create 
+an instance of the object. Nor are you likely to subclass it yourself--to 
+make the subclass work, you'd have to provide your own peer on every 
+platform where you want the application to run. 
+MenuComponent MethodsConstructor
+public MenuComponent ()--cannot be called directly 
+Since MenuComponent is an abstract 
+class, you cannot create an instance of the object. This method is called 
+when you create an instance of one of its children. 
+Fonts
+public Font getFont () 
+The getFont() method retrieves 
+the font associated with the MenuComponent 
+from setFont(). If the current 
+object's font has not been set, the parent menu's font is retrieved. 
+If there is no parent and the current object's font has not been 
+set, getFont() returns null. 
+public void setFont (Font f) 
+The setFont() method allows 
+you to change the font of the particular menu-related component to f. 
+When a MenuComponent is first 
+created, the initial font is null, 
+so the parent menu's font is used. 
+NOTE: 
+Some platforms do not support changing the fonts of menu items. Where 
+supported, it can make some pretty ugly menus. 
+Names
+The name serves as an alternative, nonlocalized reference identifier for 
+menu components. If your event handlers compare menu label strings to an 
+expected value and labels are localized for a new environment, the approach 
+fails. 
+public String getName () 
+The getName() method retrieves 
+the name of the menu component. Every instance of a subclass of MenuComponent 
+is named when it is created. 
+public void setName (String name) 
+The setName() method changes 
+the current name of the component to name. 
+Peers
+public MenuComponentPeer getPeer ()  
+The getPeer() method returns 
+a reference to the MenuComponent 
+peer as a MenuComponentPeer. 
+public synchronized void removeNotify ()  
+The removeNotify() method destroys 
+the peer of the MenuComponent 
+and removes it from the screen. addNotify() 
+will be specific to the subclass. 
+Events
+Event handling is slightly different between versions. If using the 1.0 
+event model, use postEvent(). 
+Otherwise, use dispatchEvent() to post an event to this MenuComponent or processEvent() to receive and handle an event. Remember not to mix versions within your programs. 
+public boolean postEvent (Event e)   
+The postEvent() method posts 
+Event e 
+to the MenuComponent. The event 
+is delivered to the Frame at 
+the top of the object hierarchy that contains the selected MenuComponent. 
+The only way to capture this event before it gets handed to the Frame 
+is to override this method. There are no helper functions as there are 
+for Components. Find out which 
+MenuComponent triggered the 
+event by checking e.arg, which 
+contains its label, or ((MenuItem)e.target).getName() 
+for the nonlocalized name of the target. 
+public boolean postEvent (Event e) {
+    // Use getName() vs. e.arg for localization possibility
+    if ("About".equals (((MenuItem)e.target).getName()))
+        playLaughingSound(); // Help request
+    return super.postEvent (e);
+}
+If you override this method, in order for this Event 
+to propagate to the Frame that 
+contains the MenuComponent, 
+you must call the original postEvent() 
+method (super.postEvent(e)). 
+The actual value returned by postEvent() 
+is irrelevant. 
+public final void dispatchEvent(AWTEvent e) 
+The dispatchEvent() method allows you to post new AWT events to this menu component's listeners. dispatchEvent() tells the MenuComponent to deal with the AWTEvent e by calling its processEvent() method. This method is similar to Java 1.0's postEvent() method. Events delivered in this way bypass the system's event queue. It's not clear why you would want to bypass the event queue, except possibly to deliver some kind of high priority event.
+protected void processEvent(AWTEvent e)  
+The processEvent() method receives 
+all AWTEvents with a subclass 
+of MenuComponent as its target. 
+processEvent() then passes 
+them along for processing. When you subclass a child class, overriding 
+processEvent() allows you to 
+process all events without having to provide listeners. However, remember 
+to call super.processEvent(e) 
+last to ensure regular functionality is still executed. This is like overriding 
+postEvent() using the 1.0 event 
+model. 
+Miscellaneous methods
+public MenuContainer getParent () 
+The getParent() method returns 
+the parent MenuContainer for 
+the MenuComponent. MenuContainer 
+is an interface that is implemented by Component 
+(in 1.1 only), Frame, Menu, 
+and MenuBar. This means that 
+getParent() could return any 
+one of the four. 
+protected String paramString ()
+The paramString() method of 
+MenuComponent helps build up 
+the string to display when toString() 
+is called for a subclass. At the MenuComponent 
+level, the current name of the object is appended to the output. 
+public String toString ()--can be called by user for subclass 
+The toString() method at the 
+MenuComponent level cannot 
+be called directly. This toString() 
+method is called when you call a subclass's toString() 
+and the specifics of the subclass is added between the brackets ([ and ]). 
+At this level, the results would be: 
+java.awt.MenuComponent[aname1]
+ItemSelectable
+MenuContainer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,750 @@
+
+[Chapter 11] ObjectInputStream
+Chapter 11The java.io Package
+ObjectInputStream
+Name
+ObjectInputStream
+Synopsis
+Class Name:
+java.io.ObjectInputStream
+Superclass:
+java.io.InputStream 
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.ObjectInput
+Availability:
+New as of JDK 1.1 
+Description
+The ObjectInputStream class 
+can read both primitive types and object instances from an underlying InputStream. 
+The objects and other data must have been written by an ObjectOutputStream. 
+These two classes can provide persistent storage of objects when they are 
+used in conjunction with FileInputStream 
+and FileOutputStream. The classes 
+can also be used with socket streams to pass objects across the network. 
+Only objects that are instances of classes that implement the Serializable 
+or Externalizable interfaces 
+can be deserialized from an input stream. The default deserialization mechanism 
+is implemented by readObject(). 
+When an object is deserialized, the non-static 
+and non-transient fields of 
+the object are restored to the values they had when the object was serialized, 
+including any other objects referenced by the object (except for those 
+objects that do not implement the Serializable 
+interface themselves). Graphs of objects are restored using a reference 
+sharing mechanism. New object instances are always allocated during the 
+deserialization process, to prevent existing objects from being overwritten. 
+Deserialized objects are returned as instances of type Object, 
+so they should be cast to the appropriate type. Strings and arrays are 
+objects in Java, so they are treated as objects during deserialization. 
+For example, the following code opens a file called color.ser 
+and reads a Color object: 
+FileInputStream fileIn;
+ObjectInputStream in;
+Color color;
+try {
+    fileIn = new FileInputStream("color.ser");
+    in = new ObjectInputStream(fileIn);
+    color = (Color)in.readObject();
+    in.close();
+}
+catch (Exception e) {
+    System.out.println("Error reading: " + e);
+}
+Classes that have transient instance variables
+may require special handling to reconstruct the values of these 
+variables when objects are deserialized. Special handling may
+also be necessary to correctly deserialize objects that were 
+serialized with a different version of their class than is in 
+use when they are deserialized.
+Classes that require special handling during serialization and deserialization 
+must implement the following methods (with these exact signatures): 
+private void readObject(ObjectOutputStream stream) 
+             throws IOException, ClassNotFoundException
+private void writeObject(ObjectOutputStream stream) throws IOException
+The writeObject() method is responsible for writing
+the state of the object for the particular class so that it can be
+restored by readObject().  The
+readObject() method registers an object validation
+callback by calling registerValidation() as its
+first action. The readObject() method doesn't need
+to handle reading the state for the object's superclass or any
+of its subclasses except in the case where the superclass doesn't
+itself implement the Serializable interface. In
+this case, the nonserializable class must have a no-argument
+constructor that can be called to initialize its fields, and it is the
+responsibility of the subclass to restore the state of its superclass.
+A class that inherits the implementation of Serializable 
+prevents itself from being serialized by defining readObject() 
+and writeObject() methods that 
+throw NotSerializableException 
+objects. 
+If a class needs complete control over the contents and formatting of the 
+serialized form of its objects, it should implement the Externalizable 
+interface. 
+Class Summary
+public class java.io.ObjectInputStream extends java.io.InputStream
+             implements java.io.ObjectInput {
+  // Constructors
+  public ObjectInputStream(InputStream in);
+  // Public Instance Methods
+  public int available();
+  public void close();
+  public final void defaultReadObject();
+  public int read();
+  public int read(byte[] data, int offset, int length);
+  public boolean readBoolean();
+  public byte readByte();
+  public char readChar();
+  public double readDouble();
+  public float readFloat();
+  public void readFully(byte[] data);
+  public void readFully(byte[] data, int offset, int size);
+  public int readInt();
+  public String readLine();
+  public long readLong();
+  public final Object readObject();
+  public short readShort();
+  public int readUnsignedByte();
+  public int readUnsignedShort();
+  public String readUTF();
+  public synchronized void 
+         registerValidation(ObjectInputValidation obj, int prio);
+  public int skipBytes(int len);
+  // Protected Instance Methods
+  protected final boolean enableResolveObject(boolean enable);
+  protected void readStreamHeader();
+  protected Class resolveClass(ObjectStreamClass v);
+  protected Object resolveObject(Object obj);
+}
+Constructors
+ObjectInputStream
+   public ObjectInputStream(InputStream in) throws IOException, StreamCorruptedException  
+Parameters
+in
+The underlying input 
+stream. 
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+StreamCorruptedException
+If the stream header is not correct. 
+Description
+This constructor creates an ObjectInputStream 
+that reads from the given input stream. The constructor attempts to read 
+the stream header, which consists of a magic number and a version number, 
+and if something goes wrong, an appropriate exception is thrown. If
+all of the bytes of the stream header are not available, the constructor
+does not return until they become available.
+Public Instance Methods
+available
+public int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectInput.available() 
+Overrides
+InputStream.available() 
+Description
+This method returns the number of bytes that can be read without having 
+to wait for more data to become available. 
+close
+public void close() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+Implements
+ObjectInput.close() 
+Overrides
+InputStream.close() 
+Description
+This method closes the stream and releases any system resources that are 
+associated with it. 
+defaultReadObject
+   public final void defaultReadObject() throws IOException, ClassNotFoundException, NotActiveException  
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+ClassNotFoundException
+If the class of the object being read cannot be found.
+NotActiveException
+If serialization is not active. 
+Description
+This method reads the fields of the current object that are not 
+static and not transient. The method 
+can only be called from the private 
+readObject() method of an object 
+that is being deserialized; it throws a NotActiveException 
+if it is called at any other time. This method implements the default 
+deserialization mechanism. 
+read
+public int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the 
+stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectInput.read() 
+Overrides
+InputStream.read() 
+Description
+This method reads the next byte from the stream. The method blocks until 
+some data is available, the end of the stream is detected, or an exception 
+is thrown. 
+   public int read(byte[] data, int offset, int length) throws IOException  
+Parameters
+data
+Array of bytes to 
+be filled from the stream.
+offset
+An offset into the 
+byte array.
+length
+The number of bytes 
+to read. 
+Returns
+The number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectInput.read(byte[], int, int) 
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+This method reads up to length 
+bytes of input into the given array starting at index 
+offset. The method blocks until there is some 
+input available. 
+readBoolean
+public boolean readBoolean() throws IOException
+Returns
+The boolean value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readBoolean() 
+Description
+This method reads a byte as a boolean 
+value from the underlying input stream. A byte that contains a zero is 
+read as false. A byte that 
+contains any other value is read as true. 
+The method blocks until the byte is read, the end of the stream 
+is encountered, or an exception is thrown. 
+readByte
+public byte readByte() throws IOException
+Returns
+The byte value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readByte() 
+Description
+This method reads a signed 8-bit value, a byte, 
+from the underlying input stream. The method blocks until the byte is read, 
+the end of the stream is encountered, or an exception is thrown. 
+readChar
+public char readChar() throws IOException
+Returns
+The char value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readChar() 
+Description
+This method reads a 16-bit Unicode character from the stream. The method 
+reads two bytes from the underlying input stream and then creates 
+a char value using the first byte read as the most 
+significant byte. The method blocks until the two bytes are read, the end 
+of the stream is encountered, or an exception is thrown. 
+readDouble
+public double readDouble() throws IOException
+Returns
+The double value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readDouble() 
+Description
+This method reads a 64-bit double 
+quantity from the stream. The method reads a long 
+value from the underlying input stream as if using the readLong() 
+method. The long value is then 
+converted to a double using 
+the longBitsToDouble() method 
+in Double. The method blocks 
+until the necessary eight bytes are read, the end of the stream is 
+encountered, or an exception is thrown. 
+readFloat
+public float readFloat() throws IOException
+Returns
+The float value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readFloat() 
+Description
+This method reads a 32-bit float 
+quantity from the stream. The method reads an int 
+value from the underlying input stream as if using the 
+readInt() method. The int value is then 
+converted to a float using 
+the intBitsToFloat() method 
+in Float. The method blocks 
+until the necessary four bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readFully
+public void readFully(byte[] b) throws IOException
+Parameters
+b
+The array to fill. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readFully(byte[]) 
+Description
+This method reads bytes into the given array b 
+until the array is full. The method reads repeatedly from the underlying 
+stream to fill the array. The method blocks until all of the bytes are 
+read, the end of the stream is encountered, or an exception is thrown. 
+   public void readFully(byte[] data, int offset, int size) throws IOException  
+Parameters
+data
+The array to fill.
+offset
+An offset into the 
+array.
+length
+The number of bytes 
+to read. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readFully(byte[], int, int) 
+Description
+This method reads len bytes 
+into the given array, starting at offset off. 
+The method reads repeatedly from the underlying stream to fill the array. 
+The method blocks until all of the bytes are read, the end of the stream 
+is encountered, or an exception is thrown. 
+readInt
+public int readInt() throws IOException
+Returns
+The int value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readInt() 
+Description
+This method reads a signed 32-bit int 
+quantity from the stream. The method reads four bytes from the underlying 
+input stream and then creates an int 
+quantity, using the first byte read as the most significant byte. The method 
+blocks until the four bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readLine
+public String readLine() throws IOException
+Returns
+A String that contains the line read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+I/O error occurs. 
+Implements
+DataInput.readLine() 
+Description
+This method reads the next line of text from the stream. The method reads 
+bytes of data from the underlying input stream until it encounters a line 
+terminator. A line terminator is a carriage return ("\r"), 
+a newline character ("\n"), 
+a carriage return immediately followed by a newline character, or the end 
+of the stream. The method blocks until a line terminator is read, the end 
+of the stream is encountered, or an exception is thrown. Note that this 
+method calls the readLine() 
+method of DataInputStream, 
+which is deprecated in 1.1. 
+readLong
+public long readLong() throws IOException
+Returns
+The long value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readLong() 
+Description
+This method reads a signed 64-bit long 
+quantity from the stream. The method reads eight bytes from the underlying 
+input stream and then creates a long 
+quantity, using the first byte read as the most significant byte. The method 
+blocks until the eight bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readObject
+   public final Object readObject() throws OptionalDataException, ClassNotFoundException, IOException  
+Returns
+An Object that has been deserialized from the stream. 
+Throws
+ClassNotFoundException
+If the object being deserialized has an unrecognized class.
+InvalidClassException
+If there is a problem with the class of the deserialized object.
+StreamCorruptedException
+If the stream serialization information is not correct.
+OptionalDataException
+If the stream contains primitive data instead of an object.
+IOException
+If any kind 
+of I/O error occurs. 
+Implements
+ObjectInput.readObject() 
+Description
+This method deserializes an object from the stream and returns a reference 
+to the object. The non-static 
+and non-transient fields of 
+the object are restored to the values they had when the object was serialized. 
+If the object contains references to other objects, these objects are also 
+deserialized (as long as they implement the Serializable 
+interface). Graphs of objects are restored using a reference-sharing mechanism. 
+New object instances are always allocated during the deserialization process, 
+to prevent existing objects from being overwritten. Deserialized objects 
+are returned as instances of type Object, 
+so they should be cast to the appropriate type.
+Once an object has been completely restored (i.e., all of its fields and 
+any objects it references have been restored), any object validation callbacks 
+for the object or any of the objects it references are called in an order 
+based on their priority. An object validation callback is registered by 
+the private readObject() 
+method for an object. 
+readShort
+public short readShort() throws IOException
+Returns
+The short value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readShort() 
+Description
+This method reads a signed 16-bit short 
+quantity from the stream. The method reads two bytes from the underlying 
+input stream and then creates a short 
+quantity, using the first byte read as the most significant byte. The method 
+blocks until the two bytes are read, the end of the stream is encountered, 
+or an exception is thrown. 
+readUnsignedByte
+public int readUnsignedByte() throws IOException
+Returns
+The unsigned byte value read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readUnsignedByte() 
+Description
+This method reads an unsigned 8-bit quantity from the stream. The method 
+reads a byte from the underlying input stream and returns that byte. The 
+method blocks until the byte is read, the end of the stream is encountered, 
+or an exception is thrown. 
+readUnsignedShort
+public int readUnsignedShort() throws IOException
+Returns
+The unsigned short value read 
+from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs. 
+Implements
+DataInput.readUnsignedShort() 
+Description
+This method reads an unsigned 16-bit quantity from the stream. The method 
+reads two bytes from the underlying input stream and creates an unsigned 
+short quantity using the first 
+byte read as the most significant byte. The method blocks until the two 
+bytes are read, the end of the stream is encountered, or an exception is 
+thrown. 
+readUTF
+public String readUTF() throws IOException
+Returns
+The String read from the stream. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind of I/O error occurs.
+UTFDataFormatException
+If the bytes do not represent a valid UTF-8 encoding. 
+Implements
+DataInput.readUTF() 
+Description
+This method reads a UTF-8 encoded string from the stream. 
+See the description 
+of DataInputStream.readUTF(DataInput) for more information. 
+registerValidation
+   public synchronized void registerValidation( ObjectInputValidation obj, int prio) throws NotActiveException, InvalidObjectException  
+Parameters
+obj
+The object requesting 
+validation.
+prio
+The priority of the 
+validation callback; use zero as a default. 
+Throws
+NotActiveException
+If serialization is not active.
+InvalidObjectException
+If obj is null. 
+Description
+This method may be called from an object's private 
+readObject() method to register 
+a validation callback. An object performs internal validation by implementing 
+the ObjectInputValidation interface 
+and registering itself with the ObjectInputStream 
+via this function. When ObjectInputStream 
+has completely deserialized an object (i.e., restored all of its fields 
+and any objects it references), the stream calls ObjectInputValidation.validateObject() 
+for every object that has an object validation callback. Objects that register 
+with higher priority values get validated before objects that register 
+with lower priority values. Within a priority value, the callbacks are 
+not processed in any particular order. 
+skipBytes
+public int skipBytes(int len) throws IOException
+Parameters
+len
+The number of bytes to skip. 
+Returns
+The actual number of skipped bytes. 
+Throws
+EOFException
+If the end 
+of the file is encountered.
+IOException
+If any other 
+kind I/O error occurs. 
+Implements
+DataInput.skipBytes() 
+Description
+This method skips over n bytes 
+in the underlying input stream. The method blocks until all of the bytes 
+are skipped, the end of the stream is encountered, or an exception is thrown. 
+Protected Instance Methods
+enableResolveObject
+   protected final boolean enableResolveObject(boolean enable) throws SecurityException  
+Parameters
+enable
+A boolean 
+value that specifies whether or not object replacement is enabled. 
+Returns
+true if object replacement 
+was previously enabled; false otherwise. 
+Throws
+SecurityException
+If enable is true 
+and getClassLoader() called 
+on the class of the stream does not return null. 
+Description
+This method determines if a trusted subclass of ObjectInputStream 
+is allowed to replace deserialized objects. If the method is called with 
+true, object replacement is 
+enabled. Each time an object is deserialized, resolveObject() 
+is called to give the ObjectInputStream 
+a chance to replace the object. A trusted stream is one whose class has 
+no ClassLoader. 
+readStreamHeader
+   protected void readStreamHeader() throws IOException, StreamCorruptedException  
+Throws
+StreamCorruptedException
+If the stream header is not correct.
+IOException
+If any kind 
+of I/O error occurs.
+Description
+This method attempts to read the stream header, which consists of a magic 
+number and a version number. If something goes wrong, an appropriate exception 
+is thrown. This method is called by the constructor for ObjectInputStream 
+and is the source of the exceptions it throws. If you subclass ObjectInputStream, 
+you can override this method to provide your own stream header checking. 
+resolveClass
+   protected Class resolveClass(ObjectStreamClass v) throws IOException, ClassNotFoundException  
+Parameters
+v
+The ObjectStreamClass 
+to be resolved. 
+Returns
+The Class that corresponds 
+to the given ObjectStreamClass. 
+Throws
+ClassNotFoundException
+If the class of the given ObjectStreamClass 
+cannot be found.
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method attempts to find the Class 
+object that corresponds to the supplied ObjectStreamClass. 
+When a object is deserialized, its class information is read into an ObjectStreamClass 
+object, which is then resolved to a Class 
+if possible. Subclasses of ObjectInputStream 
+can override this method to allow classes to be fetched from alternate 
+sources. The version of the ObjectStreamClass 
+and the Class must match. 
+resolveObject
+protected Object resolveObject(Object obj) throws IOException
+Parameters
+obj
+The object to be replaced. 
+Returns
+A replacement for the given object. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+If object replacement is enabled for this ObjectInputStream 
+(see enableResolveObject()), 
+this method is called with each deserialized object to give the stream 
+a chance to replace the object. In ObjectInputStream, 
+this method simply returns the object that was passed to it. Subclasses 
+can override this method to provide more useful functionality. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark()
+InputStream
+markSupported()
+InputStream
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+InputStream
+reset()
+InputStream
+skip(long n)
+InputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+ClassNotFoundException, 
+DataInput, 
+Double, 
+EOFException, 
+Externalizable,
+Float, 
+InputStream, 
+InvalidClassException, 
+IOException, 
+NotActiveException, 
+ObjectInput, 
+ObjectInputValidation, 
+ObjectOuputStream, 
+ObjectStreamClass, 
+OptionalDataException, 
+SecurityException, 
+Serializable, 
+StreamCorruptedException, 
+String, 
+UTFDataFormatException 
+ObjectInput
+ObjectInputValidation
+ 
+ 
+ 
+ 
+ 
+ 
+ 

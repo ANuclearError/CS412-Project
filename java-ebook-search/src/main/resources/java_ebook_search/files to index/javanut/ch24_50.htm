@@ -1,0 +1,40 @@
+
+[Chapter 24] 24.50 java.io.PipedReader (JDK 1.1)
+Chapter 24The java.io Package
+24.50 java.io.PipedReader (JDK 1.1)
+PipedReader is a character input stream that reads
+characters from a PipedWriter character output
+stream to which it is connected.  PipedReader
+implements one-half of a pipe, and is useful for
+communication between two threads of an application.
+A PipedReader cannot be used until it is connected
+to a PipedWriter object, which may be passed to the
+PipedReader() constructor or to the
+connect() method.
+PipedReader inherits most of the methods of its
+superclass.  See Reader for more information.
+PipedReader is the character stream analog of
+PipedInputStream. 
+public class PipedReader extends Reader {
+    // Public Constructors
+            public PipedReader();
+            public PipedReader(PipedWriter src) throws IOException;
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Reader
+            public void connect(PipedWriter src) throws IOException;
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Defines Reader
+}
+Hierarchy:
+Object->Reader->PipedReader
+Passed To:
+PipedWriter(), 
+PipedWriter.connect()
+java.io.PipedOutputStream (JDK 1.0)
+java.io.PipedWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

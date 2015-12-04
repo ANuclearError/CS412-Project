@@ -1,0 +1,42 @@
+
+[Chapter 25] 25.49 java.lang.Process (JDK 1.0)
+Chapter 25The java.lang Package
+25.49 java.lang.Process (JDK 1.0)
+This class describes a process that is running externally to
+the Java interpreter. Note that a Process is a very
+different thing than a Thread.  The Process
+class is abstract and may not be instantiated.  Call one of
+the Runtime.exec() methods to start a process and
+return a corresponding Process object.  
+waitFor() blocks until the Process exits.
+exitValue() returns the exit code of the process.
+destroy() kills the process.
+getInputStream() returns an InputStream from
+which you can read any bytes the process sends to its
+standard error stream.  getErrorStream() returns
+an InputStream from which you can read any bytes
+the process sends to its standard output stream.
+getOutputStream() returns an OutputStream
+that you can use to send bytes to the standard input stream
+of the process.
+public abstract class Process extends Object {
+    // Default Constructor: public Process()
+    // Public Instance Methods
+            public abstract void destroy();
+            public abstract int exitValue();
+            public abstract InputStream getErrorStream();
+            public abstract InputStream getInputStream();
+            public abstract OutputStream getOutputStream();
+            public abstract int waitFor() throws InterruptedException;
+}
+Returned By:
+Runtime.exec()
+java.lang.OutOfMemoryError (JDK 1.0)
+java.lang.Runnable (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

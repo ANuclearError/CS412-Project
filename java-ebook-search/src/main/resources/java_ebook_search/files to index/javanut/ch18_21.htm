@@ -1,0 +1,49 @@
+
+[Chapter 18] 18.21 java.awt.EventQueue (JDK 1.1)
+Chapter 18The java.awt Package
+18.21 java.awt.EventQueue (JDK 1.1)
+This class implements an event queue for AWT events in Java
+1.1.  When an EventQueue is created, a new thread is
+automatically created and started to remove events from the
+front of the queue and dispatch them to the appropriate
+component.  It is this thread, created by the
+EventQueue, that notifies event listeners and
+executes most of the code in a typical GUI-driven
+application.
+An application can create and use its own private
+EventQueue, but all AWT events are placed on and
+dispatched from a single system EventQueue.  Use the
+getSystemEventQueue() method of the Toolkit
+class to get the system EventQueue object.
+getNextEvent() removes and returns the event at the
+front of the queue.  It blocks if there are no events in
+the queue.  peekEvent() returns the event at the
+front of the queue without removing it from the queue.
+Passed an optional AWTEvent id field, it
+returns the first event of the specified type.  Finally,
+postEvent() places a new event on the end of the
+event queue.
+Most applications do not need to use the EventQueue
+class at all; they can simply rely on the system to dispatch
+events automatically.
+public class EventQueue extends Object {
+    // Public Constructor
+            public EventQueue();
+    // Public Instance Methods
+            public synchronized AWTEvent getNextEvent() throws InterruptedException;
+            public synchronized AWTEvent peekEvent();
+            public synchronized AWTEvent peekEvent(int id);
+            public synchronized void postEvent(AWTEvent theEvent);
+}
+Returned By:
+Toolkit.getSystemEventQueue(), 
+Toolkit.getSystemEventQueueImpl()
+java.awt.Event (JDK 1.0)
+java.awt.FileDialog (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

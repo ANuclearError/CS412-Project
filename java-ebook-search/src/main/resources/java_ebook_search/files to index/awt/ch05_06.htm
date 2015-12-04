@@ -1,0 +1,188 @@
+
+[Chapter 5] 5.6 Creating Your Own Component
+Chapter 5Components
+5.6 Creating Your Own Component
+If you find that no AWT component satisfies your needs, you 
+can create your own. This is usually done either by extending an existing 
+component or by starting from scratch. When extending an existing component, 
+you start with the base functionality of an existing object and add to 
+it. The users will not see anything new or different about the object until 
+they start to interact with it, since it is not a new component. For example, 
+a TextField could be subclassed 
+to convert all letters input to uppercase. On the other hand, if you create 
+a new component from scratch, it will appear the same on all platforms 
+(regardless of what the platform's native components look like), and 
+you have to make sure the user can fairly 
+easily figure out how to work with it. Example 5.3 shows how to create your own Component 
+by creating a Label that displays 
+vertically, as opposed to the standard Label 
+Component that displays horizontally. 
+The whole process is fairly easy. 
+The third possibility for creating your own components involves adding 
+functionality to containers. This is fairly easy to do and can be useful 
+if you are constantly grouping components together. For example, if you 
+are always adding a TextField 
+or Label to go with a Scrollbar 
+to display the value, do it once, and call it something meaningful like 
+LabeledScrollbarPanel. Then 
+whenever you need it again, reuse your LabeledScrollbarPanel. 
+Think about reusability whenever you can. 
+With Java 1.1, the colors for these new components should be set to color 
+values consistent to the user's platform. This is done through color 
+constants provided in the SystemColor 
+class introduced in Chapter 2, Simple Graphics. 
+VerticalLabel
+When you create new components, they must meet three requirements:
+In Java 1.0, you must extend a subclass of Component, usually Canvas. In Java 1.1, you can 
+extend Component itself, creating a lightweight component. In many cases, this alternative is more efficient.
+You must provide a constructor for the new component so that you can create new instances of it; if you really don't need a constructor, you can use the default 
+constructor that you inherit from Canvas 
+or Component.
+You must 
+provide a way to draw the object on the screen by overriding the paint() 
+method. 
+If initializing the component requires information about display characteristics 
+(for example, you need to know the default Font), 
+you must wait until the object is displayed on the screen before you initialize 
+it. This is done by overriding the addNotify() 
+method. First, call super.addNotify() 
+to create the peer; you can now ask for platform-dependent information 
+and initialize your component accordingly. Remember to override getPreferredSize() 
+and getMinimumSize() (the Java 
+1.0 names are preferredSize() 
+and minimumSize()) to return 
+the proper dimensions for the new component, so that layout management 
+works properly. There can be other support methods, depending upon the 
+requirements of the object. For example, it is helpful, but not required, 
+to provide a toString() or 
+paramString() method. 
+Creating a new component sounds a lot harder than it is. Example 5.3 
+contains the source for a new component called VerticalLabel. 
+It displays a label that reads from top to bottom, instead of from left 
+to right, and can be configured to display its text right or left justified 
+or centered. Figure 5.5 displays the new component VerticalLabel 
+in action. 
+Example 5.3: Source for VerticalLabel Component
+import java.awt.*;
+public class VerticalLabel extends Canvas {
+   public static final int LEFT = 0;
+   public static final int CENTER = 1;
+   public static final int RIGHT = 2;
+   private String text;
+   private int    vgap;
+   private int    alignment;
+   Dimension      mySize;
+   int            textLength;
+   char           chars[];
+   // constructors
+   public VerticalLabel () {
+        this (null, 0, CENTER);
+   }
+   public VerticalLabel (String text) {
+        this (text, 0, CENTER);
+   }
+   public VerticalLabel (String text, int vgap, int alignment) {
+      this.text = text;
+      this.vgap = vgap;
+      this.alignment = alignment;
+   }
+   void init () {
+      textLength = text.length();
+      chars = new char[textLength];
+      text.getChars (0, textLength, chars, 0);
+      Font f = getFont();
+      FontMetrics fm = getFontMetrics (f);
+      mySize = new Dimension(0,0);
+      mySize.height = (fm.getHeight() * textLength) + (vgap * 2);
+      for (int i=0; i &lt; textLength; i++) {
+          mySize.width = Math.max (mySize.width, fm.charsWidth(chars, i, 1));
+      }
+   }
+   public int getAlignment () {
+      return alignment;
+   }
+   public void addNotify () {
+       super.addNotify();
+       init();  // Component must be visible for init to work
+   }
+   public void setText (String text)    {this.text = text; init();}
+   public String getText ()             {return text; }
+   public void setVgap (int vgap)       {this.vgap = vgap; init();}
+   public int getVgap ()                {return vgap; }
+   public Dimension preferredSize ()    {return mySize; }
+   public Dimension minimumSize ()      {return mySize; }
+   public void paint (Graphics g) {
+      int x,y;
+      int xPositions[];
+      int yPositions[];
+// Must redo this each time since font/screen area might change
+// Use actual width for alignment
+      Font f = getFont();
+      FontMetrics fm = getFontMetrics (f);
+      xPositions = new int[textLength];
+      for (int i=0; i &lt; textLength; i++) {
+         if (alignment == RIGHT) {
+            xPositions[i] = size().width - fm.charWidth (chars[i]);
+         } else if (alignment == LEFT) {
+            xPositions[i] = 0;
+         } else {// CENTER
+            xPositions[i] = (size().width - fm.charWidth (chars[i])) / 2;
+         }
+      }
+      yPositions = new int[textLength];
+      for (int i=0; i &lt; textLength; i++) {
+         yPositions[i] = (fm.getHeight() * (i+1)) + vgap;
+      }
+      for (int i = 0; i &lt; textLength; i++) {
+         x = xPositions[i];
+         y = yPositions[i];
+         g.drawChars (chars, i, 1, x, y);
+      }
+   }
+   protected String paramString () {
+      String str=",align=";
+      switch (alignment) {
+         case LEFT:    str += "left"; break;
+         case CENTER:  str += "center"; break;
+         case RIGHT:   str += "right"; break;
+      }
+      if (vgap!=0) str+= ",vgap=" + vgap;
+      return super.paramString() + str + ",label=" + text;
+   }
+}
+Figure 5.5: Using VerticalLabel
+The following code is a simple applet using the VerticalLabel. 
+It creates five instances of VerticalLabel 
+within a BorderLayout panel, 
+with gaps (see Chapter 7, Layouts for more on BorderLayout). The top and bottom labels are justified 
+to the left and right, respectively, to demonstrate justification. 
+import java.awt.*;
+import java.applet.*;
+public class vlabels extends Applet {
+   public void init () {
+        setLayout (new BorderLayout (10, 10));
+        setFont (new Font ("TimesRoman", Font.BOLD, 12));
+        add ("North",  new VerticalLabel ("One", 10, VerticalLabel.LEFT));
+        add ("South",  new VerticalLabel ("Two", 10, VerticalLabel.RIGHT));
+        add ("West",   new VerticalLabel ("Three"));
+        add ("East",   new VerticalLabel ("Four"));
+        add ("Center", new VerticalLabel ("Five"));
+        resize (preferredSize());
+   }
+}
+Lightweight VerticalLabel
+The VerticalLabel in Example 5.3
+ works in both Java 1.0 and 1.1 but is relatively inefficient. When you create one, the system must create a Canvas and the peer of the Canvas. This work doesn't gain you anything; since this is a new component, it doesn't have to match the native appearance of any other component.
+In Java 1.1, there's a way to avoid the overhead if you are creating a component that doesn't have to match a native object. This is called a lightweight component. To create one, you just subclass Component itself. To make a lightweight version of our VerticalLabel, we have to change only one line of code.
+// Java 1.1 only
+public class VerticalLabel extends Component
+Everything else remains unchanged.
+Canvas
+Cursor
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,284 @@
+
+[Chapter 5] 5.5 Anonymous Classes
+Chapter 5Inner Classes and Other New Language Features
+5.5 Anonymous Classes
+An anonymous class is essentially a local class
+without a name.  Instead of defining a local class and then
+instantiating it, you can often use an
+anonymous class to combine these two steps.  
+Anonymous classes are very
+commonly used as adapter classes, like the one we saw in
+Example 5.6.
+As we'll see, anonymous classes (and their corresponding
+anonymous objects) are created through another extension to
+the syntax of the new operator.  Thus, an anonymous
+class is defined by a Java expression, not a Java
+statement. This means that an anonymous class definition can
+be included within a larger Java expression such as an
+assignment or method call.
+Example 5.8
+shows the use of an anonymous class to implement the
+java.io.FilenameFilter interface.  The
+implementation in this example is used to list only the
+files whose names end with .java from a specified
+directory.
+Example 5.8: Implementing an Interface with an Anonymous Class
+import java.io.*;
+// A simple program to list all Java source code files in a directory
+// specified as a command-line argument.
+public class Lister 
+{
+  public static void main(String[] args)
+  {
+    File f = new File(args[0]);  // f represents the specified directory.
+    // List the files in the directory, using the specified filter object.
+    // The anonymous class is defined as part of a method call expression.
+    String[] list = f.list(new FilenameFilter() {
+      public boolean accept(File f, String s) { 
+        return s.endsWith(".java"); 
+      }
+    });
+    for(int i = 0; i &lt; list.length; i++)  // output the list
+      System.out.println(list[i]);
+  }
+}
+As you can see in
+Example 5.8,
+the syntax for defining an anonymous class and creating an
+instance of that class is a regular new expression,
+followed by a class body definition in curly braces.  If the
+name following the new keyword is the name of a
+class, the anonymous class is a subclass of the
+named class.  If the name following new specifies an
+interface, as in our example, the anonymous class is 
+an implementation of the interface.  In this case, the
+anonymous class is always a subclass of Object--there
+is no way to specify an extends clause (or an
+implements clause).  In addition, since this syntax
+creates an anonymous class, there is obviously no way
+to specify a name for the newly defined class.
+Because an anonymous class has no name, it is not possible
+to define constructors for it within the class body.  This
+is one of the basic restrictions on anonymous classes.  Any
+arguments you specify between the parentheses following the
+superclass name in an anonymous class definition are
+implicitly passed to the superclass constructor.  Anonymous
+classes are commonly used to subclass simple classes that do
+not take any constructor arguments, so the parentheses
+in the anonymous class definition syntax are often
+empty, as we saw in
+Example 5.8.
+When you use an anonymous class to implement an interface,
+the constructor argument list is always empty, of
+course, since the superclass constructor, Object(),
+expects no arguments.
+One of the most elegant things about anonymous classes is
+that they allow you to define a one-shot class exactly where
+it is needed.  Other important features are the succinctness
+of the syntax and the fact that no clutter is created by an
+unnecessary name.
+Since anonymous classes have no names, you may wonder
+what the class files that represent them are named.  If you
+compile the example shown in 
+Example 5.8
+you'll find that it produces two class files,
+Lister.class and Lister$1.class.  Anonymous
+classes are given numbers to produce unique class file
+names based on the name of the containing class.
+Anonymous Class Indentation and Formatting
+The common indentation and formatting conventions we are
+familiar with for languages like Java and C begin to break
+down somewhat once we start placing class definitions within
+arbitrary expressions.  Based on their experience with inner
+classes, the engineers at JavaSoft recommend the following
+formatting rules, which are followed in
+Example 5.8:
+The opening curly brace should not be on a line by itself;
+instead, it should follow the close parenthesis of the
+new operator.  Similarly, the new operator
+should, when possible, appear on the same line as the assignment
+or other expression of which it is a part.
+The body of the anonymous class should be indented relative
+to the beginning of the line that contains the new
+keyword.
+The closing curly brace of an anonymous class should not be
+on a line by itself either; it should be followed by
+whatever tokens are required by the rest of the expression.
+Often this is a semicolon or a close parenthesis
+followed by a semicolon.  This extra punctuation serves as a
+flag to the reader that this is not just an ordinary block of
+code, and makes it easier to make sense of anonymous classes
+in a code listing.
+Anonymous Classes versus Local Classes
+As we've discussed, an anonymous class behaves just like a local
+class, and is distinguished from a local class merely in the
+syntax used to define and instantiate it.  In your own code,
+when you have to choose between using an anonymous class or
+using a local class, the decision often comes down to
+stylistic matters.  You should use whichever syntax makes
+your code clearer.  In general, you should consider using an
+anonymous class instead of a local class if:
+The class has a very short body.
+Only one instance of the class is needed.
+The class is used right after it is defined.
+The name of the class does not make your code any easier to
+understand.
+When considering the use of an anonymous class, there are
+two important restrictions to bear in mind:
+An anonymous class has no name, and the syntax for defining
+one combines definition with instantiation.  Thus, using an
+anonymous class instead of a local class is not
+appropriate if you need to create more than a single
+instance of the class each time the containing block is
+executed. 
+It is not possible to define constructors for anonymous
+classes.  If your class requires a constructor, you must use
+a local class instead.  However, as we'll see, the Java
+syntax has been extended to allow "instance initializers" to
+be defined for a class; an instance initializer can often
+substitute for a constructor.
+Consider
+Example 5.9,
+which shows the Enumeration class we've used
+throughout this chapter implemented as an anonymous class
+within the enumerate() method of the
+LinkedList class. 
+Compare it with
+Example 5.5,
+which shows the same class implemented as a local class.
+In this case, because of the size of the class in question,
+using local class syntax probably results in code that is a
+little clearer.  Still, if you are a fan of anonymous
+classes, you might choose to code the example in this way.
+Example 5.9: An Enumeration Implemented with an Anonymous Class
+import java.util.*;
+public class LinkedList 
+{
+  // Our nested top-level interface.  Body omitted here...
+  public interface Linkable { ... } 
+  // The head of the list.
+  /* private */ Linkable head;  
+  // Method bodies omitted here.
+  public void addToHead(Linkable node) { ... }
+  public Linkable removeHead() { ...  }
+  // This method creates and returns an Enumeration object for this 
+  // LinkedList.
+  public Enumeration enumerate() 
+  {
+    // Instantiate and return this implementation.
+    return new Enumeration() { 
+      Linkable current = head; // This used to be in the constructor, but
+                               // anonymous classes don't have constructors.
+      public boolean hasMoreElements() {  return (current != null); }
+      public Object nextElement() {
+        if (current == null) throw new NoSuchElementException("LinkedList");
+        Object value = current;
+        current = current.getNext();
+        return value;
+      }
+    };  // Note the required semicolon.  It terminates the return statement.
+  }
+}
+As another example, consider
+Example 5.10,
+which shows the createMenuItem() method of
+Example 5.6
+rewritten to use an anonymous class instead of a local
+class.  In this case, using an anonymous class is probably
+the right thing to do.
+Example 5.10: Using an Anonymous Class as an Adapter
+MenuItem createMenuItem(String label, char shortcut, final int command)
+{
+  // First we create a MenuItem object.
+  MenuItem item = new MenuItem(label, new MenuShortcut(shortcut));
+  // Then we register an anonymous ActionListener for our new MenuItem.
+  item.addActionListener(new ActionListener() {
+    public void actionPerformed(ActionEvent e) { app.doCommand(command); }
+  });
+  // And return the item, ready to be inserted into a menu.
+  return item;
+}
+New Java Syntax for Anonymous Classes
+We've already seen examples of the syntax for defining and
+instantiating an anonymous class.  More formally, we can
+write it as the following:
+new class-name ( [ argument-list ] ) { class-body }
+or
+new interface-name () { class-body }
+There is one additional
+new piece of syntax to support anonymous classes.
+As noted, anonymous classes cannot define constructors,
+since they do not have names.  Therefore Java 1.1 adds a
+feature known as an instance initializer, which is similar
+to the static initializer of Java 1.0.
+Example 5.11
+illustrates this new syntax.
+Example 5.11: Java 1.1 Instance Initializers
+public class InitializerDemo 
+{
+  // This is an instance variable.
+  public int[] array1;
+  // This is an instance initializer.  It is an arbitrary block of code.
+  // It runs for every new instance, after the superclass constructor 
+  // and before the class constructor, if any.  It can serve the same
+  // function as a constructor with no arguments.
+  { 
+    array1 = new int[10];
+    for(int i = 0; i &lt; 10; i++) array1[i] = i; 
+  }
+  // The line below contains another instance initializer.  The instance
+  // initializers for an object are run in the order in which they appear
+  // in the class definition.
+  int[] array2 = new int[10]; { for(int i=0; i&lt;10; i++) array2[i] = i*2; }
+  static int[] static_array = new int[10];
+  // By contrast, the block below is a static initializer.  Note the static
+  // keyword.  It runs only once, when the class is first loaded.
+  static { 
+    for(int i = 0; i &lt; 10; i++) static_array[i] = i; 
+  }
+}
+An instance initializer is simply a block of code inside
+curly braces that is embedded in a class definition, where a
+field or method definition normally appears.
+[11]
+A class (any class--not just anonymous classes) can have any
+number of instance initializers.  The instance initializers
+and any variable initializers that appear in field
+definitions for the class are executed in the order they appear
+in the Java source code.  These initializers are
+automatically run after the superclass constructor has
+returned but before the constructor, if any, of the current
+class runs.
+[11] 
+Notice that Java 1.1 now allows blocks of code to be
+inserted in class definitions, and local class definitions
+to be inserted in blocks of code.
+Because an instance initializer can serve the same function
+as a no-argument constructor method, these initializers are
+particularly useful for anonymous classes.  They can also be
+useful in non-anonymous classes. Instance
+initializers allow you to initialize an object's fields near
+the definition of those fields, rather than deferring that
+initialization to a constructor defined further away in the
+class.  Used in this way, they can sometimes improve code
+readability.
+Restrictions on Anonymous Classes
+Because anonymous classes are just a type of local class,
+they share the same restrictions: an anonymous class cannot
+define any static fields, methods, or classes.
+Since nested interfaces are implicitly static, they
+cannot be defined within anonymous classes.  Similarly,
+interfaces cannot be defined anonymously.
+Anonymous classes, like local classes, cannot be
+public, private, protected, or
+static.  In fact, the syntax for defining anonymous
+classes does not allow any modifiers to be specified.
+Local Classes
+Other New Features of Java 1.1
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,64 @@
+
+[Chapter 20] Transferable 
+Chapter 20java.awt.datatransfer Reference
+Transferable 
+Name
+Transferable 
+Description
+The Transferable interface 
+is implemented by objects that can be placed on Clipboards. 
+Interface Definition
+public abstract interface Transferable {
+  // Instance Methods
+  public abstract Object getTransferData (DataFlavor flavor) 
+    throws UnsupportedFlavorException, IOException;
+  public abstract DataFlavor[] getTransferDataFlavors();
+  public abstract boolean isDataFlavorSupported (DataFlavor flavor);
+}
+Interface Methods
+getTransferData
+public abstract Object getTransferData (DataFlavor flavor) throws UnsupportedFlavorException, IOException
+Parameters
+flavor
+The requested flavor 
+for the returned data. 
+Returns
+The data represented by this Transferable 
+object, in the requested flavor. 
+Throws
+UnsupportedFlavorException
+If the requested flavor is not supported.
+IOException
+If a Reader 
+representing the data could not be created. 
+Description
+Returns the data this Transferable 
+object represents. The class of object returned depends on the flavor requested. 
+getTransferDataFlavors
+public abstract DataFlavor[] getTransferDataFlavors()
+Returns
+An array of the supported data flavors. 
+Description
+The data flavors should be returned in order, sorted from most to least 
+descriptive. 
+isDataFlavorSupported
+public abstract boolean isDataFlavorSupported (DataFlavor flavor)
+Parameters
+flavor
+The flavor in question. 
+Returns
+true if flavor 
+is supported; false otherwise. 
+See Also
+Clipboard, DataFlavor, 
+Reader, StringSelection, 
+Transferable 
+StringSelection 
+UnsupportedFlavorException 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,81 @@
+
+[Chapter 13] 13.2 Colors
+Chapter 13Drawing With the AWT
+13.2 Colors
+The TestPattern applet fills its shapes with a
+number of colors, using the setColor() method of the
+Graphics object. setColor() sets
+the current color in the graphics context, so we set it to a different
+color before each drawing operation. But where do these color values
+come from?
+The java.awt.Color class handles color in Java. A
+Color object describes a single color. You can
+create an arbitrary Color by specifying the red,
+green, and blue values, either as integers between 0 and 255 or as
+floating-point values between 0.0 and 1.0. You can also use
+getColor() to look up a named color in the system
+properties table, as described in Chapter 7, Basic Utility Classes. 
+getColor() takes a
+String color property name, retrieves the integer
+value from the Properties list, and returns the
+Color object that corresponds to that color.
+The Color class also defines a number of
+static final color values; these are what we used
+in the TestPattern example. These constants, such
+as Color.black and Color.red,
+provide a convenient set of basic colors for your drawings.
+Desktop Colors
+The Color class I just described makes it
+easy to construct a particular color; however, that's not always what
+you want to do. Sometimes you want to match a preexisting color
+scheme. This is particularly important when you are designing a user
+interface; you might want your components to have the same colors as
+other components on that platform, and to change automatically if the
+user redefines his or her color scheme. 
+That's what the SystemColor class is for. A system
+color represents the color used by the local windowing system in a
+certain context.  The SystemColor class holds lots of pre-defined
+SystemColors, just like the Color Class holds some pre-defined basic
+colors.  For example, the field activeCaption
+represents the color used for the background to the title of an active
+window; activeCaptionText represents the color used
+for the title itself. menu represents the
+background color of menu selection; menuText
+represents the color of a menu item's text when it is not selected;
+textHighlightText is the color used when the item
+is selected; and so on.  You could use the window
+value to set the color of a Window to match the
+other Windows on the user's screen--whether or not they're generated
+by Java programs.
+myWindow.setBackground( SystemColor.window );
+Because the SystemColor class is a
+subclass of Color, you can use it
+wherever you would use a Color.
+However, the SystemColor constants are
+tricky. They are constants as far as you, the programmer, are
+concerned; your code is not allowed to modify them. However, they can
+be modified at run-time by the Toolkit. If the user changes his color
+scheme, the system colors are automatically updated to follow suit; as
+a result, anything displayed with system colors will also change color
+the next time it is redrawn. For example, the window
+myWindow would automatically change its
+background color to the new background color. 
+The SystemColor class has one noticeable
+shortcoming. You can't compare a system color to a
+Color directly; 
+the Color.equals() method doesn't return
+reliable results. For example, if you want to find out whether the
+window background color is red, you can't call:
+Color.red.equals(SystemColor.window);
+Instead, you should use getRGB() to find
+the color components of both objects, and compare them, rather than
+comparing the objects themselves.
+Basic Drawing
+Fonts
+ 
+ 
+ 
+ 
+ 
+ 
+ 

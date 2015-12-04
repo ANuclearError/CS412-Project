@@ -1,0 +1,119 @@
+
+[Chapter 18] 18.3 java.awt.AWTEventMulticaster (JDK 1.1)
+Chapter 18The java.awt Package
+18.3 java.awt.AWTEventMulticaster (JDK 1.1)
+AWTEventMulticaster is a convenience class used when
+writing a custom AWT component.  It provides an easy way
+to maintain a list of AWT EventListener objects, and to
+notify the listeners on that list when an event occurs.
+AWTEventMulticaster implements each of the event
+listener interfaces defined in the java.awt.event
+package, which means that an AWTEventMulticaster
+object can serve as any desired type of event listener.  (It
+also means, as you can see below, that the class defines 
+quite a few methods.)  AWTEventMulticaster
+implements what amounts to a linked list of
+EventListener objects.  When you invoke one of the
+EventListener methods of an
+AWTEventMulticaster, it invokes the same method on
+all of the EventListener objects in the linked list.
+Rather than instantiate an AWTEventMulticaster
+object directly, you use the static add() and
+remove() methods of the class to add and remove
+EventListener objects from the linked list.  Doing
+so returns an AWTEventMulticaster with the
+appropriate EventListener object registered.
+The API for using an AWTEventMulticaster is somewhat
+non-intuitive.  Here is some example code that shows its use:
+public class MyList extends Component {   // a class that sends ItemEvents
+  // this will be the head of a linked list of AWTEventMulticaster objects
+  protected ItemListener listener = null;
+  public void addItemListener(ItemListener l) {      // add a listener
+    listener = AWTEventMulticaster.add(listener, l);
+  }
+  public void removeItemListener(ItemListener l) {   // remove a listener
+    listener = AWTEventMulticaster.remove(listener, l);
+  }
+  protected void fireItemEvent(ItemEvent e) {        // notify all listeners
+    if (listener != null) listener.itemStateChanged(e);
+  }
+  // The rest of the class goes here
+}
+public class AWTEvent Multicaster  extends Object 
+                                   implements ComponentListener, ContainerListener, FocusListener, KeyListener, MouseListener, MouseMotionListener, WindowListener, ActionListener,ItemListener, AdjustmentListener, TextListener {
+    // Protected Constructor
+            protected AWTEventMulticaster(EventListener a, EventListener b);
+    // Protected Instance Variables
+            protected EventListener a;
+            protected EventListener b;
+    // Class Methods
+            public static ComponentListener add(ComponentListener a, ComponentListener b);
+            public static ContainerListener add(ContainerListener a, ContainerListener b);
+            public static FocusListener add(FocusListener a, FocusListener b);
+            public static KeyListener add(KeyListener a, KeyListener b);
+            public static MouseListener add(MouseListener a, MouseListener b);
+            public static MouseMotionListener add(MouseMotionListener a, MouseMotionListener b);
+            public static WindowListener add(WindowListener a, WindowListener b);
+            public static ActionListener add(ActionListener a, ActionListener b);
+            public static ItemListener add(ItemListener a, ItemListener b);
+            public static AdjustmentListener add(AdjustmentListener a, AdjustmentListener b);
+            public static TextListener add(TextListener a, TextListener b);
+            protected static EventListener addInternal(EventListener a, EventListener b);
+            public static ComponentListener remove(ComponentListener l, ComponentListener oldl);
+            public static ContainerListener remove(ContainerListener l, ContainerListener oldl);
+            public static FocusListener remove(FocusListener l, FocusListener oldl);
+            public static KeyListener remove(KeyListener l, KeyListener oldl);
+            public static MouseListener remove(MouseListener l, MouseListener oldl);
+            public static MouseMotionListener remove(MouseMotionListener l, MouseMotionListener oldl);
+            public static WindowListener remove(WindowListener l, WindowListener oldl);
+            public static ActionListener remove(ActionListener l, ActionListener oldl);
+            public static ItemListener remove(ItemListener l, ItemListener oldl);
+            public static AdjustmentListener remove(AdjustmentListener l, AdjustmentListener oldl);
+            public static TextListener remove(TextListener l, TextListener oldl);
+            protected static EventListener removeInternal(EventListener l, EventListener oldl);
+            protected static void save(ObjectOutputStream s, String k, EventListener l) throws IOException;
+    // Public Instance Methods
+            public void actionPerformed(ActionEvent e);  // From ActionListener
+            public void adjustmentValueChanged(AdjustmentEvent e);  // From AdjustmentListener
+            public void componentAdded(ContainerEvent e);  // From ContainerListener
+            public void componentHidden(ComponentEvent e);  // From ComponentListener
+            public void componentMoved(ComponentEvent e);  // From ComponentListener
+            public void componentRemoved(ContainerEvent e);  // From ContainerListener
+            public void componentResized(ComponentEvent e);  // From ComponentListener
+            public void componentShown(ComponentEvent e);  // From ComponentListener
+            public void focusGained(FocusEvent e);  // From FocusListener
+            public void focusLost(FocusEvent e);  // From FocusListener
+            public void itemStateChanged(ItemEvent e);  // From ItemListener
+            public void keyPressed(KeyEvent e);  // From KeyListener
+            public void keyReleased(KeyEvent e);  // From KeyListener
+            public void keyTyped(KeyEvent e);  // From KeyListener
+            public void mouseClicked(MouseEvent e);  // From MouseListener
+            public void mouseDragged(MouseEvent e);  // From MouseMotionListener
+            public void mouseEntered(MouseEvent e);  // From MouseListener
+            public void mouseExited(MouseEvent e);  // From MouseListener
+            public void mouseMoved(MouseEvent e);  // From MouseMotionListener
+            public void mousePressed(MouseEvent e);  // From MouseListener
+            public void mouseReleased(MouseEvent e);  // From MouseListener
+            public void textValueChanged(TextEvent e);  // From TextListener
+            public void windowActivated(WindowEvent e);  // From WindowListener
+            public void windowClosed(WindowEvent e);  // From WindowListener
+            public void windowClosing(WindowEvent e);  // From WindowListener
+            public void windowDeactivated(WindowEvent e);  // From WindowListener
+            public void windowDeiconified(WindowEvent e);  // From WindowListener
+            public void windowIconified(WindowEvent e);  // From WindowListener
+            public void windowOpened(WindowEvent e);  // From WindowListener
+    // Protected Instance Methods
+            protected EventListener remove(EventListener oldl);
+            protected void saveInternal(ObjectOutputStream s, String k) throws IOException;
+}
+Hierarchy:
+Object->AWTEventMulticaster(ComponentListener(EventListener), ContainerListener(EventListener), FocusListener(EventListener), KeyListener(EventListener), MouseListener(EventListener), MouseMotionListener(EventListener), WindowListener(EventListener), ActionListener(EventListener), ItemListener(EventListener), AdjustmentListener(EventListener), TextListener(EventListener))
+java.awt.AWTEvent (JDK 1.1)
+java.awt.AWTException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,53 @@
+
+[Chapter 31] 31.8 java.util.zip.DeflaterOutputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.8 java.util.zip.DeflaterOutputStream (JDK 1.1)
+This class is a subclass of
+java.io.FilterOutputStream; it "filters" a stream of
+data by compressing ("deflating") it and then writes the
+compressed data to another output stream.  To create a
+DeflaterOutputStream, you must specify the stream
+that it is to write to, and also a Deflater object
+that is to perform the compression.  You can set various
+options on the Deflater object to specify just what
+type of compression is to be performed.  Once a
+DeflaterOutputStream is created, its write()
+and close() methods are the same as those of other
+output streams.
+The InflaterInputStream class can be used to read data
+written with the DeflaterOutputStream.
+Note that a DeflaterOutputStream writes raw
+compressed data; applications often prefer one of its
+subclasses, GZIPOutputStream or
+ZipOutputStream, which wraps the raw compressed data
+within a standard file format.
+public class DeflaterOutputStream extends FilterOutputStream {
+    // Public Constructors
+            public DeflaterOutputStream(OutputStream out, Deflater def, int size);
+            public DeflaterOutputStream(OutputStream out, Deflater def);
+            public DeflaterOutputStream(OutputStream out);
+    // Protected Instance Variables
+            protected byte[] buf;
+            protected Deflater def;
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides FilterOutputStream
+            public void finish() throws IOException;
+            public void write(int b) throws IOException;  // Overrides FilterOutputStream
+            public void write(byte[] b, int off, int len) throws IOException;  // Overrides FilterOutputStream
+    // Protected Instance Methods
+            protected void deflate() throws IOException;
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream->DeflaterOutputStream
+Extended By:
+GZIPOutputStream, 
+ZipOutputStream
+java.util.zip.Deflater (JDK 1.1)
+java.util.zip.GZIPInputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

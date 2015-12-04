@@ -1,0 +1,147 @@
+
+[Chapter 7] 7.6 Inside the Java 1.1 Event Model
+Chapter 7Events
+7.6 Inside the Java 1.1 Event Model
+The listener-based event model we've seen in the sections
+above is ideal for creating a GUI out of pre-defined AWT
+components or out of Java Beans.  It becomes a little
+cumbersome, however, when developing custom AWT components.
+AWT components (but not beans) provide a lower-level
+interface to this event model that is sometimes more
+convenient to use.
+When an AWTEvent is delivered to a component, there
+is some default processing that goes on before the event is
+dispatched to the appropriate event listeners.  When you
+define a custom component (by subclassing), you have the
+opportunity to override methods and intercept the event
+before it is sent to listener objects.  When an
+AWTEvent is delivered to a component, it is passed to the
+processEvent() method.
+By default, processEvent() simply checks the class
+of the event object and dispatches the event to a
+class-specific method.  For example, if the event object is
+an instance of FocusEvent, it dispatches it to a
+method named processFocusEvent().  Or, if the event
+is of type ActionEvent, it is dispatched to
+processActionEvent().  In other words, any event type
+XEvent is dispatched to a corresponding 
+processXEvent()
+method.  The exception is
+for MouseEvent events, which are dispatched either
+to processMouseEvent() or
+processMouseMotionEvent(), depending on the type of
+the mouse event that occurred.  For any given component, it
+is the individual 
+processXEvent() methods 
+that are responsible for invoking the appropriate methods of
+all registered event listener objects.  The
+processMouseEvent() method, for example, invokes the
+appropriate method for each registered MouseListener
+object.  There is a one-to-one mapping between
+these methods and the event listener interfaces defined in
+java.awt.event.  Each
+processXEvent() method
+corresponds to an XListener interface.
+As you can see, there is a clear analogy between the Java
+1.0 event model and this Java 1.1 low-level event model.
+processEvent() is analogous to the Java 1.0
+handleEvent() method, and methods like
+processKeyEvent() are analogous to the Java 1.0
+keyDown() and keyUp() methods.  As with the
+Java 1.0 model, there are two levels at which you can intercept
+events: you can override processEvent() itself
+or you can rely on the default version of
+processEvent() to dispatch the events based on their
+class and instead override the individual event methods, such
+as processFocusEvent() and
+processActionEvent().
+There is one additional requirement to make this low-level
+Java 1.1 event model work.  In order to receive events of a
+particular type for a component, you must tell the component
+that you are interested in receiving that type of event.
+If you do not do this, for efficiency, the component
+does not bother to deliver that type of event.  When using
+event listeners, the act of registering a listener is enough
+to notify the component that you are interested in receiving
+events of that type.  But when you use the low-level model,
+you must register your interest explicitly.  You do this by
+calling the enableEvents() method of the component
+and passing a bit mask that specifies each of the event
+types you are interested in.  The bit mask is formed by
+ORing together various EVENT_MASK constants defined
+by the AWTEvent class.
+Scribbling with Low-Level Event Handling
+Example 7.4
+is another variation on the Scribble applet.  This
+one uses the Java 1.1 low-level event-handling model.  It
+overrides the event-specific methods
+processMouseEvent(), 
+processMouseMotionEvent(), and processKeyEvent().  Note how it calls
+enableEvents() in its init() method to
+register interest in events of that type.  Furthermore, it
+calls requestFocus() to ask that it be given the
+keyboard focus, so that it can receive key events.  Notice
+also that it passes events it is not interested in to the
+superclass event-processing method.  In this case, the
+superclass is not going to use those events, but this is
+still a good practice.
+Example 7.4: Scribble: Using the Low-Level Event Model
+import java.applet.*;
+import java.awt.*;
+import java.awt.event.*;
+public class Scribble4 extends Applet {
+  private int lastx, lasty;
+  /** Tell the system we're interested in mouse events, mouse motion events,
+   *  and keyboard events.  This is required or events won't be sent.
+   */
+  public void init() {
+    this.enableEvents(AWTEvent.MOUSE_EVENT_MASK |
+                      AWTEvent.MOUSE_MOTION_EVENT_MASK |
+                      AWTEvent.KEY_EVENT_MASK);
+    this.requestFocus();  // Ask for keyboard focus so we get key events.
+  }
+  /** Invoked when a mouse event of some type occurs */
+  public void processMouseEvent(MouseEvent e) {
+    if (e.getID() == MouseEvent.MOUSE_PRESSED) {  // Check the event type.
+      lastx = e.getX(); lasty = e.getY();
+    }
+    else super.processMouseEvent(e); // Pass unhandled events to superclass.
+  }
+  /** Invoked when a mouse motion event occurs */
+  public void processMouseMotionEvent(MouseEvent e) {
+    if (e.getID() == MouseEvent.MOUSE_DRAGGED) {  // check type
+      int x = e.getX(), y = e.getY();
+      Graphics g = this.getGraphics();
+      g.drawLine(lastx, lasty, x, y);
+      lastx = x; lasty = y;
+    }
+    else super.processMouseMotionEvent(e);
+  }
+  /** Called on key events:  clear the screen when 'c' is typed. */
+  public void processKeyEvent(KeyEvent e) {
+    if ((e.getID() == KeyEvent.KEY_TYPED) &amp;&amp; (e.getKeyChar() == 'c')) {
+      Graphics g = this.getGraphics();
+      g.setColor(this.getBackground());
+      g.fillRect(0, 0, this.getSize().width, this.getSize().height);
+    }
+    else super.processKeyEvent(e);  // Pass unhandled events to our superclass.
+  }
+}
+Another way to implement this example would be to override
+processEvent() directly instead of overriding the
+various methods that it invokes.  If we did this, we'd
+end up with a large switch statement that
+separated events by type.  When overriding
+processEvent(), it is particularly important to
+remember to pass unhandled events to
+super.processEvent() so that they can be dispatched
+correctly.
+Scribbling with Inner Classes
+New AWT Features
+ 
+ 
+ 
+ 
+ 
+ 
+ 

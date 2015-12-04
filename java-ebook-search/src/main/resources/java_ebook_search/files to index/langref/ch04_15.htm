@@ -1,0 +1,139 @@
+
+[Chapter 4] 4.15 Data Type of an Expression
+Chapter 4Expressions
+4.15 Data Type of an Expression
+If an expression
+produces a value, that value is of some particular data type.
+In some cases, it is possible to determine the exact type that is
+produced by an expression, based on the types of the literals, variables,
+and methods that an expression references. For
+those expressions that produce object references, it is typically
+only possible to determine the type of the referenced object when
+the expression is evaluated at runtime.
+The types of
+many expressions are ambiguous because of the way Java data types
+are defined. There is no ambiguity for variables, array elements,
+and method return values of primitive types, however. These expressions
+always produce the exact types specified in their declarations.
+There can be ambiguity when a variable, array element,
+or method return value is declared to have a class or interface
+reference type. The ambiguity exists because a class reference may
+actually refer to an object of the intended class or a subclass
+of that class. For example, consider a variable that is declared
+to contain a reference to a Number object:
+double square(Number n){
+    return n.doubleValue()*n.doubleValue();
+}
+When the Java compiler sees the variable n used in
+an expression, it knows that the object that is referenced could
+be an Integer, Long, Float,
+or Double object because the java.lang
+package defines those subclasses of Number. It
+is also possible, however, that the variable refers to some other
+subclass of Number defined elsewhere. All that
+the compiler can be certain of is that at runtime n
+will refer to an object of a subclass of Number.
+The variable n cannot refer to a Number
+object because Number is an abstract
+class, so there are no Number objects.
+The
+one exception to the ambiguity of class-type object references occurs
+when the class used to declare a variable, array element, or method
+return type is a final class. If a class is declared
+to be final,
+it cannot be subclassed, so there is no ambiguity.
+Ambiguity also exists if the type of a reference is an interface type, since
+the reference can refer to an object of any class that implements
+the interface. The actual class is not usually known until runtime.
+The fact that the type of value produced by an object reference
+expression cannot be determined until it is evaluated at runtime
+can affect the evaluation of other expressions in the following
+ways:
+If a method is called through an object reference
+expression, the actual method to be called may depend on the type
+of the object. The selection of the appropriate method in the object
+is made at compile-time. For example, f.read()
+causes the selection of a method named read()
+that takes no arguments.
+However, if the compiler cannot
+determine the actual class of the object, the actual method to be
+called is determined at runtime, when the class is known. The compiler
+generates code to handle a runtime selection process called dynamic
+method lookup. The process begins by searching the actual class
+for an appropriate method. If there is no such method, the superclass
+of the class is searched, followed by its superclass and on up the
+inheritance hierarchy, until an appropriate method is found. This
+process ensures that the appropriate method gets called, even if
+the actual class of the object is a subclass of the type used for
+the object reference.
+Even if the compiler cannot determine
+the actual class of the object, there is one case in which it does
+not need to generate code to handle dynamic method lookup. When
+the compiler selects the appropriate method in the object, if it
+finds that the method is declared final, 
+it can be sure that it
+is the method to be called.
+The success of a cast operation
+may need to be determined at runtime. When a class-type object reference
+is cast to another class, the operation can only succeed if the
+actual class of the object is the same class or a subclass of the
+class being cast to. If the compiler cannot determine the actual
+class of the object, it generates runtime code that can verify that
+the cast is permitted. If the actual class of the object at runtime
+makes the cast illegal, a ClassCastException
+is thrown.
+The value produced by the instanceof
+operator may need to be determined at runtime. If the compiler cannot
+determine the type of the left operand in an instanceof
+expression, it generates runtime code to decide whether the expression
+produces true or false.
+The legality of an assignment to an array element may need
+to be determined at runtime. If a variable contains a reference
+to an array and the type of elements in the array is specified with
+a class or an interface name, it may not be possible to determine
+the actual type of the array elements until runtime. Consider the
+following example:
+void foo (InputStream a[]) {
+    a[0] = new FileInputStream("/dev/null");
+}
+Any array with elements that contain references to objects
+of class InputStream or any of its subclasses
+can be passed to the method foo() shown above.
+FileInputStream f[] = new FileInputStream[3];
+foo(f);
+Since FileInputStream is a subclass of
+InputStream, the call to foo()
+does not cause any type-related problems at runtime. However, the
+following call to foo() does cause problems:
+DataInputStream f[] = new DataInputStream[3];
+foo(f);
+This call causes an ArrayStoreException
+to be thrown at runtime. Although DataInputStream
+is a subclass of InputStream, it is not a superclass
+of FileInputStream, so the assignment is not
+legal.
+The type of object thrown by a throw
+statement may need to be determined at runtime. If the object thrown
+by a throw statement is obtained through a reference
+that comes from a variable, an array element, or a method return
+value, the compiler generates runtime code that determines the type
+of the object that is thrown. In addition, this runtime code determines
+whether or not the object is caught.
+References
+Array Types;
+Assignment Operators;
+Casts;
+Class Types;
+Interface Types;
+Method Call Expression;
+The instanceof Operator;
+The throw Statement
+Order of Operations
+Constant Expressions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,103 @@
+
+[Chapter 21] PaintEvent 
+Chapter 21java.awt.event Reference
+PaintEvent 
+Name
+PaintEvent 
+Description
+The PaintEvent class represents 
+the paint and update operations that the AWT performs on components. There 
+is no PaintListener interface, 
+so the only way to catch these events is to override paint(Graphics) 
+and update(Graphics) in Component. 
+This class exists so that paint events will get serialized properly. 
+Class Definition
+public class java.awt.event.PaintEvent
+   extends java.awt.event.ComponentEvent {
+  // Constants
+  public final static int PAINT;
+  public final static int PAINT_FIRST;
+  public final static int PAINT_LAST;
+  public final static int UPDATE;
+  // Constructor
+  public PaintEvent (Component source, int id, Rectangle updateRect);
+  // Instance Methods
+  public Rectangle getUpdateRect();
+  public String paramString();
+  public void setUpdateRect (Rectangle updateRect);
+}
+Class Definition
+public class java.awt.event.PaintEvent
+        extends java.awt.event.ComponentEvent {
+  // Constants
+  public final static int PAINT;
+  public final static int PAINT_FIRST;
+  public final static int PAINT_LAST;
+  public final static int UPDATE;
+  //Constructor
+  public PaintEvent (Component source, int id, Rectangle updateRect);
+  // Instance Methods
+  public Rectangle getUpdateRect();
+  public String paramString();
+  public void setUpdateRect (Rectangle updateRect);
+}
+Constants
+PAINT
+public final static int PAINT
+The paint event type. 
+PAINT_FIRST
+public final static int PAINT_FIRST
+Specifies the beginning range of paint event ID values. 
+PAINT_LAST
+public final static int PAINT_LAST
+Specifies the ending range of paint event ID values. 
+UPDATE
+public final static int UPDATE
+The update event type. 
+Constructor
+PaintEvent
+public PaintEvent (Component source, ind id, Rectangle updateRect)
+Parameters
+source
+The source of the 
+event.
+id
+The event type ID.
+g
+The rectangular area to paint.
+Description
+Constructs a PaintEvent with 
+the given characteristics. 
+Instance Methods
+getUpdateRect
+public Rectangle getUpdateRect()
+Returns
+The rectangular area that needs painting.
+paramString
+public String paramString()
+Returns
+String with current settings of the PaintEvent. 
+Overrides
+ComponentEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+setUpdateRect
+public void setUpdateRect (Rectangle updateRect)
+Parameters
+updateRect
+The rectangular area to paint. 
+Description
+Changes the rectangular area that this PaintEvent will paint.
+See Also
+Component, ComponentEvent, 
+Graphics 
+MouseMotionListener 
+TextEvent 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

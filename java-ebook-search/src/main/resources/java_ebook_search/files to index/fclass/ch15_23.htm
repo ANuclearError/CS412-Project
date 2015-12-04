@@ -1,0 +1,186 @@
+
+[Chapter 15] URLStreamHandler
+Chapter 15The java.net Package
+URLStreamHandler
+Name
+URLStreamHandler
+Synopsis
+Class Name:
+java.net.URLStreamHandler
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The URLStreamHandler class 
+is an abstract class that defines 
+methods that encapsulate protocol-specific behavior. A stream handler protocol 
+knows how to establish a connection for a particular protocol and how to 
+parse the protocol-specific portion of a URL. An application does not normally 
+create a URLStreamHandler directly; 
+the appropriate subclass of URLStreamHandler 
+is created by a URLStreamHandlerFactory. 
+The main purpose of a subclass of URLStreamHandler 
+is to create a URLConnection 
+object for a given URL. The 
+URLStreamHandler object creates 
+an object of the appropriate subclass of URLConnection 
+for the protocol type specified by the URL. In order for a URL 
+object to handle a protocol type such as http, 
+ftp, or nntp, 
+it needs an object of the appropriate subclass of URLStreamHandler 
+to handle the protocol-specific details. 
+Class Summary
+public abstract class java.net.URLStreamHandler extends java.lang.Object {
+  // Protected Instance Methods
+  protected abstract URLConnection openConnection(URL u) 
+  protected void parseURL(URL u, String spec, int start, int limit);
+  protected void setURL(URL u, String protocol, String host, 
+                        int port, String file, String ref);
+  protected String toExternalForm(URL u);
+}
+Protected Instance Methods
+openConnection
+   protected abstract URLConnection openConnection(URL u) throws IOException  
+Parameters
+u
+The URL 
+being connected to. 
+Returns
+The URLConnection object for 
+the given URL. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method handles the protocol-specific details of establishing a connection 
+to a remote resource specified by the URL. 
+The connection should be handled just up to the point where the resource 
+data can be downloaded. A ContentHandler 
+then takes care of downloading the data and creating an appropriate object.
+A subclass of URLStreamHandler 
+must implement this method. 
+parseURL
+protected void parseURL(URL u, String spec, int start, int limit)
+Parameters
+u
+A reference to a URL 
+object that receives the results of parsing.
+spec
+The string representation 
+of a URL to be parsed.
+start
+The offset at which 
+to begin parsing the protocol-specific portion of the URL.
+limit
+The offset of the 
+last character that is to be parsed. 
+Description
+This method parses the string representation of a URL into a URL 
+object.
+Some parts of the URL object 
+may already be specified if spec 
+specifies a relative URL. However, values for those parts in spec 
+can override the inherited context.
+The method only parses the protocol-specific portion of the URL. In other 
+words, start should specify 
+the character immediately after the first colon (:), which marks the termination 
+of the protocol type, and limit 
+should either be the last character in the string or the first pound sign 
+(#), which marks the beginning of a protocol-independent anchor. Rather 
+than return a result, the method calls the set() 
+method of the specified URL 
+object to set its fields to the appropriate values.
+The implementation of the parseURL() 
+method in URLStreamHandler 
+parses the string representation as if it were an http 
+specification. A subclass that implements a protocol stream handler for 
+a different protocol must override this method to properly parse the URL. 
+setURL
+   protected void setURL(URL u, String protocol, String host, int port, String file, String ref)  
+Parameters
+u
+A reference to a URL 
+object to be modified.
+protocol
+A protocol.
+host
+A hostname.
+port
+A port number.
+file
+A filename.
+ref
+A reference. 
+Description
+This method sets the protocol, hostname, port number, filename, and reference 
+of the given URL to the specified 
+values by calling the set() 
+method of the URL. Only subclasses 
+of URLStreamHandler are allowed 
+to call the set() method of 
+a URL object. 
+toExternalForm
+protected String toExternalForm(URL u)
+Parameters
+u
+The URL 
+object to convert to a string representation. 
+Returns
+A string representation of the given URL. 
+Description
+This method unparses a URL 
+object and returns a string representation of the URL.
+The implementation of the toExternalForm() 
+method in URLStreamHandler 
+returns a string representation that is appropriate for an http 
+specification. A subclass that implements a protocol stream handler for 
+a different protocol must override this method to create a correct string 
+representation. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ContentHandler, 
+IOException, 
+URL, 
+URLConnection, 
+URLStreamHandlerFactory 
+URLEncoder
+URLStreamHandlerFactory
+ 
+ 
+ 
+ 
+ 
+ 
+ 

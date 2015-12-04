@@ -1,0 +1,30 @@
+
+[Chapter 24] 24.38 java.io.ObjectInput (JDK 1.1)
+Chapter 24The java.io Package
+24.38 java.io.ObjectInput (JDK 1.1)
+This interface extends the DataInput interface and
+adds methods for deserializing objects and reading bytes and
+arrays of bytes.
+public abstract interface ObjectInput extends DataInput {
+    // Public Instance Methods
+            public abstract int available() throws IOException;
+            public abstract void close() throws IOException;
+            public abstract int read() throws IOException;
+            public abstract int read(byte[] b) throws IOException;
+            public abstract int read(byte[] b, int off, int len) throws IOException;
+            public abstract Object readObject() throws ClassNotFoundException, IOException;
+            public abstract long skip(long n) throws IOException;
+}
+Implemented By:
+ObjectInputStream
+Passed To:
+Externalizable.readExternal()
+java.io.NotSerializableException (JDK 1.1)
+java.io.ObjectInputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,86 @@
+
+[Chapter 11] 11.3 The Adjustable Interface
+Chapter 11Scrolling
+11.3 The Adjustable Interface
+The Adjustable interface is 
+new to Java 1.1. It provides the method signatures required for an object 
+that lets you adjust a bounded integer value. It is currently implemented 
+by Scrollbar and returned by 
+two methods within ScrollPane. 
+Constants of the Adjustable Interface
+There are two direction specifiers for Adjustable. 
+public final static int HORIZONTAL  
+HORIZONTAL is the constant 
+for horizontal orientation. 
+public final static int VERTICAL  
+VERTICAL is the constant for 
+vertical orientation. 
+Methods of the Adjustable Interface
+public abstract int getOrientation ()  
+The getOrientation() method 
+is for returning the current orientation of the adjustable object, either 
+Adjustable.HORIZONTAL or Adjustable.VERTICAL. 
+setOrientation() is not part 
+of the interface. Not all adjustable objects need to be able to alter orientation. 
+For example, Scrollbar instances 
+can change their orientation, but each Adjustable 
+instance associated with a ScrollPane 
+has a fixed, unchangeable orientation. 
+public abstract int getVisibleAmount ()  
+The getVisibleAmount() method 
+lets you retrieve the size of the visible slider of the adjustable object. 
+public abstract void setVisibleAmount (int amount)  
+The setVisibleAmount() method 
+lets you change the size of the visible slider to amount. 
+public abstract int getValue ()  
+The getValue() method lets 
+you retrieve the current value of the adjustable object. 
+public abstract void setValue (int value)  
+The setValue() method lets 
+you change the value of the adjustable object to value. 
+public abstract int getMinimum () 
+The getMinimum() method lets 
+you retrieve the current minimum setting for the object. 
+public abstract void setMinimum (int minimum)  
+The setMinimum() method lets 
+you change the minimum value of the adjustable object to minimum. 
+public abstract int getMaximum ()  
+The getMaximum() method lets 
+you retrieve the current maximum setting for the object. 
+public abstract void setMaximum (int maximum)  
+The setMaximum() method lets 
+you change the maximum value of the adjustable object to maximum. 
+public abstract int getUnitIncrement ()  
+The getUnitIncrement() method 
+lets you retrieve the current line increment. 
+public abstract void setUnitIncrement (int amount)  
+The setUnitIncrement() method 
+lets you change the line increment amount of the adjustable object to amount. 
+public abstract int getBlockIncrement ()  
+The getBlockIncrement() method 
+lets you retrieve the current page increment. 
+public abstract void setBlockIncrement (int amount)  
+The setBlockIncrement() method 
+lets you change the paging increment amount of the adjustable object to 
+amount. 
+public abstract void addAdjustmentListener(AdjustmentListener listener)  
+The addAdjustmentListener() 
+method lets you register listener 
+as an object interested in being notified when an AdjustmentEvent 
+passes through the EventQueue 
+with this Adjustable object 
+as its target. 
+public abstract void removeAdjustmentListener(ItemListener listener)  
+The removeAdjustmentListener() 
+method removes listener as 
+a interested listener. If listener 
+is not registered, nothing happens. 
+Scrolling An Image
+ScrollPane
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,521 @@
+
+[Chapter 19] Toolkit
+Chapter 19java.awt Reference
+Toolkit
+Name
+Toolkit
+Description
+The abstract Toolkit class 
+provides access to platform-specific details like window size and available 
+fonts. It also deals with creating all the components' peer objects 
+when you call addNotify(). 
+Class Definition
+public abstract class java.awt.Toolkit
+    extends java.lang.Object {
+  // Class Methods
+  public static synchronized Toolkit getDefaultToolkit();
+  protected static Container getNativeContainer (Component c); 
+  public static String getProperty (String key, String defaultValue); 
+  
+  // Instance Methods
+  public abstract void beep(); 
+  public abstract int checkImage (Image image, int width, int height, 
+    ImageObserver observer);
+  public abstract Image createImage (ImageProducer producer);
+  public Image createImage (byte[] imagedata); 
+  public abstract Image createImage (byte[ ] imagedata, int imageoffset, 
+    int imagelength); 
+  public abstract ColorModel getColorModel();
+  public abstract String[] getFontList();
+  public abstract FontMetrics getFontMetrics (Font font);
+  public abstract Image getImage (String filename);
+  public abstract Image getImage (URL url);
+  public int getMenuShortcutKeyMask(); 
+  public abstract PrintJob getPrintJob (Frame frame, String jobtitle, 
+    Properties props); 
+  public abstract int getScreenResolution();
+  public abstract Dimension getScreenSize();
+  public abstract Clipboard getSystemClipboard(); 
+  public final EventQueue getSystemEventQueue(); 
+  public abstract boolean prepareImage (Image image, int width, int height, 
+    ImageObserver observer);
+  public abstract void sync();
+  
+  // Protected Instance Methods
+  protected abstract ButtonPeer createButton (Button b);
+  protected abstract CanvasPeer createCanvas (Canvas c);
+  protected abstract CheckboxPeer createCheckbox (Checkbox cb);
+  protected abstract CheckboxMenuItemPeer createCheckboxMenuItem 
+    (CheckboxMenuItem cmi);
+  protected abstract ChoicePeer createChoice (Choice c);
+  protected LightweightPeer createComponent(Component target); 
+  protected abstract DialogPeer createDialog (Dialog d);
+  protected abstract FileDialogPeer createFileDialog (FileDialog fd);
+  protected abstract FramePeer createFrame (Frame f);
+  protected abstract LabelPeer createLabel (Label l);
+  protected abstract ListPeer createList (List l);
+  protected abstract MenuPeer createMenu (Menu m);
+  protected abstract MenuBarPeer createMenuBar (MenuBar mb);
+  protected abstract MenuItemPeer createMenuItem (MenuItem mi);
+  protected abstract PanelPeer createPanel (Panel p);
+  protected abstract PopupMenuPeer createPopupMenu (PopupMenu target); 
+  protected abstract ScrollPanePeer createScrollPane (ScrollPane target);  
+  protected abstract ScrollbarPeer createScrollbar (Scrollbar sb);
+  protected abstract TextAreaPeer createTextArea (TextArea ta);
+  protected abstract TextFieldPeer createTextField (TextField tf);
+  protected abstract WindowPeer createWindow (Window w);
+  protected abstract FontPeer getFontPeer (String name, int style); 
+  protected abstract EventQueue getSystemEventQueueImpl(); 
+  protected void loadSystemColors (int[] systemColors);  
+}
+Class Methods
+getDefaultToolkit
+public static synchronized Toolkit getDefaultToolkit()
+Throws 
+AWTError
+If the toolkit for 
+the current platform cannot be found. 
+Returns
+The system's default Toolkit. 
+getNativeContainer
+protected static Container getNativeContainer (Component c) 
+Returns
+The native container for the given component. The component's immediate 
+parent may be a lightweight component. 
+getProperty
+public static String getProperty (String key, String defaultValue) 
+Parameters 
+key
+The name of a property. 
+defaultValue
+A default value to return if the property is not found. 
+Returns
+The value of the property described by key, 
+or defaultValue if it is not 
+found. 
+Instance Methods
+beep
+public abstract void beep() 
+Description
+Produces an audible beep. 
+checkImage
+public abstract int checkImage (Image image, int width, int height, ImageObserver observer)
+Parameters 
+image
+Image to check. 
+width
+Width of the scaled image; -1 if image will be rendered 
+unscaled. 
+height
+Height of the scaled image; -1 if image will be rendered 
+unscaled. 
+observer
+The Component 
+that image will be rendered on. 
+Returns
+The ImageObserver flags ORed 
+together for the data that is now available. 
+Description
+Checks on the status of the construction of a screen representation of 
+image on observer. 
+createImage
+public abstract Image createImage (ImageProducer producer)
+Parameters 
+producer
+An ImageProducer 
+that generates data for the desired image. 
+Returns
+Newly created Image. 
+Description
+Creates a new Image from an 
+ImageProducer. 
+public abstract Image createImage (byte[] imagedata) 
+Parameters 
+imagedata
+Raw data representing an image. 
+Returns
+Newly created Image. 
+Description
+Creates a new Image from the 
+imagedata provided. 
+public abstract Image createImage (byte[] imagedata, int imageoffset, int imagelength) 
+Parameters 
+imagedata
+Raw data representing one or more images. 
+imageoffset
+An offset into the data given. 
+imagelength
+The length of data to use. 
+Returns
+Newly created Image. 
+Description
+Creates a new Image from the 
+imagedata provided, starting 
+at imageoffset bytes and reading 
+imagelength bytes. 
+getColorModel
+public abstract ColorModel getColorModel()
+Returns
+The current ColorModel used 
+by the system. 
+getFontList
+public abstract String[] getFontList()
+Returns
+A String array of the set of 
+Java fonts available with this Toolkit. 
+getFontMetrics
+public abstract FontMetrics getFontMetrics (Font font)
+Parameters 
+font
+A Font whose 
+metrics are desired 
+Returns
+The current FontMetrics for 
+the font on the user's 
+system. 
+getImage
+public abstract Image getImage (String filename)
+Parameters 
+filename
+Location of Image 
+on local filesystem 
+Returns
+The Image that needs to be 
+fetched. 
+Description
+Fetches an image from the local file system. 
+public abstract Image getImage (URL url)
+Parameters 
+url
+Location of Image. 
+Returns
+The Image that needs to be 
+fetched. 
+Description
+Fetches an image from a URL. 
+getMenuShortcutKeyMask
+public int getMenuShortcutKeyMask() 
+Returns
+The modifier key mask used for menu shortcuts. This will be one of the 
+mask constants defined in java.awt.Event. 
+getPrintJob
+public abstract PrintJob getPrintJob (Frame frame, String jobtitle, Properties props) 
+Parameters 
+frame
+The frame 
+to be used as the parent of a platform-specific printing dialog. 
+jobtitle
+The name of the job. 
+props
+Properties for this print job. 
+Returns
+A PrintJob object. If the user 
+canceled the printing operation, null 
+is returned. 
+getScreenResolution
+public abstract int getScreenResolution()
+Returns
+The current resolution of the user's screen, in dots-per-inch. 
+getScreenSize
+public abstract Dimension getScreenSize()
+Returns
+The size of the screen available to the Toolkit, 
+in pixels, as a Dimension object. 
+getSystemClipboard
+public abstract Clipboard getSystemClipboard() 
+Returns
+A Clipboard object that can 
+be used for cut, copy, and paste operations. 
+getSystemEventQueue
+public final EventQueue getSystemEventQueue() 
+Returns
+A reference to the system's event queue, allowing the program to post new events or inspect the queue.
+prepareImage
+public abstract boolean prepareImage (Image image, int width, int height, ImageObserver observer)
+Parameters 
+image
+Image to check. 
+width
+Width of the scaled image; -1 if image will be rendered 
+unscaled. 
+height
+Height of the scaled image; -1 if image will be rendered 
+unscaled. 
+observer
+The Component 
+that image will be rendered on. 
+Returns
+true if image fully loaded, 
+false otherwise. 
+Description
+Forces the system to start loading the image. 
+sync
+public abstract void sync()
+Description
+Flushes the display of the underlying graphics context. 
+Protected Instance Methods
+createButton
+protected abstract ButtonPeer createButton (Button b)
+Parameters 
+b
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Button. 
+createCanvas
+protected abstract CanvasPeer createCanvas (Canvas c)
+Parameters 
+c
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Canvas. 
+createCheckbox
+protected abstract CheckboxPeer createCheckbox (Checkbox cb)
+Parameters 
+cb
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Checkbox. 
+createCheckboxMenuItem
+protected abstract CheckboxMenuItemPeer createCheckboxMenuItem (CheckboxMenuItem cmi)
+Parameters 
+cmi
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the CheckboxMenuItem. 
+createChoice
+protected abstract ChoicePeer createChoice (Choice c)
+Parameters 
+c
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Choice. 
+createComponent
+protected LightweightPeer createComponent (Component target) 
+Parameters 
+target
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Component. 
+createDialog
+protected abstract DialogPeer createDialog (Dialog d)
+Parameters 
+d
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Dialog. 
+createFileDialog
+protected abstract FileDialogPeer createFileDialog (FileDialog fd)
+Parameters 
+fd
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the FileDialog. 
+createFrame
+protected abstract FramePeer createFrame (Frame f)
+Parameters 
+f
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Frame. 
+createLabel
+protected abstract LabelPeer createLabel (Label l)
+Parameters 
+l
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Label. 
+createList
+protected abstract ListPeer createList (List l)
+Parameters 
+l
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the List. 
+createMenu
+protected abstract MenuPeer createMenu (Menu m)
+Parameters 
+m
+Menu whose 
+peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the given Menu. 
+createMenuBar
+protected abstract MenuBarPeer createMenuBar (MenuBar mb)
+Parameters 
+mb
+MenuBar whose 
+peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the MenuBar. 
+createMenuItem
+protected abstract MenuItemPeer createMenuItem (MenuItem mi)
+Parameters 
+mi
+MenuItem 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the MenuItem. 
+createPanel
+protected abstract PanelPeer createPanel (Panel p)
+Parameters 
+p
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Panel. 
+createPopupMenu
+protected abstract PopupMenuPeer createPopupMenu (PopupMenu target) 
+Parameters 
+target
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the PopupMenu. 
+createScrollPane
+protected abstract ScrollPanePeer createScrollPane (ScrollPane target) 
+Parameters 
+target
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the ScrollPane. 
+createScrollbar
+protected abstract ScrollbarPeer createScrollbar (Scrollbar sb)
+Parameters 
+sb
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Scrollbar. 
+createTextArea
+protected abstract TextAreaPeer createTextArea (TextArea ta)
+Parameters 
+ta
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the TextArea. 
+createTextField
+protected abstract TextFieldPeer createTextField (TextField tf)
+Parameters 
+tf
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the TextField. 
+createWindow
+protected abstract WindowPeer createWindow (Window w)
+Parameters 
+w
+Component 
+whose peer needs to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a peer for the Window. 
+getFontPeer
+protected abstract FontPeer getFontPeer (String name, int style) 
+Parameters 
+name
+Name of the font to be created. 
+style
+Style of the font to be created. 
+Returns
+Newly created peer. 
+Description
+Creates a FontPeer. 
+getSystemEventQueueImpl
+protected abstract getSystemEventQueueImpl()
+Returns
+A toolkit-specific EventQueue object.
+loadSystemColors
+protected abstract void loadSystemColors (int[] systemColors) 
+Description
+Fills the given integer array with the current system colors. 
+See Also
+Button, ButtonPeer, 
+Canvas, CanvasPeer, 
+Checkbox, CheckboxMenuItem, 
+CheckboxMenuItemPeer, CheckboxPeer, 
+Choice, ChoicePeer, 
+Clipboard, ColorModel, 
+Component, Container, 
+Dialog, DialogPeer, 
+Dimension, FileDialog, 
+FileDialogPeer, Font, 
+FontMetrics, FontPeer, 
+Frame, FramePeer, 
+Image, ImageObserver, 
+ImageProducer, Label, 
+LabelPeer, LightweightPeer, 
+List, ListPeer, 
+Menu, MenuBar, 
+MenuBarPeer, MenuItem, 
+MenuItemPeer, MenuPeer, 
+Panel, PanelPeer, 
+PrintJob, Scrollbar, 
+ScrollbarPeer, ScrollPane, 
+ScrollPanePeer, String, 
+TextArea, TextAreaPeer, 
+TextField, TextFieldPeer, 
+Window, WindowPeer 
+TextField
+Window
+ 
+ 
+ 
+ 
+ 
+ 
+ 

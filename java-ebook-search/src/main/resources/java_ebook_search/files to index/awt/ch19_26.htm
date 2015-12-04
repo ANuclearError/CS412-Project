@@ -1,0 +1,241 @@
+
+[Chapter 19] Frame
+Chapter 19java.awt Reference
+Frame
+Name
+Frame
+Description
+The Frame class is a special 
+type of Window that will appear 
+like other high-level programs in your windowing environment. It adds a 
+MenuBar, window title, and 
+window gadgets (like resize, maximize, minimize, window menu) to the basic 
+Window object. Frames are initially 
+invisible; call show() to display 
+them. Frames may also be associated with an Image 
+to be used as an icon. The Frame 
+class includes many constants to represent different cursor styles. All 
+styles aren't necessarily available on any platform. In 1.1, these 
+constants are defined in java.awt.Cursor. 
+Class Definition
+public class java.awt.Frame
+    extends java.awt.Window
+    implements java.awt.MenuContainer {
+  
+  // Constants
+  public final static int CROSSHAIR_CURSOR;
+  public final static int DEFAULT_CURSOR;
+  public final static int E_RESIZE_CURSOR;
+  public final static int HAND_CURSOR;
+  public final static int MOVE_CURSOR;
+  public final static int N_RESIZE_CURSOR;
+  public final static int NE_RESIZE_CURSOR;
+  public final static int NW_RESIZE_CURSOR;
+  public final static int S_RESIZE_CURSOR;
+  public final static int SE_RESIZE_CURSOR;
+  public final static int SW_RESIZE_CURSOR;
+  public final static int TEXT_CURSOR;
+  public final static int W_RESIZE_CURSOR;
+  public final static int WAIT_CURSOR;
+  
+  // Constructors
+  public Frame();
+  public Frame (String title);
+  
+  // Instance Methods
+  public void addNotify();
+  public synchronized void dispose();
+  public int getCursorType(); 
+  public Image getIconImage();
+  public MenuBar getMenuBar();
+  public String getTitle();
+  public boolean isResizable();
+  public synchronized void remove (MenuComponent component);
+  public synchronized void setCursor (int cursorType); 
+  public synchronized void setIconImage (Image image);
+  public synchronized void setMenuBar (MenuBar bar);
+  public synchronized void setResizable (boolean resizable);
+  public synchronized void setTitle (String title);
+  
+  // Protected Instance Methods
+  protected String paramString();
+}
+Constants
+CROSSHAIR_CURSOR
+public final static int CROSSHAIR_CURSOR
+Constant representing a cursor that looks like a crosshair. 
+DEFAULT_CURSOR
+public final static int DEFAULT_CURSOR
+Constant representing the platform's default cursor. 
+E_RESIZE_CURSOR
+public final static int E_RESIZE_CURSOR
+Constant representing the cursor for resizing an object on the left. 
+HAND_CURSOR
+public final static int HAND_CURSOR
+Constant representing a cursor that looks like a hand. 
+MOVE_CURSOR
+public final static int MOVE_CURSOR
+Constant representing a cursor used to move an object. 
+N_RESIZE_CURSOR
+public final static int N_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the top. 
+NE_RESIZE_CURSOR
+public final static int NE_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the top left corner. 
+NW_RESIZE_CURSOR
+public final static int NW_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the top right 
+corner. 
+S_RESIZE_CURSOR
+public final static int S_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the bottom. 
+SE_RESIZE_CURSOR
+public final static int SE_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the bottom left 
+corner. 
+SW_RESIZE_CURSOR
+public final static int SW_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the bottom right 
+corner. 
+TEXT_CURSOR
+public final static int TEXT_CURSOR
+Constant representing a cursor used within text. 
+W_RESIZE_CURSOR
+public final static int W_RESIZE_CURSOR
+Constant representing a cursor for resizing an object on the right side. 
+WAIT_CURSOR
+public final static int WAIT_CURSOR
+Constant representing a cursor that indicates the program is busy. 
+Constructors
+Frame
+public Frame()
+Description
+Constructs a Frame object, 
+with no title. 
+public Frame (String title)
+Parameters
+title
+Initial title to use for Frame.
+Description
+Constructs a Frame object, 
+with the given title. 
+Instance Methods
+addNotify
+public void addNotify()
+Overrides 
+Window.addNotify() 
+Description
+Creates Frame's peer 
+and peers of contained components. 
+dispose
+public synchronized void dispose()
+Overrides 
+Window.dispose() 
+Description
+Releases the resources of the Frame. 
+getCursorType
+public int getCursorType() 
+Returns
+The constant for the current cursor. Replaced by Component.getCursor() 
+getIconImage
+public Image getIconImage()
+Returns
+The image used as the icon, or null 
+if there is no icon for this frame. 
+getMenuBar
+public MenuBar getMenuBar()
+Returns
+The Frame's current menu 
+bar, or null if there is no 
+menu bar for this frame. 
+getTitle
+public String getTitle()
+Returns
+The current title for the Frame, 
+or null if there is no title 
+for this frame. 
+isResizable
+public boolean isResizable()
+Returns
+true if resizable, false 
+otherwise. 
+remove
+public synchronized void remove (MenuComponent component)
+Parameters
+component
+MenuBar to 
+remove from Frame. 
+Implements 
+MenuContainer.remove() 
+Description
+Removes component from Frame 
+if component is the Frame's 
+menu bar. 
+setCursor
+public synchronized void setCursor (int cursorType) 
+Parameters
+cursorType
+One of Frame's 
+cursor constants. 
+Throws
+IllegalArgumentException
+If 
+cursorType invalid. 
+Description
+Changes the cursor of the Frame. 
+Replaced by Component.setCursor(Cursor). 
+setIconImage
+public synchronized void setIconImage (Image image)
+Parameters
+image
+New image to use for the Frame's 
+icon. 
+Description
+Changes the icon's image for the Frame. 
+setMenuBar
+public synchronized void setMenuBar (MenuBar bar)
+Parameters
+bar
+New MenuBar 
+to use for the Frame. 
+Description
+Changes the menu bar of the Frame. 
+setResizable
+public synchronized void setResizable (boolean resizable)
+Parameters
+resizable
+true to make 
+the frame resizable, false 
+to prevent resizing. 
+Description
+Changes the resize state of the Frame. 
+setTitle
+public synchronized void setTitle (String title)
+Parameters
+title
+New title to use for the Frame. 
+Description
+Changes the title of the Frame. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of Frame. 
+Overrides
+Container.paramString() 
+Description
+Helper method for toString() 
+to generate a string of current settings. 
+See Also
+Container, Image, 
+MenuBar, MenuContainer, 
+String, Window 
+FontMetrics
+Graphics
+ 
+ 
+ 
+ 
+ 
+ 
+ 

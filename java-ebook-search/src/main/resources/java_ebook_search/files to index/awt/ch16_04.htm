@@ -1,0 +1,74 @@
+
+[Chapter 16] 16.4 Clipboard
+Chapter 16Data Transfer
+16.4 Clipboard
+The Clipboard class is a repository 
+for a Transferable object and 
+can be used for cut, copy, and paste operations. You can work with a private 
+clipboard by creating your own instance of Clipboard, 
+or you can work with the system clipboard by asking the Toolkit 
+for it: 
+Toolkit.getDefaultToolkit().getSystemClipboard()
+When working with the system clipboard, native applications have access 
+to information created within Java programs and vice 
+versa. Access to the system clipboard 
+is controlled by the SecurityManager 
+and is restricted within applets. 
+Clipboard MethodsVariables
+protected ClipboardOwner owner  
+The owner instance variable 
+represents the current owner of contents. 
+When something new is placed on the clipboard, the previous owner is notified 
+by a call to the lostOwnership() 
+method. The owner usually ignores this notification. However, the clipboard's 
+contents are passed back to 
+owner in case some special 
+processing or comparison needs to be done. 
+protected Transferable contents  
+The contents instance variable 
+is the object currently on the clipboard; it was placed on the clipboard 
+by owner. To retrieve the current 
+contents, use the getContents() 
+method. 
+Constructors
+public Clipboard(String name)  
+The constructor for Clipboard 
+allows you to create a private clipboard named name. 
+This clipboard is not accessible outside of your program and has no security 
+constraints placed upon it. 
+Miscellaneous methods
+public String getName()  
+The getName() method fetches 
+the clipboard's name. For private clipboards, this is the name given 
+in the constructor. The name of the system clipboard is "System". 
+public synchronized Transferable getContents(Object requester)  
+The getContents() method allows 
+you to retrieve the current contents of the clipboard. This is the method 
+you would call when the user selects Paste from a menu. 
+Once you have the Transferable 
+data, you try to get the data in whatever flavor you want by calling the 
+Transferable.getTransferData() 
+method, possibly after calling Transferable.isDataFlavorSupported(). 
+The requester represents the 
+object that is requesting the clipboard's contents; it is usually 
+just this, since the current 
+object is making the request. 
+public synchronized void setContents(Transferable contents, ClipboardOwner 
+owner)  
+The setContents() method changes 
+the contents of the clipboard to contents 
+and changes the clipboard's owner to owner. 
+You would call this method when the user selects Cut or Copy from a menu. The owner parameter 
+represents the object that owns contents. 
+This object must implement the ClipboardOwner 
+interface; it will be notified by a call to lostOwnership() 
+when something else is placed on the clipboard. 
+ClipboardOwner Interface
+StringSelection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

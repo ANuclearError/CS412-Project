@@ -1,0 +1,38 @@
+
+[Chapter 29] 29.19 java.text.StringCharacterIterator (JDK 1.1)
+Chapter 29The java.text Package
+29.19 java.text.StringCharacterIterator (JDK 1.1)
+This class is a trivial implementation of the
+CharacterIterator interface that works for text
+stored in Java String objects.  See
+CharacterIterator for details.
+public final class StringCharacterIterator extends Object implements CharacterIterator {
+    // Public Constructors
+            public StringCharacterIterator(String text);
+            public StringCharacterIterator(String text, int pos);
+            public StringCharacterIterator(String text, int begin, int end, int pos);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public char current();  // From CharacterIterator
+            public boolean equals(Object obj);  // Overrides Object
+            public char first();  // From CharacterIterator
+            public int getBeginIndex();  // From CharacterIterator
+            public int getEndIndex();  // From CharacterIterator
+            public int getIndex();  // From CharacterIterator
+            public int hashCode();  // Overrides Object
+            public char last();  // From CharacterIterator
+            public char next();  // From CharacterIterator
+            public char previous();  // From CharacterIterator
+            public char setIndex(int p);  // From CharacterIterator
+}
+Hierarchy:
+Object->StringCharacterIterator(CharacterIterator(Cloneable))
+java.text.SimpleDateFormat (JDK 1.1)
+The java.util Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

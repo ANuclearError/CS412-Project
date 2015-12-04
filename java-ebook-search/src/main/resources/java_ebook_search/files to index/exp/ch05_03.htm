@@ -1,0 +1,211 @@
+
+[Chapter 5] 5.3 Object Creation
+Chapter 5Objects in Java
+5.3 Object Creation
+Objects in Java are allocated from a system heap space, much like
+malloc'ed storage in C or C++. Unlike C or C++,
+however, we needn't manage that memory ourselves. Java takes
+care of memory allocation and deallocation for you. Java explicitly
+allocates storage for an object when you create it with the
+new keyword. More importantly, objects are removed
+by garbage collection when they're no longer referenced.
+Constructors
+You allocate an object by specifying the new 
+operator with an object constructor. A constructor 
+is a special method with the same name as its class and no return type. 
+It's called when a new class instance is created, which gives the class 
+an opportunity to set up the object for use. Constructors, like other methods, 
+can accept arguments and can be overloaded (they are not, however, inherited 
+like other methods; we'll discuss inheritance later).
+class Date { 
+    long time; 
+ 
+    Date() { 
+        time = currentTime(); 
+    } 
+ 
+    Date( String date ) { 
+        time = parseDate( date ); 
+    } 
+    ... 
+} 
+In the above example, the class Date has two
+constructors. The first takes no arguments; it's known as the default
+constructor. Default constructors play a special role in that, if we
+don't define any constructors for a class, an empty default
+constructor is supplied for us. The default constructor is what gets
+called whenever you create an object by calling its constructor with
+no arguments. Here we have implemented the default constructor so that
+it sets the instance variable time by calling a
+hypothetical method: currentTime(), which resembles
+the functionality of the real java.util.Date class.
+The second constructor takes a String
+argument. Presumably, this String contains a
+string representation of the time that can be parsed to set the
+time variable.
+Given the constructors above, we create a
+Date object in the following ways:
+Date now = new Date(); 
+Date christmas = new Date("Dec 25, 1997"); 
+In each case, Java chooses the appropriate constructor at compile-time 
+based on the rules for overloaded method selection. 
+If we later remove all references to an allocated object, it'll
+be garbage collected, as we'll discuss shortly: 
+christmas = null;          // fair game for the garbage collector 
+Setting the above reference to null means it's no
+longer pointing to the "Dec 25, 1997" object. Unless that
+object is referenced by another variable, it's now inaccessible and
+can be garbage collected. Actually, setting
+christmas to any other value would have the same
+results, but using the value null is a clear way to
+indicate that christmas no longer has a useful
+value.
+A few more notes about constructors. Constructors can't be
+abstract, synchronized, or
+final. Constructors can, however, be declared with
+the visibility modifiers public, private, or protected, to control their 
+accessibility. We'll talk
+in detail about visibility modifiers later in the chapter.
+Working with Overloaded Constructors
+A constructor can refer to another constructor in the same class or
+the immediate superclass using special forms of the
+this and super
+references. We'll discuss the first case here, and return to
+that of the superclass constructor again after we have talked more
+about subclassing and inheritance.
+A constructor can invoke another, overloaded constructor in its class using 
+the reference this() with appropriate arguments 
+to select the desired constructor. If a constructor calls another 
+constructor, it must do so as its first statement (we'll explain 
+why in a bit): 
+class Car { 
+    String model; 
+    int doors; 
+ 
+    Car( String m, int d ) { 
+        model = m; 
+        doors = d; 
+        // other, complicated setup 
+        ... 
+    } 
+ 
+    Car( String m ) { 
+        this( m, 4 ); 
+    } 
+    ... 
+} 
+In the example above, the class Car has two 
+overloaded constructors. The first, more explicit one, accepts arguments 
+specifying the car's model and its number of doors and uses them 
+to set up the object. We have also provided a simpler constructor that 
+takes just the model as an argument and, in turn, calls the first constructor 
+with a default value of four doors. The advantage of this approach is that 
+you can have a single constructor do all the complicated setup work; 
+other auxiliary constructors simply feed the appropriate arguments to that 
+constructor. 
+The important point is the call to 
+this(), which must appear as the first 
+statement our second constructor. The syntax is restricted in this way because
+there's a need to identify a clear chain of command in the calling of
+constructors. At one end of the chain, Java invokes the constructor of
+the superclass (if we don't do it explicitly) to ensure that
+inherited members are initialized properly before we proceed. There's
+also a point in the chain, just after the constructor of the
+superclass is invoked, where the initializers of the current
+class's instance variables are evaluated. Before that point, we
+can't even reference the instance variables of our class. We'll
+explain this situation again in complete detail after we have talked
+about inheritance.
+For now, all you need to know is that you can invoke a second
+constructor only as the first statement of another constructor. In
+addition, you can't do anything at that point other than pass along
+arguments of the current constructor. For example, the following is
+illegal and causes a compile-time error:
+Car( String m ) { 
+    int doors = determineDoors(); 
+    this( m, doors );   // Error  
+}                       // Constructor call must be first statement 
+The simple model name constructor can't do any additional setup before 
+calling the more explicit constructor. It can't even refer to an instance 
+member for a constant value: 
+class Car {  
+    ... 
+    final int default_doors = 4; 
+    ... 
+ 
+    Car( String m ) { 
+        this( m, default_doors ); // Error 
+                                  // Referencing uninitialized variable 
+    } 
+    ... 
+} 
+The instance variable defaultDoors above is not 
+initialized until a later point in the chain of constructor calls, so the 
+compiler doesn't let us access it yet. Fortunately, we can solve this 
+particular problem by making the identifier static 
+as well: 
+class Car { 
+    ... 
+    static final int DEFAULT_DOORS = 4; 
+    ... 
+ 
+    Car( String m ) { 
+        this( m, DEFAULT_DOORS );  // Okay now 
+    } 
+    ... 
+} 
+The static members of our class have been initialized 
+for some time (since the class was first loaded), so it's safe to access them. 
+Static and Nonstatic Code Blocks
+It's possible to declare a code block (some statements within curly
+braces) directly within the scope of a class. 
+This code block doesn't belong to any method; instead, it's executed just
+once, at the time the object is constructed, or, in the case of a code
+block marked static, at the time the class is loaded.
+Nonstatic code blocks can be thought of as just an extension of 
+instance variable initialization.  They are called at the time the instance 
+variable's initializers are evaluated (after superclass construction), in
+the textual order in which they appear in the class source.
+class MyClass {
+    Properties myProps = new Properties();
+    // set up myProps
+    {
+        myProps.put("foo", "bar);
+        myProps.put("boo", "gee);
+    }
+    int a = 5;
+    ...
+You can use static code blocks to initialize static
+class members in this way.  So the static members of a class can have 
+complex initialization just like objects:
+class ColorWheel { 
+    static Hashtable colors = new Hashtable(); 
+ 
+    // set up colors
+    static { 
+        colors.put("Red", Color.red ); 
+        colors.put("Green", Color.green ); 
+        colors.put("Blue", Color.blue ); 
+        ... 
+    } 
+    ... 
+} 
+In the above example, the class ColorWheel provides 
+a variable colors that maps the names of colors 
+to Color objects in a 
+Hashtable. 
+The first time the class ColorWheel 
+is referenced and loaded, the static components 
+of ColorWheel are evaluated, in the order 
+they appear in the source. In this case, the static 
+code block simply adds elements to the colors 
+Hashtable. 
+Methods
+Object Destruction
+ 
+ 
+ 
+ 
+ 
+ 
+ 

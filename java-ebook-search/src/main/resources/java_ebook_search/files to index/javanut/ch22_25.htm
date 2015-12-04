@@ -1,0 +1,26 @@
+
+[Chapter 22] 22.25 java.awt.peer.TextFieldPeer (JDK 1.0)
+Chapter 22The java.awt.peer Package
+22.25 java.awt.peer.TextFieldPeer (JDK 1.0)
+public abstract interface TextFieldPeer extends TextComponentPeer {
+    // Public Instance Methods
+        1.1  public abstract Dimension getMinimumSize(int columns);
+        1.1  public abstract Dimension getPreferredSize(int columns);
+            public abstract Dimension minimumSize(int cols);
+            public abstract Dimension preferredSize(int cols);
+        1.1  public abstract void setEchoChar(char echoChar);
+            public abstract void setEchoCharacter(char c);
+}
+Hierarchy:
+(TextFieldPeer(TextComponentPeer(ComponentPeer)))
+Returned By:
+Toolkit.createTextField()
+java.awt.peer.TextComponentPeer (JDK 1.0)
+java.awt.peer.WindowPeer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

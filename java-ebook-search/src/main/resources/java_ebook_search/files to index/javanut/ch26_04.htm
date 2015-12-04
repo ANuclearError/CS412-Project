@@ -1,0 +1,34 @@
+
+[Chapter 26] 26.4 java.lang.reflect.InvocationTargetException (JDK 1.1)
+Chapter 26The java.lang.reflect Package
+26.4 java.lang.reflect.InvocationTargetException (JDK 1.1)
+An object of this class is thrown by Method.invoke()
+and Constructor.newInstance() when an exception is
+thrown by the method or constructor invoked through those
+methods.  The InvocationTargetException class serves
+as a wrapper around the object that was thrown; that object
+can be retrieved with the getTargetException()
+method.
+public class InvocationTargetException extends Exception {
+    // Public Constructors
+            public InvocationTargetException(Throwable target);
+            public InvocationTargetException(Throwable target, String s);
+    // Protected Constructor
+            protected InvocationTargetException();
+    // Public Instance Methods
+            public Throwable getTargetException();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->InvocationTargetException
+Thrown By:
+Constructor.newInstance(), 
+Method.invoke()
+java.lang.reflect.Field (JDK 1.1)
+java.lang.reflect.Member (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

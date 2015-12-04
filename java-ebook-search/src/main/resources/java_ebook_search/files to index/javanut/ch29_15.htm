@@ -1,0 +1,36 @@
+
+[Chapter 29] 29.15 java.text.ParseException (JDK 1.1)
+Chapter 29The java.text Package
+29.15 java.text.ParseException (JDK 1.1)
+This exception signals that a string had an incorrect format
+and could not be parsed.  It is typically thrown by the
+parse() or parseObject() methods of
+Format and its subclasses, but is also thrown by
+certain methods in the java.text package that are
+passed patterns or other rules in string form.  The
+getErrorOffset() method of this class returns the
+character position at which the parsing error occurred in
+the offending string.
+public class ParseException extends Exception {
+    // Public Constructor
+            public ParseException(String s, int errorOffset);
+    // Public Instance Methods
+            public int getErrorOffset();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->ParseException
+Thrown By:
+DateFormat.parse(), 
+Format.parseObject(), 
+MessageFormat.parse(), 
+NumberFormat.parse(), 
+RuleBasedCollator()
+java.text.NumberFormat (JDK 1.1)
+java.text.ParsePosition (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

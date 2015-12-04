@@ -1,0 +1,60 @@
+
+[Chapter 23] 23.6 java.beans.FeatureDescriptor (JDK 1.1)
+Chapter 23The java.beans Package
+23.6 java.beans.FeatureDescriptor (JDK 1.1)
+The FeatureDescriptor class is the base class for
+MethodDescriptor and PropertyDescriptor,
+as well as
+other classes used by the JavaBeans introspection
+mechanism.  It provides basic information about a feature
+(method, property, event, etc.) of a bean.  Typically, the
+methods that begin with get and is are
+used by application builders or other tools to query the
+features of a bean.  The set methods, on the other
+hand, may be used by bean authors to define information about
+the bean.
+setName() specifies the locale-independent,
+programmatic name of the feature.  setDisplayName()
+specifies a localized, human-readable name.
+setShortDescription() specifies a short localized
+string (about 40 characters) that describes the feature.
+Both the short description and the localized name default to
+the value of the programmatic name.  setExpert() and
+setHidden() allow you to indicate that the feature
+is for use only by experts, or for use only by the builder
+tool, and should be hidden from users of the builder.
+Finally, the setValue() method allows you to
+associate an arbitrary named value with the feature.
+public class FeatureDescriptor extends Object {
+    // Public Constructor
+            public FeatureDescriptor();
+    // Public Instance Methods
+            public Enumeration attributeNames();
+            public String getDisplayName();
+            public String getName();
+            public String getShortDescription();
+            public Object getValue(String attributeName);
+            public boolean isExpert();
+            public boolean isHidden();
+            public void setDisplayName(String displayName);
+            public void setExpert(boolean expert);
+            public void setHidden(boolean hidden);
+            public void setName(String name);
+            public void setShortDescription(String text);
+            public void setValue(String attributeName, Object value);
+}
+Extended By:
+BeanDescriptor, 
+EventSetDescriptor, 
+MethodDescriptor, 
+ParameterDescriptor, 
+PropertyDescriptor
+java.beans.EventSetDescriptor (JDK 1.1)
+java.beans.IndexedPropertyDescriptor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

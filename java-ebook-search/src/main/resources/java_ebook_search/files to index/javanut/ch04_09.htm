@@ -1,0 +1,92 @@
+
+[Chapter 4] 4.9 Java Beans
+Chapter 4What's New in Java 1.1
+4.9 Java Beans
+JavaBeans is a "software component model" for Java that has
+generated quite a lot of interest from many quarters.  The
+JavaBeans API specification defines "beans" as follows: "A
+Java Bean is a reusable software component that can be
+manipulated visually in a builder tool."  The
+java.beans package defines classes and interfaces
+designed to work with beans at three distinct levels,
+described below.
+Much of the JavaBeans API is intended for use only by those
+few people who are writing interface builder tools that
+manipulate beans.  The main thing that a builder tool needs
+to be able to do with beans is "introspect" on them--i.e., to
+determine what properties are exposed by a bean, what
+methods it exports, and what events it can generate.  This
+is information that a builder tool must be able to display
+to the programmer who is using the tool.  The JavaBeans API
+defines a set of naming conventions for the methods that a
+bean defines.  If a bean follows these conventions, a
+builder tool can use the new Reflection API to determine
+what properties, methods, and events the bean supports.  The
+Introspector class uses reflection to obtain
+information about a bean and presents it to the builder
+tool in the form of a BeanInfo object, which itself
+contains various FeatureDescriptor objects
+describing the properties, methods, and events of the bean.
+At the second level, the JavaBeans API contains classes and
+interfaces intended for use by programmers who are creating
+beans for others to use. Chapter 10, Java Beans
+describes how to use the classes in java.beans in this manner.
+One of the surprising features of
+the JavaBeans API is that there is no Bean class that
+all beans must extend.  A bean can be of any class; however,
+as we've seen, beans should follow certain naming
+conventions.  The java.beans classes that a bean
+creator uses are generally auxiliary classes, used not by
+the bean, but by the builder tool that manipulates the bean.
+These auxiliary classes are shipped with a bean, and
+provide additional information or methods that a builder
+tool may use with the bean.  These classes are not
+included in finished software built with the bean.
+For example, one of the auxiliary classes a bean may define
+is a custom BeanInfo class to provide information to
+the builder tool that is not available through the
+Reflection API.  This information might include a
+human-readable description of the bean's properties,
+methods, and events, for example.  Or, if a bean does not
+follow the standard naming conventions, this custom
+BeanInfo class must also provide more basic
+information about the bean's properties, methods, and
+events.
+Besides a BeanInfo class, complex beans may also
+provide a Customizer class and one or more
+PropertyEditor classes.  A Customizer class
+is a kind of configuration tool or "wizard" for a bean.  It
+is instantiated by the builder tool in order to guide the
+user through bean customization.  A PropertyEditor
+class is used to allow the user to edit the value of bean
+properties of a particular class.  Builder tools have
+built-in property editors for common types such as strings,
+colors, and fonts, but a bean that has properties of some
+unusual or custom type may want to provide a
+PropertyEditor subclass to allow the user to easily
+specify values for those properties.
+The third level at which the JavaBeans API can be used is by programmers
+who are assembling an application using beans.  Some
+programmers may do this through a builder tool, while others
+may do it "by hand", the old-fashioned way.  Programmers
+using beans do not typically have to use the
+java.beans package.  At this level, it is more a
+matter of reading the documentation for the particular beans
+being used and following those instructions.  Nevertheless,
+a programmer using beans does need to be familiar with the
+event model used by beans, which is the same as the Java 1.1
+event model for AWT.  Also, programmers using beans "by
+hand" should be familiar with the naming conventions for
+bean properties, methods, and events, in order to more
+easily understand how a given bean can be used.  In Java
+1.1, all AWT components are beans and follow these naming
+conventions.
+Reflection
+Enterprise APIs: JDBC, RMI, and Security
+ 
+ 
+ 
+ 
+ 
+ 
+ 

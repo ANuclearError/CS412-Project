@@ -1,0 +1,187 @@
+
+[Chapter 11] PipedOutputStream
+Chapter 11The java.io Package
+PipedOutputStream
+Name
+PipedOutputStream
+Synopsis
+Class Name:
+java.io.PipedOutputStream 
+Superclass:
+java.io.OutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The PipedOutputStream 
+class represents half of a communication pipe; a PipedOutputStream 
+must be connected to a PipedOutputStream. 
+When the two halves of a communication pipe are connected, data written 
+to the PipedOutputStream can 
+be read from the PipedInputStream. 
+The communication pipe formed by a PipedOutputStream
+and a PipedInputStream should be used to 
+communicate between threads. If both ends of a pipe are used by
+the same thread, the thread can hang.
+Class Summary
+public class java.io.PipedOutputStream extends java.io.OutputStream {
+  // Constructors
+  public PipedOutputStream();
+  public PipedOutputStream(PipedInputStream snk);
+  // Instance Methods
+  public void close();
+  public void connect(PipedInputStream snk);
+  public synchronized void flush();               // New in 1.1
+  public void write(int b);
+  public void write(byte[] b, int off, int len);
+}
+Constructors
+PipedOutputStream
+public PipedOutputStream()
+Description
+This constructor creates a PipedOutputStream 
+that is not connected to a PipedInputStream. 
+The created object must be connected to a PipedInputStream 
+before it can be used. 
+public PipedOutputStream(PipedInputStream snk)
+Parameters
+snk
+The PipedInputStream 
+to connect. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This constructor creates a PipedOutputStream 
+that sends data to the given PipedInputStream. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+OutputStream.close() 
+Description
+This method closes the stream and releases the system resources that are 
+associated with it. 
+connect
+public void connect(PipedInputStream snk) throws IOException
+Parameters
+snk
+The PipedInputStream 
+to connect. 
+Throws
+IOException 
+If another 
+PipedInputStream is already 
+connected to this PipedOutputStream 
+or this PipedOutputStream is 
+already connected. 
+Description
+This method connects this PipedOutputStream 
+object to the given PipedInputStream. 
+If this PipedOutputStream or 
+snk is already connected, an 
+exception is thrown. 
+flush
+public synchronized void flush() throws IOException
+Availability
+New as of JDK 1.1 
+Throws
+IOException
+If any kind of I/O error occurs.
+InterruptedIOException
+While this method is waiting for buffer space to become available, if
+the interrupted() method of the thread that invoked
+this method is called.
+Overrides
+OutputStream.flush() 
+Description
+This method flushes the stream, which tells the connected PipedInputStream 
+to notify its readers to read any available data. 
+write
+public void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+InterruptedIOException
+While this method is waiting for buffer space to become available, if
+the interrupted() method of the thread that invoked
+this method is called.
+Overrides
+OutputStream.write(int) 
+Description
+This method writes a byte of output. The method passes the given value 
+directly to the connected PipedInputStream. 
+public void write(byte b[], int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+InterruptedIOException
+While this method is waiting for buffer space to become available, if
+the interrupted() method of the thread that invoked
+this method is called.
+Overrides
+OutputStream.write(byte[], int, int) 
+Description
+This method writes len bytes 
+of output from the given array, starting at offset off. 
+The method passes the given data to the connected PipedInputStream. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(byte[])
+OutputStream
+See Also
+IOException, 
+OutputStream, 
+PipedInputStream 
+PipedInputStream
+PipedReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

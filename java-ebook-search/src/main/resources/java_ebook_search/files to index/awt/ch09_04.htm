@@ -1,0 +1,63 @@
+
+[Chapter 9] 9.4 CheckboxGroup
+Chapter 9Pick Me
+9.4 CheckboxGroup
+The CheckboxGroup lets multiple 
+checkboxes work together to provide a mutually exclusion choice (at most 
+one Checkbox can be selected 
+at a time). Because the CheckboxGroup 
+is neither a Component nor a 
+Container, you should normally 
+put all the Checkbox components 
+associated with a CheckboxGroup 
+in their own Panel (or other 
+Container). The LayoutManager 
+of the Panel should be GridLayout 
+(0, 1) if you want them in one column. Figure 9.5 shows both a good way and bad way of positioning 
+a set of Checkbox items in 
+a CheckboxGroup. The image 
+on the left is preferred because the user can sense that the items are 
+grouped; the image on the right suggests three levels of different checkboxes 
+and can therefore surprise the user when checkboxes are deselected. 
+Figure 9.5: Straightforward and confusing layouts of Checkbox components
+CheckboxGroup MethodsConstructors
+public CheckboxGroup () 
+This constructor creates an instance of CheckboxGroup. 
+Miscellaneous methods
+public int getSelectedCheckbox ()  public Checkbox getCurrent () 
+The getSelectedCheckbox() method 
+returns the Checkbox within 
+the CheckboxGroup whose value 
+is true. If no item is selected, 
+null is returned. 
+getCurrent() is the Java 1.0 
+name for this method. 
+public synchronized void setSelectedCheckbox (Checkbox checkbox)  public synchronized void setCurrent (Checkbox checkbox) 
+The setSelectedCheckbox() method 
+makes checkbox the currently 
+selected Checkbox within the 
+CheckboxGroup. If checkboxis null, 
+the method deselects all the items in the CheckboxGroup. 
+If checkbox is not within the 
+CheckboxGroup, nothing happens. 
+setCurrent() is the Java 1.0 
+name for this method. 
+public String toString () 
+The toString() method of CheckboxGroup 
+creates a String representation 
+of the current choice (as returned by getSelectedCheckbox()). 
+Using the "straightforward" layout in Figure 9.5 as an example, 
+the results would be: 
+java.awt.CheckboxGroup[current=java.awt.Checkbox[0,31,85x21,
+    label=Helvetica,state=true]]
+If there is no currently selected item, the results within the square brackets 
+would be current=null. 
+Checkbox
+ItemSelectable
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,31 @@
+
+[Chapter 9] 9.5 ItemSelectable
+Chapter 9Pick Me
+9.5 ItemSelectable
+In Java 1.1, the classes Checkbox, Choice, 
+List, and CheckboxMenuItem 
+(covered in the next chapter) share a common interface that defines a method 
+for getting the currently selected item or items. This means that you can 
+use the same methods to retrieve the selection from any of these classes. 
+More important, it means that you can write code that doesn't know 
+what kind of selectable item it's working with. For example, you 
+could write a method that returns the selectable component from some user 
+interface. This method might have the signature: 
+public ItemSelectable getChooser();
+After you call this method, you can read selections from the user interface 
+without knowing exactly what you're dealing with. 
+Methods
+public Object[] getSelectedObjects ()  
+The getSelectedObjects() method 
+returns the currently selected item or items as an Object 
+array. The return value is null 
+if there is nothing selected. 
+CheckboxGroup
+Would You Like to Choose from the Menu?
+ 
+ 
+ 
+ 
+ 
+ 
+ 

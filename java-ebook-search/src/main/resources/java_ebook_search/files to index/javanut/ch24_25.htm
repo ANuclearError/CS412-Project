@@ -1,0 +1,40 @@
+
+[Chapter 24] 24.25 java.io.FilterOutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.25 java.io.FilterOutputStream (JDK 1.0)
+This class provides method definitions required to filter
+the data to be written to the OutputStream specified
+when the FilterOutputStream is created. It
+must be subclassed to perform some sort of filtering
+operation and may not be instantiated directly. See
+the subclasses
+BufferedOutputStream and DataOutputStream.
+public class FilterOutputStream extends OutputStream {
+    // Public Constructor
+            public FilterOutputStream(OutputStream out);
+    // Protected Instance Variables
+            protected OutputStream out;
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides OutputStream
+            public void flush() throws IOException;  // Overrides OutputStream
+            public void write(int b) throws IOException;  // Defines OutputStream
+            public void write(byte[] b) throws IOException;  // Overrides OutputStream
+            public void write(byte[] b, int off, int len) throws IOException;  // Overrides OutputStream
+}
+Hierarchy:
+Object->OutputStream->FilterOutputStream
+Extended By:
+BufferedOutputStream, 
+CheckedOutputStream, 
+DataOutputStream, 
+DeflaterOutputStream, 
+PrintStream
+java.io.FilterInputStream (JDK 1.0)
+java.io.FilterReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

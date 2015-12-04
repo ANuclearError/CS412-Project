@@ -1,0 +1,196 @@
+
+[Chapter 13] Constructor
+Chapter 13The java.lang.reflect Package
+Constructor
+Name
+Constructor
+Synopsis
+Class Name:
+java.lang.reflect.Constructor
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.reflect.Member
+Availability:
+New as of JDK 1.1 
+Description
+The Constructor 
+class represents a constructor of a class. A Constructor 
+object can be obtained by calling the getConstructor() 
+method of a Class object. Constructor 
+provides methods for getting the name, modifiers, parameters, exceptions, 
+and declaring class of a constructor. The newInstance() 
+method can create a new instance of the class that declares 
+a constructor.  
+Class Summary
+public final class java.lang.reflect.Constructor extends java.lang.Object
+                   implements java.lang.reflect.Member {
+  // Instance Methods
+  public boolean equals(Object obj); 
+  public Class getDeclaringClass();
+  public Class[] getExceptionTypes();
+  public native int getModifiers();
+  public String getName();
+  public Class[] getParameterTypes();
+  public int hashCode();
+  public native Object newInstance(Object[] initargs);
+  public String toString();
+}
+Instance Methods
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of Constructor, 
+and it is equivalent to this Constructor. 
+getDeclaringClass
+public Class getDeclaringClass()
+Returns
+The Class 
+object that represents the class that declared this constructor. 
+Implements
+Member.getDeclaringClass() 
+Description
+This method returns the Class 
+object for the class in which this constructor is declared. 
+getExceptionTypes
+public Class[] getExceptionTypes()
+Returns
+An array that contains the Class 
+objects that describe the exceptions that can be thrown by this constructor. 
+Description
+This method returns an array of Class 
+objects that represents the throws 
+clause of this constructor. If the constructor does not throw any exceptions, 
+an array of length 0 is returned. As of Java 1.1.2,
+this method is not properly supported: it always returns an empty array.
+getModifiers
+public native int getModifiers()
+Returns
+An integer that represents the modifier keywords used 
+to declare this constructor. 
+Implements
+Member.getModifiers() 
+Description
+This method returns an integer value that represents the modifiers of this 
+constructor. The Modifier class 
+should decode the returned value. 
+getName
+public String getName()
+Returns
+The name of this constructor as a String. 
+Implements
+Member.getName() 
+Description
+This method returns the name of this constructor, which is always the same 
+as the name of the declaring class. 
+getParameterTypes
+public Class[] getParameterTypes()
+Returns
+An array that contains the Class 
+objects that describe the parameter types that this constructor accepts. 
+Description
+This method returns an array of Class 
+objects that represents the parameter types this constructor accepts. The 
+parameter types are listed in the order in which they are declared. If 
+the constructor does not take any parameters, an array of length 0 is returned. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this Constructor. 
+newInstance
+   public native Object newInstance(Object[] initargs) throws InstantiationException, IllegalAccessException, IllegalArgumentException, InvocationTargetException  
+Parameters
+initargs
+An array of arguments 
+to be passed to this constructor. 
+Returns
+The newly created object. 
+Throws
+InstantiationException
+If the declaring class of this constructor is abstract.
+IllegalAccessException
+If the constructor is inaccessible.
+IllegalArgumentException
+If initargs is the wrong length 
+or contains any value of the wrong type.
+InvocationTargetException
+If the constructor itself throws an exception. 
+Description
+This method executes the constructor represented by this object
+using the given array of arguments. 
+Thus, it creates and initializes a new instance of the declaring class 
+of the constructor. If a particular parameter is of a primitive type, the 
+corresponding argument is automatically unwrapped and converted to the 
+appropriate type, if possible. If that is not possible, an IllegalArgumentException 
+is thrown. If the constructor itself throws an exception, the exception 
+is placed in an InvocationTargetException, 
+which is then thrown to the caller of newInstance(). 
+If the constructor completes normally, the newly created instance is returned. 
+toString
+public String toString()
+Returns
+A string representation of this object. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Constructor. 
+This string contains the access modifiers of the constructor, if any, followed 
+by the fully qualified name of the declaring class and a list of the parameters of the constructor, if any. The list is enclosed by parentheses, and the 
+individual parameters are separated by commas. If the constructor does 
+not have any parameters, just the parentheses are included in the string. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+Field, 
+InstantiationException, 
+IllegalAccessException, 
+IllegalArgumentException, 
+InvocationTargetException, 
+Member, 
+Method, 
+Modifier, 
+Object 
+Array
+Field
+ 
+ 
+ 
+ 
+ 
+ 
+ 

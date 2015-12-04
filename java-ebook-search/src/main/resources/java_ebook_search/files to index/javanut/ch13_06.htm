@@ -1,0 +1,97 @@
+
+[Chapter 13] 13.6 Java Documentation Comment Syntax
+Chapter 13Java Syntax
+13.6 Java Documentation Comment Syntax
+The Java language supports special "doc comments," which
+begin with /** and end with */.  These comments are
+not actually treated specially by the compiler, but can be
+extracted and automatically turned into HTML documentation
+by the javadoc program.
+Because the lines of a doc comment are embedded within a
+Java comment, any leading spaces and asterisks (*)
+are stripped from each comment line before processing.  A
+doc comment may contain HTML markup tags, such as &lt;PRE&gt; and
+&lt;TT&gt; for code usage examples, but should not contain HTML
+structural tags such as &lt;H2&gt; or &lt;HR&gt;.  Doc comments should
+immediately precede the declaration of the class, field, or
+method that they are associated with.  The first sentence of
+a doc comment should be a summary sentence, suitable for
+display on its own.  The following sentences may document
+the feature in more detail.
+Following the initial summary sentence and any additional
+documentation, a doc comment may use special tags, which all
+begin with the @ character and allow javadoc
+to provide additional formatting for the documentation.  The
+available tags are listed below.  When you use a special
+javadoc tag, it must be the first thing on its line
+within the doc comment.  The text that follows a tag may
+span more than one line, and continues until the next
+javadoc tag is encountered or until the comment ends.
+If you use more than one tag of the same type, they should
+be on subsequent lines.  For example, a class with multiple
+authors, or a method with multiple arguments would use
+multiple @author or @param tags.
+@see classname
+This tag adds a "See Also:" entry to the documentation that
+contains a hyperlink to the specified class.  It may be used
+before classes, methods, or fields.
+@see full-classname
+This tag adds a "See Also:" entry to the documentation that
+contains a hyperlink to the specified class.  It may be used
+before classes, methods, or fields.
+@see full-classname#method-name
+ 
+This tag adds a "See Also:" entry to the documentation that
+contains a hyperlink to the specified method of the
+specified class.  It may be used before classes, methods, or
+fields.
+@version text
+This tag adds a "Version:" entry containing the
+specified text to the documentation.  May only be used
+before a class definition.
+javadoc ignores this
+tag unless the -version command-line argument is
+specified.
+@author text
+This tag adds an "Author:" entry containing the
+specified text to the documentation.  May only be used
+before a class definition.  javadoc ignores this
+tag unless the -author command-line argument is
+specified.
+@param parameter-name description
+This tag adds the specified parameter and its specified
+description to the "Parameters:" section of the current
+method.  If the description is longer than one line, it may
+be continued on the next.  May only be used before a method
+definition.
+@return description
+Adds a "Returns:" section containing the specified
+description to the documentation.  May only be used before a
+method definition.
+@exception full-classname description
+Adds a "Throws:" entry to the documentation.  The entry
+contains the specified class name of the exception and the
+description specified, which should explain the significance
+of the exception.  May only be used before a method definition.
+@deprecated explanation
+As of Java 1.1, this tag specifies that the following
+class, method, or field has been deprecated.  javac
+notes this information in the class file it produces and
+issues a warning when a program uses the deprecated feature.
+javadoc adds a "Deprecated" entry to the documentation
+that includes the specified explanation.
+@since version
+As of Java 1.1, this undocumented tag is used to
+specify when the class, method, or field that follows it was
+added to the API.  It should be followed by a version number
+or other version specification.  The JDK 1.1 version of
+javadoc appears to ignore this tag.
+Reserved Words
+System Properties
+ 
+ 
+ 
+ 
+ 
+ 
+ 

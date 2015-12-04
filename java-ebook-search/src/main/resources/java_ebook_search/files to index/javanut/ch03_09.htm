@@ -1,0 +1,316 @@
+
+[Chapter 3] 3.9 Abstract Classes and Interfaces
+Chapter 3Classes and Objects in Java
+3.9 Abstract Classes and Interfaces
+In
+Example 3.14
+we declared our Circle class to be part of a package
+named shapes.  Suppose we plan to implement a number
+of shape classes: Rectangle, Square,
+Ellipse, Triangle, and so on.  We'll give
+all of these shape classes our two basic area() and
+circumference() methods.  Now, to make it easy to
+work with an array of shapes, it would be
+helpful if all our shape classes have a common superclass,
+Shape.  We want Shape to encapsulate
+whatever features all our shapes have in common.  In this
+case, they have in common the area() and
+circumference() methods.  But our generic
+Shape class can't actually implement these methods,
+since it doesn't represent any actual shape.  Java handles
+this case with abstract methods.
+Abstract Methods
+Java lets us define a method without implementing it by
+making the method abstract.  An abstract
+method has no body; it simply has a signature definition
+followed by a semicolon.
+[13]
+Here are the rules about abstract methods, 
+and the abstract classes that contain them:
+[13] 
+An abstract method in Java is something like a
+"pure virtual function" in C++ (i.e., a virtual function
+that is declared = 0).  In C++, a class that
+contains a pure virtual function is called an "abstract
+class" and may not be instantiated.  The same is true of
+Java classes that contain abstract methods.
+Any class with an abstract method is automatically
+abstract itself, and must be declared as such.
+A class may be declared abstract even if it has no
+abstract methods.  This prevents it from being
+instantiated. 
+An abstract class cannot be instantiated.
+A subclass of an abstract class can be instantiated
+if it overrides each of the abstract methods of its
+superclass and provides an implementation (i.e., a method
+body) for all of them.
+If a subclass of an abstract class does not
+implement all of the abstract methods it inherits,
+that subclass is itself abstract.
+That description of the abstract keyword was pretty
+abstract!
+Example 3.15
+is more concrete.  It shows an abstract
+Shape class and two non-abstract subclasses
+of it.
+Example 3.15: An Abstract Class and Subclasses
+public abstract class Shape {
+    public abstract double area();
+    public abstract double circumference();
+}
+class Circle extends Shape {
+    protected double r;
+    protected static final double PI = 3.14159265358979323846;
+    public Circle() { r = 1.0; }
+    public Circle(double r) { this.r = r; }
+    public double area() { return PI * r * r; }
+    public double circumference() { return 2 * PI * r; }
+    public double getRadius() { return r; }
+}
+class Rectangle extends Shape {
+    protected double w, h;
+    public Rectangle() { w = 0.0; h = 0.0; }
+    public Rectangle(double w, double h) { this.w = w;  this.h = h; }
+    public double area() { return w * h; }
+    public double circumference() { return 2 * (w + h); }
+    public double getWidth() { return w; }
+    public double getHeight() { return h; }
+}
+Note that the abstract methods in Shape have a
+semicolon right after their parentheses.  There are no curly
+braces, and no method body is defined.  Using the classes
+defined in
+Example 3.15,
+we can now write code like this:
+Shape[] shapes = new Shape[3];          // Create an array to hold shapes.
+shapes[0] = new Circle(2.0);            // Fill in the array...
+shapes[1] = new Rectangle(1.0, 3.0);
+shapes[2] = new Rectangle(4.0, 2.0);
+double total_area = 0;
+for(int i = 0; i &lt; shapes.length; i++)
+    total_area += shapes[i].area();     // Compute the area of the shapes.
+There are two important points to notice here:
+Subclasses of Shape can be assigned to elements of
+an array of Shape.  No cast is necessary.
+You can invoke the area() and
+circumference() methods for Shape objects,
+even though Shape does not define a body for these
+methods, because Shape declared them
+abstract.  If Shape did not declare them at
+all, the code would cause a compilation error.
+Interfaces
+Let's extend our shapes package further.  Suppose we
+now want to implement a number of shapes that can be drawn
+on the screen.  We could define an abstract
+DrawableShape class, and then implement various
+subclasses of it, such as DrawableCircle,
+DrawableRectangle, and so on.  This would work fine.
+But suppose we want our drawable shape types to support the
+area() and circumference() methods.  We
+don't want to have to re-implement these methods, so we'd
+like to make DrawableCircle a subclass of
+Circle, for example, and DrawableRectangle a
+subclass of Rectangle.  But classes in Java can only
+have one superclass.  If DrawableCircle extends
+Circle, then it cannot also extend
+DrawableShape!
+[14]
+[14] 
+C++ allows classes to have more than one superclass, using
+a technique known as "multiple inheritance." Multiple
+inheritance opens up a can of worms, so Java replaces it
+with what many believe is a more elegant solution.
+Java's solution to this problem is called an
+interface.  An interface looks a lot like an abstract
+class, except that it uses the keyword interface
+instead of the words abstract and class.
+Example 3.16
+shows an interface named Drawable.
+Example 3.16: An Interface Definition
+public interface Drawable {
+    public void setColor(Color c);
+    public void setPosition(double x, double y);
+    public void draw(DrawWindow dw);
+}
+While an abstract class may define some abstract methods and
+some non-abstract methods, all the methods defined within an
+interface are implicitly abstract.  We've omitted
+the abstract keyword in this example, but it is
+perfectly legal to use it if you want to belabor the
+abstractness of interface methods.  A further restriction on
+interfaces is that any variables declared in an interface
+must be static and final--that is, they must
+be constants.
+So what can we do with an interface?  Just as a class
+extends its superclass, it also optionally implements
+an interface.  implements is a Java keyword that can
+appear in a class declaration following the
+extends clause.  implements should be
+followed by the name of the interface that the class
+implements.  In order to implement an interface, a class
+must first declare the interface in an implements
+clause, and then it
+must provide an implementation (i.e., a body) for all of the
+abstract methods of the interface.
+[15]
+[15] 
+This is the real difference between multiple inheritance in
+C++ and interfaces in Java.  In C++, a class can inherit
+method implementations from more than one superclass.  In
+Java, a class can inherit actual implementations only from
+one superclass.  It can inherit additional abstract
+methods from interfaces, but it must provide its own
+implementation of those methods.  It is rare, however, to
+actually be able to use C++ multiple inheritance to inherit
+useful, non-trivial implementations from more than one class.
+The elegance and simplicity of Java's interface more than
+compensate for the inability to inherit implementations from
+more than one class.
+Example 3.17
+shows how we can define a DrawableRectangle class
+that extends our Rectangle class and implements the
+Drawable interface we defined in
+Example 3.16.
+The example assumes that a Color class and a
+DrawWindow class are defined elsewhere, and that
+DrawWindow knows how to convert floating-point
+coordinates to pixel coordinates and knows how to draw
+primitive shapes.
+Example 3.17: Implementing an Interface
+public class DrawableRectangle extends Rectangle implements Drawable {
+    // New instance variables
+    private Color c;
+    private double x, y;
+    // A constructor
+    public DrawableRectangle(double w, double h) { super(w, h); }
+    // Here are implementations of the Drawable methods.
+    // We also inherit all the public methods of Rectangle.
+    public void setColor(Color c) { this.c = c; }
+    public void setPosition(double x, double y) { this.x = x; this.y = y; }
+    public void draw(DrawWindow dw) { 
+        dw.drawRect(x, y, w, h, c);
+    }
+}
+Using Interfaces
+Suppose we implement DrawableCircle and
+DrawableSquare just as we implemented
+DrawableRectangle in
+Example 3.17.
+As we saw earlier, instances of these classes can be treated
+as instances of the abstract Shape class.  They can
+also be treated as instances of the Drawable interface.
+Example 3.18
+demonstrates this.
+Example 3.18: Casting Objects to Their Interface Type
+Shape[] shapes = new Shape[3];          // Create an array to hold shapes
+Drawable[] drawables = new Drawable[3]; // and an array to hold drawables.
+// Create some drawable shapes.
+DrawableCircle dc = new DrawableCircle(1.1);
+DrawableSquare ds = new DrawableSquare(2.5);
+DrawableRectangle dr = new DrawableRectangle(2.3, 4.5);
+// The shapes can be assigned to both arrays.
+shapes[0] = dc;   drawables[0] = dc;
+shapes[1] = ds;   drawables[1] = ds;
+shapes[2] = dr;   drawables[2] = dr;
+// Compute total area and draw the shapes by invoking 
+// the Shape and the Drawable abstract methods.
+double total_area = 0;
+for(int i = 0; i &lt; shapes.length; i++) {
+    total_area += shapes[i].area();    // Compute the area of the shapes.
+    drawables[i].setPosition(i*10.0, i*10.0);
+    drawables[i].draw(draw_window);    // Assume draw_window defined somewhere.
+}
+What this example demonstrates is that interfaces are data
+types in Java, just as classes are, and that when a class
+implements an interface, instances of that class can be
+assigned to variables of the interface type.  Don't
+interpret this example to imply that you must assign a
+DrawableRectangle object to a Drawable
+variable before you can invoke the draw() method or
+that you must assign it to a Shape variable before
+you can invoke the area() method.
+DrawableRectangle defines draw() and
+inherits area() from its Rectangle
+superclass, and so you can always invoke these methods.
+Implementing Multiple Interfaces
+Suppose we wanted shapes that could be scaled to be larger
+or smaller.  One way we could do this is by defining a
+Scalable interface and implementing subclasses of
+DrawableRectangle and the other classes.  To do this,
+though, the new subclass would have to implement both the
+Drawable interface and the Scalable
+interface.
+This is no problem.  You may specify a list of
+comma-separated interfaces in the implements clause
+of any class:
+public class DrawableScalableRectangle extends DrawableRectangle
+                implements Drawable, Scalable {
+    // The methods of the Scalable interface must be implemented here.
+}
+When a class implements more than one interface, it means
+simply that it must provide an implementation for all of the
+abstract methods in all of its interfaces.
+Constants in Interfaces
+As we noted above, constants may appear in interface
+definitions.  What does it mean to implement an interface
+that contains constants?  It
+simply means that the class that implements the interface
+"inherits" the constants (in a sense) and can use them as if
+they were defined directly in the class.  There is no need
+to prefix them with the name of the interface, and there is
+no need to provide an "implementation" of the constants:
+class A { static final int CONSTANT1 = 3; }
+interface B { static final int CONSTANT2 = 4; }
+class C implements B {
+    void f() { 
+        int i = A.CONSTANT1;  // Have to use the class name here.
+        int j = CONSTANT2;    // No class name here, because we implement
+    }                         // the interface that defines this constant.
+}
+When you have a set of constants used by more than one class
+within a package (for example, a port number and other
+protocol constants used by a client and server), it is
+convenient to define them in an interface that contains no
+abstract methods.  Then, any class that wants to use
+those constants needs only to declare that it implements the
+interface.
+Extending Interfaces
+Interfaces can have sub-interfaces, just as classes can have subclasses.  A
+sub-interface inherits all the abstract methods and
+constants of its super-interface, and may define new
+abstract methods and constants.  Interfaces are different
+from classes in one very important way, however. 
+An interface can extend more than one interface at a time:
+public interface Transformable extends Scalable, Rotateable, Reflectable { }
+public interface DrawingObject extends Drawable, Transformable { }
+public class Shape implements DrawingObject { ... }
+An interface that extends more than one interface inherits
+all the abstract methods and constants from each of those
+interfaces, and may define its own additional abstract methods
+and constants.  A class that implements such an interface
+must implement the abstract methods defined in the interface
+itself as well as all the abstract methods inherited from
+all the super-interfaces.
+Marker Interfaces
+Another technique that is sometimes useful is to define an
+interface that is entirely empty.  A class can implement
+this interface to provide additional information about
+itself.  The Cloneable interface in
+java.lang is an example of this type of "marker
+interface."  It defines no methods, but serves simply to
+identify the class as one that will allow its internal state
+to be cloned by the clone() method of the
+Object class.  In Java 1.1,
+java.io.Serializable is another such marker
+interface.  You can test whether a class implements a marker
+interface (or any interface) using the instanceof
+operator.
+Data Hiding and Encapsulation
+C++ Features Not Found in Java
+ 
+ 
+ 
+ 
+ 
+ 
+ 

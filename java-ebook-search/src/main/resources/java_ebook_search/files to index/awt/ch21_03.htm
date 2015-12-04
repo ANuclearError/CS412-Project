@@ -1,0 +1,114 @@
+
+[Chapter 21] AdjustmentEvent 
+Chapter 21java.awt.event Reference
+AdjustmentEvent 
+Name
+AdjustmentEvent 
+Description
+AdjustmentEvents are generated 
+by objects that implement the Adjustable 
+interface. Scrollbar is one 
+example of such an object. 
+Class Definition
+public class java.awt.event.AdjustmentEvent
+   extends java.awt.AWTEvent {
+  // Constants
+  public final static int ADJUSTMENT_FIRST;
+  public final static int ADJUSTMENT_LAST;
+  public final static int ADJUSTMENT_VALUE_CHANGED;
+  public final static int BLOCK_DECREMENT;
+  public final static int BLOCK_INCREMENT;
+  public final static int TRACK;
+  public final static int UNIT_DECREMENT;
+  public final static int UNIT_INCREMENT;
+  // Constructors
+  public AdjustmentEvent (Adjustable source, int id, int type, int value);
+  // Instance Methods
+  public Adjustable getAdjustable();
+  public int getAdjustmentType();
+  public int getValue();
+  public String paramString();
+}
+Constants
+ADJUSTMENT_FIRST
+public final static int ADJUSTMENT_FIRST
+Specifies the beginning range of adjustment event ID values. 
+ADJUSTMENT_LAST
+public final static int ADJUSTMENT_LAST
+Specifies the ending range of adjustment event ID values. 
+ADJUSTMENT_VALUE_CHANGED
+public final static int ADJUSTMENT_VALUE_CHANGED
+Event type ID for value changed. 
+BLOCK_DECREMENT
+public final static int BLOCK_DECREMENT
+Adjustment type for block decrement. 
+BLOCK_INCREMENT
+public final static int BLOCK_INCREMENT
+Adjustment type for block increment. 
+TRACK
+public final static int TRACK
+Adjustment type for tracking. 
+UNIT_DECREMENT
+public final static int UNIT_DECREMENT
+Adjustment type for unit decrement. 
+UNIT_INCREMENT
+public final static int UNIT_INCREMENT
+Adjustment type for unit increment. 
+Constructors
+AdjustmentEvent
+public AdjustmentEvent (Adjustable source, int id, int type, int value)
+Parameters
+source
+The object that 
+generated the event.
+id
+The event type ID of 
+the event.
+type
+The type of adjustment 
+event.
+value
+The value of the 
+Adjustable object. 
+Description
+Constructs an AdjustmentEvent 
+with the given characteristics. 
+Instance Methods
+getAdjustable
+public Adjustable getAdjustable()
+Returns
+The source of this event. 
+getAdjustmentType
+public int getAdjustmentType()
+Returns
+One of the adjustment type constants. 
+Description
+The type will be BLOCK_DECREMENT, 
+BLOCK_INCREMENT, TRACK, 
+UNIT_DECREMENT, or UNIT_INCREMENT. 
+getValue
+public int getValue()
+Returns
+The new value of the Adjustable 
+object. 
+paramString
+public String paramString()
+Returns
+String with current settings of the AdjustmentEvent. 
+Overrides
+AWTEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+Adjustable, AdjustmentListener, 
+AWTEvent, Scrollbar 
+ActionListener 
+AdjustmentListener 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,58 @@
+
+[Chapter 18] 18.6 java.awt.BorderLayout (JDK 1.0)
+Chapter 18The java.awt Package
+18.6 java.awt.BorderLayout (JDK 1.0)
+This class implements the LayoutManager interface to
+lay out Component objects in a Container.
+The BorderLayout arranges components
+that have been added to their Container (using the
+Container.add() method) with
+the names "North," "South," "East," "West," and "Center."
+These named components are arranged along the edges and
+in the center of the container.
+The hgap and vgap arguments to the
+BorderLayout constructor specify the desired
+horizontal and vertical spacing between
+adjacent components.
+Note that applications should never call the
+LayoutManager methods of this class directly; the
+Container for which the BorderLayout is
+registered does this.
+public class BorderLayout extends Object implements LayoutManager2, Serializable {
+    // Public Constructors
+            public BorderLayout();
+            public BorderLayout(int hgap, int vgap);
+    // Constants
+        1.1 public static final String CENTER;
+        1.1 public static final String EAST;
+        1.1 public static final String NORTH;
+        1.1 public static final String SOUTH;
+        1.1 public static final String WEST;
+    // Public Instance Methods
+        1.1 public void addLayoutComponent(Component comp, Object constraints);  // From LayoutManager2
+        #   public void addLayoutComponent(String name, Component comp);  // From LayoutManager
+        1.1 public int getHgap();
+        1.1 public float getLayoutAlignmentX(Container parent);  // From LayoutManager2
+        1.1 public float getLayoutAlignmentY(Container parent);  // From LayoutManager2
+        1.1 public int getVgap();
+        1.1 public void invalidateLayout(Container target);  // From LayoutManager2
+         public void layoutContainer(Container target);  // From LayoutManager
+        1.1 public Dimension maximumLayoutSize(Container target);  // From LayoutManager2
+         public Dimension minimumLayoutSize(Container target);  // From LayoutManager
+         public Dimension preferredLayoutSize(Container target);  // From LayoutManager
+         public void removeLayoutComponent(Component comp);  // From LayoutManager
+        1.1 public void setHgap(int hgap);
+        1.1 public void setVgap(int vgap);
+         public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->BorderLayout(LayoutManager2(LayoutManager), Serializable)
+java.awt.Adjustable (JDK 1.1)
+java.awt.Button (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

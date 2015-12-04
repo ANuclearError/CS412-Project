@@ -1,0 +1,36 @@
+
+[Chapter 30] 30.8 java.util.EventObject (JDK 1.1)
+Chapter 30The java.util Package
+30.8 java.util.EventObject (JDK 1.1)
+EventObject serves as a superclass for all events
+objects used by the Java 1.1 AWT event model and the JavaBeans
+event model.  This class defines a very generic type of
+event; it is extended by the more specific event classes in
+the java.awt, java.awt.event, and
+java.beans packages.
+The only common feature shared by all events is a source
+object, which is the object that in some way "generated" the
+event.  The source object is passed to the
+EventObject() constructor, and is returned by the
+getSource() method.
+public class EventObject extends Object implements Serializable {
+    // Public Constructor
+            public EventObject(Object source);
+    // Protected Instance Variables
+            protected transient Object source;
+    // Public Instance Methods
+            public Object getSource();
+            public String toString();  // Overrides Object
+}
+Extended By:
+AWTEvent, 
+PropertyChangeEvent
+java.util.EventListener (JDK 1.1)
+java.util.GregorianCalendar (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

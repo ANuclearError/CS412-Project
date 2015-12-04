@@ -1,0 +1,405 @@
+
+[Chapter 12] 12.2 ColorModel
+Chapter 12Image Processing
+12.2 ColorModel
+A color model determines how colors are represented within AWT. ColorModel 
+is an abstract class that you can subclass to specify your own representation 
+for colors. AWT provides two concrete subclasses of ColorModel 
+that you can use to build your own color model; they are DirectColorModel 
+and IndexColorModel. These 
+two correspond to the two ways computers represent colors internally. 
+Most modern computer systems use 24 bits to represent each pixel. These 
+24 bits contain 8 bits for each primary color (red, green, blue); each 
+set of 8 bits represents the intensity of that color for the particular pixel. 
+This arrangement yields the familiar "16 million colors" that 
+you see in advertisements. It corresponds closely to Java's direct 
+color model. 
+However, 24 bits per pixel, with something like a million pixels on the 
+screen, adds up to a lot of memory. In the dark ages, memory was expensive, 
+and devoting this much memory to a screen buffer cost too much. Therefore, 
+designers used fewer bits--possibly as few as three, but more often 
+eight--for each pixel. Instead of representing the colors directly 
+in these bits, the bits were an index into a color map. Graphics programs 
+would load the color map with the colors they were interested in and then 
+represent each pixel by using the index of the appropriate color in the 
+map. For example, the value 1 might represent fuschia; the value 2 might represent 
+puce. Full information about how to display each color (the red, green, 
+and blue components that make up fuschia or puce) is contained only in 
+the color map. This arrangement corresponds closely to Java's indexed 
+color model. 
+Because Java is platform-independent, you don't need to worry about 
+how your computer or the user's computer represents colors. Your 
+programs can use an indexed or direct color map as appropriate. Java will 
+do the best it can to render the colors you request. Of course, if you 
+use 5,000 colors on a computer that can only display 256, Java is going 
+to have to make compromises. It will decide which colors to put in the color 
+map and which colors are close enough to the colors in the color map, 
+but that's done behind your back. 
+Java's default color model uses 8 bits per pixel for red, green, 
+and blue, along with another 8 bits for alpha (transparency) level. However, 
+as I said earlier, you can create your own ColorModel 
+if you want to work in some other scheme. For example, you could create 
+a grayscale color model for black and white pictures, or an HSB (hue, 
+saturation, brightness) color model if you are more comfortable working 
+with this system. Your color model's job will be to take a pixel 
+value in your representation and translate that value into the corresponding 
+alpha, red, green, and blue values. If you are working with a grayscale 
+image, your image producer could deliver grayscale values to the image 
+consumer, plus a ColorModel 
+that tells the consumer how to render these gray values in terms of ARGB 
+components. 
+ColorModel MethodsConstructors
+public ColorModel (int bits) 
+There is a single constructor for ColorModel. 
+It has one parameter, bits, 
+which describes the number of bits required per pixel of an image. Since 
+this is an abstract class, you cannot call this constructor directly. Since 
+each pixel value must be stored within an integer, the maximum value for 
+bits is 32. If you request more, you get 32. 
+Pseudo-constructors
+public static ColorModel getRGBdefault() 
+The getRGBdefault() method 
+returns the default ColorModel, 
+which has 8 bits for each of the components alpha, red, green, and blue. 
+The order the pixels are stored in an integer is 0xAARRGGBB, or alpha in 
+highest order byte, down to blue in the lowest. 
+Other methods
+public int getPixelSize () 
+The getPixelSize() method returns 
+the number of bits required for each pixel as described by this color model. 
+That is, it returns the number of bits passed to the constructor. 
+public abstract int getAlpha (int pixel)
+The getAlpha() method returns 
+the alpha component of pixel 
+for a color model. Its range must be between 0 and 255, inclusive. A value 
+of 0 means the pixel is completely transparent and the background will 
+appear through the pixel. A value of 255 means the pixel is opaque and 
+you cannot see the background behind it. 
+public abstract int getRed (int pixel)
+The getRed() method returns 
+the red component of pixel 
+for a color model. Its range must be between 0 and 255, inclusive. A value 
+of 0 means the pixel has no red in it. A value of 255 means red is at maximum 
+intensity. 
+public abstract int getGreen (int pixel)
+The getGreen() method returns 
+the green component of pixel 
+for a color model. Its range must be between 0 and 255, inclusive. A value 
+of 0 means the pixel has no green in it. A value of 255 means green is 
+at maximum intensity. 
+public abstract int getBlue (int pixel)
+The getBlue() method returns 
+the blue component of pixel 
+for a color model. Its range must be between 0 and 255, inclusive. A value 
+of 0 means the pixel has no blue in it. A value of 255 means blue is at 
+maximum intensity. 
+public int getRGB(int pixel)
+The getRGB() method returns 
+the color of pixel in the default 
+RGB color model. If a subclass has changed the ordering or size of the 
+different color components, getRGB() 
+will return the pixel in the RGB color model (0xAARRGGBB order). In theory, 
+the subclass does not need to override this method, unless it wants to 
+make it final. Making this method final may yield a significant performance 
+improvement. 
+public void finalize ()  
+The garbage collector calls finalize() 
+when it determines that the ColorModel 
+object is no longer needed. finalize() frees 
+any internal resources that the ColorModel 
+object has used. 
+DirectColorModel
+The DirectColorModel class 
+is a concrete subclass of ColorModel. 
+It specifies a color model in which each pixel contains all the color information 
+(alpha, red, green, and blue values) explicitly. Pixels are represented 
+by 32-bit (int) quantities; the constructor lets you change which bits 
+are allotted to each component. 
+All of the methods in this class, except constructors, are final, because 
+of assumptions made by the implementation. You can create subclasses of 
+DirectColorModel, but you 
+can't override any of its methods. However, you should not need to 
+develop your own subclass. Just create an instance of DirectColorModel 
+with the appropriate constructor. Any subclassing results in serious performance 
+degradation, because you are going from fast, static final method calls to 
+dynamic method lookups.Constructors
+public DirectColorModel (int bits, int redMask, int greenMask, int blueMask, 
+int alphaMask) 
+This constructor creates a DirectColorModel 
+in which bits represents the total number of bits used to represent a pixel; 
+it must be less than or equal to 32. The redMask, 
+greenMask, blueMask, 
+and alphaMask specify where 
+in a pixel each color component exists. Each of the bit masks must be contiguous 
+(e.g., red cannot be the first, fourth, and seventh bits of the pixel), 
+must be smaller than 2^bits, 
+and should not exceed 8 bits. (You cannot display more than 8 bits of data 
+for any color component, but the mask can be larger.) Combined, the masks 
+together should be bits in 
+length. The default RGB color model is: 
+new DirectColorModel (32, 0x00ff0000, 0x0000ff00, 0x000000ff, 0xff000000)
+The run-time exception IllegalArgumentException is 
+thrown if any of the following occur: 
+The bits that are set in a mask are not contiguous.
+Mask bits overlap (i.e., the same bit is set in two or more masks).
+The number of mask bits exceeds bits.
+public DirectColorModel (int bits, int redMask, int greenMask, int blueMask) 
+This constructor for DirectColorModel 
+calls the first with an alpha mask of 0, which means that colors in this 
+color model have no transparency component. All colors will be fully opaque 
+with an alpha value of 255. The same restrictions for the red, green, and 
+blue masks apply. 
+Methods
+final public int getAlpha (int pixel) 
+The getAlpha() method returns 
+the alpha component of pixel 
+for the color model as a number from 0 to 255, inclusive. A value of 0 
+means the pixel is completely transparent, and the background will appear 
+through the pixel. A value of 255 means the pixel is opaque, and you cannot 
+see the background behind it. 
+final public int getRed (int pixel) 
+The getRed() method returns 
+the red component of pixel 
+for the color model. Its range is from 0 to 255. A value of 0 means the 
+pixel has no red in it. A value of 255 means red is at maximum intensity. 
+final public int getGreen (int pixel) 
+The getGreen() method returns 
+the green component of pixel 
+for the color model. Its range is from 0 to 255. A value of 0 means the 
+pixel has no green in it. A value of 255 means green is at maximum intensity. 
+final public int getBlue (int pixel) 
+The getBlue() method returns 
+the blue component of pixel 
+for the color model. Its range is from 0 to 255. A value of 0 means the 
+pixel has no blue in it. A value of 255 means blue is at maximum intensity. 
+final public int getRGB (int pixel) 
+The getRGB() method returns 
+the color of pixel in the default 
+RGB color model. If a subclass has changed the ordering or size of the 
+different color components, getRGB() 
+will return the pixel in the RGB color model (0xAARRGGBB order). The getRGB() 
+method in this subclass is identical to the method in ColorModel 
+but overrides it to make it final. 
+Other methods
+final public int getAlphaMask () 
+The getAlphaMask() method returns 
+the alphaMask from the DirectColorModel 
+constructor (or 0 if constructor did not have alphaMask). 
+The alphaMask specifies which 
+bits in the pixel represent the alpha transparency component of the color 
+model. 
+final public int getRedMask () 
+The getRedMask() method returns 
+the redMask from the DirectColorModel 
+constructor. The redMask specifies 
+which bits in the pixel represent the red component of the color model. 
+final public int getGreenMask () 
+The getGreenMask() method returns 
+the greenMask from the DirectColorModel 
+constructor. The greenMask 
+specifies which bits in the pixel represent the green component of the 
+color model. 
+final public int getBlueMask () 
+The getBlueMask() method returns 
+the blueMask from the DirectColorModel 
+constructor. The blueMask specifies 
+which bits in the pixel represent the blue component of the color model. 
+IndexColorModel
+The IndexColorModel is another 
+concrete subclass of ColorModel. 
+It specifies a ColorModel that 
+uses a color map lookup table (with a maximum size of 256), rather than 
+storing color information in the pixels themselves. Pixels are represented 
+by an index into the color map, which is at most an 8-bit quantity. Each 
+entry in the color map gives the alpha, red, green, and blue components 
+of some color. One entry in the map can be designated "transparent." 
+This is called the "transparent pixel"; the alpha component 
+of this map entry is ignored. 
+All of the methods in this class, except constructors, are final because 
+of assumptions made by the implementation. You shouldn't need to 
+create subclasses; you can if necessary, but you can't override any 
+of the IndexColorModel methods. 
+Example 12.2 (later in this chapter) uses an IndexColorModel. Constructors
+There are two sets of constructors for IndexColorModel. 
+The first two constructors use a single-byte array for the color map. The 
+second group implements the color map with separate byte arrays for each 
+color component. 
+public IndexColorModel (int bits, int size, byte colorMap[], int start, 
+boolean hasalpha, int transparent) 
+This constructor creates an IndexColorModel. 
+bits is the number of bits 
+used to represent each pixel and must not exceed 8. size 
+is the number of elements in the map; it must be less than 2^bits. hasalpha 
+should be true if the color map includes alpha (transparency) components 
+and false if it doesn't. transparent 
+is the location of the transparent pixel in the map (i.e., the pixel value 
+that is considered transparent). If there is no transparent pixel, set 
+transparent to -1. 
+The colorMap describes the 
+colors used to paint pixels. start 
+is the index within the colorMap 
+array at which the map begins; prior elements of the array are ignored. 
+An entry in the map consists of three or four consecutive bytes, representing 
+the red, green, blue, and (optionally) alpha components. If hasalpha 
+is false, a map entry consists of three bytes, and no alpha components are 
+present; if hasalpha is true, 
+map entries consist of four bytes, and all four components must be present. 
+For example, consider a pixel whose value is p, and a color map with a 
+hasalpha set to false. Therefore, 
+each element in the color map occupies three consecutive array elements. 
+The red component of that pixel will be located at colorMap[start 
++ 3*p]; the green component will be at colorMap[start 
++ 3*p + 1]; and so on. The value of size may 
+be smaller than 2^bits, 
+meaning that there may be pixel values with no corresponding entry in the 
+color map. These pixel values (i.e., size  &lt; 2^bits) are painted with the color components 
+set to 0; they are transparent if hasalpha 
+is true, opaque otherwise. 
+If bits is too large (greater 
+than 8), size is too large 
+(greater than 2^bits), 
+or the colorMap array is too 
+small to hold the map, the run-time 
+exception ArrayIndexOutOfBoundsException 
+will be thrown. 
+public IndexColorModel (int bits, int size, byte colorMap[], int start, 
+boolean hasalpha) 
+This version of the IndexColorModel 
+constructor calls the previous constructor with a transparent 
+index of -1; that is, there is no transparent pixel. If bits 
+is too large (greater than 8), or size 
+is too large (greater than 2^bits), 
+or the colorMap array is too 
+small to hold the map, the run-time 
+exception, ArrayIndexOutOfBoundsException 
+will be thrown. 
+public IndexColorModel (int bits, int size, byte red[], byte green[], byte 
+blue[],  int transparent) 
+The second set of constructors for IndexColorModel 
+is similar to the first group, with the exception that these constructors 
+use three or four separate arrays (one per color component) to represent 
+the color map, instead of a single array. 
+The bits parameter still represents 
+the number of bits in a pixel. size 
+represents the number of elements in the color map. transparent 
+is the location of the transparent pixel in the map (i.e., the pixel value 
+that is considered transparent). If there is no transparent pixel, set 
+transparent to -1. 
+The red, green, 
+and blue arrays contain the 
+color map itself. These arrays must have at least size 
+elements. They contain the red, green, and blue components of the colors 
+in the map. For example, if a pixel is at position p, 
+red[p] contains the pixel's 
+red component; green[p] contains 
+the green component; and blue[p] 
+contains the blue component. The value of size 
+may be smaller than 2^bits, 
+meaning that there may be pixel values with no corresponding entry in the 
+color map. These pixel values (i.e., size  2^bits) 
+are painted with the color components set to 0. 
+If bits is too large (greater 
+than 8), size is too large 
+(greater than 2^bits), 
+or the red, green, and blue arrays are too small to hold the map, the run-time exception ArrayIndexOutOfBoundsException 
+will be thrown. 
+public IndexColorModel (int bits, int size, byte red[], byte green[], byte 
+blue[]) 
+This version of the IndexColorModel 
+constructor calls the previous one with a transparent 
+index of -1; that is, there is no transparent pixel. If bits 
+is too large (greater than 8), size 
+is too large (greater than 2^bits), 
+or the red, green, and blue arrays are too small to hold the map, the run-time exception ArrayIndexOutOfBoundsException 
+will be thrown. 
+public IndexColorModel (int bits, int size, byte red[], byte green[], byte 
+blue[], byte alpha[]) 
+Like the previous constructor, this version creates an IndexColorModel 
+with no transparent pixel. It differs from the previous constructor in 
+that it supports transparency; the array alpha contains the map's 
+transparency values. If bits 
+is too large (greater than 8), size 
+is too large (greater than 2^bits), 
+or the red, green, blue, and alpha arrays are too small to hold the map, 
+the run-time exception ArrayIndexOutOfBoundsException 
+will be thrown. 
+Methods
+final public int getAlpha (int pixel) 
+The getAlpha() method returns 
+the alpha component of pixel 
+for a color model, which is a number between 0 and 255, inclusive. A value 
+of 0 means the pixel is completely transparent and the background will 
+appear through the pixel. A value of 255 means the pixel is opaque and 
+you cannot see the background behind it. 
+final public int getRed (int pixel) 
+The getRed() method returns 
+the red component of pixel 
+for a color model, which is a number between 0 and 255, inclusive. A value 
+of 0 means the pixel has no red in it. A value of 255 means red is at maximum 
+intensity. 
+final public int getGreen (int pixel) 
+The getGreen() method returns 
+the green component of pixel 
+for a color model, which is a number between 0 and 255, inclusive. A value 
+of 0 means the pixel has no green in it. A value of 255 means green is 
+at maximum intensity. 
+final public int getBlue (int pixel) 
+The getBlue() method returns 
+the blue component of pixel 
+for a color model, which is a number between 0 and 255, inclusive. A value 
+of 0 means the pixel has no blue in it. A value of 255 means blue is at 
+maximum intensity. 
+final public int getRGB (int pixel) 
+The getRGB() method returns 
+the color of pixel in the default 
+RGB color model. If a subclass has changed the ordering or size of the 
+different color components, getRGB() 
+will return the pixel in the RGB color model (0xAARRGGBB order). This version 
+of getRGB is identical to the version in the ColorModel 
+class but overrides it to make it final. 
+Other methods
+final public int getMapSize() 
+The getMapSize() method returns 
+the size of the color map (i.e., the number of distinct colors). 
+final public int getTransparentPixel () 
+The getTransparentPixel() method 
+returns the color map index for the transparent pixel in the color model. 
+If no transparent pixel exists, it returns -1. It is not possible to change 
+the transparent pixel after the color model has been created. 
+final public void getAlphas (byte alphas[]) 
+The getAlphas() method copies 
+the alpha components of the ColorModel 
+into elements 0 through getMapSize()-1 
+of the alphas array. Space 
+must already be allocated in the alphas 
+array. 
+final public void getReds (byte reds[]) 
+The getReds() method copies 
+the red components of the ColorModel 
+into elements 0 through getMapSize()-1 
+of the reds array. Space must 
+already be allocated in the reds 
+array. 
+final public void getGreens (byte greens[]) 
+The getGreens() method copies 
+the green components of the ColorModel 
+into elements 0 through getMapSize()-1 
+of the greens array. Space 
+must already be allocated in the greens 
+array. 
+final public void getBlues (byte blues[]) 
+The getBlues() method copies 
+the blue components of the ColorModel 
+into elements 0 through getMapSize()-1 
+of the blues array. Space must 
+already be allocated in the blues 
+array. 
+ImageObserver
+ImageProducer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

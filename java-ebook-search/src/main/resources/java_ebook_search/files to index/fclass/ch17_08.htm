@@ -1,0 +1,102 @@
+
+[Chapter 17] EventObject
+Chapter 17The java.util Package
+EventObject
+Name
+EventObject
+Synopsis
+Class Name:
+java.util.EventObject
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.awt.AWTEvent
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The EventObject class is the superclass 
+of all other classes that represent events in the Java 1.1 event model. 
+The class is named EventObject to avoid confusion with
+java.awt.Event, 
+which was used to represent events in the old Java 1.0 event model.
+Class Summary
+public class java.util.EventObject extends java.lang.Object
+             implements java.io.Serializable {
+  // Variables
+  protected transient Object source;
+  // Constructors
+  public EventObject(Object source);
+  // Instance Methods
+  public Object getSource();
+  public String toString();
+}
+Variables
+source
+protected transient Object source
+Description
+The object that generated this EventObject. 
+Constructors
+EventObject
+public EventObject(Object source)
+Parameters
+source
+The object that 
+generated this EventObject. 
+Description
+This constructor creates an EventObject 
+whose source is the given object. 
+Instance Methods
+getSource
+public Object getSource()
+Returns
+The object that generated this EventObject. 
+Description
+This method returns the object that is the source of this EventObject. 
+toString
+public String toString()
+Returns
+A string that represents this EventObject. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this EventObject. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals()
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+AWTEvent, 
+Event, 
+Serializable 
+EventListener
+GregorianCalendar
+ 
+ 
+ 
+ 
+ 
+ 
+ 

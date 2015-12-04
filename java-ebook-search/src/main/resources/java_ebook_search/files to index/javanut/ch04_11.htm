@@ -1,0 +1,88 @@
+
+[Chapter 4] 4.11 Applet Changes
+Chapter 4What's New in Java 1.1
+4.11 Applet Changes
+There are several new features in Java 1.1 that affect
+applets.  The first is the introduction of JAR files.  "JAR"
+stands for Java ARchive, and a JAR file is just that: an
+archive of files used by a Java applet.  An applet often
+requires multiple class files, as well as images, sounds,
+and other resources, to be loaded over the network.
+Prior to Java 1.1, each of these files was loaded through a
+separate HTTP request, which is fairly inefficient.  With
+Java 1.1, all (or many) of the files an applet needs can be
+combined into a single JAR file, which an applet viewer or
+Web browser can download with a single HTTP request.
+Chapter 6, Applets, demonstrates the use of JAR files.
+JAR files are stored in the ZIP file format.  A JAR archive
+can be created with the jar tool shipped with the JDK.
+Once you have created a JAR file, you refer to it in a
+&lt;APPLET&gt; tag with the ARCHIVE attribute.
+This ARCHIVE attribute may actually be set to a
+comma-separated list of archive files to be downloaded.
+Note that specifying an ARCHIVE attribute simply
+tells the applet viewer or browser the name of a JAR file or
+files to load; it does not tell the browser the name of the
+applet that is to be run.  Thus, you still must specify the
+CODE attribute (or the new OBJECT attribute,
+as we'll see below).  For example, you might use an
+&lt;APPLET&gt; tag like the following to tell the browser
+to download the animation.jar file and start the
+applet contained in the file Animator.class:
+&lt;APPLET CODE="Animator.class" ARCHIVE="animation.jar" WIDTH=500 HEIGHT=200&gt;
+&lt;/APPLET&gt;
+There is another advantage to the use of JAR files.  Every
+JAR file contains a "manifest" file, which you either
+specify explicitly when you create the archive, or which is
+created for you by the jar tool.  The manifest is
+stored in a file named META-INF/MANIFEST.MF and
+contains meta-information about the files in the archive.
+By default, the jar tool creates a manifest file that
+contains MD5 and SHA message digests for
+each file in the archive.  This information can be used by
+the applet viewer or Web browser to verify that the files in
+the archive have not been corrupted since the JAR file was
+created.
+The main reason to include message digests in the manifest
+file, however, is so that a JAR file can have digital
+signatures added to it.  An archive can be
+signed with the javakey tool.  What a digital
+signature allows you to do is verify that the files in a JAR
+file have not been modified since the digital signature was
+added to the archive.  If you trust the person or entity who
+signed the file, then you ought to trust the applet
+contained in the JAR file.  (The javakey tool allows
+you to specify whether or not you trust any given entity.)
+Chapter 6, Applets also describes how you might use digital signatures
+and javakey.
+In JDK 1.1, the appletviewer tool understands
+digitally signed JAR files. When it loads an applet
+that has been signed by a trusted entity, it runs that
+applet without subjecting it to the usual security
+restrictions--the applet can read and write files, and do
+anything that a standalone Java application can do.  Common
+Web browsers are likely to follow suit and give special
+privileges to trusted applets.  One refinement we may see in
+the future is the ability to specify varying levels of
+trust, and to assign different sets of privileges to applets
+at those varying trust levels.
+Besides the introduction of JAR files and trusted applets,
+Java 1.1 also supports "serialized applets." In an
+&lt;APPLET&gt; tag, you can specify the OBJECT
+attribute instead of the CODE attribute.  If you do
+this, the value of the OBJECT attribute should be
+the name of a file that contains a serialized representation
+of the applet to be run.  Graphical application-builder
+tools may prefer to output applets as pre-initialized object
+trees, rather than generating custom Java code to perform
+the initializations. See Chapter 9, Object Serialization for more information on
+serialized applets.
+Enterprise APIs: JDBC, RMI, and Security
+New JDK Utilities
+ 
+ 
+ 
+ 
+ 
+ 
+ 

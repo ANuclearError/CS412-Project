@@ -1,0 +1,131 @@
+
+[Chapter 22] CropImageFilter
+Chapter 22java.awt.image Reference
+CropImageFilter
+Name
+CropImageFilter
+Description
+The CropImageFilter class creates 
+a smaller image by cropping (i.e., extracting a rectangular region from) 
+a larger image. 
+Class Definition
+public class java.awt.image.CropImageFilter
+    extends java.awt.image.ImageFilter {
+  // Constructors
+  public CropImageFilter (int x, int y, int width, int height);
+  // Instance Methods
+  public void setDimensions (int width, int height);
+  public void setPixels (int x, int y, int width, int height, ColorModel model,
+    byte[] pixels, int offset, int scansize);
+  public void setPixels (int x, int y, int width, int height, ColorModel model,
+    int[] pixels, int offset, int scansize);
+  public void setProperties (Hashtable properties);
+}
+Constructors
+CropImageFilter
+public CropImageFilter (int x, int y, int width, int height)
+Parameters
+x
+x-coordinate of top-left corner of piece to crop.
+y
+y-coordinate of top-left corner of piece to crop.
+width
+Width of image to crop.
+height
+Height of image to crop. 
+Description
+Constructs a CropImageFilter 
+that crops the specified region from the original image. 
+Instance Methods
+setDimensions
+public void setDimensions (int width, int height)
+Parameters
+width
+Ignored parameter.
+height
+Ignored parameter. 
+Overrides
+ImageFilter.setDimensions(int, 
+int) 
+Description
+Called with the original image's dimensions; these dimensions are 
+ignored. The method in turn calls the ImageConsumer 
+with the dimensions of the cropped image. 
+setPixels
+public void setPixels (int x, int y, int width, int height, ColorModel model, byte[] pixels, int offset, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+width
+Width of the rectangle of pixel data delivered with 
+this method call.
+height
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+offset
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ImageFilter.setPixels(int, 
+int, int, int, ColorModel, byte[], int, int) 
+Description
+Receives a rectangle of image data from the ImageProducer; 
+crops these pixels and delivers them to any ImageConsumers. 
+public void setPixels (int x, int y, int width, int height, ColorModel model, int[] pixels, int offset, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+width
+Width of the rectangle of pixel data delivered with 
+this method call.
+height
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+offset
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ImageFilter.setPixels(int, 
+int, int, int, ColorModel, int[], int, int) 
+Description
+Receives a rectangle of image data from the ImageProducer; 
+crops these pixels and delivers them to any ImageConsumers. 
+setProperties
+public void setProperties (Hashtable properties)
+Parameters
+properties
+The properties for the image. 
+Overrides
+ImageFilter.setProperties(Hashtable) 
+Description
+Adds the "croprect" image property to the properties list. 
+See Also
+ColorModel, Hashtable, 
+ImageFilter 
+ColorModel
+DirectColorModel
+ 
+ 
+ 
+ 
+ 
+ 
+ 

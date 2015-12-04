@@ -1,0 +1,83 @@
+
+[Chapter 6] 6.5 Reading Applet Parameters
+Chapter 6Applets
+6.5 Reading Applet Parameters
+Example 6.4
+shows an extension to our Scribble applet. The
+ColorScribble class is a subclass of
+Scribble that adds the ability to scribble in a
+configurable foreground color over a configurable background
+color. (The ColorScribble applet looks a lot like
+the Scribble applet of
+Figure 6.3
+and is not pictured here.)
+ColorScribble has an init() method that
+reads the value of two "applet parameters" that can be
+optionally specified with the &lt;PARAM&gt; tag in the
+applet's HTML file. The returned string values are
+converted to colors and specified as the default foreground
+and background colors for the applet. Note that the
+init() method invokes its superclass's
+init() method, just in case a future version of
+Scribble defines that method to perform
+initialization.
+This example also introduces the getAppletInfo() and
+getParameterInfo() methods. These methods provide
+textual information about the applet (its author, its
+version, its copyright, etc.) and the parameters that it can
+accept (the parameter names, their types, and their
+meanings). An applet should generally define these methods,
+although the current generation of Web browsers do not
+actually ever make use of them.  (The appletviewer
+application in the JDK does call these methods, however.)
+Example 6.4: Reading Applet Parameters
+import java.applet.*;
+import java.awt.*;
+public class ColorScribble extends Scribble {
+  // Read in two color parameters and set the colors.
+  public void init() {
+    super.init();
+    Color foreground = getColorParameter("foreground");
+    Color background = getColorParameter("background");
+    if (foreground != null) this.setForeground(foreground);
+    if (background != null) this.setBackground(background);
+  }
+  // Read the specified parameter.  Interpret it as a hexadecimal
+  // number of the form RRGGBB and convert it to a color.
+  protected Color getColorParameter(String name) {
+    String value = this.getParameter(name);
+    try { return new Color(Integer.parseInt(value, 16)); }
+    catch (Exception e) { return null; }
+  }
+  // Return information suitable for display in an About dialog box.
+  public String getAppletInfo() {
+    return "ColorScribble v. 0.02.  Written by David Flanagan.";
+  }
+  // Return info about the supported parameters.  Web browsers and applet
+  // viewers should display this information, and may also allow users to
+  // set the parameter values.
+  public String[][] getParameterInfo() { return info; }
+  // Here's the information that getParameterInfo() returns.
+  // It is an array of arrays of strings describing each parameter.
+  // Format: parameter name, parameter type, parameter description
+  private String[][] info = {
+    {"foreground", "hexadecimal color value", "foreground color"},
+    {"background", "hexadecimal color value", "background color"}
+  };
+}
+The following HTML fragment references the applet, and
+demonstrates how parameter values can be set with the
+&lt;PARAM&gt; tag:
+&lt;APPLET code="ColorScribble.class" width=300 height=300&gt;
+&lt;PARAM name="foreground" value="0000FF"&gt;
+&lt;PARAM name="background" value="FFCCCC"&gt;
+&lt;/APPLET&gt;
+Handling Events
+Images and Sounds
+ 
+ 
+ 
+ 
+ 
+ 
+ 

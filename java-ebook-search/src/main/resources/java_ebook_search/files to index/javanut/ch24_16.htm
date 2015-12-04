@@ -1,0 +1,93 @@
+
+[Chapter 24] 24.16 java.io.File (JDK 1.0)
+Chapter 24The java.io Package
+24.16 java.io.File (JDK 1.0)
+This class supports a platform-independent definition
+of file and directory names. It also provides
+methods to list the files in a directory, to check the
+existence, readability, writeability, type, size, and
+modification time of files and directories, to make new
+directories, to rename files and directories, and to
+delete files and directories. The constants defined by this
+class are the platform-dependent directory and path
+separator characters, available as a String or
+char.
+getName() returns the name of the File with
+any directory names omitted. getPath() returns the
+full name of the file, including the directory name.
+getParent() returns the directory of the
+File. If the File is an absolute
+specification, then getAbsolutePath() returns the
+complete filename. Otherwise, if the File is a
+relative file specification, it returns the relative 
+filename appended to the current working directory.
+isAbsolute() tests whether the File is an
+absolute specification. exists(),
+canWrite(), canRead(), isFile(), and
+isDirectory() perform the obvious tests on the
+specified File. length() returns the length
+of the file. lastModified() returns the
+modification time of the file (which should be used for
+comparison with other file times only, and not interpreted
+as any particular time format).
+list() returns the name of all entries in a
+directory that are not rejected by an optional
+FilenameFilter. mkdir() creates a
+directory. mkdirs() creates all the directories in
+a File specification. renameTo() renames a
+file or directory. delete() deletes a file or
+directory. Note that there is no method to create a file;
+that is done with a FileOutputStream.
+public class File extends Object implements Serializable {
+    // Public Constructors
+            public File(String path);
+            public File(String path, String name);
+            public File(File dir, String name);
+    // Constants
+            public static final String pathSeparator;
+            public static final char pathSeparatorChar;
+            public static final String separator;
+            public static final char separatorChar;
+    // Public Instance Methods
+            public boolean canRead();
+            public boolean canWrite();
+            public boolean delete();
+            public boolean equals(Object obj);  // Overrides Object
+            public boolean exists();
+            public String getAbsolutePath();
+        1.1  public String getCanonicalPath() throws IOException;
+            public String getName();
+            public String getParent();
+            public String getPath();
+            public int hashCode();  // Overrides Object
+            public native boolean isAbsolute();
+            public boolean isDirectory();
+            public boolean isFile();
+            public long lastModified();
+            public long length();
+            public String[] list();
+            public String[] list(FilenameFilter filter);
+            public boolean mkdir();
+            public boolean mkdirs();
+            public boolean renameTo(File dest);
+            public String toString();  // Overrides Object
+}
+Passed To:
+File(), 
+File.renameTo(), 
+FileInputStream(), 
+FilenameFilter.accept(), 
+FileOutputStream(), 
+FileReader(), 
+FileWriter(), 
+RandomAccessFile(), 
+ZipFile()
+java.io.Externalizable (JDK 1.1)
+java.io.FileDescriptor (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

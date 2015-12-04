@@ -1,0 +1,37 @@
+
+[Chapter 24] 24.34 java.io.LineNumberInputStream (JDK 1.0; Deprecated.)
+Chapter 24The java.io Package
+24.34 java.io.LineNumberInputStream (JDK 1.0; Deprecated.)
+This class is a FilterInputStream that keeps track
+of the number of lines of data that have been read.
+getLineNumber() returns the current line number.
+setLineNumber() sets the line number of the current
+line. Subsequent lines are numbered starting from
+that number.
+This class is deprecated in Java 1.1 because it does not
+properly convert bytes to characters.  Use
+LineNumberReader instead.
+public class LineNumberInputStream extends FilterInputStream {
+    // Public Constructor
+            public LineNumberInputStream(InputStream in);
+    // Public Instance Methods
+            public int available() throws IOException;  // Overrides FilterInputStream
+            public int getLineNumber();
+            public void mark(int readlimit);  // Overrides FilterInputStream
+            public int read() throws IOException;  // Overrides FilterInputStream
+            public int read(byte[] b, int off, int len) throws IOException;  // Overrides FilterInputStream
+            public void reset() throws IOException;  // Overrides FilterInputStream
+            public void setLineNumber(int lineNumber);
+            public long skip(long n) throws IOException;  // Overrides FilterInputStream
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->LineNumberInputStream
+java.io.IOException (JDK 1.0)
+java.io.LineNumberReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

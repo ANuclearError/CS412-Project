@@ -1,0 +1,117 @@
+
+[Chapter 16] javah
+Chapter 16JDK Tools
+javah
+Name
+javah---Native Method C File Generator
+Availability
+JDK 1.0 and later.
+Synopsis
+javah [ options ] classnames
+Description
+javah generates C header and source files (.h
+and .c files) that describe the specified classes.
+Note that classes are specified by classname, not filename.
+These generated C files provide the information necessary
+for implementing native methods for the specified
+classes in C.  By default, javah produces output files
+suitable for the native interface used in JDK 1.0.  If the
+-jni option is specified, it generates output files
+for use with the Java 1.1 Java Native Interface (JNI).
+By default, javah generates a header file for
+the specified class or classes.  This header file declares a
+C struct that contains fields that correspond to the
+instance fields of the Java class.  The header also declares
+a procedure that you must implement for each of the native
+methods that the Java class contains.  (A full description
+of how to implement Java native methods in C is
+beyond the scope of this reference page.)
+If javah is run with the -stubs option, it
+generates a .c file that contains additional stub
+procedures necessary for linking the native method into the
+Java environment.  Note that you should not put your native
+method implementation in this generated stub file.
+With the -jni option specified, javah generates
+C header files that declare function prototypes each of the
+native methods of the specified classes.  No structure
+definitions are required using this new native interface.
+The JNI does not require stub files, either, so
+-stubs should not be specified with -jni.
+By default, javah creates C files in the current
+directory and bases their name on the name of the class.  If
+the name of the class includes a package name, then the C
+files include all the components of the fully qualified
+class name, with periods replaced by underscores.  You can
+override this default behavior with the -d and
+-o options.
+Options
+-classpath path
+The path that javah uses to look up the classes named
+on the command line.  This option overrides the default
+path, and any path specified by the CLASSPATH
+environment variable.  The path specified is an
+ordered list of directories and ZIP files, separated by
+colons on UNIX systems or semicolons on Windows systems.
+To specify additional directories or ZIP files for
+javah to search without overriding the default system
+class path, use the CLASSPATH environment variable.
+See the java reference page for more information on
+specifying paths.
+-d directory
+Specifies a directory where javah should store the
+files it generates.  By default it stores them in the
+current directory.  This option does not work with
+-o; you must specify any desired directory within
+the -o filename.
+-help
+Causes javah to display a simple usage message and exit.
+-jni
+Specifies that javah should output a header file for
+use with the new JNI (Java Native Interface), rather than
+using the old JDK 1.0 native interface.  Available in JDK
+1.1 and later.
+-o outputfile
+Combine all .h or .c file output into a
+single file, outputfile.  This is a convenience when
+you want to implement native methods for a number of classes
+in a single package.  It allows you to avoid having many
+short .h and .c files that must be
+manipulated separately.
+-stubs
+Generate .c stub files for the class or classes, and
+do not generate the .h header files.  Without this
+option, javah generates header files.
+-td directory
+The directory where javah should store temporary
+files.  The default is /tmp.
+-trace
+Specifies that javah should include tracing output
+commands in the stub files it generates.
+-v
+Verbose.  Causes javah to print messages about what it
+is doing.
+-version
+Causes javah to display its version number.
+Environment
+CLASSPATH
+Specifies an ordered list (colon-separated on UNIX,
+semicolon-separated on Windows systems) of directories and
+ZIP files in which javah should look for class
+definitions.  When a path is specified with this environment
+variable, javah always implicitly appends the location
+of the system classes to the end of the path.  If this
+environment variable is not specified, the default path
+is the current directory
+and the system classes.  This variable is overridden by
+the -classpath option.
+See Also
+java, javac
+javadoc
+javakey
+ 
+ 
+ 
+ 
+ 
+ 
+ 

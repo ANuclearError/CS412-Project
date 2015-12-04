@@ -1,0 +1,73 @@
+
+[Chapter 24] 24.56 java.io.RandomAccessFile (JDK 1.0)
+Chapter 24The java.io Package
+24.56 java.io.RandomAccessFile (JDK 1.0)
+This class allows reading and writing of arbitrary bytes,
+text, and primitive Java data types from or to any specified
+location in a file. Because this class provides random,
+rather than sequential, access to files, it is neither a
+subclass of InputStream nor of OutputStream,
+but provides an entirely independent method for reading and
+writing data from or to files. RandomAccessFile
+implements the same interfaces as DataInputStream
+and DataOutputStream, and thus defines the same
+methods for reading and writing data as those classes do.
+The seek() method provides random
+access to the file--it is used to select the position in the
+file from which, or to which, data should be read or written.
+The mode argument to the constructor methods should
+be "r" for a file that
+is to be read-only, and "rw" for a
+file that is to be written (and perhaps read as well).
+public class RandomAccessFile extends Object implements DataOutput, DataInput {
+    // Public Constructors
+            public RandomAccessFile(String name, String mode) throws IOException;
+            public RandomAccessFile(File file, String mode) throws IOException;
+    // Public Instance Methods
+            public native void close() throws IOException;
+            public final FileDescriptor getFD() throws IOException;
+            public native long getFilePointer() throws IOException;
+            public native long length() throws IOException;
+            public native int read() throws IOException;
+            public int read(byte[] b, int off, int len) throws IOException;
+            public int read(byte[] b) throws IOException;
+            public final boolean readBoolean() throws IOException;  // From DataInput
+            public final byte readByte() throws IOException;  // From DataInput
+            public final char readChar() throws IOException;  // From DataInput
+            public final double readDouble() throws IOException;  // From DataInput
+            public final float readFloat() throws IOException;  // From DataInput
+            public final void readFully(byte[] b) throws IOException;  // From DataInput
+            public final void readFully(byte[] b, int off, int len) throws IOException;  // From DataInput
+            public final int readInt() throws IOException;  // From DataInput
+            public final String readLine() throws IOException;  // From DataInput
+            public final long readLong() throws IOException;  // From DataInput
+            public final short readShort() throws IOException;  // From DataInput
+            public final String readUTF() throws IOException;  // From DataInput
+            public final int readUnsignedByte() throws IOException;  // From DataInput
+            public final int readUnsignedShort() throws IOException;  // From DataInput
+            public native void seek(long pos) throws IOException;
+            public int skipBytes(int n) throws IOException;  // From DataInput
+            public native void write(int b) throws IOException;  // From DataOutput
+            public void write(byte[] b) throws IOException;  // From DataOutput
+            public void write(byte[] b, int off, int len) throws IOException;  // From DataOutput
+            public final void writeBoolean(boolean v) throws IOException;  // From DataOutput
+            public final void writeByte(int v) throws IOException;  // From DataOutput
+            public final void writeBytes(String s) throws IOException;  // From DataOutput
+            public final void writeChar(int v) throws IOException;  // From DataOutput
+            public final void writeChars(String s) throws IOException;  // From DataOutput
+            public final void writeDouble(double v) throws IOException;  // From DataOutput
+            public final void writeFloat(float v) throws IOException;  // From DataOutput
+            public final void writeInt(int v) throws IOException;  // From DataOutput
+            public final void writeLong(long v) throws IOException;  // From DataOutput
+            public final void writeShort(int v) throws IOException;  // From DataOutput
+            public final void writeUTF(String str) throws IOException;  // From DataOutput
+}
+java.io.PushbackReader (JDK 1.1)
+java.io.Reader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

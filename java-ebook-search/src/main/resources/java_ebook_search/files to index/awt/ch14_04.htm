@@ -1,0 +1,64 @@
+
+[Chapter 14] 14.4 AppletStub Interface
+Chapter 14And Then There Were Applets
+14.4 AppletStub Interface
+The AppletStub interface provides 
+a way to get information from the run-time browser environment. The Applet 
+class provides methods with similar names that call these methods. Methods
+public abstract boolean isActive () 
+The isActive() method returns 
+the current state of the applet. While an applet is initializing, it is 
+not active, and calls to isActive() 
+return false. The system marks the applet active just prior to calling 
+start(); after this point, 
+calls to isActive() return 
+true. 
+public abstract URL getDocumentBase () 
+The getDocumentBase() method 
+returns the complete URL of the HTML 
+file that loaded the applet. This method can be used with the getImage() 
+or getAudioClip() methods to 
+load an image or audio file relative to the HTML file. 
+public abstract URL getCodeBase () 
+The getCodeBase() method returns 
+the complete URL of the .class 
+file that contains the applet. This method can be used with the getImage() method 
+or the getAudioClip() method to 
+load an image or audio file relative to the .class 
+file. 
+public abstract String getParameter (String name) 
+The getParameter() method allows 
+you to get parameters from &lt;PARAM&gt; 
+tags within the &lt;APPLET&gt; 
+tag of the HTML file that loaded the applet. The name 
+parameter of getParameter() 
+must match the name string of the &lt;PARAM&gt; 
+tag; name is case insensitive. 
+The return value of getParameter() 
+is the value associated with name; 
+it is always a String regardless 
+of the type of data in the tag. If name 
+is not found within the &lt;PARAM&gt; 
+tags of the &lt;APPLET&gt;, 
+getParameter() returns null. 
+public abstract AppletContext getAppletContext () 
+The getAppletContext() method 
+returns the current AppletContext 
+of the applet. This is part of the stub that is set by the system when 
+setStub() is called. 
+public abstract void appletResize (int width, int height) 
+The appletResize() method is 
+called by the resize method of the Applet class. The method changes the 
+size of the applet space to width 
+x height. The browser must 
+support changing the applet space; if it doesn't, the size remains 
+unchanged. 
+AppletContext Interface
+Audio in Applications
+ 
+ 
+ 
+ 
+ 
+ 
+ 

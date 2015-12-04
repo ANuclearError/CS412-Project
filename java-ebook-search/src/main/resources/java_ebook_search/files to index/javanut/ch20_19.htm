@@ -1,0 +1,37 @@
+
+[Chapter 20] 20.19 java.awt.event.KeyListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.19 java.awt.event.KeyListener (JDK 1.1)
+This interface defines the methods that an object must
+implement to "listen" for key events on AWT components.
+When a KeyEvent occurs, an AWT component
+notifies its registered KeyListener objects by
+invoking one of their methods.
+An easy way to implement this interface is by subclassing
+the KeyAdapter class.
+public abstract interface KeyListener extends EventListener {
+    // Public Instance Methods
+            public abstract void keyPressed(KeyEvent e);
+            public abstract void keyReleased(KeyEvent e);
+            public abstract void keyTyped(KeyEvent e);
+}
+Implemented By:
+AWTEventMulticaster, 
+KeyAdapter
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Component.addKeyListener(), 
+Component.removeKeyListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.KeyEvent (JDK 1.1)
+java.awt.event.MouseAdapter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

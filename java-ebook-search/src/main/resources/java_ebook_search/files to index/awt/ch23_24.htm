@@ -1,0 +1,89 @@
+
+[Chapter 23] TextComponentPeer
+Chapter 23java.awt.peer Reference
+TextComponentPeer
+Name
+TextComponentPeer
+Description
+TextComponentPeer is an interface 
+that defines the basis for text components. 
+Interface Definition
+public abstract interface java.awt.peer.TextComponentPeer
+   extends java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract int getCaretPosition(); 
+  public abstract int getSelectionEnd();
+  public abstract int getSelectionStart();
+  public abstract String getText();
+  public abstract void select (int selectionStart, int selectionEnd);
+  public abstract void setCaretPosition (int pos); 
+  public abstract void setEditable (boolean state);
+  public abstract void setText (String text);
+}
+Interface Methods
+getCaretPosition
+public abstract int getCaretPosition() 
+Returns
+The current position of the caret (text cursor). 
+getSelectionEnd
+public abstract int getSelectionEnd()
+Returns
+The ending cursor position of any selected text. 
+getSelectionStart
+public abstract int getSelectionStart()
+Returns
+The initial position of any selected text. 
+getText
+public abstract String getText()
+Returns
+The current contents of the text component's peer. 
+select
+public abstract void select (int selectionStart, int selectionEnd)
+Parameters
+selectionStart
+Beginning 
+position of the text to select.
+selectionEnd
+Ending position 
+of the text to select. 
+Description
+Selects text in the text component's peer. 
+selectCaretPosition
+public abstract void selectCaretPosition (int pos)
+Parameters
+pos
+New caret position. 
+Description
+Changes the position of the caret (text cursor). 
+setEditable
+public abstract void setEditable (boolean state)
+Parameters
+state
+true 
+if the user can change the contents of the text component's peer 
+(i.e., true to make the peer 
+editable); false to make the 
+peer read-only. 
+Description
+Allows you to change the current editable state of the text component's 
+peer. 
+setText
+public abstract void setText (String text)
+Parameters
+text
+New text for the text 
+component's peer . 
+Description
+Sets the content of the text component's peer. 
+See Also
+ComponentPeer, String, 
+TextAreaPeer, TextFieldPeer 
+TextAreaPeer
+TextFieldPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

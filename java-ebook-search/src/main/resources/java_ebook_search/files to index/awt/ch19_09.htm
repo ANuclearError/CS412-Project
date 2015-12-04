@@ -1,0 +1,273 @@
+
+[Chapter 19] CardLayout
+Chapter 19java.awt Reference
+CardLayout
+Name
+CardLayout
+Description
+The CardLayout LayoutManager 
+provides the means to manage multiple components, displaying one at a time. 
+Components are displayed in the order in which they are added to the layout, 
+or in an arbitrary order by using an assignable name. 
+Class Definition
+public class java.awt.CardLayout
+    extends java.lang.Object
+    implements java.awt.LayoutManager2, java.io.Serializable {
+  
+  // Constructors
+  public CardLayout();
+  public CardLayout (int hgap, int vgap);
+  
+  // Instance Methods
+  public void addLayoutComponent (Component comp, 
+      Object constraints); 
+  public void addLayoutComponent (String name, Component component); 
+  public void first (Container parent);
+  public int getHgap(); 
+  public abstract float getLayoutAlignmentX(Container target); 
+  public abstract float getLayoutAlignmentY(Container target); 
+  public int getVgap(); 
+  public abstract void invalidateLayout(Container target); 
+  public void last (Container parent); 
+  public void layoutContainer (Container target); 
+  public abstract Dimension maximumLayoutSize(Container target); 
+  public Dimension minimumLayoutSize (Container target); 
+  public void next (Container parent); 
+  public Dimension preferredLayoutSize (Container target); 
+  public void previous (Container parent); 
+  public void removeLayoutComponent (Component component); 
+  public void setHgap (int hgap); 
+  public void setVgap (int vgap); 
+  public void show (Container parent, String name); 
+  public String toString();
+}
+Constructors
+CardLayout
+public CardLayout()
+Description
+Constructs a CardLayout object. 
+public CardLayout (int hgap, int vgap)
+Parameters
+hgap
+Horizontal space around left and right of container 
+vgap
+Vertical space around top and bottom of container 
+Description
+Constructs a CardLayout object 
+with the values specified as the gaps around the container managed by this 
+instance of CardLayout. 
+Instance Methods
+addLayoutComponent
+public void addLayoutComponent (Component comp, Object constraints) 
+Parameters
+comp
+The component being added. 
+constraints
+An object describing the constraints on this component. 
+Implements 
+LayoutManager2.addLayoutComponent() 
+Description
+Adds the component comp to 
+a container subject to the given constraints. 
+This is a more generalized version of addLayoutComponent(String, 
+Component). It corresponds to java.awt.Container's 
+add(Component, Object). In practice, it is used 
+the same in Java 1.1 as in Java 1.0.2, except with the parameters 
+swapped: 
+Panel p = new Panel();
+p.setLayoutManager(new CardLayout());
+p.add(new Button("OK"), "Don Julio");
+addLayoutComponent
+public void addLayoutComponent (String name, Component component) 
+Parameters
+name
+Name of the component to add. 
+component
+The actual component being added. 
+Implements 
+LayoutManager.addLayoutComponent() 
+Description
+Places component under the 
+layout's management, assigning it the given name. 
+This has been replaced in version 1.1 with the more general addLayoutComponent(Component, 
+Object). 
+first
+public void first (Container parent)
+Parameters
+parent
+The container whose displayed component is changing. 
+Throws
+IllegalArgumentException
+If the LayoutManager of parent is not CardLayout. 
+Description
+Sets the container to display the first component in parent. 
+getHgap
+public int getHgap() 
+Returns
+The horizontal gap for this CardLayout 
+instance. 
+getLayoutAlignmentX
+public abstract float getLayoutAlignmentX (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+The value .5 for all containers. 
+Description
+This method returns the preferred alignment of the given container target. 
+A return value of 0 is left aligned, .5 is centered, and 1 is right aligned. 
+getLayoutAlignmentY
+public abstract float getLayoutAlignmentY (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+The value .5 for all containers. 
+Description
+This method returns the preferred alignment of the given container target. 
+A return value of 0 is top aligned, .5 is centered, and 1 is bottom aligned. 
+getVgap
+public int getVgap() 
+Returns
+The vertical gap for this CardLayout 
+instance. 
+invalidateLayout
+public abstract void invalidateLayout (Container target) 
+Parameters
+target
+The container to invalidate. 
+Description
+Does nothing. 
+last
+public void last (Container parent)
+Parameters
+parent
+The container whose displayed component is changing. 
+Throws
+IllegalArgumentException
+If the LayoutManager of parent is not CardLayout. 
+Description
+Sets the container to display the final component in parent. 
+layoutContainer
+public void layoutContainer (Container target)
+Parameters
+target
+The container that needs to be redrawn. 
+Implements
+LayoutManager.layoutContainer() 
+Description
+Displays the currently selected component contained within target. 
+maximumLayoutSize
+public abstract Dimension maximumLayoutSize (Container target) 
+Parameters
+target
+The container to inspect. 
+Returns
+A Dimension whose horizontal 
+and vertical components are Integer.MAX_VALUE. 
+Description
+For CardLayout, a maximal Dimension 
+is always returned. 
+minimumLayoutSize
+public Dimension minimumLayoutSize (Container target)
+Parameters
+target
+The container whose size needs to be calculated. 
+Returns
+Minimum Dimension of the container 
+target. 
+Implements
+LayoutManager.minimumLayoutSize() 
+Description
+Calculates minimum size of the target container. 
+next
+public void next (Container parent)
+Parameters
+parent
+The container whose displayed component is changing. 
+Throws
+IllegalArgumentException
+If the LayoutManager of parent is not CardLayout. 
+Description
+Sets the container to display the following component in the parent. 
+preferredLayoutSize
+public Dimension preferredLayoutSize (Container target)
+Parameters
+target
+The container whose size needs to be calculated. 
+Returns
+Preferred Dimension of the 
+container target. 
+Implements
+LayoutManager.preferredLayoutSize() 
+Description
+Calculates preferred size of the target 
+container. 
+previous
+public void previous (Container parent)
+Parameters
+parent
+The container whose displayed component is changing. 
+Throws
+IllegalArgumentException
+If the LayoutManager of parent is not CardLayout. 
+Description
+Sets the container to display the prior component in parent. 
+removeLayoutComponent
+public void removeLayoutComponent (Component component)
+Parameters
+component
+Component to stop tracking. 
+Implements
+LayoutManager.removeLayoutComponent() 
+Description
+Removes component from the 
+layout manager's internal tables. 
+setHgap
+public void setHgap (int hgap) 
+Parameters
+hgap
+The horizontal gap value. 
+Description
+Sets the horizontal gap for the left and right of the container. 
+setVgap
+public void setVgap (int vgap) 
+Parameters
+vgap
+The vertical gap value. 
+Description
+Sets the vertical gap for the top and bottom of the container. 
+show
+public void show (Container parent, String name)
+Parameters
+parent
+The container whose displayed component is changing. 
+name
+Name of component to display. 
+Throws
+IllegalArgumentException
+If LayoutManager 
+of parent is not CardLayout. 
+Description
+Sets the container to display the component name 
+in parent. 
+toString
+public String toString()
+Returns
+A string representation of the CardLayout object. 
+Overrides
+Object.toString() 
+See Also
+Component, Container, 
+Dimension, LayoutManager, 
+LayoutManager2, Object, 
+String 
+Canvas
+Checkbox
+ 
+ 
+ 
+ 
+ 
+ 
+ 

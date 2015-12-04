@@ -1,0 +1,68 @@
+
+[Chapter 25] 25.6 java.lang.Byte (JDK 1.1)
+Chapter 25The java.lang Package
+25.6 java.lang.Byte (JDK 1.1)
+This class provides an object wrapper around the
+byte primitive type.  It defines useful constants
+for the minimum and maximum values that can be stored by the
+byte type, and also a Class object constant
+that represents the byte type.  It also provides
+various methods for
+converting Byte values to and from strings and other numeric types.
+Most of the static methods of this class are used to convert
+a String to a Byte object or a byte
+value: the four parseByte() and valueOf()
+methods parse a number from the specified string, using an
+optionally specified radix, and return it in one of these two
+forms.  The decode() method parses a byte specified
+in base 10, base 8, or base 16 and returns it as a
+Byte.  If the string begins with "0x" or "#", it is
+interpreted as a hexadecimal number. If it begins with
+"0", it is interpreted as an octal number. Otherwise, it is
+interpreted as a decimal number.
+Note that this class has two different toString()
+methods.  One is static and converts a byte
+primitive value to a String. The other is the usual
+toString() method that converts a Byte
+object to a string. Most of the remaining methods convert a
+Byte to various primitive numeric types.
+public final class Byte extends Number {
+    // Public Constructors
+            public Byte(byte value);
+            public Byte(String s) throws NumberFormatException;
+    // Constants
+            public static final byte MAX_VALUE;
+            public static final byte MIN_VALUE;
+            public static final Class TYPE;
+    // Class Methods
+            public static Byte decode(String nm) throws NumberFormatException;
+            public static byte parseByte(String s) throws NumberFormatException;
+            public static byte parseByte(String s, int radix) throws NumberFormatException;
+            public static String toString(byte b);
+            public static Byte valueOf(String s, int radix) throws NumberFormatException;
+            public static Byte valueOf(String s) throws NumberFormatException;
+    // Public Instance Methods
+            public byte byteValue();  // Overrides Number
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object obj);  // Overrides Object
+            public float floatValue();  // Defines Number
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public long longValue();  // Defines Number
+            public short shortValue();  // Overrides Number
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->Number(Serializable)->Byte
+Returned By:
+Byte.decode(), 
+Byte.valueOf()
+java.lang.Boolean (JDK 1.0)
+java.lang.Character (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

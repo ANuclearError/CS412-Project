@@ -1,0 +1,147 @@
+
+[Chapter 3] 3.2 Object Creation
+Chapter 3Classes and Objects in Java
+3.2 Object Creation
+Take another look at how we've been creating our circle
+object:
+Circle c = new Circle();
+What are those parentheses doing there?  They make it look
+like we're calling a function!  In fact, that is exactly
+what we're doing.  Every class in Java has at least one
+constructor method, which has the same name as the
+class.  The purpose of a constructor is
+to perform any necessary initialization for the new object.
+Since we didn't define one for our Circle class,
+Java gave us a default constructor that takes no arguments
+and performs no special initialization.
+The way it works is this: The new keyword creates a
+new dynamic instance of the class--i.e., it allocates the new
+object.  The constructor method is then called, passing the
+new object implicitly (a this reference, as we saw
+above), and passing the arguments specified between
+parentheses explicitly.  
+Defining a Constructor
+There is some obvious initialization we could do for our
+circle objects, so let's define a constructor.
+Example 3.2
+shows a constructor that lets us specify the initial values
+for the center and radius of our new Circle object.
+The example also shows a use of the this keyword, as
+described in the previous section.
+Example 3.2: A Constructor for the Circle Class
+public class Circle {
+    public double x, y, r;  // The center and the radius of the circle
+    // The constructor method.
+    public Circle(double x, double y, double r)
+    {
+        this.x = x;
+        this.y = y;
+        this.r = r;
+    }   
+    public double circumference() { return 2 * 3.14159 * r; }
+    public double area() { return 3.14159 * r*r; }
+}
+With the old, default constructor, we had to write code like
+this:
+Circle c = new Circle();
+c.x = 1.414;  
+c.y = -1.0;  
+c.r = .25;
+With this new constructor the initialization becomes part of
+the object creation step:
+Circle c = new Circle(1.414, -1.0, .25);
+There are two important notes about naming and declaring
+constructors: 
+The constructor name is always the same as the class name.
+The return type is implicitly an instance of the class.  No
+return type is specified in constructor declarations, nor is
+the void keyword used.  The this object is
+implicitly returned; a constructor should not use a
+return statement to return a value.
+Multiple Constructors
+Sometimes you'll want to be able to initialize an object in a
+number of different ways, depending on what is most
+convenient in a particular circumstance.  For example, we
+might want to be able to initialize the radius of a circle
+without initializing the center, or we might want to
+initialize a circle to have the same center and radius as
+another circle, or we might want to initialize all the
+fields to default values.  Doing this is no problem: A class
+can have any number of constructor methods.
+Example 3.3
+shows how.
+Example 3.3: Multiple Circle Constructors
+public class Circle {
+    public double x, y, r;
+    public Circle(double x, double y, double r) {
+        this.x = x; this.y = y; this.r = r;
+    }
+    public Circle(double r) { x = 0.0; y = 0.0; this.r = r; }
+    public Circle(Circle c) { x = c.x; y = c.y; r = c.r; }
+    public Circle() { x = 0.0; y = 0.0; r = 1.0; }
+    public double circumference() { return 2 * 3.14159 * r; }
+    public double area() { return 3.14159 * r*r; }
+}
+Method Overloading
+The surprising thing in this example (not so surprising if
+you're a C++ programmer) is that all the constructor
+methods have the same name!  So how can the compiler tell
+them apart?  The way that you and I tell them apart is that the
+four methods take different arguments and are useful in
+different circumstances.  The compiler tells them apart in
+the same way.  In Java, a method is distinguished by its
+name, and by the number, type, and position of its
+arguments.  This is not limited to constructor methods--any
+two methods are not the same unless they have the same name,
+and the same number of arguments of
+the same type passed at the same position in the
+argument list. When you call a method and there is more
+than one method with the same name, the compiler
+automatically picks the
+one that matches the data types of the arguments you are
+passing.
+Defining methods with the same name and different argument
+types is called method overloading.  It can
+be a convenient technique, as long as you only give
+methods the same name when they perform similar functions on
+slightly different forms of input data. Overloaded methods
+may have different return types, but only if they have
+different arguments. Don't confuse
+method overloading with method overriding, which we'll
+discuss later.
+this Again
+There is a specialized use of the this keyword that
+arises when a class has multiple constructors--it can be
+used from a constructor to invoke one of the other
+constructors of the same class.  So we could rewrite the
+additional constructors from
+Example 3.3
+in terms of the first one like this:
+public Circle(double x, double y, double r) { 
+    this.x = x; this.y = y; this.r = r; 
+}
+public Circle(double r) { this(0.0, 0.0, r); }
+public Circle(Circle c) { this(c.x, c.y, c.r); }
+public Circle() { this(0.0, 0.0, 1.0); }
+Here, the this() call refers to whatever constructor
+of the class takes the specified type of arguments.  This
+would be a more impressive example, of course, if the first
+constructor that we were invoking did a more significant
+amount of initialization, as it might, for example, if we were
+writing a more complicated class.
+There is a very important restriction on this this
+syntax: it may only appear as the first statement in a
+constructor.  It may, of course, be followed by any
+additional initialization that a particular version of the
+constructor needs to do.  The reason for this restriction
+involves the automatic invocation of superclass constructor
+methods, which we'll explore later in this chapter.
+Introduction to Classes and Objects
+Class Variables
+ 
+ 
+ 
+ 
+ 
+ 
+ 

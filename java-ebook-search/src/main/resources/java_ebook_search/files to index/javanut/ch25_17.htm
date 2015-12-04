@@ -1,0 +1,68 @@
+
+[Chapter 25] 25.17 java.lang.Double (JDK 1.0)
+Chapter 25The java.lang Package
+25.17 java.lang.Double (JDK 1.0)
+This class provides an immutable object wrapper around the
+double primitive data type.  valueOf() converts a
+string to a Double, doubleValue() returns
+the primitive double value of a Double
+object, and there are other methods for returning a
+Double value as a variety of other primitive types.
+This class also provides some useful constants and static
+methods for testing double values.
+MIN_VALUE and MAX_VALUE are the smallest
+(closest to zero) and largest representable double
+values. isInfinite() in class method and instance
+method forms tests whether a double or a
+Double has an infinite value. Similarly,
+isNaN() tests whether a double or
+Double is not-a-number--this is a comparison that
+cannot be done directly because the NaN constant
+never tests equal to any other value, including itself.
+doubleToLongBits() and longBitsToDouble()
+allow you to manipulate the bit representation of a
+double directly.
+public final class Double extends Number {
+    // Public Constructors
+            public Double(double value);
+            public Double(String s) throws NumberFormatException;
+    // Constants
+            public static final double MAX_VALUE;
+            public static final double MIN_VALUE;
+            public static final double NEGATIVE_INFINITY;
+            public static final double NaN;
+            public static final double POSITIVE_INFINITY;
+        1.1public static final Class TYPE;
+    // Class Methods
+            public static native long doubleToLongBits(double value);
+            public static boolean isInfinite(double v);
+            public static boolean isNaN(double v);
+            public static native double longBitsToDouble(long bits);
+            public static String toString(double d);
+            public static Double valueOf(String s) throws NumberFormatException;
+    // Public Instance Methods
+        1.1public byte byteValue();  // Overrides Number
+            public double doubleValue();  // Defines Number
+            public boolean equals(Object obj);  // Overrides Object
+            public float floatValue();  // Defines Number
+            public int hashCode();  // Overrides Object
+            public int intValue();  // Defines Number
+            public boolean isInfinite();
+            public boolean isNaN();
+            public long longValue();  // Defines Number
+        1.1public short shortValue();  // Overrides Number
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->Number(Serializable)->Double
+Returned By:
+Double.valueOf()
+java.lang.Compiler (JDK 1.0)
+java.lang.Error (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

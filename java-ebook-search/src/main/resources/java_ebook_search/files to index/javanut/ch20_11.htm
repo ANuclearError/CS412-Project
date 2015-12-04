@@ -1,0 +1,27 @@
+
+[Chapter 20] 20.11 java.awt.event.FocusAdapter (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.11 java.awt.event.FocusAdapter (JDK 1.1)
+This class is a trivial implementation of
+FocusListener; it provides empty bodies for each
+of the methods of that interface.  When you are not
+interested in all of these methods, it is often easier to
+subclass FocusAdapter than it is to implement
+FocusListener from scratch.
+public abstract class FocusAdapter extends Object implements FocusListener {
+    // Default Constructor: public FocusAdapter()
+    // Public Instance Methods
+            public void focusGained(FocusEvent e);  // From FocusListener
+            public void focusLost(FocusEvent e);  // From FocusListener
+}
+Hierarchy:
+Object->FocusAdapter(FocusListener(EventListener))
+java.awt.event.ContainerListener (JDK 1.1)
+java.awt.event.FocusEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

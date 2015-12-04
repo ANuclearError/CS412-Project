@@ -1,0 +1,57 @@
+
+[Chapter 31] 31.13 java.util.zip.ZipEntry (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.13 java.util.zip.ZipEntry (JDK 1.1)
+This class describes a single entry (typically a compressed
+file) stored within a ZIP file.  The various methods get and
+set various pieces of information about the entry.  The
+ZipEntry class is used by the ZipFile and
+ZipInputStream, which read ZIP files, and by the
+ZipOutputStream, which writes ZIP files.  
+When reading a ZIP file, the ZipEntry objects
+returned by the ZipFile or ZipInputStream
+contain the name, size, modification time, and other
+information about each entry in the file.  When writing a
+ZIP file, on the other hand, you must create your own
+ZipEntry objects, and initialize them to contain the
+entry name and other appropriate information before writing
+the contents of the entry.
+public class ZipEntry extends Object {
+    // Public Constructor
+            public ZipEntry(String name);
+    // Constants
+            public static final int DEFLATED;
+            public static final int STORED;
+    // Public Instance Methods
+            public String getComment();
+            public long getCompressedSize();
+            public long getCrc();
+            public byte[] getExtra();
+            public int getMethod();
+            public String getName();
+            public long getSize();
+            public long getTime();
+            public boolean isDirectory();
+            public void setComment(String comment);
+            public void setCrc(long crc);
+            public void setExtra(byte[] extra);
+            public void setMethod(int method);
+            public void setSize(long size);
+            public void setTime(long time);
+            public String toString();  // Overrides Object
+}
+Passed To:
+ZipFile.getInputStream(), 
+ZipOutputStream.putNextEntry()
+Returned By:
+ZipFile.getEntry(), 
+ZipInputStream.getNextEntry()
+java.util.zip.InflaterInputStream (JDK 1.1)
+java.util.zip.ZipException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

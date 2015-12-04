@@ -1,0 +1,45 @@
+
+[Chapter 29] 29.16 java.text.ParsePosition (JDK 1.1)
+Chapter 29The java.text Package
+29.16 java.text.ParsePosition (JDK 1.1)
+ParsePosition objects are passed to the
+parse() and parseObject() methods of
+Format and its subclasses.  The
+ParsePosition class represents the position in a
+string at which parsing should begin or at which parsing
+stopped.  Before calling a parse() method, you can
+specify the starting position of parsing by passing the
+desired index to the ParsePosition() constructor, or
+by calling the setIndex() of an existing
+ParsePosition object.  When parse() returns,
+you can determine where parsing ended by calling
+getIndex().  When parsing multiple objects or values
+from a string, a single ParsePosition object can be
+used sequentially.
+public class ParsePosition extends Object {
+    // Public Constructor
+            public ParsePosition(int index);
+    // Public Instance Methods
+            public int getIndex();
+            public void setIndex(int index);
+}
+Passed To:
+ChoiceFormat.parse(), 
+DateFormat.parse(), 
+DateFormat.parseObject(), 
+DecimalFormat.parse(), 
+Format.parseObject(), 
+MessageFormat.parse(), 
+MessageFormat.parseObject(), 
+NumberFormat.parse(), 
+NumberFormat.parseObject(), 
+SimpleDateFormat.parse()
+java.text.ParseException (JDK 1.1)
+java.text.RuleBasedCollator (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,58 @@
+
+[Chapter 20] 20.14 java.awt.event.InputEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.14 java.awt.event.InputEvent (JDK 1.1)
+This abstract class serves as the superclass for the raw user
+input event types MouseEvent and KeyEvent.
+Use the inherited getComponent() to determine in which
+component the event occurred. Use
+getWhen() to obtain a timestamp for the event.  Use
+getModifiers() to determine which keyboard modifier
+keys or mouse buttons were down when the event occurred.
+You can decode the getModifiers() return value using
+the various _MASK constants defined by this class.
+The class also defines four convenience methods for
+determining the state of keyboard modifiers.
+In Java 1.1, input events are delivered to the appropriate
+listener objects before they are delivered to the AWT
+components themselves.  If a listener calls the
+consume() method of the event, the event is not passed
+on to the component.  For example, if a listener registered
+on a Button "consumes" a mouse click, it 
+prevents the button itself from responding to that event.
+You can use isConsumed() to test whether some other
+listener object has already consumed the event.
+public abstract class InputEvent extends ComponentEvent {
+    // No Constructor
+    // Constants
+            public static final int ALT_MASK;
+            public static final int BUTTON1_MASK;
+            public static final int BUTTON2_MASK;
+            public static final int BUTTON3_MASK;
+            public static final int CTRL_MASK;
+            public static final int META_MASK;
+            public static final int SHIFT_MASK;
+    // Public Instance Methods
+            public void consume();  // Overrides AWTEvent
+            public int getModifiers();
+            public long getWhen();
+            public boolean isAltDown();
+            public boolean isConsumed();  // Overrides AWTEvent
+            public boolean isControlDown();
+            public boolean isMetaDown();
+            public boolean isShiftDown();
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->InputEvent
+Extended By:
+KeyEvent, 
+MouseEvent
+java.awt.event.FocusListener (JDK 1.1)
+java.awt.event.ItemEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

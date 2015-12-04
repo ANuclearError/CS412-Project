@@ -1,0 +1,60 @@
+
+[Chapter 18] 18.36 java.awt.LayoutManager (JDK 1.0)
+Chapter 18The java.awt Package
+18.36 java.awt.LayoutManager (JDK 1.0)
+This interface defines the methods necessary for a class to
+be able to arrange Component objects within a
+Container object.  Most programs use one of the
+existing classes that implements this interface:
+BorderLayout, CardLayout,
+FlowLayout, GridBagConstraints,
+GridBagLayout, or GridLayout.
+To define a new class that lays out components, you must
+implement each of the methods defined by this interface.
+addLayoutComponent() is called when a component is
+added to the container.  removeLayoutComponent() is
+called when a component is removed.
+layoutContainer() should perform the actual
+positioning of components by setting the
+size and position of each component in the specified container. 
+minimumLayoutSize() should return the
+minimum container width and height that the
+LayoutManager needs in order to lay out its components.
+preferredLayoutSize() should return the optimal
+container width and height for the LayoutManager to
+lay out its components.
+In Java 1.1, layout managers should implement the
+LayoutManager2 interface, which is an extension of
+this one.
+Note that a Java applet or application never directly calls
+any of these LayoutManager methods--the
+Container object for which the LayoutManager
+is registered does that.
+public abstract interface LayoutManager {
+    // Public Instance Methods
+            public abstract void addLayoutComponent(String name, Component comp);
+            public abstract void layoutContainer(Container parent);
+            public abstract Dimension minimumLayoutSize(Container parent);
+            public abstract Dimension preferredLayoutSize(Container parent);
+            public abstract void removeLayoutComponent(Component comp);
+}
+Extended By:
+LayoutManager2
+Implemented By:
+FlowLayout, 
+GridLayout
+Passed To:
+Container.setLayout(), 
+Panel(), 
+ScrollPane.setLayout()
+Returned By:
+Container.getLayout()
+java.awt.Label (JDK 1.0)
+java.awt.LayoutManager2 (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

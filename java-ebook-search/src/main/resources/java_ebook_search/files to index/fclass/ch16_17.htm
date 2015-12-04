@@ -1,0 +1,220 @@
+
+[Chapter 16] RuleBasedCollator
+Chapter 16The java.text Package
+RuleBasedCollator
+Name
+RuleBasedCollator
+Synopsis
+Class Name:
+java.text.RuleBasedCollator
+Superclass:
+java.text.Collator
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The RuleBasedCollator class 
+is a concrete subclass of Collator 
+that can compare strings using a table of rules. The rules for 
+many locales already exist. To get a useful Collator 
+for a given locale, use the getInstance(Locale) 
+factory method of Collator. 
+If you need a special-purpose Collator 
+or a Collator for a new locale, 
+you can create your own RuleBasedCollator 
+from a string that represents the rules. The rules are expressed in three 
+primary forms: 
+[relation] [text]
+[reset] [text]
+[modifier]
+The rules can be chained together. The only modifier is the @ 
+character, which specifies that all diacriticals are sorted backwards, 
+as in French. 
+The valid relations are: 
+&gt;
+Greater than as a primary difference 
+;
+Greater than as a secondary difference or difference in accent 
+,
+Greater than as a tertiary difference or difference in case 
+=
+Equal 
+For example "&lt;a&lt;b" 
+is two chained rules that state that 'a' 
+is greater than all ignorable characters, 
+and 'b' 
+is greater than 'a'. 
+To expand this rule to include capitals, 
+use "&lt;a,A&lt;b,B". 
+A reset, specified by the &amp; 
+character, is used to insert rules in an existing list of chained rules. 
+For example, we can add a rule to sort 'e' 
+with an umlaut (Unicode 0308) after plain 'e'. 
+The existing rules might look like 
+"&lt;a&lt;b&lt;c&lt;d&lt;e&lt;f". 
+We can add the following reset, 
+"&amp;e;e\u0308", so that the complete 
+rule table looks like 
+"&lt;a&lt;b&lt;c&lt;d&lt;e&lt;f&amp;e;e\u0308". 
+Class Summary
+public class java.text.RuleBasedCollator extends java.text.Collator {
+  // Constructors
+  public RuleBasedCollator(String rules);
+  // Instance Methods
+  public Object clone();
+  public int compare(String source, String target); 
+  public boolean equals(Object obj); 
+  public CollationElementIterator 
+         getCollationElementIterator( String source);
+  public CollationKey getCollationKey(String source); 
+  public String getRules();
+  public int hashCode();
+}
+Constructors
+RuleBasedCollator
+public RuleBasedCollator(String rules) throws ParseException
+Parameters
+rules
+A string that contains the rules. 
+Throws
+ParseException
+If the given rules are incorrectly formed. 
+Description
+This constructor creates a RuleBasedCollator 
+with the given rules. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this RuledBasedCollator. 
+Overrides
+Collator.clone() 
+Description
+This method creates a copy of this RuledBasedCollator 
+and returns it. 
+compare
+public int compare(String source, String target)
+Parameters
+source
+The source string.
+target
+The target string. 
+Returns
+-1 if source is less than target, 
+0 if the strings are equal, or 1 if source 
+is greater than target. 
+Overrides
+Collator.compare() 
+Description
+This method compares the given strings according to the rules for this 
+RuleBasedCollator and returns 
+a value that indicates their relationship. If either of the strings are compared more than once, a CollationKey 
+should be used instead. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Collator.equals() 
+Description
+This method returns true if 
+obj is an instance of RuleBasedCollator 
+and is equivalent to this RuleBasedCollator. 
+getCollationElementIterator
+   public CollationElementIterator getCollationElementIterator( String source)  
+Parameters
+source
+The source string. 
+Returns
+A CollationElementIterator 
+for the given string. 
+Description
+This method generates a CollationElementIterator 
+for the given string. 
+getCollationKey
+public CollationKey getCollationKey(String source)
+Parameters
+source
+The source string. 
+Returns
+A CollationKey for the given 
+string. 
+Overrides
+Collator.getCollationKey() 
+Description
+This method generates a CollationKey 
+for the given string. The returned object can be compared with other CollationKey 
+objects using CollationKey.compareTo(). 
+This comparison is faster than using RuleBasedCollator.compare(), 
+so if the same string is used for many comparisons, you should use 
+CollationKey objects. 
+getRules
+public String getRules()
+Returns
+The rules string for this RuleBasedCollator. 
+Description
+This method returns a string that contains the rules that this RuleBasedCollator 
+is using. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Collator.hashCode() 
+Description
+This method returns a hashcode for this RuleBasedCollator. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+equals(String, String)
+Collator
+finalize()
+Object
+getClass()
+Object
+getDecomposition()
+Collator
+getStrength()
+Collator
+notify()
+Object
+notifyAll()
+Object
+setDecomposition(int)
+Collator
+setStrength(int)
+Collator
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+CollationKey, 
+CollationElementIterator, 
+Collator, 
+Locale, 
+ParseException, 
+String 
+ParsePosition
+SimpleDateFormat
+ 
+ 
+ 
+ 
+ 
+ 
+ 

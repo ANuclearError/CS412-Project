@@ -1,0 +1,1045 @@
+
+[Chapter 10] Understand the Abstract Windowing Toolkit
+Chapter 10
+10. Understand the Abstract Windowing Toolkit
+Contents:
+GUI Concepts in Java
+Applets
+The Abstract Windowing Toolkit (AWT), or
+"another windowing toolkit," as some people affectionately
+call it, provides a large collection of classes for building
+graphical user interfaces in Java. With AWT, you can
+create windows, draw, work with images, and use components like
+buttons, scrollbars, and pull-down menus in a platform independant way. 
+The java.awt package contains the 
+AWT GUI classes.  
+The java.awt.image package provides some additional
+tools for working with images.
+AWT is the largest and most complicated part of the standard Java
+distribution, so it shouldn't be any surprise that we'll take several
+chapters (five, to be precise) to discuss it. Here's the lay of the
+land: 
+Chapter 10, Understand the Abstract Windowing Toolkit covers the basic concepts 
+you need to understand how
+AWT builds user interfaces.
+In Chapter 11, Using and Creating GUI Components, we discuss the basic components from which
+user interfaces are built: lists, text fields, checkboxes, and so on.
+Chapter 12, Layout Managers discusses layout managers, which are responsible for
+arranging components within a display.
+Chapter 13, Drawing With the AWT discusses the fundamentals of drawing, 
+including simple image displays.
+Chapter 14, Working With Images, the last chapter to discuss the AWT in detail, covers the image
+generation and processing tools that are in the
+java.awt.image package. We'll throw in
+audio for good measure.
+We can't cover the full functionality of AWT
+in this book; if you want complete coverage, see the Java AWT
+Reference (O'Reilly).
+Instead,
+we'll cover the basics of the tools you are most likely to
+use and show some examples of what can be done with some of the more
+advanced features. Figure 10.1 shows the user
+interface portion of the java.awt package.
+Figure 10.1: User-interface classes of the java.awt package
+As its name suggests, AWT is an
+abstraction. Its classes and functionality are the same for all Java
+implementations, so Java applications built with
+AWT should work in the same way on all
+platforms. 
+You could choose to write your code on under Windows NT/95, and then 
+run it on an X Window System, or a Macintosh. 
+To achieve platform independence,
+AWT uses interchangeable toolkits that interact with the
+host windowing system to display user-interface components, thus
+shielding your application code from the details of the environment
+it's running in. Let's say you ask AWT
+to create a button. When your application or applet runs, a toolkit
+appropriate to the host environment renders the button appropriately: on
+Windows, you can get a button that looks like other Windows
+buttons; on a Macintosh, you can get a Mac button; and so on.
+Working with user-interface components in AWT is
+meant to be easy.  While the low-level (possibly native) GUI
+toolkits may be complex, you won't have to work with
+them directly unless you want to port AWT to a new
+platform or provide an alternative "look and feel" for the
+built-in components. When building a user interface for your
+application, you'll be working with prefabricated
+components. It's easy to assemble a collection of user-interface
+components (buttons, text areas, etc.), and arrange them inside
+containers to build complex layouts. You can also use simple 
+components as building blocks for making entirely new kinds of
+interface gadgets that are completely portable and reusable.
+AWT uses layout managers to arrange components
+inside containers and control their sizing and positioning. Layout
+managers define a strategy for arranging components instead of relying
+on absolute positioning. For example, you can define a user interface
+with a collection of buttons and text areas and be reasonably
+confident it will always display correctly. It doesn't matter
+that Windows, UNIX, and the Macintosh render your
+buttons and text areas differently; the layout manager should still position
+them sensibly with respect to each other.
+Unfortunately, the reality is that most of the complaints about
+Java center around
+AWT. AWT is very different from
+what many people are used to and lacks some of the advanced features other
+GUI environments provide (at least for now). It's
+also true that most of the bugs in current implementations of Java lie
+in the AWT toolkits. As bugs are fixed and
+developers become accustomed to AWT, we would expect the
+number of complaints to diminish. Java 1.1 is a big improvement over
+previous versions. But at the time of this writing, there are
+some rough edges.
+10.1 GUI Concepts in Java
+Chapter 11, Using and Creating GUI Components contains examples using most of the components in the
+java.awt package. But before we dive 
+into those examples, we need to spend a bit of time talking about the
+concepts AWT uses for creating and handling
+user interfaces. This material should get you up to speed on
+GUI concepts and on how they are used in Java.
+Components
+A component is the fundamental user-interface object in Java.
+Everything you see on the display in a Java application is an
+AWT component. This includes things like windows,
+drawing canvases, buttons, checkboxes, scrollbars, lists, menus, and
+text fields. To be used, a component must usually be placed in a
+Container. Container objects group components, arrange them for display, and
+associate them with a particular display device. All
+components are derived from the abstract
+java.awt.Component class, as you saw in Figure 10.1. For example, the Button
+class is a subclass of the Component class, which
+is derived directly from Object.
+For the sake of simplicity, we can split the functionality of the
+Component class into two categories: appearance and
+behavior. The Component class contains methods and
+variables that control an object's general appearance. This
+includes basic attributes such as whether or not it's visible, its
+current size and location, and certain common graphical defaults like
+font and color. The Component class also contains
+methods implemented by specific subclasses to produce the
+actual graphics the object displays. When a component is first
+displayed, it's associated with a particular display device. The
+Component class encapsulates access to its display
+area on that device. This includes methods for accessing graphics and
+for working with off-screen drawing buffers for the display.
+By a Component's behavior, we usually mean
+the way it responds to user-driven events. When the user performs an
+action (like pressing the mouse button) within a component's
+display area, an AWT thread delivers an event object
+that describes "what happened."  The event is delivered to
+objects that have registered themselves as "listeners" for that type 
+of event from that component. For example, when the user clicks on a
+button, the button delivers an
+ActionEvent. To receive those events, an
+object registers with the button as an
+ActionListener. 
+Events are delivered by invoking designated event-handler methods within 
+the receiving object (the "listener").  Objects prepare themselves to
+receive events by 
+implementing methods for the types of events in which they are interested 
+and then registering as listeners with the sources of the events.
+There are specific types of events that cover different categories of 
+component and user interaction.
+For example, MouseEvents describe
+activities of the mouse within a component's 
+area, KeyEvents describe key presses, and
+functionally higher level events  
+such as ActionEvents indicate that a user
+interface component has done its job.
+Although events are crucial to the workings of AWT, they aren't
+limited to building user interfaces. Events are an important interobject 
+communications mechanism that may be used by completely nongraphical 
+parts of an application as well. They are particularly important in
+the context of Java Beans, which use events as an extremely general
+notification mechanism.  We will
+describe events thoroughly in this chapter because they are so fundamental 
+to the way in which user interfaces function in Java, but it's good to
+keep the bigger picture in mind.
+Containers often take on certain responsibilities for the components
+that they hold.  Instead of having every component handle events for its
+own bit of the user interface, a container may register itself or another
+object to receive the events for its child components, and "glue"
+those events to the correct application logic.
+A component informs its container when it does something that might affect 
+other components in the container, such as changing
+its size or visibility.  The container can then tell the layout manager that
+it is time to rearrange the child components.
+Containers in Java are themselves a kind of component. Because all
+components share this structure, container objects can manage and
+arrange Component objects without knowing what they
+are and what they are doing. Components can be swapped and replaced
+with new versions easily and combined into composite user-interface
+objects that can be treated as individual components. This lends
+itself well to building larger, reusable user-interface items.
+Peers
+We have just described a nice system in which components govern their
+own appearance, and events are delivered to objects that are "listening"
+to those components.  Unfortunately, getting data
+out to a display medium and receiving events from input devices
+involve crossing the line from Java to the real world. The real world
+is a nasty place full of architecture dependence, local peculiarities,
+and strange physical devices like mice, trackballs, and '69 Buicks.
+At some level, our components will have to talk to
+objects that contain native methods to interact with the host
+operating environment. To keep this interaction as clean and well-defined
+as possible, Java uses a set of peer
+interfaces. The peer interface makes it possible for a pure Java-language 
+AWT component to use a corresponding real 
+component--the peer object--in the native environment. 
+You won't generally deal directly with peer interfaces or
+the objects behind them; peer handling is encapsulated within
+the Component class. It's important to understand
+the architecture, though, because it imposes some limitations on what you
+can do with components.
+For example, when a component such as a
+Button is first created and displayed on the
+screen, code in the Component class asks an
+AWT Toolkit class to create a
+corresponding peer object, as shown in Figure 10.2. The Toolkit is a
+factory that knows how to create objects in 
+the native display system; Java uses this factory design pattern
+to provide an abstraction that separates the implementation of component 
+objects from their functionality. 
+The Toolkit object contains methods
+for making instances of each type of component peer. (As a developer,
+you will probably never work with a native user-interface
+directly.) Toolkits can be swapped and
+replaced to provide new implementations of the components without
+affecting the rest of Java.
+Figure 10.2: A toolkit creating a peer object
+Figure 10.2 shows a
+Toolkit producing a peer object for a
+Button. When you add a button to a container, the
+container calls the Button's
+addNotify() method. In turn,
+addNotify() calls the
+Toolkit's createButton()
+method to make the Button's peer object in
+the real display system. Thereafter, the component class keeps a
+reference to the peer object and delegates calls to its methods.
+The java.awt.peer package, shown in Figure 10.3, parallels the java.awt
+package and contains an interface for each type of component. For
+example, the Button component has a
+ButtonPeer interface, which defines the
+capabilities of a button.
+Figure 10.3: The java.awt.peer package
+The peer objects themselves can be built in whatever way is
+necessary, using a combination of Java and native code. (We will discuss
+the implementation of peers a bit more in the AWT performance section of this
+chapter.)
+A Java-land button doesn't know or care how the real-world button
+is implemented or what additional capabilities it may have; it knows
+only about the existence of the methods defined in the
+ButtonPeer interface. Figure 10.4 shows a call to the
+setLabel() method of a Button
+object, which results in a call to the corresponding
+setLabel() method of the native button object.
+Figure 10.4: Invoking a method in the peer interface
+In this case, the only action a button peer must be able to perform is to set 
+its label text; setLabel() is the only method in the
+ButtonPeer interface. How the native button acts,
+responds to user input, etc. is entirely up to it. It might turn
+green when pressed or make a "ka-chunk" sound. The component in Java-land has no
+control over these aspects of the native button's behavior--and
+this has important implications.  This abstraction allows 
+AWT to use native components from whatever platform it 
+resides on.  However, it also means that a lot of a component's functionality
+is locked away where we can't get to it. 
+We'll see that we can usually intercept events before the peer object has a 
+chance to act on them, but we usually can't change much of the object's basic
+behavior.
+A component gets its peer when it's added to a container. 
+Containers are associated with display devices through 
+Toolkit objects, and thus control the process of
+peer creation.  We'll talk more the ramifications of this when we discuss
+addNotify() later.
+(See "Component peers and addNotify()".)
+The Model/View/Controller Framework
+Before we continue our discussion of
+GUI concepts, I want to make a brief aside and talk
+about the Model/View/Controller (MVC)
+framework. MVC is a method of building reusable
+components that logically separates the structure, representation, and
+behavior of a component into separate pieces. MVC
+is primarily concerned with building user-interface components, but
+the basic ideas can be applied to many design issues; its principles
+can be seen throughout Java. Java doesn't implement all of
+MVC, whose origins are in Smalltalk, but
+MVC's influence is apparent throughout the
+language.
+The fundamental
+idea behind MVC is the separation of the data model
+for an item from its presentation. For example, we can draw different
+representations (e.g., bar graphs, pie charts) of the data in a
+spreadsheet. The data is the "model"; the particular
+representation is the "view." A single model can have many
+views that show different representations of the data. The behavior of
+a user-interface component usually changes its model and affects how
+the component is rendered as a view. If we were to create a button
+component for example, its data model could be as simple as a
+boolean value for whether it's up or down. The
+behavior for handling mouse-press events would alter the model, and the
+display would examine that data when it draws the on-screen
+representation.
+The way in which AWT objects communicate, by passing events from sources
+to listeners, is part of this MVC concept of separation.  Event listeners
+are "observers" and event sources are "observables."  When an observable
+changes or performs a function, it notifies all of its observers of the 
+activity.[1]
+[1] 
+Although they are not used by AWT, Java provides generic
+Observer class and 
+Observable interface in the
+java.util package.  (In practice, these are
+more a design hint than of day to day usefulness.)
+This model of operation is also central to the
+way in which Java works with graphics, as you'll see in Chapter 11, Using and Creating GUI Components. Image information from a producer, such as a
+graphics engine or video stream, is distributed to consumers that can
+represent different views of the data. Consumers register with a
+producer and receive updates as the image is created or when the image has 
+changed.
+The factory concept used by the Toolkit
+objects is related to MVC; factories use Java
+interfaces to separate the implementation of an object from its
+behavior. An object that implements an interface doesn't have to
+fit into a particular class structure; it needs only to provide the
+methods defined by the interface. Thus, an AWT
+Toolkit is a factory that produces native
+user-interface components that correspond to Java components. The
+native components don't need to match
+AWT's class structure, provided they
+implement the appropriate interface.
+Painting and Updating
+Components can be asked to draw themselves at any time. In a more
+procedural programming environment, you might expect a component
+would be involved in drawing only when first created or when it
+changes its appearance. In Java, components act in a way that is more
+closely tied to the underlying behavior of the display
+environment. For example, when you obscure a component with a window
+and then reexpose it, an AWT thread asks the
+component to redraw itself.
+AWT asks a component to draw itself by
+calling its paint()
+method. paint() may be called at any time, but in
+practice, it's called when the object is first made visible, whenever
+it changes its appearance, and whenever some tragedy in the display
+system messes up its area. Because
+paint() can't make any assumptions about why
+it was called, it must redraw the component's entire display. 
+However, redrawing the whole component is unnecessary if only a
+small part changes, especially in an anticipated way.  
+In this case, you'd like to specify what
+part of the component has changed, and redraw that part
+alone. Painting a large portion of the screen is time consuming, and
+can cause flickering that is especially annoying if you're
+redrawing the object frequently, as with animation. When a component
+realizes it needs to redraw itself, it should ask
+AWT to schedule a call to its
+update() method. 
+update() can
+do drawing of its own, but often, it simply defines a
+clipping region--by calling
+clipRect()--on its graphics context; to limit 
+the extent of the painted area and then 
+calling paint() explicitly. A simple
+component doesn't have to implement its own
+update() method, but that doesn't mean the
+method doesn't exist. In this case, the component gets a default
+version of update() that simply clears the
+component's area and calls paint().
+A component never calls its update() method
+directly. Instead, when a component requires redrawing, it schedules a
+call to update() by invoking
+repaint(). The repaint() method
+asks AWT to schedule the component for
+repainting. At some point in the future, a call to
+update() occurs. AWT is allowed
+to manage these requests in whatever way is most efficient. If there
+are too many requests to handle, or if there are multiple requests for
+the same component, AWT can reschedule a number of 
+repaint requests into a single call to update(). 
+This means that you can't predict
+exactly when update() will be called in response to
+a repaint(); all you can expect is that it happens
+at least once, after you request it. 
+Normally, calling repaint() is an implicit request to be updated as soon
+as possible.  There is another form of repaint() 
+that allows you
+to specify a time period within which you would like an update, giving
+the system more flexibility in scheduling the request. An application
+can use this method to govern its refresh rate.  For example, 
+the rate at which you render frames for an animation might vary, depending
+on other factors (like the complexity of the image).  You could impose 
+an effective maximum frame rate by calling repaint() with a time (the inverse
+of the frame rate) as an argument.  If you then happen to make more than 
+one repaint request within that time period, AWT is not obliged to physically
+repaint for each one.  It can simply condense them to carry out a single 
+update within the time you have specified.
+Both paint() and update()
+take a single argument: a Graphics object. The
+Graphics object represents the component's
+graphics context. It corresponds to the area of the screen on which
+the component can draw and provides the methods for performing
+primitive drawing and image manipulation. We'll look at the
+Graphics class in detail in Chapter 11, Using and Creating GUI Components.
+All components paint and update themselves using this
+mechanism. However, you really care about it only when doing your own
+drawing, and in practice, you should be drawing only on a
+Canvas, Panel,
+Applet, 
+or your own subclasses of Component.
+Other kinds of objects, like buttons and
+scrollbars, have lots of behavior built into their peers. You may be able to
+draw on one of these objects, but unless you specifically catch the
+appropriate events and redraw (which could get complicated), your
+handiwork is likely to disappear. 
+Canvases,
+Panels, and lightweight components (which
+we will discuss fully later in this chapter) are "blank slates" for
+you to implement your own behavior and appearance.
+For example, by itself, the AWT Canvas has no 
+outward appearance; it takes up space and has a background color, but 
+otherwise, it's empty. By subclassing Canvas and 
+adding your own code, you can create a more complicated object like a 
+graph or a flying toaster.  A lightweight component is even "emptier" 
+than that.  It doesn't have a real Toolkit
+peer for its implementation; 
+you get to specify all of the behavior and appearance yourself.  
+We'll talk more about using Canvas and
+lightweight components to create new kinds of GUI objects later in
+this chapter. 
+A Panel is like a 
+Canvas, but it's also a 
+Container, so that it can hold other user-interface components.  In the same way, a lightweight container is a simple
+extension of the AWT Container class.
+(More about that when we talk about containers below.)
+Enabling and Disabling Components
+Standard AWT components can be turned on and off by calling the
+enable() and
+disable() methods.
+When a component like a Button or
+TextField is disabled, it becomes
+"ghosted" or "greyed-out" and doesn't respond to user input.
+For example, let's see how to create a component that can only be used
+once. This requires getting ahead of the story; I won't explain some
+aspects of this example until later. Earlier, I said that a
+Button generates an
+ActionEvent when it is pressed. This event
+is delivered to the listeners'
+actionPerformed() method. The code below
+disables whatever component generated the event: 
+public boolean void actionPerformed(ActionEvent e ) {
+    ...
+    ((Component)e.getSource()).disable();
+}
+This code calls getSource() to find out
+which component generated the event. We cast the result to
+Component because we don't necessarily
+know what kind of component we're dealing with; it might not be a
+button, because other kinds of components can generate action events.
+Once we have our component, we disable it.
+You can also disable an entire container. Disabling a
+Panel, for instance, disables all the components it
+contains.
+Unfortunately, disabling components and containers is handled by the 
+AWT Toolkit at a low level. It is currently not possible to have custom 
+(pure Java) components notified when their native containers are disabled.
+This flaw should be corrected in a future release.
+Focus, please
+In order to receive keyboard events, a component has to have keyboard 
+focus. The component with the focus is simply the
+currently selected input component. It receives all keyboard event
+information until the focus changes. A component can ask for 
+focus with the Component's
+requestFocus() method. Text components like
+TextField and
+TextArea do this 
+automatically whenever you click the mouse in their area. A component
+can find out when it gains or loses focus through the
+FocusListener interface (see the table of
+events below).
+If you want to create your own text-oriented
+component, you could implement this behavior yourself.  For instance,
+you might request focus when the mouse is clicked in your component's
+area. After receiving focus, you could change the cursor or do
+something else to highlight the component.
+Many user interfaces are designed so that the focus automatically
+jumps to 
+the "next available" component when the user presses the TAB key.
+This behavior is particularly common in forms; users often expect to
+be able to tab to the next text entry field. AWT handles automatic
+focus traversal for you when it is applicable. 
+You can get control over the behavior through
+the transferFocus() and
+isFocusTraversable() methods of
+Component.   
+transferFocus() passes the focus to the
+next appropriate component.
+You can use transferFocus() to control the
+order of tabbing between components by  
+overriding it in the container and implementing your own policy.
+isFocusTraversable() returns a boolean
+value specifying whether or not the component
+should be considered eligible for receiving a transfer focus.
+Your components can override this method to determine whether or not they
+can be "tabbed to."
+Other Component Methods
+The Component class is very large; it has
+to provide the base level 
+functionality for all of the various kinds of Java GUI objects.  We don't have
+room to document every method of the component class here, but we'll flesh
+out our discussion by covering some more of the important ones. 
+Container getParent()
+Return the container that holds this component.
+String getName() / void setName(String name)
+Get or assign the String name of this component.  
+Giving a component a name is useful for debugging.  
+The name shows up when you do a toString().
+setVisible(boolean visible)
+Make the component visible or invisible, within its container.
+If you change the components, visibility, remember to call
+validate()  
+on the container; this causes the layout manager to lay out the
+container again. 
+Color getForeground() / void setForeground(Color c)Color getBackground() / void setBackground(Color c)
+Get and set the foreground and background colors for this component.
+The foreground color of any component is the default color used for
+drawing. For example, it is the color used for text in a text field;
+it is also the default drawing color for the
+Graphics object passed to the component's
+paint() method.
+The background color is used to fill the component's area when it is
+cleared by the default implementation of
+update(). 
+Font getFont() / void setFont(Font f)
+Get or set the Font for this component.
+(Fonts are discussed in Chapter 13, Drawing With the AWT.) 
+You can set the Font on text components
+like TextField and
+TextArea. 
+For Canvases,
+Panels, and lightweight components, this
+will also be the  
+default font used for drawing text on the Graphics context passed to
+paint().
+FontMetrics getFontMetrics(Font font)
+Find out the characteristics of a font when rendered on this component.
+FontMetrics allow you to find out the
+dimensions of text when rendered in that font.
+Dimension getSize() / void setSize(int width, int height)
+Get and set the current size of the component.  Remember to call
+validate() 
+on the component's container if you change its size (see Containers below).  
+There are other methods
+in Component to set its location, but
+normally this is the job of a layout manager.
+Cursor getCursor() / void setCursor(Cursor cursor)
+Get or set the type of cursor (mouse pointer) used when the mouse is over this 
+component's area.  For example:
+Component myComponent = ...;
+Cursor crossHairs = Cursor.getPredefinedCursor( Cursor.CROSSHAIR_CURSOR );
+myComponent.setCursor( crossHairs );
+Containers
+Now that you understand components a little better, our discussion of
+containers should be easy. 
+A container is a kind of component that holds and manages other
+AWT components.  If you look back to 
+Figure 10.1, you
+can see the part of the java.awt class hierarchy
+that descends from Container. 
+The most useful Container types are
+Frame, Panel,
+and Applet.
+A Frame is a top-level window on your
+display. Frame is derived from
+Window, which is pretty much the same, but lacks a
+border. A Panel is a generic container element used
+to group components inside of Frames and other
+Panels. 
+The Applet class is a kind of 
+Panel that provides the foundation for
+applets that run inside Web browsers. 
+As a Panel, an
+Applet has the ability to contain other
+user-interface components.  All these classes are subclasses of the
+Container class; you can also use the
+Container class directly, like a
+Panel, to hold 
+components inside of another container. This is called a "lightweight
+container," and is closely related to lightweight components. We'll
+discuss lightweight components and containers later in this chapter.
+Because a Container is a kind of
+Component, it has all of the methods of
+the Component class, including the
+graphical and event-related methods we're 
+discussing in this chapter.   But a container also maintains a
+list of "child" components, which are the components it manages, and
+therefore has methods for dealing with those components. By
+themselves, most components aren't very useful until they are added to
+a container and 
+displayed.  The add()
+method of the Container class adds a component to
+the container. Thereafter, this component can be displayed in the 
+container's area and positioned by its layout manager.  You can also
+remove a component 
+from a container with the remove() method.
+Layout managers
+A layout manager is an object that controls the
+placement and sizing of components within the display area of a
+container. A layout manager is like a window manager in a display
+system; it controls where the components go and how big they
+are.  Every container has a default layout manager, but you can easily
+install a new one by calling the container's
+setLayout() method.
+AWT comes with a few layout managers that
+implement common layout schemes. The default layout manager for a
+Panel is a
+FlowLayout, which 
+tries to place objects at their preferred size from left to right and
+top to bottom in the container. The default for a
+Frame is a
+BorderLayout, which 
+places a limited number of objects at named locations like
+"North," "South," and "Center." Another layout
+manager, the GridLayout, arranges components in a
+rectangular grid.  The most general (and difficult to use) layout manager 
+is GridBagLayout, which lets you do the
+kinds of things you can do with  
+HTML tables.  We'll get into the details of all of these layout managers
+in Chapter 12, Layout Managers.
+As I mentioned above, you normally call
+add() to add a component to a container. There is
+an overloaded version of add() that you may
+need, depending on what layout manager you're using.
+Often you'll use the version of add() that takes a
+single Component as an argument. However, if
+you're using a layout manager that uses "constraints,"
+like BorderLayout or GridBagLayout, you need to
+specify additional information about where to put the new component.  
+For that you can use the version that takes a constraint object:
+add( Component component, Object constraint);
+For example, to add a component to the top of a
+BorderLayout, you might say: 
+add( newComponent, "North");
+In this case, the constraint object is the string "North." The
+GridBagLayout uses a much more complex
+constraint object to specify positioning. 
+Insets
+Insets specify a container's margins; the space specified by the
+container's insets won't be used by a layout manager. Insets are
+described by an Insets object, which has
+four int fields:
+top, bottom,
+left, and
+right. You normally don't need to worry
+about the insets, the container will set them automatically, taking
+into account extras like the menu bar that may appear at the top of a
+frame. However, you should modify the insets if you're doing something
+like adding a decorative border (for example, a set of
+"index tabs" at the top of a container) that reduces the space
+available for components. To change the insets, you override the
+component's getInsets() method, which
+returns an Insets object. For example:
+//reserve 50 pixels at the top, 5 at the sides and 10 at the bottom
+public Insets getInsets() {
+    return new Insets (50,5,10,5);
+}
+Z-ordering (stacking components)
+In most layout schemes, components are not allowed to overlap, but they can.
+If they do, the order in which components were added to a container matters.
+When components overlap they are "stacked" in the order in which they were 
+added: the first component added to the container is on top, the last
+is on the bottom.  To give you more control over stacking, two
+additional forms of the add() method 
+take an additional 
+integer argument that lets you specify the component's exact position
+in the container's stacking order.
+validate() and layout()
+A layout manager arranges the components in a container only when
+asked to. Several things can mess up a container after it's initially
+laid out:
+Changing its size
+Resizing or moving one of its child components
+Adding, showing, removing, or hiding a child component
+ 
+Any of these actions causes the container to be marked
+invalid. Saying that a container is invalid simply means it needs
+to have its child components readjusted by its layout manager. This is
+accomplished by calling the Container's
+validate() method. validate()
+then turns around and calls the Container's
+doLayout() method, which asks the layout manager to
+do its job. In addition, validate() also notes that
+the Container has been fixed (i.e., it's valid
+again) and looks at each child component of the container, recursively
+validating any containers that are also messed up.
+So if you have an applet that contains a small
+Panel--say a keypad holding some
+buttons--and you change the size of the Panel
+by calling its resize() method, you should also
+call validate() on the applet. The applet's
+layout manager may then reposition or resize 
+the keypad within the applet. It also
+automatically calls validate() for the keypad, so
+that it can rearrange its buttons to fit inside its new area.
+There are two things you should note. First, all components,
+not just containers, maintain a notion of when they are valid or
+invalid. But most components (e.g., buttons) don't do anything
+special when they're validated.  If you have a custom component that wants 
+to be notified when it is resized, it might be best to make it a 
+container (perhaps a lightweight container) and do your work in the 
+doLayout() method.
+Next, child containers are validated only if they are invalid. 
+That means that if you have an invalid
+component nested inside a valid component and you validate a container
+above them both, the invalid component may never be
+reached.  However, the invalidate() method
+that marks a container as
+dirty automatically marks parent containers as well, all the way up
+the container hierarchy.  So that situation should never happen.
+Component peers and addNotify()
+A component gets its peer when it's added to a container. 
+Containers are associated with display devices through 
+Toolkit objects, and thus control the process of
+peer creation. This means that you can't ask certain questions about a 
+component before it's placed in a container.  
+For example, you can't find out about a component's size or 
+its default font until the component knows where it's being displayed (until
+it has its peer).  
+You probably also shouldn't be able to ask a component with no peer
+about other resources controlled by the peer, such as off screen graphics
+areas and font metrics. Java's developers apparently thought this
+restriction too onerous so container-less components are
+associated with the "default" toolkit that can answer some of these 
+kinds of inquiries.  
+In practice, the default toolkit is usually able to provide
+the right answer, because with current implementations of Java the default
+toolkit is probably the only toolkit available. This approach may
+cause problems in the future, if Java's developers add the ability for
+different containers to have different toolkits.
+The same issue (the existence of a component's peer) also comes up
+when you are making your own kinds of 
+components and need access to some of these peer resources before you can
+complete the setup.  For example, suppose that you want to set the size or
+some other feature of your component based on the default font used.  
+You can't complete this setup in your constructor, because the peer doesn't
+exist yet.  The solution to all of these problems is proper use of the
+addNotify() method.  As its name implies,
+addNotify() can be used to get 
+notification when the peer is created.  You can override it to do your
+own work, as long as you remember to call
+super.addNotify() to complete the 
+peer creation.  For example:
+class FancyLabel  {
+    FancyLabel() {
+        // No peer yet...
+    }
+    public void addNotify() {
+        super.addNotify();  // complete the peer creation
+        // Complete setup based on Fonts
+        // and other peer resources.
+    }
+}
+Managing Components
+There are a few additional tools of the
+Container class that we should mention.  
+Component[] getComponents()
+Returns the container's components in an array.
+void list(PrintWriter out, int indent)
+Generates a list of the components in this container and writes them to
+the specified PrintWriter.
+Component getComponentAt(int x, int y)
+Tells you what component is at the specified coordinates in the container's
+coordinate system.  
+Listening for Components
+Finally, an important tool to be aware of is the
+ContainerListener interface. 
+It lets you receive an event whenever a component is added to or removed from
+a container.  (It lets you hear the tiny cries of the component as it is 
+imprisoned in its container or torn away.)
+You can use the ContainerListener
+interface to automate the process of 
+setting up components when they are added to your container.  For instance,
+your container might need to register other kinds of event listeners with 
+its components to track the mouse or handle certain kinds of actions.
+Windows and Frames
+Windows and frames are the "top level" containers for Java components.
+A Window is simply a plain, graphical
+screen that displays in your 
+windowing system.   Windows have no frills; they are mainly suitable for
+making "splash" screens and dialogs--things that limit the
+user's control.  Frame, on the other hand,
+is a subclass of Window 
+that have a border and can hold a menu-bar. Frames are under the control of 
+your window manager, so you can normally drag a Frame around on the 
+screen and resize it, using the normal controls for your environment.
+Figure 10.5 shows a Frame on the left and
+a Window on the right.
+Figure 10.5: A typical frame and window
+All other components and
+containers in Java must be held, at some level, inside of a
+Window or
+Frame. 
+Applets, as we've mentioned a few times, are a kind of
+Panel.  Even applets
+must be housed in a Java frame or window, though normally
+you don't see an applet's parent frame because it is part of (or
+simply is) the browser or appletviewer displaying the applet.
+A Frame is the only
+Component that can be displayed 
+without being added to or attached to another
+Container. 
+After creating a Frame, you can call the
+show() method to display it.
+Let's create a standalone equivalent of our
+HelloWeb applet from Chapter 2, A First Applet:
+Figure 10.6: Standalone equivalent of the HelloWeb applet
+class HelloWebApp {
+    public static void main( String [] args ) {
+        Frame myFrame = new Frame("The Title");
+        myFrame.add("Center", new Label("Hello Web!", Label.CENTER) );
+        myFrame.pack();
+        myFrame.show();
+    }
+}
+Here we've got our minimal, graphical, standalone Java application.
+The Frame constructor can take a
+String argument that supplies a title,
+displayed in the Frame's 
+title bar.  (Another approach would be to create the
+Frame with no title, and call 
+setTitle() to supply the title later.)
+After creating the Frame, we add our 
+Label to it and then call
+pack(), which prepares the
+Frame for display. 
+pack() does a couple of things, but its
+most important effect  
+in this case is that it sets the size of the
+Frame  to the smallest needed
+to hold all of its components.  Specifically,
+pack() calls:
+setSize( preferredSize() );
+Next, we call show() to get the
+Frame onto the screen.  The
+show() method returns immediately, without
+blocking. Fortunately, our application does not exit while the
+Frame is showing.
+To get rid of a Frame, call the
+dispose() method.  If you want to hide the
+Frame temporarily, call
+setVisible(false).  You can check to see 
+if a Frame is showing with the
+isShowing() method. 
+In this example, we let pack() set the
+size of the Frame for us 
+before we show() it.  If we hadn't, the
+Frame would have come up at an 
+undefined size.  If we instead want the
+Frame to be a specific size  
+(not just hugging its child components) we could simply call
+setSize() instead of
+pack().
+...
+myFrame.setSize( 300, 300 );
+myFrame.show();
+Other Methods for Controlling Frames
+The setLocation() method of the
+Component class can be used on a
+Frame or 
+Window to set its 
+position on the screen.  The x and y coordinates are considered relative
+to the screen's origin (the top left corner).
+You can use the toFront() and
+toBack() methods, respectively, to pull a
+Frame or
+Window to the front of other windows, or
+push it to the background. 
+By default, a user is allowed to resize a
+Frame, but you can prevent resizing by
+calling setResizable(false) before showing
+the Frame. 
+On most systems, frames can be "iconfied";  
+that is, they can be represented by a little icon image.  
+You can get and set a frame's icon image by calling
+getIconImage() and  
+setIconImage(). 
+Remember that as with all components, you can set the cursor by
+calling the setCursor() method.  
+Using Windows
+Windows and frames have a slightly convoluted relationship.  We said above that
+Frame is a subclass of
+Window.  However, if you look, you'll see
+that to
+create a Window you have to have a
+Frame available to serve as its parent. 
+The Window constructor takes a
+Frame as an argument.
+Window myWindow = new Window( myFrame );
+The rationale for this is long and boring.  Suffice it to say that this
+limitation will probably go away in the future.
+Prepacking Windows and Frames
+Earlier we said that calling pack() on a
+Frame sets the frame's size to the
+preferred size of its layout. However, the
+pack() method
+is not simply equivalent to a call to
+setSize().
+ pack() is often called before any of the
+frame's components have their peers. Therefore, calling
+pack() forces the container to choose its
+Toolkit and
+to create the peers of any components that have been added to it.  After
+that is done, the layout manager can reliably determine its preferred size.
+For a large frame with lots of components, packing the frame is a
+convenient way to 
+do this setup work in advance, before the frame is displayed. Whether
+or not this is useful depends on whether you'd rather have your
+application start up
+faster, or pop up its frames faster, once it is running.
+AWT Performance and Lightweight Components
+Java's developers initially decided to implement the standard AWT
+components with a "mostly native" Toolkit. As we described above, that
+means that most of the important 
+functionality of these classes is delegated to peer objects, which live in 
+the native operating system. Using native peers allows Java to 
+take on the look and feel of the local operating environment.
+Macintosh users see Mac applications, PC users see Windows' windows, 
+and Unix users can have their Motif motif; warm fuzzy feelings abound.
+Java's chameleon-like ability to blend into the native environment is 
+considered by many to be an integral part of platform independance.
+However, there are a few important downsides to this arrangement.
+First, as we mentioned earlier, using native peer implementations
+makes it much more difficult (if not impossible) to subclass these
+components to specialize or modify 
+their behavior. Most of their behavior comes from the native peer, and
+therefore can't be overidden or extended easily.  As it turns out,
+this is not a terrible problem because of 
+the ease with which we can make our own components in Java; we will 
+give you an idea of how to start in Chapter 11, Using and Creating GUI Components.  It is also
+true that a sophisticated new component, like an HTML viewer,
+would benefit little in deriving from a more primitive text viewing 
+component like TextArea.
+Next, porting the native code makes it much more difficult to bring
+Java to a new platform.
+For the user, this can only mean one thing: bugs.  Quite simply,
+while the Java language itself has been quite stable, the cross platform 
+behavior of the AWT has been an Achilles' heel.  Although the situation 
+is steadily improving, the lack of large, commercial quality Java 
+applications until relatively recently testifies to the difficulties involved.
+At this time, new development has been saturated with Java
+for well over a year (a decade in Net time) and very few real applications
+are with us.
+Finally, we come to a somewhat counterintuitive problem with the use of 
+native peers.  In most current implementations of Java, the native 
+peers are quite "heavy" and consume a lot of resources.  You might expect that
+relying on native code would be much more efficient than creating the
+components in Java.  However, it can take a long time to 
+instantiate a large number of GUI elements when each requires the 
+creation of a native peer from the toolkit.  And in some cases you may find 
+that once they are created, they don't perform as well as the pure Java
+equivalents that you can create yourself.
+An extreme example would be a spreadsheet that uses an AWT
+TextField for
+each cell.  Creating hundreds of
+TextFieldPeer objects would be 
+something between slow and impossible.  While simply saying "don't do
+that" might be a  
+valid answer, this begs the question: how do you create large
+applications with complex GUIs? Java would not be a very interesting
+environment if it was only limited to simple tasks. One solution,
+taken by development 
+environments like Sun's JavaWorkshop, is to use "wrapper" classes for
+the standard
+AWT components; the wrapper controls when peer objects are created.
+Another attack on the problem has been to create "lightweight"
+components that are written entirely in Java, and therefore don't
+require native code.
+Using Lightweight Components and Containers
+A "lightweight" component is simply a component that is implemented
+entirely in Java.  You implement all of its appearance by drawing in
+the paint() and
+update() methods; you implement its
+behavior by catching user events (usually at a low level) and possibly
+generating new events.  Lightweight components can be used to create
+new kinds of gadgets, in the same way you might use a
+Canvas or a
+Panel.  But they avoid some of the
+performance penalties inherent in the use of peers, and, perhaps more
+importantly, they provide more flexibility in their appearance.
+A lightweight component can have a transparent background, allowing its
+container to "show through" its own area.  It is also more reasonable
+to have another component or container overlap or draw into a lightweight 
+component's area.
+You create a lightweight component by subclassing the
+Component and
+Container classes directly.
+That is, instead of writing:
+class myCanvas extends Canvas { ... }
+you write:
+class myCanvas extends Container { ... } // lightweight
+That's often all you need to do to create a lightweight component.
+When the lightweight component is put into a container, it doesn't get a 
+native peer.  Instead, it gets a
+LightweightPeer that serves as
+a place holder and identifies the component as lightweight 
+and in need of special help. 
+The container then takes over the responsibilities that 
+would otherwise be handled by a native peer:
+namely, low-level delivery of events and paint requests.  
+The container receives mouse movement events, key strokes, paint 
+requests, etc., for the lightweight component.  It then sorts out 
+the events that fall within the component's bounds and 
+dispatches them to it.  Similarly, it translates paint requests that overlap 
+the lightweight component's area and forwards them to it.
+Figure 10.7: Sending a paint() request to a component
+Figure 10.7 shows a component receiving a
+paint() request via its container.
+This makes it easy to see how a lightweight component can have a transparent
+background.  The component is actually drawing directly onto its
+container's graphics context. Conversely, anything that the container
+drew on its background is visible in the lightweight component. For an
+ordinary
+container, this will simply be the container's background color.  But you 
+can do much cooler things too.  (See the PictureButton example at the end
+of the next chapter.)  All of the normal rules still apply;  your 
+lightweight component's 
+paint() method should render the
+component's entire image (assume that the container
+has obliterated it), but your update()
+method can assume that whatever drawing it has done previously is
+still intact.
+Just as you can create a lightweight component by subclassing
+Component, you can create a lightweight
+container by subclassing Container. A
+lightweight container can hold any components, including other
+lightweight components and containers. In this case, event handling
+and paint requests are managed by the first "regular" container in the
+container hierarchy. (There has to be one somewhere, if you think
+about it.) This brings us to the cardinal rule of subclassing containers,
+which is:
+"Always call super.paint() if you override
+a container's paint() method."
+If you don't, the container won't
+be able to manage lightweight components properly.
+To summarize, lightweight components are very flexible, pure Java 
+components that are managed by their container and have 
+a transparent background by default.
+Lightweight components do not rely on native peers from the
+AWT toolkit to provide their implementations and so they can not readily 
+take on the look and feel of the local platform.  
+In a sense, a lightweight component is 
+just a convenient way to package an extension to a container's 
+painting and event handling methods.  But, again, all of this happens 
+automatically, behind the scenes; you can create 
+and use lightweight components as you would any other kind of component.  
+We'll see examples of lightweight components and containers in the next
+chapter.
+Writing a Protocol Handler
+Applets
+ 
+ 
+ 
+ 
+ 
+ 
+ 

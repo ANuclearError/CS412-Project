@@ -1,0 +1,47 @@
+
+[Chapter 29] 29.12 java.text.Format (JDK 1.1)
+Chapter 29The java.text Package
+29.12 java.text.Format (JDK 1.1)
+This abstract class is the base class for all number, date,
+and string formatting classes in the java.text
+package.  It defines two abstract methods that are
+implemented by subclasses.  format() converts an
+object to a string using the formatting rules encapsulated
+by the Format subclass and optionally appends the
+resulting string to an existing
+StringBuffer. parseObject() performs the
+reverse operation--it parses a formatted string and returns
+the corresponding object.  Status information for these two
+operations is returned in FieldPosition and
+ParsePosition objects.  The non-abstract methods of
+this class are simple shortcuts that rely on implementations
+of the abstract methods.
+See ChoiceFormat, DateFormat,
+MessageFormat, and NumberFormat.
+public abstract class Format extends Object implements Serializable, Cloneable {
+    // Default Constructor: public Format()
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public final String format(Object obj);
+            public abstract StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos);
+            public abstract Object parseObject(String source, ParsePosition status);
+            public Object parseObject(String source) throws ParseException;
+}
+Extended By:
+DateFormat, 
+MessageFormat, 
+NumberFormat
+Passed To:
+MessageFormat.setFormat(), 
+MessageFormat.setFormats()
+Returned By:
+MessageFormat.getFormats()
+java.text.FieldPosition (JDK 1.1)
+java.text.MessageFormat (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,28 @@
+
+[Chapter 24] 24.66 java.io.UnsupportedEncodingException (JDK 1.1)
+Chapter 24The java.io Package
+24.66 java.io.UnsupportedEncodingException (JDK 1.1)
+This exception signals that a requested character encoding
+is not supported by the current Java Virtual Machine.
+public class UnsupportedEncodingException extends IOException {
+    // Public Constructors
+            public UnsupportedEncodingException();
+            public UnsupportedEncodingException(String s);
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->UnsupportedEncodingException
+Thrown By:
+ByteArrayOutputStream.toString(), 
+InputStreamReader(), 
+OutputStreamWriter(), 
+String(), 
+String.getBytes()
+java.io.SyncFailedException (JDK 1.1)
+java.io.UTFDataFormatException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

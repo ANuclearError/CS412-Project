@@ -1,0 +1,322 @@
+
+[Chapter 16] Collator
+Chapter 16The java.text Package
+Collator
+Name
+Collator
+Synopsis
+Class Name:
+java.text.Collator
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.text.RuleBasedCollator
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The Collator class compares strings in a manner that is appropriate for a particular locale. 
+Although Collator is an abstract 
+class, the getInstance() factory 
+methods can be used to get a usable instance of a Collator 
+subclass that implements a particular collation strategy. One subclass, 
+RuleBasedCollator, is provided 
+as part of the JDK. 
+A Collator object has a strength 
+property that controls the level of difference that is considered significant 
+for comparison purposes. The Collator 
+class provides four strength values: PRIMARY, 
+SECONDARY, TERTIARY, 
+and IDENTICAL. Although the 
+interpretation of these strengths is locale-dependent, they generally have 
+the following meanings: 
+PRIMARY
+The comparison considers letter differences, but ignores case and diacriticals. 
+SECONDARY
+The comparison considers letter differences and diacriticals, but ignores case. 
+TERTIARY
+The comparison considers letter differences, case, and diacriticals. 
+IDENTICAL
+The comparison considers all differences. 
+The default comparison strength is TERTIARY. 
+If you only need to compare two String 
+objects once, the compare() 
+method of the Collator class 
+provides the best performance. However, if you need to compare the same 
+String objects multiple times, 
+such as when you are sorting, you should use CollationKey 
+objects instead. A CollationKey 
+object contains a String that 
+has been converted into a series of bits that can be compared in a bitwise 
+fashion against other CollationKey 
+objects. You use a Collator 
+object to create a CollationKey 
+for a given String. 
+Class Summary
+public abstract class java.text.Collator extends java.lang.Object
+                      implements java.io.Serializable, 
+                                 java.lang.Cloneable {
+  // Constants
+  public static final int CANONICAL_DECOMPOSITION;
+  public static final int FULL_DECOMPOSITION;
+  public static final int IDENTICAL;
+  public static final int NO_DECOMPOSITION;
+  public static final int PRIMARY;
+  public static final int SECONDARY;
+  public static final int TERTIARY;
+  // Constructors
+  protected Collator();
+  // Class Methods
+  public static synchronized Locale[] getAvailableLocales();
+  public static synchronized Collator getInstance();
+  public static synchronized Collator getInstance(Locale desiredLocale);
+  // Instance Methods
+  public Object clone();
+  public abstract int compare(String source, String target);
+  public boolean equals(Object that); 
+  public boolean equals(String source, String target);
+  public abstract CollationKey getCollationKey(String source);
+  public synchronized int getDecomposition();
+  public synchronized int getStrength();
+  public abstract synchronized int hashCode();
+  public synchronized void setDecomposition(int decompositionMode);
+  public synchronized void setStrength(int newStrength);
+}
+Constants
+CANONICAL_DECOMPOSITION
+public final static int CANONICAL_DECOMPOSITION
+Description
+A decomposition constant that specifies that Unicode 2.0 characters which 
+are canonical variants are decomposed for collation. This is the default 
+decomposition setting. 
+FULL_DECOMPOSITION
+public final static int FULL_DECOMPOSITION
+Description
+A decomposition constant that specifies that Unicode 2.0 canonical variants 
+and compatibility variants are decomposed for collation. This is the 
+most complete decomposition setting, and thus the slowest setting. 
+IDENTICAL
+public final static int IDENTICAL
+Description
+A strength constant that specifies that all differences are considered 
+significant for comparison purposes. 
+NO_DECOMPOSITION
+public final static int NO_DECOMPOSITION
+Description
+A decomposition setting that specifies that no Unicode characters are
+decomposed for collation. This is the least complete decomposition setting, 
+and thus the fastest setting. It only works correctly for languages that 
+do not use diacriticals. 
+PRIMARY
+public final static int PRIMARY
+Description
+A strength constant that specifies that only primary differences are considered 
+significant for comparison purposes. Primary differences are typically 
+letter differences. 
+SECONDARY
+public final static int SECONDARY
+Description
+A strength constant that specifies that only secondary differences and 
+above are considered significant for comparison purposes. Secondary differences 
+are typically differences in diacriticals, or accents. 
+TERTIARY
+public final static int TERTIARY
+Description
+A strength constant that specifies that only tertiary differences and above 
+are considered significant for comparison purposes. Tertiary differences 
+are typically differences in case. This is the default strength setting. 
+Constructors
+Collator
+protected Collator()
+Description
+This constructor creates a Collator 
+with the default strength of TERTIARY 
+and default decomposition mode of CANONICAL_DECOMPOSITION. 
+Class Methods
+getAvailableLocales
+public static synchronized Locale[] getAvailableLocales()
+Returns
+An array of Locale objects. 
+Description
+This method returns an array of the Locale 
+objects for which this class can create Collator 
+objects. 
+getInstance
+public static synchronized Collator getInstance()
+Returns
+A Collator appropriate for 
+the default Locale. 
+Description
+This method creates a Collator 
+that compares strings in the default Locale. 
+   public static synchronized Collator getInstance( Locale desiredLocale)  
+Parameters
+desiredLocale
+The Locale 
+to use. 
+Returns
+A Collator appropriate for 
+the given Locale. 
+Description
+This method creates a Collator 
+that compares strings in the given Locale. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this Collator. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this Collator 
+and returns it. 
+compare
+public abstract int compare(String source, String target)
+Parameters
+source
+The source string.
+target
+The target string. 
+Returns
+-1 if source is less than
+target, 0 if the strings are
+equal, or 1 if source is greater
+than target.
+Description
+This method compares the given strings according to the collation
+rules for this Collator and returns a value that
+indicates their relationship. If either of the strings are compared
+more than once, a CollationKey should be used
+instead.
+equals
+public boolean equals(Object that)
+Parameters
+that
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of Collator 
+and is equivalent to this Collator. 
+public boolean equals(String source, Source target)
+Parameters
+source
+The source string.
+target
+The target string. 
+Returns
+true if the given strings are 
+equal; false otherwise. 
+Description
+This method compares the given strings for equality using the collation 
+rules for this Collator. Note 
+that this method applies locale-specific rules and is thus not the same 
+as String.equals(). 
+getCollationKey
+public abstract CollationKey getCollationKey(String source)
+Parameters
+source
+The string to use when generating the CollationKey. 
+Returns
+A CollationKey for the given 
+string. 
+Description
+This method generates a CollationKey 
+for the given string. The returned object can be compared with other CollationKey 
+objects using CollationKey.compareTo(). 
+This comparison is faster than using Collator.compare(), 
+so if the same string is used for many comparisons, you should use 
+CollationKey objects. 
+getDecomposition
+public synchronized int getDecomposition()
+Returns
+The decomposition mode for this Collator. 
+Description
+This method returns the current decomposition mode for this Collator. 
+The decomposition mode specifies how composed Unicode characters are handled 
+during collation. You can adjust the decomposition mode to choose between 
+faster and more complete collation. The returned value is one of the following 
+values: NO_DECOMPOSITION, CANONICAL_DECOMPOSITION, 
+or FULL_DECOMPOSITION. 
+getStrength
+public synchronized int getStrength()
+Returns
+The strength setting for this Collator. 
+Description
+This method returns the current strength setting for this Collator. 
+The strength specifies the minimum level of difference that is considered 
+significant during collation. The returned value is one of the following 
+values: PRIMARY, SECONDARY, 
+TERTIARY, or IDENTICAL. 
+hashCode
+public abstract synchronized int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this Collator. 
+setDecomposition
+public synchronized void setDecomposition(int decompositionMode)
+Parameters
+decompositionMode
+The decomposition mode:
+NO_DECOMPOSITION, 
+CANONICAL_DECOMPOSITION,
+or FULL_DECOMPOSITION. 
+Description
+This method sets the decomposition mode for this Collator. 
+The decomposition mode specifies how composed Unicode characters are handled 
+during collation. You can adjust the decomposition mode to choose between 
+faster and more complete collation. 
+setStrength
+public synchronized void setStrength(int newStrength)
+Parameters
+newStrength
+The new strength setting: PRIMARY, SECONDARY, 
+TERTIARY, or IDENTICAL. 
+Description
+This method sets the strength of this Collator. 
+The strength specifies the minimum level of difference that is considered 
+significant during collation. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+CollationKey, 
+Locale, 
+RuleBasedCollator, 
+String 
+CollationKey
+DateFormat
+ 
+ 
+ 
+ 
+ 
+ 
+ 

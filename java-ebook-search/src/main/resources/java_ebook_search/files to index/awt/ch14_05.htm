@@ -1,0 +1,239 @@
+
+[Chapter 14] 14.5 Audio in Applications
+Chapter 14And Then There Were Applets
+14.5 Audio in Applications
+The rest of this chapter describes how to use audio in your applications. 
+Because the audio support discussed so far has been provided by the browser, 
+applications that don't run in the context of a browser must use 
+a different set of classes to work with audio. These classes are within 
+the sun.audio package. Although 
+the sun.* package hierarchy 
+is not necessarily included by other vendors, the sun.audio 
+classes discussed here are provided with Netscape Navigator 2.0/3.0 
+and Internet Explorer 3.0. Therefore, you can use these classes within 
+applets, too. This section ends by developing a SunAudioClip 
+class that has an interface similar to the applet's audio interface; 
+you can use it to minimize coding differences between applets and applications. 
+AudioData
+The AudioData class holds a 
+clip of 8000 Hz &micro;Law audio data. This data can be used to construct 
+an AudioDataStream or ContinuousAudioDataStream, 
+which can then be played with the AudioPlayer. Constructor
+public AudioData (byte buffer[]) 
+The AudioData constructor accepts 
+a byte array buffer and creates 
+an instance of AudioData. The 
+buffer should contain 8000 Hz &micro;Law audio data. 
+Methods
+There are no methods for AudioData. 
+AudioStream
+AudioStream subclasses FilterInputStream, 
+which extends InputStream. 
+Using an InputStream lets you 
+move back and forth (rewind and fast forward) within an audio file, in 
+addition to playing the audio data from start to finish. Constructors
+public AudioStream (InputStream in) throws IOException 
+The AudioStream constructor 
+has InputStream in 
+as its parameter and can throw IOException 
+on error. In the following code, we get an input stream by opening a .au 
+file. Another common way to construct an AudioStream 
+is to use the stream associated with a URL through the URL's openStream() 
+method. 
+FileInputStream fis = new FileInputStream ("/usr/openwin/demo/sounds/1.au");
+AudioStream audiostream = new AudioStream (fis);
+or:
+AudioStream audiostream = new AudioStream (savedUrl.openStream());
+If you are constructing the audio data yourself, you would use a ByteArrayInputStream. 
+Whatever the source of the data, the input stream should provide data in 
+Sun's .au 
+format. 
+Methods
+public int read (byte buffer[], int offset, int length) throws IOException
+The read() method for AudioStream 
+reads an array of bytes into buffer. 
+offset is the first element 
+of buffer that is used. length 
+is the maximum number of bytes to read. This method blocks until some input 
+is available. read() returns 
+the actual number of bytes read. If the end of stream is encountered and 
+no bytes were read, read() 
+returns -1. Ordinarily, you read() 
+an AudioStream only if you want 
+to modify the audio data in some way. 
+public int getLength() 
+The getLength() method returns 
+the length of the audio data contained within the AudioStream, 
+excluding any header information in the file. 
+public AudioData getData () throws IOException 
+The getData() method of AudioStream 
+is the most important and most frequently used. It reads the data from 
+the input stream and creates an AudioData 
+instance. As the following code shows, you can create an AudioStream 
+and get the AudioData with 
+one statement. 
+AudioData audiodata = new AudioStream (aUrl.openStream()).getData();
+AudioDataStreamConstructors
+public AudioDataStream (AudioData data) 
+This constructor creates an AudioDataStream 
+from an AudioData object data. 
+The resulting AudioDataStream 
+is a subclass of ByteArrayInputStream 
+and can be played by the AudioPlayer.start() 
+method. 
+Methods
+There are no methods for AudioDataStream. 
+ContinuousAudioDataStreamConstructors
+public ContinuousAudioDataStream (AudioData data) 
+This constructor creates a continuous stream of audio from data. 
+The resulting ContinuousAudioDataStream 
+is a subclass of AudioDataStream 
+and, therefore, of ByteArrayInputStream. 
+It can be played by AudioPlayer.start(); 
+whenever the player reaches the end of the continuous audio data stream, 
+it restarts from the beginning. 
+Methods
+public int read ()  
+This read() method of ContinuousAudioDataStream 
+overrides the read() method 
+in ByteArrayInputStream to 
+rewind back to the beginning of the stream when end-of-file is reached. 
+This method is used by the system when it reads the InputStream; 
+it is rarely called directly. read() 
+never returns -1 since it loops back to the beginning on end-of-file. 
+public int read (byte buffer[], int offset, int length)  
+This read() method of ContinuousAudioDataStream 
+overrides the read() method 
+in ByteArrayInputStream to 
+rewind back to the beginning of the stream when end-of-file is reached. 
+This method is used by the system when it reads the InputStream; 
+it is rarely called directly. read() 
+returns the actual number of bytes read. read() 
+never returns -1 since it loops back to the beginning on end-of-file. 
+AudioStreamSequenceConstructors
+public AudioStreamSequence (Enumeration e) 
+The constructor for AudioStreamSequence 
+accepts an Enumeration e(normally the elements of a Vector 
+of AudioStreams) as its sole 
+parameter. The constructor converts the sequence of audio streams into 
+a single stream to be played in order. An example follows: 
+Vector v = new Vector ();
+v.addElement (new AudioStream (url1.openStream ());
+v.addElement (new AudioStream (url2.openStream ());
+AudioStreamSequence audiostream = new AudioStreamSequence (v.elements ());
+Methods
+public int read ()  
+This read() method of AudioStreamSequence 
+overrides the read() method 
+in InputStream to start the 
+next stream when end-of-file is reached. This method is used by the system 
+when it reads the InputStream 
+and is rarely called directly. If the end of all streams is encountered 
+and no bytes were read, read() 
+returns -1. Otherwise, read() 
+returns the character read. 
+public int read (byte buffer[], int offset, int length)   
+This read() method of AudioStreamSequence 
+overrides the read() method 
+in InputStream to start the 
+next stream when end-of-file is reached. This method is used by the system 
+when it reads the InputStream 
+and is rarely called directly. read() 
+returns the actual number of bytes read. If the end of all streams is encountered 
+and no bytes were read, read() 
+returns -1. 
+AudioPlayer
+The AudioPlayer class is the 
+workhorse of the sun.audio 
+package. It is used to play all the streams that were created with the 
+other classes. There is no constructor for AudioPlayer; 
+it just extends Thread and 
+provides start() and stop() 
+methods. Variable
+public final static AudioPlayer player 
+player is the default audio 
+player. This audio player is initialized automatically when the class is 
+loaded; you do not have to initialize it (in fact, you can't because 
+it is final) or call the constructor yourself. 
+Methods
+public synchronized void start (InputStream in) 
+The start() method starts a 
+thread that plays the InputStream 
+in. Stream in 
+continues to play until there is no more data or it is stopped. If in is 
+a ContinuousAudioDataStream, 
+the playing continues until stop() 
+(described next) is called. 
+public synchronized void stop (InputStream in) 
+The stop() method stops the 
+player from playing InputStream 
+in. Nothing happens if the 
+stream in is no longer playing 
+or was never started. 
+SunAudioClip Class Definition
+The class in Example 14.3 is all you need to play audio files in applications. 
+It implements the java.applet.AudioClip 
+interface, so the methods and functionality will be familiar. The test 
+program in main() demonstrates 
+how to use the class. Although the class itself can be used in applets, 
+provided your users have the sun.audio 
+package available, it is geared towards application users. 
+Example 14.3: The SunAudioClip Class
+import java.net.URL;
+import java.io.FileInputStream;
+import sun.audio.*;
+public class SunAudioClip implements java.applet.AudioClip {
+    private AudioData audiodata;
+    private AudioDataStream audiostream;
+    private ContinuousAudioDataStream continuousaudiostream;
+    static int length;
+    public SunAudioClip (URL url) throws java.io.IOException {
+        audiodata = new AudioStream (url.openStream()).getData();
+        audiostream = null;
+        continuousaudiostream = null;
+    }
+    public SunAudioClip (String filename) throws java.io.IOException {
+        FileInputStream fis = new FileInputStream (filename);
+        AudioStream audioStream = new AudioStream (fis);
+        audiodata = audioStream.getData();
+        audiostream = null;
+        continuousaudiostream = null;
+    }
+    public void play () {
+        audiostream = new AudioDataStream (audiodata);
+        AudioPlayer.player.start (audiostream);
+    }
+    public void loop () {
+        continuousaudiostream = new ContinuousAudioDataStream (audiodata);
+        AudioPlayer.player.start (continuousaudiostream);
+    }
+    public void stop () {
+        if (audiostream != null)
+            AudioPlayer.player.stop (audiostream);
+        if (continuousaudiostream != null)
+            AudioPlayer.player.stop (continuousaudiostream);
+    }
+    public static void main (String args[]) throws Exception {
+        URL url1 = new URL ("http://localhost:8080/audio/1.au");
+        URL url2 = new URL ("http://localhost:8080/audio/2.au");
+        SunAudioClip sac1 = new SunAudioClip (url1);
+        SunAudioClip sac2 = new SunAudioClip (url2);
+        SunAudioClip sac3 = new SunAudioClip ("1.au");
+        sac1.play ();
+        sac2.loop ();
+        sac3.play ();
+        try {// Delay for loop
+            Thread.sleep (2000);
+        } catch (InterruptedException ie) {}
+        sac2.stop();
+    }
+}
+AppletStub Interface
+Toolkit and Peers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

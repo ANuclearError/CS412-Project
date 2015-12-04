@@ -1,0 +1,134 @@
+
+[Chapter 23] TextAreaPeer
+Chapter 23java.awt.peer Reference
+TextAreaPeer
+Name
+TextAreaPeer
+Description
+TextAreaPeer is an interface 
+that defines the basis for text areas. 
+Interface Definition
+public abstract interface java.awt.peer.TextAreaPeer
+   extends java.awt.peer.TextComponentPeer {
+  // Interface Methods
+  public abstract Dimension getMinimumSize (int rows, int columns); 
+  public abstract Dimension getPreferredSize (int rows, int columns); 
+  public abstract void insert (String string, int position); 
+  public abstract void insertText (String string, int position); 
+  public abstract Dimension minimumSize (int rows, int columns); 
+  public abstract Dimension preferredSize (int rows, int columns); 
+  public abstract void replaceRange (String string, int startPosition, int endPosition); 
+  public abstract void replaceText (String string, int startPosition, int endPosition); 
+}
+Interface Methods
+getMinimumSize
+public abstract Dimension getMinimumSize (int rows, int columns) 
+Parameters
+rows
+Number of rows within 
+the text area's peer.
+columns
+Number of columns 
+within the text area's peer. 
+Returns
+The minimum dimensions of a text area's peer of the given size. 
+getPreferredSize
+public abstract Dimension getPreferredSize (int rows, int columns) 
+Parameters
+rows
+Number of rows within 
+the text area's peer.
+columns
+Number of columns 
+within the text area's peer. 
+Returns
+The preferred dimensions of a text area's peer of the given size. 
+insert
+public abstract void insert (String string, int position) 
+Parameters
+string
+Content to place 
+within the text area's peer.
+position
+Location at which 
+to insert the content. 
+Description
+Places additional text within the text area's peer. 
+insertText
+public abstract void insertText (String string, int position) 
+Parameters
+string
+Content to place 
+within the text area's peer.
+position
+Location at which 
+to insert the content. 
+Description
+Places additional text within the text area's peer. Replaced by insert(String, 
+int). 
+minimumSize
+public abstract Dimension minimumSize (int rows, int columns) 
+Parameters
+rows
+Number of rows within 
+the text area's peer.
+columns
+Number of columns 
+within the text area's peer. 
+Returns
+The minimum dimensions of a text area's peer of the given size. Replaced 
+by getMinimumSize(int, int). 
+preferredSize
+public abstract Dimension preferredSize (int rows, int columns) 
+Parameters
+rows
+Number of rows within 
+the text area's peer.
+columns
+Number of columns 
+within the text area's peer. 
+Returns
+The preferred dimensions of a text area's peer of the given size. 
+Replaced by getPreferredSize(int, int). 
+replaceRange
+public abstract void replaceRange (String string, int startPosition, int endPosition) 
+Parameters
+string
+New content to place 
+in the text area's peer.
+startPosition
+Starting 
+position of the content to replace.
+endPosition
+Ending position 
+of the content to replace. 
+Description
+Replaces a portion of the text area peer's content with the given 
+text. 
+replaceText
+public abstract void replaceText (String string, int startPosition, int endPosition) 
+Parameters
+string
+New content to place 
+in the text area's peer.
+startPosition
+Starting 
+position of the content to replace.
+endPosition
+Ending position 
+of the content to replace. 
+Description
+Replaces a portion of the text area peer's content with the given 
+text. Replaced by replaceRange(String, int, int). 
+See Also
+Dimension, String, 
+TextComponentPeer 
+ScrollPanePeer 
+TextComponentPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

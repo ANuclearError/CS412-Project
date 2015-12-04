@@ -1,0 +1,109 @@
+
+[Chapter 8] 8.4 Data Transfer with Cut-and-Paste
+Chapter 8New AWT Features
+8.4 Data Transfer with Cut-and-Paste
+Java 1.1 adds cut-and-paste capabilities to Java
+applications through the classes and interfaces of the
+java.awt.datatransfer package.  The
+DataFlavor class is perhaps the most central of
+these classes.  It represents the type of data to be
+transferred.  Every data flavor consists of a human-readable
+name and a data type specification.  The data type can be
+specified in one of two ways: with a Java Class
+object or with a MIME type string.  These two different
+ways of specifying the data type reflect two different ways
+of transferring the data.  When the data type is specified
+as a class object, objects of that type are transferred
+using the object serialization mechanism (which is
+discussed in Chapter 9, Object Serialization).  In
+Example 8.1,
+for example, the DataFlavor is specified using the
+Class object for java.util.Vector.  This means that
+data is transferred as a serialized Vector object.  It
+also means that the DataFlavor object has an implicit
+MIME type of:
+application/x-java-serialized-object; class=java.util.Vector
+The data type of a DataFlavor can also be specified
+as a MIME type.  In this case, data is transferred through a
+stream--the recipient of the data receives a Reader
+stream from which it can read textual data.  In this case,
+the recipient usually has to parse the data according
+to the rules of the specified MIME type.
+The Transferable interface is another important
+piece of the AWT data transfer picture.  This interface specifies
+methods that must be implemented by any object that wants to
+make data available for transfer.  One of its methods
+returns an array of all the DataFlavor types it can
+use to transfer its data.  Another method checks whether the
+Transferable object supports a given method.
+The most important method,
+getTransferData(), actually returns the data in a
+format appropriate for the requested DataFlavor.
+While DataFlavor and Transferable provide
+the underlying infrastructure for data transfer, it is the
+Clipboard class and ClipboardOwner interface
+that support the cut-and-paste style of data transfer.  A
+typical cut-and-paste scenario works like this:
+When the user issues a command to "copy" or "cut" something,
+the initiating application first obtains the system
+Clipboard object by calling the
+getSystemClipboard() method of the Toolkit
+object.  Next, it creates a Transferable object that
+represents the data to be transferred.  Finally, it passes
+this transferable object to the clipboard by calling the
+setContents() method of the clipboard.  The
+initiating application must also pass an object that
+implements the ClipboardOwner interface to
+setContents().  By doing so, it becomes the
+"clipboard owner" and must maintain its
+Transferable object until it ceases to be the
+clipboard owner.
+When the user issues a command to "paste," the receiving
+application first obtains the system Clipboard
+object in the same way that the initiating application did.
+Then, it calls the getContents() method of the system
+clipboard to receive the Transferable object stored
+there.  Now it can use the methods defined by the
+Transferable interface to choose a DataFlavor
+for the data transfer and actually transfer the data.
+When the user copies or cuts some other piece of data, a new
+data transfer is initiated, and the new initiating
+application (it may be the same one) becomes the new
+clipboard owner.  The previous owner is notified that it is
+no longer the clipboard owner when the system invokes the
+lostOwnership() method of the ClipboardOwner
+object specified in the initiating call to
+setContents().
+Note that untrusted applets are not allowed to work with the
+system clipboard because there might be sensitive data on it
+from other applications.  This means that applets cannot
+participate in inter-application cut-and-paste.  Instead,
+an applet must create a private clipboard object that it can
+use for intra-applet data transfer.
+The cut(), copy(), and paste()
+methods of Example 8.1
+implement cut-and-paste functionality for scribbled lines.  They rely on
+the nested SimpleSelection class that implements
+the Transferable and ClipboardOwner
+interfaces.  Note the definition of a DataFlavor object that
+serves to specify the type of data transfer.
+[1]
+[1] 
+Although the example application uses the system clipboard,
+scribbles can only be pasted between windows of the same
+application, not between separate instances of the
+application running in separate Java interpreters.  In Java
+1.1.1, inter-application cut-and-paste only works with
+the pre-defined DataFlavor.stringFlavor and
+DataFlavor.textFlavor data flavors.  Custom types
+like the one used in the example do not correctly interface
+with the system clipboard.
+Printing
+New Feature Demo
+ 
+ 
+ 
+ 
+ 
+ 
+ 

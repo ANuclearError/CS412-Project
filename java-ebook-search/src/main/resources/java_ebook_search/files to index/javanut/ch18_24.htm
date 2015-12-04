@@ -1,0 +1,78 @@
+
+[Chapter 18] 18.24 java.awt.Font (JDK 1.0)
+Chapter 18The java.awt Package
+18.24 java.awt.Font (JDK 1.0)
+This class represents a font in a platform-independent way.
+The constructor accepts a font name, style, and point size.
+In Java 1.0, supported font names are: "TimesRoman,"
+"Helvetica," "Courier," "Dialog," and "DialogInput."  In
+Java 1.1, "Serif," "SansSerif," and "Monospaced" should be
+used in preference to the first three names.  The style may
+be one of the constants PLAIN, BOLD, or
+ITALIC, or the sum BOLD+ITALIC.  
+The class method getFont() looks up the specified
+name in the system properties list and returns the font
+specified as the value of that property.  It takes an
+optional Font default to use if the named font
+property is not found.  This allows user customizability.
+Use the FontMetrics class if you need to know how
+tall a font is or how wide a string drawn using that font
+will be.
+public class Font extends Object implements Serializable {
+    // Public Constructor
+            public Font(String name, int style, int size);
+    // Constants
+            public static final int BOLD;
+            public static final int ITALIC;
+            public static final int PLAIN;
+    // Protected Instance Variables
+            protected String name;
+            protected int size;
+            protected int style;
+    // Class Methods
+        1.1  public static Font decode(String str);
+            public static Font getFont(String nm);
+            public static Font getFont(String nm, Font font);
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+            public String getFamily();
+            public String getName();
+        1.1  public FontPeer getPeer();
+            public int getSize();
+            public int getStyle();
+            public int hashCode();  // Overrides Object
+            public boolean isBold();
+            public boolean isItalic();
+            public boolean isPlain();
+            public String toString();  // Overrides Object
+}
+Passed To:
+Component.getFontMetrics(), 
+Component.setFont(), 
+ComponentPeer.getFontMetrics(), 
+ComponentPeer.setFont(), 
+Font.getFont(), 
+FontMetrics(), 
+Graphics.getFontMetrics(), 
+Graphics.setFont(), 
+MenuComponent.setFont(), 
+Toolkit.getFontMetrics()
+Returned By:
+Component.getFont(), 
+Font.decode(), 
+Font.getFont(), 
+FontMetrics.getFont(), 
+Graphics.getFont(), 
+MenuComponent.getFont(), 
+MenuContainer.getFont()
+Type Of:
+FontMetrics.font
+java.awt.FlowLayout (JDK 1.0)
+java.awt.FontMetrics (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

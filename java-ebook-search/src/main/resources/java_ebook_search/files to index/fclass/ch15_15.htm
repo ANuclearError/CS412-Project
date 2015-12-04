@@ -1,0 +1,281 @@
+
+[Chapter 15] ServerSocket
+Chapter 15The java.net Package
+ServerSocket
+Name
+ServerSocket
+Synopsis
+Class Name:
+java.net.ServerSocket
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The ServerSocket class represents 
+a socket that listens for connection requests from clients on a specified 
+port. When a connection is requested, a Socket 
+object is created to handle the communication. 
+The low-level network access in ServerSocket 
+is provided by a subclass of the abstract 
+class SocketImpl. An application 
+can change the server socket factory that creates the SocketImpl 
+subclass by supplying a SocketImplFactory 
+using the setSocketFactory() 
+method. This feature allows an application to create sockets that are appropriate 
+for the local network configuration and accommodate such things as firewalls. 
+Class Summary
+public class java.net.ServerSocket extends java.lang.Object {
+  // Constructors
+  public ServerSocket(int port);
+  public ServerSocket(int port, int backlog);
+  public ServerSocket(int port, int backlog, 
+                      InetAddress bindAddr);              // New in 1.1
+  // Class Methods
+  public static synchronized void setSocketFactory(SocketImplFactory fac);
+  // Instance Methods
+  public Socket accept();
+  public void close();
+  public InetAddress getInetAddress();
+  public int getLocalPort();
+  public synchronized int getSoTimeout()                  // New in 1.1
+  public synchronized void setSoTimeout(int timeout);     // New in 1.1
+  public String toString();
+  // Protected Instance Methods
+  protected final void implAccept(Socket s);              // New in 1.1
+}
+Constructors
+ServerSocket
+public ServerSocket(int port) throws IOException
+Parameters
+port
+A port number, or 0 for any available port. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to listen on the given port. 
+Description
+This method creates a server socket that listens for a connection on the 
+given port. A default of 50 pending connections can be queued by the ServerSocket. 
+Calling accept() removes a 
+pending connections from the queue. If the queue is full, additional connection 
+requests are refused.
+If an application has specified a server socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+public ServerSocket(int port, int backlog) throws IOException
+Parameters
+port
+A port number, or 0 for any available port.
+backlog
+The maximum length of the pending connections queue. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to listen on the given port. 
+Description
+This method creates a server socket that listens for a connection on the 
+given port. The backlog parameter 
+specifies how many pending connections can be queued by the ServerSocket. 
+Calling accept() removes a 
+pending connection from the queue. If the queue is full, additional connection 
+requests are refused.
+If an application has specified a server socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+   public ServerSocket(int port, int backlog, InetAddress bindAddr) throws IOException  
+Availability
+New as of JDK 1.1 
+Parameters
+port
+A port number, or 0 for any available port.
+backlog
+The maximum length of the pending connections queue.
+bindAddr
+A local address. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to listen on the given port. 
+Description
+This method creates a server socket that listens for a connection on the 
+given port of bindAddr. On 
+machines with multiple addresses, bindAddr 
+specifies the address on which this ServerSocket 
+listens. The backlog parameter 
+specifies how many pending connections can be queued by the ServerSocket. 
+Calling accept() removes 
+pending connections from the queue. If the queue is full, additional connection 
+requests are refused.
+If an application has specified a server socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+Class Methods
+setSocketFactory
+   public static synchronized void setSocketFactory( SocketImplFactory fac) throws IOException  
+Parameters
+fac
+An object that implements SocketImplFactory. 
+Throws
+IOException
+If the factory has already been defined.
+SecurityException
+If the application does not have permission to set the factory. 
+Description
+This method is used to set the SocketImplFactory. 
+This factory object
+produces instances of subclasses of SocketImpl 
+that do the low-level work of server sockets. When a ServerSocket 
+constructor is called, the createSocketImpl() 
+method of the factory is called to create the server socket implementation. 
+Instance Methods
+accept
+public Socket accept() throws IOException
+Returns
+A Socket 
+object for the connection. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to accept the connection. 
+Description
+This method accepts a connection and returns a Socket 
+object to handle communication. If there are pending connections, the method 
+accepts a pending connection from the queue and returns immediately. Otherwise, 
+the method may block until a connection is requested. If a time-out value 
+has been specified using the setSoTimeout() 
+method, accept() may time out 
+and throw an InterruptedIOException 
+if no connection is requested in the time-out period. 
+close
+public void close() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method closes this server socket, releasing any system resources it 
+holds. 
+getInetAddress
+public InetAddress getInetAddress()
+Returns
+The IP address to which this ServerSocket 
+is listening. 
+Description
+Generally, this method returns the address of the local host. However, 
+a ServerSocket can be constructed 
+with an alternate address using ServerSocket(int, int, 
+InetAddress). The method returns null 
+if the socket is not yet connected. 
+getLocalPort
+public int getLocalPort()
+Returns
+The port number to which this ServerSocket 
+is listening. 
+Description
+This method returns the port number to which this object is connected. 
+getSoTimeout
+public synchronized int getSoTimeout() throws IOException
+Availability
+New as of JDK 1.1 
+Returns
+The receive timeout value for the socket. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method returns the receive time-out value for this socket. A value 
+of zero indicates that accept() 
+waits indefinitely for an incoming packet, while a non-zero value indicates 
+the number of milliseconds it waits. 
+setSoTimeout
+   public synchronized void setSoTimeout(int timeout) throws SocketException  
+Availability
+New as of JDK 1.1 
+Parameters
+timeout
+The new time-out value, in milliseconds, for this socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method is used to set the time-out value that is used for accept(). 
+A nonzero value is the length of time, in milliseconds, the ServerSocket 
+should wait for a connection. A value of zero indicates that the ServerSocket 
+should wait indefinitely. If a time-out value is needed, this method must 
+be called before accept(). 
+toString
+public String toString()
+Returns
+The string representation of this ServerSocket. 
+Overrides
+Object.toString() 
+Description
+This method returns a String 
+that contains the address and port of this ServerSocket. 
+Protected Instance Methods
+implAccept
+protected final void implAccept(Socket s) throws IOException
+Availability
+New as of JDK 1.1 
+Parameters
+s
+The Socket object to be connected. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to accept the connection. 
+Description
+This method is a helper method for accept(). 
+It can be overridden in subclasses of ServerSocket 
+to support new subclasses of Socket. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+InetAddress, 
+IOException, 
+SecurityException, 
+Socket, 
+SocketException, 
+SocketImpl, 
+SocketImplFactory 
+ProtocolException
+Socket
+ 
+ 
+ 
+ 
+ 
+ 
+ 

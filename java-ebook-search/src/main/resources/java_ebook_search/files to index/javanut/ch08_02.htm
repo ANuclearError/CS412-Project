@@ -1,0 +1,136 @@
+
+[Chapter 8] 8.2 Popup Menus and Menu Shortcuts
+Chapter 8New AWT Features
+8.2 Popup Menus and Menu Shortcuts
+In Java 1.1, the AWT has some welcome new menuing features.
+As you can see from
+Figure 8.1,
+popup menus (and submenus) are now supported by the AWT.
+Not shown in the figure, but also supported, are keyboard
+menu shortcuts, which in this example are attached to the
+menu items in the pulldown menu.
+Popup menus are represented by the PopupMenu class.
+PopupMenu is a subclass of Menu and is used
+very much like a Menu pane is.  To create a popup
+menu, create a PopupMenu, and add MenuItem
+objects to it, just as you would do with a regular menu
+pane.  Instead of adding a popup menu to a menubar, however,
+you must add it to the component over which it pops up.
+You do this with the add() method of the target
+component.  As part of the addition of popup menus in Java
+1.1, a new add() method has been added to the
+Component class.  This new version of add()
+accepts a single PopupMenu argument.  
+Here's a fragment of the Scribble() constructor in
+Example 8.1
+that creates a popup menu and adds it to a
+component:
+// Create the popup menu using a loop.  Note the separation of menu
+// "action command" string from menu label.  Good for internationalization.
+String[] labels = new String[] {
+  "Clear", "Print", "Save", "Load", "Cut", "Copy", "Paste" };
+String[] commands = new String[] {
+  "clear", "print", "save", "load", "cut", "copy", "paste" };
+popup = new PopupMenu();                   // Create the menu.
+for(int i = 0; i &lt; labels.length; i++) {
+  MenuItem mi = new MenuItem(labels[i]);   // Create a menu item.
+  mi.setActionCommand(commands[i]);        // Set its action command.
+  mi.addActionListener(this);              // And its action listener.
+  popup.add(mi);                           // Add item to the popup menu.
+}
+Menu colors = new Menu("Color");           // Create a submenu.
+popup.add(colors);                         // And add it to the popup.
+String[] colornames = new String[] { "Black", "Red", "Green", "Blue"};
+for(int i = 0; i &lt; colornames.length; i++) {
+  MenuItem mi = new MenuItem(colornames[i]);  // Create the submenu items
+  mi.setActionCommand(colornames[i]);         // in the same way.
+  mi.addActionListener(this);
+  colors.add(mi);
+}
+// Finally, register the popup menu with the component it appears over.
+this.add(popup);
+In addition to creating and registering a popup menu, you
+must also arrange for it to pop up at the appropriate time.
+Popup menus are always triggered by mouse events, but the
+particular "popup trigger" event varies from platform to
+platform.  To hide this platform dependency, the
+MouseEvent class defines a isPopupTrigger()
+method that you can use to determine whether a popup menu
+should be "posted" (i.e., popped up) in response to a given
+event.  To post a menu, call its show() method,
+specifying the component it should appear over and also the
+coordinates (from the mouse event) that it should appear at.
+The processMouseEvent() method of
+Example 8.1
+handles posting the popup menu:
+public void processMouseEvent(MouseEvent e) {
+  if (e.isPopupTrigger())                               // If popup trigger,
+    popup.show(this, e.getX(), e.getY());               // pop up the menu.
+  else if (e.getID() == MouseEvent.MOUSE_PRESSED) {
+    last_x = (short)e.getX(); last_y = (short)e.getY(); // Save position.
+  }
+  else super.processMouseEvent(e);  // Pass other event types on.
+}
+Event handling for the menu items in a PopupMenu is
+the same as it is for pulldown menu items.  The simplest
+technique is to specify the same action listener object for
+each menu item, but specify a different string as the
+"action command" for each item.  Then, the
+actionPerformed() method of the listener can
+dispatch the ActionEvent based on the command string
+it contains.  The actionPerformed() method of the
+Scribble class in Example 8.1
+shows this technique:
+public void actionPerformed(ActionEvent event) {
+  // Get the "action command" of the event, and dispatch based on that.
+  // This method calls a lot of the interesting methods in this class.
+  String command = event.getActionCommand();
+  if (command.equals("clear")) clear();
+  else if (command.equals("print")) print();
+  else if (command.equals("save")) save();
+  else if (command.equals("load")) load();
+  else if (command.equals("cut")) cut();
+  else if (command.equals("copy")) copy();
+  else if (command.equals("paste")) paste();
+  else if (command.equals("Black")) current_color = Color.black;
+  else if (command.equals("Red")) current_color = Color.red;
+  else if (command.equals("Green")) current_color = Color.green;
+  else if (command.equals("Blue")) current_color = Color.blue;
+}
+The MenuShortcut class is another important addition
+to the menu functionality of Java.  Any MenuItem
+object may have a MenuShortcut object specified that
+allows the user to invoke the menu item with a keyboard
+command.  You create a MenuShortcut object by
+specifying the key code of the key to act as the shortcut,
+and, optionally, whether the Shift modifier is
+required to invoke the shortcut.  The key should be
+specified as one of the VK_ virtual key constants
+defined by the KeyEvent class.  Note that you do not
+specify any Ctrl, Alt, or Meta modifier for
+a shortcut.  Like the "popup trigger" event, the standard
+keyboard modifier for menu shortcuts is platform-dependent,
+so Java hides this from you.  Consider the following menu
+shortcut, for example:
+MenuShortcut s = new MenuShortcut(KeyEvent.VK_C);
+This shortcut is invoked as Ctrl-C on a Windows
+platform or by using the special "Command" modifier on a
+Mac.
+The following fragment of the ScribbleFrame() constructor of
+Example 8.1 creates menu shortcuts and associates
+them with menu items:
+// Create three menu items, with menu shortcuts, and add to the menu.
+MenuItem n, c, q;
+file.add(n = new MenuItem("New Window", new MenuShortcut(KeyEvent.VK_N)));
+file.add(c = new MenuItem("Close Window",new MenuShortcut(KeyEvent.VK_W)));
+file.addSeparator();                     // Put a separator in the menu.
+file.add(q = new MenuItem("Quit", new MenuShortcut(KeyEvent.VK_Q)));
+The ScrollPane Container
+Printing
+ 
+ 
+ 
+ 
+ 
+ 
+ 

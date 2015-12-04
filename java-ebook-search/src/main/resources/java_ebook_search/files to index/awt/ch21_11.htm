@@ -1,0 +1,48 @@
+
+[Chapter 21] FocusAdapter 
+Chapter 21java.awt.event Reference
+FocusAdapter 
+Name
+FocusAdapter 
+Description
+The FocusAdapter class implements the methods of FocusListener 
+with empty functions. It may be easier for you to extend FocusAdapter, 
+overriding only those methods you are interested in, than to implement 
+FocusListener and provide the 
+empty functions yourself. 
+Class Definition
+public abstract class java.awt.event.FocusAdapter
+   extends java.lang.Object
+   implements java.awt.event.FocusListener {
+  // Instance Methods
+  public void focusGained (FocusEvent e);
+  public void focusLost (FocusEvent e);
+}
+Instance Methods
+focusGained
+public void focusGained (FocusEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component gains 
+focus. 
+focusLost
+public void focusLost (FocusEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a component loses 
+focus. 
+See Also
+FocusEvent, FocusListener 
+ContainerListener 
+FocusEvent 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

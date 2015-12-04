@@ -1,0 +1,42 @@
+
+[Chapter 24] 24.18 java.io.FileInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.18 java.io.FileInputStream (JDK 1.0)
+This class is a subclass of InputStream that reads
+bytes from a file specified by name or by a File or
+FileDescriptor object. read() reads a byte
+or array of bytes from the file.  It returns -1 when the end
+of file has been reached.  To read binary data, you
+typically use this class in conjunction with a
+BufferedInputStream and DataInputStream.  To
+read text, you typically use it with an
+InputStreamReader and BufferedReader.  Call
+close() to close the file when input is no longer
+needed.
+public class FileInputStream extends InputStream {
+    // Public Constructors
+            public FileInputStream(String name) throws FileNotFoundException;
+            public FileInputStream(File file) throws FileNotFoundException;
+            public FileInputStream(FileDescriptor fdObj);
+    // Public Instance Methods
+            public native int available() throws IOException;  // Overrides InputStream
+            public native void close() throws IOException;  // Overrides InputStream
+            public final FileDescriptor getFD() throws IOException;
+            public native int read() throws IOException;  // Defines InputStream
+            public int read(byte[] b) throws IOException;  // Overrides InputStream
+            public int read(byte[] b, int off, int len) throws IOException;  // Overrides InputStream
+            public native long skip(long n) throws IOException;  // Overrides InputStream
+    // Protected Instance Methods
+            protected void finalize() throws IOException;  // Overrides Object
+}
+Hierarchy:
+Object->InputStream->FileInputStream
+java.io.FileDescriptor (JDK 1.0)
+java.io.FileNotFoundException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

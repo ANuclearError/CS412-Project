@@ -1,0 +1,57 @@
+
+[Chapter 13] 13.3 AWTError
+Chapter 13AWT Exceptions and Errors
+13.3 AWTError
+AWTError is a subclass of Error 
+that is used when a serious run-time error has occurred within AWT. For 
+example, an AWTError is thrown 
+if the default Toolkit cannot 
+be initialized or if you try to create a FileDialog 
+within Netscape Navigator (since that program does not permit local file system 
+access). When an AWTError is 
+thrown and not caught, the virtual machine stops your program. You may 
+throw this Error to indicate 
+a serious run-time problem in any subclass of the AWT classes. Using AWTError 
+is slightly preferable to creating your own Error 
+because you don't have to provide another class file. Since it is part of Java, AWTError is guaranteed 
+to exist on the run-time platform. 
+Methods are not required to declare that they throw 
+AWTError. If you throw an error 
+that is not caught, it will eventually propagate to the top level of the 
+system. 
+AWTError MethodConstructor
+public AWTError (String message) 
+The sole constructor creates an AWTError 
+with a detail message of message. 
+This message can be retrieved using getMessage(), 
+which it inherits from Error 
+(and is required by the Throwable 
+interface). If you do not want a detailed message, message 
+may be null. 
+Throwing an AWTError
+The code in Example 13.1 throws an AWTError if it is executed with this command:
+java -Dawt.toolkit=foo throwme
+ 
+The error occurs because the Java interpreter tries to use the toolkit 
+foo, which does not exist (assuming that class foo does not 
+exist in your CLASSPATH). Therefore, 
+getDefaultToolkit() throws 
+an AWTError, and the next statement 
+never executes. 
+Example 13.1: The throwme class
+import java.awt.Toolkit;
+public class throwme {
+    public static void main (String[] args) {
+        System.out.println (Toolkit.getDefaultToolkit());
+        System.out.println ("Never Gets Here");
+    }
+}
+IllegalComponentStateException
+And Then There Were Applets
+ 
+ 
+ 
+ 
+ 
+ 
+ 

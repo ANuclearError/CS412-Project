@@ -1,0 +1,260 @@
+
+[Chapter 11] PipedInputStream
+Chapter 11The java.io Package
+PipedInputStream
+Name
+PipedInputStream
+Synopsis
+Class Name:
+java.io.PipedInputStream
+Superclass:
+java.io.InputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The PipedInputStream class 
+represents half of a communication pipe; a PipedInputStream 
+must be connected to a PipedOutputStream. 
+When the two halves of a communication pipe are connected, data written 
+to the PipedOutputStream can 
+be read from the PipedInputStream. 
+The communication pipe formed by a PipedInputStream
+and a PipedOutputStream should be used to 
+communicate between threads. If both ends of a pipe are used by
+the same thread, the thread can hang.
+Class Summary
+public class java.io.PipedInputStream extends java.io.InputStream {
+  // Variables
+  protected byte[] buffer;                        // New in 1.1
+  protected int in;                               // New in 1.1
+  protected int out;                              // New in 1.1
+  protected final static int PIPE_SIZE;           // New in 1.1
+  // Constructors
+  public PipedInputStream();
+  public PipedInputStream(PipedOutputStream src);
+  // Public Instance Methods
+  public synchronized int available();            // New in 1.1
+  public void close();
+  public void connect(PipedOutputStream src);
+  public synchronized int read();
+  public synchronized int read(byte[] b, int off, int len);
+  // Protected Instance Methods
+  protected synchronized void receive(int b);     // New in 1.1
+}
+Variables
+buffer
+protected byte[] buffer
+Availability
+New as of JDK 1.1 
+Description
+The internal data buffer. The buffer receives data from the connected PipedOutputStream 
+and supplies data for the calls to read(). 
+in
+protected int in
+Availability
+New as of JDK 1.1 
+Description
+An index into the buffer that points to the byte after the last byte of 
+valid data. A value of -1 indicates that the buffer is empty. 
+out
+protected int out
+Availability
+New as of JDK 1.1 
+Description
+An index into the buffer that points to the next byte that will be returned 
+by read(). 
+PIPE_SIZE
+public final static int PIPE_SIZE = 1024
+Availability
+New as of JDK 1.1 
+Description
+The size of the internal data buffer. The buffer receives data from the 
+connected PipedOutputStream 
+and supplies data for the calls to read(). 
+Constructors
+PipedInputStream
+public PipedInputStream()
+Description
+This constructor creates a PipedInputStream 
+that is not connected to a PipedOutputStream. 
+The created object must be connected to a PipedOutputStream 
+before it can be used. 
+public PipedInputStream(PipedOutputStream src) throws IOException
+Parameters
+src
+The PipedOutputStream 
+to connect. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This constructor creates a PipedInputStream 
+that receives data from the given PipedOutputStream. 
+Public Instance Methods
+available
+public synchronized int available() throws IOException
+Availability
+New as of JDK 1.1 
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.available() 
+Description
+This method returns the number of bytes that can be read without having 
+to wait for more data to become available. More data becomes available 
+in the PipedInputStream when 
+data is written to the connected PipedOutputStream. 
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.close() 
+Description
+This method closes the stream and releases the system resources that are 
+associated with it. 
+connect
+public void connect(PipedOutputStream src) throws IOException
+Parameters
+src
+The PipedOutputStream 
+to connect. 
+Throws
+IOException 
+If another 
+PipedOutputStream is already 
+connected to this PipedInputStream. 
+Description
+This method connects the given PipedOutputStream 
+to this PipedInputStream object. 
+If there is already a connected PipedOutputStream, 
+an exception is thrown. 
+read
+public synchronized int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the
+stream is encountered.
+Throws
+IOException
+If the pipe is broken. In other words, if this
+PipedInputStream is closed or if the connected
+PipedOutputStream is dead.
+InterruptedIOException
+While this method is waiting for input, if the
+interrupted() method of the thread that invoked
+this method is called.
+Overrides
+InputStream.read() 
+Description
+This method returns the next byte from the pipe buffer. If the buffer is 
+empty, the method waits until data is written to the connected PipedOutputStream. 
+The method blocks until the byte is read, the end of the stream is encountered, 
+or an exception is thrown. 
+   public synchronized int read(byte b[], int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to be filled.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If the pipe is broken. In other words, if this
+PipedInputStream is closed or if the connected
+PipedOutputStream is dead.
+InterruptedIOException
+While this method is waiting for buffer space to become available, if
+the interrupted() method of the thread that invoked
+this method is called.
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+This method copies bytes from the pipe buffer into the given array b, 
+starting at index off and continuing 
+for len bytes. If there is 
+at least one byte in the buffer, the method returns as many bytes as are 
+in the buffer (up to len). 
+If the buffer is empty, the method blocks until data is written to the 
+connected PipedOutputStream. 
+Protected Instance Methods
+receive
+protected synchronized void receive(int b) throws IOException
+Availability
+New as of JDK 1.1 
+Parameters
+b
+The byte being received. 
+Throws
+IOException
+If the pipe 
+is broken. In other words, if this PipedInputStream 
+is closed. 
+Description
+This method is called by the connected PipedOutputStream 
+object to provide the given value as a byte of input to this PipedInputStream 
+object. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+InputStream
+markSupported()
+InputStream
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+InputStream
+reset()
+InputStream
+skip(long)
+InputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+InputStream, 
+IOException, 
+PipedOutputStream 
+OutputStreamWriter
+PipedOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

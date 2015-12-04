@@ -1,0 +1,165 @@
+
+[Chapter 10] Process
+Chapter 10The java.lang Package
+Process
+Name
+Process
+Synopsis
+Class Name:
+java.lang.Process
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None that are provided on all platforms. However,
+a platform-specific version of Java should include at least one
+operating-system-specific subclass.
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Process class describes processes that
+are started by the exec() method in the Runtime
+class. A Process object controls
+a process and gets information about it.
+The Process class is an abstract
+class; therefore,
+it cannot be instantiated. The actual Process
+objects created by the exec() method belong to
+operating-system-specific subclasses of Process
+that implement the Process methods in platform-dependent
+ways.
+Note that losing all references to a Process
+object, thereby making it garbage collectable, does not result in
+the underlying Process object dying. It merely
+means that there is no longer a Java object to control the process.
+The process itself continues to run asynchronously. In addition,
+no guarantees are made as to whether a controlled process will be
+able to continue after its parent process dies.
+Class Summary
+public abstract class java.lang.Process extends java.lang.Object {
+    // Constructors
+    public Process();
+    // Instance Methods
+    public abstract void destroy();
+    public abstract int exitValue();
+    public abstract InputStream getErrorStream();
+    public abstract InputStream getInputStream();
+    public abstract OutputStream getOutputStream();
+    public abstract int waitFor();
+}
+Constructors
+Process
+public Process()
+Description
+Creates a Process object.
+Instance Methods
+destroy
+abstract public void destroy()
+Description
+This method kills the process controlled by this object.
+exitValue
+abstract public int exitValue()
+Returns
+The exit value of the process controlled by this object.
+Throws
+IllegalThreadStateException
+If the process is still running and the exit value
+is not yet available.
+Description
+This method returns the exit value of the process that this
+object is controlling.
+The waitFor() method is a similar method
+that waits for the controlled process to terminate and then returns
+its exit value.
+getErrorStream
+abstract public InputStream getErrorStream()
+Returns
+An InputStream object connected
+to the error stream of the process.
+Description
+This method returns an InputStream object
+that can read from the error stream of the process.
+Although it is suggested that this InputStream not
+be buffered, the Java specification does not forbid such an implementation.
+In other words, although error output from programs is traditionally
+unbuffered, there is no guarantee that it won't be buffered. This
+means that error output written by the process may not be received
+immediately.
+getInputStream
+abstract public InputStream getInputStream()
+Returns
+An InputStream object that is connected
+to the standard output stream of the process.
+Description
+This method returns an InputStream object
+that can read from the standard output stream of the process.
+This InputStream is likely to be buffered,
+which means that output written by the process may not be received
+immediately.
+getOutputStream
+abstract public OutputStream getOutputStream()
+Returns
+An OutputStream object that is connected
+to the standard input stream of the process.
+Description
+This method returns an OutputStream object
+that can write to the standard input stream of the process.
+This OutputStream is likely to be buffered,
+which means that input sent to the process may not be received until
+the buffer fills up or a new line or carriage-return character is
+sent.
+waitFor
+abstract public int waitFor()
+Returns
+The exit value of the process controlled by this object.
+Throws
+InterruptedException
+If another thread interrupts this thread while it
+is waiting for the process to exit.
+Description
+This method returns the exit value of the process that this
+object is controlling. If the process is still running, the method
+waits until the process terminates and its exit value is available.
+The exitValue() method is a similar method
+that does not wait for the controlled process to terminate.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exceptions;
+Object;
+Runtime
+Object
+Runnable
+ 
+ 
+ 
+ 
+ 
+ 
+ 

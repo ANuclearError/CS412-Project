@@ -1,0 +1,43 @@
+
+[Chapter 4] 4.2 Inner Classes
+Chapter 4What's New in Java 1.1
+4.2 Inner Classes
+While the bulk of the changes in Java 1.1 are additions to
+the core Java API, there has also been a major addition to
+the language itself.  The language has been
+extended to allow class definitions to be nested within
+other classes, and even to be defined locally, within blocks
+of code.  Altogether, there are four new types of classes
+that can be defined in Java 1.1; these four new types
+are sometimes loosely referred to as "inner classes."
+Chapter 5, Inner Classes and Other New Language Features
+explains in detail how to define and use each of the four
+new types of classes.  As we'll see, inner classes are
+useful primarily for defining simple "helper" or "adaptor"
+classes that serve a very specific function at a particular
+place in a program, and are not intended to be
+general-purpose "top-level" classes.  By using inner classes
+nested within other classes, you can place the definition of
+these special-purpose helper classes closer to where they
+are actually used in your programs.  This makes your code
+clearer, and also prevents you from cluttering up the
+package namespace with small special purpose classes that
+are not of interest to programmers using your package.
+We'll also see that inner classes are particularly useful
+in conjunction with the new AWT event model in Java 1.1.
+One important feature of inner classes is that no changes to
+the Java Virtual Machine are required to support them.
+When a Java 1.1 compiler encounters an inner class, it
+transforms the Java 1.1 source code in a way that converts
+the nested class to a regular top-level class.  Once that
+transformation has been performed, the code can be compiled
+just as it would have been in Java 1.0.
+Java 1.1 Package-by-Package
+The New AWT Event Model
+ 
+ 
+ 
+ 
+ 
+ 
+ 

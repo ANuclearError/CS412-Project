@@ -1,0 +1,41 @@
+
+[Chapter 24] 24.20 java.io.FileOutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.20 java.io.FileOutputStream (JDK 1.0)
+This class is a subclass of OutputStream that
+writes data to a file specified by name, or by a
+File or FileDescriptor
+object. write() writes a byte or array of bytes to
+the file.  To write binary data, you typically use this
+class in conjunction with a BufferedOutputStream and
+a DataOutputStream.  To write text, you typically
+use it with a PrintWriter, BufferedWriter,
+and an OutputStreamWriter.  Use close() to
+close a FileOutputStream when no further output
+will be written to it.
+public class FileOutputStream extends OutputStream {
+    // Public Constructors
+            public FileOutputStream(String name) throws IOException;
+        1.1  public FileOutputStream(String name, boolean append) throws IOException;
+            public FileOutputStream(File file) throws IOException;
+            public FileOutputStream(FileDescriptor fdObj);
+    // Public Instance Methods
+            public native void close() throws IOException;  // Overrides OutputStream
+            public final FileDescriptor getFD() throws IOException;
+            public native void write(int b) throws IOException;  // Defines OutputStream
+            public void write(byte[] b) throws IOException;  // Overrides OutputStream
+            public void write(byte[] b, int off, int len) throws IOException;  // Overrides OutputStream
+    // Protected Instance Methods
+            protected void finalize() throws IOException;  // Overrides Object
+}
+Hierarchy:
+Object->OutputStream->FileOutputStream
+java.io.FileNotFoundException (JDK 1.0)
+java.io.FileReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

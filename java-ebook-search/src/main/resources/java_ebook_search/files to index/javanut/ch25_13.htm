@@ -1,0 +1,31 @@
+
+[Chapter 25] 25.13 java.lang.ClassNotFoundException (JDK 1.0)
+Chapter 25The java.lang Package
+25.13 java.lang.ClassNotFoundException (JDK 1.0)
+Signals that a class to be loaded could not be found.
+public class ClassNotFoundException extends Exception {
+    // Public Constructors
+            public ClassNotFoundException();
+            public ClassNotFoundException(String s);
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->ClassNotFoundException
+Thrown By:
+Beans.instantiate(), 
+Class.forName(), 
+ClassLoader.findSystemClass(), 
+ClassLoader.loadClass(), 
+Externalizable.readExternal(), 
+ObjectInput.readObject(), 
+ObjectInputStream.defaultReadObject(), 
+ObjectInputStream.readObject(), 
+ObjectInputStream.resolveClass()
+java.lang.ClassLoader (JDK 1.0)
+java.lang.CloneNotSupportedException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

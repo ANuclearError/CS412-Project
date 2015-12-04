@@ -1,0 +1,61 @@
+
+[Chapter 23] ScrollbarPeer
+Chapter 23java.awt.peer Reference
+ScrollbarPeer
+Name
+ScrollbarPeer
+Description
+ScrollbarPeer is an interface 
+that defines the basis for scrollbar components. 
+Interface Definition
+public abstract interface java.awt.peer.ScrollbarPeer
+   extends java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract void setLineIncrement (int amount);
+  public abstract void setPageIncrement (int amount);
+  public abstract void setValues (int value, int visible, int minimum, int maximum);
+}
+Interface Methods
+setLineIncrement
+public abstract void setLineIncrement (int amount)
+Parameters
+amount
+New line increment 
+amount. 
+Description
+Changes the line increment amount for the scrollbar's peer. 
+setPageIncrement
+public abstract void setPageIncrement (int amount)
+Parameters
+amount
+New paging increment 
+amount. 
+Description
+Changes the paging increment amount for the scrollbar's peer. 
+setValues
+public abstract void setValues (int value, int visible, int minimum, int maximum)
+Parameters
+value
+New value for the 
+scrollbar's peer.
+visible
+New slider width.
+minimum
+New minimum value 
+for the scrollbar's peer.
+maximum
+New maximum value 
+for the scrollbar's peer. 
+Description
+Changes the settings of the scrollbar's peer to the given amounts. 
+See Also
+ComponentPeer 
+PopupMenuPeer 
+ScrollPanePeer 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

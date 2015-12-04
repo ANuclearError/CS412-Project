@@ -1,0 +1,518 @@
+
+[Chapter 12] Long
+Chapter 12The java.lang Package
+Long
+Name
+Long
+Synopsis
+Class Name:
+java.lang.Long
+Superclass:
+java.lang.Number
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Long class provides an object wrapper
+for a long value. This is useful when you need
+to treat a long value as an object. For example,
+there are a number of utility methods that take a reference to an
+Object as one of their arguments. You cannot
+specify a long value for one of these arguments,
+but you can provide a reference to a Long object
+that encapsulates the long value. Furthermore,
+as of JDK 1.1, the Long class is necessary to 
+support the Reflection API and class literals.
+The Long class also provides a number of
+utility methods for converting long values to
+other primitive types and for converting long values
+to strings and vice versa.
+Class Summary
+public final class java.lang.Long extends java.lang.Number {
+    // Constants
+    public static final long MIN_VALUE;
+    public static final long MAX_VALUE;
+    public final static Class TYPE;                    // New in 1.1
+    // Constructors
+    public Long(long value);
+    public Long(String s);
+    // Class Methods
+    public static Long getLong(String nm);
+    public static Long getLong(String nm, long val);
+    public static Long getLong(String nm, Long val);
+    public static long parseLong(String s);
+    public static long parseLong(String s, int radix);
+    public static String toBinaryString(long i);
+    public static String toHexString(long i);
+    public static String toOctalString(long i);
+    public static String toString(long i);
+    public static String toString(long i, int radix);
+    public static Long valueOf(String s);
+    public static Long valueOf(String s, int radix);
+    // Instance Methods
+    public byte byteValue();                           // New in 1.1
+    public double doubleValue();
+    public boolean equals(Object obj);
+    public float floatValue();
+    public int hashCode();
+    public int intValue();
+    public long longValue();
+    public short shortValue();                         // New in 1.1
+    public String toString();
+}
+Constants
+MAX_VALUE
+public static final long MAX_VALUE = 0x7fffffffffffffffL
+Description
+The largest value that can be represented by a long.
+MIN_VALUE
+public static final long MIN_VALUE = 0x8000000000000000L
+Description
+The smallest value that can be represented by a long.
+TYPE
+public static final Class TYPE 
+Availability
+New as of JDK 1.1
+Description
+The Class object that represents the type
+long.
+It is always true that Long.TYPE 
+== long.class.
+Constructors
+Long
+public Long(long value)
+Parameters
+value
+The long value to be encapsulated
+by this object.
+Description
+Creates a Long object with the specified
+long value.
+public Long(String s) throws NumberFormatException
+Parameters
+s
+The string to be made into a Long
+object.
+Throws
+NumberFormatException
+If the sequence of characters in the given String
+does not form a valid long literal.
+Description
+Constructs a Long object with the value
+specified by the given string. The string should consist of one or
+more digit characters. The digit characters can be preceded by a
+single `-' character. If the string contains any other characters, the
+constructor throws a NumberFormatException.
+Class Methods
+getLong
+public static Integer getLong(String nm)
+Parameters
+nm
+The name of a system property.
+Returns
+The value of the system property as a Long object
+or a Long object with the value 0 if the named
+property does not exist or cannot be parsed.
+Description
+This method retrieves the value of the named system property
+and returns it as a Long object. The method obtains
+the value of the system property as a String
+using System.getProperty().
+If the value of the property begins with 0x
+or # and is not followed by a minus sign, the
+rest of the value is parsed as a hexadecimal integer. If the value
+begins with 0, it's parsed as an octal integer;
+otherwise it's parsed as a decimal integer.
+public static Long getLong(String nm, long val)
+Parameters
+nm
+The name of a system property.
+val
+A default value for the property.
+Returns
+The value of the system property as a Long object
+or a Long object with the value val
+if the named property does not exist or cannot be parsed.
+Description
+This method retrieves the value of the named system property
+and returns it as a Long object. The method obtains
+the value of the system property as a String
+using System.getProperty().
+If the value of the property begins with 0x or
+# and is not followed by a minus sign, the rest of
+the value is parsed as a hexadecimal integer. If the value begins with
+0, it's parsed as an octal integer; otherwise it's
+parsed as a decimal integer.
+public static Long getLong(String nm, Long val)
+Parameters
+nm
+The name of a system property.
+ 
+val
+A default value for the property.
+Returns
+The value of the system property as a Long object,
+or the Long object val if
+the named property does not exist or cannot be parsed.
+Description
+This method retrieves the value of the named system property
+and returns it as a Long object. The method obtains
+the value of the system property as a String
+using System.getProperty().
+If the value of the property begins with 0x or
+# and is not followed by a minus sign, the rest of
+the value is parsed as a hexadecimal integer. If the value begins with
+0, it's parsed as an octal integer; otherwise it's
+parsed as a decimal integer.
+parseLong
+   public static long parseLong(String s) throws NumberFormatException  
+Parameters
+s
+The String to be converted to
+a long value.
+Returns
+The numeric value of the long represented
+by the String object.
+Throws
+NumberFormatException
+If the String does not contain
+a valid representation of a long value.
+Description
+This method returns the numeric value of the long
+represented by the contents of the given String
+object. The String must contain only decimal
+digits, except that the first character may be a minus sign.
+   public static long parseLong(String s, int radix) throws NumberFormatException  
+Parameters
+s
+The String to be converted to
+a long value.
+radix
+The radix used in interpreting the characters in
+the String as digits. It must be in the
+range Character.MIN_RADIX to
+Character.MAX_RADIX.
+If radix is in the range 2 through 10,
+only characters for which the Character.isDigit()
+method returns true are considered valid digits.
+If radix is in the range 11 through 36,
+characters in the ranges
+`A' through `Z' and `a' through `z' may be considered valid digits.
+Returns
+The numeric value of the long represented
+by the String object in the specified radix.
+Throws
+NumberFormatException
+If the String does not contain
+a valid representation of a long or radix
+is not in the appropriate range.
+Description
+This method returns the numeric value of the long
+represented by the contents of the given String
+object in the specified radix. The String must
+contain only valid digits of the specified radix, except that the
+first character may be a minus sign. The digits are parsed in the
+specified radix to produce the numeric value.
+toBinaryString
+public static String toBinaryString(long value)
+Parameters
+value
+The long value to be converted
+to a string.
+Returns
+A string that contains the binary representation of the given
+value.
+Description
+This method returns a String object that
+contains the representation of the given value as an unsigned binary
+number. To convert the given value to an unsigned quantity, the
+method simply uses the value as if it were not negative. In other
+words, if the given value is negative, the method adds 2^64 to it.
+Otherwise the value is used as it is.
+The string returned by this method contains a sequence of
+one or more `0' and `1' characters. The method returns "0" if its
+argument is 0. Otherwise, the string returned
+by this method begins with `1'.
+toHexString
+public static String toHexString(long value)
+Parameters
+value
+The long value to be converted
+to a string.
+Returns
+A string that contains the hexadecimal representation of the
+given value.
+Description
+This method returns a String object that
+contains the representation of the given value as an unsigned hexadecimal
+number. To convert the given value to an unsigned quantity, the
+method simply uses the value as if it were not negative. In other
+words, if the given value is negative, the method adds 2^64 to it.
+Otherwise the value is used as it is.
+The string returned by this method contains a sequence of
+one or more of the characters `0', `1', `2', `3', `4', `5', `6',
+`7', `8', `9', `a', `b', `c', `d', `e', and `f'.
+The method returns "0" if its argument is
+0. Otherwise, the string returned by this method
+does not begin with `0'.
+To produce a string that contains upper- instead
+of lowercase letters, use the String.toUpperCase()
+method.
+toOctalString
+public static String toOctalString(long value)
+Parameters
+value
+The long value to be converted
+to a string.
+Returns
+A string that contains the octal representation of the given
+value.
+Description
+This method returns a String object that
+contains a representation of the given value as an unsigned octal
+number. To convert the given value to an unsigned quantity, the
+method simply uses the value as if it were not negative. In other
+words, if the given value is negative, the method adds 2^64 to it.
+Otherwise the value is used as it is.
+The string returned by this method contains a sequence of
+one or more of the characters `0', `1', `2', `3', `4', `5', `6',
+and `7'. The method returns "0" if its
+argument is 0. Otherwise,
+the string returned by this method does not begin with `0'.
+toString
+public static String toString(long i)
+Parameters
+i
+The long value to be converted
+to a string.
+Returns
+The string representation of the given value.
+Description
+This method returns a String object that
+contains the decimal representation of the given value.
+This method returns a string that begins with `-' if the given
+value is negative. The rest of the string is a sequence of one or
+more of the characters `0', `1', `2', `3', `4', `5', `6', `7', `8',
+and `9'. This method returns "0" if its argument is 0.
+Otherwise, the string returned by this method does not begin with
+"0" or "-0".
+public static String toString(long i, int radix)
+Parameters
+i
+The long value to be converted
+to a string.
+radix
+The radix used in converting the value to a string.
+This value must be in the range Character.MIN_RADIX
+to Character.MAX_RADIX.
+Returns
+The string representation of the given value in the specified
+radix.
+Description
+This method returns a String object that
+contains the representation of the given value in the specified
+radix.
+This method returns a string that begins with`-'  if the given
+value is negative. The rest of the string is a sequence of one or
+more characters that represent the magnitude of the given value.
+The characters that can appear in the sequence are determined by
+the value of radix. If N
+is the value of radix, the first N
+characters on the following line can appear in the sequence:
+0123456789abcdefghijklmnopqrstuvwxyz
+The method does not verify that radix is
+in the proper range. If radix is less than Character.MIN_RADIX
+or greater than Character.MAX_RADIX, the value
+10 is used instead of the given value.
+This method returns "0" if its argument is 0.
+Otherwise, the string returned by this method does not begin with
+"0" or "-0".
+valueOf
+   public static Long valueOf(String s) throws NumberFormatException  
+Parameters
+s
+The string to be made into a Long
+object.
+Returns
+The Long object constructed from the string.
+Throws
+NumberFormatException
+If the String does not contain
+a valid representation of a long.
+Description
+Constructs a Long object with the value
+specified by the given string. The string should consist of one or more
+digit characters. The digit characters can be preceded by a single -
+character. If the string contains any other characters, the method
+throws a NumberFormatException.
+   public static Long valueOf(String s, int radix) throws NumberFormatException  
+Parameters
+s
+The string to be made into a Long
+object.
+radix
+The radix used in converting the string to a value.
+This value must be in the range Character.MIN_RADIX
+to Character.MAX_RADIX.
+Returns
+The Long object constructed from the string.
+Throws
+NumberFormatException
+If the String does not contain
+a valid representation of a long.
+Description
+Constructs a Long object with the value
+specified by the given string in the specified radix. The string
+should consist of one or more digit characters or characters in
+the range `A' to `Z' or `a' to `z' that are considered digits
+in the given radix. The digit characters can be preceded by
+a single `-' character. If the string contains any other
+characters, the method throws a NumberFormatException.
+The method does not verify that radix is
+in the proper range. If radix is less than Character.MIN_RADIX
+or greater than Character.MAX_RADIX, 
+the value
+10 is used instead of the given value.
+Instance Methods
+byteValue
+public byte byteValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a byte.
+Overrides
+Number.byteValue()
+Description
+This method returns the value of this object as a byte.
+The high order bits of the value are discarded.
+doubleValue
+public double doubleValue()
+Returns
+The value of this object as a double.
+Overrides
+Number.doubleValue()
+Description
+This method returns the value of this object as a double.
+Rounding may occur.
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object.
+Returns
+true if the objects are equal; false
+if they are not.
+Overrides
+Object.equals()
+Description
+This method returns true if obj
+is an instance of Long and it contains the same
+value as the object this method is associated with.
+floatValue
+public float floatValue()
+Returns
+The value of this object as a float.
+Overrides
+Number.floatValue()
+Description
+This method returns the value of this object as a float.
+Rounding may occur.
+hashCode
+public int hashCode()
+Returns
+A hashcode based on the long value of
+the object.
+Overrides
+Object.hashCode()
+Description
+This method returns a hashcode computed from the value of
+this object. More specifically, the result is the exclusive OR of
+the two halves of the long value represented
+by the object. If value is the value of the object,
+the method returns a result equivalent to the following expression:
+(int)(value^(value&gt;&gt;&gt;32))
+intValue
+public int intValue()
+Returns
+The value of this object as an int.
+Overrides
+Number.intValue()
+Description
+This method returns the value of this object as an int.
+The high-order bits of the value are discarded.
+longValue
+public long longValue()
+Returns
+The value of this object as a long.
+Overrides
+Number.longValue()
+Description
+This method returns the value of this object as a long.
+shortValue
+public short shortValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a short.
+Overrides
+Number.shortValue()
+Description
+This method returns the value of this object as a short.
+The high-order bits of the value are discarded.
+toString
+public String toString()
+Returns
+The string representation of the value of this object.
+Overrides
+Object.toString()
+Description
+This method returns a String object that
+contains the decimal representation of the value of this object.
+This method returns a string that begins with `-' if the value
+is negative. The rest of the string is a sequence of one or more
+of the characters `0', `1', `2', `3', `4', `5', `6', `7', `8', and
+`9'. This method returns "0" if the value of
+the object is 0.
+Otherwise, the string returned by this method does not begin with
+"0" or "-0".
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Character, 
+Class, 
+Integer, 
+Number, 
+NumberFormatException, 
+String, 
+System
+LinkageError
+Math
+ 
+ 
+ 
+ 
+ 
+ 
+ 

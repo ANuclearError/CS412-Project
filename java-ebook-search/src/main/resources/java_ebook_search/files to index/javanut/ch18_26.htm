@@ -1,0 +1,77 @@
+
+[Chapter 18] 18.26 java.awt.Frame (JDK 1.0)
+Chapter 18The java.awt Package
+18.26 java.awt.Frame (JDK 1.0)
+This class represents an optionally resizable top-level
+application window with a titlebar and other
+platform-dependent window decorations.  setTitle()
+specifies a title, setMenuBar() specifies a menu
+bar, setCursor() specifies a cursor, and
+setIconImage() specifies an icon for the window.
+Call the pack() method of Window to initiate
+layout management of the window and set its initial size
+appropriately. 
+Call the show() method of Window to make a
+frame appear on the screen or to bring it to the front of
+the window stack.  Call hide() to remove a frame
+from the screen.  Call the dispose() method when the
+Frame is no longer needed so that it can release its
+window system resources for reuse.
+The constants defined by this class specify various cursor
+types.  In Java 1.1, these constants and the cursor methods
+of Frame are deprecated in favor of the
+Cursor class and cursor methods of
+Component.
+public class Frame extends Window implements MenuContainer {
+    // Public Constructors
+            public Frame();
+            public Frame(String title);
+    // Constants
+            public static final int CROSSHAIR_CURSOR;
+            public static final int DEFAULT_CURSOR;
+            public static final int E_RESIZE_CURSOR;
+            public static final int HAND_CURSOR;
+            public static final int MOVE_CURSOR;
+            public static final int NE_RESIZE_CURSOR;
+            public static final int NW_RESIZE_CURSOR;
+            public static final int N_RESIZE_CURSOR;
+            public static final int SE_RESIZE_CURSOR;
+            public static final int SW_RESIZE_CURSOR;
+            public static final int S_RESIZE_CURSOR;
+            public static final int TEXT_CURSOR;
+            public static final int WAIT_CURSOR;
+            public static final int W_RESIZE_CURSOR;
+    // Public Instance Methods
+            public void addNotify();  // Overrides Window
+            public synchronized void dispose();  // Overrides Window
+        #   public int getCursorType();
+            public Image getIconImage();
+            public MenuBar getMenuBar();
+            public String getTitle();
+            public boolean isResizable();
+            public synchronized void remove(MenuComponent m);  // Overrides Component
+        #   public synchronized void setCursor(int cursorType);
+            public synchronized void setIconImage(Image image);
+            public synchronized void setMenuBar(MenuBar mb);
+            public synchronized void setResizable(boolean resizable);
+            public synchronized void setTitle(String title);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Container
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Container->Window->Frame(MenuContainer)
+Passed To:
+Dialog(), 
+FileDialog(), 
+Toolkit.createFrame(), 
+Toolkit.getPrintJob(), 
+Window()
+java.awt.FontMetrics (JDK 1.0)
+java.awt.Graphics (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

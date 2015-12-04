@@ -1,0 +1,827 @@
+
+[Chapter 12] Class
+Chapter 12The java.lang Package
+Class
+Name
+Class
+Synopsis
+Class Name:
+java.lang.Class
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Seriablizable
+Availability:
+JDK 1.0 or later
+Description
+ 
+As of Java 1.1, instances of the Class class 
+are used as run-time descriptions of all Java data types, both reference types
+and primitive types.  The Class class has also been
+greatly expanded in 1.1 to provide support for the Reflection API.
+Prior to 1.1, Class just
+provided run-time descriptions of reference types.
+A Class object provides considerable
+information about the data type.  You can use the 
+isPrimitive()
+method to find out if a Class object describes
+a primitive type, while isArray() indicates if
+the object describes an array type.  If a Class
+object describes a class or interface type, there are numerous methods
+that return information about the fields, methods, and constructors
+of the type.  This information is returned as 
+java.lang.reflect.Field, 
+java.lang.reflect.Method, and
+java.lang.reflect.Constructor objects.
+There are a number of ways that you can get a Class
+object for a particular data type:
+If you have an object, you can get the 
+Class object that describes
+the class of that object by calling the object's getClass()method. Every class inherits this method from the
+Object class. 
+As of Java 1.1, you can get the Class object 
+that describes any Java type using the new class literal syntax.
+A class literal is simply the name of a type (a class name or
+a primitive type name) followed by a period and the class
+keyword.  For example:
+Class s = String.class;
+Class i = int.class;
+Class v = java.util.Vector.class;
+In Java 1.0, 
+you can get the Class object from the name of a
+data type using the forName() class method of
+Class.  For example:
+Class v = Class.forName("java.util.Vector");
+This technique still works in Java 1.1, but it is more cumbersome
+(and less efficient) than using a class literal.
+You can create an instance of a class using the 
+newInstance()
+method of a Class object, if the class has a
+constructor that takes no arguments.
+The Class
+ class
+has no public constructors; it cannot be explicitly
+instantiated. Class objects are normally created
+by the ClassLoader class or a ClassLoader
+object.
+Class Summary
+public final class java.lang.Class extends java.lang.Object 
+                                   implements java.io.Serializable {
+    // Class Methods
+    public static native Class forName(String className);
+    // Instance Methods
+    public Class[] getClasses();                           // New in 1.1
+    public native ClassLoader getClassLoader();
+    public native Class getComponentType();                // New in 1.1
+    public Constructor 
+           getConstructor(Class[] parameterTypes);         // New in 1.1
+    public Constructor[] getConstructors();                // New in 1.1
+    public Class[] getDeclaredClasses();                   // New in 1.1
+    public Constructor 
+           getDeclaredConstructor(Class[] parameterTypes); // New in 1.1
+    public Constructor[] getDeclaredConstructors();        // New in 1.1
+    public Field getDeclaredField(String name);            // New in 1.1
+    public Field[] getDeclaredFields();                    // New in 1.1
+    public Method getDeclaredMethod(String name, 
+                  Class[] parameterTypes)                  // New in 1.1
+    public Method[] getDeclaredMethods()                   // New in 1.1
+    public Class getDeclaringClass();                      // New in 1.1
+    public Field getField(String name);                    // New in 1.1
+    public Field[] getFields();                            // New in 1.1
+    public native Class[] getInterfaces();    
+    public Method getMethod(String name, 
+                  Class[] parameterTypes);                 // New in 1.1
+    public Method[] getMethods();                          // New in 1.1
+    public native int getModifiers();                      // New in 1.1
+    public native String getName();
+    public URL getResource(String name);                   // New in 1.1
+    public InputStream getResourceAsStream(String name);   // New in 1.1
+    public native Object[] getSigners();                   // New in 1.1
+    public native Class getSuperclass();
+    public native boolean isArray();                       // New in 1.1
+    public native boolean isAssignableFrom(Class cls);     // New in 1.1
+    public native boolean isInstance(Object obj);          // New in 1.1 
+    public native boolean isInterface();
+    public native boolean isPrimitive();                   // New in 1.1 
+    public native Object newInstance();
+    public String toString();
+}
+Class Methods
+forName
+   public static Class forName(String className) throws ClassNotFoundException  
+Parameters
+className
+Name of a class qualified by the name of its
+package. If the class is defined inside of another class, all dots
+(.) that separate the top-level class name
+from the class to load must be changed to dollar signs 
+($) for the name to be recognized.  
+Returns
+A Class object that describes the named
+class.
+Throws
+ClassNotFoundException
+If the class cannot be loaded because it cannot
+be found.
+Description
+This method dynamically loads a class if it has
+not already been loaded. The method returns a Class
+object that describes the named class.
+The most common use of forName() is for
+loading classes on the fly when an application wants to use classes it wasn't built with. For example, a web browser uses this
+technique. When a browser needs to load an applet, the browser calls
+Class.forName() for the applet. The method loads
+the class if it has not already been loaded and returns the
+Class object that encapsulates the class. The
+browser then creates an instance of the applet by calling the Class object's newInstance() method.
+When a class is loaded using a ClassLoader
+object, any classes loaded at the instigation of that class are
+also loaded using the same ClassLoader object.
+This method implements that security policy by trying to find a
+ClassLoader object to load the named class.
+The method searches the stack for the most recently invoked method
+associated with a class that was loaded using a ClassLoader object. If such a class is found, the ClassLoader
+object associated with that class is used.
+Instance Methods
+getClasses
+public Class[] getClasses()
+Availability
+New as of JDK 1.1
+Returns
+An array of Class objects that contains
+the public classes and interfaces that
+are members of this class.
+Description
+If this Class object represents a 
+reference type, this method returns an array of Class
+objects that lists all of the public classes and
+interfaces that are members of this class or interface.  The list
+includes public classes and interfaces that
+are inherited from superclasses and that are defined by this class
+or interface.  If there are no public member
+classes or interfaces, or if this Class represents
+a primitive type, the method returns an array of length
+0.
+As of Java 1.1.1, this method always returns an array of length
+0, no matter how many public
+member classes this class or interface actually declares.
+getClassLoader
+public native ClassLoader getClassLoader()
+Returns
+The ClassLoader object used to load this
+class or null if this class was not loaded with
+a ClassLoader.
+Description
+This method returns the ClassLoader object
+that was used to load this class. If this class was not loaded with
+a ClassLoader, null is returned.
+This method is useful for making sure that a class gets loaded
+with the same class loader as was used for loading this Class
+object.
+getComponentType
+public native Class getComponentType()
+Availability
+New as of JDK 1.1
+Returns
+A Class object that describes the component
+type of this class if it is an array type.
+Description
+If this Class object represents an array 
+type, this method returns a Class
+object that describes the component type of the array.
+If this Class does not represent
+an array type, the method returns null.
+getConstructor
+   public Constructor getConstructor(Class[] parameterTypes) throws NoSuchMethodException, SecurityException  
+Availability
+New as of JDK 1.1
+Parameters
+parameterTypes
+An array of Class objects that describes the 
+parameter types, in declared order, of the constructor. 
+Returns
+A Constructor object that reflects the specified
+public constructor of this class.
+Throws
+NoSuchMethodException
+If the specified constructor does not exist.
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class, this method returns a Constructor
+object that reflects the specified public
+constructor of this class.  The constructor is located by
+searching all of the constructors of the class for a 
+public constructor that has exactly the
+same formal parameters as specified.  If this 
+Class does not represent
+a class, the method returns null.
+getConstructors
+   public Constructor[] getConstructors() throws SecurityException  
+Availability
+New as of JDK 1.1
+Returns
+An array of Constructor objects that reflect the 
+public constructors of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class, this method returns an array of Constructor
+objects that reflect the public
+constructors of this class.  If there are no public
+constructors, or if this Class does not represent
+a class, the method returns an array of length 0.
+getDeclaredClasses
+public Class[] getDeclaredClasses() throws SecurityException
+Availability
+New as of JDK 1.1
+Returns
+An array of Class objects that contains
+all of the declared classes and interfaces that
+are members of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+reference type, this method returns an array of Class
+objects that lists all of the classes and
+interfaces that are members of this class or interface.  The list
+includes public, protected,
+default access, and private classes and interfaces that
+are defined by this class or interface, but it excludes classes and 
+interfaces inherited from superclasses.
+If there are no such member classes or interfaces, or if 
+this Class represents
+a primitive type, the method returns an array of length
+0.
+As of Java 1.1.1, this method always returns an array of length
+0, no matter how many member classes this class or
+interface declares.
+getDeclaredConstructor
+   public Constructor getDeclaredConstructor(Class[] parameterTypes) throws NoSuchMethodException, SecurityException  
+Availability
+New as of JDK 1.1
+Parameters
+parameterTypes
+An array of Class objects that describes the 
+parameter types, in declared order, of the constructor. 
+Returns
+A Constructor object that reflects the specified
+declared constructor of this class.
+Throws
+NoSuchMethodException
+If the specified constructor does not exist.
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class, this method returns a Constructor
+object that reflects the specified declared
+constructor of this class.  The constructor is located by
+searching all of the constructors of the class for a 
+public, protected, default
+access, or private constructor that has exactly the
+same formal parameters as specified.  If this 
+Class does not represent
+a class, the method returns null.
+getDeclaredConstructors
+   public Constructor[] getDeclaredConstructors() throws SecurityException  
+Availability
+New as of JDK 1.1
+Returns
+An array of Constructor objects that reflect the 
+declared constructors of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class, this method returns an array of Constructor
+objects that reflect the public, 
+protected, default access, and private
+constructors of this class.  If there are no declared
+constructors, or if this Class does not represent
+a class, the method returns an array of length 0.
+getDeclaredField
+   public Field getDeclaredField(String name) throws NoSuchFieldException, SecurityException  
+Availability
+New as of JDK 1.1
+Parameters
+name
+The simple name of the field.
+Returns
+A Field object that reflects the specified
+declared field of this class.
+Throws
+NoSuchFieldException
+If the specified field does not exist.
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns a Field
+object that reflects the specified declared
+field of this class.  The field is located by
+searching all of the fields of the class (but not inherited fields) for a 
+public, protected, default
+access, or private field that has the specified
+simple name.  If this 
+Class does not 
+represent
+a class or interface, the method returns null.
+getDeclaredFields
+public Field[] getDeclaredFields() throws SecurityException
+Availability
+New as of JDK 1.1
+Returns
+An array of Field objects that reflect the 
+declared fields of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns an array of Field
+objects that reflect the public, 
+protected, default access, and private
+fields declared by this class, but excludes inherited fields.  
+If there are no declared
+fields, or if this Class does not represent
+a class or interface, 
+the method returns an array of length 0.
+This method does not reflect the implicit length
+field for array types.  The methods of the class Array
+should be used to manipulate array types.
+getDeclaredMethod
+   public Method getDeclaredMethod(String name, Class[] parameterTypes) throws NoSuchMethodException, SecurityException  
+Availability
+New as of JDK 1.1
+Parameters
+name
+The simple name of the method.
+parameterTypes
+An array of Class objects that describes the 
+parameter types, in declared order, of the method. 
+Returns
+A Method object that reflects the specified
+declared method of this class.
+Throws
+NoSuchMethodException
+If the specified method does not exist.
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns a Method
+object that reflects the specified declared
+method of this class.  The method is located by
+searching all of the methods of the class (but not inherited methods) for a 
+public, protected, default
+access, or private method that has the specified
+simple name and exactly the same formal parameters as specified.  
+If this Class does not represent
+a class or interface, the method returns null.
+getDeclaredMethods
+public Method[] getDeclaredMethods() throws SecurityException
+Availability
+New as of JDK 1.1
+Returns
+An array of Method objects that reflect the 
+declared methods of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns an array of Method
+objects that reflect the public, 
+protected, default access, and private
+methods declared by this class, but excludes inherited methods.  
+If there are no declared
+methods, or if this Class does not represent
+a class or interface, 
+the method returns an array of length 0.
+getDeclaringClass
+public Class getDeclaringClass()
+Availability
+New as of JDK 1.1
+Returns
+A Class object that represents the declaring class if
+this class is a member of another class.
+Description
+If this Class object represents a 
+class or interface that is a member of another class
+or interface, this method returns a Class
+object that describes the declaring class or interface.
+If this class or interface is not a member of another class
+or interface, or if it represents
+a primitive type, the method returns null.
+getField
+   public Field getField(String name) throws NoSuchFieldException, SecurityException  
+Availability
+New as of JDK 1.1
+Parameters
+name
+The simple name of the field.
+Returns
+A Field object that reflects the specified
+public field of this class.
+Throws
+NoSuchFieldException
+If the specified field does not exist.
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns a Field
+object that reflects the specified public
+field of this class.  The field is located by
+searching all of the fields of the class, including any 
+inherited fields, for a 
+public field that has the specified
+simple name.  If this 
+Class does not represent
+a class or interface, the method returns null.
+getFields
+public Field[] getFields() throws SecurityException
+Availability
+New as of JDK 1.1
+Returns
+An array of Field objects that reflect the 
+public fields of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns an array of Field
+objects that reflect the public 
+fields declared by this class and any inherited public
+fields.  If there are no public
+fields, or if this Class does not represent
+a class or interface, 
+the method returns an array of length 0.
+This method does not reflect the implicit length
+field for array types.  The methods of the class Array
+should be used to manipulate array types.
+getInterfaces
+public native Class[] getInterfaces()
+Returns
+An array of the interfaces implemented by this class
+or extended by this interface.
+Description
+If the Class object represents a class,
+this method returns an array that refers to all of the interfaces
+that the class implements. The order of the interfaces referred
+to in the array is the same as the order in the class declaration's
+implements clause. If the class does not implement
+any interfaces, the length of the returned array is 0.
+If the object represents an interface, this method returns
+an array that refers to all of the interfaces that this interface
+extends. The interfaces occur in the order they appear
+in the interface declaration's extends clause.
+If the interface does not extend any interfaces, the length of the
+returned array is 0.
+If the object represents a primitive or array type, the method
+returns an array of length 0.
+getMethod
+   public Method getMethod(String name, Class[] parameterTypes) throws NoSuchMethodException, SecurityException  
+Availability
+New as of JDK 1.1
+Parameters
+name
+The simple name of the method.
+parameterTypes
+An array of Class objects that describes the 
+parameter types, in declared order, of the method. 
+Returns
+A Method object that reflects the specified
+public method of this class.
+Throws
+NoSuchMethodException
+If the specified method does not exist.
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns a Method
+object that reflects the specified public
+method of this class.  The method is located by
+searching all of the methods of the class, including any inherited methods, 
+for a public method that has the specified
+simple name and exactly the same formal parameters as specified.  
+If this Class does not represent
+a class or interface, the method returns null.
+getMethods
+public Method[] getMethods() throws SecurityException
+Availability
+New as of JDK 1.1
+Returns
+An array of Method objects that reflect the 
+public methods of this class.
+Throws
+SecurityException
+If the checkMemberAccess() method of the
+SecurityManager throws a 
+SecurityException.
+Description
+If this Class object represents a 
+class or interface, this method returns an array of Method
+objects that reflect the public
+methods declared by this class and any inherited public
+methods.  If there are no public
+methods or if this Class doesn't represent
+a class or interface, 
+the method returns an array of length 0.
+getModifiers
+public native int getModifiers()
+Availability
+New as of JDK 1.1
+Returns
+An integer that represents the modifier keywords used to declare
+this class.
+Description
+If this Class object represents a class or 
+interface, this method returns an integer value that represents
+the modifiers used to declare the class or interface.  The
+Modifier class should be used to decode the
+returned value.
+getName
+public native String getName()
+Returns
+The fully qualified name of this class or interface.
+Description
+This method returns the fully qualified name of the type
+represented by this Class object.
+If the object represents the class of an array, the method
+returns a String that contains as many left square
+brackets as there are dimensions in the array, followed by a code
+that indicates the type of element contained in the base array.
+Consider the following:
+(new int [3][4][5]).getClass().getName()
+This code returns "[[[I". The codes used
+to indicate the element type are as follows:
+Code
+Type
+[
+array
+B
+byte
+C
+char
+d
+double
+F
+float
+I
+int
+J
+long
+L fully_qualified_class_name
+class or interface
+S
+short
+Z
+boolean
+getResource
+public URL getResource(String name)
+Availability
+New as of JDK 1.1
+Parameters
+name
+A resource name.
+Returns
+A URL object that is connected to the specified
+resource or null if the resource cannot be found.
+Description
+This method finds a resource with the given name for this
+Class object and returns a
+URL object that is connected to the resource.
+The rules for searching for a resource associated with a class are
+implemented by the ClassLoader for the class; this 
+method simply calls the getResource() method of
+the ClassLoader.  If this class does not
+have a ClassLoader (i.e., it is a system class),
+the method calls the ClassLoader.getSystemResource()
+method.
+getResourceAsStream
+public InputStream getResourceAsStream(String name)
+Availability
+New as of JDK 1.1
+Parameters
+name
+A resource name.
+Returns
+An InputStream object that is connected to the specified
+resource or null if the resource cannot be found.
+Description
+This method finds a resource with the given name for this
+Class object and returns an
+InputStream object that is connected to the resource.
+The rules for searching for a resource associated with a class are
+implemented by the ClassLoader for the class; this 
+method simply calls the getResourceAsStream() method of
+the ClassLoader.  If this class does not
+have a ClassLoader (i.e., it is a system class),
+the method calls the ClassLoader.getSystemResourceAsStream()
+method.
+getSigners
+public native Object[] getSigners()
+Availability
+New as of JDK 1.1
+Returns
+An array of Objects that represents the signers
+of this class.
+Description
+This method returns an 
+array of objects that represents the digital
+signatures for this class.
+getSuperclass
+public native Class getSuperclass()
+Returns
+The superclass of this class or null if
+there is no superclass.
+Description
+If the Class object represents a class
+other than Object, this method returns the Class object that represents its superclass. If the object represents
+an interface, the Object class, or a primitive
+type, the method
+returns null.
+isArray
+public native boolean isArray()
+Availability
+New as of JDK 1.1
+Returns
+true if this object describes an array type;
+otherwise false.
+isAssignableFrom
+public native boolean isAssignableFrom(Class cls)
+Availability
+New as of JDK 1.1
+Parameters
+cls
+A Class object to be tested.
+Returns
+true if the type represented by cls
+is assignable to the type of this class:
+otherwise false.
+Throws
+NullPointerException
+If cls is null.
+Description
+This method determines whether or not the type 
+represented by cls is assignable to the
+type of this class.  
+If this class represents a class, this class must be the same
+as cls or a superclass of cls.
+If this class represents an interface, this class must be the same
+as cls or a superinterface of cls.
+If this class represents a primitive type, this class must
+be the same as cls.
+isInstance
+public native boolean isInstance(Object obj)
+Availability
+New as of JDK 1.1
+Parameters
+obj
+An Object to be tested.
+Returns
+true if obj can be cast to
+the reference type specified by this class; 
+otherwise false.
+Throws
+NullPointerException
+If obj is null.
+Description
+This method determines whether or not the object represented
+by obj can be cast to the type of
+this class object without causing a ClassCastException.
+This method is the dynamic equivalent of the instanceof
+operator.
+isInterface
+public native boolean isInterface()
+Returns
+true if this object describes an interface;
+otherwise false.
+isPrimitive
+public native boolean isPrimitive()
+Availability
+New as of JDK 1.1
+Returns
+true if this object describes a primitive type;
+otherwise false.
+newInstance
+   public native Object newInstance () throws InstantiationException, IllegalAccessException  
+Returns
+A reference to a new instance of this class.
+Throws
+InstantiationException
+If the Class object represents an interface or an
+abstract class.
+IllegalAccessException
+If the class or an initializer is not accessible.
+Description
+This method creates a new instance of this class by performing
+these steps:
+It creates a new object of the class
+represented by the Class object.
+It calls the constructor for the class that takes
+no arguments.
+It returns a reference to the initialized object.
+The newInstance() method is useful for
+creating an instance of a class that has been dynamically loaded
+using the forName() method.
+The reference returned by this method is usually cast to the
+type of object that is instantiated.
+The newInstance() method can throw objects that are not instances of the classes it is declared to throw. If the constructor invoked by newInstance() throws an exception, the exception is thrown by newInstance() regardless of the class of the object.
+toString
+public String toString()
+Returns
+A String that contains the name of the
+class with either 'class' or 'interface' prepended as appropriate.
+Overrides
+Object.toString()
+Description
+This method returns a string representation of the Class
+object.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals()
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Array, 
+ClassLoader, 
+ClassNotFoundException, 
+Constructor, 
+Field, 
+IllegalAccessException, 
+InputStream
+InstantiationException, 
+Method, 
+Modifier, 
+NoSuchFieldException, 
+NoSuchMethodException, 
+Object,
+SecurityException, 
+SecurityManager, 
+URL
+Character
+ClassCastException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

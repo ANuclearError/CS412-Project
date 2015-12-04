@@ -1,0 +1,161 @@
+
+[Chapter 18] ZipFile
+Chapter 18The java.util.zip Package
+ZipFile
+Name
+ZipFile
+Synopsis
+Class Name:
+java.util.zip.ZipFile
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ZipFile class represents 
+a ZIP file. Unlike with a ZipInputStream, 
+you can read the entries in a ZipFile 
+nonsequentially. Internally, the class uses a RandomAccessFile 
+so that you can read the entries from the file in any order. You can obtain 
+a list of the entries in this ZIP file by calling entries(). 
+Given an entry, you can get an InputStream 
+for that entry using getInputStream(). 
+Class Summary
+public class java.util.zip.ZipFile extends java.lang.Object {
+  // Constructors
+  public ZipFile(File file);
+  public ZipFile(String name);
+  // Instance Methods
+  public void close();
+  public Enumeration entries();
+  public ZipEntry getEntry(String name);
+  public InputStream getInputStream(ZipEntry ze);
+  public String getName();
+}
+Constructors
+ZipFile
+public ZipFile(File file) throws ZipException, IOException
+Parameters
+file
+The File to read. 
+Throws
+ZipException
+If the ZIP file cannot be read.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This constructor creates a ZipFile 
+for reading from the given File 
+object. 
+public ZipFile(String name) throws IOException
+Parameters
+name
+A string that contains the path name of the file. 
+Throws
+ZipException
+If the ZIP file cannot be read.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This constructor creates a ZipFile 
+for reading from the file specified by the given path. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method closes the ZipFile 
+and releases its system resources. 
+entries
+public Enumeration entries()
+Returns
+An Enumeration of ZipEntry 
+objects. 
+Description
+This method returns an enumeration of ZipEntry 
+objects that represents the contents of this ZipFile. 
+getEntry
+public ZipEntry getEntry(String name)
+Parameters
+name
+The entry name. 
+Returns
+The entry corresponding to the given name or null 
+if there is no such entry. 
+Description
+This method returns the ZipEntry 
+object that corresponds to the given entry name. 
+getInputStream
+public InputStream getInputStream(ZipEntry ze) throws IOException
+Parameters
+ze
+A ZipEntry in this file. 
+Returns
+An InputStream for the given 
+entry. 
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method returns an input stream that can read the entry 
+described by the supplied ZipEntry. 
+getName
+public String getName()
+Returns
+The path of this file. 
+Description
+This method returns the path name of this ZipFile. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+File, 
+InputStream, 
+IOException, 
+RandomAccessFile, 
+String, 
+ZipEntry, 
+ZipException, 
+ZipInputStream 
+ZipException
+ZipInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

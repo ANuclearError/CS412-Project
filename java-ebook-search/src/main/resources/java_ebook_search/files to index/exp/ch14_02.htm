@@ -1,0 +1,63 @@
+
+[Chapter 14] 14.2 Working with Audio
+Chapter 14Working With Images
+14.2 Working with Audio
+So you've read all the material on drawing and image processing,
+and you're wondering what in the world audio has to do with
+images. Well, not much actually, except that true multimedia
+presentations often combine image techniques such as animation with
+sound. So we're going to spend a few minutes here talking about
+audio, for lack of a better place to discuss it.
+As we write this, the good people at Sun are hard at work
+developing the API that Java applets will use for playing audio. A
+future release of Java will undoubtedly have support for real-time and
+continuous audio streams, sound management, mixing, synchronization,
+and filtering. Unfortunately, at the moment, we can tell you
+only about the basics.
+java.applet.AudioClip defines an interface
+for objects that can play sound. An object that implements
+AudioClip can be told to play()
+its sound data, stop() playing the sound, or
+loop() continually.
+An applet can call its getAudioClip() method
+to retrieve sounds over the network. This method takes an absolute or
+relative URL to specify where the audio file is
+located. The viewer may take the sound from a cache or retrieve it
+over the network. The following applet,
+NoisyButton, gives a simple example:
+import java.awt.*;
+import java.awt.event.*;
+public class NoisyButton extends java.applet.Applet implements ActionListener { 
+    java.applet.AudioClip sound;
+    public void init() {
+        sound = getAudioClip( getClass().getResource(getParameter("sound")) );
+        Button button = new Button("Play Sound");
+        button.addActionListener( this );
+        add ( button );
+    }
+    public void actionPerformed( ActionEvent e ) {
+        if ( sound != null )
+            sound.play();
+    }
+}
+    *** Update description... 
+NoisyButton retrieves an
+AudioClip from the server; we use
+getCodeBase() to find out where the applet lives
+and getParameter() to find the name of the audio
+file. (The applet tag that displays NoisyButton
+must include a parameter tag for sound.)
+Unfortunately, this is about the extent of what we can do with sound
+right now. If you want to experiment, there are a few additional
+methods in the sun.audio classes. 
+Stay tuned for a bigger and better audio API as part of
+the upcoming Java Media package.
+Image Processing
+Glossary
+ 
+ 
+ 
+ 
+ 
+ 
+ 

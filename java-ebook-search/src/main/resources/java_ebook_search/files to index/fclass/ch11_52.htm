@@ -1,0 +1,383 @@
+
+[Chapter 11] PrintStream
+Chapter 11The java.io Package
+PrintStream
+Name
+PrintStream
+Synopsis
+Class Name:
+java.io.PrintStream
+Superclass:
+java.io.FilterOutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The PrintStream class provides 
+support for writing string representations of primitive data types and 
+objects to an underlying output stream. As of JDK 1.1, PrintStream 
+uses the system's default encoding scheme to convert characters to 
+bytes and uses the system's own specific line separator, rather than 
+the newline character, for separating lines of text. Although this class 
+is not officially deprecated, its constructors are, and you should use 
+PrintWriter instead of PrintStream 
+in new code. 
+Prior to JDK 1.1, PrintStream 
+did not handle Unicode characters. Any PrintStream 
+methods that wrote characters only wrote the low eight bits of each character. 
+In addition, prior to JDK 1.1, PrintStream 
+used the newline character to separate lines of text, regardless of the 
+platform. These problems have been corrected as of JDK 1.1. 
+All of the methods of PrintStream 
+that write multiple times to the underlying output stream handle synchronization 
+internally, so that PrintStream 
+objects are thread-safe. 
+A PrintStream object is often 
+used to write to a BufferedOutputStream 
+object. Note that you can specify that the PrintStream 
+be flushed every time it writes the line separator or the newline 
+character by using the constructor that takes a boolean 
+argument. 
+PrintStream objects are often 
+used to report errors. For this reason, the methods of this class do not 
+throw exceptions. Instead, the methods catch any exceptions thrown by any 
+downstream OutputStream objects 
+and set an internal flag, so that the object can remember that a problem 
+occurred. You can query the internal flag by calling the checkError() 
+method. 
+Class Summary
+public class java.io.PrintStream extends java.io.FilterOutputStream {
+  // Constructors
+  public PrintStream(OutputStream out);           // Deprecated in 1.1
+  public PrintStream(OutputStream out, 
+                     boolean autoFlush);          // Deprecated in 1.1
+  // Public Instance Methods
+  public boolean checkError();
+  public void close();
+  public void flush();
+  public void print(boolean b);
+  public void print(char c);
+  public void print(char[] s);
+  public void print(double d);
+  public void print(float f);
+  public void print(int i);
+  public void print(long l);
+  public void print(String s);
+  public void print(Object obj);
+  public void println();
+  public void println(boolean b);
+  public void println(char c);
+  public void println(char[] s);
+  public void println(double d);
+  public void println(float f);
+  public void println(int i);
+  public void println(long l);
+  public void println(Object obj);
+  public void println(String s);
+  public void write(int b);
+  public void write(byte[] buf, int off, int len);
+  // Protected Instance Methods
+  protected void setError();                      // New in 1.1
+}
+Constructors
+PrintStream
+public PrintStream(OutputStream out)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+out
+The output stream to 
+use. 
+Description
+This constructor creates a PrintStream 
+object that sends output to the given OutputStream. 
+public PrintStream(OutputStream out, boolean autoflush)
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+out
+The output stream to use.
+autoflush
+A boolean value that indicates whether or not the
+print stream is flushed every time a newline is output.
+Description
+This constructor creates a PrintStream 
+object that sends output to the given OutputStream. 
+If autoflush is true, 
+every time the PrintStream 
+object writes a newline character or line separator, it calls its flush() 
+method. Note that this is different than with a PrintWriter 
+object, which only calls its flush() 
+method when a println() method 
+is called. 
+Public Instance Methods
+checkError
+public boolean checkError()
+Returns
+true if any error has occurred; 
+false otherwise. 
+Description
+This method flushes any buffered output and returns true 
+if any error has occurred. Once the error flag for a PrintStream 
+object has been set, it is never cleared. 
+close
+public void close()
+Overrides
+FilterOutputStream.close() 
+Description
+This method closes this print stream and releases any resources associated 
+with the object. The method does this by calling the close() 
+method of the underlying output stream and catching any exceptions that 
+are thrown. 
+flush
+public void flush()
+Overrides
+FilterOutputStream.flush() 
+Description
+This method flushes this print stream, forcing any bytes that may be buffered 
+to be written to the underlying output stream. The method does this by 
+calling the flush() method 
+of the underlying output stream and catching any exceptions that are thrown. 
+print
+public void print(boolean b)
+Parameters
+b
+The boolean 
+value to print. 
+Description
+This method writes "true" to the underlying 
+output stream if b is true; 
+otherwise it writes "false". 
+public void print(char c)
+Parameters
+c
+The char value to print. 
+Description
+This method writes the given character to the underlying output stream. 
+public void print(char[] s)
+Parameters
+s
+The char array to print. 
+Description
+This method writes the characters in the given array to the underlying 
+output stream. 
+public void print(double d)
+Parameters
+d
+The double value to print. 
+Description
+This method writes a string representation of the given double 
+value to the underlying output stream. The string representation is identical 
+to the one returned by calling Double.toString(d). 
+public void print(float f)
+Parameters
+f
+The float value to print. 
+Description
+This method writes a string representation of the given float 
+value to the underlying output stream. The string representation is identical 
+to the one returned by calling Float.toString(f). 
+public void print(int i)
+Parameters
+i
+The int value to print. 
+Description
+This method writes a string representation of the given int 
+value to the underlying output stream. The string representation is identical 
+to the one returned by calling Integer.toString(i). 
+public void print(long l)
+Parameters
+l
+The long value to print. 
+Description
+This method writes a string representation of the given long 
+value to the underlying output stream. The string representation is identical 
+to the one returned by calling Long.toString(l). 
+public void print(Object obj)
+Parameters
+obj
+The Object to print. 
+Description
+This method writes the string representation of the given Object 
+to the underlying output stream. The string representation is that returned 
+by calling the toString() 
+method of Object. 
+public void print(String s)
+Parameters
+s
+The String 
+to print. 
+Description
+This method writes the given String 
+to the underlying output stream. If String 
+is null, the method writes 
+"null". 
+println
+public void println()
+Description
+This method writes a line separator to the underlying output stream. 
+public void println(boolean b)
+Parameters
+b
+The boolean 
+value to print. 
+Description
+This method writes "true" to the underlying 
+output stream if b is true, 
+otherwise it writes "false". In either case, 
+the string is followed by a line separator. 
+public void println(char c)
+Parameters
+c
+The char value to print. 
+Description
+This method writes the given character, followed by a line separator, to 
+the underlying output stream. 
+public void println(char[] s)
+Parameters
+s
+The char array to print. 
+Description
+This method writes the characters in the given array, followed by a line 
+separator, to the underlying output stream. 
+public void println(double d)
+Parameters
+d
+The double value to print. 
+Description
+This method writes a string representation of the given double 
+value, followed by a line separator, to the underlying output stream. The 
+string representation is identical to the one returned by calling Double.toString(d). 
+public void println(float f)
+Parameters
+f
+The float value to print. 
+Description
+This method writes a string representation of the given float 
+value, followed by a line separator, to the underlying output stream. The 
+string representation is identical to the one returned by calling Float.toString(f). 
+public void println(int i)
+Parameters
+i
+The int value to print. 
+Description
+This method writes a string representation of the given int 
+value, followed by a line separator, to the underlying output stream. The 
+string representation is identical to the one returned by calling Integer.toString(i). 
+public void println(long l)
+Parameters
+l
+The long value to print. 
+Description
+This method writes a string representation of the given long 
+value, followed by a line separator, to the underlying output stream. The 
+string representation is identical to the one returned by calling Long.toString(l). 
+public void println(Object obj)
+Parameters
+obj
+The Object to print. 
+Description
+This method writes the string representation of the given Object, 
+followed by a line separator, to the underlying output stream. The string 
+representation is that returned by calling the toString() 
+method of Object. 
+public void println(String s)
+Parameters
+s
+The String to print. 
+Description
+This method writes the given String, 
+followed by a line separator, to the underlying output stream. If String 
+is null, the method writes 
+"null" followed 
+by a line separator. 
+write
+public void write(int b)
+Parameters
+b
+The value to write to 
+the stream. 
+Overrides
+FilterOutputStream.write(int) 
+Description
+This method writes the lowest eight bits of b 
+to the underlying stream as a byte. The method does this by calling the 
+write() method of the underlying 
+output stream and catching any exceptions that are thrown. If necessary, 
+the method blocks until the byte is written. 
+public void write(byte b[], int off, int len)
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Overrides
+FilterOutputStream.write(byte[], int, int) 
+Description
+This method writes the lowest eight bits of each of len 
+bytes from the given array, starting off elements from 
+the beginning of the array, to the underlying output stream. The method 
+does this by calling write(b, 
+off, len) 
+for the underlying output stream and catching any exceptions that are thrown. 
+If necessary, the method blocks until the bytes are written. 
+Protected Instance Methods
+setError
+protected void setError()
+Availability
+New as of JDK 1.1 
+Description
+This method sets the error state of the PrintStream 
+object to true. Any subsequent 
+calls to getError() return
+true. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(byte[])
+FilterOutputStream
+See Also
+Double, 
+FilterOutputStream, 
+Float, 
+Integer, 
+Long, 
+OutputStream 
+PipedWriter
+PrintWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

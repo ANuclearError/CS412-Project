@@ -1,0 +1,58 @@
+
+[Chapter 15] URLStreamHandlerFactory
+Chapter 15The java.net Package
+URLStreamHandlerFactory
+Name
+URLStreamHandlerFactory
+Synopsis
+Interface Name:
+java.net.StreamHandlerFactory
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The URLStreamHandlerFactory 
+interface defines a method that creates a URLStreamHandler 
+object for a specific protocol. The interface is implemented by classes 
+that select URLStreamHandler 
+subclasses to process particular protocol types. 
+The URL class uses a URLStreamHandlerFactory 
+to create URLStreamHandler 
+objects. The protocol type is determined by the portion of the URL up to 
+the first colon. For example, given the following URL: 
+http://www.tolstoi.org/ilych.html
+the protocol type is http. 
+A URLStreamHandlerFactory that 
+recognizes http returns a URLStreamHandler 
+that can process the URL. 
+Interface Declaration
+public abstract interface java.net.URLStreamHandlerFactory {
+  // Methods
+  public abstract URLStreamHandler createURLStreamHandler(String protocol);
+}
+Methods
+createURLStreamHandler
+public abstract URLStreamHandler createURLStreamHandler (String protocol)
+Parameters
+protocol
+A String 
+that represents a protocol. 
+Description
+This method creates an object of the appropriate subclass of URLStreamHandler 
+that can process a URL using the named protocol. 
+See Also
+URL, URLStreamHandler
+URLStreamHandler
+UnknownHostException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

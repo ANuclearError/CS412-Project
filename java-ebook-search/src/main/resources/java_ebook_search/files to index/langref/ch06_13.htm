@@ -1,0 +1,31 @@
+
+[Chapter 6] 6.13 The synchronized Statement
+Chapter 6Statements and Control Structures
+6.13 The synchronized Statement
+A synchronized
+statement provides a way of synchronizing the execution of a block,
+so that only one thread can be executing the block at a time:
+The expression in parentheses must produce a reference type, or the
+compiler issues an error message. If the expression evaluates to
+null, a NullPointerException is
+thrown.
+Before executing the block in a synchronized
+statement, the current thread obtains a lock for the object referenced
+by the expression. While the block is being executed, no other thread
+can obtain the lock for that object. When the thread is done executing
+the block, it releases the lock, so it is available for other threads.
+See Chapter 8 for a complete discussion of threads in Java.
+References
+Blocks;
+Expression 4;
+Runtime exceptions;
+Threads 8
+The try Statement
+Program Structure
+ 
+ 
+ 
+ 
+ 
+ 
+ 

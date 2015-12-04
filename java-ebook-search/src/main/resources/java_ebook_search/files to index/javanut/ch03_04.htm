@@ -1,0 +1,207 @@
+
+[Chapter 3] 3.4 Class Methods
+Chapter 3Classes and Objects in Java
+3.4 Class Methods
+Let's define a new method in our Circle
+class.  This one tests whether a specified point falls within
+the defined circle:
+public class Circle {
+    double x, y, r;
+    // is point (a,b) inside this circle?  
+    public boolean isInside(double a, double b)
+    {
+        double dx = a - x;
+        double dy = b - y;
+        double distance = Math.sqrt(dx*dx + dy*dy);
+        if (distance &lt; r) return true;
+        else return false;
+    }
+        .
+        .  // Constructor and other methods omitted.
+        .
+}
+What's this Math.sqrt() thing?  It looks like a
+method call and, given its name and its context, we can guess
+that it is computing a square root.  But the method calls
+we've discussed are done through an object.  Math
+isn't the name of an object that we've declared, and there
+aren't any global objects in Java, so this must be a kind of
+method call that we haven't seen before.
+static Methods
+What's going on here is that Math is the name of a
+class.  sqrt() is the name of a class method
+(or static method) defined in Math.  It differs from the instance
+methods, such as area() in Circle, that
+we've seen so far.
+Class methods are like class variables in a number of ways:
+Class methods are declared with the static keyword.
+Class methods are often referred to as "static methods."
+Class methods are invoked through the class rather than
+through an instance.  (Although within the class they may be
+invoked by method name alone.)
+Class methods are the closest Java comes to "global"
+methods.  Because they must be referred to by the class name,
+there is no danger of name conflicts.
+No this
+Class methods differ from instance methods in one
+important way: they are not passed an implicit this
+reference.  Thus, these this-less methods are not
+associated with any instance of the class and may not refer
+to any instance variables or invoke instance methods.
+Since class methods are not passed a this reference,
+and are not invoked through an object, they are the closest
+thing that Java offers to the "normal" C procedures that you
+may be accustomed to, and may therefore seem familiar and comforting.
+If you're sick and tired of this object-oriented business,
+it is perfectly possible to write complete Java programs
+using only class methods, although this does defeat
+an important purpose of using the language!
+But don't think that class methods are somehow
+cheating--there are perfectly good reasons to declare a
+method static.  And indeed, there are classes like
+Math that declare all their methods (and variables)
+static.  Since Math is a collection of
+functions that operate on floating-point numbers, which are
+a primitive type, there are no objects involved, and no need
+for instance methods.  System is another class that
+defines only class methods--it provides a varied collection of
+system functions for which there is no appropriate object
+framework. 
+A Class Method for Circles
+Example 3.5
+shows two (overloaded) definitions of a method for our
+Circle class.  One is an instance method and one is a
+class method.
+Example 3.5: A Class Method and an Instance Method
+public class Circle {
+    public double x, y, r;
+    // An instance method.  Returns the bigger of two circles.
+    public Circle bigger(Circle c) { 
+        if (c.r &gt; r) return c; else return this; 
+    }
+    // A class method.  Returns the bigger of two circles.
+    public static Circle bigger(Circle a, Circle b) {
+        if (a.r &gt; b.r) return a; else return b;
+    }
+        .
+        .  // Other methods omitted here.
+        .
+}
+You would invoke the instance method like this:
+Circle a = new Circle(2.0);
+Circle b = new Circle(3.0);
+Circle c = a.bigger(b);         // or, b.bigger(a);
+And you would invoke the class method like this:
+Circle a = new Circle(2.0);
+Circle b = new Circle(3.0);
+Circle c = Circle.bigger(a,b);
+Neither of these is the "correct" way to implement this
+method.  One or the other will seem more natural, depending
+on circumstances.
+A Mystery Explained
+Now that we understand class variables, instance variables,
+class methods, and instance methods, we are in a position to
+explore that mysterious method call we saw in our very first
+Java "Hello World" example:
+System.out.println("Hello world!");
+One hypothesis is that println() is a class method
+in a class named out, which is in a package named System.
+Syntactically, this is perfectly reasonable (except perhaps
+that class names always seem to be capitalized by
+convention, and out isn't capitalized).  But if you
+look at the API documentation, you'll find that
+System is not a package name; it is the name of a class
+(which is in the java.lang package, by the way).
+Can you figure it out?
+Here's the story: System is a class.  It has a class
+variable named out.  out refers to an object
+of type PrintStream.  The object System.out
+has an instance method named println().  Mystery
+solved!
+Static Initializers
+Both class and instance variables can have initializers
+attached to their declarations.  For example:
+static int num_circles = 0;
+float r = 1.0;
+Class variables are initialized when the class is first
+loaded.  Instance variables are initialized when an object
+is created.
+Sometimes we need more complex initialization than is
+possible with these simple variable initializers.  For
+instance variables, there are constructor methods, which are
+run when a new instance of the class is created.  Java also
+allows you to write an initialization method for class
+variables.  Such a method is called a static
+initializer.
+The syntax of static initializers gets kind of bizarre.
+Consider that a static initializer is invoked automatically
+by the system when the class is loaded.  Thus there are no
+meaningful arguments that can be passed to it (unlike the
+arguments we can pass to a constructor method when creating
+a new instance).  There is also no value to return.  So a
+static initializer has no arguments and no return value.
+Furthermore, it is not really necessary to give it a name,
+since the system calls the method automatically for us.
+What part of a method declaration is left?  Just the
+static keyword and the curly brackets!
+Example 3.6 
+shows a class declaration with a static initializer.
+Notice that the class contains a regular static variable
+initializer of the kind we've seen before, and also a static
+initializer--an arbitrary block of code between {
+and }.
+Example 3.6: A Static Initializer
+// We can draw the outline of a circle using trigonometric functions.
+// Trigonometry is slow though, so we pre-compute a bunch of values.
+public class Circle {
+    // Here are our static lookup tables, and their own simple initializers.
+    static private double sines[] = new double[1000];
+    static private double cosines[] = new double[1000];
+    // Here's a static initializer "method" that fills them in.  
+    // Notice the lack of any method declaration!
+    static {
+        double x, delta_x;
+        int i;
+        delta_x = (Circle.PI/2)/(1000-1);
+        for(i = 0, x = 0.0; i &lt; 1000; i++, x += delta_x) {
+            sines[i] = Math.sin(x);
+            cosines[i] = Math.cos(x);
+        }
+    }
+        .
+        .  // The rest of the class omitted.
+        .
+}
+The syntax gets even a little stranger than this.  Java
+allows any number of static initializer blocks of code to
+appear within a class definition.  What the compiler
+actually does is to internally produce a single class
+initialization routine that combines all the static variable
+initializers and all of the static initializer blocks of
+code, in the order that they appear in the class
+declaration.  This single initialization procedure is run
+automatically, one time only, when the class is first
+loaded.
+One common use of static initializers is for classes that
+implement native methods--i.e., methods written in
+C.  The static initializer for such a class should call
+System.load() or System.loadLibrary() to
+read in the native library that implements these native
+methods.  
+Instance Initializers
+In Java 1.1, a class definition may also include instance
+initializers.  These look like static initializers, but
+without the static keyword.  An instance initializer
+is like a constructor: it runs when an instance of the class
+is created.  We'll see more about instance initializers in
+Chapter 5, Inner Classes and Other New Language Features, Inner Classes and Other New Language
+Features.
+Class Variables
+Object Destruction
+ 
+ 
+ 
+ 
+ 
+ 
+ 

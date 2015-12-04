@@ -1,0 +1,285 @@
+
+[Chapter 3] 3.5 The Applet Tag
+Chapter 3Tools of the Trade
+3.5 The Applet Tag
+    Add stuff about 'archive' tag.
+Applets are embedded in HTML documents with the
+&lt;applet&gt; tag. The
+&lt;applet&gt; tag resembles the
+HTML &lt;img&gt; image
+tag.[2]
+ It contains attributes that identify the
+applet to be displayed and, optionally, give the Web browser hints
+about how it should be displayed. The standard image tag sizing and
+alignment attributes, such as height and
+width, can be used inside the applet tag. Unlike
+images, however, applets have both an opening
+&lt;applet&gt; and a closing
+&lt;/applet&gt; tag. Sandwiched between these can be
+any number of &lt;param&gt; tags that contain
+application-specific parameters to be passed to the applet itself:
+[2] 
+If you are not familiar with HTML or other
+markup languages, you may want to refer to HTML: The
+Definitive Guide, from O'Reilly &amp; Associates, for a
+complete reference on HTML and structured Web
+documents.
+&lt;applet attribute [ attribute ] ...  &gt; 
+[&lt;param parameter &gt;] 
+[&lt;param parameter &gt;] 
+... 
+&lt;\applet&gt; 
+Attributes
+Attributes are name/value pairs that are interpreted by a Web browser
+or applet viewer. (Many HTML tags besides
+&lt;applet&gt; have attributes.) Attributes of the
+&lt;applet&gt; tag specify general features that
+apply to all applets, such as size and alignment. The definition of
+the &lt;applet&gt; tag lists a fixed set of
+recognized attributes; specifying an incorrect or 
+nonexistent
+attribute should be considered an HTML error.
+Three attributes, code,
+width, and height, are always
+required in the &lt;applet&gt;
+tag. code specifies the name of the applet to be
+loaded; width and height
+determine its initial size. Other attributes are optional.
+The following is an HTML fragment for a
+hypothetical, simple clock applet that takes no parameters and
+requires no special HTML layout:
+&lt;applet code=AnalogClock width=100 height=100&gt;&lt;/applet&gt; 
+The HTML file that contains this
+&lt;applet&gt; tag needs to be stored in the same
+directory as the AnalogClock.class class file. The
+applet tag is not sensitive to spacing, so the above is therefore
+equivalent to:
+&lt;applet 
+    code=AnalogClock 
+    width=100 
+    height=100&gt; 
+&lt;\applet&gt; 
+You can use whatever form seems appropriate. 
+Parameters
+Parameters are analogous to command-line arguments; they provide a way 
+to pass information to an applet. Each &lt;param&gt; 
+tag contains a name and a value that are passed as strings to the applet: 
+&lt;param name = parameter_name value = parameter_value&gt; 
+Parameters provide a means of embedding application-specific data and
+configuration information within an HTML
+document.[3]
+ Our AnalogClock applet, for example, might accept
+a parameter that selects between local and universal time:
+[3] 
+If you are wondering why the applet's parameters are specified
+in yet another type of tag, here's the reason. In the original
+alpha release of Java, applet parameters were included inside of a
+single &lt;app&gt; tag along with formatting
+attributes. However, this format was not
+SGML-compliant, so the
+&lt;param&gt; tag was added.
+&lt;applet code=AnalogClock width=100 height=100&gt; 
+    &lt;param name=zone value=GMT&gt; 
+&lt;\applet&gt; 
+Presumably, this AnalogClock applet is designed to
+look for a parameter named zone with a possible
+value of GMT.
+Parameter names and values can be quoted to contain spaces and
+other special characters. We could therefore be more verbose
+and use a parameter value like the following:
+&lt;param name=zone value="Greenwich Mean Time"&gt; 
+The parameters a given applet expects are determined by the developer
+of that applet. There is no fixed set of parameter names or
+values; it's up to the applet to interpret the parameter name/value
+pairs that are passed to it. Any number of parameters can be specified,
+and the applet may choose to use or ignore them as it sees fit. The
+applet might also consider parameters to be either optional or
+required and act accordingly.
+Hablo Applet?
+Web browsers ignore tags they don't understand; if the Web
+browser doesn't interpret the &lt;applet&gt; or
+&lt;param&gt; tags, they should disappear and any
+HTML between the
+&lt;applet&gt;and &lt;/applet&gt;
+tags should appear normally.
+By convention, Java-enabled Web browsers do the opposite and
+ignore any extra HTML between the
+&lt;applet&gt; and
+&lt;/applet&gt; tags. This means we can place
+some alternate HTML inside the
+&lt;applet&gt; tag, which is then displayed only by
+Web browsers that can't run the applet.
+For our AnalogClock example, we could
+display a small text explanation and an image of the clock applet as a
+teaser:
+&lt;applet code=AnalogClock width=100 height=100&gt; 
+    &lt;param name=zone value=GMT&gt; 
+    &lt;strong&gt;If you see this you don't have a Java-enabled Web 
+    browser. Here's a picture of what you are missing.&lt;/strong&gt; 
+    &lt;img src="clockface.gif"&gt; 
+&lt;\applet&gt; 
+The Complete Applet Tag
+We can now spell out the full-blown &lt;applet&gt; 
+tag:[4]
+[4] 
+The HTML working group of the
+IETF is investigating standardization of embedded
+objects in HTML. A draft document can be found at
+ftp://ds.internic.net/internet-drafts/draft-ietf-html-cda-00.txt.
+They would prefer a slightly less application-centric name such as
+&lt;embed&gt;. However, their discussion, for the
+most part, parallels the &lt;applet&gt; tag.
+&lt;applet 
+    code = class name 
+    width = pixels wide 
+    height = pixels high 
+    [ codebase = location URL ] 
+    [ name = instance name ] 
+    [ alt = alternate text ] 
+    [ align = alignment style ] 
+    [ vspace = vertical pad pixels ] 
+    [ hspace = horizontal pad pixels ] 
+&gt; 
+[ &lt;param name = parameter name value = parameter value&gt; ] 
+[ &lt;param name = parameter name value = parameter value&gt; ] 
+... 
+[ HTML for non Java aware browsers ] 
+&lt;\applet&gt; 
+The width, height, 
+align, vspace, and 
+hspace attributes have the same meanings as those 
+of the &lt;img&gt; tag and determine the preferred 
+size, alignment, and padding respectively. 
+The alt attribute specifies alternate text that is
+displayed by browsers that understand the
+&lt;applet&gt; tag and its attributes, but
+can't actually run applets. This attribute can also
+describe the applet, since in this case any alternate
+HTML between &lt;applet&gt; and
+&lt;\applet&gt; is ignored.
+The name attribute specifies an instance
+name for the executing applet. This is a name specified as
+a unique label for each copy of an applet on a particular
+HTML page. For example, if we include our
+clock twice on the same page (using two applet tags), we could give
+each instance a unique name to differentiate them:
+&lt;applet code=AnalogClock name="bigClock" width=300 height=300&gt;&lt;\applet&gt; 
+&lt;applet code=AnalogClock name="smallClock" width=50 height=50&gt;&lt;\applet&gt; 
+Applets use instance names to recognize and communicate with other
+applets on the same page. We could, for instance, create a
+"clock setter" applet that knows how to set the time on a
+AnalogClock applet and pass it the instance name of
+a particular target clock on this page as a parameter. This might look
+something like:
+&lt;applet code=ClockSetter&gt; 
+    &lt;param name=clockToSet value="bigClock"&gt; 
+&lt;\applet&gt; 
+Loading Class Files
+The code attribute of the
+&lt;applet&gt; tag should specify the name of an
+applet. This is either a simple class name, or a package path and class
+name. For now, let's look at simple class names; I'll
+discuss packages in a moment. By default, the Java run-time system
+looks for the class file in the same location as the
+HTML document that contains it. This location is
+known as the base URL for the document.
+Consider an HTML document,
+clock.html, that contains our clock applet
+example:
+&lt;applet code=AnalogClock width=100 height=100&gt;&lt;\applet&gt; 
+Let's say we retrieve the document at the following
+URL:
+http://www.time.ch/documents/clock.html
+Java tries to retrieve the applet class file from the same base
+location:
+http://www.time.ch/documents/AnalogClock.class
+The codebase attribute of the
+&lt;applet&gt; tag can be used to specify an
+alternative base URL for the class file search.
+Let's say our HTML document now
+specifies codebase, as in the following example:
+&lt;applet 
+    codebase=http://www.joes.ch/stuff/ 
+    code=AnalogClock 
+    width=100 
+    height=100&gt; 
+&lt;\applet&gt; 
+Java now looks for the applet class file at: 
+http://www.joes.ch/stuff/AnalogClock.class
+Packages
+Packages are groups of Java classes; see Chapter 5, Objects in Java for
+more information. A package name is a little like an Internet
+hostname, in that they both use a hierarchical, dot-separated naming
+convention. A Java class file can be identified by its full name by
+prefixing the class name with the package name. We might therefore
+have a package called time for time-related Java
+classes, and perhaps a subordinate package called
+time.clock to hold classes related to one or more
+clock applications.
+In addition to providing a naming scheme, packages can be used
+to locate classes stored at a particular location. Before a class file
+is retrieved from a server, its package-name component is translated
+by the client into a relative path name under the base
+URL of the document. The components of a class
+package name are simply turned into the components of a path name,
+just like with classes on your local system.
+Let's suppose that our AnalogClock has 
+been placed into the time.clock package and now 
+has the fully qualified name of time.clock.AnalogClock. 
+Our simple &lt;applet&gt; tag would now look 
+like: 
+&lt;applet code=time.clock.AnalogClock width=100 height=100&gt;&lt;\applet&gt; 
+Let's say the clock.html document is 
+once again retrieved from: 
+http://www.time.ch/documents/clock.html
+Java now looks for the class file in the following location: 
+http://www.time.ch/documents/time/clock/AnalogClock.class
+The same is true when specifying an alternative
+codebase:
+&lt;applet 
+    codebase=http://www.joes.ch/stuff/ 
+    code=time.clock.AnalogClock 
+    width=100 
+    height=100&gt; 
+&lt;\applet&gt; 
+Java now tries to find the class in the corresponding path under the
+new base URL:
+http://www.joes.ch/stuff/time/clock/AnalogClock.class
+One possible package-naming convention proposes that Internet host and
+domain names be incorporated as part of package names to form a unique
+identifier for classes produced by a given organization. If a company
+with the domain name foobar.com produced our
+AnalogClock class, they might distribute it in a
+package called com.foobar.time.clock. The fully
+qualified name of the AnalogClock class would then
+be com.foo.time.clock.AnalogClock. This would
+presumably be a unique name stored on an arbitrary server. A future
+version of the Java class loader might use this to automatically
+search for classes on remote hosts.
+Perhaps soon we'll run Sun's latest
+and greatest Web browser directly from its source with:
+% java com.sun.java.hotjava.HotJava
+Viewing Applets
+Sun's JDK comes with an applet-viewer program
+aptly called appletviewer. To use
+appletviewer, specify the URL
+of the document on the command line. For example, to view our
+AnalogClock at the URL shown
+above, use the following command:
+% appletviewer http://www.time.ch/documents/clock.html 
+The appletviewer retrieves all applets in the
+specified document and displays each one in a separate
+window. appletviewer is not a Web browser; it
+doesn't attempt to display HTML. It's primarily a
+convenience for testing and debugging applets.  If the document
+doesn't contain &lt;applet&gt; tags,
+appletviewer does nothing.
+The Netscape Alternative
+The Java Language
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,95 @@
+
+[Chapter 15] NoRouteToHostException
+Chapter 15The java.net Package
+NoRouteToHostException
+Name
+NoRouteToHostException
+Synopsis
+Class Name:
+java.net.NoRouteToHostException
+Superclass:
+java.net.SocketException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+A NoRouteToHostException is 
+thrown when a socket connection cannot be established with a remote host. 
+This type of exception usually indicates that a firewall is blocking access 
+to the host, or that an intermediate router is down. 
+Class Summary
+public class java.net.NoRouteToHostException 
+             extends java.net.SocketException {
+  // Constructors
+  public NoRouteToHostException();
+  public NoRouteToHostException(String msg);
+}
+Constructors
+NoRouteToHostException
+public NoRouteToHostException()
+Description
+This constructor creates a NoRouteToHostException 
+with no associated detail message. 
+public NoRouteToHostException(String msg)
+Parameters
+msg
+The detail message. 
+Description
+This constructor creates a NoRouteToHostException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Throwable
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+IOException, 
+RuntimeException, 
+SocketException 
+MulticastSocket
+ProtocolException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

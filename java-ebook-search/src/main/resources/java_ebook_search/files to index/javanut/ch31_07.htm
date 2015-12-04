@@ -1,0 +1,71 @@
+
+[Chapter 31] 31.7 java.util.zip.Deflater (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.7 java.util.zip.Deflater (JDK 1.1)
+This class implements the general ZLIB data compression
+algorithm used by the gzip and PKZip compression programs.
+The constants defined by this class are used to specify the
+compression strategy to be used and the compression
+speed/strength trade-off level to be used.  If you set the
+nowrap argument to the constructor to true,
+then the ZLIB header and checksum data are omitted from
+the compressed output, which is the format that both gzip
+and PKZip use.
+The important methods of this class are setInput(),
+which specifies input data to be compressed, and
+deflate(), which compresses the data and returns the
+compressed output.  The remaining methods exist so that
+Deflater can be used for stream-based compression,
+as it is in higher-level classes such as
+GZIPOutputStream and ZipOutputStream.  These
+stream classes are sufficient in most cases.  Most
+applications do not need to use Deflater directly.
+The Inflater class uncompresses data compressed with
+a Deflater object.
+public class Deflater extends Object {
+    // Public Constructors
+            public Deflater(int level, boolean nowrap);
+            public Deflater(int level);
+            public Deflater();
+    // Constants
+            public static final int BEST_COMPRESSION;
+            public static final int BEST_SPEED;
+            public static final int DEFAULT_COMPRESSION;
+            public static final int DEFAULT_STRATEGY;
+            public static final int DEFLATED;
+            public static final int FILTERED;
+            public static final int HUFFMAN_ONLY;
+            public static final int NO_COMPRESSION;
+    // Public Instance Methods
+            public synchronized native int deflate(byte[] b, int off, int len);
+            public int deflate(byte[] b);
+            public synchronized native void end();
+            public synchronized void finish();
+            public synchronized boolean finished();
+            public synchronized native int getAdler();
+            public synchronized native int getTotalIn();
+            public synchronized native int getTotalOut();
+            public boolean needsInput();
+            public synchronized native void reset();
+            public synchronized native void setDictionary(byte[] b, int off, int len);
+            public void setDictionary(byte[] b);
+            public synchronized void setInput(byte[] b, int off, int len);
+            public void setInput(byte[] b);
+            public synchronized void setLevel(int Level);
+            public synchronized void setStrategy(int strategy);
+    // Protected Instance Methods
+            protected void finalize();  // Overrides Object
+}
+Passed To:
+DeflaterOutputStream()
+Type Of:
+DeflaterOutputStream.def
+java.util.zip.DataFormatException (JDK 1.1)
+java.util.zip.DeflaterOutputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

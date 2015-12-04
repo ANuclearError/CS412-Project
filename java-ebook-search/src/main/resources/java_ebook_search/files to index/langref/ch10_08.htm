@@ -1,0 +1,484 @@
+
+[Chapter 10] Double
+Chapter 10The java.lang Package
+Double
+Name
+Double
+Synopsis
+Class Name:
+java.lang.Double
+Superclass:
+java.lang.Number
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Double class provides an object wrapper
+for a double value. This is useful when you need
+to treat a double value as an object. For example,
+there are a number of utility methods that take a reference to an
+Object as one of their arguments. You cannot
+specify a double value for one of these arguments,
+but you can provide a reference to a Double object
+that encapsulates the double value.  Furthermore,
+as of JDK 1.1, the Double class is necessary to 
+support the Reflection API and class literals.
+In Java, double values are represented
+using the IEEE 754 format. The Double class provides
+constants for the three special values that are mandated by this format:
+POSITIVE_INFINITY, NEGATIVE_INFINITY,
+and NaN (not-a-number).
+The Double class also provides some utility
+methods, such as methods for determining whether a double
+value is an infinity value or NaN, for converting double
+values to other primitive types, and for converting a double
+to a String and vice versa.
+Class Summary
+public final class java.lang.Double extends java.lang.Number {
+    // Constants
+    public final static double MAX_VALUE;
+    public final static double MIN_VALUE;
+    public final static double NaN;
+    public final static double NEGATIVE_INFINITY;
+    public final static double POSITIVE_INFINITY;
+    public final static Class TYPE;                    // New in 1.1
+    // Constructors
+    public Double(double value);
+    public Double(String s);
+    // Class Methods
+    public static native long doubleToLongBits(double value);
+    public static boolean isInfinite(double v);
+    public static boolean isNaN(double v);
+    public static native double longBitsToDouble(long bits);
+    public static String toString(double d);
+    public static Double valueOf(String s);
+    // Instance Methods
+    public byte byteValue();                           // New in 1.1
+    public double doubleValue();
+    public boolean equals(Object obj);
+    public float floatValue();
+    public int hashCode();
+    public int intValue();
+    public boolean isInfinite();
+    public boolean isNaN();
+    public long longValue();
+    public short shortValue();                         // New in 1.1
+    public String toString();
+}
+Constants
+MAX_VALUE
+   public static final double MAX_VALUE = 1.79769313486231570e+308  
+Description
+The largest value that can be represented by a double.
+MIN_VALUE
+   public static final double MIN_VALUE = 4.94065645841246544e-324  
+Description
+The smallest value that can be represented by a double.
+NaN
+public static final double NaN = 0.0 / 0.0
+Description
+This variable represents the value not-a-number (NaN), which is a
+special value produced by double operations such as
+division of zero by zero. When NaN is one of the operands, most
+arithmetic operations return NaN as the result.
+Most comparison operators (&lt;,
+&lt;=, ==,
+&gt;=, &gt;) return
+false when one of their arguments is NaN.  The
+exception is !=, which returns
+true when one of its arguments is NaN.
+NEGATIVE_INFINITY
+public static final double NEGATIVE_INFINITY = -1.0 / 0.0
+Description
+This variable represents the value negative infinity, which
+is produced when a double operation underflows
+or a negative double value is divided by zero.
+Negative infinity is by definition less than any other double
+value.
+POSITIVE_INFINITY
+public static final double POSITIVE_INFINITY = 1.0 / 0.0
+Description
+This variable represents the value positive infinity, which
+is produced when a double operation overflows
+or a positive double value is divided by zero.
+Positive infinity is by definition greater than any other double
+value.
+TYPE
+public static final Class TYPE 
+Availability
+New as of JDK 1.1
+Description
+The Class object that represents the type
+double.
+It is always true that Double.TYPE 
+== double.class.
+Constructors
+Double
+public Double(double value)
+Parameters
+value
+The double value to be encapsulated
+by this object.
+Description
+Creates a Double object with the specified
+double value.
+public Double(String s) throws NumberFormatException
+Parameters
+s
+The string to be made into a Double
+object.
+Throws
+NumberFormatException
+If the sequence of characters in the given String
+does not form a valid double literal.
+Description
+Constructs a Double object with the value
+specified by the given string. The string must contain a sequence
+of characters that forms a legal double literal.
+Class Methods
+doubleToLongBits
+public static native long doubleToLongBits(double value)
+Parameters
+value
+The double value to be converted.
+Returns
+The long value that contains the same sequence
+of bits as the representation of the given double value.
+Description
+This method returns the long value that
+contains the same sequence of bits as the representation of the
+given double value. The meaning of the bits in
+the result is defined by the IEEE 754 floating-point format: bit
+63 is the sign bit, bits 62-52 are the exponent, and bits 51-0 are
+the mantissa.
+An argument of POSITIVE_INFINITY
+produces the result 0x7ff0000000000000L, an argument
+of NEGATIVE_INFINITY produces the result 0xfff0000000000000L,
+and an argument of NaN produces the result 0x7ff8000000000000L.
+The value returned by this method can be converted back to
+the original double value by the longBitsToDouble() method.
+isInfinite
+static public boolean isInfinite(double v)
+Parameters
+v
+The double value to be tested.
+Returns
+true if the specified value is equal to
+POSITIVE_INFINITY or NEGATIVE_INFINITY;
+otherwise false.
+Description
+This method determines whether or not the specified value
+is an infinity value.
+isNaN
+public static boolean isNaN(double v)
+Parameters
+v
+The double value to be tested.
+Returns
+true if the specified value is equal to
+NaN; otherwise false.
+Description
+This method determines whether or not the specified value
+is NaN.
+longBitsToDouble
+public static native double longBitsToDouble(long bits)
+Parameters
+bits
+The long value to be converted.
+Returns
+The double value whose representation is
+the same as the bits in the given long value.
+Description
+This method returns the double value whose
+representation is the same as the bits in the given double
+value. The meaning of the bits in the long
+value is defined by the IEEE 754 floating-point format: bit 63 is
+the sign bit, bits 62-52 are the exponent, and bits 51-0 are the
+mantissa. The argument 0x7f80000000000000L produces
+the result POSITIVE_INFINITY and the argument
+0xff80000000000000L produces the result NEGATIVE_INFINITY.
+Arguments in the ranges 0x7ff0000000000001L through
+0x7fffffffffffffffL and 0xfff0000000000001L
+through 0xffffffffffffffffL all produce the result
+NaN.
+Except for NaN values not normally used by Java, this method
+is the inverse of the doubleToLongBits() method.
+toString
+public static String toString(double d)
+Parameters
+d
+The double value to be converted.
+Returns
+A string representation of the given value.
+Description
+This method returns a String object that
+contains a representation of the given double value.
+The values NaN, NEGATIVE_INFINITY,
+POSITIVE_INFINITY, -0.0, and
++0.0 are represented by 
+the strings "NaN", "--Infinity", 
+"Infinity", "--0.0", 
+and "0.0", respectively.
+For other values, the exact string representation depends
+on the value being converted. If the absolute value of d
+is greater than or equal to 10^-3 
+or less than or equal to 10^7, it
+is converted to a string with an optional minus sign (if the
+value is negative) followed by up to eight digits
+before the decimal point, a decimal point, and the necessary number
+of digits after the decimal point (but no trailing zero if there is 
+more than one significant digit).  There is always a minimum of
+one digit after the decimal point.
+Otherwise, the value is converted to a string with an optional
+minus sign (if the value is negative), followed by a single digit,
+a decimal point, the necessary number of digits after the decimal
+point (but no trailing zero if there is more than one significant digit),
+and the letter E followed by a plus or a minus 
+sign and a base 10 exponent of at least one digit.  Again, there is always 
+a minimum of one digit after the decimal point.
+Note that the definition of this method has changed as of JDK 1.1.  
+Prior to that release, the method provided a string representation
+that was equivalent to the %g format of 
+the printf function in C.
+valueOf
+   public static Double valueOf(String s) throws NumberFormatException  
+Parameters
+s
+The string to be made into a Double
+object.
+Returns
+The Double object constructed from the
+string.
+Throws
+NumberFormatException
+If the sequence of characters in the given String
+does not form a valid double literal.
+Description
+Constructs a Double object with the value
+specified by the given string. The string must contain a sequence
+of characters that forms a legal double literal.
+This method ignores leading and trailing white space in the string.
+Instance Methods
+byteValue
+public byte byteValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a byte.
+Overrides
+Number.byteValue()
+Description
+This method returns the truncated value of this object as a
+byte. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by an byte, the method
+returns Byte.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by an byte, the method
+returns Byte.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+doubleValue
+public double doubleValue()
+Returns
+The value of this object as a double.
+Overrides
+Number.doubleValue()
+Description
+This method returns the value of this object as a double.
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object.
+Returns
+true if the objects are equal; false
+if they are not.
+Overrides
+Object.equals()
+Description
+This method returns true if obj
+is an instance of Double and it contains the same
+value as the object this method is associated with. More specifically,
+the method returns true if the
+doubleToLongBits() method returns the same result
+for the values of both objects.
+This method produces a different result than the ==
+operator when both values are NaN. In this case,
+the == operator produces false,
+while this method returns true. By the same token,
+the method also produces a different result when the two values
+are +0.0 and -0.0. In this
+case, the == operator produces true,
+while this method returns false.
+floatValue
+public float floatValue()
+Returns
+The value of this object as a float.
+Overrides
+Number.floatValue()
+Description
+This method returns this object value as a float.
+Rounding may occur.
+hashCode
+public int hashCode()
+Returns
+A hashcode based on the double value of
+the object.
+Overrides
+Object.hashCode()
+Description
+This method returns a hashcode computed from the value of
+this object. More specifically, if d is the value
+of the object, and bitValue is defined as:
+long bitValue = Double.doubleToLongBits(d)
+then the hashcode returned by this method is computed as
+follows:
+(int)(bitValue ^ (bitValue&gt;&gt;&gt;32))
+intValue
+public int intValue()
+Returns
+The value of this object as an int.
+Overrides
+Number.intValue()
+Description
+This method returns the truncated value of this object as an
+int. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by an int, the method
+returns Integer.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by an int, the method
+returns Integer.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+isInfinite
+public boolean isInfinite()
+Returns
+true if the value of this object is equal
+to POSITIVE_INFINITY or NEGATIVE_INFINITY;
+otherwise false.
+Description
+This method determines whether or not the value of this object
+is an infinity value.
+isNaN
+public boolean isNaN()
+Returns
+true if the value of this object is equal
+to NaN; otherwise false.
+Description
+This method determines whether or not the value of this object
+is NaN.
+longValue
+public long longValue()
+Returns
+The value of this object as a long.
+Overrides
+Number.longValue()
+Description
+This method returns the truncated value of this object as
+a long. More specifically, if the value of the
+object is NaN, the method returns 0. If the value
+is POSITIVE_INFINITY, or any other value too
+large to be represented by a long, the method
+returns Long.MAX_VALUE. If the
+value is NEGATIVE_INFINITY,
+or any other value too small to be represented by a long,
+the method returns Long.MIN_VALUE. Otherwise,
+the value is rounded toward zero and returned.
+shortValue
+public short shortValue()
+Availability
+New as of JDK 1.1
+Returns
+The value of this object as a short.
+Overrides
+Number.shortValue()
+Description
+This method returns the truncated value of this object as a
+short. More specifically, if the value of the object
+is NaN, the method returns 0. If the value is
+POSITIVE_INFINITY, or any other value that is too
+large to be represented by an short, the method
+returns Short.MAX_VALUE. If the value is
+NEGATIVE_INFINITY, or any other value that is too
+small to be represented by an short, the method
+returns Short.MIN_VALUE. Otherwise, the value is
+rounded toward zero and returned.
+toString
+public String toString()
+Returns
+A string representation of the value of this object.
+Overrides
+Object.toString()
+Description
+This method returns a String object that
+contains a representation of the value of this object.
+The values NaN, NEGATIVE_INFINITY,
+POSITIVE_INFINITY, -0.0, and
++0.0 are represented by 
+the strings "NaN", "--Infinity", 
+"Infinity", "--0.0", 
+and "0.0", respectively.
+For other values, the exact string representation depends
+on the value being converted. If the absolute value of this object
+is greater than or equal to 10^-3 
+or less than or equal to 10^7, it
+is converted to a string with an optional minus sign (if the
+value is negative) followed by up to eight digits
+before the decimal point, a decimal point, and the necessary number
+of digits after the decimal point (but no trailing zero if there is 
+more than one significant digit).  There is always a minimum of
+one digit after the decimal point.
+Otherwise, the value is converted to a string with an optional
+minus sign (if the value is negative), followed by a single digit,
+a decimal point, the necessary number of digits after the decimal
+point (but no trailing zero if there is more than one significant digit),
+and the letter E followed by a plus or a minus 
+sign and a base 10 exponent of at least one digit. Again, there is always 
+a minimum of one digit after the decimal point.
+Note that the definition of this method has changed as of JDK 1.1.  
+Prior to that release, the method provided a string representation
+that was equivalent to the %g format of 
+the printf function in C.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class;
+Exceptions;
+Float;
+Floating-point literals;
+Floating-point types;
+Number;
+String
+Compiler
+Float
+ 
+ 
+ 
+ 
+ 
+ 
+ 

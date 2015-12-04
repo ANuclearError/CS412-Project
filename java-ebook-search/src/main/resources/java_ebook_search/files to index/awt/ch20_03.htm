@@ -1,0 +1,162 @@
+
+[Chapter 20] DataFlavor 
+Chapter 20java.awt.datatransfer Reference
+DataFlavor 
+Name
+DataFlavor 
+Description
+The DataFlavor class encapsulates information about data formats. 
+Class Definition
+public class java.awt.datatransfer.DataFlavor
+   extends java.lang.Object {
+  // Class Variables
+  public static DataFlavor plainTextFlavor;
+  public static DataFlavor stringFlavor;
+  // Constructors
+  public DataFlavor (Class representationClass, 
+    String humanPresentableName);
+  public DataFlavor (String MIMEType, String humanPresentableName);
+  // Instance Methods
+  public boolean equals (DataFlavor dataFlavor);
+  public String getHumanPresentableName();
+  public String getMIMEType();
+  public Class getRepresentationClass();
+  public boolean isMIMETypeEqual (String MIMEType);
+  public final boolean isMIMETypeEqual (DataFlavor dataFlavor);
+  public void setHumanPresentableName (String humanPresentableName);
+  // Protected Instance Methods
+  protected String normalizeMIMEType (String MIMEType);
+  protected String normalizeMIMETypeParameter (String parameterName, 
+    String parameterValue);
+}
+Class Variables
+plainTextFlavor
+public static DataFlavor plainTextFlavor
+A preset DataFlavor object representing plain text.
+stringFlavor
+public static DataFlavor stringFlavor
+A preset DataFlavor object 
+representing a Java String. 
+Constructors
+DataFlavor
+public DataFlavor (Class representationClass, String humanPresentableName)
+Parameters
+representationClass
+The 
+Java class that represents data in this flavor.
+humanPresentableName
+A 
+name for this flavor that humans will recognize. 
+Description
+Constructs a DataFlavor object 
+with the given characteristics. The MIME type for this DataFlavor 
+is application/x-java-serialized-object 
+&lt;Java ClassName&gt;.[1] 
+[1] 
+The type name changed to x-java-serialized-object in the 1.1.1 release.
+public DataFlavor (String MIMEType, String humanPresentableName)
+Parameters
+MIMEType
+The MIME type string this DataFlavor 
+represents.
+humanPresentableName
+A 
+name for this flavor that humans will recognize. 
+Description
+Constructs a DataFlavor object 
+with the given characteristics. The representation class used 
+for this DataFlavor is java.io.InputStream. 
+Instance Methods
+equals
+public boolean equals (DataFlavor dataFlavor)
+Parameters
+dataFlavor
+The flavor to 
+compare. 
+Returns
+true if dataFlavor 
+is equivalent to this DataFlavor, 
+false otherwise. 
+Description
+Compares two different DataFlavor 
+instances for equivalence. 
+getHumanPresentableName
+public String getHumanPresentableName()
+Returns
+The name of this flavor. 
+getMIMEType
+public String getMIMEType()
+Returns
+The MIME type string for this flavor. 
+getRepresentationClass
+public Class getRepresentationClass()
+Returns
+The Java class that will be used to represent data in this flavor. 
+isMIMETypeEqual
+public boolean isMIMETypeEqual (String MIMEType)
+Parameters
+MIMEType
+The type to compare. 
+Returns
+true if the given MIME type 
+is the same as this DataFlavor's 
+MIME type; false otherwise. 
+Description
+Compares two different DataFlavor 
+MIME types for equivalence. 
+public final boolean isMIMETypeEqual (DataFlavor dataFlavor)
+Parameters
+dataFlavor
+The flavor to 
+compare. 
+Returns
+true if DataFlavor's 
+MIME type is the same as this DataFlavor's 
+MIME type; false otherwise. 
+Description
+Compares two different DataFlavor 
+MIME types for equivalence. 
+setHumanPresentableName
+public void setHumanPresentableName (String humanPresentableName)
+Parameters
+humanPresentableName
+A 
+name for this flavor that humans will recognize. 
+Description
+Changes the name of the DataFlavor. 
+Protected Instance Methods
+normalizeMIMEType
+protected String normalizeMIMEType (String MIMEType)
+Parameters
+MIMEType
+The 
+MIME type string to normalize. 
+Returns
+Normalized MIME type string. 
+Description
+This method is called for each MIME type string. Subclasses can override 
+this method to add default parameter/value pairs to MIME strings. 
+normalizeMIMETypeParameter
+protected String normalizeMIMETypeParameter (String parameterName, String parameterValue)
+Parameters
+parameterName
+The MIME type parameter to normalize.
+parameterValue
+The corresponding value. 
+Returns
+Normalized MIME type parameter string. 
+Description
+This method is called for each MIME type parameter string. Subclasses can 
+override this method to handle special parameters, such as those that are 
+case-insensitive. 
+See Also
+Class, String 
+ClipboardOwner 
+StringSelection 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

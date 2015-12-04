@@ -1,0 +1,173 @@
+
+[Chapter 11] OutputStream
+Chapter 11The java.io Package
+OutputStream
+Name
+OutputStream
+Synopsis
+Class Name:
+java.io.OutputStream
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.io.ByteArrayOutputStream,
+java.io.FileOutputStream,
+java.io.FilterOutputStream,
+java.io.ObjectOutputStream,
+java.io.PipedOutputStream
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The OutputStream class is an 
+abstract class that is the 
+superclass of all classes that represent output byte streams. OutputStream 
+defines the basic output methods that all output streams provide. A similar 
+hierarchy of classes, based around Writer, 
+deals with character streams instead of byte streams. 
+OutputStream is designed so that
+write(byte[]) and write(byte[],
+int, int) call
+write(int b).  Thus, a subclass
+can simply override write(), and all the
+write methods will work. However, for
+efficiency's sake, write(byte[],
+int, int) should also be
+overridden with a method that can write a block of data more
+efficiently than writing each byte separately.
+Some OutputStream subclasses 
+may implement buffering to increase efficiency. OutputStream 
+provides a method, flush(), 
+that tells the OutputStream 
+to write any buffered output to the underlying device, which may be a disk 
+drive or a network. 
+Class Summary
+public abstract class java.io.OutputStream extends java.lang.Object {
+  // Instance Methods
+  public void close();
+  public void flush();
+  public abstract void write(int b);
+  public void write(byte[] b);
+  public void write(byte[] b, int off, int len);
+}
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method closes the output stream and releases any resources associated 
+with it.
+The implementation of the close() 
+method in OutputStream does 
+nothing; a subclass should override this method to handle cleanup for 
+the stream. 
+flush
+public void flush() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method forces any bytes that may be buffered by the output stream 
+to be written.
+The implementation of flush() 
+in OutputStream does nothing; 
+a subclass should override this method as needed. 
+write
+public abstract void write(int b) throws IOException
+Parameters
+b
+The value to write to 
+the stream. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method writes a byte of output. The method blocks until the byte is 
+actually written.
+A subclass of OutputStream must implement this method. 
+public void write(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+write to the stream. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+ 
+This method writes the bytes from the given array by calling
+write(b, 0, b.length).  The method blocks until the
+bytes are actually written.
+A subclass does not usually need to override this method, as it can override 
+write(byte[], int, 
+int) and have write(byte[]) 
+work automatically. 
+public void write(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write to the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method writes len bytes 
+of output from the given array, starting at offset off. 
+The method blocks until the bytes are actually written.
+The implementation of this method in OutputStream uses write(int) 
+repeatedly to write the bytes. Although it is not strictly necessary, a 
+subclass should override this method to write a block of data more efficiently. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ByteArrayOutputStream, 
+FileOutputStream, 
+FilterOutputStream, 
+IOException, 
+ObjectOutputStream, 
+PipedOutputStream 
+OptionalDataException
+OutputStreamWriter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

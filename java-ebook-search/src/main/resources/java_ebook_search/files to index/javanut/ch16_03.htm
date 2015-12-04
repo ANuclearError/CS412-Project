@@ -1,0 +1,207 @@
+
+[Chapter 16] java
+Chapter 16JDK Tools
+java
+Name
+java---The Java Interpreter
+Availability
+JDK 1.0 and later.
+Synopsis
+java [ interpreter options ] classname [ program arguments ]
+java_g [ interpreter options ] classname [ program arguments ]
+Description
+java is the Java byte-code interpreter--it runs Java
+programs.  java_g is a debugging version of the
+interpreter.  It is unoptimized, and has some additional
+options for tracing the execution of a program.
+The program to be run is the class specified by
+classname.  This must be a fully qualified
+name, it must include the package name of the
+class, but not the .class file
+extension.  Note that you specify the package and class
+name, with components separated by '.', not the directory and
+filename of the class, which has its components separated
+by '/' or '/'.  If a Java class has no package
+statement, then it is not in any package, and the class name
+is specified alone.  Examples:
+% java david.games.Checkers
+% java test
+See the description of the -classpath option and the
+CLASSPATH environment variable below for information
+on specifying where java should look for classes.
+The class specified by classname must contain a
+method main() with exactly the following signature:
+public static void main(String argv[])
+Any arguments following the classname on the
+java command line are placed into an array and passed
+to the main() method when java starts up.
+If main() creates any threads, java
+runs until the last thread exits.  Otherwise, the interpreter
+executes the body of main() and exits.
+Although only a single class name is specified when invoking
+java, the interpreter automatically loads any
+additional classes required by the program.  These classes
+are located relative to the Java class path, described under
+the -classpath option below.
+By default, java runs a byte-code verifier on all
+classes loaded over the network.  This verifier performs a
+number of tests on the byte-code of the loaded class to
+ensure, for example, that it does not corrupt the internal
+operand stack and that it performs appropriate run-time
+checks on such things as array references.  The
+-verify, -noverify, and
+-verifyremote options control the byte-code
+verification process.
+Options
+-classpath path
+The path that java uses to look up the specified
+classname and all other classes that it loads.
+Specifying this option overrides the default path and the
+CLASSPATH environment variable.
+The class path is an ordered list of directories and ZIP
+files within and below which java searches for
+named classes.  On UNIX systems, a path is specified as a
+colon-separated list of directories and ZIP files.  On
+Windows systems, directories and ZIP files (which may have
+drive specifiers that use colons) are separated from each
+other with semicolons.
+For example, a UNIX -classpath specification might look
+like this:
+-classpath /usr/lib/java/classes:.:~/java/classes
+On a Windows system, the specification might be:
+-classpath C:\tools\java\classes.zip;.;D:\users\david\classes
+A period by itself in the path indicates that the current
+working directory is searched.  Directories and ZIP
+files are searched in the order they appear.  Place the
+standard Java classes first in the path if you do not want
+them to be accidentally or maliciously overridden by classes
+with the same name in other directories.
+java expects to find class files in a directory
+hierarchy (or with a directory name within a ZIP file) that
+maps to the fully qualified name of the class.  Thus, on a
+UNIX system, Java would load the class
+java.lang.String by looking for the file
+java/lang/String.class beneath one of the
+directories specified in the class path.  Similarly, on a
+Windows 95 or Windows NT system (which support long
+filenames), java would look for the file
+java\lang\String.class beneath a specified
+directory or within a specified ZIP file.
+If you do not specify -classpath or the
+CLASSPATH environment variable, the default
+class path is:
+.:$JAVA/classes:$JAVA/lib/classes.zip       UNIX systems
+.;$JAVA\classes;$JAVA\lib\classes.zip       Windows systems
+Where $JAVA is JDK installation directory.
+-cs, -checksource
+Both of these options tell java to check the modification
+times on the specified class file and its corresponding
+source file.  If the class file cannot be found or if it is
+out of date, it is automatically recompiled from the source.
+-Dpropertyname=value
+Defines propertyname to equal value in the
+system properties list.  Your Java program can then
+look up the specified value by its property name.  You
+may specify any number of -D options.  For example:
+% java -Dawt.button.color=gray -Dmy.class.pointsize=14 my.class
+-debug
+Causes java to display a password as it starts up.
+This password can be used to allow the jdb debugger to
+attach itself to this interpreter session.  Note that this
+password should not be considered cryptographically secure.
+-help
+Print a usage message and exit.
+-ldigit
+Sets the logging level for trace output.  java_g only.
+-ms initmem[k|m]
+Specifies how much memory is allocated for the heap
+when the interpreter starts up.  By default, initmem
+is specified in bytes.  You can specify it in kilobytes by
+appending the letter k or in megabytes by appending
+the letter m.  The default is 1
+MB.  For large or memory intensive applications (such
+as the Java compiler), you can improve run-time performance by
+starting the interpreter with a larger amount of memory.
+You must specify an initial heap size of at least 1000
+bytes.
+-mx maxmem[k|m]
+Specifies the maximum heap size the interpreter will use
+for dynamically allocated objects and arrays.
+maxmem is specified in bytes by default.  You can
+specify maxmem in kilobytes by appending the letter
+k and in megabytes by appending the letter
+m.  The default is 16 MB.
+You must not specify a heap size less than 1000 bytes.
+-noasyncgc
+Do not do garbage collection asynchronously.  With this
+option specified, java only performs garbage
+collection when it runs out of memory or when the garbage
+collector is explicitly invoked.  Without this option,
+java runs the garbage collector as a separate,
+low-priority thread.
+-noclassgc
+Do not garbage collect loaded classes that are no longer in
+use.  This option is only available in JDK 1.1 and later.
+-noverify
+Never run the byte-code verifier.
+-oss stacksize[k|m]
+Sets the size of each thread's Java code stack.  By
+default, stacksize is specified in bytes.  You can
+specify it in kilobytes by appending the letter k or
+in megabytes by appending the letter m.  The default
+value is 400 KB.  You must specify at least 1000
+bytes.
+-prof[:file]
+Output profiling information to the specified file or
+to the file java.prof in the current directory.
+The format of this profiling information is not well
+documented.  Prior to JDK 1.1, no file can be
+specified; profiling information is always output to ./java.prof.
+-ss stacksize[k|m]
+Sets the size of each thread's native code stack.  By
+default, stacksize is specified in bytes.  You can
+specify it in kilobytes by appending the letter k or
+in megabytes by appending the letter m.  The default
+value is 128 KB.  You must specify at least 1000
+bytes.
+-t
+Output a trace of all bytecodes executed.  java_g only.
+-tm
+Output a trace of all methods executed.  java_g only.
+-v, -verbose
+Print a terminal message each time java loads a class.
+-verbosegc
+Print a message whenever the garbage collector frees memory.
+-verify
+Run the byte-code verifier on all classes that are loaded.
+-verifyremote
+Run the byte-code verifier on all classes that are loaded
+through a class loader.  (This generally means classes that
+are dynamically loaded from an untrusted location.) This is
+the default behavior for java.
+-version
+Print the version of the Java interpreter and exit.
+Environment
+CLASSPATH
+Specifies an ordered list (colon-separated on UNIX,
+semicolon-separated on Windows systems) of directories and
+ZIP files in which java should look for class
+definitions.  When a path is specified with this environment
+variable, java always implicitly appends the location
+of the system classes to the end of the path.  If this
+environment variable is not specified, the default path
+is the current directory and the system classes.
+This variable is overridden by the -classpath
+option.  See -classpath above for more information
+on specifying paths.
+See Also
+javac, jdb
+jar
+javac
+ 
+ 
+ 
+ 
+ 
+ 
+ 

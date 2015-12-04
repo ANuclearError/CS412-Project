@@ -1,0 +1,206 @@
+
+[Chapter 7] 7.3 BorderLayout
+Chapter 7Layouts
+7.3 BorderLayout
+BorderLayout is the default 
+LayoutManager for a Window. 
+It provides a very flexible way of positioning components along the edges 
+of the window. The following call to setLayout() 
+changes the LayoutManager of 
+the current container to the default BorderLayout: 
+setLayout(new BorderLayout()). Figure 7.4 
+shows a typical BorderLayout. 
+Figure 7.4: BorderLayout
+BorderLayout is the only layout 
+provided that requires you to name components when you add them to the 
+layout; if you're using a BorderLayout, 
+you must use add(String name, Component component) 
+in Java 1.0 or add(Component component, String name) 
+in Java 1.1 (parameter order switched). (The CardLayout 
+can use these versions of add(), 
+but does not require it.) The name 
+parameter of add() specifies 
+the region to which the component should be added. The five different regions 
+are "North", "South", "East", and "West" 
+for the edges of the window, and "Center" for any remaining 
+interior space. These names are case sensitive. It is not necessary that 
+a container use all five regions. If a region is not used, it relinquishes 
+its space to the regions around it. If you add() 
+multiple objects to a single region, the layout manager only displays the 
+last one. If you want to display multiple objects within a region, group 
+them within a Panel first, 
+then add() the Panel. 
+NOTE: 
+In Java 1.1, if you do not provide a name, the component is placed in the "Center" 
+region. 
+BorderLayout MethodsConstants
+Prior to Java 1.1, you had to use string constants to specify the constraints 
+when adding a component to a container whose layout is BorderLayout. 
+With Java 1.1, you can use class constants, instead of a literal string, in the following list. 
+public static final String CENTER  
+The CENTER constant represents 
+the "Center" string and indicates that a component should be 
+added to the center region. 
+public static final String EAST  
+The EAST constant represents 
+the "East" string and indicates that a component should be 
+added to the east region. 
+public static final String NORTH  
+The NORTH constant represents 
+the "North" string and indicates that a component should be 
+added to the north region. 
+public static final String SOUTH  
+The SOUTH constant represents 
+the "South" string and indicates that a component should be 
+added to the south region. 
+public static final String WEST  
+The WEST constant represents 
+the "West" string and indicates that a component should be 
+added to the west region. 
+Constructors
+public BorderLayout () 
+This constructor creates a BorderLayout 
+using a default setting of zero pixels for the horizontal and vertical 
+gaps. The gap specifies the space between adjacent components. With horizontal 
+and vertical gaps of zero, components in adjacent regions will touch each 
+other. As Figure 7.4 shows, each component within 
+a BorderLayout will be resized 
+to fill an entire region. 
+public BorderLayout (int hgap, int vgap) 
+This version of the constructor allows you to create a BorderLayout 
+with a horizontal gap of hgap 
+and vertical gap of vgap, putting 
+some space between the different components. The units for gaps are pixels. 
+It is possible to have negative gaps if you want components to overlap. 
+Informational methods
+public int getHgap ()  
+The getHgap() method retrieves 
+the current horizontal gap setting. 
+public void setHgap (int hgap)  
+The setHgap() method changes 
+the current horizontal gap setting to hgap. 
+After changing the gaps, you must validate() 
+the Container. 
+public int getVgap ()  
+The getVgap() method retrieves 
+the current vertical gap setting. 
+public void setVgap (int hgap)  
+The setVgap() method changes 
+the current vertical gap setting to vgap. 
+After changing the gaps, you must validate() 
+the Container. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component)  
+This version of addLayoutComponent() 
+has been deprecated and replaced by the addLayoutComponent(Component, 
+Object) method of the LayoutManager2 
+interface. 
+public void removeLayoutComponent (Component component)  
+The removeLayoutComponent() 
+method of BorderLayout removes 
+component from the container, 
+if it is in one of the five regions. If component 
+is not in the container already, nothing happens. 
+public Dimension preferredLayoutSize (Container target)  
+The preferredLayoutSize() method 
+of BorderLayout calculates 
+the preferred dimensions for the components in target. 
+To compute the preferred height, a BorderLayout 
+adds the height of the getPreferredSize() 
+of the north and south components to the maximum getPreferredSize() 
+height of the east, west, and center components. The vertical gaps are 
+added in for the north and south components, if present. The top and bottom 
+insets are also added into the height. To compute the preferred width, 
+a BorderLayout adds the width 
+of the getPreferredSize() of 
+east, west, and center components, along with the horizontal gap for the 
+east and west regions. It compares this value to the preferred widths of 
+the north and south components. The BorderLayout 
+takes the maximum of these three and then adds the left and right insets, 
+plus twice the horizontal gap. The result is the preferred width for the 
+container. 
+public Dimension minimumLayoutSize (Container target)  
+The minimumLayoutSize() method 
+of BorderLayout calculates 
+the minimum dimensions for the components in target. 
+To compute the minimum height, a BorderLayout 
+adds the height of the getMinimumSize() 
+of the north and south components to the maximum of the minimum heights 
+of the east, west, and center components. The vertical gaps are added in 
+for the north and south components, if present, along with the container's 
+top and bottom insets. To compute the minimum width, a BorderLayout 
+adds the width of the getMinimumSize() 
+of east, west, and center components, along with the horizontal gap for 
+the east and west regions. The BorderLayout 
+takes the maximum of these three and then adds the left and right insets, 
+plus twice the horizontal gap. The result is the minimum width for the 
+container. 
+public void layoutContainer (Container target)  
+The layoutContainer() method 
+draws target's components 
+on the screen in the appropriate regions. The north region takes up the 
+entire width of the container along the top. South does the same along 
+the bottom. The heights of north and south will be the heights of the components 
+they contain. The east and west regions are given the widths of the components 
+they contain. For height, east and west are given whatever is left in the 
+container after satisfying north's and south's height requirements. 
+If there is any extra vertical space, the east and west components are 
+resized accordingly. Any space left in the middle of the screen is assigned 
+to the center region. If there is insufficient space for all the components, 
+space is allocated according to the following priority: north, south, west, 
+east, and center. Unlike FlowLayout, 
+BorderLayout reshapes the internal 
+components of the container to fit within their region. Figure 7.5 
+shows what happens if the east and south regions are not present and the 
+gaps are nonzero. 
+Figure 7.5: BorderLayout with missing regions
+LayoutManager2 methods
+public void addLayoutComponent (Component component, Object name)  
+This addLayoutComponent() method 
+puts component in the name 
+region of the container. In Java 1.1, if name 
+is null, component is added 
+to the center. If the name is not "North", "South", 
+"East", "West", or "Center", the component 
+is added to the container but won't be displayed. Otherwise, it 
+is displayed in the appropriate region. 
+There can only be one component in any region, so any component already 
+in the named region is removed. To get multiple components in one region 
+of a BorderLayout, group the 
+components in another container, and add the container as a whole to the 
+layout. 
+If name is not a String, 
+addLayoutComponent() throws 
+the run-time exception IllegalArgumentException. 
+public abstract Dimension maximumLayoutSize(Container target)  
+The maximumLayoutSize() method 
+returns a Dimension object 
+with a width and height of Integer.MAX_VALUE. 
+In effect, this means that BorderLayout 
+does not support the concept of maximum size. 
+public abstract float getLayoutAlignmentX(Container target)  
+The getLayoutAlignmentX() method 
+says that BorderLayout containers 
+should be centered horizontally within the area available. 
+public abstract float getLayoutAlignmentY(Container target)  
+The getLayoutAlignmentY() method 
+says that BorderLayout containers 
+should centered vertically within the area available. 
+public abstract void invalidateLayout(Container target)  
+The invalidateLayout() method 
+of BorderLayout does nothing. 
+Miscellaneous methods
+public String toString () 
+The toString() method of BorderLayout 
+returns a string showing the current horizontal and vertical gap settings. 
+If both gaps are zero, the result will be: 
+java.awt.BorderLayout[hgap=0,vgap=0]
+FlowLayout
+GridLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

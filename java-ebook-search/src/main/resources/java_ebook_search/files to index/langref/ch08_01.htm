@@ -1,0 +1,420 @@
+
+[Chapter 8] Threads
+Chapter 8
+8. Threads
+Contents:
+Using Thread Objects
+Synchronizing Multiple Threads
+Threads provide a way for a Java program to do multiple tasks
+concurrently. A thread is essentially a flow of control in a program
+and is similar to the more familiar concept of a process. An operating
+system that can run more than one program at the same time uses
+processes to keep track of the various programs that it is
+running. However, processes generally do not share any state, while
+multiple threads within the same application share much of the same
+state. In particular, all of the threads in an application run in the
+same address space, sharing all resources except the stack. In
+concrete terms, this means that threads share field variables, but not
+local variables.
+When multiple processes share a single processor, there are
+times when the operating system must stop the processor from running
+one process and start it running another process. The operating
+system must execute a sequence of events called a context
+switch to transfer control from one process to another.
+When a context switch occurs, the operating system has to save a
+lot of information for the process that is being paused and load
+the comparable information for the process being resumed. A context
+switch between two processes can require the execution of thousands
+of machine instructions. The Java virtual machine is responsible
+for handling context switches between threads in a Java program.
+Because threads share much of the same state, a context switch between
+two threads typically requires the execution of less than 100
+machine instructions.
+There are a number of situations where it makes sense to
+use threads in a Java program. Some programs must be able to engage
+in multiple activities and still be able to respond to additional
+input from the user. For example, a web browser should be able to
+respond to user input while fetching an image or playing a sound.
+Because threads can be suspended and resumed, they can make it easier
+to control multiple activities, even if the activities do not need
+to be concurrent. If a program models real world objects that display
+independent, autonomous behavior, it makes sense to use a separate
+thread for each object. Threads can also implement asynchronous
+methods, so that a calling method does not have to wait for the
+method it calls to complete before continuing with its own activity.
+Java applets make considerable use of threads. For example,
+an animation is generally implemented with a separate thread. If
+an applet has to download extensive information, such as an image or
+a sound, to initialize itself, the initialization can take a long
+time. This initialization can be done in a separate thread to prevent
+the initialization from interfering with the display of the applet.
+If an applet needs to process messages from the network, that work generally
+is done in a separate thread so that the applet can continue
+painting itself on the screen and responding to mouse and keyboard
+events. In addition, if each message is processed separately,
+the applet uses a separate thread for each message.
+For all of the reasons there are to use threads, there are
+also some compelling reasons not to use them. If a program uses
+inherently sequential logic, where one operation starts another
+operation and then must wait for the other operation to complete
+before continuing, one thread can implement the entire
+sequence. Using multiple threads in such a case results in a more
+complex program with no accompanying benefits. There is considerable
+overhead in creating and starting a thread, so if an operation involves
+only a few primitive statements, it is faster to handle it with
+a single thread. This can even be true when the operation is conceptually
+asynchronous. When multiple threads share objects, the objects must
+use synchronization mechanisms to coordinate thread access and maintain
+consistent state. Synchronization mechanisms add complexity to a
+program, can be difficult to tune for optimal performance, and can
+be a source of bugs.
+8.1 Using Thread Objects
+The Thread
+class in the java.lang package creates
+and controls threads in Java programs. The execution of Java code
+is always under the control of a Thread object.
+The Thread class provides a static
+method called currentThread() that provides a reference
+to the Thread object that controls the current
+thread of execution.
+References
+Thread
+Associating a Method with a Thread
+The first thing you need to do to make a Thread object
+useful is to associate it with a method you want it to run.
+Java provides two ways of associating a method with a
+Thread:
+Declare a subclass of Thread that defines
+a run() method.
+Pass a reference to an object that implements the Runnable
+interface to a Thread constructor.
+For example, if you need to load the contents of a URL as part of an
+applet's initialization, but the applet can provide other functionality
+before the content is loaded, you might want to load the content in a
+separate thread. Here is a class that does just that:
+import java.net.URL;
+class UrlData extends Thread   {
+    private Object data;
+    private URL url
+    public UrlData(String urlName) throws MalformedURLException {
+        url = new URL(urlName);
+        start();
+    }
+    public void run(){
+        try {
+            data = url.getContent();
+        } catch (java.io.IOException  e) {
+        }
+    }
+    public Object getUrlData(){
+        return data;
+    }
+}
+The UrlData class is declared as a subclass
+of Thread so that it can get the contents of
+the URL in a separate thread. The constructor creates a
+java.net.URL object to fetch the
+contents of the URL, and then calls
+the start() method to start the thread. Once
+the thread is started, the constructor returns; it does not wait
+for the contents of the URL to be fetched. The run()
+method is executed after the thread is started; it does the real
+work of fetching the data. The getUrlData() method
+is an access method that returns the value of the data
+variable. The value of this variable is null
+until the contents of the URL have been fetched, at which
+time it contains a reference to the actual data.
+Subclassing the Thread
+class is convenient when the method you want to run in a separate
+thread does not need to belong to a particular class. Sometimes,
+however, you need the method to be part of a particular class that
+is a subclass of a class other than Thread. Say,
+for example, you want a graphical object that is displayed
+in a window to alternate its background color between red and blue
+once a second. The object that implements this behavior needs to
+be a subclass of the java.awt.Canvas class. However,
+at the same time, you need a separate thread to alternate the color of
+the object once a second.
+In this situation, you want to tell a Thread
+object to run code in another object that is not a subclass of the
+Thread class.
+You can accomplish this by passing a reference to an object that implements
+the Runnable interface to the constructor of
+the Thread class. The Runnable
+interface requires that an object has a public method
+called run() that takes no arguments. When a
+Runnable object is passed to the constructor
+of the Thread class, it creates a Thread
+object that calls the Runnable object's
+run() method when the thread is started.
+The following example
+shows part of the code that implements an object that alternates
+its background color between red and blue once a second:
+class AutoColorChange extends java.awt.Canvas implements Runnable {
+    private Thread myThread;
+    AutoColorChange () {
+        myThread = new Thread(this);
+        myThread.start();
+        ...
+    }
+    public void run() {
+        while (true) {
+            setBackground(java.awt.Color.red);
+            repaint();
+            try {
+                myThread.sleep(1000);
+            } catch (InterruptedException e) {}
+            setBackground(java.awt.Color.blue);
+            repaint();
+            try {
+                myThread.sleep(1000);
+            } catch (InterruptedException e) {}
+        }
+    }
+}
+The AutoChangeColor class extends
+java.awt.Canvas,
+alternating the background color between red and blue once a second.
+The constructor creates a new Thread by passing
+the current object to the Thread constructor,
+which tells the Thread to call the run()
+method in the AutoChangeColor class. The constructor
+then starts the new thread by calling its start()
+method, so that the color change happens asynchronously of whatever
+else is going on. The class has an instance variable called
+myThread
+that contains a reference to the Thread object,
+so that can control the thread. The run() method
+takes care of changing the background color, using the
+sleep()
+method of the Thread class to temporarily suspend
+the thread and calling repaint() to redisplay
+the object after each color change.
+References
+Runnable;
+Thread
+Controlling a Thread
+As shown in the previous section, you start a Thread
+by calling its start()
+method. Before the start() method is called,
+the isAlive() method of the Thread
+object always returns false.
+When the start()
+method is called, the Thread object becomes associated
+with a scheduled thread in the underlying environment. After the
+start() method has returned,
+the isAlive()
+method always returns true. The Thread is now scheduled to run until it dies, unless it is suspended
+or in another unrunnable state.
+It is actually possible for isAlive() to
+return true before start()
+returns, but not before start() is called. This
+can happen because the start() method can return
+either before the started Thread begins to run
+or after it begins to run. In other words, the method that called
+start() and the new thread are now running concurrently.
+On a multiprocessor system, the start() method
+can even return at the same time the started Thread
+begins to run.
+Thread objects have a parent-child relationship.
+The first thread created in a Java environment does not have
+a parent Thread. However, after the first
+Thread
+object is created, the Thread object that controls
+the thread used to create another Thread object
+is considered to be the parent of the newly created Thread.
+This parent-child relationship is used to supply some default values
+when a Thread object is created, but it has no
+further significance after a Thread has been created.
+References
+Thread
+Stopping a thread
+A thread dies when one of the following things happens:
+The run() method
+called by the Thread returns.
+An exception is thrown that causes the run()
+method to be exited.
+The stop() method of the Thread is called.
+The stop() method of the Thread class works by throwing a ThreadDeath
+object in the run() method of the thread. Normally,
+you should not catch ThreadDeath objects in a
+try statement. If you need to catch
+ThreadDeath objects to detect that a
+Thread is about to die, the try
+statement that catches ThreadDeath
+objects should rethrow them.
+When an object (ThreadDeath or otherwise) is thrown
+out of the run() method for the
+Thread, the uncaughtException()
+method of the ThreadGroup for that
+Thread is called. If the thrown object is an
+instance of the ThreadDeath class, the thread dies,
+and the thrown object is ignored. Otherwise, if the thrown object is
+of any other class, uncaughtException() calls the
+thrown object's printStackTrace() method, the
+thread dies, and the thrown object is ignored. In either case, if there
+are other nondaemon threads running in the system, the current program
+continues to run.
+References
+Errors;
+The try Statement;
+Thread;
+ThreadGroup
+Interrupting a thread
+In some situations, you need to kill a thread in a way that
+allows it to complete what it is currently doing before dying. For
+example, if a thread is in the middle of processing a transaction,
+you might want the transaction to complete before the thread dies.
+The Thread class provides support for this in
+the form of the interrupt() method.
+There are a number of methods
+in the Java API, such as wait() and
+join(), that are declared as throwing an
+InterruptedException.
+ 
+Both of these methods temporarily suspend the execution of a thread. In Java
+1.1, if a thread is waiting for one of these methods to return
+and another thread calls interrupt() on the
+waiting thread, the method that is waiting throws 
+an InterruptedException. 
+The interrupt() method sets an internal flag in a
+Thread object. Before the
+interrupt() method is called, the
+isInterrupted() method of the
+Thread object always returns
+false.  After the interrupt()
+method is called, isInterrupted() returns
+true.  
+Prior to version 1.1, the methods in the Java API that are declared
+as throwing an InterruptedException do not actually
+do so. However, the isInterrupted() method
+does return True if the thread has been interrupted.
+Thus, if the code in the
+run() method for a thread periodically calls
+isInterrupted(), the thread can respond to a call to
+interrupt() by shutting down in an orderly fashion.
+References
+Other exceptions;
+Thread
+Thread priority
+One of the attributes that controls the behavior of a thread
+is its priority. Although Java does not guarantee much about how
+threads are scheduled, it does guarantee that a thread with a priority
+that is higher than that of another thread will be scheduled to
+run at least as often, and possibly more often, than the thread
+with the lower priority. The priority of a thread is set when
+the Thread object
+is created, by passing an argument to the constructor that creates
+the Thread object. If an explicit priority is
+not specified, the Thread inherits the priority
+of its parent Thread object.
+You can query the priority of a Thread
+object by calling its getPriority()
+method. Similarly, you can set the priority of a Thread
+using its setPriority()
+method. The priority you specify must be greater than or equal to
+Thread.MIN_PRIORITY and less than or equal to
+Thread.MAX_PRIORITY.
+Before actually setting the priority of a Thread
+object, the setPriority()
+method checks the maximum allowable priority
+for the ThreadGroup
+that contains the Thread by calling
+getMaxPriority()
+on the ThreadGroup. If the call to
+setPriority()
+tries to set the priority to a value that is higher than the maximum
+allowable priority for the ThreadGroup, the priority
+is instead set to the maximum priority. It is possible for the current
+priority of a Thread to be greater than the maximum
+allowable priority for the ThreadGroup. In this
+case, an attempt to raise the priority of the Thread
+results in its priority being lowered to the maximum priority.
+References
+Thread;
+ThreadGroup
+Daemon threads
+A daemon thread is a thread that runs continuously to perform
+a service, without having any connection with the overall state
+of the program. For example, the thread that runs the garbage collector
+in Java is a daemon thread. The thread that processes mouse events
+for a Java program is also a daemon thread. In general, threads
+that run application code are not daemon threads, and threads that
+run system code are daemon threads. If a thread dies and there are
+no other threads except daemon threads alive, the Java virtual machine
+stops.
+A Thread
+object has a boolean attribute that specifies whether or not a thread is a daemon thread. The daemon attribute
+of a thread is set when the Thread object
+is created, by passing an argument to the constructor that creates
+the Thread object. If the daemon attribute is
+not explicitly specified, the Thread inherits
+the daemon attribute of its parent Thread object.
+The daemon attribute is queried using the isDaemon()
+method; it is set using the setDaemon() method.
+References
+Thread
+Yielding
+When a thread has nothing to do, it can call the
+yield() method of its Thread
+object. This method tells the scheduler to run a different thread. The
+value of calling yield() depends largely on whether
+the scheduling mechanism for the platform on which the program is running is preemptive or nonpreemptive.
+By choosing a maximum length of time a thread can continuously, a
+preemptive scheduling mechanism guarantees that
+no single thread uses more than its fair share of the processor. If a
+thread runs for that amount of time without yielding control to
+another thread, the scheduler preempts the thread and causes it to
+stop running so that another thread can run.
+A nonpreemptive scheduling
+mechanism cannot preempt threads. A nonpreemptive scheduler relies
+on the individual threads to yield control of the processor frequently,
+so that it can provide reasonable performance. A thread explicitly
+yields control by calling the Thread object's
+yield() method. More often, however, a thread
+implicitly yields control when it is forced to wait for something
+to happen elsewhere.
+Calling a Thread object's yield()
+method during a lengthy computation can be quite valuable on a platform
+that uses a nonpreemptive scheduling
+mechanism, as it allows other threads to run. Otherwise, the lengthy
+computation can prevent other threads from running. On a platform
+that uses a preemptive scheduling
+mechanism, calling yield() does not usually make
+any noticeable difference in the responsiveness of threads.
+Regardless of the scheduling algorithm that is being used,
+you should not make any assumptions about when a thread will be
+scheduled to run again after it has called yield().
+If you want to prevent a thread from being scheduled to run until
+a specified amount of time has elapsed, you should call
+the sleep()
+method of the Thread object. The sleep()
+method takes an argument that specifies a
+minimum number of milliseconds
+that must elapse before the thread can be scheduled to run again.
+References
+Thread
+Controlling groups of threads
+Sometimes it is necessary to control multiple threads at the same
+time. Java provides the ThreadGroup class for this
+purpose. Every Thread object belongs to a
+ThreadGroup object.  By passing an argument to the
+constructor that creates the Thread object, the
+ThreadGroup of a thread can be set when the
+Thread object is created. If an explicit
+ThreadGroup is not specified, the
+Thread belongs to the same
+ThreadGroup as its parent Thread
+object.
+References
+Thread;
+ThreadGroup
+Applets
+Synchronizing Multiple Threads
+ 
+ 
+ 
+ 
+ 
+ 
+ 

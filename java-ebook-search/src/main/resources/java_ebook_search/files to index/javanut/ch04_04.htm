@@ -1,0 +1,58 @@
+
+[Chapter 4] 4.4 Deprecated Features
+Chapter 4What's New in Java 1.1
+4.4 Deprecated Features
+Although you can use the old AWT event model in Java 1.1, it
+has been officially "deprecated," and its use in new
+software is discouraged.  When you compile code that uses
+the 1.0 event model, you'll be made aware of this by the
+"deprecation warning" that the javac compiler issues.
+This warning notifies you that your code relies on methods
+or classes in the Java API that have been superseded by
+newer, preferred alternatives.  If you compile using the
+-deprecation flag, javac provides a detailed
+warning about each use of a deprecated feature.  You can
+simply ignore these warnings, but when time permits, the
+better approach is to update your code so that it no longer
+relies on deprecated features of the Java API. While it is
+not strictly true to say that deprecated features are
+"unsupported," they will almost certainly receive far less
+support in practice than the features that replace them.
+The reason that the compiler is able to issue deprecation
+warnings at all is the addition of a new @deprecated
+tag to the documentation-comment syntax of Java 1.1.  As you
+may be aware, comments that begin with the /**
+character sequence are treated specially in Java, and are
+used by the javadoc tool to automatically generate
+online documentation for packages, classes, methods, and
+fields.  Prior to Java 1.1, the compiler ignored the
+contents of documentation comments.  In Java 1.1, however,
+it scans these comments for the @deprecated tag.
+If it is found, the compiler marks the class, interface,
+constructor, method, or field following the comment as
+deprecated, and issues a warning when the deprecated feature
+is used.
+The old AWT event-handling model is not the only Java 1.0
+feature that has been deprecated in Java 1.1; merely the one
+you are most likely to encounter first.  A number of common
+AWT component methods have been renamed, to follow a more
+regular naming scheme that fits the JavaBeans naming
+conventions.  These methods can be invoked by the old name
+or the new, but if you use the old name, you'll be rewarded
+with a deprecation warning. Fortunately, in simple cases
+like this, it is trivial to write a script or program to
+mechanically convert from the old name to the new.  Other
+areas of the Java API have been deprecated as well.  You'll
+notice that a few of the input and output stream classes
+in the java.io package have been deprecated and
+superseded by "Reader" and "Writer" stream classes, for
+example.
+The New AWT Event Model
+Other AWT Improvements
+ 
+ 
+ 
+ 
+ 
+ 
+ 

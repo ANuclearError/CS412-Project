@@ -1,0 +1,25 @@
+
+[Chapter 28] 28.4 java.net.ContentHandlerFactory (JDK 1.0)
+Chapter 28The java.net Package
+28.4 java.net.ContentHandlerFactory (JDK 1.0)
+This interface defines a method that creates and returns an
+appropriate ContentHandler object for a specified
+MIME type. A system-wide ContentHandlerFactory interface
+may be specified by using the
+URLConnection.setContentHandlerFactory() method.
+Normal applications never need to use or implement this interface.
+public abstract interface ContentHandlerFactory {
+    // Public Instance Methods
+            public abstract ContentHandler createContentHandler(String mimetype);
+}
+Passed To:
+URLConnection.setContentHandlerFactory()
+java.net.ContentHandler (JDK 1.0)
+java.net.DatagramPacket (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

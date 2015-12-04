@@ -1,0 +1,62 @@
+
+[Chapter 9] 9.2 ClassLoader
+Chapter 9Security
+9.2 ClassLoader
+Java supports dynamically loaded classes, so the class loading
+mechanism plays an important role in the Java security model. The
+default class loading mechanism in Java loads classes from local files
+found relative to directories specified by the
+CLASSPATH environment variable. The
+CLASSPATH environment variable should have a value
+made up of one or more directory paths separated by a colon. The path
+implied by the package of a class is relative to the directories
+specified in the CLASSPATH environment variable.
+In contrast, an instance of the
+java.lang.ClassLoader class defines how classes are
+loaded over the network. You can specify a security policy for loading
+classes by defining a subclass of ClassLoader that
+implements the
+policy. The loadClass() method of a
+ClassLoader loads a top-level class, such as a
+subclass of Applet. That
+ClassLoader object then becomes associated with the
+loaded class. You can retrieve the ClassLoader
+object that loads the class by calling the
+getClassLoader() of an instance of the loaded
+class; every class in Java inherits this method from the
+Object class.
+An object of a class loaded using a ClassLoader can
+attempt to load additional classes without explicitly using a
+ClassLoader object. The object does this by calling
+the forName() method of the
+Class class.  However, if a
+ClassLoader object is associated with any pending
+method invocation in the current thread, the
+forName() method uses that
+ClassLoader to load the additional classes. In
+essence, this means that the object can only load classes through its
+associated ClassLoader.
+If Java security is implemented correctly, an untrusted applet cannot
+escape the security policy implemented by the
+ClassLoader object used to load it because it
+cannot access any other ClassLoader objects. An
+applet should not be able to create its own
+ClassLoader objects. It is the responsibility of
+the checkCreateClassLoader() method of
+SecurityManager to enforce this restriction.
+Because a SecurityManager can determine the
+ClassLoader, if any, used to load a class, it can
+use the ClassLoader to help determine the
+trustworthiness ofthe class. Classes loaded by different
+ClassLoader objects cannot accidentally be mixed up
+because a class is identified by the combination of its fully
+qualified name and its ClassLoader.
+SecurityManager
+Accessing the Environment
+ 
+ 
+ 
+ 
+ 
+ 
+ 

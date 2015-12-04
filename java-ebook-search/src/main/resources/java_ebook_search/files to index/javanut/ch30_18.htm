@@ -1,0 +1,37 @@
+
+[Chapter 30] 30.18 java.util.PropertyResourceBundle (JDK 1.1)
+Chapter 30The java.util Package
+30.18 java.util.PropertyResourceBundle (JDK 1.1)
+This class is a concrete subclass of ResourceBundle.
+It reads a Properties file from a specified
+InputStream and implements the
+ResourceBundle API for looking up named resources
+from the resulting Properties object.
+A Properties file contains lines of the form:
+name=value
+Each such line defines a named property with the specified
+String value.
+Although you can instantiate a
+PropertyResourceBundle yourself, it is more common
+to simply define a Properties file, and then allow
+ResourceBundle.getBundle() to look up that file and
+return the necessary PropertyResourceBundle object.
+See also Properties and ResourceBundle.
+public class PropertyResourceBundle extends ResourceBundle {
+    // Public Constructor
+            public PropertyResourceBundle(InputStream stream) throws IOException;
+    // Public Instance Methods
+            public Enumeration getKeys();  // Defines ResourceBundle
+            public Object handleGetObject(String key);  // Defines ResourceBundle
+}
+Hierarchy:
+Object->ResourceBundle->PropertyResourceBundle
+java.util.Properties (JDK 1.0)
+java.util.Random (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

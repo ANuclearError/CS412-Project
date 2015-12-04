@@ -1,0 +1,70 @@
+
+[Chapter 18] java.applet Reference
+Chapter 18
+18. java.applet Reference
+Contents:
+Introduction to the Reference Chapters
+Package diagrams
+Applet
+AppletContext
+AppletStub
+AudioClip
+18.1 Introduction to the Reference Chapters
+The preceding seventeen chapters cover just about all there is to know 
+about AWT. We have tried to organize them logically, and provide all 
+the information that you would expect in a reference manual--plus 
+much more in the way of examples and practical information about how to 
+do things effectively. However, there are many times when you just 
+need a reference book, pure and simple: one that's organized alphabetically, 
+and where you can find any method if you know the class and package that it 
+belongs to, without having to second guess the author's organizational 
+approach. That's what the rest of this book provides. It's 
+designed to help you if you need to look something up quickly, and find 
+a brief but accurate summary of what it does. In these sections, the emphasis 
+is on brief; if 
+you want a longer description, look in the body of the book. 
+The reference sections describe the following packages: 
+java.applet (Chapter 18, java.applet Reference)
+java.awt (Chapter 19, java.awt Reference)
+java.awt.datatransfer (Chapter 20, java.awt.datatransfer Reference)
+java.awt.event (Chapter 21, java.awt.event Reference)
+java.awt.image (Chapter 22, java.awt.image Reference)
+java.awt.peer (Chapter 23, java.awt.peer Reference)
+Within each package, classes and interfaces are listed alphabetically.
+There is a description and a pseudo-code definition for each class or interface. 
+Each variable and method is listed and described. New Java 1.1 classes 
+are marked with a black star (), as are new methods and new variables. 
+Of course, if a class is new, all its 
+methods are new. We didn't mark individual methods in new classes. Methods that are deprecated in Java 1.1 are marked with a white star ().
+Inheritance presents a significant problem with documenting
+object-oriented libraries, because the bulk of a class's methods
+tend to be hiding in the superclasses. Even if you're very
+familiar with object-oriented software development, when you're
+trying to look up a method under the pressure of some deadline,
+it's easy to forget that you need to look at the superclasses in
+addition to the class you're interested in itself. Nowhere is
+this problem worse than in AWT, where some classes (in particular,
+components and containers) inherit well over 100 methods, and provide
+few methods of their own. For example, the Button
+class contains seven public methods, none of which happens to be
+setFont().  The font used to display a
+button's label is certainly settable--but to find it, you
+have to look in the superclass Component.
+So far, we haven't found a way around this problem. The description 
+of each class has an abbreviated class hierarchy diagram, showing superclasses 
+(all the way back to Object), immediate subclasses, and the interfaces 
+that the class implements. Ideally, it would be nice to have a list of 
+all the inherited methods--and in other parts of Java, that's 
+possible. For AWT, the lists would be longer than the rest of this book, 
+much too long to be practical, or even genuinely useful. Someday, electronic 
+documentation may be able to solve this problem, but we're not there 
+yet. 
+Printing Arbitrary Content
+Package diagrams
+ 
+ 
+ 
+ 
+ 
+ 
+ 

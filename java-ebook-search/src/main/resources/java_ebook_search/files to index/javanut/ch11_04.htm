@@ -1,0 +1,135 @@
+
+[Chapter 11] 11.4 Handling Local Customs
+Chapter 11Internationalization
+11.4 Handling Local Customs
+The second problem of internationalization is the task of
+following local customs and conventions in areas like date
+and time formatting.  The java.text package defines
+classes to help with this duty.
+The NumberFormat class is used to format
+numbers, monetary amounts, and percentages in a
+locale-dependent way for display to the user.  This is
+necessary because different locales have different
+conventions for number formatting.  For example, in France,
+a comma is used as a decimal separator instead of a period, as
+used in many English speaking countries.  A
+NumberFormat object can use the default locale or
+any locale you specify.
+The DateFormat class is used to format dates
+and times in a locale-dependent way for display to the user.
+Different countries have different conventions.  Should the
+month or day be displayed first?  Should periods or colons
+be used to separate fields of the time?  What are the names
+of the months in the language of the locale?  A
+DateFormat object can simply use the default locale
+or it can use any locale you specify.  The
+DateFormat class is used in conjunction with the
+TimeZone and Calendar classes of
+java.util.  The TimeZone object tells the
+DateFormat what time zone the date should be
+interpreted in, while the Calendar object specifies
+how the date itself should be broken down into days, weeks,
+months, and years.  Almost all locales use the standard
+GregorianCalendar.
+The Collator class is used to compare strings in a
+locale-dependent way.  This is necessary because different
+languages "alphabetize" strings in different ways (and some
+languages don't even use alphabets).  In traditional
+Spanish, for example, the letters "ch" are treated as a
+single character that comes between "c" and "d" for the purposes of
+sorting.  When you need to sort strings or search for a
+string within Unicode text, you should use a
+Collator object, either one created to work with the
+default locale or one created for a specified
+locale.
+The BreakIterator class allows you to locate
+character, word, line, and sentence boundaries in a
+locale-dependent way.  This is useful when you need to
+recognize such boundaries in Unicode text, as when you are
+implementing a word-wrapping algorithm.
+Example 11.3
+shows a class that uses the NumberFormat and
+DateFormat classes to display a hypothetical stock
+portfolio to the user following local conventions.  The
+program uses various NumberFormat and
+DateFormat objects to format (using the
+format() method) different types of numbers and
+dates.  These Format objects all operate using the
+default locale, but could have been created with an
+explicitly specified locale. Example 11.2
+shows the output of this program in American, Canadian, and
+French locales.  Note the different treatment of dates,
+numbers, and monetary quantities in these three locales.
+Example 11.2: Dates and Numbers Formatted for Three Locales
+# American English locale (en_US)
+Portfolio value at April 08, 1997 6:57:40 PM PDT:
+Symbol  Shares  Bought On       At      Quote   Change
+XXX     400     6/15/96         $11.90  $13.00  9%
+YYY     1,100   9/14/96         $71.09  $27.25  -61%
+ZZZ     6,000   6/27/91         $23.37  $89.12  281%
+# Canadian English locale (en_CA)
+Portfolio value at April 8, 1997 9:57:40 CDT PM:
+Symbol  Shares  Bought On       At      Quote   Change
+XXX     400     15/06/96        $11.90  $13.00  9%
+YYY     1,100   14/09/96        $71.09  $27.25  -61%
+ZZZ     6,000   27/06/91        $23.37  $89.12  281%
+# French locale (fr_FR)
+Portfolio value at 9 avril 1997 03:57:40 GMT+02:00:
+Symbol  Shares  Bought On       At      Quote   Change
+XXX     400     15/06/96        11,90 F 13,00 F 9%
+YYY     1 100   14/09/96        71,09 F 27,25 F -61%
+ZZZ     6 000   27/06/91        23,37 F 89,12 F 281%
+Example 11.3: Formatting Dates and Numbers in an Internationalized Program
+import java.text.*;
+import java.util.Date;
+/**
+ * A partial implementation of a hypothetical stock portfolio class.
+ * We use it only to demonstrate number and date internationalization.
+ */
+public class Portfolio {
+  EquityPosition[] positions;
+  Date lastQuoteTime = new Date();
+  public void print() {
+    // Obtain NumberFormat and DateFormat objects to format our data.
+    NumberFormat number = NumberFormat.getInstance();
+    NumberFormat price = NumberFormat.getCurrencyInstance();
+    NumberFormat percent = NumberFormat.getPercentInstance();
+    DateFormat shortdate = DateFormat.getDateInstance(DateFormat.SHORT);
+    DateFormat fulldate = DateFormat.getDateTimeInstance(DateFormat.LONG,
+                                                         DateFormat.LONG);
+    // Print some introductory data.
+    System.out.println("Portfolio value at " +
+                       fulldate.format(lastQuoteTime) + ":");
+    System.out.println("Symbol\tShares\tBought On\tAt\t" +
+                       "Quote\tChange");
+    // Then display the table using the format() methods of the Format objects.
+    for(int i = 0; i &lt; positions.length; i++) {
+      System.out.print(positions[i].name + "\t");
+      System.out.print(number.format(positions[i].shares) + "\t");
+      System.out.print(shortdate.format(positions[i].purchased) + "\t");
+      System.out.print(price.format(positions[i].bought) + "\t");
+      System.out.print(price.format(positions[i].current) + "\t");
+      double change =
+        (positions[i].current - positions[i].bought)/positions[i].bought;
+      System.out.println(percent.format(change));
+    }
+  }
+  static class EquityPosition {
+    String name;             // Name of the stock.
+    int shares;              // Number of shares held.
+    Date purchased;          // When purchased.
+    double bought, current;  // Purchase price and current price (per share).
+    EquityPosition(String n, int s, Date when, double then, double now) {
+      name = n; shares = s; purchased = when; bought = then; current = now;
+    }
+  }
+}
+Character Encodings
+Localizing User-Visible Messages
+ 
+ 
+ 
+ 
+ 
+ 
+ 

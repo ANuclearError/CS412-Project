@@ -1,0 +1,501 @@
+
+[Chapter 16] NumberFormat
+Chapter 16The java.text Package
+NumberFormat
+Name
+NumberFormat
+Synopsis
+Class Name:
+java.text.NumberFormat
+Superclass:
+java.text.Format
+Immediate Subclasses:
+java.text.ChoiceFormat, 
+java.text.DecimalFormat
+Interfaces Implemented:
+java.lang.Cloneable
+Availability:
+New as of JDK 1.1 
+Description
+The NumberFormat class formats 
+and parses numbers in a locale-specific manner. NumberFormat is an abstract 
+class, but it provides factory methods that return useful instances of 
+NumberFormat subclasses. These factory methods come in three groups: 
+The getCurrencyInstance() 
+methods return objects that format and parse currency values. 
+The getNumberInstance() 
+methods return objects that format and parse normal numbers. 
+The getPercentInstance() 
+methods return objects that format percentage values. 
+For example, to format a number as an Italian currency value, you can use 
+this code: 
+double salary = 1234.56;
+System.out.println
+  (NumberFormat.getCurrencyInstance(Locale.ITALY).format(salary));
+This produces the following output: 
+L 1.234,56
+The NumberFormat class defines 
+two field constants that represent the integer and fractional fields in 
+a formatted number. These field constants create FieldPosition 
+objects. 
+Class Summary
+public abstract class java.text.NumberFormat extends java.text.Format
+                      implements java.lang.Cloneable {
+  // Constants
+  public static final int FRACTION_FIELD;
+  public static final int INTEGER_FIELD;
+  // Class Methods
+  public static Locale[] getAvailableLocales();
+  public static final NumberFormat getCurrencyInstance();
+  public static NumberFormat getCurrencyInstance(Locale inLocale);
+  public static final NumberFormat getInstance();
+  public static NumberFormat getInstance(Locale inLocale);
+  public static final NumberFormat getNumberInstance();
+  public static NumberFormat getNumberInstance(Locale inLocale);
+  public static final NumberFormat getPercentInstance();
+  public static NumberFormat getPercentInstance(Locale inLocale);
+  // Instance Methods
+  public Object clone();
+  public boolean equals(Object obj); 
+  public final String format(double number);
+  public final String format(long number);
+  public final StringBuffer format(Object number, StringBuffer toAppendTo,
+                            FieldPosition pos); 
+  public abstract StringBuffer format(double number, 
+                               StringBuffer toAppendTo, FieldPosition pos);
+  public abstract StringBuffer format(long number, StringBuffer toAppendTo, 
+                               FieldPosition pos);
+  public int getMaximumFractionDigits();
+  public int getMaximumIntegerDigits();
+  public int getMinimumFractionDigits();
+  public int getMinimumIntegerDigits();
+  public int hashCode();
+  public boolean isGroupingUsed();
+  public boolean isParseIntegerOnly();
+  public Number parse(String text);
+  public abstract Number parse(String text, ParsePosition parsePosition);
+  public final Object parseObject(String source, 
+                      ParsePosition parsePosition); 
+  public void setGroupingUsed(boolean newValue);
+  public void setMaximumFractionDigits(int newValue);
+  public void setMaximumIntegerDigits(int newValue);
+  public void setMinimumFractionDigits(int newValue);
+  public void setMinimumIntegerDigits(int newValue);
+  public void setParseIntegerOnly(boolean value);
+}
+Constants
+FRACTION_FIELD
+public final static int FRACTION_FIELD
+Description
+A field constant that represents the fractional 
+part of the number. 
+INTEGER_FIELD
+public final static int INTEGER_FIELD
+Description
+A field constant that represents the integer 
+part of the number. 
+Class Methods
+getAvailableLocales
+public static Locale[] getAvailableLocales()
+Returns
+An array of Locale objects. 
+Description
+This method returns an array of the Locale 
+objects for which this class can create NumberFormat 
+objects. 
+getCurrencyInstance
+public static final NumberFormat getCurrencyInstance()
+Returns
+A NumberFormat appropriate 
+for the default Locale that 
+formats currency values. 
+Description
+This method creates a NumberFormat 
+that formats and parses currency values in the default 
+locale. 
+public static NumberFormat getCurrencyInstance(Locale inLocale)
+Parameters
+inLocale
+The Locale to use. 
+Returns
+A NumberFormat appropriate 
+for the given Locale that formats 
+currency values. 
+Description
+This method creates a NumberFormat 
+that formats and parses currency values in the given 
+locale. 
+getInstance
+public static final NumberFormat getInstance()
+Returns
+A default NumberFormat appropriate 
+for the default Locale. 
+Description
+This method creates a default NumberFormat 
+that formats and parses values in the default locale. 
+public static NumberFormat getInstance(Locale inLocale)
+Parameters
+inLocale
+The Locale to use. 
+Returns
+A default NumberFormat appropriate 
+for the given Locale. 
+Description
+This method creates a NumberFormat 
+that formats and parses values in the given locale. 
+getNumberInstance
+public static final NumberFormat getNumberInstance()
+Returns
+A NumberFormat appropriate 
+for the default Locale that 
+formats normal numbers. 
+Description
+This method creates a NumberFormat 
+that formats and parses number values in the default 
+locale. 
+public static NumberFormat getNumberInstance(Locale inLocale)
+Parameters
+inLocale
+The Locale to use. 
+Returns
+A NumberFormat appropriate 
+for the given Locale that formats 
+normal numbers. 
+Description
+This method creates a NumberFormat 
+that formats and parses number values in the given 
+locale. 
+getPercentInstance
+public static final NumberFormat getPercentInstance()
+Returns
+A NumberFormat appropriate 
+for the default Locale that 
+formats percentage values. 
+Description
+This method creates a NumberFormat 
+that formats and parses percent values in the default 
+locale. 
+public static NumberFormat getPercentInstance(Locale inLocale)
+Parameters
+inLocale
+The Locale to use. 
+Returns
+A NumberFormat appropriate 
+for the given Locale that formats 
+percentage values. 
+Description
+This method creates a NumberFormat 
+that formats and parses percent values in the given 
+locale. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this NumberFormat. 
+Overrides
+Format.clone() 
+Description
+This method creates a copy of this NumberFormat 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of NumberFormat 
+and is equivalent to this NumberFormat. 
+format
+public final String format(double number)
+Parameters
+number
+The double value to be formatted. 
+Returns
+A string that contains a formatted representation of the value. 
+Description
+This method formats the given number and returns the result as a string. 
+public final String format(long number)
+Parameters
+number
+The long value to be formatted. 
+Returns
+A string that contains a formatted representation of the value. 
+Description
+This method formats the given number and returns the result as a string. 
+   public final StringBuffer format(Object number, StringBuffer toAppendTo, FieldPosition pos)  
+Parameters
+number
+The object to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+pos
+A number field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the object appended to it. 
+Overrides
+Format.format(Object, 
+StringBuffer, FieldPosition) 
+Description
+This method formats the given object and appends the result to the given 
+StringBuffer. If pos 
+refers to one of the number fields, its beginning and ending indices are 
+filled with the beginning and ending positions of the given field in the 
+resulting formatted string. 
+   public abstract StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos)  
+Parameters
+number
+The double 
+value to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+pos
+A number field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the object appended to it. 
+Description
+This method formats the given number and appends the result to the given 
+StringBuffer. If pos 
+refers to one of the number fields, its beginning and ending indices are 
+filled with the beginning and ending positions of the given field in the 
+resulting formatted string. 
+   public abstract StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition pos)  
+Parameters
+number
+The long 
+value to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+pos
+A number field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the object appended to it. 
+Description
+This method formats the given number and appends the result to the given 
+StringBuffer. If pos 
+refers to one of the number fields, its beginning and ending indices are 
+filled with the beginning and ending positions of the given field in the 
+resulting formatted string. 
+getMaximumFractionDigits
+public int getMaximumFractionDigits()
+Returns
+The maximum number of digits allowed in the fraction 
+portion. 
+Description
+This method returns the maximum number of digits that can be in the fraction 
+part of the number. 
+getMaximumIntegerDigits
+public int getMaximumIntegerDigits()
+Returns
+The maximum number of digits allowed in the integer 
+portion. 
+Description
+This method returns the maximum number of digits that can be in the integer 
+part of the number. 
+getMinimumFractionDigits
+public int getMinimumFractionDigits()
+Returns
+The minimum number of digits allowed in the fraction 
+portion. 
+Description
+This method returns the minimum number of digits that can be in the fraction 
+part of the number. 
+getMinimumIntegerDigits
+public int getMinimumIntegerDigits()
+Returns
+The minimum number of digits allowed in the integer 
+portion. 
+Description
+This method returns the minimum number of digits that can be in the integer 
+part of the number. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this NumberFormat. 
+isGroupingUsed
+public boolean isGroupingUsed()
+Returns
+A boolean value that indicates 
+whether or not this NumberFormat 
+uses a grouping character to break up long sequences of digits in the integer 
+part of a number. 
+Description
+This method returns true if 
+this NumberFormat uses a grouping 
+character. For example, it is common in the United States to use a comma 
+as a grouping character: 1,234.56. 
+isParseIntegerOnly
+public boolean isParseIntegerOnly()
+Returns
+A boolean value that indicates 
+whether or not this NumberFormat 
+parses only integers. 
+Description
+This method returns true if 
+this NumberFormat parses only 
+integers. 
+parse
+public Number parse(String text) throws ParseException
+Parameters
+text
+The string to be parsed.
+Returns
+The Number object represented 
+by the given string. 
+Throws
+ParseException
+If the text cannot be parsed as a number. 
+Description
+This method parses a number from the given string, starting from the beginning 
+of the string. 
+   public abstract Number parse(String text, ParsePosition parsePosition)  
+Parameters
+text
+The string to be parsed.
+parsePosition
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+The Number object represented 
+by the text starting at the given position. 
+Description
+This method parses a number from the given string, starting from the given 
+position. After the string has been parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text. 
+parseObject
+   public final Object parseObject(String source, ParsePosition parsePosition)  
+Parameters
+source
+The string to be parsed.
+parsePosition
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+The object represented by the text starting at the given position. 
+Overrides
+Format.parseObject(String, 
+ParsePosition) 
+Description
+This method parses a number from the given string, starting from the given 
+position. After the string has been parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text. 
+setGroupingUsed
+public void setGroupingUsed(boolean newValue)
+Parameters
+newValue
+The new grouping flag. 
+Description
+This method sets whether or not this NumberFormat 
+uses a grouping character to break up long sequences of digits in the integer 
+part of a number. For example, it is common in the United States to use 
+a comma as a grouping character: 1,234.56. 
+setMaximumFractionDigits
+public void setMaximumFractionDigits(int newValue)
+Parameters
+newValue
+The new maximum number of fraction digits. 
+Description
+This method sets the maximum number of digits that may be present 
+in the fraction part of the number. The maximum value must be greater than 
+the minimum number of fraction digits allowed. If the value is less than 
+the current minimum, the minimum is also set to this value. 
+setMaximumIntegerDigits
+public void setMaximumIntegerDigits(int newValue)
+Parameters
+newValue
+The new maximum number of integer digits. 
+Description
+This method sets the maximum number of digits that may be present 
+in the integer part of the number. The maximum value must be greater than 
+the minimum number of integer digits allowed. If the value is less than 
+the current minimum, the minimum is also set to this value. 
+setMinimumFractionDigits
+public void setMinimumFractionDigits(int newValue)
+Parameters
+newValue
+The new minimum number of fraction digits. 
+Description
+This method sets the minimum number of digits that may be present 
+in the fraction part of the number. The minimum value must be less than 
+the maximum number of fraction digits allowed. If the value is greater 
+than the current maximum, the maximum is also set to this value. 
+setMinimumIntegerDigits
+public void setMinimumIntegerDigits(int newValue)
+Parameters
+newValue
+The new minimum number of integer digits. 
+Description
+This method sets the minimum number of digits that may be present 
+in the integer part of the number. The minimum value must be less than 
+the maximum number of integer digits allowed. If the value is greater than 
+the current maximum, the maximum is also set to this value. 
+setParseIntegerOnly
+public void setParseIntegerOnly(boolean value)
+Parameters
+value
+The new parsing flag. 
+Description
+This method sets whether or not this NumberFormat 
+parses only integers. If the value is true, 
+this NumberFormat only parse 
+integers. Otherwise it parses both the integer and fractional parts of 
+numbers. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+format(Object)
+Format
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+parseObject(String)
+Format
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ChoiceFormat, 
+DecimalFormat, 
+FieldPosition, 
+Format, 
+Number, 
+ParseException, 
+ParsePosition, 
+String, 
+StringBuffer 
+MessageFormat
+ParseException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

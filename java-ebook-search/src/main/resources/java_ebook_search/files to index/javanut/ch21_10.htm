@@ -1,0 +1,50 @@
+
+[Chapter 21] 21.10 java.awt.image.IndexColorModel (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.10 java.awt.image.IndexColorModel (JDK 1.0)
+This class is a ColorModel that determines the red,
+green, blue, and alpha values for a pixel by using the pixel
+value as an index into colormap arrays. If no array of
+alpha values is specified, all pixels are considered
+fully opaque, except for one optionally specified reserved
+value that is fully transparent. This color model is useful
+when working with image data that is defined in terms of a
+color map.
+You should not need to instantiate any kind of
+ColorModel object unless you are processing image
+data that does not use the standard RGB color format.
+public class IndexColorModel extends ColorModel {
+    // Public Constructors
+            public IndexColorModel(int bits, int size, byte[] r, byte[] g, byte[] b);
+            public IndexColorModel(int bits, int size, byte[] r, byte[] g, byte[] b, int trans);
+            public IndexColorModel(int bits, int size, byte[] r, byte[] g, byte[] b, byte[] a);
+            public IndexColorModel(int bits, int size, byte[] cmap, int start, boolean hasalpha);
+            public IndexColorModel(int bits, int size, byte[] cmap, int start, boolean hasalpha, int trans);
+    // Public Instance Methods
+            public final int getAlpha(int pixel);  // Defines ColorModel
+            public final void getAlphas(byte[] a);
+            public final int getBlue(int pixel);  // Defines ColorModel
+            public final void getBlues(byte[] b);
+            public final int getGreen(int pixel);  // Defines ColorModel
+            public final void getGreens(byte[] g);
+            public final int getMapSize();
+            public final int getRGB(int pixel);  // Overrides ColorModel
+            public final int getRed(int pixel);  // Defines ColorModel
+            public final void getReds(byte[] r);
+            public final int getTransparentPixel();
+}
+Hierarchy:
+Object->ColorModel->IndexColorModel
+Passed To:
+RGBImageFilter.filterIndexColorModel()
+Returned By:
+RGBImageFilter.filterIndexColorModel()
+java.awt.image.ImageProducer (JDK 1.0)
+java.awt.image.MemoryImageSource (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

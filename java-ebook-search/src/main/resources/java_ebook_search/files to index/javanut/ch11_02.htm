@@ -1,0 +1,397 @@
+
+[Chapter 11] 11.2 Unicode
+Chapter 11Internationalization
+11.2 Unicode
+Java uses the Unicode character encoding.  Java 1.0 used
+Unicode version 1.1, while Java 1.1 has adopted the newer Unicode
+2.0 standard.  Unicode is a 16-bit character encoding
+established by the Unicode Consortium, which describes the
+standard as follows (see http://unicode.org):
+The Unicode Worldwide Character Standard is a character
+coding system designed to support the interchange,
+processing, and display of the written texts of the diverse
+languages of the modern world. In addition, it supports
+classical and historical texts of many written languages.
+In its current version (2.0), the Unicode standard contains
+38,885 distinct coded characters derived from 25 supported
+scripts.  These characters cover the principal written
+languages of the Americas, Europe, the Middle East, Africa,
+India, Asia, and Pacifica.
+In the canonical form of the Unicode encoding, which is
+what Java char and String types use, every
+character occupies two bytes.  The Unicode characters \u0020
+to \u007E are equivalent to the ASCII and ISO8859-1
+(Latin-1) characters 0x20 through 0x7E.  The Unicode
+characters \u00A0 to \u00FF are identical to the ISO8859-1
+characters 0xA0 to 0xFF.  Thus there is a trivial mapping
+between Latin-1 and Unicode characters.  A number of other
+portions of the Unicode encoding are based on pre-existing
+standards, such as ISO8859-5 (Cyrillic) and ISO8859-8
+(Hebrew), though the mappings between these standards and
+Unicode may not be as trivial as the Latin-1 mapping.
+Note that Unicode support is quite limited on many
+platforms. One of the difficulties with the use of Unicode
+is the poor availability of fonts to display all of the
+Unicode characters. Figure 11.1
+shows the characters that are available on a typical
+configuration of the U.S. English Windows 95 platform.  Note the
+special box glyph used to indicate undefined characters.
+Figure 11.1: Some Unicode characters and their encodings
+Unicode is similar to, but not the same as, ISO 10646, the
+UCS (Universal Character Set) encoding.  UCS is a 2- or
+4-byte encoding originally intended to contain all national
+standard character encodings.  For example, it was to
+include the separate Chinese, Japanese, Korean, and Vietnamese encodings
+for Han ideographic characters.  Unicode, in contrast,
+"unifies" these disparate encodings into a single set of Han
+characters that work for all four countries.  Unicode
+has been so successful, however, that ISO 10646 has adopted
+it in place of non-unified encodings.  Thus, ISO 10646 is
+effectively Unicode, with the option of two extra bytes for
+expansion purposes.
+Unicode is a trademark of the Unicode Consortium.  Version
+2.0 of the standard is defined by the book The Unicode
+Standard, Version 2.0 (published by Addison-Wesley,
+ISBN 0-201-48345-9). Further information about the Unicode
+standard and the Unicode Consortium can be obtained at
+http://unicode.org/.
+Table 11.1
+provides an overview of the Unicode 2.0 encoding.
+Table 11.1: Outline of the Unicode 2.0 Encoding
+Start
+End
+Description
+0000
+1FFF
+Alphabets
+0000
+007F
+Basic Latin
+0080
+00FF
+Latin-1 Supplement
+0100
+017F
+Latin Extended-A
+0180
+024F
+Latin Extended-B
+0250
+02AF
+IPA Extensions
+02B0
+02FF
+Spacing Modifier Letters
+0300
+036F
+Combining Diacritical Marks
+0370
+03FF
+Greek
+0400
+04FF
+Cyrillic
+0530
+058F
+Armenian
+0590
+05FF
+Hebrew
+0600
+06FF
+Arabic
+0900
+097F
+Devanagari
+0980
+09FF
+Bengali
+0A00
+0A7F
+Gurmukhi
+0A80
+0AFF
+Gujarati
+0B00
+0B7F
+Oriya
+0B80
+0BFF
+Tamil
+0C00
+0C7F
+Telugu
+0C80
+0CFF
+Kannada
+0D00
+0D7F
+Malayalam
+0E00
+0E7F
+Thai
+0E80
+0EFF
+Lao
+0F00
+0FBF
+Tibetan
+10A0
+10FF
+Georgian
+1100
+11FF
+Hangul Jamo
+1E00
+1EFF
+Latin Extended Additional
+1F00
+1FFF
+Greek Extended
+2000
+2FFF
+Symbols and Punctuation
+2000
+206F
+General Punctuation
+2070
+209F
+Superscripts and Subscripts
+20A0
+20CF
+Currency Symbols
+20D0
+20FF
+Combining Marks for Symbols
+2100
+214F
+Letterlike Symbols
+2150
+218F
+Number Forms
+2190
+21FF
+Arrows
+2200
+22FF
+Mathematical Operators
+2300
+23FF
+Miscellaneous Technical
+2400
+243F
+Control Pictures
+2440
+245F
+Optical Character Recognition
+2460
+24FF
+Enclosed Alphanumerics
+2500
+257F
+Box Drawing
+2580
+259F
+Block Elements
+25A0
+25FF
+Geometric Shapes
+2600
+26FF
+Miscellaneous Symbols
+2700
+27BF
+Dingbats
+3000
+33FF
+CJK Auxiliary
+3000
+303F
+CJK Symbols and Punctuation
+3040
+309F
+Hiragana
+30A0
+30FF
+Katakana
+3100
+312F
+Bopomofo
+3130
+318F
+Hangul Compatibility Jamo
+3190
+319F
+Kanbun
+3200
+32FF
+Enclosed CJK Letters and Months
+3300
+33FF
+CJK Compatibility
+4E00
+9FFF
+CJK Unified Ideographs
+Han characters used in China, Japan, Korea, Taiwan, and Vietnam
+AC00
+D7A3
+Hangul Syllables
+D800
+DFFF
+Surrogates
+D800
+DB7F
+High Surrogates
+DB80
+DBFF
+High Private Use Surrogates
+DC00
+DFFF
+Low Surrogates
+E000
+F8FF
+Private Use
+F900
+FFFF
+Miscellaneous
+F900
+FAFF
+CJK Compatibility Ideographs
+FB00
+FB4F
+Alphabetic Presentation Forms
+FB50
+FDFF
+Arabic Presentation Forms-A
+FE20
+FE2F
+Combining Half Marks
+FE30
+FE4F
+CJK Compatibility Forms
+FE50
+FE6F
+Small Form Variants
+FE70
+FEFE
+Arabic Presentation Forms-B
+FEFF
+FEFF
+Specials
+FF00
+FFEF
+Halfwidth and Fullwidth Forms
+FFF0
+FFFF
+Specials
+Unicode and Local Encodings
+While Java programs use Unicode text internally, Unicode is
+not the customary character encoding for most countries or
+locales.  Thus, an important requirement for Java programs
+is to be able to convert text from the local encoding to
+Unicode as it is read (from a file or network, for example)
+and to be able to convert text from Unicode to the local
+encoding as it is written.  In Java 1.0, this requirement is
+not well supported.  In Java 1.1, however, the conversion
+can be done with the java.io.InputStreamReader and
+java.io.OutputStreamWriter classes, respectively.
+These classes load an appropriate
+ByteToCharConverter or CharToByteConverter
+class to perform the conversion.  Note that these converter
+classes are part of the sun.io package and are not
+for public use (although an explicit conversion interface may
+be defined in a later release of Java).
+The UTF-8 Encoding
+The canonical two-bytes per character encoding is useful for
+the manipulation of character data and is the internal
+representation used throughout Java.  However, because a large amount
+of text used by Java programs is 8-bit text, and because
+there are so many existing computer systems that support
+only 8-bit characters, the 16-bit canonical form is usually not
+the most efficient way to store Unicode text nor the
+most portable way to transmit it.
+Because of this, other encodings called "transformation formats"
+have been developed.  Java provides simple support for the
+UTF-8 encoding with the DataInputStream.readUTF()
+and DataOutputStream.writeUTF() methods.
+UTF-8 is a variable-width or "multi-byte" encoding format;
+this means that different characters require different
+numbers of bytes.  In UTF-8, the standard ASCII characters
+occupy only one byte, and remain untouched by the encoding
+(i.e., a string of ASCII characters is a legal UTF-8 string).
+As a tradeoff, however, other Unicode characters occupy two
+or three bytes.
+In UTF-8, Unicode characters between \u0000 and \u007F
+occupy a single byte, which has a value of between 0x00 and
+0x7F, and which always has its high-order bit set to 0.
+Characters between \u0080 and \u07FF occupy
+two bytes, and characters between \u0800 and \uFFFF
+occupy three bytes.
+The first byte of a two-byte character always has high-order
+bits 110, and the first byte of a three-byte character
+always has high-order bits 1110.  Since single-byte
+characters always have 0 as their high-order bit, the one-,
+two-, and three-byte characters can easily be distinguished
+from each other.
+The second and third bytes of two- and three-byte characters
+always have high-order bits 10, which distinguishes them
+from one-byte characters, and also distinguishes them from
+the first byte of a two- or three-byte sequence.  This is
+important because it allows a program to locate the start of
+a character in a multi-byte sequence.
+The remaining bits in each character (i.e., the bits that are
+not part of one of the required high-order bit sequences)
+are used to encode the actual Unicode character data.  In
+the single-byte form, there are seven bits available, suitable
+for encoding characters up to \u007F.  In the two-byte
+form, there are 11 data bits available, which is enough to
+encode values to \u07FF, and in the three-byte form there
+are 16 available data bits, which is enough to encode all
+16-bit Unicode characters. Table 11.2
+summarizes the UTF-8 encoding.
+Table 11.2: The UTF-8 Encoding
+Start Character
+End Character
+Required Data Bits
+Binary Byte Sequence (x = data bits)
+\u0000
+\u007F
+7
+0xxxxxxx
+\u0080
+\u07FF
+11
+110xxxxx 10xxxxxx
+\u0800
+\uFFFF
+16
+1110xxxx 10xxxxxx 10xxxxxx
+The UTF-8 has the following desirable features:
+All ASCII characters are one-byte UTF-8 characters.  A legal
+ASCII string is a legal UTF-8 string.
+Any non-ASCII character (i.e., any character with the high-order
+bit set) is part of a multi-byte character.
+The first byte of any UTF-8 character indicates the number
+of additional bytes in the character.
+The first byte of a multi-byte character is easily
+distinguished from the subsequent bytes.  Thus, it is easy
+to locate the start of a character from an arbitrary
+position in a data stream.
+It is easy to convert between UTF-8 and Unicode.
+The UTF-8 encoding is relatively compact.  For text with a
+large percentage of ASCII characters, it is more compact
+than Unicode.  In the worst case, a UTF-8 string is only 50%
+larger than the corresponding Unicode string.
+Java actually uses a slightly modified form of UTF-8.  The
+Unicode character \u0000 is encoded using a two-byte
+sequence, so that an encoded Unicode string never contains
+null characters.
+A Word About Locales
+Character Encodings
+ 
+ 
+ 
+ 
+ 
+ 
+ 

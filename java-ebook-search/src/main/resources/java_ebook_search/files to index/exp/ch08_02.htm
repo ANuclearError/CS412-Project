@@ -1,0 +1,451 @@
+
+[Chapter 8] 8.2 Files
+Chapter 8Input/Output Facilities
+8.2 Files
+Unless otherwise restricted, a Java application can read and
+write to the host filesystem with the same level of access as the user
+who runs the Java interpreter. Java applets and other kinds of
+networked applications can, of course, be restricted by the
+SecurityManager and cut off from these
+services. We'll discuss applet access at the end of this
+section. First, let's take a look at the tools for basic file
+access.
+Working with files in Java is still somewhat problematic. The
+host filesystem lies outside of Java's virtual environment, in
+the real world, and can therefore still suffer from architecture and
+implementation differences. Java tries to mask some of these
+differences by providing information to help an application tailor
+itself to the local environment; I'll mention these areas as
+they occur.
+java.io.File
+The java.io.File class encapsulates access to
+information about a file or directory entry in the filesystem. It gets
+attribute information about a file, lists the entries in a directory,
+and performs basic filesystem operations like removing a file or
+making a directory. While the File object handles
+these tasks, it doesn't provide direct access for reading and writing
+file data; there are specialized streams for that purpose.
+File constructors
+You can create an instance of File from a
+String pathname as follows:
+File fooFile = new File( "/tmp/foo.txt" ); 
+File barDir = new File( "/tmp/bar" ); 
+You can also create a file with a relative path like: 
+File f = new File( "foo" ); 
+ In this
+case, Java works relative to the current directory of the Java
+interpreter. You can determine the current directory by checking the
+user.dir property in the System
+Properties list
+(System.getProperty('user.dir')).
+An overloaded version of the File
+constructor lets you specify the directory path and filename as
+separate String objects:
+File fooFile = new File( "/tmp", "foo.txt" ); 
+With yet another variation, you can specify the directory with a
+File object and the filename with a
+String:
+File tmpDir = new File( "/tmp" ); 
+File fooFile = new File ( tmpDir, "foo.txt" ); 
+None of the File constructors throw any exceptions.
+This means the object is created whether or not the file or
+directory actually exists; it isn't an error to create a
+File object for an nonexistent file. You can use
+the exists() method to find out whether the file or
+directory exists.
+Path localization
+One of the reasons that working with files in Java is problematic is
+that pathnames are expected to follow the conventions of the local
+filesystem. Java's designers intend to provide
+an abstraction that deals with most system-dependent filename
+features, such as the file separator, path separator, device
+specifier, and root directory. Unfortunately, not all of these
+features are implemented in the current version.
+On some systems, Java can compensate for differences such as the direction 
+of the file separator slashes in the above string. For example, in the 
+current implementation on Windows platforms, Java accepts paths 
+with either forward slashes or backslashes. However, under Solaris, Java 
+accepts only paths with forward slashes. 
+Your best bet is to make sure you follow the filename
+conventions of the host filesystem. If your application is just
+opening and saving files at the user's request, you should be
+able to handle that functionality with the
+java.awt.FileDialog class. This class encapsulates
+a graphical file-selection dialog box. The methods of the
+FileDialog take care of system-dependent filename
+features for you.
+If your application needs to deal with files on its own behalf,
+however, things get a little more complicated. The
+File class contains a few static
+variables to make this task easier. File.separator
+defines a String that specifies the file separator
+on the local host (e.g., "/" on UNIX and Macintosh systems and
+"\" on Windows systems), while File.separatorChar
+provides the same information in character
+form. File.pathSeparator defines a
+String that separates items in a path (e.g., ":" on
+UNIX systems; ";" on Macintosh and Windows systems);
+File.pathSeparatorChar provides the information in
+character form.
+You can use this system-dependent information in several
+ways. Probably the simplest way to localize pathnames is to pick a
+convention you use internally, say "/", and do a
+String replace to substitute for the localized
+separator character:
+// We'll use forward slash as our standard 
+String path = "mail/1995/june/merle"; 
+path = path.replace('/', File.separatorChar); 
+File mailbox = new File( path ); 
+Alternately, you could work with the components of a pathname and
+built the local pathname when you need it:
+String [] path = { "mail", "1995", "june", "merle" }; 
+  
+StringBuffer sb = new StringBuffer(path[0]); 
+for (int i=1; i&lt; path.length; i++) 
+    sb.append( File.separator + path[i] ); 
+  File mailbox = new File( sb.toString() ); 
+One thing to remember is that Java interprets the backslash character
+(\) as an escape character when used in a
+String. To get a backslash in a
+String, you have to use "\\".
+File methods
+Once we have a valid File object, we can use it to
+ask for information about the file itself and to perform standard
+operations on it. A number of methods lets us ask certain questions
+about the File. For example,
+isFile() returns true if the
+File represents a file, while
+isDirectory() returns true if
+it's a directory. isAbsolute() indicates whether the
+File has an absolute or relative path
+specification.
+The components of the File pathname are
+available through the following methods: getName(),
+getPath(), getAbsolutePath(),
+and getParent(). getName()
+returns a String for the filename without any
+directory information; getPath() returns the
+directory information without the filename. If the
+File has an absolute path specification,
+getAbsolutePath() returns that path. Otherwise it
+returns the relative path appended to the current working
+directory. getParent() returns the parent directory
+of the File.
+Interestingly, the string returned by getPath()
+or getAbsolutePath() may not be the same, case-wise,
+as the actual name of the file.  You can retrieve the case-correct version
+of the file's path using getCanonicalPath().
+In Windows 95, for example, you can create a 
+File object whose
+getAbsolutePath() is
+C:\Autoexec.bat but whose
+getCanonicalPath() is
+C:\AUTOEXEC.BAT.
+We can get the modification time of a file or directory with
+lastModified(). This time value is not useful as
+an absolute time; you should use it only to compare two modification
+times. We can also get the size of the file in bytes with
+length(). Here's a fragment of code that
+prints some information about a file:
+File fooFile = new File( "/tmp/boofa" ); 
+ 
+String type = fooFile.isFile() ? "File " : "Directory "; 
+String name = fooFile.getName(); 
+long len = fooFile.length(); 
+System.out.println(type + name + ", " + len + " bytes " ); 
+If the File object corresponds to a directory, 
+we can list the files in the directory with the list() 
+method: 
+String [] files = fooFile.list(); 
+list() returns an array of
+String objects that contains filenames. (You might
+expect that list() would return an
+Enumeration instead of an array, but it doesn't.)
+If the File refers to a nonexistent
+directory, we can create the directory with mkdir()
+or mkdirs(). mkdir() creates a
+single directory; mkdirs() creates all of the
+directories in a File specification. Use
+renameTo() to rename a file or directory and
+delete() to delete a file or directory. Note that
+File doesn't provide a method to create a file;
+creation is handled with a FileOutputStream as
+we'll discuss in a moment.
+Table 8.1 summarizes the methods provided
+by the File class.
+Table 8.1: File Methods
+Method
+Return type
+Description
+canRead()
+boolean
+Is the file (or directory) readable?
+canWrite()
+boolean
+Is the file (or directory) writable?
+delete()
+boolean
+Deletes the file (or directory)
+exists()
+boolean
+Does the file (or directory) exist?
+getAbsolutePath()
+String
+Returns the absolute path of the file (or directory)
+getCanonicalPath()
+String
+Returns the absolute, case-correct path of the file (or directory)
+getName()
+String
+Returns the name of the file (or directory)
+getParent()
+String
+Returns the name of the parent directory of the file (or directory)
+getPath()
+String
+Returns the path of the file (or directory)
+isAbsolute()
+boolean
+Is the filename (or directory name) absolute?
+isDirectory()
+boolean
+Is the item a directory?
+isFile()
+boolean
+Is the item a file?
+lastModified()
+long
+Returns the last modification time of the file (or directory)
+length()
+long
+Returns the length of the file
+list()
+String []
+Returns a list of files in the directory
+mkdir()
+boolean
+Creates the directory
+mkdirs()
+boolean
+Creates all directories in the path
+renameTo(File dest)
+boolean
+Renames the file (or directory)
+File Streams
+Java provides two specialized streams for reading and writing files in
+the filesystem: FileInputStream and
+FileOutputStream. These streams provide the basic
+InputStream and OutputStream
+functionality applied to reading and writing the contents of files.
+They can be combined with the filtered streams described earlier to
+work with files in the same way we do other stream
+communications.
+Because FileInputStream is a subclass of
+InputStream, it inherits all standard
+InputStream functionality for reading the contents
+of a file. FileInputStream provides only a
+low-level interface to reading data, however, so you'll
+typically wrap another stream like a
+DataInputStream around the
+FileInputStream.
+You can create a FileInputStream from a
+String pathname or a File object:
+FileInputStream foois = new FileInputStream( fooFile ); 
+FileInputStream passwdis = new FileInputStream( "/etc/passwd" ); 
+When you create a FileInputStream, Java attempts to
+open the specified file. Thus, the FileInputStream
+constructors can throw a FileNotFoundException if
+the specified file doesn't exist, or an IOException
+if some other I/O error occurs. You should be sure to catch and handle
+these exceptions in your code. When the stream is first created, its
+available() method and the File
+object's length() method should return the
+same value. Be sure to call the close() method when
+you are done with the file.
+To read characters from a file, you can wrap an InputStreamReader
+around a FileInputStream.  If you want to use the default
+character encoding scheme, you can use the FileReader
+class instead, which is provided as a convenience.  FileReader
+works just like FileInputStream, except that it
+reads characters instead of bytes and wraps a Reader
+instead of an InputStream.
+The following class, ListIt, is a small
+utility that displays the contents of a file or directory to standard
+output:
+import java.io.*; 
+ 
+class ListIt { 
+    public static void main ( String args[] ) throws Exception { 
+        File file =  new File( args[0] ); 
+ 
+        if ( !file.exists() || !file.canRead() ) { 
+            System.out.println( "Can't read " + file ); 
+            return; 
+        } 
+ 
+        if ( file.isDirectory() ) { 
+            String [] files = file.list(); 
+            for (int i=0; i&lt; files.length; i++) 
+                System.out.println( files[i] ); 
+        } 
+        else 
+            try { 
+                FileReader fr = new FileReader ( file );
+                BufferedReader in = new BufferedReader( fr );
+                String line;
+                while ((line = in.readLine()) != null)
+                    System.out.println(line);
+            } 
+            catch ( FileNotFoundException e ) {
+                System.out.println( "File Disappeared" ); 
+            }
+    } } 
+ListIt constructs a File
+object from its first command-line argument and tests the
+File to see if it exists and is readable. If the
+File is a directory, ListIt
+prints the names of the files in the directory. Otherwise, ListIt
+reads and prints the file.
+FileOutputStream is a subclass of
+OutputStream, so it inherits all the standard
+OutputStream functionality for writing to a
+file. Just like FileInputStream though,
+FileOutputStream provides only a low-level
+interface to writing data. You'll typically wrap another stream
+like a DataOutputStream or a
+PrintStream around the
+FileOutputStream to provide higher-level
+functionality. You can create a FileOutputStream
+from a String pathname or a File
+object. Unlike FileInputStream however, the
+FileOutputStream constructors don't throw a
+FileNotFoundException. If the specified file
+doesn't exist, the FileOutputStream creates the
+file. The FileOutputStream constructors can throw
+an IOException if some other I/O error occurs, so
+you still need to handle this exception.
+If the specified file does exist, the
+FileOutputStream opens it for writing. When you
+actually call a write() method, the new data
+overwrites the current contents of the file. If you need to append
+data to an existing file, you should use a different constructor that accepts
+an append flag, as shown here:
+FileInputStream foois = new FileInputStream( fooFile ); 
+FileInputStream passwdis = new FileInputStream( "/etc/passwd" ); 
+Antoher alternative for appending files is to use a 
+RandomAccessFile, as I'll discuss shortly.
+To write characters (instead of bytes) to a file, you can wrap an 
+OutputStreamWriter 
+around a FileOutputStream.  If you want to use the default
+character encoding scheme, you can use the FileWriter
+class instead, which is provided as a convenience.  FileWriter
+works just like FileOutputStream, except that it
+writes characters instead of bytes and wraps a Writer
+instead of an OutputStream.
+The following example reads a line of data from standard input
+and writes it to the file /tmp/foo.txt:
+String s = new BufferedReader( new InputStreamReader( System.in ) ).readLine(); 
+ 
+File out = new File( "/tmp/foo.txt" ); 
+FileWriter fw = new FileWriter ( out ); 
+PrintWriter pw = new PrintWriter( fw, true ) 
+pw.println( s ); 
+Notice how we have wrapped a PrintWriter around the
+FileWriter to facilitate writing the data. To
+be a good filesystem citizen, you need to call the
+close() method when you are done with the
+FileWriter.
+java.io.RandomAccessFile
+The java.io.RandomAccessFile class provides the
+ability to read and write data from or to any specified location in a
+file. RandomAccessFile implements both the
+DataInput and DataOutput
+interfaces, so you can use it to read and write strings and Java
+primitive types. In other words, RandomAccessFile
+defines the same methods for reading and writing data as
+DataInputStream and
+DataOutputStream. However, because the class
+provides random, rather than sequential, access to file data, it's
+not a subclass of either InputStream or
+OutputStream.
+You can create a RandomAccessFile from a
+String pathname or a File
+object. The constructor also takes a second String
+argument that specifies the mode of the file. Use "r" for
+a read-only file or "rw" for a read-write file. Here's how to
+create a simple database to keep track of user information:
+try { 
+    RandomAccessFile users = new RandomAccessFile( "Users", "rw" ); 
+    ... 
+} 
+catch (IOException e) {  
+} 
+When you create a RandomAccessFile in read-only
+mode, Java tries to open the specified file. If the file doesn't
+exist, RandomAccessFile throws an
+IOException. If, however, you are creating a
+RandomAccessFile in read-write mode, the object
+creates the file if it doesn't exist. The constructor can still throw
+an IOException if some other I/O error occurs, so
+you still need to handle this exception.
+After you have created a RandomAccessFile,
+call any of the normal reading and writing methods, just as you would
+with a DataInputStream or
+DataOutputStream. If you try to write to a
+read-only file, the write method throws an
+IOException.
+What makes a RandomAccessFile special is the
+seek() method. This method takes a
+long value and uses it to set the location for
+reading and writing in the file. You can use the
+getFilePointer() method to get the current
+location. If you need to append data on the end of the file, use
+length() to determine that location. You can write
+or seek beyond the end of a file, but you can't read beyond the end
+of a file. The read methods throws a EOFException
+if you try to do this.
+Here's an example of writing some data to our user database: 
+users.seek( userNum * RECORDSIZE ); 
+users.writeUTF( userName ); 
+users.writeInt( userID ); 
+One caveat to notice with this example is that we need to be sure that
+the String length for userName,
+along with any data that comes after it, fits within the
+boundaries of the record size.
+Applets and Files
+For security reasons, applets are not permitted to read and write to
+arbitrary places in the filesystem. The ability of an applet to read
+and write files, as with any kind of system resource, is under the control
+of a SecurityManager object.  A SecurityManager is installed by the
+application that is running the applet, such as an applet viewer or
+Java-enabled Web browser. All filesystem access must first pass the
+scrutiny of the SecurityManager. With that in
+mind, applet-viewer applications are free to implement their own
+schemes for what, if any, access an applet may have.
+For example, Sun's HotJava Web browser allows applets to
+have access to specific files designated by the user in
+an access-control list. Netscape Navigator, on the other hand,
+currently doesn't allow applets any access to the filesystem.
+It isn't unusual to want an applet to maintain some kind
+of state information on the system where it's running. But for a
+Java applet that is restricted from access to the local filesystem,
+the only option is to store data over the network on its server.
+Although, at the moment, the Web is a relatively static, read-only
+environment, applets have at their disposal powerful, general means
+for communicating data over networks, as you'll see in Chapter 9, Network Programming. The only limitation is that, by convention, an
+applet's network communication is restricted to the server that
+launched it. This limits the options for where the data will reside.
+The only means of writing data to a server in Java
+is through a network socket. In Chapter 9, Network Programming we'll
+look at building networked applications with sockets in detail. With
+the tools of that chapter it's possible to build powerful
+client/server applications.
+Streams
+Serialization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

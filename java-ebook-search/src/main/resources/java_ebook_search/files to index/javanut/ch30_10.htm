@@ -1,0 +1,59 @@
+
+[Chapter 30] 30.10 java.util.Hashtable (JDK 1.0)
+Chapter 30The java.util Package
+30.10 java.util.Hashtable (JDK 1.0)
+This class implements a hashtable data structure, which
+allows you to associate values with a key and to efficiently
+look up the value associated with a given key. A hashtable
+is essentially an associative array, which stores objects
+with non-numeric array indices.
+put() associates a value with a key in a
+Hashtable. get() retrieves a value for a
+specified key. remove() deletes a key/value
+association. keys() and elements() return
+Enumeration objects that allow you to iterate
+through the complete set of keys and values stored in the
+table.
+public class Hashtable extends Dictionary implements Cloneable, Serializable {
+    // Public Constructors
+            public Hashtable(int initialCapacity, float loadFactor);
+            public Hashtable(int initialCapacity);
+            public Hashtable();
+    // Public Instance Methods
+            public synchronized void clear();
+            public synchronized Object clone();  // Overrides Object
+            public synchronized boolean contains(Object value);
+            public synchronized boolean containsKey(Object key);
+            public synchronized Enumeration elements();  // Defines Dictionary
+            public synchronized Object get(Object key);  // Defines Dictionary
+            public boolean isEmpty();  // Defines Dictionary
+            public synchronized Enumeration keys();  // Defines Dictionary
+            public synchronized Object put(Object key, Object value);  // Defines Dictionary
+            public synchronized Object remove(Object key);  // Defines Dictionary
+            public int size();  // Defines Dictionary
+            public synchronized String toString();  // Overrides Object
+    // Protected Instance Methods
+            protected void rehash();
+}
+Hierarchy:
+Object->Dictionary->Hashtable(Cloneable, Serializable)
+Extended By:
+Properties
+Passed To:
+CropImageFilter.setProperties(), 
+ImageConsumer.setProperties(), 
+ImageFilter.setProperties(), 
+MemoryImageSource(), 
+PixelGrabber.setProperties(), 
+ReplicateScaleFilter.setProperties()
+Type Of:
+GridBagLayout.comptable
+java.util.GregorianCalendar (JDK 1.1)
+java.util.ListResourceBundle (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

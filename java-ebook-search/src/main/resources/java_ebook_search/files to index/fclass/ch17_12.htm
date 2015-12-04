@@ -1,0 +1,506 @@
+
+[Chapter 17] Locale
+Chapter 17The java.util Package
+Locale
+Name
+Locale
+Synopsis
+Class Name:
+java.util.Locale
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The Locale class is 
+used for internationalization. Instances of Locale 
+specify language and formatting customs by identifying a language and a
+country. A Locale object may also specify a 
+platform-specific variant.
+Other classes throughout the JDK use Locale 
+objects to determine how to represent themselves to the user. The tasks 
+performed by these classes are called locale-sensitive tasks; the tasks 
+should be done in a way that conforms with the conventions of a particular 
+country and language. 
+There are a number of classes provided with Java that have
+static methods that create instances of 
+locale-specific subclasses. For example, the NumberFormat 
+class contains static methods named 
+getInstance() that create and 
+return locale-specific instances of subclasses of 
+NumberFormat. A particular 
+NumberFormat instance knows 
+how to format numbers, currency values, and percentages appropriately for 
+a particular locale. Note that it is the responsibiity of a 
+class like NumberFormat to implement the 
+logic needed to translate locale-identifying information
+into actual subclass instances.
+Classes like NumberFormat that can create 
+locale-specific instances are expected to follow certain conventions:
+Methods like getInstance() in
+NumberFormat are expected to have
+two variants: one that takes a Locale argument 
+and one that does not. The variant that does not take a locale argument
+is expected to use the default locale, which is normally 
+determined by calling Locale.getDefault().
+Classes that can create a variety of locale-specific
+instances are expected to implement a method that has
+the following signature:
+public static Locale[] getAvailableLocales()
+This requirement is not specified through an interface
+declaration because interfaces cannot declare static 
+methods. The purpose of this method is to facilitate presenting the
+user with a list or menu of locale choices. The
+getAvailableLocales() method should return an 
+array of Locale objects that identifies 
+all of the locales for which the class can create locale-specific instances.
+Two additional methods are recommended for helping to
+display the locale choices:
+public static final String getDisplayName(Locale objectLocale)
+public static String getDisplayName(Locale objectLocale,
+                                    Locale displayLocale)
+The first form of getDisplayName() 
+should return a description of objectLocale 
+that is suitable for display in the default locale. The second form 
+should return a description of objectLocale 
+that is suitable for display in the locale specified by 
+displayLocale. Implementations of these 
+methods generally call the getDisplayName() method
+of the Locale object.
+The language, country and variant information that are
+encapsulated by a Locale object are 
+specified to a constructor as strings. The language for a 
+Locale should be specified as 
+one of the two-letter lowercase language codes defined by ISO-639.
+Look for a complete list at
+http://www.ics.uci.edu/pub/ietf/http/related/iso639.txt.
+The country for a Locale object should
+be specified as either "" to indicate
+that no country is specified, or as one of the two-letter
+uppercase country codes defined by ISO-3166. 
+Check the site,
+http://www.chemie.fu-berlin.de/diverse/doc/ISO_3166.html,
+for a complete list
+Variant codes are platform-specific.
+Although the Locale 
+is constructed from these three types of codes, human-readable names can 
+be obtained by calling getDisplayLanguage(), 
+getDisplayCountry(), and getDisplayVariant(). 
+The Locale class defines a 
+number of constant Locale objects 
+that represent some of the major languages and countries of the world. 
+Class Summary
+public abstract class java.util.Locale extends java.lang.Object
+                      implements java.lang.Cloneable, java.io.Serializable {
+  // Constants
+  public final static Locale CANADA;
+  public final static Locale CANADA_FRENCH;
+  public final static Locale CHINA;
+  public final static Locale CHINESE;
+  public final static Locale ENGLISH;
+  public final static Locale FRANCE;
+  public final static Locale FRENCH;
+  public final static Locale GERMAN;
+  public final static Locale GERMANY;
+  public final static Locale ITALIAN;
+  public final static Locale ITALY;
+  public final static Locale JAPAN;
+  public final static Locale JAPANESE;
+  public final static Locale KOREA;
+  public final static Locale KOREAN;
+  public final static Locale PRC;
+  public final static Locale SIMPLIFIED_CHINESE;
+  public final static Locale TAIWAN;
+  public final static Locale TRADITIONAL_CHINESE;
+  public final static Locale UK;
+  public final static Locale US;
+  // Constructors
+  public Locale(String language, String country);
+  public Locale(String language, String country, String variant);
+  // Class Methods
+  public static synchronized Locale getDefault();
+  public static synchronized void setDefault(Locale newLocale);
+  // Instance Methods
+  public Object clone();
+  public boolean equals(Object obj);
+  public String getCountry();
+  public final String getDisplayCountry();
+  public String getDisplayCountry(Locale inLocale);
+  public final String getDisplayLanguage();
+  public String getDisplayLanguage(Locale inLocale);
+  public final String getDisplayName();
+  public String getDisplayName(Locale inLocale);
+  public final String getDisplayVariant();
+  public String getDisplayVariant(Locale inLocale);
+  public String getISO3Country();
+  public String getISO3Language();
+  public String getLanguage();
+  public String getVariant();
+  public synchronized int hashCode();
+  public final String toString();
+}
+Constants
+CANADA
+public final static Locale CANADA
+Description
+A locale that represents English-speaking Canada.
+CANADA_FRENCH
+public final static Locale CANADA_FRENCH
+Description
+A locale that represents French-speaking Canada.
+CHINA
+public final static Locale CHINA
+Description
+A locale that represents China.
+CHINESE
+public final static Locale CHINESE
+Description
+A locale that represents the Chinese language.
+ENGLISH
+public final static Locale ENGLISH
+Description
+A locale that represents the English language.
+FRANCE
+public final static Locale FRANCE
+Description
+A locale that represents France.
+FRENCH
+public final static Locale FRENCH
+Description
+A locale that represents the French language.
+GERMAN
+public final static Locale GERMAN
+Description
+A locale that represents the German language.
+GERMANY
+public final static Locale GERMANY
+Description
+A locale that represents Germany.
+ITALIAN
+public final static Locale ITALIAN
+Description
+A locale that represents the Italian language.
+ITALY
+public final static Locale ITALY
+Description
+A locale that represents Italy.
+JAPAN
+public final static Locale JAPAN
+Description
+A locale that represents Japan.
+JAPANESE
+public final static Locale JAPANESE
+Description
+A locale that represents the Japanese language.
+KOREA
+public final static Locale KOREA
+Description
+A locale that represents Korea.
+KOREAN
+public final static Locale KOREAN
+Description
+A locale that represents the Korean language.
+PRC
+public final static Locale PRC
+Description
+A locale that represents the People's Republic of China. 
+It is equivalent to CHINA. 
+SIMPLIFIED_CHINESE
+public final static Locale SIMPLIFIED_CHINESE
+Description
+A locale that represents the Chinese language as used in mainland China.
+TAIWAN
+public final static Locale TAIWAN
+Description
+A locale that represents Taiwan.
+TRADITIONAL_CHINESE
+public final static Locale TRADITIONAL_CHINESE
+Description
+A locale that represents the Chinese language as used in Taiwan.
+UK
+public final static Locale UK
+Description
+A locale that represents the United Kingdom.
+US
+public final static Locale US
+Description
+A locale that represents the United States.
+Constructors
+Locale
+public Locale(String language, String country)
+Parameters
+language
+A two-letter ISO-639 
+language code.
+country
+A two-letter ISO-3166 
+country code or "" to omit the country specification.
+Description
+This constructor creates a Locale 
+that represents the given language and country. 
+public Locale(String language, String country, String variant)
+Parameters
+language
+A two-letter ISO-639 
+language code.
+country
+A two-letter ISO-3166 
+country code or "" to omit the country specification.
+variant
+A vendor-specific 
+variant code. 
+Description
+This constructor creates a Locale 
+that represents the given language, country, and variant. 
+Class Methods
+getDefault
+public static synchronized Locale getDefault()
+Returns
+The default Locale. 
+Description
+This method returns the current default Locale. 
+An application or applet uses this method to find out how to present locale-sensitive 
+information, such as textual strings and numbers. The method is generally 
+called during application initialization to get the default Locale. 
+Once the locale is set, it almost never changes. If you do change the 
+locale, you should probably reload the GUI for your application, so that 
+any locale-sensitive information in the interface is changed.
+The initial default Locale 
+is set by the host system. 
+setDefault
+public static synchronized void setDefault(Locale newLocale)
+Parameters
+newLocale
+The new default locale. 
+Description
+This method changes the current default locale to newLocale. 
+Note that calling setDefault() 
+does not change the default locale of the host system. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this Locale. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this Locale 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of Locale, 
+and it contains the same value as the object this method is associated 
+with. 
+getCountry
+public String getCountry()
+Returns
+The country of this Locale. 
+Description
+This method returns a String that represents
+the country of this Locale. This String
+is the same String that was passed to the constructor
+of this Locale object. The String
+is normally a two-letter ISO-3166 country code. 
+getDisplayCountry
+public final String getDisplayCountry()
+Returns
+The country of this Locale. 
+Description
+This method returns the country of this Locale 
+as a country name in a form appropriate for this Locale. 
+If the country name cannot be found, this method returns the same value 
+as getCountry(). 
+public String getDisplayCountry(Locale inLocale)
+Parameters
+inLocale
+The locale to use when finding the country name. 
+Returns
+The country of this Locale, 
+localized to the given locale. 
+Description
+This method returns the country of this Locale 
+as a country name in a form appropriate for inLocale. 
+For example, Locale.ITALY.getDisplayCountry(Locale.GERMAN) 
+returns the German name for Italy, Italien. 
+getDisplayLanguage
+public final String getDisplayLanguage()
+Returns
+The language of this Locale. 
+Description
+This method returns the language of this Locale 
+as a language name in a form appropriate for this Locale. 
+If the language name cannot be found, this method returns the same value 
+as getLanguage(). 
+public String getDisplayLanguage(Locale inLocale)
+Parameters
+inLocale
+The locale to 
+use when finding the language name. 
+Returns
+The language of this Locale, 
+localized to the given locale. 
+Description
+This method returns the language of this Locale 
+as a language name in a form appropriate for inLocale. 
+For example, Locale.ITALY.getDisplayLanguage(Locale.GERMAN) 
+returns the German name for the Italian language, Italienisch. 
+getDisplayName
+public final String getDisplayName()
+Returns
+A string that represents this Locale. 
+Description
+This method constructs a string that represents this Locale 
+by calling getDisplayLanguage(), 
+getDisplayCountry(), and getDisplayVariant(). 
+In other words, the method returns a string that contains the country name, 
+language name, and variant in a form appropriate for this Locale. 
+If any of the names cannot be found, the 
+String that was passed to the constructor
+of this Locale object is used instead. 
+These strings are normally two-letter ISO codes. 
+public String getDisplayName(Locale inLocale)
+Parameters
+inLocale
+The locale to 
+use when constructing the string representation. 
+Returns
+A string that represents this Locale. 
+Description
+This method constructs a string that represents this Locale 
+by calling getDisplayLanguage(inLocale), 
+getDisplayCountry(inLocale), 
+and getDisplayVariant(inLocale). 
+In other words, the method returns a string that contains the country name, 
+language name, and variant in a form appropriate for inLocale. 
+If any of the names cannot be found, the 
+String that was passed to the constructor
+of this Locale object is used instead. 
+These strings are normally two-letter ISO codes. 
+getDisplayVariant
+public final String getDisplayVariant()
+Returns
+The variant of this Locale. 
+Description
+This method returns the variant of this Locale 
+as a human-readable string in a form appropriate for this Locale. 
+If the variant name cannot be found, this method returns the same value 
+as getVariant(). 
+public String getDisplayVariant(Locale inLocale)
+Parameters
+inLocale
+The locale to 
+use when finding the variant name. 
+Returns
+The variant of this Locale, 
+localized to the given locale. 
+Description
+This method returns the variant of this Locale 
+as a human-readable string in a form appropriate for inLocale. 
+getISO3Country
+public String getISO3Country() throws MissingResourceException
+Returns
+The ISO three-letter country code of this Locale. 
+Throws
+MissingResourceException
+If the requested code cannot be found. 
+Description
+This method returns the country of this Locale 
+as a three-letter ISO country code. The country code is obtained from a 
+ResourceBundle for this Locale. 
+getISO3Language
+public String getISO3Language() throws MissingResourceException
+Returns
+The ISO three-letter language code of this Locale. 
+Throws
+MissingResourceException
+If the requested code cannot be found. 
+Description
+This method returns the language of this Locale 
+as a three-letter ISO language code. The language code is obtained from 
+a ResourceBundle for this Locale. 
+getLanguage
+public String getLanguage()
+Returns
+The language of this Locale. 
+Description
+This method returns a String that represents
+the language of this Locale. This String
+is the same String that was passed to the constructor
+of this Locale object. The String
+is normally a two-letter ISO-639 language code. 
+getVariant
+public String getVariant()
+Returns
+The variant of this Locale. 
+Description
+This method returns the variant code of this Locale. 
+If no variant code is specified for this Locale, 
+an empty string is returned. 
+hashCode
+public synchronized int hashCode()
+Returns
+A hashcode for this Locale. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this object. 
+toString
+public final String toString()
+Returns
+A string representation of this Locale. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Locale, 
+constructed from the language code, country code, and variant code. The 
+various codes are separated by underscore characters. If a code is missing, 
+it is omitted. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Cloneable, 
+DateFormat, 
+NumberFormat, 
+ResourceBundle, 
+Serializable 
+ListResourceBundle
+MissingResourceException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,140 @@
+
+[Chapter 9] 9.3 Generating Exceptions
+Chapter 9Exception Handling
+9.3 Generating Exceptions
+A Java program can use the exception-handling mechanism to
+deal with program-specific errors in a clean manner. A program simply
+uses the throw statement to signal an exception.
+The throw statement must be followed by an object
+that is of type Throwable or one of its subclasses.
+For program-defined exceptions, you typically want an exception object
+to be an instance of a subclass of the Exception
+class. In most cases, it makes sense to define a new subclass of
+Exception that is specific to your program.
+Consider the following example:
+class WrongDayException extends Exception {
+    public WrongDayException () {}
+    public WrongDayException(String msg) {
+        super(msg);
+    }
+}
+public class ThrowExample {
+    void doIt() throws WrongDayException{
+        int dayOfWeek =(new java.util.Date()).getDay();
+        if (dayOfWeek != 2  &amp;&amp; dayOfWeek != 4)
+            throw new WrongDayException("Tue. or Thur.");
+        // The rest of doIt's logic goes here
+        System.out.println("Did it");
+    }
+    public static void main (String [] argv) {
+        try {
+            (new ThrowExample()).doIt();
+        } catch (WrongDayException e) {
+            System.out.println("Sorry, can do it only on "
+                                + e.getMessage());
+        }
+    }
+}
+The code in this example defines a class called
+WrongDayException
+to represent the specific type of exception thrown by the example.
+The Throwable class, and most subclasses of
+Throwable,
+have at least two constructors. One constructor takes a string argument
+that is used as a textual message that explains the exception,
+while the other constructor takes no arguments. Thus, the
+WrongDayException class defines two constructors.
+In the class ThrowExample, if the current
+day of the week is neither Tuesday nor Thursday,
+the doIt()
+method throws a WrongDayException. Note that
+the WrongDayException object is created at the
+same time it is thrown. It is common practice to provide some
+information about an exception when it is thrown, so a string argument
+is used in the allocation statement for the
+WrongDayException.
+The method declaration for the doIt() method
+contains a throws clause, to indicate the fact
+that it can throw a WrongDayException.
+The main() method in ThrowExample
+encloses its call to the doIt() method in a
+try
+statement, so that it can catch any WrongDayException
+thrown by doIt(). The catch
+block prints an error message, using the getMessage()
+method of the exception object. This method retrieves the string
+that was passed to the constructor when the exception object was
+created.
+References
+Constructors;
+Exceptions;
+Methods;
+The throw Statement;
+The try Statement;
+Throwable
+Printing Stack Traces
+When an exception is caught, it can be useful to print a stack
+trace to figure out where the exception came from. A stack trace
+looks like the following:
+java.lang.ArithmeticException: / by zero
+        at t.cap(t.java:16)
+        at t.doit(t.java:8)
+        at t.main(t.java:3)
+You can print a stack trace by calling the
+printStackTrace()
+method that all Throwable objects inherit from
+the Throwable class. For example:
+int cap (x) {return 100/x}
+try {
+    cap(0);
+} catch(ArithmeticException e) {
+    e.printStackTrace();
+}
+You can also print a stack trace anywhere in an application,
+without actually throwing an exception. For example:
+new Throwable().printStackTrace();
+References
+Throwable
+Rethrowing Exceptions
+After an exception is caught, it can be rethrown if
+is appropriate. The one choice that you have to make when rethrowing
+an exception concerns the location from where the stack trace says the
+object was thrown. You can make the rethrown exception appear
+to have been thrown from the location of the original exception
+throw, or from the location of the current rethrow.
+To rethrow an exception and have the stack trace indicate
+the original location, all you have to do is rethrow the exception:
+try {
+    cap(0);
+} catch(ArithmeticException e) {
+    throw e;
+}
+To arrange for the stack trace to show the actual location
+from which the exception is being rethrown, you have to call the
+exception's fillInStackTrace() method. This method
+sets the stack trace information in the exception based on the current
+execution context. Here's an example using the
+fillIn-StackTrace() method:
+try {
+    cap(0);
+} catch(ArithmeticException e) {
+    throw (ArithmeticException)e.fillInStackTrace();
+}
+It is important to call fillInStackTrace() on
+the same line as the throw statement, so that
+the line number specified in the stack trace matches the line on
+which the throw statement appears. The
+fillInStackTrace()
+method returns a reference to the Throwable class,
+so you need to cast the reference to the actual type of the exception.
+References
+Throwable
+Declaring Exceptions
+The Exception Hierarchy
+ 
+ 
+ 
+ 
+ 
+ 
+ 

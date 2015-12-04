@@ -1,0 +1,86 @@
+
+[Chapter 28] The java.net Package
+Chapter 28
+28. The java.net Package
+Contents:
+java.net.ConnectException (JDK 1.1)
+java.net.ContentHandler (JDK 1.0)
+java.net.ContentHandlerFactory (JDK 1.0)
+java.net.DatagramPacket (JDK 1.0)
+java.net.DatagramSocket (JDK 1.0)
+java.net.DatagramSocketImpl (JDK 1.1)
+java.net.FileNameMap (JDK 1.1)
+java.net.HttpURLConnection (JDK 1.1)
+java.net.InetAddress (JDK 1.0)
+java.net.MalformedURLException (JDK 1.0)
+java.net.MulticastSocket (JDK 1.1)
+java.net.NoRouteToHostException (JDK 1.1)
+java.net.ProtocolException (JDK 1.0)
+java.net.ServerSocket (JDK 1.0)
+java.net.Socket (JDK 1.0)
+java.net.SocketException (JDK 1.0)
+java.net.SocketImpl (JDK 1.0)
+java.net.SocketImplFactory (JDK 1.0)
+java.net.UnknownHostException (JDK 1.0)
+java.net.UnknownServiceException (JDK 1.0)
+java.net.URL (JDK 1.0)
+java.net.URLConnection (JDK 1.0)
+java.net.URLEncoder (JDK 1.0)
+java.net.URLStreamHandler (JDK 1.0)
+java.net.URLStreamHandlerFactory (JDK 1.0)
+The java.net package provides a powerful and
+flexible infrastructure for networking.
+Figure 28.1
+shows the class hierarchy for this package. Many of the
+classes in this package are part of the networking
+infrastructure and are not used by normal applications;
+these complicated classes can make the package a difficult
+one to understand. In this overview we describe only the
+classes that an application might normally use.
+Figure 28.1: The java.net package
+The URL class represents an Internet Uniform
+Resource Locator. It provides a very simple interface to
+networking--the object referred to by the URL can be
+downloaded with a single call, or streams may be opened to
+read from or write to the object.
+At a slightly more complex level, the URLConnection
+object may be obtained from a given URL object. The
+URLConnection class provides additional methods that
+allow you to work with URLs in more sophisticated ways.
+If you want to do more than simply download an object
+referenced by a URL, you can do your own networking with the
+Socket class. This class allows you to connect to a
+specified port on a specified Internet host and read and
+write data using the InputStream and
+OutputStream classes of the java.io
+package. If you want to implement a server to accept
+connections from clients, you can use the related
+ServerSocket class. Both Socket and
+ServerSocket use the InetAddress address
+class, which represents an Internet address.
+The java.net package allows you to do low-level
+networking with DatagramPacket objects which may be
+sent and received over the network through a
+DatagramSocket object.  In Java 1.1, the package has been
+extended to include a MulticastSocket class that
+supports multicast networking.
+28.1 java.net.BindException (JDK 1.1)
+This exception signals that a socket could not be bound to a
+local address and port.  This often means that the port is
+already in use.
+public class BindException extends SocketException {
+    // Public Constructors
+            public BindException(String msg);
+            public BindException();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->SocketException->BindException
+java.math.BigInteger (JDK 1.1)
+java.net.ConnectException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

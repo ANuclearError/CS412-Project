@@ -1,0 +1,108 @@
+
+[Chapter 3] 3.3 The Java Compiler
+Chapter 3Tools of the Trade
+3.3 The Java Compiler
+In this section, I'm going to say a few words about
+javac, the Java compiler that is supplied as part
+of Sun's JDK. (If you are happily working in
+another development environment, you may want to skip ahead to the
+next section.) The javac compiler is written
+entirely in Java, so it's available for any platform that supports the
+Java run-time system. The ability to support its own development
+environments is an important stage in a language's development.
+Java makes this bootstrapping automatic by supplying a ready-to-run
+compiler at the same cost as porting the interpreter.
+javac turns Java source code into a
+compiled class that contains Java virtual machine byte-code. By
+convention, source files are named with a .java
+extension; the resulting class files have a
+.class extension. javac
+considers a file to be a single compilation unit. As you'll see
+in Chapter 5, Objects in Java, classes in a given compilation unit
+share certain features like package and
+import statements.
+javac allows you one public
+class per file and insists the file have the same name as the
+class. If the filename and class name don't match,
+javac issues a compilation error. A single file
+can contain multiple classes, as long as only one of the classes is
+public. You should avoid packing lots of classes
+into a single file. The compiler lets you include extra
+non-public classes in a .java
+file, so that you can implement a class that is tightly coupled to
+another class without a lot of hassle. But you should have more than
+one class in a file if the public class in the file
+is the only one that ever uses additional classes.
+Now for an example. The source code for the following class
+should be placed in a file called BigBird.java:
+package animals.birds 
+ 
+public class BigBird extends Bird { 
+    ... 
+} 
+We can then compile it with: 
+% javac BigBird.java 
+Unlike the Java interpreter, which takes a class name as its argument,
+javac requires an actual filename to process.
+The above command produces the class file
+BigBird.class and stores it in the same directory
+as the source file. While it's useful to have the class file in the
+same directory as the source when you are working on a simple example,
+for most real applications you'll need to store the class file
+in an appropriate place in the class path.
+You can use the -d option to
+javac to specify an alternate directory for
+storing the class files it generates. The specified directory is used
+as the root of the class hierarchy, so .class
+files are placed in this directory or in a subdirectory below it,
+depending on the package name of the class. For example, we can use
+the following command to put our BigBird.class
+file in an appropriate location:
+% javac -d /home/vicky/Java/classes BigBird.java 
+When you use the -d option,
+javac automatically creates any directories
+needed to store the class file in the appropriate place. In the above
+command, the BigBird.class file is stored in
+/home/vicky/Java/classes/animals/birds.
+You can specify multiple .java files in a
+single javac command; the compiler simply creates
+a class file for each source file. But you don't need to list
+source files for other classes your class references, as long as
+the other classes have already been compiled. During compilation, Java
+resolves other class references using the class path. If our class
+references other classes in animals.birds or other
+packages, the appropriate paths should be listed in the class
+path at compile time, so that javac can find the
+appropriate class files. You either make sure that the
+CLASSPATH environment variable is set or use the
+-classpath option to javac.
+The Java compiler is more intelligent than your average
+compiler and replaces some of the functionality of a
+make utility. For example,
+javac compares the modification times of the
+source and class files for all referenced classes and recompiles them
+as necessary. A compiled Java class remembers the source file from
+which it was compiled, so as long as the source file is in the same
+directory as the class file, javac can recompile
+the source if necessary. If, in the above example, class
+BigBird references another class,
+animals.furry.Grover, javac
+looks for the source Grover.java in an
+animals.furry package and recompiles it if
+necessary to bring the Grover.class class file up
+to date.
+It's important to note that javac can do
+its job even if only the compiled versions of referenced
+classes are available. Java class files contain all the data type
+and method signature information source files do, so
+compiling against binary class files is as type safe (and exception
+safe) as compiling with Java source code.
+The Class Path
+The Netscape Alternative
+ 
+ 
+ 
+ 
+ 
+ 
+ 

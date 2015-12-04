@@ -1,0 +1,102 @@
+
+[Chapter 29] 29.14 java.text.NumberFormat (JDK 1.1)
+Chapter 29The java.text Package
+29.14 java.text.NumberFormat (JDK 1.1)
+This class formats and parses numbers in a locale-specific
+way.  As an abstract class, it cannot be instantiated
+directly, but it provides a number of static methods that
+return instances of a concrete subclass which you can use
+for formatting.  The getInstance() method returns a
+NumberFormat object suitable for normal formatting of
+numbers in either the default locale or in a specified
+locale.  getCurrencyInstance() and
+getPercentInstance() return NumberFormat objects for
+formatting numbers that represent monetary amounts and
+percentages in either the default locale or in a specified
+locale.  getAvailableLocales() returns an array of
+locales for which NumberFormat objects are available.
+Once you have created a suitable NumberFormat object, you
+may customize its locale-independent behavior with
+setMaximumFractionDigits(), setGroupingUsed()
+and similar set methods.  In order to
+customize the locale-dependent behavior, you can use
+instanceof to test if the NumberFormat
+object is an instance of DecimalFormat, and if so,
+cast it to that type.  The DecimalFormat class
+provides complete control over number formatting.  Note,
+however, that a NumberFormat customized in this way
+may no longer be appropriate for the desired locale.
+After creating and customizing a NumberFormat
+object, you can use the various format() methods to
+convert numbers to strings or string buffers, and you can
+use the parse() or parseObject() methods to
+convert strings to numbers.
+The constants defined by this class are intended to be used by the FieldPosition object.
+The NumberFormat class in not intended for the
+display of very large or very small numbers that require
+exponential notation, and it may not gracefully handle
+infinite or NaN (not-a-number) values.
+public abstract class NumberFormat extends Format implements Cloneable {
+    // Default Constructor: public NumberFormat()
+    // Constants
+            public static final int FRACTION_FIELD;
+            public static final int INTEGER_FIELD;
+    // Class Methods
+            public static Locale[] getAvailableLocales();
+            public static final NumberFormat getCurrencyInstance();
+            public static NumberFormat getCurrencyInstance(Locale inLocale);
+            public static final NumberFormat getInstance();
+            public static NumberFormat getInstance(Locale inLocale);
+            public static final NumberFormat getNumberInstance();
+            public static NumberFormat getNumberInstance(Locale inLocale);
+            public static final NumberFormat getPercentInstance();
+            public static NumberFormat getPercentInstance(Locale inLocale);
+    // Public Instance Methods
+            public Object clone();  // Overrides Format
+            public boolean equals(Object obj);  // Overrides Object
+            public final StringBuffer format(Object number, StringBuffer toAppendTo, FieldPosition pos);  // Defines Format
+            public final String format(double number);
+            public final String format(long number);
+            public abstract StringBuffer format(double number, StringBuffer toAppendTo, FieldPosition pos);
+            public abstract StringBuffer format(long number, StringBuffer toAppendTo, FieldPosition pos);
+            public int getMaximumFractionDigits();
+            public int getMaximumIntegerDigits();
+            public int getMinimumFractionDigits();
+            public int getMinimumIntegerDigits();
+            public int hashCode();  // Overrides Object
+            public boolean isGroupingUsed();
+            public boolean isParseIntegerOnly();
+            public abstract Number parse(String text, ParsePosition parsePosition);
+            public Number parse(String text) throws ParseException;
+            public final Object parseObject(String source, ParsePosition parsePosition);  // Defines Format
+            public void setGroupingUsed(boolean newValue);
+            public void setMaximumFractionDigits(int newValue);
+            public void setMaximumIntegerDigits(int newValue);
+            public void setMinimumFractionDigits(int newValue);
+            public void setMinimumIntegerDigits(int newValue);
+            public void setParseIntegerOnly(boolean value);
+}
+Hierarchy:
+Object->Format(Serializable, Cloneable)->NumberFormat(Cloneable)
+Extended By:
+ChoiceFormat, 
+DecimalFormat
+Passed To:
+DateFormat.setNumberFormat()
+Returned By:
+DateFormat.getNumberFormat(), 
+NumberFormat.getCurrencyInstance(), 
+NumberFormat.getInstance(), 
+NumberFormat.getNumberInstance(), 
+NumberFormat.getPercentInstance()
+Type Of:
+DateFormat.numberFormat
+java.text.MessageFormat (JDK 1.1)
+java.text.ParseException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

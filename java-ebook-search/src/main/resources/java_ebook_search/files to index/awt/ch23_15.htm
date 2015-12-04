@@ -1,0 +1,53 @@
+
+[Chapter 23] MenuBarPeer
+Chapter 23java.awt.peer Reference
+MenuBarPeer
+Name
+MenuBarPeer
+Description
+MenuBarPeer is an interface 
+that defines the basis for menu bars. 
+Interface Definition
+public abstract interface java.awt.peer.MenuBarPeer
+   extends java.awt.peer.MenuComponentPeer {
+  // Interface Methods
+  public abstract void addHelpMenu (Menu m);
+  public abstract void addMenu (Menu m);
+  public abstract void delMenu (int index);
+}
+Interface Methods
+addHelpMenu
+public abstract void addHelpMenu (Menu m)
+Parameters
+m
+Menu to designate as 
+the help menu with the menu bar's peer. 
+Description
+Sets a particular menu to be the help menu of the menu bar's peer. 
+addMenu
+public abstract void addMenu (Menu m)
+Parameters
+m
+Menu to add to the menu 
+bar's peer 
+Description
+Adds a menu to the menu bar's peer. 
+delMenu
+public abstract void delMenu (int index)
+Parameters
+index
+Menu position to 
+delete from the menu bar's peer. 
+Description
+Deletes a menu from the menu bar's peer. 
+See Also
+Menu, MenuComponentPeer 
+ListPeer
+MenuComponentPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

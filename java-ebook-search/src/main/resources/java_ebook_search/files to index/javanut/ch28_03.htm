@@ -1,0 +1,35 @@
+
+[Chapter 28] 28.3 java.net.ContentHandler (JDK 1.0)
+Chapter 28The java.net Package
+28.3 java.net.ContentHandler (JDK 1.0)
+This abstract class defines a method that reads data
+from a URLConnection and returns an object
+representing that data. Each subclass that implements this
+method is responsible for handling a different type of
+content (i.e., a different MIME type). Applications never
+create ContentHandler objects directly--they are
+created, when necessary, by the registered
+ContentHandlerFactory object. Applications should
+also never call ContentHandler methods
+directly--they should call 
+URL.getContent() or
+URLConnection.getContent() instead. 
+You only need to subclass ContentHandler if you
+are writing a Web browser or similar application that
+needs to parse and understand some new content type.
+public abstract class ContentHandler extends Object {
+    // Default Constructor: public ContentHandler()
+    // Public Instance Methods
+            public abstract Object getContent(URLConnection urlc) throws IOException;
+}
+Returned By:
+ContentHandlerFactory.createContentHandler()
+java.net.ConnectException (JDK 1.1)
+java.net.ContentHandlerFactory (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

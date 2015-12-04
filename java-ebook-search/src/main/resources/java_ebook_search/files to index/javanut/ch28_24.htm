@@ -1,0 +1,27 @@
+
+[Chapter 28] 28.24 java.net.URLEncoder (JDK 1.0)
+Chapter 28The java.net Package
+28.24 java.net.URLEncoder (JDK 1.0)
+This class defines a single static method which is used to
+convert a string to its URL-encoded form. That is, spaces
+are converted to "+", and non-alphanumeric characters other
+than underscore are output as two hexadecimal digits
+following a percent sign. Note that this technique only
+works for 8-bit characters. This method is used to
+"canonicalize" a URL specification so that it uses only
+characters from an extremely portable subset of ASCII which
+can be correctly handled by computers around the world.
+public class URLEncoder extends Object {
+    // No Constructor
+    // Class Methods
+            public static String encode(String s);
+}
+java.net.URLConnection (JDK 1.0)
+java.net.URLStreamHandler (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

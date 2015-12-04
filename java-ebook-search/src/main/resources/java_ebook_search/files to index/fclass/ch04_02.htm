@@ -1,0 +1,111 @@
+
+[Chapter 4] 4.2 Declaring Exceptions
+Chapter 4Exception Handling
+4.2 Declaring Exceptions
+If a method is expected to throw any exceptions, the method
+declaration must declare that fact in a throws
+clause. If a method implementation contains a throw
+statement, it is possible that an exception will be thrown
+from within the method. In addition, if a method calls another method
+declared with a throws clause, there is the possibility
+that an exception will be thrown from within the method. If the
+exception is not caught inside the method with a try
+statement, it will be thrown out of the method to its caller. Any
+exception that can be thrown out of a method in this way must be
+listed in a throws clause in the method declaration.
+The classes listed in a throws clause must be
+Throwable or
+any of its subclasses; the Throwable class is
+the superclass of all objects that can be thrown in Java.
+However, there are certain types of exceptions that do not
+have to be listed in a throws clause. Specifically,
+if the exception is an instance of Error,
+RunTimeException,
+or a subclass of one of those classes, it does not have to be listed
+in a throws clause. Subclasses
+of the Error
+class correspond to situations that are not easily predicted,
+such as the system running out of memory. Subclasses
+of RunTimeException
+correspond to many common run-time problems, such as illegal casts
+and array index problems. The reason that these types of exceptions
+are treated specially is that they can be thrown from such a large
+number of places that essentially every method would have to declare
+them.
+Consider the following example:
+import java.io.IOException;
+class throwsExample {
+    char[] a;
+    int position;
+    ...
+    // Method explicitly throws an exception
+    int read() throws IOException {
+        if (position &gt;= a.length)
+            throw new IOException();
+        return a[position++];
+    }
+    // Method implicitly throws an exception
+    String readUpTo(char terminator) throws IOException {
+        StringBuffer s = new StringBuffer();
+        while (true) {
+            int c = read(); // Can throw IOException
+            if (c == -1 || c == terminator) {
+                return s.toString();
+            }
+            s.append((char)c);
+        }
+        return s.toString();
+    }
+    // Method catches an exception internally
+    int getLength() {
+        String s;
+        try {
+            s = readUpTo(':');
+        } catch (IOException e) {
+            return 0;
+        }
+        return s.length();
+    }
+    // Method can throw a RunTimeException
+    int getAvgLength() {
+        int count = 0;
+        int total = 0;
+        int len;
+        while (true){
+            len = getLength();
+            if (len == 0)
+                break;
+            count++;
+            total += len;
+        }
+        return total/count; // Can throw ArithmeticException
+    }
+}
+The method read() can throw an
+IOException,
+so it declares that fact in its throws clause.
+Without that throws clause, the compiler would
+complain that the method must either declare IOException
+in its throws clause or catch it. Although the
+readUpTo() method does not explicitly throw any
+exceptions, it calls the read() method that does
+throw an IOException, so it declares that fact
+in its throws clause. Whether explicitly or implicitly
+thrown, the requirement to catch or declare an exception is the
+same. The getLength() method catches the
+IOException thrown by readUpTo(),
+so it does not have to declare the exception. The final method,
+getAvgLength(), can throw an
+ArithmeticException if count
+is zero. Because ArithmeticException is a subclass
+of RuntimeException, the fact that it can be
+thrown out of getAvgLength() does not need to be declared in a throws clause.
+Handling Exceptions
+Generating Exceptions
+ 
+ 
+ 
+ 
+ 
+ 
+ 

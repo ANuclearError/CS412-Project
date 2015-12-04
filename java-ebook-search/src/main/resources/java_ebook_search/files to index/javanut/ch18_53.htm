@@ -1,0 +1,76 @@
+
+[Chapter 18] 18.53 java.awt.ScrollPane (JDK 1.1)
+Chapter 18The java.awt Package
+18.53 java.awt.ScrollPane (JDK 1.1)
+This Container class creates horizontal and
+vertical scrollbars surrounding a "viewport" and allows a
+single child component to be displayed and scrolled within
+this viewport.  Typically the child of the
+ScrollPane is larger than the
+ScrollPane itself, so scrollbars allow the user to
+select the currently visible portion.
+When you call the ScrollPane() constructor, you may
+optionally specify a scrollbar display policy, which should
+be one of the three constants defined by this class.  If you
+do not specify a policy, ScrollPane uses the
+SCROLLBARS_AS_NEEDED policy.
+A program can programmatically scroll the child within the
+viewport by calling setScrollPosition().
+getHAdjustable() and getVAdjustable() return
+the horizontal and vertical Adjustable objects that
+control scrolling (typically these are not actually
+instances of Scrollbar).  You can use these
+Adjustable objects to specify the unit and block
+increment values for the scrollbars. You can also
+directly set the Adjustable value, as an alternative
+to setScrollPosition(), but should not set other
+values of the Adjustable objects.
+Use setSize() to set the size of the
+ScrollPane container.  You may want to take the size
+of the scrollbars into account when computing the overall
+container size--use getHScrollbarHeight() and
+getVScrollbarWidth() to obtain these values.
+ScrollPane overrides the printComponents()
+method of Container so that when a
+ScrollPane is printed, the entire child component is
+printed, rather than only the currently visible portion.
+public class ScrollPane extends Container {
+    // Public Constructors
+            public ScrollPane();
+            public ScrollPane(int scrollbarDisplayPolicy);
+    // Constants
+            public static final int SCROLLBARS_ALWAYS;
+            public static final int SCROLLBARS_AS_NEEDED;
+            public static final int SCROLLBARS_NEVER;
+    // Public Instance Methods
+            public void addNotify();  // Overrides Container
+            public void doLayout();  // Overrides Container
+            public Adjustable getHAdjustable();
+            public int getHScrollbarHeight();
+            public Point getScrollPosition();
+            public int getScrollbarDisplayPolicy();
+            public Adjustable getVAdjustable();
+            public int getVScrollbarWidth();
+            public Dimension getViewportSize();
+        #   public void layout();  // Overrides Container
+            public String paramString();  // Overrides Container
+            public void printComponents(Graphics g);  // Overrides Container
+            public final void setLayout(LayoutManager mgr);  // Overrides Container
+            public void setScrollPosition(int x, int y);
+            public void setScrollPosition(Point p);
+    // Protected Instance Methods
+            protected final void addImpl(Component comp, Object constraints, int index);  // Overrides Container
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Container->ScrollPane
+Passed To:
+Toolkit.createScrollPane()
+java.awt.Rectangle (JDK 1.0)
+java.awt.Scrollbar (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

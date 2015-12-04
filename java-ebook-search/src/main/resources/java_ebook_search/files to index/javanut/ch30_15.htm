@@ -1,0 +1,40 @@
+
+[Chapter 30] 30.15 java.util.Observable (JDK 1.0)
+Chapter 30The java.util Package
+30.15 java.util.Observable (JDK 1.0)
+This class is the superclass of all "observable" objects to
+be used in an object-oriented model/view paradigm. The
+class methods allow you to add and delete Observer
+objects to and from an Observable's list, and to
+notify all of the Observer objects on the list.
+Observer objects are "notified" by invoking their
+update() method. Observable also maintains
+an internal "changed" flag, which may be set and cleared by
+the Observable, and which may be queried with
+hasChanged() by any interested observer.
+public class Observable extends Object {
+    // Public Constructor
+        1.1public Observable();
+    // Public Instance Methods
+            public synchronized void addObserver(Observer o);
+            public synchronized int countObservers();
+            public synchronized void deleteObserver(Observer o);
+            public synchronized void deleteObservers();
+            public synchronized boolean hasChanged();
+            public void notifyObservers();
+            public void notifyObservers(Object arg);
+    // Protected Instance Methods
+            protected synchronized void clearChanged();
+            protected synchronized void setChanged();
+}
+Passed To:
+Observer.update()
+java.util.NoSuchElementException (JDK 1.0)
+java.util.Observer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

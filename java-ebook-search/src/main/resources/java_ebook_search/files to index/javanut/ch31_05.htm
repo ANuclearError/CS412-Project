@@ -1,0 +1,30 @@
+
+[Chapter 31] 31.5 java.util.zip.CRC32 (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.5 java.util.zip.CRC32 (JDK 1.1)
+This class implements the Checksum interface and
+computes a checksum on a stream of data using the CRC-32
+algorithm.  The CheckedInputStream and
+CheckedOutputStream classes provide a higher-level
+interface to computing checksums on streams of data.
+public class CRC32 extends Object implements Checksum {
+    // Default Constructor: public CRC32()
+    // Public Instance Methods
+            public long getValue();  // From Checksum
+            public void reset();  // From Checksum
+            public void update(int b);  // From Checksum
+            public native void update(byte[] b, int off, int len);  // From Checksum
+            public void update(byte[] b);
+}
+Type Of:
+GZIPInputStream.crc, 
+GZIPOutputStream.crc
+java.util.zip.Checksum (JDK 1.1)
+java.util.zip.DataFormatException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

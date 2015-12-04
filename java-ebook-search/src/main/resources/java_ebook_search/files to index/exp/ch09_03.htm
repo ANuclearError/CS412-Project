@@ -1,0 +1,231 @@
+
+[Chapter 9] 9.3 Working with URLs
+Chapter 9Network Programming
+9.3 Working with URLs
+A URL points to an
+object on the Internet. It's a collection of information that
+identifies an item, tells you where to find it, and specifies a method
+for communicating with it or retrieving it from its source. A
+URL refers to any kind of information source.
+It might point to static data, such as a file on a local filesystem, a
+Web server, or an FTP archive; or it can point to a
+more dynamic object such as a news article on a news spool or a record
+in a WAIS database. URLs can
+even refer to less tangible resources such as Telnet sessions and
+mailing addresses.
+A URL is usually presented as a string of
+text, like an address.[3]
+ Since there are many different ways to locate an item on the Net, and
+different mediums and transports require different kinds of
+information, there are different formats for different kinds of
+URLs. The most common form specifies three things:
+a network host or server, the name of the item and its location on
+that host, and a protocol by which the host should communicate:
+[3] 
+The term URL was coined by the Uniform Resource
+Identifier (URI) working group of the
+IETF to distinguish URLs from
+the more general notion of Uniform Resource Names or
+URNs. URLs are really just
+static addresses, whereas URNs would be more
+persistent and abstract identifiers used to resolve the
+location of an object anywhere on the Net. URLs are
+defined in RFC 1738 and RFC
+1808.
+protocol://hostname/location/item
+protocol is an identifier such as
+"http," "ftp," or "gopher"; hostname
+is an Internet hostname; and the location and
+item components form a path that identifies the
+object on that host. Variants of this form allow extra information to
+be packed into the URL, specifying things like port
+numbers for the communications protocol and fragment identifiers that
+reference parts inside the object.
+We sometimes speak of a URL that is relative
+to a base URL. In that case we are using the base
+URL as a starting point and supplying additional
+information. For example, the base URL might point
+to a directory on a Web server; a relative URL
+might name a particular file in that directory.
+The URL class
+A URL is represented by an instance of the
+java.net.URL class. A URL
+object manages all information in a URL string
+and provides methods for retrieving the object it identifies. We can
+construct a URL object from a
+URL specification string or from its component
+parts:
+try { 
+    URL aDoc = new URL( "http://foo.bar.com/documents/homepage.html" ); 
+    URL sameDoc = 
+        new URL("http","foo.bar.com","documents/homepage.html"); 
+}  
+catch ( MalformedURLException e ) { } 
+The two URL objects above point to the same network
+resource, the homepage.html document on the
+server foo.bar.com. Whether or not the resource
+actually exists and is available isn't known until we try to
+access it. At this point, the URL object just
+contains data about the object's location and how to access
+it. No connection to the server has been made. We can examine the
+URL's components with the
+getProtocol(), getHost(), and
+getFile() methods. We can also compare it to
+another URL with the sameFile()
+method. sameFile() determines if two
+URLs point to the same resource. It can be fooled,
+but sameFile does more than compare the
+URLs for equality; it takes into account the
+possibility that one server may have several names, and other factors.
+When a URL is created, its specification is
+parsed to identify the protocol component. If the protocol
+doesn't make sense, or if Java can't find a protocol
+handler for it, the URL constructor throws a
+MalformedURLException. A protocol handler is a Java
+class that implements the communications protocol for accessing the
+URL resource. For example, given an
+"http" URL, Java prepares to use the
+HTTP protocol handler to retrieve documents from
+the specified server.
+Stream Data
+The most general way to get data back from
+URL is to ask for an InputStream
+from the URL by calling
+openStream(). If you're writing an applet
+that will be running under Netscape, this is about your only
+choice. In fact, it's a good choice if you want to receive
+continuous updates from a dynamic information source. The drawback is
+that you have to parse the contents of an object yourself. Not all
+types of URLs support the
+openStream() method; you'll get an
+UnknownServiceException if yours doesn't.
+The following code reads a single line from an HTML file: 
+try { 
+    URL url = new URL("http://server/index.html"); 
+    DataInputStream dis = new DataInputStream( url.openStream() ); 
+    String line = dis.readLine(); 
+We ask for an InputStream with
+openStream(), and wrap it in a
+DataInputStream to read a line of text. Here,
+because we are specifying the "http" protocol in the
+URL, we still require the services of an
+HTTP protocol handler. As we'll discuss more in a
+bit, that brings up some questions about what handlers we have
+available to us and where. This example partially works around those
+issues because no content handler is involved; we read the data and
+interpret it as a content handler would. However, there are even more
+limitations on what applets can do right now. For the time being, if
+you construct URLs relative to the applet's
+codeBase(), you should be able to use them in
+applets as in the above example. This should guarantee that the needed
+protocol is available and accessible to the applet. Again, we'll
+discuss the more general issues a bit later.
+Getting the Content as an Object
+openStream() operates at a lower level than the
+more general content-handling mechanism implemented by the
+URL class. We showed it first because, until some
+things are settled, you'll be limited as to when you can use
+URLs in their more powerful role. When a proper
+content handler is available to Java (currently, only if you supply
+one with your standalone application), you'll be able to retrieve the
+object the URL addresses as a complete object, by
+calling the URL's getContent()
+method. 
+getContent() initiates a connection to the
+host, fetches the data for you, determines the data's
+MIME type, and invokes a content handler to turn
+the data into a Java object.
+For example: given the URL 
+http://foo.bar.com/index.html, a call to
+getContent() uses the HTTP
+protocol handler to receive the data and the HTML
+content handler to turn the data into some kind of object. A
+URL that points to a plain-text file would use a
+text-content handler that might return a String
+object. 
+A GIF file might be turned into an
+Image object for display, using a
+GIF content handler. If we accessed the
+GIF file using an "ftp"
+URL, Java would use the same content handler, but
+would use the FTP protocol handler to receive the
+data.
+getContent() returns the output of the
+content handler. Now we're faced with a problem: exactly what
+did we get?  Since the content handler can return almost anything, the
+return type of getContent() is
+Object. Before doing anything meaningful with this
+Object, we must cast it into some other data type
+that we can work with.
+ For example, if we expect a
+String, we'll cast the result of
+getContent() to a String:
+String content; 
+ 
+try  
+    content = (String)myURL.getContent(); 
+catch ( Exception e ) { } 
+Of course, we are presuming we will in fact get a
+String object back from this
+URL. If we're wrong, we'll get a
+ClassCastException. Since it's common for servers
+to be confused (or even lie) about the MIME types
+of the objects they serve, it's wise to catch that exception (it's a
+subclass of RuntimeException, so catching it is
+optional) or to check the type of the returned object with the
+instanceof operator:
+if ( content instanceof String ) { 
+    String s = (String)content; 
+    ... 
+Various kinds of errors can occur when trying to retrieve the
+data. For example, getContent() can throw an
+IOException if there is a communications error;
+IOException is not a type of
+RuntimeException, so we must catch it explicitly,
+or declare the method that calls getContent() can
+throw it. Other kinds of errors can happen at the application level:
+some knowledge of how the handlers deal with errors is necessary.
+For example, consider a URL that refers to a
+nonexistent file on an HTTP server. When
+requested, the server probably returns a valid HTML
+document that consists of the familiar "404 Not Found"
+message. An appropriate HTML content handler is
+invoked to interpret this and return it as it would any other
+HTML object. At this point, there are several
+alternatives, depending entirely on the content handler's
+implementation. It might return a String containing
+the error message; it could also conceivably return some other kind of
+object or throw a specialized subclass of
+IOException. To find out that an error occurred,
+the application may have to look directly at the object returned from
+getContent(). After all, what is an error to the
+application may not be an error as far as the protocol or content
+handlers are concerned. "404 Not Found" isn't an
+error at this level; it's a perfectly valid document.
+Another type of error occurs if a content handler that
+understands the data's MIME type isn't
+available. In this case, getContent() invokes a
+minimal content handler used for data with an unknown type and
+returns the data as a raw InputStream. A
+sophisticated application might specialize this behavior to try to
+decide what to do with the data on its own.
+The openStream() and
+getContent() methods both implicitly create a
+connection to the remote URL object. For some
+applications, it may be necessary to use the
+openConnection() method of the
+URL to interact directly with the protocol
+handler. openConnection() returns a
+URLConnection object, which represents a single,
+active connection to the URL resource. We'll
+examine URLConnections further when we start writing
+protocol handlers.
+Datagram Sockets
+Web Browsers and Handlers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

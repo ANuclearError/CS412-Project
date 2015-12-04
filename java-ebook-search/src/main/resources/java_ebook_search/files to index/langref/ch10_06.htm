@@ -1,0 +1,58 @@
+
+[Chapter 10] Cloneable
+Chapter 10The java.lang Package
+Cloneable
+Name
+Cloneable
+Synopsis
+Interface Name:
+java.lang.Cloneable
+Super-interface:
+None
+Immediate Sub-interfaces:
+java.text.CharacterIterator
+Implemented by:
+java.awt.GridBagConstraints,
+java.awt.Insets,
+java.awt.image.ImageFilter,
+java.text.BreakIterator,
+java.text.Collator,
+java.text.DateFormat,
+java.text.DateFormatSymbols,
+java.text.DecimalFormatSymbols,
+java.text.Format,
+java.text.NumberFormat,
+java.util.BitSet,
+java.util.Calendar,
+java.util.Date,
+java.util.Hashtable,
+java.util.Locale,
+java.util.TimeZone,
+java.util.Vector
+Availability:
+JDK 1.0 or later
+Description
+The Cloneable
+interface provides no functionality; it declares no methods
+or variables. This interface is simply provided as a way of indicating
+that an object can be cloned (that is, copied). A class that is declared
+as implementing this interface is assumed to have overridden the
+Object class' implementation of clone() with an implementation that can successfully clone instances
+of the class. The implementation of clone() that is
+provided by the Object class simply throws
+a CloneNotSupportedException.
+Interface Declaration
+public interface java.lang.Cloneable {
+}
+See Also
+Exceptions;
+Object
+ClassLoader
+Compiler
+ 
+ 
+ 
+ 
+ 
+ 
+ 

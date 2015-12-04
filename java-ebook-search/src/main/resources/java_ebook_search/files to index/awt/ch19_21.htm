@@ -1,0 +1,67 @@
+
+[Chapter 19] EventQueue 
+Chapter 19java.awt Reference
+EventQueue 
+Name
+EventQueue 
+Description
+The EventQueue class is a facility for queuing Java 1.1 AWT events, either for the system or for some other purpose. You rarely need to create your own event queue; for most purposes, you will want to work with the system's event queue, which you acquire using the Toolkit.
+Class Definition
+public class EventQueue extends Object {
+  // Constructor
+  public EventQueue();
+  // Instance Methods
+  public synchronized AWTEvent getNextEvent() throws InterruptedException;
+  public synchronized AWTEvent peekEvent();
+  public synchronized AWTEvent peekEvent (int id);
+  public synchronized void postEvent (AWTEvent theEvent);
+}
+Constructor
+EventQueue
+public EventQueue()
+Description
+Creates an EventQueue for your own use.
+Instance Methods
+getNextEvent
+public synchronized AWTEvent getNextEvent() throws InterruptedException
+Throws 
+InterruptedException
+If the 
+thread is interrupted before an event is posted to the queue. 
+Returns
+AWTEvent 
+taken from the event queue. 
+Description
+Removes the next event from the event queue and returns it. If there 
+are no events in the queue, this method will block until another thread 
+posts one. 
+peekEvent
+public synchronized AWTEvent peekEvent()
+Returns
+Next AWTEvent 
+on the event queue. 
+Description
+Returns a reference to the next event on the queue without removing it 
+from the queue. 
+public synchronized AWTEvent peekEvent (int id)
+Parameters
+id
+Type of event to find. 
+Returns
+AWTEvent 
+with the given type id; null 
+if no event with the given type is currently in the queue. 
+Description
+Returns an event with the given type if one exists, but doesn't remove 
+the event from the queue. 
+See Also
+AWTEvent, Event 
+Event
+FileDialog
+ 
+ 
+ 
+ 
+ 
+ 
+ 

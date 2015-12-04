@@ -1,0 +1,177 @@
+
+[Chapter 11] BufferedOutputStream
+Chapter 11The java.io Package
+BufferedOutputStream
+Name
+BufferedOutputStream
+Synopsis
+Class Name:
+java.io.BufferedOutputStream
+Superclass:
+java.io.FilterOutputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+A BufferedOutputStream object provides a more
+efficient way to write just a few bytes at a time to an
+OutputStream.
+BufferedOutputStream objects
+use a buffer to store output for an 
+associated OutputStream. 
+In other words, a large number of bytes are stored in an internal buffer 
+and only written when the buffer fills up or is explicitly flushed. A BufferedOutputStream 
+is more efficient than a regular OutputStream 
+because the data is written to memory, rather than a disk or a network. 
+Minimizing the number of write operations to a disk or the network 
+minimizes the cumulative overhead for these operations.
+You should wrap a BufferedOutputStream 
+around any OutputStream whose 
+write() operations may be time 
+consuming or costly, such as a FileOutputStream. 
+Class Summary
+public class java.io.BufferedOutputStream 
+             extends java.io.FilterOutputStream {
+  // Variables
+  protected byte[] buf;
+  protected int count;
+  // Constructors
+  public BufferedOutputStream(OutputStream out);
+  public BufferedOutputStream(OutputStream out, int size);
+  // Instance Methods
+  public synchronized void flush();
+  public synchronized void write(int b);
+  public synchronized void write(byte[] b, int off, int len);
+}
+Variables
+buf
+protected byte[] buf
+Description
+The buffer that stores the data for the output stream. 
+count
+protected int count
+Description
+The current position in the buffer. 
+Constructors
+BufferedOutputStream
+public BufferedOutputStream(OutputStream out)
+Parameters
+out
+The output stream to buffer. 
+Description
+This constructor creates a BufferedOutputStream that 
+acts on the specified OutputStream, 
+using a buffer with the default size of 512 bytes. 
+public BufferedOutputStream(OutputStream out, int size)
+Parameters
+out
+The output stream to buffer.
+size
+The size of buffer to use. 
+Description
+This constructor creates a BufferedOutputStream that 
+acts on the specified OutputStream, 
+using a buffer that is size 
+bytes long. 
+Instance Methods
+flush
+public synchronized void flush() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.flush() 
+Description
+This method writes the contents of the buffer to the underlying output 
+stream. It is called automatically when the buffer fills up. You can 
+also call it before the buffer is full. This is known as "flushing" 
+the buffer. This method blocks until the underlying write() 
+is complete. 
+write
+public synchronized void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(int) 
+Description
+This method places a byte containing the low-order eight bits of the given 
+integer into the buffer. If the buffer is full, it is flushed, and the 
+value b is placed in the newly 
+empty buffer. If the buffer is flushed, this method blocks until flush() 
+returns; otherwise this method returns immediately. 
+   public synchronized void write(byte b[], int off, int len) throws IOException  
+Parameters
+b
+An array of bytes to 
+write to the stream.
+off
+An offset into the 
+byte array.
+len
+The number of bytes 
+to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterOutputStream.write(byte[], int, int) 
+Description
+This method copies len bytes 
+from b, starting at off, 
+into the buffer. If there is enough space left in the buffer for the new 
+data, it is copied into the buffer and the method returns immediately. 
+Otherwise, the buffer is flushed, and the new data is written directly 
+to the underlying stream. This is subtly different from the behavior of 
+write(int), which places new 
+data in the buffer after a flush(). 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+FilterOutputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(byte[])
+FilterOutputStream
+See Also
+FilterOutputStream, 
+IOException, 
+OutputStream 
+BufferedInputStream
+BufferedReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,50 @@
+
+[Chapter 2] 2.4 StringTokenizer
+Chapter 2Strings and Related Classes
+2.4 StringTokenizer
+The java.util.StringTokenizer 
+class provides support for parsing a string into a sequence of words, or 
+tokens, that are 
+separated by some set of delimiter characters. Here is an example of how 
+to use the StringTokenizer 
+class: 
+StringTokenizer s = new StringTokenizer("This is it");
+while (s.hasMoreTokens())
+    System.out.println(s.nextToken());
+This example begins by creating a StringTokenizer 
+object to pick tokens out of the specified string. The example uses a StringTokenizer 
+constructor that does not specify what delimiters to use, so the new StringTokenizer 
+object uses the default delimiters: space, 
+tab ('\t'), 
+carriage return ('\r'), 
+and newline ('\n'). 
+The while loop does the actual 
+work of getting the tokens from the StringTokenizer 
+object. The hasMoreTokens() 
+method returns true while there 
+are still more tokens to be fetched from the StringTokenizer 
+object, while nextToken() returns 
+the next token. Here is the output from the example: 
+This
+is
+it
+You can also use a StringTokenizer 
+to extract tokens from a string that uses delimiters other than whitespace. 
+For example, suppose that you need to extract tokens that are separated 
+by commas, such as from a string that looks like this: 
+abc,def,123,789
+In this case, you use a StringTokenizer 
+constructor that takes a parameter that specifies the characters to be 
+treated as delimiters. For example: 
+StringTokenizer s = new StringTokenizer(commaString, ",");
+The second argument to this constructor specifies the delimiter characters, 
+so in this case, the only delimiter character is the comma character. 
+String Concatenation
+Threads
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,90 @@
+
+[Chapter 11] SyncFailedException
+Chapter 11The java.io Package
+SyncFailedException
+Name
+SyncFailedException
+Synopsis
+Class Name:
+java.io.SyncFailedException
+Superclass:
+java.io.IOException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+A SyncFailedException is thrown from when an
+underlying I/O device cannot be synchronized to a known state. The
+FileDescriptor.sync() method throws this exception when its
+synchronization operation fails.
+Class Summary
+public class java.io.SyncFailedException extends java.io.IOException {
+  // Constructors
+  public SyncFailedException(String desc);
+}
+Constructors
+SyncFailedException
+public SyncFailedException(String desc)
+Parameters
+desc
+A description of the 
+reason this exception was thrown. 
+Description
+This constructor creates a SyncFailedException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception,
+FileDescriptor,
+IOException, 
+Throwable 
+StringWriter
+UnsupportedEncodingException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

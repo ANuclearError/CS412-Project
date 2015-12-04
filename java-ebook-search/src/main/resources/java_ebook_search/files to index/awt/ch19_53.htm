@@ -1,0 +1,207 @@
+
+[Chapter 19] ScrollPane 
+Chapter 19java.awt Reference
+ScrollPane 
+Name
+ScrollPane 
+Description
+The ScrollPane class provides 
+automatic scrolling of a child component. 
+Class Definition
+public class java.awt.ScrollPane
+    extends java.awt.Container {
+  // Constants
+  public final static int SCROLLBARS_ALWAYS;
+  public final static int SCROLLBARS_AS_NEEDED;
+  public final static int SCROLLBARS_NEVER;
+  // Constructors
+  public ScrollPane();
+  public ScrollPane (int scrollbarDisplayPolicy);
+  // Public Instance Methods
+  public void addNotify();
+  public void doLayout();
+  public Adjustable getHAdjustable();
+  public int getHScrollbarHeight();
+  public Point getScrollPosition();
+  public int getScrollbarDisplayPolicy();
+  public Adjustable getVAdjustable();
+  public int getVScrollbarWidth();
+  public Dimension getViewportSize();
+  public void layout(); 
+  public String paramString();
+  public void printComponents (Graphics g);
+  public final void setLayout (LayoutManager mgr);
+  public void setScrollPosition (int x, int y);
+  public void setScrollPosition (Point p);
+  
+  //Protected Instance Methods
+  protected final void addImpl (Component comp, Object constraints,
+    int index); 
+}
+Constants
+SCROLLBARS_ALWAYS
+public final static int SCROLLBARS_ALWAYS
+Always show the scrollbars. 
+SCROLLBARS_AS_NEEDED
+public final static int SCROLLBARS_AS_NEEDED
+Only show the scrollbars if the contents of the ScrollPane 
+are larger than what is visible. 
+SCROLLBARS_NEVER
+public final static int SCROLLBARS_NEVER
+Don't ever show the scrollbars. The ScrollPane 
+can still be scrolled programmatically. 
+Constructors
+ScrollPane
+public ScrollPane()
+Description
+Constructs a ScrollPane object 
+with SCROLLBARS_AS_NEEDED. 
+public ScrollPane (int scrollbarDisplayPolicy)
+Parameters 
+scrollbarDisplayPolicy
+One of the SCROLLBARS_ 
+constants. 
+Description
+Constructs a ScrollPane object 
+with the specified scrollbar display policy. 
+Instance Methods
+addImpl
+protected final void addImpl (Component comp, Object constraints, int index)
+Parameters 
+comp
+The component to add to the Scrollpane. 
+constraints
+Layout constraints; ignored.
+index
+The position at which to add the component; should always be less than or equal to 0.
+Returns
+The component that was added. 
+Overrides 
+Container.addImpl (Component, Object, int) 
+Throws 
+IllegalArgumentException
+If 
+pos is greater than 0. 
+Description
+Adds a child component to the Scrollpane. If there already was a child component, it is replaced 
+by the new component. 
+addNotify
+public void addNotify()
+Overrides 
+Container.addNotify() 
+Description
+Creates ScrollPane's peer. 
+doLayout
+public void doLayout()
+Overrides 
+Container.doLayout() 
+Description
+Lays out the ScrollPane. Resizes 
+the child component to its preferred size. 
+getHAdjustable
+public Adjustable getHAdjustable()
+Returns
+The object implementing the Adjustable 
+interface that is used to adjust the ScrollPane 
+horizontally. Usually this is a Scrollbar. 
+getHScrollbarHeight
+public int getHScrollbarHeight()
+Returns
+The height a horizontal scrollbar would occupy, regardless of whether it's 
+shown or not. 
+getScrollPosition
+public Point getScrollPosition()
+Returns
+Returns the position within the child component that is displayed at 0, 
+0 in the ScrollPane. 
+getScrollbarDisplayPolicy
+public int getScrollbarDisplayPolicy()
+Returns
+The display policy for the scrollbars (one of the SCROLLBARS_ 
+constants). 
+getVAdjustable
+public Adjustable getVAdjustable()
+Returns
+The object implementing the Adjustable 
+interface that is used to adjust the ScrollPane 
+vertically. Usually this is a Scrollbar. 
+getVScrollbarWidth
+public int getVScrollbarWidth()
+Returns
+The width a vertical scrollbar would occupy, regardless of whether it's 
+shown or not. 
+getViewportSize
+public Dimension getViewportSize()
+Returns
+The size of the ScrollPane's 
+port (the area of the child component that is shown). 
+layout
+public void layout() 
+Overrides 
+Container.layout() 
+Description
+Lays out component. Replaced by doLayout(). 
+paramString
+public String paramString()
+Returns
+String with current settings of ScrollPane. 
+Overrides 
+Container.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+printComponents
+public void printComponents (Graphics g)
+Parameters 
+g
+Graphics context. 
+Overrides 
+Container.printComponents(Graphics) 
+Description
+Prints the ScrollPane's 
+child component. 
+setLayout
+public void setLayout (LayoutManager manager)
+Parameters 
+manager
+Ignored. 
+Overrides 
+Container.setLayout(LayoutManager) 
+Description
+Does nothing. No layout manager is needed because there is only one child 
+component. 
+setScrollPosition
+public void setScrollPosition (int x, int y)
+Parameters 
+x
+New horizontal position. 
+y
+New vertical position. 
+Throws 
+IllegalArgumentException
+If 
+the point given is not valid. 
+Description
+Scroll to the given position in the child component. 
+public void setScrollPosition (Point p)
+Parameters 
+p
+New position. 
+Throws 
+IllegalArgumentException
+If 
+the point given is not valid. 
+Description
+Scroll to the given position in the child component. 
+See Also
+Adjustable, Container, 
+Point, Scrollbar 
+Rectangle
+Scrollbar
+ 
+ 
+ 
+ 
+ 
+ 
+ 

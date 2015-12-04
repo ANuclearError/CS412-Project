@@ -1,0 +1,50 @@
+
+[Chapter 24] 24.3 java.io.BufferedReader (JDK 1.1)
+Chapter 24The java.io Package
+24.3 java.io.BufferedReader (JDK 1.1)
+This class applies buffering to a character input stream,
+thereby improving the efficiency of character input.  You
+create a BufferedReader by specifying some other
+character input stream that it is to buffer input from.
+(You can also specify a buffer size at this time, although
+the default size is usually fine.)  Typically you 
+use this sort of buffering when you are using a
+FileReader or InputStreamReader.
+BufferedReader defines the standard set of
+Reader methods, and also provides a
+readLine() method that reads a line of text (not
+including the line-terminators) and returns it as a
+String.
+BufferedReader is the character-stream analog of
+BufferedInputStream.  It also provides a replacement
+for the deprecated readLine() method of
+DataInputStream, which did not properly convert
+bytes into characters.
+public class BufferedReader extends Reader {
+    // Public Constructors
+            public BufferedReader(Reader in, int sz);
+            public BufferedReader(Reader in);
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Reader
+            public void mark(int readAheadLimit) throws IOException;  // Overrides Reader
+            public boolean markSupported();  // Overrides Reader
+            public int read() throws IOException;  // Overrides Reader
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Defines Reader
+            public String readLine() throws IOException;
+            public boolean ready() throws IOException;  // Overrides Reader
+            public void reset() throws IOException;  // Overrides Reader
+            public long skip(long n) throws IOException;  // Overrides Reader
+}
+Hierarchy:
+Object->Reader->BufferedReader
+Extended By:
+LineNumberReader
+java.io.BufferedOutputStream (JDK 1.0)
+java.io.BufferedWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

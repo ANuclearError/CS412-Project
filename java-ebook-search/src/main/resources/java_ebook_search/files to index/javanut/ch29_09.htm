@@ -1,0 +1,87 @@
+
+[Chapter 29] 29.9 java.text.DecimalFormat (JDK 1.1)
+Chapter 29The java.text Package
+29.9 java.text.DecimalFormat (JDK 1.1)
+This is the concrete Format class used by
+NumberFormat for all locales that use base 10
+numbers.  Most applications do not need to use this class
+directly--they can use the static methods of
+NumberFormat to obtain a default NumberFormat object
+for a desired locale, and may then perform minor
+locale-independent customizations on that object.
+Applications that require highly-customized number
+formatting and parsing may create custom
+DecimalFormat objects by passing a suitable pattern
+to the DecimalFormat() constructor method.  The
+applyPattern() method can be used to change this
+pattern.  A pattern consists of a string of characters from
+the following table.  For example: "$#,##0.00;($#,##0.00)".
+Character
+Meaning
+#
+A digit; zeros show as absent
+0
+A digit; zeros show as 0
+.
+The locale-specific decimal separator
+,
+The locale-specific grouping separator
+-
+The locale-specific negative prefix
+%
+Show value as a percentage
+;
+Separates positive number format (on left) from optional
+negative number format (on right)
+'
+Quote a reserved character, so it appears literally in the output 
+other
+Appears literally in output
+A DecimalFormatSymbols object may be optionally
+specified when creating a DecimalFormat object.  If
+one is not specified, a DecimalFormatSymbols object
+suitable for the default locale is used.
+public class DecimalFormat extends NumberFormat {
+    // Public Constructors
+            public DecimalFormat();
+            public DecimalFormat(String pattern);
+            public DecimalFormat(String pattern, DecimalFormatSymbols symbols);
+    // Public Instance Methods
+            public void applyLocalizedPattern(String pattern);
+            public void applyPattern(String pattern);
+            public Object clone();  // Overrides NumberFormat
+            public boolean equals(Object obj);  // Overrides NumberFormat
+            public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition);  // Defines NumberFormat
+            public StringBuffer format(long number, StringBuffer result, FieldPosition fieldPosition);  // Defines NumberFormat
+            public DecimalFormatSymbols getDecimalFormatSymbols();
+            public int getGroupingSize();
+            public int getMultiplier();
+            public String getNegativePrefix();
+            public String getNegativeSuffix();
+            public String getPositivePrefix();
+            public String getPositiveSuffix();
+            public int hashCode();  // Overrides NumberFormat
+            public boolean isDecimalSeparatorAlwaysShown();
+            public Number parse(String text, ParsePosition status);  // Defines NumberFormat
+            public void setDecimalFormatSymbols(DecimalFormatSymbols newSymbols);
+            public void setDecimalSeparatorAlwaysShown(boolean newValue);
+            public void setGroupingSize(int newValue);
+            public void setMultiplier(int newValue);
+            public void setNegativePrefix(String newValue);
+            public void setNegativeSuffix(String newValue);
+            public void setPositivePrefix(String newValue);
+            public void setPositiveSuffix(String newValue);
+            public String toLocalizedPattern();
+            public String toPattern();
+}
+Hierarchy:
+Object->Format(Serializable, Cloneable)->NumberFormat(Cloneable)->DecimalFormat
+java.text.DateFormatSymbols (JDK 1.1)
+java.text.DecimalFormatSymbols (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

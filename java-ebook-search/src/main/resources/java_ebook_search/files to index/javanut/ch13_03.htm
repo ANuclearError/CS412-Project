@@ -1,0 +1,217 @@
+
+[Chapter 13] 13.3 Operators
+Chapter 13Java Syntax
+13.3 Operators
+Operators
+lists the operators of the Java language, along with their precedence,
+operand types, and associativity.
+Table 13.3: Java Operators
+Prec.
+Operator
+Operand Type(s)
+Assoc.
+Operation Performed
+1
+++
+arithmetic
+R
+pre-or-post increment (unary)
+--
+arithmetic
+R
+pre-or-post decrement (unary)
++, -
+arithmetic
+R
+unary plus, unary minus
+~
+integral
+R
+bitwise complement (unary)
+!
+boolean
+R
+logical complement (unary)
+(type)
+any
+R
+cast
+2
+*, /, %
+arithmetic
+L
+multiplication, division, remainder
+3
++, -
+arithmetic
+L
+addition, subtraction
++
+string
+L
+string concatenation
+4
+&lt;&lt;
+integral
+L
+left shift
+&gt;&gt;
+integral
+L
+right shift with sign extension
+&gt;&gt;&gt;
+integral
+L
+right shift with zero extension
+5
+&lt;, &lt;=
+arithmetic
+L
+less than, less than or equal
+&gt;, &gt;=
+arithmetic
+L
+greater than, greater than or equal
+instanceof
+object, type
+L
+type comparison
+6
+==
+primitive
+L
+equal (have identical values)
+!=
+primitive
+L
+not equal (have different values)
+==
+object
+L
+equal (refer to same object)
+!=
+object
+L
+not equal (refer to different objects)
+7
+&amp;
+integral
+L
+bitwise AND
+&amp;
+boolean
+L
+boolean AND
+8
+^
+integral
+L
+bitwise XOR
+^
+boolean
+L
+boolean XOR
+9
+|
+integral
+L
+bitwise OR
+|
+boolean
+L
+boolean OR
+10
+&amp;&amp;
+boolean
+L
+conditional AND
+11
+||
+boolean
+L
+conditional OR
+12
+?:
+boolean, any, any
+R
+conditional (ternary) operator
+13
+=
+variable, any
+R
+assignment
+*=, /=, %=, +=, -=, &lt;&lt;=, &gt;&gt;=, &gt;&gt;&gt;=, &amp;=, ^=, |=
+variable, any
+R
+assignment with operation
+Operator precedence controls the order in which operations are
+performed.  Consider the following example:
+w = x + y * z;
+The multiplication operator * has a higher
+precedence than the addition operator +, so the
+multiplication is performed before the addition.
+Furthermore, the assignment operator = has the
+lowest precedence of any operator, so the assignment is
+done after all the operations on the right-hand side are
+performed.  Operators with the same precedence (like
+addition and subtraction) are performed in order according
+to their associativity
+(usually left-to-right).  Operator precedence
+can be overridden with the explicit use of parentheses. For example:
+w = (x + y) * z;
+The associativity of an operator specifies the order that
+operations of the same precedence are performed in.  In
+Table 13.3
+a value of L specifies left-to-right associativity, and a
+value of R specifies right-to-left associativity.
+Left-to-right associativity means that operations are
+performed left-to-right.  For example:
+w = x + y + z;
+is the same as:
+w = ((x + y) + z);
+because the addition operator has left-to-right
+associativity. On the other hand, the following expressions:
+x = ~-~y;
+q = a?b:c?d:e?f:g;
+are equivalent to:
+x = ~(-(~y));
+q = a?b:(c?d:(e?f:g));
+because the unary operators and the ternary conditional
+?: operator have right-to-left associativity.
+Java operators are basically identical to C operators,
+except for these differences:
+The + operator applied to String values
+concatenates them.  If only one operand of + is a
+String, the other one is converted to a string.
+The conversion is done automatically for primitive types
+and by calling the toString method of non-primitive
+types.
+Java does not have the comma operator like C does.  It does,
+however, simulate this operator in the limited context of the
+for loop initialization and increment expressions.
+Since all Java integral types are signed, the &gt;&gt;
+operator always does a signed right shift, filling in high
+bits with the sign bit of the operand.  The new &gt;&gt;&gt;
+operator performs an unsigned right shift, filling in high
+bits of the shifted value with zero bits.
+The &amp; and | operators perform bitwise AND
+and OR operations on integral operands, and perform logical
+AND and OR operators on boolean operands.
+&amp;&amp; and || also perform logical AND and OR on
+boolean operands, but do not evaluate the right-hand
+operand, if the result of the operation is fully determined
+by the left-hand operand.
+The instanceof operator returns true if the
+object on the left-hand side is an instance of the class or
+implements the interface on the right-hand side.  Otherwise
+it returns false.  If the left-hand side is
+null, it returns false.
+Character Escape Sequences
+Modifiers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

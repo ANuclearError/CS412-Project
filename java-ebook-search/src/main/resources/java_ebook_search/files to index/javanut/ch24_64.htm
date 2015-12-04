@@ -1,0 +1,52 @@
+
+[Chapter 24] 24.64 java.io.StringWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.64 java.io.StringWriter (JDK 1.1)
+This class is a character output stream that uses an
+internal StringBuffer object as the destination of
+the characters written to the stream.  When you create a
+StringWriter, you may optionally specify an initial
+size for the StringBuffer, but you do not specify
+the StringBuffer itself--it is managed internally
+by the StringWriter, and grows as necessary to
+accommodate the characters written to it.
+StringWriter defines the standard write(),
+flush(), and close() methods that all
+Writer subclasses do, and also defines two methods
+to obtain the characters that have been written into the
+stream's internal buffer.  toString() returns the
+contents of the internal buffer as a String, and
+getBuffer() returns the buffer itself.  Note that
+getBuffer() returns a reference to the actual
+internal buffer, not a copy of it, so any changes you make
+to the buffer are reflected in subsequent calls to
+toString(). 
+StringWriter is quite similar to
+CharArrayWriter, but does not have a byte stream
+analog.
+public class StringWriter extends Writer {
+    // Public Constructor
+            public StringWriter();
+    // Protected Constructor
+            protected StringWriter(int initialSize);
+    // Public Instance Methods
+            public void close();  // Defines Writer
+            public void flush();  // Defines Writer
+            public StringBuffer getBuffer();
+            public String toString();  // Overrides Object
+            public void write(int c);  // Overrides Writer
+            public void write(char[] cbuf, int off, int len);  // Defines Writer
+            public void write(String str);  // Overrides Writer
+            public void write(String str, int off, int len);  // Overrides Writer
+}
+Hierarchy:
+Object->Writer->StringWriter
+java.io.StringReader (JDK 1.1)
+java.io.SyncFailedException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

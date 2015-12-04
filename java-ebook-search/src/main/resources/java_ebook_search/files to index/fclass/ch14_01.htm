@@ -1,0 +1,639 @@
+
+[Chapter 14] The java.math Package
+Chapter 14
+14. The java.math Package
+Contents:
+BigDecimal
+BigInteger
+The package java.math is new as of Java 1.1.
+It contains two classes that support arithmetic on arbitrarily large
+integers and floating-point numbers.  
+Figure 14.1 shows the class hierarchy for
+the java.math package.
+Figure 14.1: The java.math package
+BigDecimal
+Name
+BigDecimal
+Synopsis
+Class Name:
+java.math.BigDecimal
+Superclass:
+java.lang.Number
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The BigDecimal class represents arbitrary-precision
+rational numbers. A BigDecimal object provides a
+good way to represent a real number that exceeds the range or
+precision that can be represented by a double value
+or the rounding that is done on a double value is
+unacceptable.
+The representation for a BigDecimal consists of an
+unlimited precision integer value and an integer scale factor. The
+scale factor indicates a power of 10 that the integer value is
+implicitly divided by.  For example, a BigDecimal
+would represent the value 123.456 with an integer value of 123456 and
+the scale factor of 3.  Note that the scale factor cannot be negative
+and a BigDecimal cannot overflow.
+Most of the methods in BigDecimal perform
+mathematical operations or make comparisons with other
+BigDecimal objects. Operations that result in some
+loss of precision, such as division, require a rounding method to be
+specified. The BigDecimal class defines constants
+to represent the different rounding methods. The rounding method
+determines if the digit before a discarded fraction is rounded up or
+left unchanged.
+Class Summary
+public class java.math.BigDecimal extends java.lang.Number {
+  // Constants
+  public static final int ROUND_CEILING;
+  public static final int ROUND_DOWN;
+  public static final int ROUND_FLOOR;
+  public static final int ROUND_HALF_DOWN;
+  public static final int ROUND_HALF_EVEN;
+  public static final int ROUND_HALF_UP;
+  public static final int ROUND_UNNECESSARY;
+  public static final int ROUND_UP;
+  // Constructors
+  public BigDecimal(double val);
+  public BigDecimal(String val);
+  public BigDecimal(BigInteger val);
+  public BigDecimal(BigInteger val, int scale);
+  // Class Methods
+  public static BigDecimal valueOf(long val);
+  public static BigDecimal valueOf(long val, int scale);
+  // Instance Methods
+  public BigDecimal abs();
+  public BigDecimal add(BigDecimal val);
+  public int compareTo(BigDecimal val);
+  public BigDecimal divide(BigDecimal val, int roundingMode);
+  public BigDecimal divide(BigDecimal val, int scale, int roundingMode);
+  public double doubleValue();
+  public boolean equals(Object x); 
+  public float floatValue();
+  public int hashCode();
+  public int intValue();
+  public long longValue();
+  public BigDecimal max(BigDecimal val);
+  public BigDecimal min(BigDecimal val);
+  public BigDecimal movePointLeft(int n);
+  public BigDecimal movePointRight(int n);
+  public BigDecimal multiply(BigDecimal val);
+  public BigDecimal negate();
+  public int scale();
+  public BigDecimal setScale(int scale);
+  public BigDecimal setScale(int scale, int roundingMode);
+  public int signum();
+  public BigDecimal subtract(BigDecimal val);
+  public BigInteger toBigInteger();
+  public String toString();
+}
+Constants
+ROUND_CEILING
+public static final int ROUND_CEILING
+Description
+A rounding method that rounds towards positive infinity.
+Under this method, the value is rounded to the least integer 
+greater than or equal to its value. For example, 
+2.5 rounds to 3 and -2.5 rounds to -2.
+ROUND_DOWN
+public static final int ROUND_DOWN
+Description
+ 
+A rounding method that rounds towards zero by truncating. 
+For example, 2.5 rounds to 2 and -2.5 rounds to -2.
+ROUND_FLOOR
+public static final int ROUND_FLOOR
+Description
+A rounding method that rounds towards negative infinity. Under this 
+method, the value is rounded to the greatest integer less than
+or equal to its value. For example, 2.5 rounds to 2 and -2.5 rounds to -3.
+ROUND_HALF_DOWN
+public static final int ROUND_HALF_DOWN
+Description
+A rounding method that increments the digit prior to a discarded fraction 
+if the fraction is greater than 0.5; otherwise, the digit is left unchanged. 
+For example, 2.5 rounds to 2, 2.51 rounds to 3, -2.5
+rounds to -2, and -2.51 rounds to -3.
+ROUND_HALF_EVEN
+public static final int ROUND_HALF_EVEN
+Description
+A rounding method that behaves like ROUND_HALF_UP 
+if the digit prior to the discarded fraction is odd; otherwise it behaves 
+like ROUND_HALF_DOWN. 
+For example, 2.5 rounds to 2, 3.5 rounds to 4,
+-2.5 rounds to -2, and -3.5 rounds to -4.
+ROUND_HALF_UP
+public static final int ROUND_HALF_UP
+Description
+A rounding method that increments the digit prior to a discarded fraction 
+if the fraction is greater than or equal to 0.5; otherwise, the digit is 
+left unchanged. 
+For example, 2.5 rounds to 3, 2.49 rounds to 2,
+-2.5 rounds to -3, and -2.49 rounds to -2.
+ROUND_UNNECESSARY
+public static final int ROUND_UNNECESSARY
+Description
+A constant that specifies that rounding is not necessary. If the 
+result really does require rounding, an ArithmeticException 
+is thrown. 
+ROUND_UP
+public static final int ROUND_UP
+Description
+A rounding method that rounds away from zero by truncating. 
+For example, 2.5 rounds to 3 and -2.5 rounds to -3.
+Constructors
+BigDecimal
+public BigDecimal(double val) throws NumberFormatException
+Parameters
+val
+The initial value. 
+Throws
+NumberFormatException
+If the double has any of the 
+special values: Double.NEGATIVE_INFINITY, 
+Double.POSITIVE_INFINITY, or 
+Double.NaN. 
+Description
+This constructor creates a BigDecimal with the
+given initial value. The scale of the BigDecimal
+that is created is the smallest value such that
+(10^scale x val) is
+an integer.
+public BigDecimal(String val) throws NumberFormatException
+Parameters
+val
+The initial value. 
+Throws
+NumberFormatException
+If the string cannot be parsed into a valid BigDecimal. 
+Description
+This constructor creates a BigDecimal 
+with the initial value specified by the String. 
+The string can contain an optional minus sign, followed by zero or more 
+decimal digits, followed by an optional fraction. The fraction must contain 
+a decimal point and zero or more decimal digits. The string must contain 
+as least one digit in the integer or fractional part. The scale of the 
+BigDecimal that is created 
+is equal to the number of digits to the right of the decimal point or 
+0 if there is no decimal point. The mapping from characters to digits is 
+provided by the Character.digit() 
+method. 
+public BigDecimal(BigInteger val)
+Parameters
+val
+The initial value. 
+Description
+This constructor creates a BigDecimal 
+whose initial value comes from the given BigInteger. 
+The scale of the BigDecimal 
+that is created is 0. 
+   public BigDecimal(BigInteger val, int scale) throws NumberFormatException  
+Parameters
+val
+The initial value.
+scale
+The initial scale. 
+Throws
+NumberFormatException
+If scale is negative. 
+Description
+This constructor creates a BigDecimal 
+from the given parameters. The scale 
+parameter specifies how many digits of the supplied BigInteger 
+fall to the right of the decimal point. 
+Class Methods
+valueOf
+public static BigDecimal valueOf(long val)
+Parameters
+val
+The initial value. 
+Returns
+A BigDecimal that represents 
+the given value. 
+Description
+This method creates a BigDecimal 
+from the given long value. 
+The scale of the BigDecimal 
+that is created is 0. 
+   public static BigDecimal valueOf(long val, int scale) throws NumberFormatException  
+Parameters
+val
+The initial value.
+scale
+The initial scale. 
+Returns
+A BigDecimal that represents 
+the given value and scale. 
+Throws
+NumberFormatException
+If scale is negative. 
+Description
+This method creates a BigDecimal 
+from the given parameters. The scale 
+parameter specifies how many digits of the supplied long 
+fall to the right of the decimal point. 
+Instance Methods
+abs
+public BigDecimal abs()
+Returns
+A BigDecimal that contains 
+the absolute value of this number. 
+Description
+This method returns the absolute value of this BigDecimal. 
+If this BigDecimal is nonnegative, 
+it is returned. Otherwise, a new BigDecimal 
+that contains the absolute value of this BigDecimal 
+is returned. The scale of the new BigDecimal 
+is the same as that of this BigDecimal. 
+add
+public BigDecimal add(BigDecimal val)
+Parameters
+val
+The number to be added. 
+Returns
+A new BigDecimal that contains 
+the sum of this number and the given value. 
+Description
+This method returns the sum of this BigDecimal 
+and the given BigDecimal as 
+a new BigDecimal. The value 
+of the new BigDecimal is the 
+sum of the values of the two BigDecimal 
+objects being added; the scale is the maximum of their two scales. 
+compareTo
+public int compareTo(BigDecimal val)
+Parameters
+val
+The number to be compared. 
+Returns
+-1 if this number is less than val, 
+0 if this number is equal to val, 
+or 1 if this number is greater than val. 
+Description
+This method compares this BigDecimal 
+to the given BigDecimal and 
+returns a value that indicates the result of the comparison. The method 
+considers two BigDecimal objects 
+that have the same values but different scales to be equal. This method 
+can be used to implement all six of the standard boolean comparison operators: 
+==, !=, 
+&lt;=, &lt;, 
+&gt;=, and &gt;. 
+divide
+   public BigDecimal divide(BigDecimal val, int roundingMode) throws ArithmeticException, IllegalArgumentException  
+Parameters
+val
+The divisor.
+roundingMode
+The rounding 
+mode. 
+Returns
+A new BigDecimal that contains 
+the result (quotient) of dividing this number by the supplied value. 
+Throws
+ArithmeticException
+If val is 0, or if ROUND_UNNECESSARY 
+is specified for the rounding mode but rounding is necessary.
+IllegalArgumentException
+If roundingMode is not a valid value. 
+Description
+This method returns the quotient that results from dividing this BigDecimal 
+by the given BigDecimal and 
+applying the specified rounding mode. The quotient is returned as a new 
+BigDecimal that has the same 
+scale as the scale of this BigDecimal 
+scale. One of the rounding constants must be specified for the rounding 
+mode. 
+   public BigDecimal divide(BigDecimal val, int scale, int roundingMode) throws ArithmeticException, IllegalArgumentException  
+Parameters
+val
+The divisor.
+scale
+The scale for the 
+result.
+roundingMode
+The rounding 
+mode. 
+Returns
+A new BigDecimal that contains 
+the result (quotient) of dividing this number by the supplied value. 
+Throws
+ArithmeticException
+If val is 0, if scale 
+is less than zero, or if ROUND_UNNECESSARY 
+is specified for the rounding mode but rounding is necessary.
+IllegalArgumentException
+If roundingMode is not a valid value. 
+Description
+This method returns the quotient that results from dividing dividing this 
+BigDecimal by the given BigDecimal 
+and applying the specified rounding mode. The quotient is returned as a 
+new BigDecimal that has the 
+given scale. One of the rounding constants must be specified for the rounding 
+mode. 
+doubleValue
+public double doubleValue()
+Returns
+The value of this BigDecimal 
+as a double. 
+Overrides
+Number.doubleValue() 
+Description
+This method returns the value of this BigDecimal 
+as a double. If the value exceeds 
+the limits of a double, Double.POSITIVE_INFINITY 
+or Double.NEGATIVE_INFINITY 
+is returned. 
+equals
+public boolean equals(Object x)
+Parameters
+x
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+x is an instance of BigDecimal, 
+and it represents the same value as this BigDecimal. 
+In order to be considered equal using this method, two BigDecimal 
+objects must have the same values and scales. 
+floatValue
+public float floatValue()
+Returns
+The value of this BigDecimal 
+as a float. 
+Overrides
+Number.floatValue() 
+Description
+This method returns the value of this BigDecimal 
+as a float. If the value exceeds 
+the limits of a float, Float.POSITIVE_INFINITY 
+or Float.NEGATIVE_INFINITY 
+is returned. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this BigDecimal. 
+intValue
+public int intValue()
+Returns
+The value of this BigDecimal 
+as an int. 
+Overrides
+Number.intValue() 
+Description
+This method returns the value of this BigDecimal 
+as an int. If the value exceeds 
+the limits of an int, the excessive high-order
+bits are discarded. Any fractional part of this BigDecimal 
+is truncated. 
+longValue
+public long longValue()
+Returns
+The value of this BigDecimal 
+as a long. 
+Overrides
+Number.longValue() 
+Description
+This method returns the value of this BigDecimal 
+as a long. If the value exceeds 
+the limits of a long, the excessive high-order bits
+are discarded. Any fractional part of this BigDecimal 
+is also truncated. 
+max
+public BigDecimal max(BigDecimal val)
+Parameters
+val
+The number to be compared. 
+Returns
+The BigDecimal that represents 
+the greater of this number and the given value. 
+Description
+This method returns the greater of this BigDecimal 
+and the given BigDecimal. 
+min
+public BigDecimal min(BigDecimal val)
+Parameters
+val
+The number to be compared. 
+Returns
+The BigDecimal that represents 
+the lesser of this number and the given value. 
+Description
+This method returns the lesser of this BigDecimal 
+and the given BigDecimal. 
+movePointLeft
+public BigDecimal movePointLeft(int n)
+Parameters
+n
+The number of digits 
+to move the decimal point to the left. 
+Returns
+A new BigDecimal that contains 
+the adjusted number. 
+Description
+This method returns a BigDecimal 
+that is computed by shifting the decimal point of this BigDecimal 
+left by the given number of digits. If n 
+is nonnegative, the value of the new BigDecimal 
+is the same as the current value, and the scale is increased by n. 
+If n is negative, the method 
+call is equivalent to movePointRight(-n). 
+movePointRight
+public BigDecimal movePointRight(int n)
+Parameters
+n
+The number of digits 
+to move the decimal point to the right. 
+Returns
+A new BigDecimal that contains 
+the adjusted number. 
+Description
+This method returns a BigDecimal 
+that is computed by shifting the decimal point of this BigDecimal 
+right by the given number of digits. If n 
+is nonnegative, the value of the new BigDecimal 
+is the same as the current value, and the scale is decreased by n. 
+If n is negative, the method 
+call is equivalent to movePointLeft(-n). 
+multiply
+public BigDecimal multiply(BigDecimal val)
+Parameters
+val
+The number to be multiplied. 
+Returns
+A new BigDecimal that contains 
+the product of this number and the given value. 
+Description
+This method multiplies this BigDecimal 
+and the given BigDecimal, and 
+returns the result as a new BigDecimal. 
+The value of the new BigDecimal 
+is the product of the values of the two BigDecimal 
+objects being added; the scale is the sum of their two scales. 
+negate
+public BigDecimal negate()
+Returns
+A new BigDecimal that contains 
+the negative of this number. 
+Description
+This method returns a new BigDecimal 
+that is identical to this BigDecimal 
+except that its sign is reversed. The scale of the new BigDecimal 
+is the same as the scale of this BigDecimal. 
+scale
+public int scale()
+Returns
+The scale of this number. 
+Description
+This method returns the scale of this BigDecimal. 
+setScale
+   public BigDecimal setScale(int scale) throws ArithmeticException, IllegalArgumentException  
+Parameters
+scale
+a
+The new scale. 
+Returns
+A new BigDecimal that is identical 
+to this number, except that is has the given scale. 
+Throws
+ArithmeticException
+If the new number cannot be calculated without rounding.
+IllegalArgumentException
+This exception is never thrown. 
+Description
+This method creates a new BigDecimal 
+that has the given scale and a value that is calculated by multiplying 
+or dividing the value of this BigDecimal 
+by the appropriate power of 10 to maintain the overall value. The method 
+is typically used to increase the scale of a number, not decrease it. It 
+can decrease the scale, however, if there are enough zeros in 
+the fractional part of the value to allow for rescaling without loss of 
+precision.
+Calling this method is equivalent to calling setScale(scale, 
+BigDecimal.ROUND_UNNECESSARY). 
+   public BigDecimal setScale(int scale, int roundingMode) throws ArithmeticException, IllegalArgumentException  
+Parameters
+scale
+The new scale.
+roundingMode
+The rounding mode. 
+Returns
+A new BigDecimal that contains 
+this number adjusted to the given scale. 
+Throws
+ArithmeticException
+If scale is less than zero, or 
+if ROUND_UNNECESSARY is specified 
+for the rounding mode but rounding is necessary.
+IllegalArgumentException
+If roundingMode is not a valid value. 
+Description
+This method creates a new BigDecimal 
+that has the given scale and a value that is calculated by multiplying 
+or dividing the value of this BigDecimal 
+by the appropriate power of 10 to maintain the overall value. When the 
+scale is reduced, the value must be divided, so precision may be lost. 
+In this case, the specified rounding mode is used. 
+signum
+public int signum()
+Returns
+-1 if this number is negative, 0 if this number is zero, 
+or 1 if this number is positive. 
+Description
+This method returns a value that indicates the sign of this BigDecimal. 
+subtract
+public BigDecimal subtract(BigDecimal val)
+Parameters
+val
+The number to be subtracted. 
+Returns
+A new BigDecimal that contains 
+the result of subtracting the given number from this number. 
+Description
+This method subtracts the given BigDecimal 
+from this BigDecimal and returns 
+the result as a new BigDecimal. 
+The value of the new BigDecimal 
+is the result of subtracting the value of the given BigDecimal 
+from this BigDecimal; the scale 
+is the maximum of their two scales. 
+toBigInteger
+public BigInteger toBigInteger()
+Returns
+The value of this BigDecimal 
+as a BigInteger. 
+Description
+This method returns the value of this BigDecimal 
+as a BigInteger. The fractional 
+part of this number is truncated. 
+toString
+public String toString()
+Returns
+A string representation of this object. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this
+BigDecimal.  A minus sign represents the sign, and
+a decimal point is used to represent the scale. The mapping from
+digits to characters is provided by the
+Character.forDigit() method.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+byteValue()
+Number
+clone()
+Object
+getClass()
+Object
+finalize()
+Object
+notify()
+Object
+notifyAll()
+Object
+shortValue()
+Number
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ArithmeticException, 
+BigInteger, 
+Character, 
+Double, 
+Float, 
+IllegalArgumentException, 
+Integer, 
+Long, 
+Number, 
+NumberFormatException 
+Modifier
+BigInteger
+ 
+ 
+ 
+ 
+ 
+ 
+ 

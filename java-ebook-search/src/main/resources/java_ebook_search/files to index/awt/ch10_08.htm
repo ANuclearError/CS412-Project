@@ -1,0 +1,213 @@
+
+[Chapter 10] 10.8 Putting It All Together
+Chapter 10Would You Like to Choose from the Menu?
+10.8 Putting It All Together
+Now that you know about all the different menu classes, it is time to show 
+an example. Example 10.1 contains the code to put up 
+a functional MenuBar attached 
+to a Frame, using the 1.0 event 
+model. Figure 10.2 (earlier in the chapter) displays the resulting screen. 
+The key parts to examine are how the menus are put together in the MenuTest 
+constructor and how their actions are handled within action(). 
+I implement one real action in the example: the one that terminates the 
+application when the user chooses Quit. Any other action 
+just displays the label of the item and (if it was a CheckBoxMenuItem) 
+the item's state, to give you an idea of how you can use the information 
+returned in the event. 
+Example 10.1: MenuTest 1.0 Source Code
+import java.awt.*;
+public class MenuTest extends Frame {
+    MenuTest () {
+        super ("MenuTest");
+        MenuItem mi;
+        Menu file = new Menu ("File", true);
+        file.add ("Open");
+        file.add (mi = new MenuItem ("Close"));
+        mi.disable();
+        Menu extras = new Menu ("Extras", false);
+        extras.add (new CheckboxMenuItem ("What"));
+        extras.add ("Yo");
+        extras.add ("Yo");
+        file.add (extras);
+        file.addSeparator();
+        file.add ("Quit");
+        Menu help = new Menu("Help");
+        help.add ("About");
+        MenuBar mb = new MenuBar();
+        mb.add (file);
+        mb.add (help);
+        mb.setHelpMenu (help);
+        setMenuBar (mb);
+        resize (200, 200);
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            System.exit(0);
+        }
+        return super.handleEvent (e);
+    }
+    public boolean action (Event e, Object o) {
+        if (e.target instanceof MenuItem) {
+            if ("Quit".equals (o)) {
+                dispose();
+                System.exit(1);
+            } else {
+                System.out.println ("User selected " + o);
+                if (e.target instanceof CheckboxMenuItem) {
+                    CheckboxMenuItem cb = (CheckboxMenuItem)e.target;
+                    System.out.println ("The value is: " + cb.getState());
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    public static void main (String []args) {
+        MenuTest f = new MenuTest ();
+        f.show();
+    }
+}
+The MenuTest constructor builds 
+all the menus, creates a menu bar, adds the menus to the menu bar, and 
+adds the menu bar to the Frame. 
+To show what is possible, I've included a submenu, a separator bar, 
+a disabled item, and a help menu. 
+The handleEvent() method exists 
+to take care of WINDOW_DESTROY 
+events, which are generated if the user uses a native command to exit from 
+the window. 
+The action() method does the 
+work; it received the action events generated whenever the user selects 
+a menu. We ignore most of them, but a real application would need to 
+do more work figuring out the user's selection. As it is, action() 
+is fairly simple. If the user selected a menu item, we check to see whether 
+the item's label was "Quit"; if it was, we exit. If the 
+user selected anything else, we print the selection and return true 
+to indicate that we handled the event. 
+Using Java 1.1 Events
+Example 10.2 uses the Java 1.1 event model but is 
+otherwise very similar to Example 10.1. Take a close 
+look at the differences and similarities. Although the code that builds 
+the GUI is basically the same in both examples, the event handling is completely 
+different. The helper class MyMenuItem 
+is necessary to simplify event handling. In Java 1.1, every menu item can 
+be an event source, so you have to register a listener for each item. Rather 
+than calling addActionListener() 
+explicitly for each item, we create a subclass of MenuItem 
+that registers a listener automatically. The listener is specified in the 
+constructor to MyMenuItem; 
+in this example, the object that creates the menus (MenuTest12) 
+always registers itself as the listener. An alternative would be to override 
+processActionEvent() in MyMenuItem, 
+but then we'd also need to write a subclass for CheckboxMenuItem. 
+Having said all that, the code is relatively simple. MenuTest12 
+implements ActionListener so 
+it can receive action events from the menus. As I noted previously, it registers 
+itself as the listener for every menu item when it builds the interface. 
+The actionPerformed() method 
+is called whenever the user selects a menu item; the logic of this method 
+is virtually the same as it was in Example 10.1. Notice, 
+though, that we use getActionCommand() 
+to read the label of the menu item. (Note also that getActionCommand() 
+doesn't necessarily return the label; you can change the command 
+associated with the menu item by calling setActionCommand().) 
+Similarly, we call the event's getSource() 
+method to get the menu item that actually generated the event; we need 
+this to figure out whether the user selected a CheckboxMenuItem 
+(which implements ItemSelectable). 
+We override processWindowEvent() 
+so that we can receive WINDOW_CLOSING 
+events without registering a listener. Window closings occur when the user 
+uses the native display manager to close the application. If one of these 
+events arrives, we shut down cleanly. To make sure that we receive window 
+events even if there are no listeners, the MenuTest12 
+constructor calls enableEvents(WINDOW_EVENT_MASK). 
+Example 10.2: MenuTest12 Source Code, Using Java 1.1 Event Handling
+// Java 1.1 only
+import java.awt.*;
+import java.awt.event.*;
+public class MenuTest12 extends Frame implements ActionListener {
+    class MyMenuItem extends MenuItem {
+        public MyMenuItem (String s, ActionListener al) {
+            super (s);
+            addActionListener (al);
+        }
+    }
+    public MenuTest12 () {
+        super ("MenuTest");
+        MenuItem mi;
+        Menu file = new Menu ("File", true);
+        file.add (new MyMenuItem ("Open", this));
+        mi = file.add (new MyMenuItem ("Close", this));
+        mi.setEnabled (false);
+        Menu extras = new Menu ("Extras", false);
+        mi = extras.add (new CheckboxMenuItem ("What"));
+        mi.addActionListener(this);
+        mi = extras.add (new MyMenuItem ("Yo", this));
+        mi.setActionCommand ("Yo1");
+        mi = extras.add (new MyMenuItem ("Yo", this));
+        mi.setActionCommand ("Yo2");
+        file.add (extras);
+        file.addSeparator();
+        file.add (new MyMenuItem ("Quit", this));
+        Menu help = new Menu("Help");
+        help.add (new MyMenuItem ("About", this));
+        MenuBar mb = new MenuBar();
+        mb.add (file);
+        mb.add (help);
+        mb.setHelpMenu (help);
+        setMenuBar (mb);
+        setSize (200, 200);
+        enableEvents (AWTEvent.WINDOW_EVENT_MASK);
+    }
+// Cannot override processActionEvent since method of MenuItem
+// Would have to subclass both MenuItem and CheckboxMenuItem
+    public void actionPerformed(ActionEvent e) {
+        if (e.getActionCommand().equals("Quit")) {
+            System.exit(0);
+        }
+        System.out.println ("User selected " + e.getActionCommand());
+        if (e.getSource() instanceof ItemSelectable) {
+            ItemSelectable is = (ItemSelectable)e.getSource();
+            System.out.println ("The value is: " +
+                (is.getSelectedObjects().length != 0)));
+        }
+    }
+    protected void processWindowEvent(WindowEvent e) {
+        if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+            // Notify others we are closing
+            super.processWindowEvent(e);
+            System.exit(0);
+        } else {
+            super.processWindowEvent(e);
+        }
+    }
+    public static void main (String []args) {
+        MenuTest12 f = new MenuTest12 ();
+        f.show();
+    }
+}
+I took the opportunity when writing the 1.1 code to make one additional improvement 
+to the program. By using action commands, you can easily differentiate 
+between the two Yo menu items. Just call setActionCommand() 
+to assign a different command to each item. (I used "Yo1" and 
+"Yo2".) You could also differentiate between the items by saving 
+a reference to each menu item, calling getSource() 
+in the event handler, and comparing the result to the saved references. 
+However, if the ActionListener 
+is another class, it would need access to those references. Using action 
+commands is simpler and results in a cleaner event handler. 
+The intent of the setActionCommand() 
+and getActionCommand() methods 
+is more for internationalization support. For example, you could use setActionCommand() 
+to associate the command Quit with a menu item, then set 
+the item's label to the appropriate text for the user's locality. 
+MenuBar
+PopupMenu
+ 
+ 
+ 
+ 
+ 
+ 
+ 

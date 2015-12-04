@@ -1,0 +1,193 @@
+
+[Chapter 7] 7.6 Applets
+Chapter 7Program Structure
+7.6 Applets
+A Java applet must be run from
+within another program, called a host application. At this point,
+most host applications are Web browsers. The interaction between
+an applet and its host application is rather involved.
+From the viewpoint of an applet, the interaction involves defining a
+subclass of the java.applet.Applet class. The
+Applet class defines a number of methods that
+control the applet. A subclass of Applet overrides
+one or more of the methods:
+init()
+The init() method is called to
+initialize the applet. Most initialization of an applet is done
+here instead of in a constructor because the constructor may be
+called before the hosting program is ready to provide all of the
+services needed for initialization.
+start()
+The start() method is called
+in a separate thread to tell the applet to start doing whatever
+it is supposed to do.
+paint()
+The paint() method is called
+at unpredictable times to draw the applet onto the screen.
+stop()
+The stop() method is called to
+tell the applet to stop doing whatever it does.
+destroy()
+The destroy() method is called
+to tell the applet to release any resources that it holds.
+From the viewpoint of the host application, the interaction
+typically follows a standard sequence of events. The host application
+usually does the following:
+Installs a SecurityManager
+object to implement a security policy.
+Creates a ClassLoader object
+to load the applet.
+Loads the applet and calls its default constructor.
+Passes an AppletStub object to
+the applet's setStub() method.
+Calls the applet's init() method
+in a separate thread.
+Marks the applet as active.
+Starts a new thread to run the applet's start()
+method.
+Calls the applet's show() method,
+which makes the applet visible and causes the applet's
+paint() method to be called for the first time.
+Calls the applet's paint() method
+whenever the applet needs to be refreshed.
+Calls the applet's start() and
+stop() methods when the host wants the applet
+to start or stop. These methods are typically called when the applet
+is exposed or hidden.
+Calls the applet's hide() method
+followed by its destroy() method when the host
+wants to shut down the applet.
+Embedding an Applet in a Web Page
+Web pages are written in a language called HTML. This explanation of
+how to embed an applet in a Web page assumes that you have some
+knowledge of basic HTML. An applet is embedded in a Web page using
+an &lt;applet&gt; tag. A minimal
+&lt;applet&gt; tag looks as follows:
+&lt;applet code=Clock height=300 width=350&gt;
+&lt;/applet&gt;
+The code attribute of this sample 
+&lt;applet&gt; tag specifies that the applet
+to be run is a class named Clock. The
+width and height
+attributes specify that the applet should be given a screen area
+that is 300 pixels high and 350 pixels wide.
+The following list shows all of the attributes that can be specified
+in an &lt;applet&gt;
+tag. The attributes should be specified in the order in which they
+are listed. The code, height,
+and width attributes are required in an
+&lt;applet&gt; tag; the other attributes are optional:
+codebase
+The codebase attribute should
+specify a URL that identifies the directory used to find the
+.class
+files needed for the applet. Files for classes that belong to the
+default package should be in this directory. Files for classes that
+belong to named packages should be in subdirectories of this directory,
+where the relative path is specified by individual identifiers in
+the package name. If codebase is not specified,
+the &lt;applet&gt; tag uses the directory that
+contains the HTML file as a default.
+code
+The code attribute specifies
+the name of the class that implements the applet. If the applet
+is part of a named package, you must specify the fully qualified
+class name. So, if the name of the class is
+DataPlot
+and it is part of a package called COM.geomaker.graph,
+the value of the code attribute should be:
+code=COM.geomaker.graph.DataPlot.class
+The browser locates the compiled code for the class
+by appending .class to the filename and searching
+the directory specified by the base URL for the document.
+object
+The object attribute specifies the name of a file
+that contains a serialized representation of an applet. If this
+attribute is specified, the applet is created by deserialization,
+rather than by calling its default constructor.  The serialization is
+assumed to have occurred after the applet's init()
+method has been invoked, so the start() method is called
+instead of the init() method.  Any attributes
+specified when the applet was serialized are not restored; the applet
+sees the attributes specified for this invocation.
+The object attribute is new as of Java 1.1.  An
+&lt;applet&gt; tag must include either the
+code attribute or the object
+attribute, but it cannot include both.
+archive
+The archive attribute specifies a list of one or
+more archives that contain classes or other resources for an
+applet. Archives can be JAR or ZIP files. If this attribute is
+specified, the resources in the archives are loaded before the applet
+is run.
+If multiple archives are listed, they should be separated by
+commas.  The archive attribute is new for Java
+1.1.
+alt
+The alt attribute specifies the
+text that should be displayed by Web browsers that understand the
+&lt;applet&gt; tag but cannot run Java applets.
+If the text contains space characters, it should be enclosed in
+quotation marks.
+name
+The name attribute specifies
+a name for a particular instance of an applet. An applet can get a
+reference to another applet on the same Web page using the
+getApplet() method.
+width
+The width attribute specifies
+the width of the applet in pixels.
+height
+The height attribute specifies
+the height of the applet in pixels.
+align
+The align attribute specifies
+the positioning of the applet. The possible values are:
+left,
+right, top, texttop,
+middle, absmiddle,
+baseline, bottom, or
+absbottom.
+vspace
+The vspace attribute specifies
+the amount of vertical space above and below the applet in pixels.
+hspace
+The hspace attribute specifies
+the amount of horizontal space to the left and right of the applet
+in pixels.
+Applet-specific
+parameters can be provided to an applet using &lt;param&gt;
+tags inside the &lt;applet&gt; tag.
+A &lt;param&gt; tag must specify
+name and value attributes. For example:
+&lt;param name=speed value=65&gt;
+If a Web browser does not support the &lt;applet&gt;
+tag, it ignores the tag and simply displays any HTML content provided
+inside the tag. However, if the browser understands the
+&lt;applet&gt;
+tag, this HTML content is ignored. This means that you can provide
+HTML content inside an &lt;applet&gt; tag to inform
+users of non-Java-enabled browsers about what they are missing.
+Here is an example that combines all of these elements:
+&lt;applet code=Compass height=400 width=300&gt;
+&lt;param name=direction value=north&gt;
+&lt;param name=speed value=65&gt;
+&lt;p&gt;
+&lt;i&gt;If you can see this message, your Web browser is not Java enabled. 
+There is a Java applet on this Web page that you are not seeing.&lt;/i&gt;
+&lt;p&gt;
+&lt;/applet&gt;
+If a non-Java-enabled browser is used to view this HTML file, the following
+text is displayed:
+If you can see this message, your Web browser
+is not Java-enabled.  There is a Java applet on this Web page that
+you are not seeing.
+Applications
+Threads
+ 
+ 
+ 
+ 
+ 
+ 
+ 

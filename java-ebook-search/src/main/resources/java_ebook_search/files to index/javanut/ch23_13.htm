@@ -1,0 +1,34 @@
+
+[Chapter 23] 23.13 java.beans.PropertyChangeListener (JDK 1.1)
+Chapter 23The java.beans Package
+23.13 java.beans.PropertyChangeListener (JDK 1.1)
+This interface is an extension of
+java.util.EventListener and defines the method that
+a class must implement in order to be notified when property
+changes occur.  A PropertyChangeEvent is sent out to
+all registered PropertyChangeListener objects whenever a
+bean changes one of its "bound" properties, or whenever a
+PropertyEditor or Customizer changes the
+value of a property.
+public abstract interface PropertyChangeListener extends EventListener {
+    // Public Instance Methods
+            public abstract void propertyChange(PropertyChangeEvent evt);
+}
+Passed To:
+Customizer.addPropertyChangeListener(), 
+Customizer.removePropertyChangeListener(), 
+PropertyChangeSupport.addPropertyChangeListener(), 
+PropertyChangeSupport.removePropertyChangeListener(), 
+PropertyEditor.addPropertyChangeListener(), 
+PropertyEditor.removePropertyChangeListener(), 
+PropertyEditorSupport.addPropertyChangeListener(), 
+PropertyEditorSupport.removePropertyChangeListener()
+java.beans.PropertyChangeEvent (JDK 1.1)
+java.beans.PropertyChangeSupport (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

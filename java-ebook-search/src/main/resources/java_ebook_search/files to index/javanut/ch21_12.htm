@@ -1,0 +1,54 @@
+
+[Chapter 21] 21.12 java.awt.image.PixelGrabber (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.12 java.awt.image.PixelGrabber (JDK 1.0)
+This class is an ImageConsumer that extracts a
+specified rectangular array of pixels (in the default RGB
+color model) from a specified Image or
+ImageProducer and stores them into a specified array
+(using the specified offset into the array and specified
+scanline size). Use this class when you want to
+inspect or manipulate the data of an image or some
+rectangular portion of an image.
+The method grabPixels() makes the
+PixelGrabber start grabbing pixels.
+status() returns the status of the pixel-grabbing
+process. The return value uses the same flag value
+constants as the ImageObserver class does. The
+remaining methods are the standard ImageConsumer
+methods and should not be called directly.
+public class PixelGrabber extends Object implements ImageConsumer {
+    // Public Constructors
+            public PixelGrabber(Image img, int x, int y, int w, int h, int[] pix, int off, int scansize);
+            public PixelGrabber(ImageProducer ip, int x, int y, int w, int h, int[] pix, int off, int scansize);
+        1.1  public PixelGrabber(Image img, int x, int y, int w, int h, boolean forceRGB);
+    // Public Instance Methods
+        1.1  public synchronized void abortGrabbing();
+        1.1  public synchronized ColorModel getColorModel();
+        1.1  public synchronized int getHeight();
+        1.1  public synchronized Object getPixels();
+        1.1  public synchronized int getStatus();
+        1.1  public synchronized int getWidth();
+            public boolean grabPixels() throws InterruptedException;
+            public synchronized boolean grabPixels(long ms) throws InterruptedException;
+            public synchronized void imageComplete(int status);  // From ImageConsumer
+            public void setColorModel(ColorModel model);  // From ImageConsumer
+            public void setDimensions(int width, int height);  // From ImageConsumer
+            public void setHints(int hints);  // From ImageConsumer
+            public void setPixels(int srcX, int srcY, int srcW, int srcH, ColorModel model,
+            public void setPixels'u'byte[] pixels, int srcOff, int srcScan);  // From ImageConsumer
+            public void setPixels(int srcX, int srcY, int srcW, int srcH, ColorModel model,
+            public void setPixels'u'int[] pixels, int srcOff, int srcScan);  // From ImageConsumer
+            public void setProperties(Hashtable props);  // From ImageConsumer
+        1.1  public synchronized void startGrabbing();
+            public synchronized int status();
+}
+java.awt.image.MemoryImageSource (JDK 1.0)
+java.awt.image.RGBImageFilter (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

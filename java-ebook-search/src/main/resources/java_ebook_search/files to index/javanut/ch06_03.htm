@@ -1,0 +1,58 @@
+
+[Chapter 6] 6.3 Drawing Graphics
+Chapter 6Applets
+6.3 Drawing Graphics
+Example 6.2
+shows a fancier version of our simple applet.
+As you can see from
+Figure 6.2 ,
+we've made the graphical display more interesting. This
+applet also does all of its drawing in the paint()
+method. It demonstrates the use of Font and
+Color objects.
+This example also introduces the init() method,
+which is used, typically in place of a constructor, to
+perform any one-time initialization that is necessary when
+the applet is first created. The paint() method may
+be invoked many times in the life of an applet, so this
+example uses init() to create the Font
+object that paint() uses.
+Figure 6.2: A fancier applet
+Example 6.2: An Applet with Fancier Graphics
+import java.applet.*;
+import java.awt.*;
+public class SecondApplet extends Applet {
+  static final String message = "Hello World";
+  private Font font;
+  // One-time initialization for the applet
+  // Note: no constructor defined.
+  public void init() {
+    font = new Font("Helvetica", Font.BOLD, 48);
+  }
+  // Draw the applet whenever necessary.  Do some fancy graphics.
+  public void paint(Graphics g) {
+    // The pink oval
+    g.setColor(Color.pink);
+    g.fillOval(10, 10, 330, 100);
+    // The red outline. Java doesn't support wide lines, so we
+    // try to simulate a 4-pixel wide line by drawing four ovals.
+    g.setColor(Color.red);
+    g.drawOval(10, 10, 330, 100);
+    g.drawOval(9, 9, 332, 102);
+    g.drawOval(8, 8, 334, 104);
+    g.drawOval(7, 7, 336, 106);
+    // The text
+    g.setColor(Color.black);
+    g.setFont(font);
+    g.drawString(message, 40, 75);
+  }
+}
+A First Applet
+Handling Events
+ 
+ 
+ 
+ 
+ 
+ 
+ 

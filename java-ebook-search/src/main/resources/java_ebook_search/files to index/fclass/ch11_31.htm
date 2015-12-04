@@ -1,0 +1,128 @@
+
+[Chapter 11] InvalidClassException
+Chapter 11The java.io Package
+InvalidClassException
+Name
+InvalidClassException
+Synopsis
+Class Name:
+java.io.InvalidClassException
+Superclass:
+java.io.ObjectStreamException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+An InvalidClassException is 
+thrown during object serialization. It indicates that the run-time environment 
+does not support a serialized class for one of the following reasons: 
+The version of the class does not match the serial version of 
+the class in the stream. 
+The class contains unknown data types. 
+An InvalidClassException can 
+also indicate one of these problems with the class itself: 
+The class implements only one of writeObject() 
+and readObject(). 
+The class is not public.
+The class does not have an accessible constructor that takes 
+no arguments. 
+Class Summary
+public class java.io.InvalidClassException
+             extends java.io.ObjectStreamException {
+  // Variables
+  public String classname;
+  // Constructors
+  public InvalidClassException(String reason);
+  public InvalidClassException(String cname, String reason);
+  // Instance Methods
+  public String getMessage();
+}
+Variables
+classname
+public String classname
+Description
+The name of the class that caused the exception. 
+Constructors
+InvalidClassException
+public InvalidClassException(String reason)
+Parameters
+reason
+The reason the exception 
+was thrown. 
+Description
+This constructor creates an InvalidClassException 
+with the specified reason string. 
+public InvalidClassException(String cname, String reason)
+Parameters
+cname
+The name of the class.
+reason
+The reason the exception was thrown. 
+Description
+This constructor creates an InvalidClassException 
+with the specified class name and reason string. 
+Instance Methods
+getMessage
+public String getMessage()
+Returns
+The reason string for this exception. 
+Overrides
+Throwable.getMessage() 
+Description
+This method returns the reason string for this exception. If a class name 
+has also been specified, it is prepended to the reason string with a semicolon. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+ObjectStreamException, 
+Throwable 
+InterruptedIOException
+InvalidObjectException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

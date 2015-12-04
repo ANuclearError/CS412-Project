@@ -1,0 +1,29 @@
+
+[Chapter 20] 20.5 java.awt.event.ComponentAdapter (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.5 java.awt.event.ComponentAdapter (JDK 1.1)
+This class is a trivial implementation of
+ComponentListener; it provides empty bodies for each
+of the methods of that interface.  When you are not
+interested in all of these methods, it is often
+easier to subclass ComponentAdapter than it is to implement
+ComponentListener from scratch.
+public abstract class ComponentAdapter extends Object implements ComponentListener {
+    // Default Constructor: public ComponentAdapter()
+    // Public Instance Methods
+            public void componentHidden(ComponentEvent e);  // From ComponentListener
+            public void componentMoved(ComponentEvent e);  // From ComponentListener
+            public void componentResized(ComponentEvent e);  // From ComponentListener
+            public void componentShown(ComponentEvent e);  // From ComponentListener
+}
+Hierarchy:
+Object->ComponentAdapter(ComponentListener(EventListener))
+java.awt.event.AdjustmentListener (JDK 1.1)
+java.awt.event.ComponentEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

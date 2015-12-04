@@ -1,0 +1,332 @@
+
+[Chapter 6] 6.5 Frames
+Chapter 6Containers
+6.5 Frames
+The Frame is a special type 
+of Window that looks like other 
+high level programs in your windowing environment. It adds a MenuBar, 
+window title, and window gadgets (like resize, maximize, minimize, window 
+menu) to the basic Window object. 
+All the menu-related pieces are discussed in Chapter 10, Would You Like to Choose from the Menu? 
+The default layout manager for a Frame 
+is BorderLayout. 
+Frame Constants
+The Frame class includes a number of constants used
+to specify cursors.  These constants are left over from Java 1.0 and
+maintained for compatibility.  In Java 1.1, you should use the new
+Cursor class, introduced in the previous chapter,
+and the Component.setCursor() method to change the
+cursor over a frame. Avoid using the Frame
+constants for new code. To see these cursors, refer to Figure 5.6.
+public final static int DEFAULT_CURSOR 
+public final static int CROSSHAIR_CURSOR 
+public final static int TEXT_CURSOR 
+public final static int WAIT_CURSOR 
+public final static int SW_RESIZE_CURSOR 
+public final static int SE_RESIZE_CURSOR 
+public final static int NW_RESIZE_CURSOR 
+public final static int NE_RESIZE_CURSOR 
+public final static int N_RESIZE_CURSOR 
+public final static int S_RESIZE_CURSOR 
+public final static int W_RESIZE_CURSOR 
+public final static int E_RESIZE_CURSOR 
+public final static int HAND_CURSOR 
+public final static int MOVE_CURSOR 
+NOTE: 
+HAND_CURSOR and 
+MOVE_CURSOR are not available 
+on Windows platforms with Java 1.0. If you ask to use these and they are 
+not available, you get DEFAULT_CURSOR. 
+Frame Constructors
+public Frame () 
+The constructor for Frame creates 
+a hidden window with a window title of "Untitled" (Java1.0) 
+or an empty string (Java1.1). Like Window, 
+the default LayoutManager of 
+a Frame is BorderLayout. 
+DEFAULT_CURSOR is the initial cursor. 
+To position the Frame on the 
+screen, call Component.move(). 
+Since the Frame is initially 
+hidden, you need to call the show() 
+method before the user sees the Frame. 
+public Frame (String title) 
+This version of Frame's constructor is identical to the first but 
+sets the window title to title. 
+Figure 6.3 shows the results of a call to new 
+Frame("My Frame") followed by resize() 
+and show(). 
+Figure 6.3: A typical Frame
+Frame Methods
+public String getTitle () 
+The getTitle() method returns 
+the current title for the Frame. 
+If there is no title, this method returns null. 
+public void setTitle (String title) 
+The setTitle() method changes 
+the Frame's title to 
+title. 
+public Image getIconImage () 
+The getIconImage() method returns 
+the image used as the icon. Initially, this returns null. 
+For some platforms, the method should not be used because the platform 
+does not support the concept. 
+public void setIconImage (Image image) 
+The setIconImage() method changes 
+the image to display when the Frame 
+is iconified to image. Not 
+all platforms utilize this resource. 
+public MenuBar getMenuBar () 
+The getMenuBar() method retrieves 
+the Frame's current menu 
+bar. 
+public synchronized void setMenuBar (MenuBar bar) 
+The setMenuBar() method changes the menu bar of the
+Frame to bar. If
+bar is null, it removes the menu
+bar so that none is available. It is possible to have multiple menu
+bars based upon the context of the application. However, the same menu
+bar cannot appear on multiple frames and only one can appear at a
+time. The MenuBar class, and everything to do with
+menus, is covered in Chapter 10, Would You Like to Choose from the Menu?. 
+public synchronized void remove (MenuComponent component) 
+The remove() method removes 
+component from Frame 
+if component is the frame's 
+menu bar. This is equivalent to calling setMenuBar() 
+with a parameter of null and 
+in actuality is what remove() 
+calls. 
+public synchronized void dispose () 
+The dispose() method frees 
+up the system resources used by the Frame. 
+If any Dialogs or Windows 
+are associated with this Frame, 
+their resources are freed, too. Some people like to call Component.hide() 
+before calling the dispose() method so 
+users do not see the frame decomposing. 
+public boolean isResizable () 
+The isResizable() method will 
+tell you if the current Frame 
+is resizable. 
+public void setResizable (boolean resizable) 
+The setResizable() method changes 
+the resize state of the Frame. 
+A resizable value of true 
+means the user can resize the Frame, 
+false means the user cannot. 
+This must be set before the Frame 
+is shown or the peer created. 
+public void setCursor (int cursorType) 
+The setCursor() method changes 
+the cursor of the Frame to 
+cursorType. cursorType 
+must be one of the cursor constants provided with the Frame 
+class. You cannot create your own cursor image yet. When changing from 
+the DEFAULT_CURSOR to another 
+cursor, the mouse must be moved for the cursor icon to change to the new 
+cursor. If cursorType is not 
+one of the predefined cursor types, setCursor() 
+throws the IllegalArgumentException run-time exception. 
+This method has been replaced by the Component.setCursor() 
+method. Both function equivalently, but this method is being phased out. 
+public int getCursorType () 
+The getCursorType() method 
+retrieves the current cursor. 
+This method has been replaced by the Component.getCursor() 
+method. Both function equivalently, but this method is being phased out. 
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Frame peer. This 
+is automatically done when you call the show() 
+method of the Frame. If you 
+override this method, first call super.addNotify(), 
+then add your customizations for the new class. Then you can do everything 
+you need to do with the information about the newly created peer. 
+protected String paramString () 
+When you call the toString() 
+method of Frame, the default 
+toString() method of Component 
+is called. This in turn calls paramString(), 
+which builds up the string to display. At the Frame 
+level, paramString() appends 
+resizable (if true) 
+and the title (if present). Using the default Frame 
+constructor, the results would be: 
+java.awt.Frame[0,0,0x0,invalid,hidden,layout=java.awt.BorderLayout,
+resizable,title=]
+Until the Frame is shown, via 
+show(), the position and size 
+are not known and therefore appear as zeros. After showing the Frame, 
+you might see: 
+java.awt.Frame[44,44,300x300,layout=java.awt.BorderLayout,
+resizable,title=]
+Frame Events
+In Java 1.0, a Frame peer generates all the events that 
+are generated by the Component 
+class; it does not generate events that are specific to a particular type 
+of component. That is, it generates key events, mouse events, and focus 
+events; it doesn't generate action events or list events. If an event 
+happens within a child component of a Frame, 
+the target of the event is the child component, not the Frame.Window
+In addition to the Component 
+events, Frame generates the 
+WINDOW events. These events are WINDOW_DESTROY, 
+WINDOW_EXPOSE, WINDOW_ICONIFY, 
+WINDOW_DEICONIFY, and WINDOW_MOVED. 
+One common event, WINDOW_DESTROY, 
+is generated when the user tries to close the Frame 
+by selecting Quit, Close, or Exit 
+(depending on your windowing environment) from the window manager's 
+menu. By default, this event does nothing. You must provide an event handler 
+that explicitly closes the Frame. 
+If you do not, your Frame will 
+close only when the Java Virtual Machine exits--for example, when 
+you quit Netscape Navigator. The handleEvent() 
+method in the following example, or one like it, should therefore be included in all 
+classes that extend Frame. 
+If a WINDOW_DESTROY event occurs, 
+it gets rid of the Frame and exits the program. Make sure your method calls 
+super.handleEvent() to process 
+the other events. 
+public boolean handleEvent (Event e) {
+    if (e.id == Event.WINDOW_DESTROY) {
+        hide();
+        dispose();
+        System.exit(0);
+        return true;          // boolean method, must return something
+    } else {
+                              // handle other events we find interesting
+    }
+                              // make sure normal event processing happens
+    return super.handleEvent (e);
+}
+Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners for different event types; 
+the listeners are told when the event happens. The Frame class inherits all its listener handling from Window.
+Here's the Java 1.1 code necessary to handle WINDOW_CLOSING 
+events; it is equivalent to the handleEvent() 
+method in the previous example. First, you must add the following line to the Frame's 
+constructor: 
+enableEvents (AWTEvent.WINDOW_EVENT_MASK);
+This line guarantees that we will receive window events, even if there 
+is no listener. The processWindowEvent() 
+method in the following code does the actual work of closing things down: 
+// Java 1.1 only
+protected void processWindowEvent(WindowEvent e) {
+    if (e.getID() == WindowEvent.WINDOW_CLOSING) {
+        // Notify others we are closing
+        if (windowListener != null)
+            windowListener.windowClosing(e);
+        System.exit(0);
+    } else {
+        super.processEvent(e);
+    }
+}
+If you forget to enable events, processWindowEvent() 
+may never be called, and your windows will not shut down until the Java 
+Virtual Machine exits. All subclasses of Frame 
+should include code like this to make sure they terminate gracefully. 
+Building a New Component from a Window
+Now that we have discussed the Frame and Window objects, we can briefly 
+investigate some ways to use them together. Previously I said that you can 
+use a Window to build your own pop-up menu. That's no longer necessary 
+in Java 1.1, but the same techniques apply to plenty of other objects. In the following example, we build a set of pop-up buttons; it also uses the 
+Toolkit of a Frame 
+to load images within an application. The pop-up button set appears when 
+the user presses the right mouse button over the image. It is positioned 
+at the coordinates of the mouseDown() 
+event; to do so, we add the current location() 
+of the Frame to the mouse's 
+x and y 
+coordinates. Figure 6.4 shows what this application 
+looks like when the pop-up button set is on the screen. 
+import java.awt.*;
+public class PopupButtonFrame extends Frame {
+    Image im;
+    Window w = new PopupWindow (this);
+    PopupButtonFrame () {
+        super ("PopupButton Example");
+        resize (250, 100);
+        show();
+        im = getToolkit().getImage ("rosey.jpg");
+        MediaTracker mt = new MediaTracker (this);
+        mt.addImage (im, 0);
+        try {
+            mt.waitForAll();
+        } catch (Exception e) {e.printStackTrace(); }
+    }
+    public static void main (String args[]) {
+        Frame f = new PopupMenuFrame ();
+    }
+    public void paint (Graphics g) {
+        if (im != null)
+            g.drawImage (im, 20, 20, this);
+    }
+    public boolean mouseDown (Event e, int x, int y) {
+        if (e.modifiers == Event.META_MASK) {
+            w.move (location().x+x, location().y+y);
+            w.show();
+            return true;
+        }
+        return false;
+    }
+}
+class PopupWindow extends Window {
+    PopupWindow (Frame f) {
+        super (f);
+        Panel p = new Panel ();
+        p.add (new Button ("About"));
+        p.add (new Button ("Save"));
+        p.add (new Button ("Quit"));
+        add ("North", p);
+        setBackground (Color.gray);
+        pack();
+    }
+    public boolean action (Event e, Object o) {
+        if ("About".equals (o))
+            System.out.println ("About");
+        else if ("Save".equals (o))
+            System.out.println ("Save Me");
+        else if ("Quit".equals (o))
+            System.exit (0);
+        hide();
+        return true;
+    }
+}
+Figure 6.4: Pop-up buttons
+The most interesting method in this application is mouseDown(). 
+When the user clicks on the mouse, mouseDown() 
+checks whether the META_MASK 
+is set in the event modifiers; this indicates that the user pressed the 
+right mouse button, or pressed the left button while pressing the Meta key. 
+If this is true, mouseDown() 
+moves the window to the location of the mouse click, calls show() to display 
+the window, and returns true 
+to indicate that the event was handled completely. If mouseDown were called with any other 
+kind of mouse event, we return false 
+to let the event propagate to any other object that might be interested. 
+Remember that the coordinates passed with the mouse event are the coordinates 
+of the mouse click relative to the Frame; to find out where to position 
+the pop-up window, we need an absolute location and therefore ask the Frame 
+for its location. 
+PopupWindow itself is a simple 
+class. Its constructor simply creates a display with three buttons. The 
+call to pack() sizes the window 
+so that it provides a nice border around the buttons but isn't excessively 
+large; you can change the border by playing with the window's insets 
+if you want, but that usually isn't necessary. The class PopupWindow 
+has an action() method that 
+is called when the user clicks one of the buttons. When the user clicks 
+on a button, action() prints 
+a message and hides the window. 
+Window
+Dialogs
+ 
+ 
+ 
+ 
+ 
+ 
+ 

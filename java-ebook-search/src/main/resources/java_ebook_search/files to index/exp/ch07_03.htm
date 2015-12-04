@@ -1,0 +1,167 @@
+
+[Chapter 7] 7.3 Dates
+Chapter 7Basic Utility Classes
+7.3 Dates
+Working with dates and times without the proper tools can be a
+chore.[2]
+Java 1.1 gives you three classes that do all the hard work for you.
+The java.util.Date encapsulates a point
+in time.  The java.util.GregorianCalendar class,
+which descends from the abstract java.util.Calendar,
+translates
+between a point in time and calendar fields like month, day, and
+year.  Finally, the java.text.DateFormat class
+knows how to generate and parse string representations of dates
+and times.  In Java 1.0.2,
+the Date class performed all three functions.  In
+Java 1.1, most of its methods have been deprecated, so that its only purpose
+in life is to represent a point in time.
+[2] 
+For a wealth of information about time and world time keeping
+conventions, see http://tycho.usno.navy.mil/, the
+U.S. Navy Directorate of Time.  For a fascinating history of the Gregorian and
+Julian calendars, try
+http://barroom.visionsystems.com/serendipity/date/jul_greg.html.
+The separation of the
+Date class and the
+GregorianCalendar class is analagous to having
+a class representing temperature and a class that translates that temperature
+to Celsius units.  Conceivably, we could define other subclasses of
+Calendar, say
+JulianCalendar or
+LunarCalendar.
+The default GregorianCalendar constructor creates an
+object that represents the current time, as determined by the system
+clock:
+GregorianCalendar now = new GregorianCalendar();
+Other constructors accept values to initialize the calendar. In the
+first statement below, we construct an object representing August 9,
+1996; the second statement specifies both a date and a time, yielding
+an object that represents 9:01 AM, April 8, 1997. 
+GregorianCalendar daphne = 
+    new GregorianCalendar(1996, Calendar.AUGUST, 9);
+GregorianCalendar sometime = 
+    new GregorianCalendar(1997, Calendar.APRIL, 8, 9, 1); // 9:01 AM
+We can also create a GregorianCalendar
+by setting specific
+fields using the
+set() method.  The
+Calendar class contains a torrent
+of constants representing both calendar fields and field values.  The
+first argument to the set() method
+is a field constant; the second argument is the new value for the field.
+GregorianCalendar kristen = new GregorianCalendar();
+kristen.set(Calendar.YEAR, 1972);
+kristen.set(Calendar.MONTH, Calendar.MAY);
+kristen.set(Calendar.DATE, 20);
+A GregorianCalendar is created
+in the default time zone.  Setting the time zone of the calendar is as
+easy as obtaining the desired TimeZone and
+giving it to the GregorianCalendar:
+GregorianCalendar smokey = new GregorianCalendar();
+smokey.setTimeZone(TimeZone.getTimeZone("MST"));
+To create a string representing a point in time, use the
+DateFormat class.  Although
+DateFormat itself is abstract,
+it has several factory methods that return useful
+DateFormat subclass instances.
+To get a default DateFormat, simply
+call getInstance().
+DateFormat plain = DateFormat.getInstance();
+String now = plain.format(new Date());  // 4/9/97 6:06 AM
+Those of you who don't live on the West coast will notice that
+the example above produces a result that is not quite right.
+DateFormat instances stubbornly
+insist on using Pacific Standard Time, so you have to tell them
+what time zone you're in:
+DateFormat plain = DateFormat.getInstance();
+plain.setTimeZone(TimeZone.getDefault());
+String now = plain.format(new Date());  // 4/9/97 9:06 AM
+You can generate a date string or a time string, or both,
+ using the
+getDateInstance(),
+getTimeInstance(), and
+getDateTimeInstance()
+factory
+methods.  The argument to these methods describes
+what level of detail you'd like to see.
+DateFormat
+defines four constants representing detail levels: they are
+SHORT,
+MEDIUM,
+LONG, and
+FULL.  There is also
+a DEFAULT, which is
+the same as MEDIUM. The code below creates
+three DateFormat instances: one to format
+a date, one to format a time, and one to format a date and time
+together. Note that getDateTimeInstance()
+requires two arguments: the first specifies how to format the date,
+the second says how to format the time. 
+DateFormat df = DateFormat.getDateInstance(DateFormat.DEFAULT); // 09-Apr-97
+DateFormat tf = DateFormat.getTimeInstance(DateFormat.DEFAULT); // 9:18:27 AM
+DateFormat dtf = 
+    DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
+    // Wednesday, April 09, 1997 9:18:27 o'clock AM EDT
+Formatting dates and times for other countries is just as easy.  There
+are overloaded factory methods that accept a
+Locale argument:
+DateFormat df = 
+    DateFormat.getDateInstance(DateFormat.DEFAULT, Locale.FRANCE);
+    // 9 avr. 97 
+DateFormat tf = 
+    DateFormat.getTimeInstance(DateFormat.DEFAULT, Locale.GERMANY);
+    // 9:27:49 
+DateFormat dtf = 
+    DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL,
+                                   Locale.ITALY); 
+    // mercoledi 9 aprile 1997 9.27.49 GMT-04:00
+To parse a string representing a date, we use the
+parse() method of the
+DateFormat class. The result is a
+Date object.  The parsing
+algorithms are finicky, so it's
+safest to parse dates and times that are in the same format that
+is produced by the DateFormat.  The
+parse() method throws
+a ParseException if it doesn't understand
+the string you give it.  Occasionally other exceptions are thrown
+from the parse() method.  To cover
+all the bases, catch NullPointerExceptions
+and StringIndexOutOfBoundsExceptions also.
+try {
+  Date d;
+  DateFormat df;
+  
+  df = DateFormat.getDateTimeInstance(DateFormat.FULL, DateFormat.FULL);
+  d = df.parse("Wednesday, April 09, 1997 2:22:22 o'clock PM EST"); // ok
+  
+  df = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.MEDIUM);
+  d = df.parse("09-Apr-97 2:22:22 PM"); //ok
+  
+  df = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG);
+  d = df.parse("April 09, 1997 2:22:22 PM EST");    // ok
+  d = df.parse("09-Apr-97 2:22:22 PM"); // ParseException - detail level mismatch
+}
+catch (Exception e) {}
+There's been a lot of talk about the "millenium bug" lately.  This refers
+to the expected failure of software in the year 2000, when programs
+that use two digits to represent years interpret "00" as 1900 instead
+of 2000.  Java is mostly safe from this error.  The
+Date class has no specific
+field for year and is thus immune to this problem.
+The only time you'll run into this error in Java
+is when you
+use a DateFormat to parse a date string
+with a two-digit year.  Two-digit years are automatically prefixed
+with 19.  My advice is to always use a four-digit year when you
+expect to parse a date string.
+Math Utilities
+Vectors and Hashtables
+ 
+ 
+ 
+ 
+ 
+ 
+ 

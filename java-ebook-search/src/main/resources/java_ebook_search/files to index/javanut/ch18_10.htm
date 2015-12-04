@@ -1,0 +1,49 @@
+
+[Chapter 18] 18.10 java.awt.Checkbox (JDK 1.0)
+Chapter 18The java.awt Package
+18.10 java.awt.Checkbox (JDK 1.0)
+This class represents a GUI checkbox with a textual label.
+The Checkbox maintains a boolean state--whether it
+is checked or not.  The checkbox may optionally be part of a
+CheckboxGroup which enforces "radio button" behavior. 
+public class Checkbox extends Component implements ItemSelectable {
+    // Public Constructors
+            public Checkbox();
+            public Checkbox(String label);
+        1.1 public Checkbox(String label, boolean state);
+        1.1 public Checkbox(String label, boolean state, CheckboxGroup group);
+            public Checkbox(String label, CheckboxGroup group, boolean state);
+    // Public Instance Methods
+        1.1 public synchronized void addItemListener(ItemListener l);  // From ItemSelectable
+            public void addNotify();  // Overrides Component
+            public CheckboxGroup getCheckboxGroup();
+            public String getLabel();
+        1.1 public Object[] getSelectedObjects();  // From ItemSelectable
+            public boolean getState();
+        1.1 public synchronized void removeItemListener(ItemListener l);  // From ItemSelectable
+            public void setCheckboxGroup(CheckboxGroup g);
+            public synchronized void setLabel(String label);
+            public void setState(boolean state);
+    // Protected Instance Methods
+            protected String paramString();  // Overrides Component
+        1.1 protected void processEvent(AWTEvent e);  // Overrides Component
+        1.1 protected void processItemEvent(ItemEvent e);
+}
+Hierarchy:
+Object->Component(ImageObserver, MenuContainer, Serializable)->Checkbox(ItemSelectable)
+Passed To:
+CheckboxGroup.setCurrent(), 
+CheckboxGroup.setSelectedCheckbox(), 
+Toolkit.createCheckbox()
+Returned By:
+CheckboxGroup.getCurrent(), 
+CheckboxGroup.getSelectedCheckbox()
+java.awt.CardLayout (JDK 1.0)
+java.awt.CheckboxGroup (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

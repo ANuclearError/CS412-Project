@@ -1,0 +1,53 @@
+
+[Chapter 31] 31.11 java.util.zip.Inflater (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.11 java.util.zip.Inflater (JDK 1.1)
+This class implements the general ZLIB data decompression
+algorithm used by gzip, PKZip, and other data compression
+applications.  It decompresses or "inflates" data compressed
+through the Deflater class.
+The important methods of this class are setInput(),
+which specifies input data to be decompressed, and
+inflate(), which decompresses the input data into an
+output buffer.  A number of other methods exist so that this
+class can be used for stream-based decompression, as it is
+in the higher-level classes such as GZIPInputStream
+and ZipInputStream.   These stream-based classes are
+sufficient in most cases.  Most applications do not need to
+use Inflater directly.
+public class Inflater extends Object {
+    // Public Constructors
+            public Inflater(boolean nowrap);
+            public Inflater();
+    // Public Instance Methods
+            public synchronized native void end();
+            public synchronized boolean finished();
+            public synchronized native int getAdler();
+            public synchronized int getRemaining();
+            public synchronized native int getTotalIn();
+            public synchronized native int getTotalOut();
+            public synchronized native int inflate(byte[] b, int off, int len) throws DataFormatException;
+            public int inflate(byte[] b) throws DataFormatException;
+            public synchronized boolean needsDictionary();
+            public synchronized boolean needsInput();
+            public synchronized native void reset();
+            public synchronized native void setDictionary(byte[] b, int off, int len);
+            public void setDictionary(byte[] b);
+            public synchronized void setInput(byte[] b, int off, int len);
+            public void setInput(byte[] b);
+    // Protected Instance Methods
+            protected void finalize();  // Overrides Object
+}
+Passed To:
+InflaterInputStream()
+Type Of:
+InflaterInputStream.inf
+java.util.zip.GZIPOutputStream (JDK 1.1)
+java.util.zip.InflaterInputStream (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

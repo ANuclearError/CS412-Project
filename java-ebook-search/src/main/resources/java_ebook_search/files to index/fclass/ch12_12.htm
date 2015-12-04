@@ -1,0 +1,405 @@
+
+[Chapter 12] ClassLoader
+Chapter 12The java.lang Package
+ClassLoader
+Name
+ClassLoader
+Synopsis
+Class Name:
+java.lang.ClassLoader
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The ClassLoader class provides a mechanism
+for Java to load classes over a network or from any source other
+than the local filesystem. The default class-loading mechanism
+loads classes from files found relative to directories specified
+by the CLASSPATH
+environment variable. This default mechanism does not use an instance
+of the ClassLoader class.
+An application can implement another mechanism for loading
+classes by declaring a subclass of the abstract
+ClassLoader class. A subclass of ClassLoader
+must override the loadClass() to define a class-loading
+policy. This method implements any sort of security that
+is necessary for the class-loading mechanism. The other methods
+of ClassLoader are final,
+so they cannot be overridden.
+A ClassLoader object is typically used
+by calling its loadClass() method to explicitly
+load a top-level class, such as a subclass of Applet.
+The ClassLoader that loads the class becomes
+associated with the class; it can be obtained by calling the getClassLoader() method of the Class object that represents
+the class.
+Once a class is loaded, it must be resolved before it can
+be used. Resolving a class
+means ensuring that all of the other classes it references
+are loaded. In addition, all of the classes that they reference
+must be loaded, and so on, until all of the needed classes have been
+loaded. Classes are resolved using the resolveClass() method
+of the ClassLoader object that loaded the initial
+class. This means that when a ClassLoader object
+is explicitly used to load a class, the same ClassLoader
+is used to load all of the classes that it references, directly
+or indirectly.
+Classes loaded using a ClassLoader object may
+attempt to load additional classes without explicitly using a
+ClassLoader object. They can do this by calling the
+Class class' forName() 
+method. However, in such a situation, a ClassLoader
+object is implicitly used. See the description of
+Class.forName() for more information.
+Java identifies a class by a combination of its fully
+qualified name and the class loader that was used to load the
+class. If you write a subclass of ClassLoader,
+it should not attempt to directly load local classes. Instead,
+it should call findSystemClass(). A local class
+that is loaded directly by a ClassLoader is 
+considered to be a different class than the same class loaded by
+findSystemClass(). This can lead to having two
+copies of the same class loaded, which can cause a number 
+of inconsistencies. For example, the class' equals() 
+method may decide that the same object is not equal to itself.
+Class Summary
+public abstract class java.lang.ClassLoader extends java.lang.Object {
+    // Constructors
+    protected ClassLoader();
+    // Class Methods
+    public static final URL 
+           getSystemResource(String name);                  // New in 1.1
+    public static final InputStream 
+           getSystemResourceAsStream(String name);          // New in 1.1
+    // Public Instance Methods
+    public URL getResource(String name);                    // New in 1.1
+    public InputStream getResourceAsStream(String name);    // New in 1.1
+    public Class loadClass(String name);                    // New in 1.1
+    
+    // Protected Instance Methods
+    protected final Class defineClass(byte data[], 
+              int offset, int length);               // Deprecated in 1.1
+    protected final Class defineClass(String name, 
+              byte[] data, int offset, int length);         // New in 1.1
+    protected final Class findLoadedClass(String name);     // New in 1.1
+    protected final Class findSystemClass(String name);
+    protected abstract Class loadClass(String name, boolean resolve);
+    protected final void resolveClass(Class c);
+    protected final void setSigners(Class cl, 
+              Object[] signers);                            // New in 1.1
+}
+Constructors
+ClassLoader
+protected ClassLoader()
+Throws
+SecurityException
+If there is a SecurityManager
+object installed and its checkCreateClassLoader()
+method throws a SecurityException when called
+by this constructor.
+Description
+Initializes a ClassLoader object. Because
+ClassLoader is an abstract class,
+only subclasses of the class can access this constructor.
+Class Methods
+getSystemResource
+public static final URL getSystemResource(String name)
+Availability
+New as of JDK 1.1
+Parameters
+name
+A system resource name.
+Returns
+A URL object that is connected to the specified
+system resource or null if the resource cannot be found.
+Description
+This method finds a system resource with the given name and returns a
+URL object that is connected to the resource.
+The resource name can be any system resource.
+getSystemResourceAsStream
+public static final InputStream getSystemResourceAsStream(String name)
+Availability
+New as of JDK 1.1
+Parameters
+name
+A system resource name.
+Returns
+An InputStream object that is connected to the specified
+system resource or null if the resource cannot be found.
+Description
+This method finds a system resource with the given name and returns an
+InputStream object that is connected to the resource.
+The resource name can be any system resource.
+Public Instance Methods
+getResource
+public URL getResource(String name)
+Availability
+New as of JDK 1.1
+Parameters
+name
+A resource name.
+Returns
+A URL object that is connected to the specified
+resource or null if the resource cannot be found.
+Description
+This method finds a resource with the given name and returns a
+URL object that is connected to the resource.
+A resource is a file that contains data (e.g., sound, images, text) 
+and it can be part of a package. The name of a resource is
+a sequence of identifiers separated by "/". For example, a
+resource might have the name help/american/logon.html .
+System resources are found on the host machine using the
+conventions of the host implementation.  For example, 
+the "/" in the resource name may be treated as a 
+path separator, with the entire resource name treated as a relative path 
+to be found under a directory in CLASSPATH.
+The implementation of getResource() in 
+ClassLoader simply returns null.
+A subclass can override this method to provide more useful
+functionality.
+getResourceAsStream
+public InputStream getResourceAsStream(String name)
+Availability
+New as of JDK 1.1
+Parameters
+name
+A resource name.
+Returns
+An InputStream object that is connected to the specified
+resource or null if the resource cannot be found.
+Description
+This method finds a resource with the given name and returns an
+InputStream object that is connected to the resource.
+A resource is a file that contains data (e.g., sound, images, text) 
+and it can be part of a package. The name of a resource is
+a sequence of identifiers separated by `/'. For example, a
+resource might have the name help/american/logon.html.
+System resources are found on the host machine using the
+conventions of the host implementation.  For example, 
+the `/' in the resource name may be treated as a 
+path separator, with the entire resource name treated as a relative path 
+to be found under a directory in CLASSPATH.
+The implementation of getResourceAsStream() in 
+ClassLoader simply returns null.
+A subclass can override this method to provide more useful
+functionality.
+loadClass
+public Class loadClass(String name) throws ClassNotFoundException
+Availability
+New as of JDK 1.1
+Parameters
+name
+The name of the class to be returned. The class
+name should be qualified by its package name. The lack of an explicit
+package name specifies that the class is part of the default package.
+Returns
+The Class object for the specified class.
+Throws
+ClassNotFoundException
+If it cannot find a definition for the named class.
+Description
+This method loads the named class by calling 
+loadClass(name, true).
+Protected Instance Methods
+defineClass
+   protected final Class defineClass(byte data[], int offset, int length)  
+Availability
+Deprecated as of JDK 1.1
+Parameters
+data
+An array that contains the byte codes that define
+a class.
+offset
+The offset in the array of byte codes.
+length
+The number of byte codes in the array.
+Returns
+The newly created Class object.
+Throws
+ClassFormatError
+If the data array does not constitute
+a valid class definition.
+Description
+This method creates a Class object from the byte codes that
+define the class. Before the class can be used, it must be resolved.
+The method is intended to be called from an implementation
+of the loadClass() method.  
+Note that this method is deprecated as of Java 1.1.  You should use
+the version of defineClass() that takes a 
+name parameter and is therefore more secure.
+   protected final Class defineClass(String name, byte data[], int offset, int length)  
+Availability
+New as of JDK 1.1
+Parameters
+name
+The expected name of the class to be defined or null if
+it is not known.  The class name
+should be qualified by its package name.  The lack of an explicit package
+name specifies that the class is part of the default package.
+data
+An array that contains the byte codes that define
+a class.
+offset
+The offset in the array of byte codes.
+length
+The number of byte codes in the array.
+Returns
+The newly created Class object.
+Throws
+ClassFormatError
+If the data array does not constitute
+a valid class definition.
+Description
+This method creates a Class object from the byte codes that
+define the class. Before the class can be used, it must be resolved.
+The method is intended to be called from an implementation
+of the loadClass() method.
+findLoadedClass
+   protected final Class findLoadedClass(String name)  
+Availability
+New as of JDK 1.1
+Parameters
+name
+The name of the class to be returned. The class
+name should be qualified by its package name. The lack of an explicit
+package name specifies that the class is part of the default package.
+Returns
+The Class object for the specified loaded class or
+null if the class cannot be found.
+Description
+This method finds the specified class that has already been loaded.
+findSystemClass
+   protected final Class findSystemClass(String name) throws ClassNotFoundException  
+Parameters
+name
+The name of the class to be returned. The class
+name should be qualified by its package name. The lack of an explicit
+package name specifies that the class is part of the default package.
+Returns
+The Class object for the specified system
+class.
+Throws
+ClassNotFoundException
+If the default class-loading mechanism cannot find
+a definition for the class.
+NoClassDefFoundError
+If the
+default class-loading mechanism cannot find the class.
+Description
+This method finds and loads a system class if it has not already
+been loaded. A system class
+is a class that is loaded by the default
+class-loading mechanism from the local filesystem. An implementation
+of the loadClass() method typically calls this
+method to attempt to load a class from the locations specified by
+the CLASSPATH environment variable.
+loadClass
+   protected abstract Class loadClass(String name, boolean resolve) throws ClassNotFoundException  
+Parameters
+name
+The name of the class to be returned. The class
+name should be qualified by its package name. The lack of an explicit
+package name specifies that the class is part of the default package.
+resolve
+Specifies whether or not the class should be resolved
+by calling the resolveClass() method.
+Returns
+The Class object for the specified class.
+Throws
+ClassNotFoundException
+If it cannot find a definition for the named class.
+Description
+An implementation of this abstract method
+loads the named class and returns its Class object.
+It is permitted and encouraged for an implementation to cache the
+classes it loads, rather than load one each time the method is called.
+An implementation of this method should do at least the following:
+Load the byte codes that comprise
+the class definition into a byte[].
+Call the defineClass() method
+to create a Class object to represent the class
+definition.
+If the resolve parameter is true,
+call the resolveClass() method to resolve the
+class.
+If an implementation of this method caches the classes that
+it loads, it is recommended that it use an instance of the java.util.Hashtable
+to implement the cache.
+resolveClass
+protected final void resolveClass(Class c)
+Parameters
+c
+The Class object for the class to be resolved.
+Description
+This method resolves the given Class object.
+Resolving a class means ensuring
+that all of the other classes that the Class
+object references are loaded. In
+addition, all of the classes that they reference must be loaded,
+and so on, until all of the needed classes have been loaded.
+The resolveClass() method should be called
+by an implementation of the loadClass() method
+when the value of the loadClass() method's
+resolve parameter is true.
+setSigners
+   protected final void setSigners(Class cl, Object[] signers)  
+Availability
+New as of JDK 1.1
+Parameters
+cl
+The Class object for the class to be signed.
+signers
+An array of Objects that represents the signers
+of this class.
+Description
+This method specifies the objects that represent the digital
+signatures for this class.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+ClassNotFoundException, 
+InputStream, 
+NoClassDefFoundError, 
+Object,
+SecurityException, 
+SecurityManager, 
+URL
+ClassFormatError
+ClassNotFoundException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

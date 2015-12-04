@@ -1,0 +1,302 @@
+
+[Chapter 5] 5.8 Interfaces
+Chapter 5Objects in Java
+5.8 Interfaces
+Interfaces are kind of like Boy Scout (or Girl Scout) merit badges. When 
+a scout has learned to build a bird house, he can walk around wearing a 
+little patch with a picture of one on his sleeve. This says to the world, 
+"I know how to build a bird house." Similarly, an interface 
+is a list of methods that define some set of behavior for an object. Any 
+class that implements each of the methods listed in the interface can declare 
+that it implements the interface and wear, as its merit badge, an extra 
+type--the interface's type. 
+Interface types act like class types. You can declare variables to 
+be of an interface type, you can declare arguments of methods to accept 
+interface types, and you can even specify that the return type of a method 
+is an interface type. In each of these cases, what is meant is that any 
+object that implements the interface (i.e., wears the right merit badge) 
+can fill that spot. In this sense, interfaces are orthogonal to the class 
+hierarchy. They cut across the boundaries of what kind of object an item 
+is and deal with it only in terms of what it can do. A class implements 
+as many interfaces as it desires. In this way, interfaces in Java replace 
+the need for multiple inheritance (and all of its messy side effects). 
+An interface looks like a purely abstract class 
+(i.e., a class with only abstract methods). You 
+define an interface with the interface keyword 
+and list its methods with no bodies: 
+interface Driveable { 
+    boolean startEngine(); 
+    void stopEngine(); 
+    float accelerate( float acc ); 
+    boolean turn( Direction dir ); 
+} 
+The example above defines an interface called
+Driveable with four methods. It's acceptable, but
+not necessary, to declare the methods in an interface with the
+abstract modifier, so we haven't used it
+here. Interfaces define capabilities, so it's common to name
+interfaces after their capabilities in a passive
+sense. "Driveable" is a good example; "runnable" and
+"updateable" would be two more.
+Any class that implements all the methods can then declare it implements 
+the interface by using a special implements clause 
+in its class definition: 
+class Automobile implements Driveable { 
+    ... 
+    boolean startEngine() { 
+        if ( notTooCold ) 
+            engineRunning = true; 
+        ... 
+    } 
+ 
+    void stopEngine() { 
+        engineRunning = false; 
+    } 
+ 
+    float accelerate( float acc ) { 
+        ... 
+    } 
+ 
+    boolean turn( Direction dir ) { 
+        ... 
+    } 
+    ... 
+} 
+The class Automobile implements the methods of the
+Driveable interface and declares itself
+Driveable using an implements
+clause.
+As shown in Figure 5.9, another class,
+such as LawnMower, can also implement the
+Driveable interface. The figure illustrates the
+Driveable interface being implemented by two
+different classes. While it's possible that both
+Automobile and Lawnmower could
+derive from some primitive kind of vehicle, they don't have to
+in this scenario. This is a significant advantage of interfaces over
+standard multiple inheritance as implemented in C++.
+Figure 5.9: Implementing the Driveable interface
+After declaring the interface, we have a new type,
+Driveable.  We can declare variables of type
+Driveable and assign them any instance of a
+Driveable object:
+Automobile auto = new Automobile(); 
+Lawnmower mower = new Lawnmower(); 
+Driveable vehicle; 
+ 
+vehicle = auto; 
+vehicle.startEngine(); 
+vehicle.stopEngine(); 
+... 
+vehicle = mower; 
+vehicle.startEngine(); 
+vehicle.stopEngine(); 
+Both Automobile and Lawnmower 
+implement Driveable and can be considered of 
+that type.
+Interfaces as Callbacks
+Interfaces can be used to implement callbacks in Java. A callback 
+is a situation where you'd like to pass a reference to some behavior 
+and have another object invoke it later. In C or C++, this is prime territory 
+for function pointers; in Java, we'll use interfaces instead. 
+Consider two classes: a TickerTape class that 
+displays data and a TextSource class that provides 
+an information feed. We'd like our TextSource 
+to send any new text data. We could have TextSource 
+store a reference to a TickerTape object, but 
+then we could never use our TextSource to send 
+data to any other kind of object. Instead, we'd have to proliferate 
+subclasses of TextSource that dealt with different 
+types. A more elegant solution is to have TextSource 
+store a reference to an interface type, TextUpdateable: 
+interface TextUpdateable { 
+    receiveText( String text ); 
+} 
+ 
+class TickerTape implements TextUpdateable { 
+    TextSource source; 
+ 
+    init() { 
+        source = new TextSource( this ); 
+        ... 
+    } 
+ 
+    public receiveText( String text ) { 
+        scrollText( text ): 
+    } 
+    ... 
+} 
+ 
+class TextSource { 
+    TextUpdateable receiver; 
+ 
+    TextSource( TextUpdateable r ) { 
+        receiver = r; 
+    } 
+ 
+    private sendText( String s ) { 
+        receiver.receiveText( s ); 
+    } 
+    ... 
+} 
+The only thing TextSource really cares about 
+is finding the right method to invoke to send text. Thus, we can list that 
+method in an interface called TextUpdateable 
+and have our TickerTape implement the interface. 
+A TickerTape object can then be used anywhere we need something of the type TextUpdateable. 
+In this case, the TextSource constructor takes 
+a TextUpdateable object and stores the reference 
+in an instance variable of type TextUpdateable. 
+Our TickerTape object simply passes a reference 
+to itself as the callback for text updates, and the source can invoke its 
+receiveText() method as necessary. 
+Interface Variables
+Although interfaces allow us to specify behavior without 
+implementation, there's one exception. An interface can contain constant 
+variable identifiers; these identifiers appear in any class that implements 
+the interface. This functionality allows for predefined parameters that 
+can be used with the methods: 
+interface Scaleable { 
+    static final int BIG = 0, MEDIUM = 1, SMALL = 2; 
+ 
+    void setScale( int size ); 
+} 
+The Scaleable interface defines three integers: 
+BIG, MEDIUM, and SMALL. 
+All variables defined in interfaces are implicitly final 
+and static; we don't have to use the 
+modifiers here but, for clarity, we recommend you do so. 
+A class that implements Scaleable sees these 
+variables: 
+class Box implements Scaleable { 
+ 
+    void setScale( int size ) { 
+        switch( size ) { 
+            case BIG: 
+                ... 
+            case MEDIUM: 
+                ... 
+            case SMALL: 
+                ... 
+        } 
+    } 
+    ... 
+} 
+Empty Interfaces
+Sometimes, interfaces are created just to hold constants; anyone who 
+implements the interfaces can see the constant names, much as if they were
+included by a C/C++ include file.  This is a somewhat degenerate, but 
+acceptable use of interfaces.
+Sometimes completely empty interfaces will be used to serve as a marker
+that a class has some special property.  The java.io.Serializeable interface
+is a good example (See Chapter 8).  Classes that implement Serializable don't 
+add any methods or variables.  Their additional type simply identifies them 
+to Java as classes that want to be able to be serialized.
+Interfaces and Packages
+Interfaces behave like classes within packages. An interface can be declared 
+public to make it visible outside of its package. 
+Under the default visibility, an interface is visible only inside of its 
+package. There can be only one public interface 
+declared in a compilation unit. 
+Subinterfaces
+An interface can extend another interface, just as a class can extend another 
+class. Such an interface is called a subinterface: 
+interface DynamicallyScaleable extends Scaleable { 
+    void changeScale( int size ); 
+} 
+The interface DynamicallyScaleable extends our 
+previous Scaleable interface and adds an additional 
+method. A class that implements DynamicallyScaleable 
+must implement all methods of both interfaces. 
+Interfaces can't specify that they implement other interfaces, instead they
+are allowed to extend more than one interface.  (This is multiple inheritence
+for interfaces).  More than one superinterface can be specified with the 
+comma operator:
+    interface DynamicallyScaleable extends Scaleable, SomethingElseable {
+        ...
+Inside Arrays
+At the end of Chapter 4, The Java Language, I mentioned that arrays have a 
+place in the Java class hierarchy, but I didn't give you any details. 
+Now that we've discussed the object-oriented aspects of Java, I can 
+give you the whole story. 
+Array classes live in a parallel Java class hierarchy under the Object 
+class. If a class is a direct subclass of Object, 
+then an array class for that base type also exists as a direct subclass 
+of Object. Arrays of more derived classes are 
+subclasses of the corresponding array classes. For example, consider the 
+following class types: 
+class Animal { ... } 
+class Bird extends Animal { ... } 
+class Penguin extends Bird { ... } 
+Figure 5.10 illustrates the class hierarchy for arrays 
+of these classes. 
+Figure 5.10: Arrays in the Java class hierarchy
+Arrays of the same dimension are related to one another in the same manner 
+as their base type classes. In our example, Bird 
+is a subclass of Animal, which means that the 
+Bird[] type is a subtype of Animal[]. 
+In the same way a Bird object can be used 
+in place of an Animal object, a Bird[] 
+array can be assigned to an Animal[] array: 
+Animal [][] animals; 
+Bird [][] birds = new Bird [10][10]; 
+birds[0][0] = new Bird(); 
+ 
+// make animals and birds reference the same array object 
+animals = birds;   
+System.out.println( animals[0][0] );               // prints Bird 
+Because arrays are part of the class hierarchy, we can use instanceof 
+to check the type of an array: 
+if ( birds instanceof Animal[][] )                 // yes 
+An array is a subtype of Object and can therefore 
+be assigned to Object type variables: 
+Object something; 
+something = animals; 
+Since Java knows the actual type of all objects, you can also cast back 
+if appropriate: 
+animals = (Animal [][])something; 
+Under unusual circumstances, Java may not be able to check the types
+of objects you place into arrays at compile-time. In those cases, it's
+possible to receive an ArrayStoreException if you
+try to assign the wrong type of object to an array element. Consider
+the following:
+class Dog { ... } 
+class Poodle extends Dog { ... } 
+class Chihuahua extends Dog { ... } 
+ 
+Dog [] dogs; 
+Poodle [] poodles = new Poodle [10]; 
+ 
+dogs = poodles;  
+ 
+dogs[3] = new Chihuahua();     // Run-time error, ArrayStoreException 
+Both Poodle and Chihuahua are
+subclasses of Dog, so an array of
+Poodle objects can therefore be assigned to an
+array of Dog objects, as I described
+previously. The problem is that an object assignable to an
+element of an array of type Dog[] may not be
+assignable to an element of an array of type
+Poodle. A Chihuahua object, for
+instance, can be assigned to a Dog element because
+it's a subtype of Dog, but not to a
+Poodle element.[6]
+[6] 
+In some sense this could be considered a tiny hole in the Java type 
+system. It doesn't occur elsewhere in Java, only with arrays. This is 
+because array objects exhibit covariance in 
+overriding their assignment and extraction methods. Covariance allows array 
+subclasses to override methods with arguments or return values that are 
+subtypes of the overridden methods, where the methods would normally be 
+overloaded or prohibited. This allows array subclasses to operate on their 
+base types with type safety, but also means that subclasses have different 
+capabilities than their parents, leading to the problem shown above. 
+Variable and Method Visibility
+Inner Classes
+ 
+ 
+ 
+ 
+ 
+ 
+ 

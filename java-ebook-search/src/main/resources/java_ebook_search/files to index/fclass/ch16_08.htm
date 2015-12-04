@@ -1,0 +1,272 @@
+
+[Chapter 16] DateFormatSymbols
+Chapter 16The java.text Package
+DateFormatSymbols
+Name
+DateFormatSymbols
+Synopsis
+Class Name:
+java.text.DateFormatSymbols
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The DateFormatSymbols class 
+encapsulates date and time formatting data that is locale-specific, like 
+the names of the days of the week and the names of the months. Typically, 
+you do not need to instantiate DateFormatSymbols 
+yourself. Instead, an instance is automatically created for you, behind 
+the scenes, when you use one of the factory methods in DateFormat 
+to create a DateFormat object. 
+You can retrieve a DateFormatSymbols 
+object by calling the getDateFormatSymbols() 
+method of SimpleDateFormat. 
+Once you have a DateFormatSymbols 
+object, you can modify the strings it uses if you want to change them. 
+Class Summary
+public class java.text.DateFormatSymbols extends java.lang.Object
+             implements java.io.Serializable, java.lang.Cloneable {
+  // Constructors
+  public DateFormatSymbols();
+  public DateFormatSymbols(Locale locale);
+  // Instance Methods
+  public Object clone();
+  public boolean equals(Object obj); 
+  public String[] getAmPmStrings();
+  public String[] getEras();
+  public String getLocalPatternChars();
+  public String[] getMonths();
+  public String[] getShortMonths();
+  public String[] getShortWeekdays();
+  public String[] getWeekdays();
+  public String[][] getZoneStrings();
+  public int hashCode();
+  public void setAmPmStrings(String[] newAmpms);
+  public void setEras(String[] newEras);
+  public void setLocalPatternChars(String newLocalPatternChars);
+  public void setMonths(String[] newMonths);
+  public void setShortMonths(String[] newShortMonths);
+  public void setShortWeekdays(String[] newShortWeekdays);
+  public void setWeekdays(String[] newWeekdays);
+  public void setZoneStrings(String[][] newZoneStrings);
+}
+Constructors
+DateFormatSymbols
+public DateFormatSymbols()
+Throws
+MissingResourceException
+If the resources for the default locale cannot be found or loaded. 
+Description
+This constructor creates a DateFormatSymbols 
+object for the default locale. 
+public DateFormatSymbols(Locale locale)
+Parameters
+locale
+The Locale to use. 
+Throws
+MissingResourceException
+If the resources for the given locale cannot be found or loaded. 
+Description
+This constructor creates a DateFormatSymbols 
+object for the given locale. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this DateFormatSymbols. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this DateFormatSymbols 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of DecimalFormatSymbols 
+and is equivalent to this DateFormatSymbols. 
+getAmPmStrings
+public String[] getAmPmStrings()
+Returns
+An array of strings used for the A.M./P.M. 
+field for this DateFormatSymbols. 
+Description
+This method returns the strings that are used for the A.M./P.M. field 
+(e.g., "AM", "PM"). 
+getEras
+public String[] getEras()
+Returns
+An array of strings used for the era field for 
+this DateFormatSymbols. 
+Description
+This method returns the strings that are used for the era field (e.g., 
+"BC", "AD"). 
+getLocalPatternChars
+public String getLocalPatternChars()
+Returns
+A string that contains the data-time pattern characters for this DateFormatSymbols. 
+Description
+This method returns the data-time pattern characters for the locale of 
+this object. 
+getMonths
+public String[] getMonths()
+Returns
+An array of strings used for the month field for this DateFormatSymbols. 
+Description
+This method returns the strings that are used for the month field (e.g., 
+"January", "February"). 
+getShortMonths
+public String[] getShortMonths()
+Returns
+An array of strings used for the short month field for this DateFormatSymbols. 
+Description
+This method returns the strings that are used for the short (i.e., three-character) month field (e.g., "Jan", "Feb"). 
+getShortWeekdays
+public String[] getShortWeekdays()
+Returns
+An array ofstrings used for the short weekday 
+field for this DateFormatSymbols. 
+Description
+This method returns the strings that are used for the short (i.e., three-character) weekday field (e.g., "Mon", "Tue"). 
+getWeekdays
+public String[] getWeekdays()
+Returns
+An array ofstrings used for the weekday field 
+for this DateFormatSymbols. 
+Description
+This method returns the strings that are used for the weekday field (e.g., 
+"Monday", "Tuesday"). 
+getZoneStrings
+public String[][] getZoneStrings()
+Returns
+An array of arrays of strings used for the time zones for this DateFormatSymbols. 
+Description
+This method returns the time-zone strings. Each subarray is an array of 
+six strings that specify a time-zone ID, its long name, its short name, its 
+daylight-savings-time name, its short daylight-savings-time name, and a 
+major city in the time zone. For example, an entry for Mountain Standard 
+Time is: 
+{"MST", "Mountain Standard Time", "MST",
+ "Mountain Daylight Time", "MDT", "Denver"}
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this DateFormatSymbols 
+object. 
+setAmPmStrings
+public void setAmPmStrings(String[] newAmpms)
+Parameters
+newAmpms
+The new strings. 
+Description
+This method sets the strings that are used for the A.M./P.M. field for 
+this DateFormatSymbols. 
+setEras
+public void setEras(String[] newEras)
+Parameters
+newEras
+The new strings. 
+Description
+This method sets the strings that are used for the era field for this DateFormatSymbols. 
+setLocalPatternChars
+public void setLocalPatternChars(String newLocalPatternChars)
+Parameters
+newLocalPatternChars
+The new date-time pattern characters. 
+Description
+This method sets the date-time pattern characters of this DateFormatSymbols 
+object. 
+setMonths
+public void setMonths(String[] newMonths)
+Parameters
+newMonths
+The new strings. 
+Description
+This method sets the strings that are used for the month field for this 
+DateFormatSymbols. 
+setShortMonths
+public void setShortMonths(String[] newShortMonths)
+Parameters
+newShortMonths
+The new strings. 
+Description
+This method sets the strings that are used for the short (i.e., three-character) 
+month field for this DateFormatSymbols. 
+setShortWeekdays
+public void setShortWeekdays(String[] newShortWeekdays)
+Parameters
+newShortWeekdays
+The new strings. 
+Description
+This method sets the strings that are used for the short (i.e., three-character) 
+weekday field for this DateFormatSymbols. 
+setWeekdays
+public void setWeekdays(String[] newWeekdays)
+Parameters
+newWeekdays
+The new strings. 
+Description
+This method sets the strings that are used for the weekday field for this 
+DateFormatSymbols. 
+setZones
+public void setZones(String[][] newZoneStrings)
+Parameters
+newZoneStrings
+The new strings. 
+Description
+This method sets the strings that are used for the time-zone field for 
+this DateFormatSymbols. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+DateFormat, 
+Locale, 
+SimpleDateFormat, 
+TimeZone 
+DateFormat
+DecimalFormat
+ 
+ 
+ 
+ 
+ 
+ 
+ 

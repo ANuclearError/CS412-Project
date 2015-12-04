@@ -1,0 +1,112 @@
+
+[Chapter 20] StringSelection 
+Chapter 20java.awt.datatransfer Reference
+StringSelection 
+Name
+StringSelection 
+Description
+StringSelection is a "convenience" 
+class that can be used for copy and paste operations on Unicode text strings. 
+For example, you could place a string on the system's clipboard with 
+the following code: 
+Clipboard c =
+  Toolkit.getDefaultToolkit().getSystemClipboard();
+StringSelection s = new StringSelection(
+  "Be safe when you cut and paste.");
+c.setContents(s, s);
+Class Definition
+public class java.awt.datatransfer.StringSelection
+   extends java.lang.Object
+   implements java.awt.datatransfer.ClipboardOwner,
+         java.awt.datatransfer.Transferable {
+  // Constructor
+  public StringSelection(String data);
+  // Instance Methods
+  public synchronized Object getTransferData (DataFlavor flavor) 
+    throws UnsupportedFlavorException, IOException;
+  public synchronized DataFlavor[] getTransferDataFlavors();
+  public boolean isDataFlavorSupported (DataFlavor flavor);
+  public void lostOwnership (Clipboard clipboard, Transferable contents);
+}
+Constructors
+StringSelection
+public StringSelection (String data)
+Parameters
+data
+The 
+string to be placed in a clipboard. 
+Description
+Constructs a StringSelection 
+object from the given string. 
+Instance Methods
+getTransferData
+public synchronized Object getTransferData (DataFlavor flavor) throws UnsupportedFlavorException, IOException
+Parameters
+flavor
+The requested flavor 
+for the returned data, which can be either DataFlavor.stringFlavor 
+or DataFlavor.plainTextFlavor. 
+Returns
+The string that the StringSelection 
+was constructed with. This is returned either as a String 
+object or a Reader object, 
+depending on the flavor requested. 
+Throws
+UnsupportedFlavorException
+If the requested flavor is not supported.
+IOException
+If a Reader 
+representing the string could not be created. 
+Implements
+Transferable.getTransferData(DataFlavor) 
+Description
+Returns the string this StringSelection 
+represents. This is returned either as a String 
+object or a Reader object, 
+depending on the flavor requested. 
+getTransferDataFlavors
+public synchronized DataFlavor[] getTransferDataFlavors()
+Returns
+An array of the data flavors the StringSelection 
+supports. 
+Implements
+Transferable.getTransferDataFlavors() 
+Description
+DataFlavor.stringFlavor and 
+DataFlavor.plainTextFlavor 
+are returned. 
+isDataFlavorSupported
+public boolean isDataFlavorSupported (DataFlavor flavor)
+Parameters
+flavor
+The flavor in question. 
+Returns
+true if flavor 
+is supported; false otherwise. 
+Implements
+Transferable.isDataFlavorSupported(DataFlavor) 
+lostOwnership
+public void lostOwnership (Clipboard clipboard, Transferable contents)
+Parameters
+clipboard
+The clipboard whose contents are changing.
+contents
+The contents that were on the clipboard. 
+Implements
+ClipboardOwner.lostOwnership(Clipboard, 
+Transferable) 
+Description
+Does nothing. 
+See Also
+Clipboard, ClipboardOwner, 
+DataFlavor, String, 
+Transferable 
+DataFlavor 
+Transferable 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

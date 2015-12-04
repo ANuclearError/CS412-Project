@@ -1,0 +1,26 @@
+
+[Chapter 17] 17.3 java.applet.AppletStub (JDK 1.0)
+Chapter 17The java.applet Package
+17.3 java.applet.AppletStub (JDK 1.0)
+This is an internal interface used when implementing an
+applet viewer.
+public abstract interface AppletStub {
+    // Public Instance Methods
+            public abstract void appletResize(int width, int height);
+            public abstract AppletContext getAppletContext();
+            public abstract URL getCodeBase();
+            public abstract URL getDocumentBase();
+            public abstract String getParameter(String name);
+            public abstract boolean isActive();
+}
+Passed To:
+Applet.setStub()
+java.applet.AppletContext (JDK 1.0)
+java.applet.AudioClip (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,88 @@
+
+[Chapter 19] 19.3 java.awt.datatransfer.DataFlavor (JDK 1.1)
+Chapter 19The java.awt.datatransfer Package
+19.3 java.awt.datatransfer.DataFlavor (JDK 1.1)
+Objects of this type define a data type or format for the
+purposes of data transfer.  A DataFlavor is
+characterized by two values.  The first is a descriptive
+human-readable name, passed to a DataFlavor()
+constructor or set with setHumanPresentableName().
+The second component of a DataFlavor specifies the
+type of data to be transferred in a more machine-readable
+way.  The two DataFlavor() constructors allow two
+distinct ways to specify this data type.  One way is by
+directly specifying the representation class of the data.
+This is a Class object that defines the Java type
+that the recipient of a data transfer is passed.  The
+other way to specify the data type represented by a
+DataFlavor is to pass a string that specifies the
+MIME type of the data to be transferred.
+When you construct a DataFlavor object by specifying
+the representation type of the data, the MIME type of the
+DataFlavor is automatically set to:
+application/x-java-serialized-object class=classname
+This indicates that
+the object is to be transferred using the data format of the
+Java object serialization protocol.  When you pass a MIME type
+string to the DataFlavor() constructor, on the other
+hand, the representation class of the DataFlavor
+is automatically set to the Class object for
+java.io.InputStream.  This means that the recipient
+of the data transfer is given an InputStream
+object from which it can read and parse data in the
+specified MIME format.
+Because the same MIME type can be specified with a number of
+slightly different strings, the DataFlavor class
+converts the MIME type to a canonical form so that it can
+be uniquely identified and compared.  Use
+isMimeTypeEqual() to compare the MIME type of a
+DataFlavor object with another MIME type, or with
+the MIME type of another DataFlavor.
+Because textual data is so often transferred, the
+DataFlavor class defines constants for two
+commonly-used data flavors.  stringFlavor represents
+text transferred as a String object, while
+plainTextFlavor represents text transferred through
+an InputStream, using the text/plain MIME type.
+public class DataFlavor extends Object {
+    // Public Constructors
+            public DataFlavor(Class representationClass, String humanPresentableName);
+            public DataFlavor(String mimeType, String humanPresentableName);
+    // Class Variables
+            public static DataFlavor plainTextFlavor;
+            public static DataFlavor stringFlavor;
+    // Public Instance Methods
+            public boolean equals(DataFlavor dataFlavor);
+            public String getHumanPresentableName();
+            public String getMimeType();
+            public Class getRepresentationClass();
+            public boolean isMimeTypeEqual(String mimeType);
+            public final boolean isMimeTypeEqual(DataFlavor dataFlavor);
+            public void setHumanPresentableName(String humanPresentableName);
+    // Protected Instance Methods
+            protected String normalizeMimeType(String mimeType);
+            protected String normalizeMimeTypeParameter(String parameterName, String parameterValue);
+}
+Passed To:
+DataFlavor.equals(), 
+DataFlavor.isMimeTypeEqual(), 
+StringSelection.getTransferData(), 
+StringSelection.isDataFlavorSupported(), 
+Transferable.getTransferData(), 
+Transferable.isDataFlavorSupported(), 
+UnsupportedFlavorException()
+Returned By:
+StringSelection.getTransferDataFlavors(), 
+Transferable.getTransferDataFlavors()
+Type Of:
+DataFlavor.plainTextFlavor, 
+DataFlavor.stringFlavor
+java.awt.datatransfer.ClipboardOwner (JDK 1.1)
+java.awt.datatransfer.StringSelection (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

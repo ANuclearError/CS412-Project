@@ -1,0 +1,29 @@
+
+[Chapter 28] 28.25 java.net.URLStreamHandler (JDK 1.0)
+Chapter 28The java.net Package
+28.25 java.net.URLStreamHandler (JDK 1.0)
+This abstract class defines the openConnection() method that creates a
+URLConnection for a given URL. A separate
+subclass of this class may be defined for various URL
+protocol types. A URLStreamHandler is created by a
+URLStreamHandlerFactory.
+Normal applications never need to use or subclass this class.
+public abstract class URLStreamHandler extends Object {
+    // Default Constructor: public URLStreamHandler()
+    // Protected Instance Methods
+            protected abstract URLConnection openConnection(URL u) throws IOException;
+            protected void parseURL(URL u, String spec, int start, int limit);
+            protected void setURL(URL u, String protocol, String host, int port, String file, String ref);
+            protected String toExternalForm(URL u);
+}
+Returned By:
+URLStreamHandlerFactory.createURLStreamHandler()
+java.net.URLEncoder (JDK 1.0)
+java.net.URLStreamHandlerFactory (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

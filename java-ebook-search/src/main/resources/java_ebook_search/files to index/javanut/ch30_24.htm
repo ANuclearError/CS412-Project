@@ -1,0 +1,63 @@
+
+[Chapter 30] 30.24 java.util.TimeZone (JDK 1.1)
+Chapter 30The java.util Package
+30.24 java.util.TimeZone (JDK 1.1)
+The TimeZone class represents a time zone; it is
+used with the Calendar and DateFormat
+classes.
+As an abstract class, TimeZone cannot be directly
+instantiated.  Instead, you should call the static
+getDefault() method to obtain a TimeZone
+object that represents the time zone inherited from the host
+operating system.  Or, you should call getTimeZone()
+(also static), passing the name of the desired zone.  You
+can obtain a list of the supported time zone names by calling
+the static getAvailableIDs() method.
+Once you have a TimeZone object, you can call
+inDaylightTime() to determine whether, for a given
+Date, daylight savings time is in effect for that
+time zone.  Call getID() to obtain the name of the
+time zone, and call getOffset() for a given date to
+determine the number of milliseconds to add to GMT to
+convert to the time zone.
+public abstract class TimeZone extends Object implements Serializable, Cloneable {
+    // Default Constructor: public TimeZone()
+    // Class Methods
+            public static synchronized String[] getAvailableIDs(int rawOffset);
+            public static synchronized String[] getAvailableIDs();
+            public static synchronized TimeZone getDefault();
+            public static synchronized TimeZone getTimeZone(String ID);
+            public static synchronized void setDefault(TimeZone zone);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public String getID();
+            public abstract int getOffset(int era, int year, int month, int day, int dayOfWeek, int milliseconds);
+            public abstract int getRawOffset();
+            public abstract boolean inDaylightTime(Date date);
+            public void setID(String ID);
+            public abstract void setRawOffset(int offsetMillis);
+            public abstract boolean useDaylightTime();
+}
+Extended By:
+SimpleTimeZone
+Passed To:
+Calendar(), 
+Calendar.getInstance(), 
+Calendar.setTimeZone(), 
+DateFormat.setTimeZone(), 
+GregorianCalendar(), 
+TimeZone.setDefault()
+Returned By:
+Calendar.getTimeZone(), 
+DateFormat.getTimeZone(), 
+TimeZone.getDefault(), 
+TimeZone.getTimeZone()
+java.util.StringTokenizer (JDK 1.0)
+java.util.TooManyListenersException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

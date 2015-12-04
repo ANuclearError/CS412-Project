@@ -1,0 +1,30 @@
+
+[Chapter 20] 20.20 java.awt.event.MouseAdapter (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.20 java.awt.event.MouseAdapter (JDK 1.1)
+This class is a trivial implementation of
+MouseListener; it provides empty bodies for each
+of the methods of that interface.  When you are not
+interested in all of these methods, it is often easier to
+subclass MouseAdapter than it is to implement
+MouseListener from scratch.
+public abstract class MouseAdapter extends Object implements MouseListener {
+    // Default Constructor: public MouseAdapter()
+    // Public Instance Methods
+            public void mouseClicked(MouseEvent e);  // From MouseListener
+            public void mouseEntered(MouseEvent e);  // From MouseListener
+            public void mouseExited(MouseEvent e);  // From MouseListener
+            public void mousePressed(MouseEvent e);  // From MouseListener
+            public void mouseReleased(MouseEvent e);  // From MouseListener
+}
+Hierarchy:
+Object->MouseAdapter(MouseListener(EventListener))
+java.awt.event.KeyListener (JDK 1.1)
+java.awt.event.MouseEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

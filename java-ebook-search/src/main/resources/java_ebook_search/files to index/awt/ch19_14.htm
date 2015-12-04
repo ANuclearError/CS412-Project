@@ -1,0 +1,322 @@
+
+[Chapter 19] Color
+Chapter 19java.awt Reference
+Color
+Name
+Color
+Description
+The Color class represents 
+a specific color to the system. 
+Class Definition
+public final class java.awt.Color
+    extends java.lang.Object
+    implements java.io.Serializable {
+  
+  // Constants
+  public static final Color black;
+  public static final Color blue;
+  public static final Color cyan;
+  public static final Color darkGray;
+  public static final Color gray;
+  public static final Color green;
+  public static final Color lightGray;
+  public static final Color magenta;
+  public static final Color orange;
+  public static final Color pink;
+  public static final Color red;
+  public static final Color white;
+  public static final Color yellow;
+  
+  // Constructors
+  public Color (int rgb);
+  public Color (int red, int green, int blue);
+  public Color (float red, float green, float blue);
+  
+  // Class Methods
+  public static Color decode (String name); 
+  public static Color getColor (String name);
+  public static Color getColor (String name, Color defaultColor);
+  public static Color getColor (String name, int defaultColor);
+  public static Color getHSBColor (float hue, float saturation, 
+      float brightness);
+  public static int HSBtoRGB (float hue, float saturation, float brightness);
+  public static float[] RGBtoHSB (int red, int green, int blue, 
+      float hsbvalues[]);
+  
+  // Instance Methods
+  public Color brighter();
+  public Color darker();
+  public boolean equals (Object object);
+  public int getBlue();
+  public int getGreen();
+  public int getRed();
+  public int getRGB();
+  public int hashCode();
+  public String toString();
+}
+Constants
+black
+public static final Color black
+The color black. 
+blue
+public static final Color blue
+The color blue. 
+cyan
+public static final Color cyan
+The color cyan. 
+darkGray
+public static final Color darkGray
+The color dark gray. 
+gray
+public static final Color gray
+The color gray. 
+green
+public static final Color green
+The color green. 
+lightGray
+public static final Color lightGray
+The color light gray. 
+magenta
+public static final Color magenta
+The color magenta. 
+orange
+public static final Color orange
+The color orange. 
+pink
+public static final Color pink
+The color pink. 
+red
+public static final Color red
+The color red. 
+white
+public static final Color white
+The color white. 
+yellow
+public static final Color yellow
+The color yellow. 
+Constructors
+Color
+public Color (int rgb)
+Parameters
+rgb
+Composite color value 
+Description
+Constructs a Color object with 
+the given rgb value. 
+public Color (int red, int green, int blue)
+Parameters
+red
+Red component of color in the range[0, 255] 
+green
+Green component of color in the range[0, 255] 
+blue
+Blue component of color in the range[0, 255] 
+Description
+Constructs a Color object with 
+the given red, green, 
+and blue values. 
+public Color (float red, float green, float blue)
+Parameters
+red
+Red component of color in the range[0.0, 1.0] 
+green
+Green component of color in the range[0.0, 1.0] 
+blue
+Blue component of color in the range[0.0, 1.0] 
+Description
+Constructs a Color object with 
+the given red, green, 
+and blue values. 
+Class Methods
+decode
+public static Color decode (String nm) 
+Parameters
+nm
+A String 
+representing a color as a 24-bit integer. 
+Returns
+The color requested. 
+Throws
+NumberFormatException
+If 
+nm cannot be converted to a number. 
+Description
+Gets color specified by the given string. 
+getColor
+public static Color getColor (String name)
+Parameters
+name
+The name of a system 
+property indicating which color to fetch. 
+Returns
+Color instance of name requested, 
+or null if the name 
+is invalid. 
+Description
+Gets color specified by the system property name.
+public static Color getColor (String name, Color defaultColor)
+Parameters
+name
+The name 
+of a system property indicating which color to fetch. 
+defaultColor
+Color to return 
+if name is not found in properties, 
+or invalid. 
+Returns
+Color instance of name requested, 
+or defaultColor if the name 
+is invalid. 
+Description
+Gets color specified by the system property name. 
+public static Color getColor (String name, int defaultColor)
+Parameters
+name
+The name 
+of a system property indicating which color to fetch. 
+defaultColor
+Color to return 
+if name is not found in properties, 
+or invalid. 
+Returns
+Color instance of name requested, 
+or defaultColor if the name 
+is invalid. 
+Description
+Gets color specified by the system property name. 
+The default color is specified as a 32-bit RGB value. 
+getHSBColor
+public static Color getHSBColor (float hue, float saturation, float brightness)
+Parameters
+hue
+Hue component of Color 
+to create, in the range[0.0, 1.0]. 
+saturation
+Saturation component 
+of Color to create, in the 
+range[0.0, 1.0]. 
+brightness
+Brightness component 
+of Color to create, in the 
+range[0.0, 1.0]. 
+Returns
+Color instance for values provided. 
+Description
+Create an instance of Color 
+by using hue, saturation, and brightness instead of red, green, and blue 
+values. 
+HSBtoRGB
+public static int HSBtoRGB (float hue, float saturation, float brightness)
+Parameters
+hue
+Hue component of Color 
+to convert, in the range[0.0, 1.0]. 
+saturation
+Saturation component 
+of Color to convert, in the 
+range[0.0, 1.0]. 
+brightness
+Brightness component 
+of Color to convert, in the 
+range[0.0, 1.0]. 
+Returns
+Color value for hue, saturation, and brightness provided. 
+Description
+Converts a specific hue, saturation, and brightness to a Color 
+and returns the red, green, and blue values in a composite integer value. 
+RGBtoHSB
+public static float[] RGBtoHSB (int red, int green, int blue, float[] hsbvalues)
+Parameters
+red
+Red component of Color 
+to convert, in the range[0, 255]. 
+green
+Green component of 
+Color to convert, in the range[0, 
+255]. 
+blue
+Blue component of Color 
+to convert, in the range[0, 255]. 
+hsbvalues
+Three element array in which to put the result. This 
+array is used as the method's return object. If null, a new array 
+is allocated. 
+Returns
+Hue, saturation, and brightness values for Color 
+provided, in elements 0, 1, and 2 (respectively) of the returned array. 
+Description
+Allows you to convert specific red, green, blue value to the hue, saturation, 
+and brightness equivalent. 
+Instance Methods
+brighter
+public Color brighter()
+Returns
+Brighter version of current color. 
+Description
+Creates new Color that is somewhat 
+brighter than current. 
+darker
+public Color darker()
+Returns
+Darker version of current color. 
+Description
+Creates new Color that is somewhat 
+darker than current. 
+equals
+public boolean equals (Object object)
+Parameters
+object
+The object to compare. 
+Returns
+true if object 
+represents the same color, false otherwise. 
+Overrides
+Object.equals(Object) 
+Description
+Compares two different Color 
+instances for equivalence. 
+getBlue
+public int getBlue()
+Returns
+Blue component of current color. 
+getGreen
+public int getGreen()
+Returns
+Green component of current color. 
+getRed
+public int getRed()
+Returns
+Red component of current color. 
+getRGB
+public int getRGB()
+Returns
+Current color as a composite value. 
+Description
+Gets integer value of current color. 
+hashCode
+public int hashCode()
+Returns
+A hashcode to use when storing Color 
+in a Hashtable. 
+Overrides
+Object.hashCode() 
+Description
+Generates a hashcode for the Color. 
+toString
+public String toString()
+Returns
+A string representation of the Color object. 
+Overrides
+Object.toString() 
+See Also
+Object, Properties, 
+Serializable, String 
+Choice
+Component
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,765 @@
+
+[Chapter 14] BigInteger
+Chapter 14The java.math Package
+BigInteger
+Name
+BigInteger
+Synopsis
+Class Name:
+java.math.BigInteger
+Superclass:
+java.lang.Number
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The BigInteger class represents 
+an arbitrary-precision integer value. You should use this class if a long 
+is not big enough for your purposes. The number in a BigInteger 
+is represented by a sign value and a magnitude, which is an arbitrarily large 
+array of bytes. A BigInteger 
+cannot overflow. 
+Most of the methods in BigInteger 
+perform mathematical operations or make comparisons with other BigInteger 
+objects. BigInteger also defines 
+some methods for handling modular arithmetic and determining primality 
+that are needed for cryptographic purposes. 
+Class Summary
+public class java.math.BigInteger extends java.lang.Number {
+  // Constructors
+  public BigInteger(byte[] val);
+  public BigInteger(int signum, byte[] magnitude);
+  public BigInteger(String val);
+  public BigInteger(String val, int radix);
+  public BigInteger(int numBits, Random rndSrc);
+  public BigInteger(int bitLength, int certainty, Random rnd);
+  // Class Methods
+  public static BigInteger valueOf(long val);
+  // Instance Methods
+  public BigInteger abs();
+  public BigInteger add(BigInteger val);
+  public BigInteger and(BigInteger val);
+  public BigInteger andNot(BigInteger val);
+  public int bitCount();
+  public int bitLength();
+  public BigInteger clearBit(int n);
+  public int compareTo(BigInteger val);
+  public BigInteger divide(BigInteger val);
+  public BigInteger[] divideAndRemainder(BigInteger val);
+  public double doubleValue();
+  public boolean equals(Object x); 
+  public BigInteger flipBit(int n);
+  public float floatValue();
+  public BigInteger gcd(BigInteger val);
+  public int getLowestSetBit();
+  public int hashCode();
+  public int intValue();
+  public boolean isProbablePrime(int certainty);
+  public long longValue();
+  public BigInteger max(BigInteger val);
+  public BigInteger min(BigInteger val);
+  public BigInteger mod(BigInteger m);
+  public BigInteger modInverse(BigInteger m);
+  public BigInteger modPow(BigInteger exponent, BigInteger m);
+  public BigInteger multiply(BigInteger val);
+  public BigInteger negate();
+  public BigInteger not();
+  public BigInteger or(BigInteger val);
+  public BigInteger pow(int exponent);
+  public BigInteger remainder(BigInteger val);
+  public BigInteger setBit(int n);
+  public BigInteger shiftLeft(int n);
+  public BigInteger shiftRight(int n);
+  public int signum();
+  public BigInteger subtract(BigInteger val);
+  public boolean testBit(int n);
+  public byte[] toByteArray();
+  public String toString();
+  public String toString(int radix);
+  public BigInteger xor(BigInteger val);
+}
+Constructors
+BigInteger
+public BigInteger(byte[] val) throws NumberFormatException
+Parameters
+val
+The initial value. 
+Throws
+NumberFormatException
+If the array does not contain any bytes. 
+Description
+This constructor creates a BigInteger 
+with the given initial value. The value is expressed as a two's complement 
+signed integer, with the most significant byte in the first position (val[0]) 
+of the array (big-endian). The most significant bit of the most significant 
+byte is the sign bit. 
+   public BigInteger(int signum, byte[] magnitude) throws NumberFormatException  
+Parameters
+signum
+The sign of the value: -1 indicates negative, 0 indicates zero, and 1
+indicates positive.
+magnitude
+The initial magnitude of the value. 
+Throws
+NumberFormatException
+If signum is invalid or if 
+signum is 0 but magnitude is not 0. 
+Description
+This constructor creates a BigInteger 
+with the given initial value and sign. The magnitude is expressed as a 
+big-endian byte array. 
+public BigInteger(String val) throws NumberFormatException
+Parameters
+val
+The initial value. 
+Throws
+NumberFormatException
+If the string cannot be parsed into a valid BigInteger. 
+Description
+This constructor creates a BigInteger 
+with the initial value specified by the String. 
+The string can contain an optional minus sign followed by zero or more 
+decimal digits. The mapping from characters to digits is provided by the 
+Character.digit() method. 
+   public BigInteger(String val, int radix) throws NumberFormatException  
+Parameters
+val
+The initial value.
+radix
+The radix to use to parse the given string. 
+Throws
+NumberFormatException
+If the string cannot be parsed, or if the radix is not in the allowed range 
+(Character.MIN_RADIX through 
+Character.MAX_RADIX). 
+Description
+This constructor creates a BigInteger 
+with the initial value specified by the String 
+using the given radix. The string can contain an optional minus sign followed 
+by zero or more digits in the specified radix. The mapping from characters 
+to digits is provided by the Character.digit() 
+method. 
+   public BigInteger(int numBits, Random rndSrc) throws IllegalArgumentException  
+Parameters
+numBits
+The maximum number of bits in the returned number.
+rndSrc
+The source of the random bits. 
+Throws
+IllegalArgumentException
+If numBits is less than zero. 
+Description
+This constructor creates a random BigInteger in the
+range 0 to
+2^numBits -1.
+public BigInteger(int bitLength, int certainty, Random rnd)
+Parameters
+bitLength
+The maximum number of bits in the returned number.
+certainty
+The certainty that the returned value is a prime number.
+rnd
+The source of the random bits. 
+Throws
+ArithmeticException
+If numBits is less than 2. 
+Description
+This constructor creates a random BigInteger 
+in the range 0 to 
+2^numBits-1
+that is probably a prime number. The probability that the returned number 
+is prime is greater 
+than 1-.5^certainty. 
+In other words, the higher the value of certainty, 
+the more likely the BigInteger 
+is to be prime, and also the longer it takes for the constructor to create 
+the BigInteger. 
+Class Methods
+valueOf
+public static BigInteger valueOf(long val)
+Parameters
+val
+The initial value. 
+Returns
+A BigInteger that represents 
+the given value. 
+Description
+This method creates a BigInteger 
+from the given long value. 
+Instance Methods
+abs
+public BigInteger abs()
+Returns
+A BigInteger that contains 
+the absolute value of this number. 
+Description
+This method returns the absolute value of this BigInteger. 
+If this BigInteger is nonnegative, 
+it is returned. Otherwise, a new BigInteger 
+that contains the absolute value of this BigInteger 
+is returned. 
+add
+public BigInteger add(BigInteger val) throws ArithmeticException
+Parameters
+val
+The number to be added. 
+Returns
+A new BigInteger that contains 
+the sum of this number and the given value. 
+Throws
+ArithmeticException
+If any kind of arithmetic error occurs. 
+Description
+This method returns the sum of this BigInteger 
+and the given BigInteger as 
+a new BigInteger. 
+and
+public BigInteger and(BigInteger val)
+Parameters
+val
+The number to be ANDed. 
+Returns
+A new BigInteger that contains 
+the bitwise AND of this number and the given value. 
+Description
+This method returns the bitwise AND of this BigInteger 
+and the supplied BigInteger 
+as a new BigInteger. 
+andNot
+public BigInteger andNot(BigInteger val)
+Parameters
+val
+The number to be combined 
+with this BigInteger. 
+Returns
+A new BigInteger that contains 
+the bitwise AND of this number and the bitwise negation of the given value. 
+Description
+This method returns the bitwise AND of this BigInteger 
+and the bitwise negation of the given BigInteger 
+as a new BigInteger. Calling 
+this method is equivalent to calling and(val.not()). 
+bitCount
+public int bitCount()
+Returns
+The number of bits that differ from this BigInteger's 
+sign bit. 
+Description
+This method returns the number of bits in the two's complement representation 
+of this BigInteger that differ 
+from the sign bit of this BigInteger. 
+bitLength
+public int bitLength()
+Returns
+The number of bits needed to represent this number, excluding a sign bit. 
+Description
+This method returns the minimum number of bits needed to represent this 
+number, not counting a sign bit. 
+clearBit
+public BigInteger clearBit(int n) throws ArithmeticException
+Parameters
+n
+The bit to clear. 
+Returns
+A new BigInteger that contains 
+the value of this BigInteger 
+with the given bit cleared. 
+Throws
+ArithmeticException
+If n is less than 0. 
+Description
+This method returns a new BigInteger 
+that is equal to this BigInteger, 
+except that the given bit is cleared, or set to zero. 
+compareTo
+public int compareTo(BigInteger val)
+Parameters
+val
+The value to be compared. 
+Returns
+-1 if this number is less than val, 
+0 if this number is equal to val, 
+or 1 if this number is greater than val. 
+Description
+This method compares this BigInteger 
+to the given BigInteger and 
+returns a value that indicates the result of the comparison. This method 
+can be used to implement all six of the standard boolean comparison operators: 
+==, !=, 
+&lt;=, &lt;, 
+&gt;=, and &gt;. 
+divide
+public BigInteger divide(BigInteger val) throws ArithmeticException
+Parameters
+val
+The divisor. 
+Returns
+A new BigInteger that contains 
+the result (quotient) of dividing this number by the given value. 
+Throws
+ArithmeticException
+If val is zero. 
+Description
+This method returns the quotient that results from dividing this BigInteger 
+by the given BigInteger as 
+a new BigInteger. Any fractional 
+remainder is discarded. 
+divideAndRemainder
+   public BigInteger[] divideAndRemainder(BigInteger val) throws ArithmeticException  
+Parameters
+val
+The divisor. 
+Returns
+An array of BigInteger objects that contains the quotient and remainder 
+(in that order) that result from dividing this number by the given value. 
+Throws
+ArithmeticException
+If val is zero. 
+Description
+This method returns the quotient and remainder that results from dividing 
+this BigInteger by the given 
+BigInteger as an array of new 
+BigInteger objects. The first 
+element of the array is equal to divide(val); 
+the second element is equal to remainder(val). 
+doubleValue
+public double doubleValue()
+Returns
+The value of this BigInteger 
+as a double. 
+Overrides
+Number.doubleValue() 
+Description
+This method returns the value of this BigInteger 
+as a double. If the value exceeds 
+the limits of a double, Double.POSITIVE_INFINITY 
+or Double.NEGATIVE_INFINITY 
+is returned. 
+equals
+public boolean equals(Object x)
+Parameters
+x
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+x is an instance of BigInteger, 
+and it represents the same value as this BigInteger. 
+flipBit
+public BigInteger flipBit(int n)
+Parameters
+n
+The bit to toggle. 
+Returns
+A new BigInteger that contains 
+the value of this BigInteger 
+with the given bit toggled. 
+Throws
+ArithmeticException
+If n is less than 0. 
+Description
+This method returns a new BigInteger 
+that is equal to this BigInteger, 
+except that the given bit is toggled. In other words, if the given bit 
+is 0, it is set to one, or if it is 1, it is set to zero. 
+floatValue
+public float floatValue()
+Returns
+The value of this BigInteger 
+as a float. 
+Overrides
+Number.floatValue() 
+Description
+This method returns the value of this BigInteger 
+as a float. If the value exceeds 
+the limits of a float, Float.POSITIVE_INFINITY 
+or Float.NEGATIVE_INFINITY 
+is returned. 
+gcd
+public BigInteger gcd(BigInteger val)
+Parameters
+val
+The number to be compared. 
+Returns
+A new BigInteger that contains 
+the greatest common denominator of this number and the given number. 
+Description
+This method calculates the greatest common denominator of the absolute 
+value of this BigInteger and 
+the absolute value of the given BigInteger, 
+and returns it as a new BigInteger. 
+If both values are 0, the method returns a BigInteger 
+that contains the value 0. 
+getLowestSetBit
+public int getLowestSetBit()
+Returns
+The index of the lowest-order bit with a value of 1, or -1 if there are 
+no bits that are 1. 
+Description
+This method returns the index of the lowest-order, or rightmost, bit with 
+a value of 1. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this BigInteger. 
+intValue
+public int intValue()
+Returns
+The value of this BigInteger 
+as an int. 
+Overrides
+Number.intValue() 
+Description
+This method returns the value of this BigInteger 
+as an int. If the value exceeds 
+the limits of an int, the excessive high-order 
+bits are discarded.
+isProbablePrime
+public boolean isProbablePrime(int certainty)
+Parameters
+certainty
+The "certainty" 
+that this number is prime, where a higher value indicates more certainty. 
+Returns
+true if this number is probably 
+prime; false if it is definitely 
+not prime. 
+Description
+This method returns true if this number has a
+probability of being prime that is greater than 1-.5^certainty. If the number is
+definitely not prime, false is returned.
+longValue
+public long longValue()
+Returns
+The value of this BigInteger 
+as a long. 
+Overrides
+Number.longValue() 
+Description
+This method returns the value of this BigInteger 
+as a long. If the value exceeds 
+the limits of a long, the excessive high-order
+bits are discarded.
+max
+public BigInteger max(BigInteger val)
+Parameters
+val
+The number to be compared. 
+Returns
+The BigInteger that represents 
+the greater of this number and the given value. 
+Description
+This method returns the greater of this BigInteger 
+and the given BigInteger. 
+min
+public BigInteger min(BigInteger val)
+Parameters
+val
+The number to be compared. 
+Returns
+The BigInteger that represents 
+the lesser of this number and the given value. 
+Description
+This method returns the lesser of this BigInteger 
+and the given BigInteger. 
+mod
+public BigInteger mod(BigInteger m)
+Parameters
+m
+The number to use. 
+Returns
+A new BigInteger that contains 
+the modulus of this number and the given number. 
+Throws
+ArithmeticException
+If m is less than or equal to zero. 
+Description
+This method returns a new BigInteger 
+that contains the value of this BigInteger 
+mod m. 
+modInverse
+   public BigInteger modInverse(BigInteger m) throws ArithmeticException  
+Parameters
+m
+The number to use. 
+Returns
+A new BigInteger that contains 
+the multiplicative inverse of the modulus of this number and the given 
+number. 
+Throws
+ArithmeticException
+If m is less than or equal 
+to zero, or if the result cannot be calculated. 
+Description
+This method returns a new BigInteger 
+that contains the multiplicative inverse of the value of this BigInteger 
+mod m. 
+modPow
+public BigInteger modInverse(BigInteger exponent, BigInteger m)
+Parameters
+exponent
+The exponent.
+m
+The number to use. 
+Returns
+A new BigInteger that contains 
+the modulus of this number raised to the given power and the given number. 
+Throws
+ArithmeticException
+If m is less than or equal to zero. 
+Description
+This method returns a new BigInteger 
+that contains the value of this BigInteger 
+raised to the given power mod m. 
+multiply
+public BigInteger multiply(BigInteger val)
+Parameters
+val
+The number to be multiplied. 
+Returns
+A new BigInteger that contains 
+the product of this number and the given number. 
+Description
+This method multiplies this BigInteger 
+by the given BigInteger and 
+returns the product as a new BigInteger. 
+negate
+public BigInteger negate()
+Returns
+A new BigInteger that contains 
+the negative of this number. 
+Description
+This method returns a new BigInteger 
+that is identical to this BigInteger 
+except that its sign is reversed. 
+not
+public BigInteger not()
+Returns
+A new BigInteger that contains 
+the bitwise negation of this number. 
+Description
+This method returns a new BigInteger 
+that is calculated by inverting every bit of this BigInteger. 
+or
+public BigInteger or(BigInteger val)
+Parameters
+val
+The value to be ORed. 
+Returns
+A new BigInteger that contains 
+the bitwise OR of this number and the given value. 
+Description
+This method returns the bitwise OR of this BigInteger 
+and the given BigInteger as 
+a new BigInteger. 
+pow
+public BigInteger pow(int exponent) throws ArithmeticException
+Parameters
+exponent
+The exponent. 
+Returns
+A new BigInteger that contains 
+the result of raising this number to the given power. 
+Throws
+ArithmeticException
+If exponent is less than zero. 
+Description
+This method raises this BigInteger 
+to the given power and returns the result as a new BigInteger. 
+remainder
+   public BigInteger remainder(BigInteger val) throws ArithmeticException  
+Parameters
+val
+The divisor. 
+Returns
+A new BigInteger that contains 
+the remainder that results from dividing this number by the given value. 
+Throws
+ArithmeticException
+If val is zero. 
+Description
+This method returns the remainder that results from dividing this BigInteger 
+by the given BigInteger as 
+a new BigInteger. 
+setBit
+public BigInteger setBit(int n) throws ArithmeticException
+Parameters
+n
+The bit to set. 
+Returns
+A new BigInteger that contains 
+the value of this BigInteger 
+with the given bit set. 
+Throws
+ArithmeticException
+If n is less than zero. 
+Description
+This method returns a new BigInteger 
+that is equal to this BigInteger, 
+except that the given bit is set to 1. 
+shiftLeft
+public BigInteger shiftLeft(int n)
+Parameters
+n
+The number of bits to 
+shift. 
+Returns
+A new BigInteger that contains 
+the result of shifting the bits of this number left by the given number 
+of bits. 
+Description
+This method returns a new BigInteger 
+that contains the value of this BigInteger 
+left-shifted by the given number of bits. 
+shiftRight
+public BigInteger shiftRight(int n)
+Parameters
+n
+The number of bits to 
+shift. 
+Returns
+A new BigInteger that contains 
+the result of shifting the bits of this number right by the given number 
+of bits with sign extension. 
+Description
+This method returns a new BigInteger 
+that contains the value of this BigInteger 
+right-shifted by the given number of bits with sign extension. 
+signum
+public int signum()
+Returns
+-1 is this number is negative, 0 if this number is zero, or 1 if this number 
+is positive. 
+Description
+This method returns a value that indicates the sign of this BigInteger. 
+subtract
+public BigInteger subtract(BigInteger val)
+Parameters
+val
+The number to be subtracted. 
+Returns
+A new BigDecimal that contains 
+the result of subtracting the given number from this number. 
+Description
+This method subtracts the given BigInteger 
+from this BigInteger and returns 
+the result as a new BigInteger. 
+testBit
+public boolean testBit(int n) throws ArithmeticException
+Parameters
+n
+The bit to test. 
+Returns
+true if the specified bit is 1;
+false if the specified bit is 0.
+Throws
+ArithmeticException
+If n is less than zero. 
+Description
+This method returns 
+true if the specified bit in
+this BigInteger is 1.
+Otherwise the method returns false.
+toByteArray
+public byte[] toByteArray()
+Returns
+An array of bytes that represents this object. 
+Description
+This method returns an array of bytes that contains the two's complement 
+representation of this BigInteger. 
+The most significant byte is in the first position (val[0]) 
+of the array. The array can be used with the BigInteger(byte[]) 
+constructor to reconstruct the number. 
+toString
+public String toString()
+Returns
+A string representation of this object in decimal form. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this BigInteger 
+in decimal form. A minus sign represents the sign if necessary. 
+The mapping from digits to characters is provided by the Character.forDigit() 
+method. 
+public String toString(int radix)
+Parameters
+radix
+The radix to use. 
+Returns
+A string representation of this object in the given radix. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this BigInteger 
+for the given radix. A minus sign is used to represent the sign if necessary. 
+The mapping from digits to characters is provided by the Character.forDigit() 
+method. 
+xor
+public BigInteger xor(BigInteger val)
+Parameters
+val
+The value to be XORed. 
+Returns
+A new BigInteger that contains 
+the bitwise XOR of this number and the given value. 
+Description
+This method returns the bitwise XOR of this BigInteger 
+and the given BigInteger as 
+a new BigInteger. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+byteValue()
+Number
+clone()
+Object
+getClass()
+Object
+finalize()
+Object
+notify()
+Object
+notifyAll()
+Object
+shortValue()
+Number
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ArithmeticException, 
+BigDecimal, 
+Character, 
+Double, 
+Float, 
+IllegalArgumentException, 
+Integer, 
+Long, 
+Number, 
+NumberFormatException 
+BigDecimal
+BindException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

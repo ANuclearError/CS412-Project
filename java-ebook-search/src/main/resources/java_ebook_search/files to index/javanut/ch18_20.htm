@@ -1,0 +1,115 @@
+
+[Chapter 18] 18.20 java.awt.Event (JDK 1.0)
+Chapter 18The java.awt Package
+18.20 java.awt.Event (JDK 1.0)
+This class contains public instance variables that describe
+some kind of GUI event.  In Java 1.1, this class has been
+superseded by AWTEvent and the
+java.awt.event package.
+The class contains a large number
+of constants.  Some of the constants specify the event type
+and are values for the id variable.  Other constants
+are values for keys, like the function keys, that do not
+have ASCII (or Latin-1) values, and are set on the
+key field.  Other constants are mask values that are
+ORed into the modifiers field to describe the state
+of the modifier keys on the keyboard.  The target
+field is very important--it is the object for which the
+event occurred.  The when field specifies when the
+event occurred.  The x and y fields specify
+the mouse coordinates at which it occurred.  Finally, the
+arg field is a value specific to the type of the
+event.  Not all fields have valid values for all types of
+events.
+public class Event extends Object implements Serializable {
+    // Public Constructors
+            public Event(Object target, long when, int id, int x, int y, int key, int modifiers, Object arg);
+            public Event(Object target, long when, int id, int x, int y, int key, int modifiers);
+            public Event(Object target, int id, Object arg);
+    // Event Type Constants
+            public static final int ACTION_EVENT;
+            public static final int GOT_FOCUS, LOST_FOCUS;
+            public static final int KEY_ACTION, KEY_ACTION_RELEASE;
+            public static final int KEY_PRESS, KEY_RELEASE;
+            public static final int LIST_SELECT, LIST_DESELECT;
+            public static final int LOAD_FILE, SAVE_FILE;
+            public static final int MOUSE_DOWN, MOUSE_UP;
+            public static final int MOUSE_DRAG, MOUSE_MOVE;
+            public static final int MOUSE_ENTER, MOUSE_EXIT;
+            public static final int SCROLL_ABSOLUTE;
+        1.1  public static final int SCROLL_BEGIN, SCROLL_END;
+            public static final int SCROLL_LINE_DOWN, SCROLL_LINE_UP;
+            public static final int SCROLL_PAGE_DOWN, SCROLL_PAGE_UP;
+            public static final int WINDOW_EXPOSE;
+            public static final int WINDOW_ICONIFY, WINDOW_DEICONIFY;
+            public static final int WINDOW_DESTROY;
+            public static final int WINDOW_MOVED;
+    // Keyboard Modifier Constants
+            public static final int ALT_MASK;
+            public static final int CTRL_MASK;
+            public static final int META_MASK;
+            public static final int SHIFT_MASK;
+    // Function Key Constants
+            public static final int F1, F2, F3, F4, F5, F6, F7, F8, F9, F10, F11, F12;
+            public static final int LEFT, RIGHT, UP, DOWN;
+            public static final int PGUP, PGDN;
+            public static final int HOME, END;
+        1.1  public static final int INSERT, DELETE;
+        1.1  public static final int BACK_SPACE;
+        1.1  public static final int ENTER;
+        1.1  public static final int ESCAPE;
+        1.1  public static final int TAB;
+        1.1  public static final int CAPS_LOCK, NUM_LOCK, SCROLL_LOCK;
+        1.1  public static final int PAUSE, PRINT_SCREEN;
+    // Public Instance Variables
+            public Object arg;
+            public int clickCount;
+            public Event evt;
+            public int id;
+            public int key;
+            public int modifiers;
+            public Object target;
+            public long when;
+            public int x;
+            public int y;
+    // Public Instance Methods
+            public boolean controlDown();
+            public boolean metaDown();
+            public boolean shiftDown();
+            public String toString();  // Overrides Object
+            public void translate(int x, int y);
+    // Protected Instance Methods
+            protected String paramString();
+}
+Passed To:
+AWTEvent(), 
+Component.action(), 
+Component.deliverEvent(), 
+Component.gotFocus(), 
+Component.handleEvent(), 
+Component.keyDown(), 
+Component.keyUp(), 
+Component.lostFocus(), 
+Component.mouseDown(), 
+Component.mouseDrag(), 
+Component.mouseEnter(), 
+Component.mouseExit(), 
+Component.mouseMove(), 
+Component.mouseUp(), 
+Component.postEvent(), 
+Container.deliverEvent(), 
+MenuComponent.postEvent(), 
+MenuContainer.postEvent(), 
+PopupMenuPeer.show(), 
+Window.postEvent()
+Type Of:
+Event.evt
+java.awt.Dimension (JDK 1.0)
+java.awt.EventQueue (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

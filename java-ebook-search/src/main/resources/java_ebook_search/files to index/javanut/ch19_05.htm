@@ -1,0 +1,45 @@
+
+[Chapter 19] 19.5 java.awt.datatransfer.Transferable (JDK 1.1)
+Chapter 19The java.awt.datatransfer Package
+19.5 java.awt.datatransfer.Transferable (JDK 1.1)
+This interface defines the methods that a class must define
+if it is to act as the source object in a data transfer
+operation.
+getTransferDataFlavors() should return an array of
+DataFlavor objects that specify the data types or
+formats in which the object can provide its data.  The
+DataFlavor objects should be ordered from best
+format (most richly descriptive) to worst format.
+isDataFlavorSupported() must return a boolean value
+indicating whether it can transfer data using a specified
+DataFlavor.  Finally, getTransferData() must
+return an object that represents the data formatted as
+required by the specified DataFlavor.
+StringSelection is a pre-defined class that
+implements the Transferable interface for the
+transfer of string data.
+public abstract interface Transferable {
+    // Public Instance Methods
+            public abstract Object getTransferData(DataFlavor flavor) throws UnsupportedFlavorException, IOException;
+            public abstract DataFlavor[] getTransferDataFlavors();
+            public abstract boolean isDataFlavorSupported(DataFlavor flavor);
+}
+Implemented By:
+StringSelection
+Passed To:
+Clipboard.setContents(), 
+ClipboardOwner.lostOwnership(), 
+StringSelection.lostOwnership()
+Returned By:
+Clipboard.getContents()
+Type Of:
+Clipboard.contents
+java.awt.datatransfer.StringSelection (JDK 1.1)
+java.awt.datatransfer.UnsupportedFlavorException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

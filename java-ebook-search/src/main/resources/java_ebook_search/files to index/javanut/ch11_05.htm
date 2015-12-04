@@ -1,0 +1,264 @@
+
+[Chapter 11] 11.5 Localizing User-Visible Messages
+Chapter 11Internationalization
+11.5 Localizing User-Visible Messages
+The third task of internationalization involves ensuring that
+there are no user-visible strings that are hard-coded in an
+application, instead of being looked up based on the
+locale.  In Example 11.3,
+for example, the strings "Portfolio value", "Symbol",
+"Shares", and others are hard-coded in the
+application and appear in English, even when the program
+is run in the French locale.  The only way to prevent this is
+to fetch all user-visible messages at runtime, and to
+translate every message into each of the languages that your
+application must support.
+Java 1.1 helps you handle this task with the ResourceBundle
+class of the java.util package.  This class
+represents a "bundle" of resources that can be looked up
+by name.  You define a localized resource bundle for each
+locale you want to support, and Java takes care of loading
+the correct bundle for the default (or specified)
+locale.  With the correct bundle loaded, you can look up the
+resources (typically strings) that your program needs at
+runtime.
+Working with Resource Bundles
+To define a bundle of localized resources, you create a
+subclass of ResourceBundle and provide definitions
+for the handleGetObject() and getKeys()
+methods.  handleGetObject() is passed the name of a
+resource; it should return an appropriate localized version
+of that resource.  getKeys() should return an
+Enumeration object that gives the user a
+list of all resource names defined in the
+ResourceBundle.  Instead of subclassing
+ResourceBundle directly, however, it is often easier to
+subclass ListResourceBundle.  You can also
+simply provide a property file (see the java.util.Properties
+class) that ResourceBundle.getBundle() uses to
+create an instance of PropertyResourceBundle.
+To use localized resources from a ResourceBundle in
+a program, you should first call the static
+getBundle() method, which dynamically loads and
+instantiates a ResourceBundle, as described below.
+The returned ResourceBundle has the name you specify
+and is appropriate for the specified locale (or
+for the default locale, if no locale is explicitly
+specified).  Once you have obtained a ResourceBundle
+object with getBundle(), you use the
+getObject() method to look up resources by name.
+Note that there is a convenience method, getString(),
+that simply casts the value returned by getObject() to
+be a String object.
+When you call getBundle(), you specify the base name
+of the desired ResourceBundle and a desired
+locale (if you don't want to rely on the default locale). Recall that
+a Locale is specified with a two-letter language
+code, an optional two-letter country code, and an optional
+variant string.  getBundle() looks for an
+appropriate ResourceBundle class for the locale by
+appending this locale information to the base name for the
+bundle.  The method looks for an appropriate class
+with the following algorithm:
+Search for a class with the following name:
+basename_language_country_variant
+If no such class is found, or no variant string is specified
+for the locale, it goes to the next step.
+Search for a class with the following name:
+basename_language_country
+If no such class is found, or no country code is specified
+for the locale, it goes to the next step.
+Search for a class with the following name:
+basename_language
+If no such class is found, it goes to the final step.
+Search for a class which has the same name as the basename, or in
+other words, seach for a class with the following name:
+basename
+This represents a default resource bundle used by any locale
+that is not explicitly supported.
+At each step in the above process, getBundle()
+checks first for a class file with the given name.  If no
+class file is found, it uses the
+getResourceAsStream() method of ClassLoader
+to look for a Properties file with the same name as
+the class and a .properties extension.  If such a
+properties file is found, its contents are used to create a
+Properties object and getBundle()
+instantiates and returns a PropertyResourceBundle
+that exports the properties in the Properties file
+through the ResourceBundle API.
+If getBundle() cannot find a class or properties
+file for the specified locale in any of the four search
+steps above, it repeats the search using the default locale
+instead of the specified locale.  If no appropriate
+ResourceBundle is found in this search either,
+getBundle() throws a
+MissingResourceException.
+Any ResourceBundle object may have a parent
+ResourceBundle specified for it.  When you look up a
+named resource in a ResourceBundle,
+getObject() first looks in the specified bundle, but
+if the named resource is not defined in that bundle, it
+recursively looks in the parent bundle.  Thus, every
+ResourceBundle "inherits" the resources of its
+parent, and may choose to "override" some, or all, of these
+resources.  (Note that we are using the terms "inherit" and
+"override" in a different sense than we do when talking
+about classes that inherit and override methods in their
+superclass.)  What this means is that every
+ResourceBundle you define does not have to
+define every resource
+required by your application.  For example, you might define
+a ResourceBundle of messages to display to
+French-speaking users.  Then you might define a smaller and
+more specialized ResourceBundle that overrides a few
+of these messages so that they are appropriate for
+French-speaking users who live in Canada.
+Your application is not required to find and set up the
+parent objects for the ResourceBundle objects it uses.  The
+getBundle() method actually does this for you.  When
+getBundle() finds an appropriate class or properties
+file as described above, it does not immediately return the
+ResourceBundle it has found.  Instead, it continues
+through the remaining steps in the search process listed
+above, looking for less-specific class or properties files
+from which the ResourceBundle may "inherit"
+resources.  If and when getBundle() finds these
+less-specific resource bundles, it sets them up as the
+appropriate ancestors of the original
+bundle.  Only once it has checked all possibilities does it
+return the original ResourceBundle object that it
+created.
+To continue the example begun above, when a program runs in
+Qu&eacute;bec, getBundle() might first find a small
+specialized ResourceBundle class that has only a few
+specific Qu&eacute;becois resources.
+Next, it looks for a more general ResourceBundle
+that contains French messages and it sets this bundle as the
+parent of the original Qu&eacute;becois bundle.  Finally,
+getBundle() looks for (and probably finds) a class
+that defines a default set of resources, probably written in
+English (assuming that English is the native tongue of the
+original programmer).  This default bundle is set as the
+parent of the French bundle (which makes it the grandparent
+of the Qu&eacute;becois bundle).  When the application looks up a
+named resource, the Qu&eacute;becois bundle is searched first.  If
+the resource is not defined there, then the French bundle is
+searched, and finally, any named resource not found in the
+French bundle is looked up in the default bundle.
+ResourceBundle Example
+Examining some code makes this discussion of resource
+bundles much clearer. Example 11.4
+is a convenience routine for creating menu panes.  Given a
+list of menu item names, it looks up labels and menu
+shortcuts for those named menu items in a resource bundle and
+creates a localized menu pane.  The example has a simple
+test program attached. Figure 11.2
+shows the menus it creates in the American, British, and
+French locales.  This program could not run, of course,
+without localized resource bundles from which the localized
+menu labels are looked up. Example 11.4
+shows American, British, and French resource files used to
+create each of the menus shown in the figure.
+Figure 11.2: Localized menu panes
+Example 11.4: Creating Localized Menu Panes
+import java.awt.*;
+import java.awt.event.*;
+import java.util.Locale;
+import java.util.ResourceBundle;
+import java.util.MissingResourceException;
+/** A convenience class to automatically create localized menu panes. */
+public class SimpleMenu {
+  /** The convenience method that creates menu panes. */
+  public static Menu create(String bundlename,
+                            String menuname, String[] itemnames,
+                            ActionListener listener, boolean popup) {
+    // Get the resource bundle used for this menu.
+    ResourceBundle b = ResourceBundle.getBundle(bundlename);
+    // Get the menu title from the bundle.  Use name as default label.
+    String menulabel;
+    try { menulabel = b.getString(menuname + ".label"); }
+    catch(MissingResourceException e) { menulabel = menuname; }
+    // Create the menu pane.
+    Menu m;
+    if (popup) m = new PopupMenu(menulabel);
+    else m = new Menu(menulabel);
+    // For each named item in the menu.
+    for(int i = 0; i &lt; itemnames.length; i++) {
+      // Look up the label for the item, using name as default.
+      String itemlabel;
+      try { itemlabel=b.getString(menuname + "." + itemnames[i] + ".label"); }
+      catch (MissingResourceException e) { itemlabel = itemnames[i]; }
+      // Look up a shortcut for the item, and create the menu shortcut, if any.
+      String shortcut;
+      try{shortcut = b.getString(menuname + "." + itemnames[i]+".shortcut"); }
+      catch (MissingResourceException e) { shortcut = null; }
+      MenuShortcut ms = null;
+      if (shortcut != null) ms = new MenuShortcut(shortcut.charAt(0));
+      // Create the menu item.
+      MenuItem mi;
+      if (ms != null) mi = new MenuItem(itemlabel, ms);
+      else mi = new MenuItem(itemlabel);
+      // Register an action listener and command for the item.
+      if (listener != null) {
+        mi.addActionListener(listener);
+        mi.setActionCommand(itemnames[i]);
+      }
+      // Add the item to the menu.
+      m.add(mi);
+    }
+    // Return the automatically created localized menu.
+    return m;
+  }
+  /** A simple test program for the above code. */
+  public static void main(String[] args) {
+    // Set the default locale based on the command-line args.
+    if (args.length == 2) Locale.setDefault(new Locale(args[0], args[1]));
+    Frame f = new Frame("SimpleMenu Test");  // Create a window.
+    MenuBar menubar = new MenuBar();         // Create a menubar.
+    f.setMenuBar(menubar);                   // Add menubar to window.
+    // Create a menu using our convenience routine (and the default locale).
+    Menu colors = SimpleMenu.create("Menus", "colors",
+                                    new String[] { "red", "green", "blue" },
+                                    null, false);
+    menubar.add(colors);                     // Add the menu to the menubar.
+    f.setSize(300, 150);                     // Set the window size.
+    f.show();                                // Pop the window up.
+  }
+}
+This example does not stand alone.  It relies on resource
+bundles to localize the menu. Example 11.5
+shows three property files that serve as resource bundles for
+this example.  Note that this single example listing
+actually contains the bodies of three separate files.
+Example 11.5: Property Files as Resource Bundles
+# The file Menus.properties is the default "Menus" resource bundle.
+# As an American programmer, I made my own locale the default.
+colors.label=Colors
+colors.red.label=Red
+colors.red.shortcut=R
+colors.green.label=Green
+colors.green.shortcut=G
+colors.blue.label=Blue
+colors.blue.shortcut=B
+# This is the file Menus_en_GB.properties.  It is the resource bundle for
+# British English.  Note that it overrides only a single resource definition
+# and simply inherits the rest from the default (American) bundle.
+colors.label=Colours
+# This is the file Menus_fr.properties.  It is the resource bundle for all
+# French-speaking locales.  It overrides most, but not all, of the resources
+# in the default bundle.
+colors.label=Couleurs
+colors.red.label=Rouge
+colors.green.label=Vert
+colors.green.shortcut=V
+colors.blue.label=Bleu
+Handling Local Customs
+Formatted Messages
+ 
+ 
+ 
+ 
+ 
+ 
+ 

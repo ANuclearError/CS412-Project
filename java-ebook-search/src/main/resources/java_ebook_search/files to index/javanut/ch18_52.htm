@@ -1,0 +1,91 @@
+
+[Chapter 18] 18.52 java.awt.Rectangle (JDK 1.0)
+Chapter 18The java.awt Package
+18.52 java.awt.Rectangle (JDK 1.0)
+This class defines a rectangle as the X and Y
+coordinate of its upper-left corner and a width and height.
+The instance methods perform various tests and
+transformations on the rectangle.  The x, y,
+width, and height variables are public and may
+thus be manipulated directly.  Rectangle objects are
+used in several places in the java.awt package to
+specify clipping rectangles and bounding boxes.
+public class Rectangle extends Object implements Shape, Serializable {
+    // Public Constructors
+            public Rectangle();
+        1.1  public Rectangle(Rectangle r);
+            public Rectangle(int x, int y, int width, int height);
+            public Rectangle(int width, int height);
+            public Rectangle(Point p, Dimension d);
+            public Rectangle(Point p);
+            public Rectangle(Dimension d);
+    // Public Instance Variables
+            public int height;
+            public int width;
+            public int x;
+            public int y;
+    // Public Instance Methods
+            public void add(int newx, int newy);
+            public void add(Point pt);
+            public void add(Rectangle r);
+        1.1  public boolean contains(Point p);
+        1.1  public boolean contains(int x, int y);
+            public boolean equals(Object obj);  // Overrides Object
+        1.1  public Rectangle getBounds();  // From Shape
+        1.1  public Point getLocation();
+        1.1  public Dimension getSize();
+            public void grow(int h, int v);
+            public int hashCode();  // Overrides Object
+        #   public boolean inside(int x, int y);
+            public Rectangle intersection(Rectangle r);
+            public boolean intersects(Rectangle r);
+            public boolean isEmpty();
+        #   public void move(int x, int y);
+        #   public void reshape(int x, int y, int width, int height);
+        #   public void resize(int width, int height);
+        1.1  public void setBounds(Rectangle r);
+        1.1  public void setBounds(int x, int y, int width, int height);
+        1.1  public void setLocation(Point p);
+        1.1  public void setLocation(int x, int y);
+        1.1  public void setSize(Dimension d);
+        1.1  public void setSize(int width, int height);
+            public String toString();  // Overrides Object
+            public void translate(int x, int y);
+            public Rectangle union(Rectangle r);
+}
+Passed To:
+Component.setBounds(), 
+GridBagLayout.AdjustForGravity(), 
+PaintEvent(), 
+PaintEvent.setUpdateRect(), 
+PropertyEditor.paintValue(), 
+PropertyEditorSupport.paintValue(), 
+Rectangle(), 
+Rectangle.add(), 
+Rectangle.intersection(), 
+Rectangle.intersects(), 
+Rectangle.setBounds(), 
+Rectangle.union()
+Returned By:
+Component.bounds(), 
+Component.getBounds(), 
+Graphics.getClipBounds(), 
+Graphics.getClipRect(), 
+PaintEvent.getUpdateRect(), 
+Polygon.getBoundingBox(), 
+Polygon.getBounds(), 
+Rectangle.getBounds(), 
+Rectangle.intersection(), 
+Rectangle.union(), 
+Shape.getBounds()
+Type Of:
+Polygon.bounds
+java.awt.PrintJob (JDK 1.1)
+java.awt.ScrollPane (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

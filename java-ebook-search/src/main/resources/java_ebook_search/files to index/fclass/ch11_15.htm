@@ -1,0 +1,94 @@
+
+[Chapter 11] Externalizable
+Chapter 11The java.io Package
+Externalizable
+Name
+Externalizable
+Synopsis
+Interface Name:
+java.io.Externalizable
+Super-interface:
+java.io.Serializable
+Immediate Sub-interfaces:
+None
+Implemented By:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The Externalizable interface 
+is an extension of the Serializable 
+interface. Whereas a Serializable 
+object is automatically saved and loaded (in most cases), an Externalizable 
+object has sole responsibility for saving and loading its state via the 
+writeExternal() and readExternal() 
+methods. If a class implements the Externalizable 
+interface, it must handle any versioning issues that occur. 
+The methods of Externalizable 
+are public, which can pose 
+a security risk. If security is a concern, Externalizable 
+objects should not write or read sensitive information, or the Serializable 
+interface should be used instead. 
+Interface Declaration
+public abstract interface java.io.Externalizable
+                          extends java.io.Serializable {
+  // Methods
+  public abstract void readExternal(ObjectInput in);
+  public abstract void writeExternal(ObjectOutput out);
+}
+Methods
+readExternal
+   public abstract void readExternal(ObjectInput in) throws IOException, ClassNotFoundException  
+Parameters
+in
+The object input stream 
+to use. 
+Throws
+ClassNotFoundException
+If the class of the object being deserialized cannot be found.
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads an object from the given stream. This method has full 
+responsibility for restoring the object's state. The implementation 
+of readExternal() should read 
+data in the format that is written out by writeExternal(). 
+In general, an implementation should call methods of DataInput 
+to read primitive types and methods of ObjectInput 
+to read objects, strings, and arrays. 
+writeExternal
+   public abstract void writeExternal(ObjectOutput out) throws IOException  
+Parameters
+out
+The object output stream 
+to use. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method writes an object to the given stream. This method has full 
+responsibility for saving the object's state. The implementation 
+of writeExternal() should write 
+data in the format that is read by readExternal(). 
+In general, an implementation should call methods of DataOutput 
+to write primitive types and methods of ObjectOutput 
+to write objects, strings, and arrays. 
+See Also
+ClassNotFoundException, 
+DataInput, 
+DataOutput, 
+IOException, 
+ObjectInput, 
+ObjectOutput, 
+Serializable 
+EOFException
+File
+ 
+ 
+ 
+ 
+ 
+ 
+ 

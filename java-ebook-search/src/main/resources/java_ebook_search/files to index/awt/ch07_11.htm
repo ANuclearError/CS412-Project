@@ -1,0 +1,326 @@
+
+[Chapter 7] 7.11 The sun.awt Layout Collection
+Chapter 7Layouts
+7.11 The sun.awt Layout Collection
+The sun.awt package defines 
+four additional layouts. The first two, HorizBagLayout 
+and VerticalBagLayout, are 
+available only when used with Sun's JDK or Internet Explorer, since 
+they are not provided with Netscape Navigator and may not be available 
+from other vendors. Therefore, these layout managers should be used
+selectively within applets. The third layout manager, 
+VariableGridLayout, is available 
+with Netscape Navigator 2.0 or 3.0 and Internet Explorer. Usage of 
+this layout manager is safer 
+within applets but is still at your own risk. The final layout manager 
+is introduced in Java 1.1, OrientableFlowLayout. 
+Only time will tell where that one will be available. Any of these layout 
+managers could be moved into a future version of java.awt 
+if there is enough interest. 
+HorizBagLayout
+In a HorizBagLayout, the components 
+are all arranged in a single row, from left to right. The height of each 
+component is the height of the container; the width of each component is 
+its preferred width. Figure 7.16 shows HorizBagLayout 
+in use. 
+Figure 7.16: HorizBagLayout
+Constructors
+public HorizBagLayout () 
+This constructor creates a HorizBagLayout 
+with a horizontal gap of zero pixels. The gap is the space between the 
+different components in the horizontal direction. 
+public HorizBagLayout (int hgap) 
+This constructor creates a HorizBagLayout 
+using a horizontal gap of hgap 
+pixels. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component) 
+The addLayoutComponent() method 
+of HorizBagLayout does nothing. 
+public void removeLayoutComponent (Component component) 
+The removeLayoutComponent() 
+method of HorizBagLayout does 
+nothing. 
+public Dimension preferredLayoutSize (Container target) 
+The preferredLayoutSize() method 
+of HorizBagLayout sums up the 
+preferred widths of all the components in target, 
+along with the hgap and right and left insets to get the width of the target. 
+The height returned will be the preferred height of the tallest component. 
+public Dimension minimumLayoutSize (Container target) 
+The minimumLayoutSize() method 
+of HorizBagLayout sums up the 
+minimum widths of all the components in target, 
+along with the hgap and right and left insets to get the width of the target. 
+The height returned will be the minimum height of the tallest component. 
+public void layoutContainer (Container target) 
+The layoutContainer() method 
+draws target's components 
+on the screen in one row. The height of each component is the height of 
+the container. Each component's width is its preferred width, if 
+enough space is available. 
+Miscellaneous methods
+public String toString () 
+The toString() method of HorizBagLayout 
+returns a string with the current horizontal gap setting--for example: 
+sun.awt.HorizBagLayout[hgap=0]
+VerticalBagLayout
+The VerticalBagLayout places 
+all the components in a single column. The width of each component is the 
+width of the container; each component is given its preferred height. Figure 7.17 shows VerticalBagLayout 
+in use. 
+Figure 7.17: VerticalBagLayout
+Constructors
+public VerticalBagLayout () 
+This constructor creates a VerticalBagLayout 
+with a vertical gap of zero pixels. The gap is the space between components 
+in the vertical direction. With a gap of 0, adjacent components will touch 
+each other. 
+public VerticalBagLayout (int vgap) 
+This constructor creates a VerticalBagLayout 
+with a vertical gap of vgap 
+pixels. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component) 
+The addLayoutComponent() method 
+of VerticalBagLayout does nothing. 
+public void removeLayoutComponent (Component component) 
+The removeLayoutComponent() 
+method of VerticalBagLayout 
+does nothing. 
+public Dimension preferredLayoutSize (Container target) 
+To get the preferred height of the layout, the preferredLayoutSize() 
+method sums up the preferred height of all the components in target 
+along with the vgap and top and bottom insets. For the preferred width, 
+preferredLayoutSize() returns 
+the preferred width of the widest component. 
+public Dimension minimumLayoutSize (Container target) 
+To get the minimum height of the layout, the minimumLayoutSize() 
+method sums up the minimum height of all the components in target 
+along with the vgap and top and bottom insets. For the minimum width, minimumLayoutSize() 
+returns the minimum width of the widest component. 
+public void layoutContainer (Container target) 
+The layoutContainer() method 
+draws target's components 
+on the screen in one column. The width of each component is the width of 
+the container. Each component's height is its preferredSize() 
+height, if available. 
+Miscellaneous methods
+public String toString () 
+The toString() method of VerticalBagLayout 
+returns a string with the current vertical gap setting. For example: 
+sun.awt.VerticalBagLayout[vgap=0]
+VariableGridLayout
+The VariableGridLayout builds 
+upon the GridLayout. It arranges 
+components on a grid of rows and columns. However, instead of giving all 
+components the same size, the VariableGridLayout 
+allows you to size rows and columns fractionally. Another difference between 
+VariableGridLayout and GridBagLayout 
+is that a VariableGridLayout 
+has a fixed size. If you ask for a 3x3 grid, you will get exactly that. 
+The layout manager throws the ArrayIndexOutOfBoundsException 
+run-time exception if you try to add too many components. 
+Figure 7.18 shows a VariableGridLayout 
+in which row one takes up 50 percent of the screen, and rows two and three take 
+up 25 percent of the screen each. Column one takes up 50 percent of the screen; columns 
+two and three take 25 percent each. 
+Figure 7.18: VariableGridLayout in Netscape Navigator
+Here is the code that creates Figure 7.18: 
+import java.awt.*;
+java.applet.Applet;
+import sun.awt.VariableGridLayout;
+public class vargrid extends Applet {
+    public void init () {
+        VariableGridLayout vgl;
+        setLayout (vgl = new VariableGridLayout (3,3));
+        vgl.setRowFraction (0, 1.0/2.0);
+        vgl.setRowFraction (1, 1.0/4.0);
+        vgl.setRowFraction (2, 1.0/4.0);
+        vgl.setColFraction (0, 1.0/2.0);
+        vgl.setColFraction (1, 1.0/4.0);
+        vgl.setColFraction (2, 1.0/4.0);
+        add (new Button ("One"));
+        add (new Button ("Two"));
+        add (new Button ("Three"));
+        add (new Button ("Four"));
+        add (new Button ("Five"));
+        add (new Button ("Six"));
+        add (new Button ("Seven"));
+        add (new Button ("Eight"));
+        add (new Button ("Nine"));
+    }
+}
+Constructors
+public VariableGridLayout (int rows, int columns) 
+This constructor creates a VariableGridLayout 
+with the specified number of rows 
+and columns. You cannot specify 
+zero for one dimension. If either rows 
+or columns is zero, the constructor 
+throws the NullPointerException run-time exception. 
+This constructor uses the default values for horizontal and vertical gaps 
+(zero pixels), which means that components in adjacent cells will touch 
+each other. 
+public VariableGridLayout (int rows, int columns, int hgap, int vgap) 
+This version of the constructor is called by the previous one. It creates 
+a VariableGridLayout with the 
+specified number of rows and 
+columns, a horizontal gap of 
+hgap, and a vertical gap of 
+vgap. The gaps specify in pixels the 
+space between adjacent components in the horizontal and vertical directions. It is possible to have negative gaps if you want components 
+to overlap. You cannot specify zero for the number of rows or columns. 
+If either rows or columns 
+is zero, the constructor throws the run-time exception NullPointerException. 
+Support methods
+The distinguishing feature of a VariableGridLayout 
+is that you can tell a particular row or column to take up a certain fraction 
+of the display. By default, the horizontal space available is split evenly 
+among the grid's columns; vertical space is split evenly among the 
+rows. This group of methods lets you find out how much space is allotted 
+to each row or column and lets you change that allocation. The sum of 
+the fractional amounts for each direction should add up to one. If greater 
+than one, part of the display will be drawn offscreen. If less than one, 
+additional screen real estate will be unused. 
+public void setRowFraction (int rowNumber, double fraction) 
+This method sets the percentage of space available for row rowNumber 
+to fraction. 
+public void setColFraction (int colNumber, double fraction) 
+This method sets the percentage of space available for column colNumber 
+to fraction. 
+public double getRowFraction (int rowNumber) 
+This method returns the current fractional setting for row rowNumber. 
+public double getColFraction (int colNumber) 
+This method returns the current fractional setting for column colNumber. 
+LayoutManager methods
+The only method from GridLayout that is overridden is the layoutContainer() 
+method. 
+public void layoutContainer (Container target) 
+The layoutContainer() method 
+draws target's components 
+on the screen in a series of rows and columns. The size of each component 
+within a VariableGridLayout 
+is determined by the RowFraction 
+and ColFraction settings for 
+its row and column. 
+Miscellaneous methods
+public String toString () 
+The toString() method of VariableGridLayout 
+returns a string with the current horizontal and vertical gap settings, 
+the number of rows and columns, and the row and column fractional amounts. 
+For example, the string produced by Figure 7.19 would 
+be: 
+sun.awt.VariableGridLayout[hgap=0,vgap=0,rows=3,cols=3,
+    rowFracs=[3]&lt;0.50&gt;&lt;0.25&gt;&lt;0.25&gt;,colFracs=[3]&lt;0.50&gt;&lt;0.25&gt;&lt;0.25&gt;]
+OrientableFlowLayout
+The OrientableFlowLayout is 
+available for those who want something like a FlowLayout 
+that lets you arrange components from top to bottom. Figure 7.19 
+shows OrientableFlowLayout 
+in use. 
+Figure 7.19: OrientableFlowLayout
+Constants
+Since OrientableFlowLayout 
+subclasses FlowLayout, the 
+FlowLayout constants of LEFT, 
+RIGHT, and CENTER 
+are still available. 
+public static final int HORIZONTAL  
+The HORIZONTAL constant tells 
+the layout manager to arrange components from left to right, like the FlowLayout 
+manager. 
+public static final int VERTICAL  
+The VERTICAL constant tells 
+the layout manager to arrange components from top to bottom. 
+public static final int TOP  
+The TOP constant tells the 
+layout manager to align the first component at the top of the screen (top 
+justification). 
+public static final int BOTTOM  
+The BOTTOM constant tells the 
+layout manager to align the first component at the bottom of the screen 
+(bottom justification). 
+Constructors
+public OrientableFlowLayout ()  
+This constructor creates a OrientableFlowLayout 
+that acts like the default FlowLayout. 
+The objects flow from left to right and have an hgap 
+and vgap of 5. 
+public OrientableFlowLayout (int direction)  
+This constructor creates a OrientableFlowLayout 
+in the given direction. Valid 
+values are OrientableFlowLayout.HORIZONTAL 
+or OrientableFlowLayout.VERTICAL. 
+public OrientableFlowLayout (int direction, int horizAlignment, int vertAlignment)  
+This constructor creates a OrientableFlowLayout 
+in the given direction. Valid values are OrientableFlowLayout.HORIZONTAL 
+or OrientableFlowLayout.VERTICAL. 
+horizAlignment provides 
+the horizontal alignment setting. vertAlignment 
+provides a vertical alignment setting; it may be OrientableFlowLayout.TOP, 
+FlowLayout.CENTER, or OrientableFlowLayout.BOTTOM. 
+If direction is HORIZONTAL, 
+the vertical alignment is ignored. If direction 
+is VERTICAL, the horizontal 
+alignment is ignored. 
+public OrientableFlowLayout (int direction, int horizAlignment, int 
+vertAlignment, int horizHgap, int horizVgap, int vertHgap, 
+int vertVgap)  
+The final constructor adds separate horizontal and vertical gaps to the 
+settings of OrientableFlowLayout. 
+The horizHgap and horizVgap 
+parameters are the gaps when horizontally aligned. The vertHgap 
+and vertVgap parameters 
+are the gaps when vertically aligned. 
+LayoutManager methods
+public Dimension preferredLayoutSize (Container target)  
+The preferredLayoutSize() method 
+of OrientableFlowLayout calculates 
+the preferred dimensions for the target 
+container. The OrientableFlowLayout 
+computes the preferred size by placing all the components in one row or 
+column, depending upon the current orientation, and adding their individual 
+preferred sizes along with gaps and insets. 
+public Dimension minimumLayoutSize (Container target)  
+The minimumLayoutSize() method 
+of OrientableFlowLayout calculates 
+the minimum dimensions for the container by adding up the sizes of the 
+components. The OrientableFlowLayout 
+computes the minimum size by placing all the components in one row or column, 
+depending upon the current orientation, and adding their individual minimum 
+sizes along with gaps and insets. 
+public void layoutContainer (Container target)  
+The layoutContainer() method 
+draws target's Components 
+on the screen, starting with the first row or column of the display, and 
+going from left to right across the screen, or from top to bottom, based 
+on the current orientation. When it reaches the margin of the container, 
+it skips to the next row or column and continues drawing additional components. 
+Miscellaneous methods
+public void orientHorizontally ()  
+The orientHorizontally() method 
+allows you to change the orientation of the LayoutManager 
+to horizontal. The container must be validated before you see the effect 
+of the change. 
+public void orientVertically ()  
+The orientVertically() method 
+allows you to change the orientation of the LayoutManager 
+to vertical. The container must be validated before you see the effect 
+of the change. 
+public String toString ()  
+The toString() method of OrientableFlowLayout 
+returns a string with the current orientation setting, along with the entire 
+FlowLayout.toString() results. 
+For example: 
+sun.awt.OrientableFlowLayout[orientation=vertical, 
+sun.awt.OrientableFlowLayout[hgap=5,vgap=5,align=center]]
+Designing Your Own LayoutManager
+Other Layouts Available on the Net
+ 
+ 
+ 
+ 
+ 
+ 
+ 

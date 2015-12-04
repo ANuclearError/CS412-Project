@@ -1,0 +1,184 @@
+
+[Chapter 19] FontMetrics
+Chapter 19java.awt Reference
+FontMetrics
+Name
+FontMetrics
+Description
+The FontMetrics class provides 
+the means to calculate actual width and height of text if drawn on the 
+screen. 
+Class Definition
+public abstract class java.awt.FontMetrics
+    extends java.lang.Object
+    implements java.io.Serializable {
+  
+  // Variables
+  protected Font font;
+  
+  // Constructors
+  protected FontMetrics (Font font);
+  
+  // Instance Methods
+  public int bytesWidth (byte data[], int offset, int length);
+  public int charsWidth (char data[], int offset, int length);
+  public int charWidth (char character);
+  public int charWidth (int character);
+  public int getAscent();
+  public int getDescent();
+  public Font getFont();
+  public int getHeight();
+  public int getLeading();
+  public int getMaxAdvance();
+  public int getMaxAscent();
+  public int getMaxDecent();
+  public int getMaxDescent();
+  public int[] getWidths();
+  public int stringWidth (String string);
+  public String toString();
+}
+Variables
+font
+protected Font font
+The Font object whose metrics 
+are represented by this object. 
+Constructors
+FontMetrics
+protected FontMetrics (Font font)
+Parameters
+font
+The Font 
+object whose metrics you want. 
+Description
+Constructs a platform specific FontMetrics 
+object for the given font. 
+Instance Methods
+bytesWidth
+public int bytesWidth (byte data[], int offset, int length)
+Parameters
+data[]
+Array of characters to lookup. 
+offset
+Initial character position. 
+length
+Number of characters to lookup. 
+Returns
+Advance width of characters in the array, starting with offset 
+and ending with offset+length, 
+in pixels. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+offset or length 
+is invalid. 
+charsWidth
+public int charsWidth (char data[], int offset, int length)
+Parameters
+data[]
+Array of characters to lookup. 
+offset
+Initial character position. 
+length
+Number of characters to lookup. 
+Returns
+Advance width of characters in the array, starting with offset 
+and ending with offset+length-1, 
+in pixels. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+offset or length 
+is invalid. 
+charWidth
+public int charWidth (char character)
+Parameters
+character
+character to lookup 
+Returns
+Advanced pixel width of character. 
+public int charWidth (int character)
+Parameters
+character
+int value of character to lookup 
+Returns
+Advanced pixel width of character. 
+getAscent
+public int getAscent()
+Returns
+Amount of space above the baseline required for the tallest character in 
+the font. 
+getDescent
+public int getDescent()
+Returns
+Amount of space below the baseline required for the lowest descender (e.g., 
+the tail on "p") in the font. 
+getFont
+public Font getFont()
+Returns
+The Font whose metrics are 
+represented by this object. 
+getHeight
+public int getHeight()
+Returns
+The sum of getDescent(), getAscent(), 
+and getLeading(); recommended 
+total space between baselines. 
+getLeading
+public int getLeading()
+Returns
+Retrieves recommended amount of space between lines of text. 
+getMaxAdvance
+public int getMaxAdvance()
+Returns
+Retrieves advance pixel width of widest character in the font. 
+getMaxAscent
+public int getMaxAscent()
+Returns
+Retrieves maximum amount of space above the baseline required for the tallest 
+character within the font's FontMetrics. 
+May differ from getAscent() 
+for characters with diacritical marks. 
+getMaxDecent
+public int getMaxDecent()
+Returns
+Retrieves the maximum amount of space below the baseline required for the 
+deepest character for the font. 
+Description
+A misspelling of getMaxDescent(). 
+getMaxDescent
+public int getMaxDescent()
+Returns
+Retrieves the maximum amount of space below the baseline required for the 
+deepest character for the font. 
+getWidths
+public int[] getWidths()
+Returns
+255 element array of character widths. 
+Description
+Retrieves an integer array of the advance widths of the first 255 characters 
+in the FontMetrics' font. 
+stringWidth
+public int stringWidth (String string)
+Parameters
+string
+Character string to lookup. 
+Returns
+Advance pixel width of string. 
+toString
+public String toString()
+Returns
+A string representation of the FontMetrics 
+object. 
+Overrides 
+Object.toString() 
+See Also
+Font, Object, String 
+Font
+Frame
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,42 @@
+
+[Chapter 24] 24.49 java.io.PipedOutputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.49 java.io.PipedOutputStream (JDK 1.0)
+This class is an OutputStream that implements one half 
+of a pipe, and is useful for communication between
+threads. A PipedOutputStream must be connected to a
+PipedInputStream, which may be specified when the
+PipedOutputStream is created or with the
+connect() method. Data written to the
+PipedOutputStream are available for reading on
+the PipedInputStream.
+See OutputStream for information on the low-level
+methods for writing data to a PipedOutputStream. A
+FilterOutputStream may be used to provide a
+higher-level interface for writing data to a
+PipedOutputStream.
+public class PipedOutputStream extends OutputStream {
+    // Public Constructors
+            public PipedOutputStream(PipedInputStream snk) throws IOException;
+            public PipedOutputStream();
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides OutputStream
+            public void connect(PipedInputStream snk) throws IOException;
+            public synchronized void flush() throws IOException;  // Overrides OutputStream
+            public void write(int b) throws IOException;  // Defines OutputStream
+            public void write(byte[] b, int off, int len) throws IOException;  // Overrides OutputStream
+}
+Hierarchy:
+Object->OutputStream->PipedOutputStream
+Passed To:
+PipedInputStream(), 
+PipedInputStream.connect()
+java.io.PipedInputStream (JDK 1.0)
+java.io.PipedReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

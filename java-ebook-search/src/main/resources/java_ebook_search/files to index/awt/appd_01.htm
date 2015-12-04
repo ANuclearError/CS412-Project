@@ -1,0 +1,84 @@
+
+[Appendix D] Image Loading
+Appendix D
+D. Image Loading
+Contents:
+How Images are Loaded
+A Brief Tour of sun.awt.image
+D.1 How Images are Loaded
+You have seen how easy it is to display an image on screen and have
+probably guessed that there's more going on behind the
+scenes. The
+getImage() and drawImage()
+methods trigger a series of events that result in the
+image being available for display on the
+ImageObserver. The image is fetched asynchronously in another
+thread. The entire process[1]
+goes as follows:
+[1] 
+ 
+This summary covers Sun's implementation (JDK). Implementations
+that don't derive from the JDK may behave completely differently.  
+The call to getImage() triggers
+Toolkit to call createImage()
+for the image's InputStreamImageSource (which
+is a URLImageSource in this case; it would be a
+FileImageSource if we were loading the image from a
+local file).
+The Toolkit registers the 
+image as being "desired." Desired just means that something 
+will eventually want the image loaded. The system then waits until an ImageObserver 
+registers its interest in the image. 
+The drawImage() method (use 
+of MediaTracker or prepareImage()) 
+registers an ImageObserver 
+as interested. 
+Registering an ImageObserver 
+kicks the image's ImageRepresentation 
+into action; this is the start of the loading process, although image data 
+isn't actually transferred until step 9. ImageRepresentation 
+implements the ImageConsumer 
+interface. 
+The start of production registers the image source (ImageProducer 
+URLImageSource) with the ImageFetcher 
+and also registers the ImageRepresentation 
+as an ImageConsumer for the 
+image. 
+The ImageFetcher creates 
+a thread to get the image from its source. 
+The ImageFetcher reads data 
+and passes it along to the InputStreamImageSource, 
+which is a URLImageSource. 
+The URLImageSource determines 
+that JPEGImageDecoder is the 
+proper ImageDecoder for converting 
+the input stream into an Image. 
+(Other ImageDecoders are used 
+for other image types, like GIF.) 
+The ImageProducer starts 
+reading the image data from the source; it calls the ImageConsumer 
+(i.e., the ImageRepresentation) 
+as it processes the image. The most important method in the ImageConsumer 
+interface is setPixels(), which 
+delivers pixel data to the consumer for rendering onscreen. 
+As the ImageConsumer (i.e., 
+the ImageRepresentation) gets 
+additional information, it notifies the ImageObserver 
+via imageUpdate() calls. 
+When the image is fully acquired across the network, the thread started 
+by the ImageFetcher stops. 
+As you see, there are a lot of unfamiliar moving pieces. Many of them are 
+from the java.awt.image package and are discussed in Chapter 12, Image Processing. Others are from the 
+sun.awt.image package; they 
+are hidden in that you don't need to know anything about them to 
+do image processing in Java. However, if you're curious, we'll 
+briefly summarize these classes in the next section. 
+Test Program
+A Brief Tour of sun.awt.image
+ 
+ 
+ 
+ 
+ 
+ 
+ 

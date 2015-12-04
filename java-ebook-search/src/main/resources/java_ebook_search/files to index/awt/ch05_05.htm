@@ -1,0 +1,52 @@
+
+[Chapter 5] 5.5 Canvas
+Chapter 5Components
+5.5 Canvas
+A Canvas is a class just waiting 
+to be subclassed. Through Canvas, 
+you can create additional AWT objects that are not provided by the base 
+classes. Canvas is also useful 
+as a drawing area, particularly when additional components are on the screen. 
+It is tempting to draw directly onto a Container, but this often isn't 
+a good idea. Anything you draw might disappear underneath the components 
+you add to the container. When you are drawing on a container, you are 
+essentially drawing on the background. The container's layout manager 
+doesn't know anything about what you have drawn and won't 
+arrange components with your artwork in mind. To be safe, do your drawing 
+onto a Canvas and place that 
+Canvas in a Container. 
+Canvas MethodsConstructors
+public Canvas ()  
+The constructor creates a new Canvas 
+with no default size. If you place the canvas in a container, the container's 
+layout manager sizes the canvas for you. If you aren't placing the 
+canvas in a container, call setBounds() 
+to specify the canvas's size. 
+Java 1.0 used the default constructor for Canvas; 
+there was no explicit constructor. 
+Miscellaneous methods
+public void paint (Graphics g)  
+The default implementation of the paint() 
+method colors the entire Canvas 
+with the current background color. When you subclass this method, your 
+paint() method needs to draw 
+whatever should be shown on the canvas. 
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Canvas peer. If 
+you override this method, first call super.addNotify(), 
+then add your customizations. Then you can do everything you need with 
+the information about the newly created peer. 
+Canvas Events
+The Canvas peer passes all 
+events to you, which is why it's well suited to creating your own 
+components. 
+A Simple Calculator
+Creating Your Own Component
+ 
+ 
+ 
+ 
+ 
+ 
+ 

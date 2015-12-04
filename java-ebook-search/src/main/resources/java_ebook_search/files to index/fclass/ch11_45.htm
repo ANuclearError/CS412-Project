@@ -1,0 +1,93 @@
+
+[Chapter 11] OptionalDataException
+Chapter 11The java.io Package
+OptionalDataException
+Name
+OptionalDataException
+Synopsis
+Class Name:
+java.io.OptionalDataException
+Superclass:
+java.io.ObjectStreamException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+An OptionalDataException is 
+thrown during object deserialization to indicate that primitive data has 
+been encountered instead of objects. Either the eof 
+flag is true, or the length 
+variable indicates the number of bytes that are available to be read. 
+Class Summary
+public class java.io.OptionalDataException 
+             extends java.io.ObjectStreamException {
+  // Variables
+  public boolean eof;
+  public int length;
+}
+Variables
+eof
+public boolean eof
+Description
+A boolean value that indicates 
+if the stream is at its end. 
+length
+public int length
+Description
+The number of available bytes of data. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+ObjectInputStream, 
+ObjectStreamException, 
+Throwable 
+ObjectStreamException
+OutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

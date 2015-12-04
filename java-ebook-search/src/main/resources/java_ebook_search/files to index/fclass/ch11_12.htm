@@ -1,0 +1,230 @@
+
+[Chapter 11] DataOutput
+Chapter 11The java.io Package
+DataOutput
+Name
+DataOutput
+Synopsis
+Interface Name:
+java.io.DataOutput
+Super-interface:
+None
+Immediate Sub-interfaces:
+java.io.ObjectOutput
+Implemented By:
+java.io.DataOutputStream,
+java.io.RandomAccessFile
+Availability:
+JDK 1.0 or later
+Description
+The DataOutput interface defines 
+methods for writing primitive data types to an output stream in a machine-independent 
+manner. All multibyte quantities are written in a format that stores the 
+most significant byte as the first byte and the least significant byte 
+as the last byte. 
+Interface Declaration
+public abstract interface java.io.DataOutput {
+  // Methods
+  public abstract void write(byte[] b);
+  public abstract void write(byte[] b, int off, int len);
+  public abstract void write(int b);
+  public abstract void writeBoolean(boolean v);
+  public abstract void writeByte(int v);
+  public abstract void writeBytes(String s);
+  public abstract void writeChar(int v);
+  public abstract void writeChars(String s);
+  public abstract void writeDouble(double v);
+  public abstract void writeFloat(float v);
+  public abstract void writeInt(int v);
+  public abstract void writeLong(long v);
+  public abstract void writeShort(int v);
+  public abstract void writeUTF(String str);
+}
+Methods
+write
+public abstract void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes the low-order 8 bits of the given integer b. 
+public abstract void write(byte[] b) throws IOException
+Parameters
+b
+An array of values to 
+write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes all of the 8-bit bytes in the given array. 
+   public abstract void write(byte[] b, int off, int len) throws IOException  
+Parameters
+b
+An array of values to write.
+off
+An offset into the array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes len bytes 
+from the given array, starting off 
+elements from the beginning of the array. 
+writeBoolean
+public abstract void writeBoolean(boolean v) throws IOException
+Parameters
+v
+The boolean 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+If v is true, 
+this method writes a byte that contains the value 1. 
+If v is false, 
+the method writes a byte that contains the value 0. 
+writeByte
+public abstract void writeByte(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes an 8-bit byte 
+using the low-order eight bits of the integer v. 
+writeBytes
+public abstract void writeBytes(String s) throws IOException
+Parameters
+s
+The String to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes the characters in the given String as a sequence of 8-bit bytes. The high-order 
+bytes of the characters in the string are ignored. 
+writeChar
+public abstract void writeChar(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes a 16-bit char 
+using the low-order 16 bits of the given integer v. 
+writeChars
+public abstract void writeChars(String s) throws IOException
+Parameters
+s
+The String to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes the characters in the given String 
+object as a sequence of 16-bit characters. 
+writeDouble
+public abstract void writeDouble(double v) throws IOException
+Parameters
+v
+The double 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes a 64-bit double. 
+writeFloat
+public abstract void writeFloat(float v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes a 32-bit float. 
+writeInt
+public abstract void writeInt(int v) throws IOException
+Parameters
+v
+The int 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes a 32-bit int. 
+writeLong
+public abstract void writeLong(long v) throws IOException
+Parameters
+v
+The long 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes a 64-bit long. 
+writeShort
+public abstract void writeShort(int v) throws IOException
+Parameters
+v
+The short 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method writes a 16-bit short. 
+writeUTF
+public abstract void writeUTF(String str) throws IOException
+Parameters
+str
+The String 
+to write. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method writes the given String using 
+UTF-8 encoding. See Appendix B, The UTF-8 Encoding for information
+on the UTF-8 encoding.
+See Also
+DataOutputStream, 
+IOException, 
+ObjectOutput, 
+RandomAccessFile 
+DataInputStream
+DataOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

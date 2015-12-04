@@ -1,0 +1,108 @@
+
+[Chapter 30] The java.util Package
+Chapter 30
+30. The java.util Package
+Contents:
+java.util.Calendar (JDK 1.1)
+java.util.Date (JDK 1.0)
+java.util.Dictionary (JDK 1.0)
+java.util.EmptyStackException (JDK 1.0)
+java.util.Enumeration (JDK 1.0)
+java.util.EventListener (JDK 1.1)
+java.util.EventObject (JDK 1.1)
+java.util.GregorianCalendar (JDK 1.1)
+java.util.Hashtable (JDK 1.0)
+java.util.ListResourceBundle (JDK 1.1)
+java.util.Locale (JDK 1.1)
+java.util.MissingResourceException (JDK 1.1)
+java.util.NoSuchElementException (JDK 1.0)
+java.util.Observable (JDK 1.0)
+java.util.Observer (JDK 1.0)
+java.util.Properties (JDK 1.0)
+java.util.PropertyResourceBundle (JDK 1.1)
+java.util.Random (JDK 1.0)
+java.util.ResourceBundle (JDK 1.1)
+java.util.SimpleTimeZone (JDK 1.1)
+java.util.Stack (JDK 1.0)
+java.util.StringTokenizer (JDK 1.0)
+java.util.TimeZone (JDK 1.1)
+java.util.TooManyListenersException (JDK 1.1)
+java.util.Vector (JDK 1.0)
+The java.util package defines a number of useful
+classes. This package should not be considered a "utility"
+package separate from the rest of the language; in fact,
+Java depends directly on several of the classes in this
+package.
+Figure 30.1
+shows the class hierarchy of this package.
+Figure 30.1: The java.util package
+The Hashtable class is one of the most useful in the
+package--it implements a hashtable or associative array. It
+allows arbitrary objects to be stored and retrieved by
+arbitrary keys. The Properties subclass of
+Hashtable is used to store the Java system
+properties list.
+Vector is another extremely useful class. It
+implements an array of objects that grows as needed
+when objects are added.
+The Enumeration interface provides a simple and
+consistent way to loop through all the elements contained
+within some kind of object or data structure.
+The Date class represents a date and time, using a
+millisecond representation.  In Java 1.1, the
+Calendar class manipulates dates using more familiar
+units such as months, days, hours, and minutes.  The
+TimeZone class is also used in conjunction with
+dates.
+In Java 1.1, ResourceBundle and its subclasses,
+ListResourceBundle and PropertyResourceBundle,
+represent a
+"bundle" of localized resources that are read in by an
+internationalized program at runtime.
+The remaining classes are also useful. BitSet
+implements an arbitrary-size array of bits. Random
+generates and returns pseudo-random numbers in a variety of
+forms. StringTokenizer parses a string into tokens.
+Stack implements a last-in-first-out stack on which
+objects may be pushed, and from which they may be popped.
+And the Observer interface and Observable
+class provide infrastructure for implementing the
+object-oriented model-view paradigm in Java.
+30.1 java.util.BitSet (JDK 1.0)
+This class defines an arbitrarily large set of bits.
+Instance methods allow you to set, clear, and query
+individual bits in the set, and also to perform bitwise
+boolean arithmetic on the bits in BitSet objects.
+This class can be used as an extremely compact array of
+boolean values, although reading and writing those values is
+slower than normal array access.
+public final class BitSet extends Object implements Cloneable, Serializable {
+    // Public Constructors
+            public BitSet();
+            public BitSet(int nbits);
+    // Public Instance Methods
+            public void and(BitSet set);
+            public void clear(int bit);
+            public Object clone();  // Overrides Object
+            public boolean equals(Object obj);  // Overrides Object
+            public boolean get(int bit);
+            public int hashCode();  // Overrides Object
+            public void or(BitSet set);
+            public void set(int bit);
+            public int size();
+            public String toString();  // Overrides Object
+            public void xor(BitSet set);
+}
+Passed To:
+BitSet.and(), 
+BitSet.or(), 
+BitSet.xor()
+java.text.StringCharacterIterator (JDK 1.1)
+java.util.Calendar (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

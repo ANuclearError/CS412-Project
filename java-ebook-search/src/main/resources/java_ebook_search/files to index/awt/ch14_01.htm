@@ -1,0 +1,419 @@
+
+[Chapter 14] And Then There Were Applets
+Chapter 14
+14. And Then There Were Applets
+Contents:
+What's a Java Applet?
+AudioClip Interface
+AppletContext Interface
+AppletStub Interface
+Audio in Applications
+Although it is not part of the java.awt 
+package, the java.applet package 
+is closely related. The java.applet 
+package provides support for running an applet in the context of a World 
+Wide Web browser. It consists of one class (Applet) 
+and three interfaces (AppletContext, 
+AudioClip, and AppletStub). 
+The Applet class supports the 
+"applet life cycle" methods (init(), 
+start(), stop(), 
+destroy()) that you override 
+to write an applet. AudioClip 
+provides support for audio within applets. (Applications use the sun.audio 
+package for audio support; sun.audio 
+is also covered in this chapter.) The AppletStub 
+and AppletContext interfaces 
+provide a way for the applet to interact with its run-time environment. 
+Many of the methods of AppletStub 
+and AppletContext are duplicated 
+in the Applet class. 
+14.1 What's a Java Applet?
+Much of the initial excitement about Java centered around applets. Applets 
+are small Java programs that can be embedded within HTML pages and downloaded 
+and executed by a web browser. Because executing code from random Internet 
+sites presents a security risk, Java goes to great lengths to ensure the 
+integrity of the program executing and to prevent it from performing any 
+unauthorized tasks. 
+An applet is a specific type of Java Container. 
+The class hierarchy of an applet is shown in Figure 14.1.
+Figure 14.1: Applet class hierarchy
+When you are writing an applet, remember that you can use the features 
+of its ancestors. In particular, remember to check the methods of the Component, 
+Container, and Panel 
+classes, which are inherited by the Applet 
+class. 
+Applet Methods
+All the methods of Applet, 
+except setStub(), either need 
+to be overridden or are methods based on one of the java.applet 
+interfaces. The system calls setStub() 
+to set up the context of the interfaces. The browser implements the AppletContext 
+and AppletStub interfaces. Constructor
+public Applet () 
+The system calls the Applet 
+constructor when the applet is loaded and before it calls setStub(), 
+which sets up the applet's stub and context. When you subclass Applet, 
+you usually do not provide a constructor. If you do provide a constructor, 
+you do not have access to the AppletStub 
+or AppletContext and, therefore, 
+may not call any of their methods. 
+AppletStub setup
+public final void setStub (AppletStub stub) 
+The setStub() method of Applet 
+is called by the browser when the applet is loaded into the system. It 
+sets the AppletStub of the 
+applet to stub. In turn, the 
+AppletStub contains the applet's 
+AppletContext. 
+Applet information methods
+Several methods of Applet provide 
+information that can be used while the applet is running. 
+public AppletContext getAppletContext () 
+The getAppletContext() method 
+returns the current AppletContext. 
+This is part of the applet's stub, which is set by the system when 
+setStub() is called. 
+public URL getCodeBase () 
+The getCodeBase() method returns 
+the complete URL of the .class 
+file that contains the applet. This method can be used with the getImage() 
+or the getAudioClip() methods, described later in this chapter, 
+to load an image or audio file relative to the .class 
+file location. 
+public URL getDocumentBase () 
+The getDocumentBase() method 
+returns the complete URL of the .html 
+file that loaded the applet. This can be used with the getImage() 
+or getAudioClip() methods, described later in this chapter, 
+to load an image or audio file relative to the .html 
+file. 
+public String getParameter (String name) 
+The getParameter() method allows 
+you to get run-time parameters from within the &lt;APPLET&gt; 
+tag of the .html file that 
+loaded the applet. Parameters are defined by HTML &lt;PARAM&gt; 
+tags, which have the form: 
+&lt;PARAM name="parameter" value="value&gt;
+If the name parameter of getParameter() 
+matches the name string of a &lt;PARAM&gt; 
+tag, getParameter() returns 
+the tag's value as a string. 
+If name is not found within 
+the &lt;PARAM&gt; tags of the 
+&lt;APPLET&gt;, getParameter() 
+returns null. The argument name 
+is not case sensitive; that is, it matches parameter names regardless of case. 
+Remember that getParameter() 
+always returns a string, even 
+though the parameter values might appear as integers or floating point 
+numbers in the HTML file. In some situations, it makes sense to pass multiple 
+values in a single parameter; if you do this, you have to parse the parameter 
+string manually. Using a StringTokenizer 
+will make the job easier. 
+Enabling your applets to accept parameters allows them to be customized 
+at run-time by the HTML author, without providing the source code. This 
+provides greater flexibility on the Web without requiring any recoding. 
+Example 14.1 shows how an applet reads parameters from an HTML 
+file. It contains three parts: the HTML file that loads the applet, the 
+applet source code, and the output from the applet. 
+Example 14.1: Getting Parameters from an HTML File
+&lt;APPLET CODE=ParamApplet WIDTH=100 HEIGHT=100&gt;
+&lt;PARAM NAME=one VALUE=1.0&gt;
+&lt;PARAM name=TWO value=TOO&gt;
+&lt;/APPLET&gt;
+public class ParamApplet extends java.applet.Applet {
+    public void init () {
+        String param;
+        float one;
+        String two;
+        if ((param = getParameter ("ONE")) == null) {
+            one = -1.0f;  // Not present
+        } else {
+            one = Float.valueOf (param).longValue();
+        }
+        if ((param = getParameter ("two")) == null) {
+            two = "two";
+        } else {
+            two = param.toUpperCase();
+        }
+        System.out.println ("One: " + one);
+        System.out.println ("Two: " + two);
+    }
+}
+One: 1
+Two: TOO
+public String getAppletInfo ()  
+The getAppletInfo() method 
+lets an applet provide a short descriptive string to the browser. This 
+method is frequently overridden to return a string showing the applet's 
+author and copyright information. How (or whether) to display this information 
+is up to the browser. With appletviewer, this information is displayed 
+when the user selects the Info choice under the Applet 
+menu. Neither Netscape Navigator nor Internet Explorer currently display 
+this information. 
+public String[][] getParameterInfo ()  
+The getParameterInfo() method 
+lets an applet provide a two-dimensional array of strings describing the 
+parameters it reads from &lt;PARAM&gt; 
+tags. It returns an array of three strings for each parameter. In each 
+array, the first String represents 
+the parameter name, the second describes the data type, and the third is 
+a brief description or range of values. Like getAppletInfo(), 
+how (or whether) to display this information is up to the browser. With 
+appletviewer, this information is displayed when the user selects the Info 
+choice under the Applet menu. Neither Netscape Navigator nor Internet Explorer 
+currently display this information. The following code shows how an applet 
+might use getParameterInfo() 
+and getAppletInfo(): 
+public String getAppletInfo() {
+    String whoami = "By John Zukowski (c) 1997";
+    return whoami;
+}
+public String[][] getParameterInfo() {
+    String[][] strings = {
+        {"parameter1",     "String",      "Background Color name"},
+        {"parameter2",     "URL",         "Image File"},
+        {"parameter3",     "1-10",        "Number in Series"}
+    };
+    return strings;
+}
+public void showStatus (String message) 
+The showStatus() method displays 
+message on the browser's 
+status line, if it has one. Again, how to display this string is up to 
+the browser, and the browser can overwrite it whenever it wants. You should 
+only use showStatus() for messages 
+that the user can afford to miss. 
+public boolean isActive () 
+The isActive() method returns 
+the current state of the applet. While an applet is initializing, it is 
+not active, and calls to isActive() 
+return false. The system marks the applet active just prior to calling 
+start(); after this point, 
+calls to isActive() return 
+true. 
+public Locale getLocale ()   
+The getLocale() method retrieves 
+the current Locale of the applet, 
+if it has one. Using a Locale 
+allows you to write programs that can adapt themselves to different languages 
+and different regional variants. If no Locale 
+has been set, getLocale() returns 
+the default Locale. The default 
+Locale has a user language 
+of English and no region. To change the default Locale, 
+set the system properties user.language 
+and user.region, or call Locale.setDefault() 
+(setDefault() verifies access 
+rights with the security manager).[1] 
+[1] 
+ 
+For more on the Locale class, 
+see Java Fundamental Classes Reference, by Mark Grand, from O'Reilly &amp; Associates.
+Applet life cycle
+The browser calls four methods of the Applet 
+class to execute the applet. These methods constitute the applet's 
+life cycle. The default versions don't do anything; you must override 
+at least one of them to create a useful applet. 
+public void init () 
+The init() method is called 
+once when the applet is first loaded. It should be used for tasks that 
+need to be done only once. init() 
+is often used to load images or sound files, set up the screen, get parameters 
+out of the HTML file, and create objects the applet will need later. You 
+should not do anything that might "hang" or wait indefinitely. 
+In a sense, init() does things 
+that might otherwise be done in an applet's constructor. 
+public void start ()   
+The start() method is called 
+every time the browser displays the web page containing the applet. start() 
+usually does the "work" of the applet. It often starts threads, 
+plays sound files, or does computation. start() 
+may also be called when the browser is de-iconified. 
+public void stop () 
+The stop() method is called 
+whenever the browser leaves the web page containing the applet. It should 
+stop or suspend anything that the applet is doing. For example, it should 
+suspend any threads that have been created and stop playing any sound 
+files. stop() may also be called 
+when the browser is iconified. 
+public void destroy ()   
+The destroy() method is called 
+when the browser determines that it no longer needs to keep the applet 
+around--in practice, when the browser decides to remove the applet 
+from its cache or the browser exits. After this point, if the browser needs 
+to display the applet again, it will reload the applet and call the applet's 
+init() method. destroy() 
+gives the applet a final opportunity to release any resources it is using 
+(for example, close any open sockets). Most applets don't need to 
+implement destroy(). It is 
+always a good idea to release resources as soon as they aren't needed, 
+rather than waiting for destroy(). 
+There are no guarantees about when destroy() 
+will be called; if your browser has a sufficiently large cache, the applet 
+may stay around for a very long time. 
+Applet-sizing methods
+public void resize(int width, int height)
+The resize() method changes 
+the size of the applet space to width 
+x height. The browser must 
+support changing the applet space or else the sizing does not change. Netscape 
+Navigator does not allow an applet to change its size; the applet is sized 
+to the region allocated by the &lt;APPLET&gt; 
+tag, period. 
+Because Applet is a subclass 
+of Component, it inherits the 
+Java 1.1 method setSize(), 
+which has the same function. 
+public void resize (Dimension dim)
+This resize() method calls 
+the previous version of resize() with a width of dim.width 
+and a height of dim.height. 
+Images
+We have discussed Image objects extensively in Chapter 2, Simple Graphics, and Chapter 12, Image Processing, and used them in many of our examples. When writing an applet, you can use the getImage() 
+method directly. In applications, you must go through Toolkit 
+(which the following methods call) to get images. 
+public Image getImage (URL url) 
+The getImage() method loads 
+the image file located at url. url 
+must be a complete and valid URL. The method returns a system-specific 
+object that subclasses Image 
+and returns immediately. The Image 
+is not loaded until needed, either by prepareImage(), 
+MediaTracker, or drawImage(). 
+public Image getImage (URL url, String filename) 
+The getImage() method loads 
+the image file located at url 
+in filename. The applet locates 
+the file relative to the specified URL; that is, if the URL ends with a filename, 
+the applet removes the filename and appends the filename 
+argument to produce a new URL. getImage() 
+returns a system-specific object that subclasses Image 
+and returns immediately. The Image 
+is not loaded until needed, either by prepareImage(), 
+MediaTracker, or drawImage(). 
+In most cases, the url argument 
+is a call to getDocumentBase() 
+or getCodeBase(); most often, 
+image files are located in the same directory as the HTML file, the applet's 
+Java class file, or their own subdirectory. 
+Audio
+Every Java platform is guaranteed to understand Sun's AU file format, 
+which contains a single channel of 8000 Hz &micro;Law encoded audio data.[2] 
+Java applets do not require any helper applications to play audio; they 
+use the browser's audio capabilities. You can use an independent 
+application, like Sun's audiotool, to control the volume. Of course, 
+the user's workstation or PC needs audio hardware, but these days, 
+it's hard to buy a computer that isn't equipped for audio. 
+[2] 
+ 
+The AU format is explained in the Audio File Format FAQ (version 3.10) 
+located at ftp://ftp.cwi.nl/pub/audio/index.html 
+in files AudioFormats.part1 
+and AudioFormats.part2.
+The Java Media Framework API is rumored to provide support for additional 
+audio formats, like Microsoft's .wav files or Macintosh/SGI 
+.aiff audio files. At present, if you want your Java program to play audio 
+files in other formats, you must first convert the audio file to the .au 
+format, using a utility like SOX (Sound Exchange).[3] 
+Once converted, your Java program can play the resulting .au 
+file normally. (If you are interested in more information about audio, look in the alt.binaries.sounds.d newsgroup.) 
+[3] 
+ 
+SOX is available at http://www.spies.com/Sox. 
+The current version of SOX is 10; version 11 is in gamma release. The UNIX 
+source is located in sox10.tar.gz, 
+while the DOS executable is sox10dos.zip.
+The Applet class provides two 
+ways to play audio clips. The first mechanism provides a method to load 
+and play an audio file once: 
+public void play (URL url) 
+The play() method downloads 
+and plays the audio file located at url. 
+url must be a complete and 
+valid URL. If url is invalid, 
+no sound is played. Some environments throw an exception if the URL is 
+invalid, but not all. Calling play() 
+within an applet's destroy() 
+method usually has no effect; the applet and its resources will probably 
+be deallocated before play() 
+has time to download the audio file. 
+public void play (URL url, String filename) 
+This version of play() downloads 
+and plays the audio file located at url 
+in the file filename. The applet 
+locates the file relative to the specified URL; that is, if the URL ends with 
+a filename, the applet removes the filename and appends the filename 
+argument to produce a new URL. If the resulting URL is invalid, no sound 
+is played. Some environments throw an exception if the URL is invalid, but not all. 
+In most cases, the url argument 
+is a call to getDocumentBase() 
+or getCodeBase(); most often, 
+sound files are located in the same directory as the HTML file or the applet's 
+Java class file. For some reason, you cannot have a double dot (..) 
+in the URL of an audio file; you can in the URL of an image file. Putting a double dot in the URL of an audio file raises a security 
+exception in an applet causing play() to fail. 
+The following applet plays an audio file located relative to the HTML file 
+from which the applet was loaded: 
+import java.net.*;
+import java.applet.*;
+public class audioTest extends Applet {
+    public void init () {
+        System.out.println ("Before");
+        play (getDocumentBase(), "audio/flintstones.au");
+        System.out.println ("After");
+    }
+}
+The second way to play audio files splits the process into two steps: you 
+get an AudioClip object and 
+then play it as necessary. This procedure eliminates a significant drawback 
+to play(): if you call play() 
+repeatedly, it reloads the audio file each time, making the applet much 
+slower. 
+public AudioClip getAudioClip (URL url) 
+The getAudioClip() method loads 
+the audio file located at url. 
+url must be a complete and 
+valid URL. Upon success, getAudioClip() 
+returns an instance of a class that implements the AudioClip 
+interface. You can then call methods in the AudioClip 
+interface (see AudioClip Interface) to play the clip. If 
+an error occurs during loading (e.g., because the file was not found or the URL was invalid), getAudioClip() 
+returns null. 
+getAudioClip() sounds similar 
+to getImage(), and it is. However, 
+Java currently loads audio clips synchronously; it does not start a separate 
+thread as it does for images. You may want to create a helper class that 
+loads audio clips in a separate thread. 
+The actual class of the AudioClip 
+object depends on the platform you are using; you shouldn't need 
+to know it. If you are curious, the appletviewer uses the class sun.applet.AppletAudioClip; 
+Netscape Navigator uses the class netscape.applet.AppletAudioClip. 
+public AudioClip getAudioClip (URL url , String filename) 
+This version of the getAudioClip() 
+method loads the audio file located at url 
+in the file filename. The applet 
+locates the file relative to the specified URL; that is, if the URL ends with 
+a filename, the applet removes the filename and appends the filename 
+argument to produce a new URL. If the resulting URL is invalid, the file 
+is not loaded. Upon success, getAudioClip() 
+returns an instance of a class that implements the AudioClip 
+interface. You can then call methods in the AudioClip 
+interface (see AudioClip Interface) to play the clip. If 
+an error occurs during loading (e.g., because the file was not found or the URL was invalid), getAudioClip() 
+returns null. 
+In most cases, the url argument 
+is a call to getDocumentBase() 
+or getCodeBase(); most often, 
+sound files are located in the same directory as the HTML file or the applet's 
+Java class file. 
+AWTError
+AudioClip Interface
+ 
+ 
+ 
+ 
+ 
+ 
+ 

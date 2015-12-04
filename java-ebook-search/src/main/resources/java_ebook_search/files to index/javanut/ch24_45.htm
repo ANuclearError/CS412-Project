@@ -1,0 +1,28 @@
+
+[Chapter 24] 24.45 java.io.OptionalDataException (JDK 1.1)
+Chapter 24The java.io Package
+24.45 java.io.OptionalDataException (JDK 1.1)
+This exception is thrown by the readObject() method
+of an ObjectInputStream when it encounters primitive
+type data where it expects object data.  Despite the
+exception name, this data is not "optional," and object
+deserialization is aborted.  
+public class OptionalDataException extends ObjectStreamException {
+    // No Constructor
+    // Public Instance Variables
+            public boolean eof;
+            public int length;
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->ObjectStreamException->OptionalDataException
+Thrown By:
+ObjectInputStream.readObject()
+java.io.ObjectStreamException (JDK 1.1)
+java.io.OutputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

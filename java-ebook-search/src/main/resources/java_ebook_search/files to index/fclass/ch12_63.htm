@@ -1,0 +1,450 @@
+
+[Chapter 12] ThreadGroup
+Chapter 12The java.lang Package
+ThreadGroup
+Name
+ThreadGroup
+Synopsis
+Class Name:
+java.lang.ThreadGroup
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The ThreadGroup class implements a grouping
+scheme for threads. A ThreadGroup object can own
+Thread objects and other
+ThreadGroup objects. The ThreadGroup
+class provides methods that allow a ThreadGroup
+object to control its Thread and ThreadGroup
+objects as a group. For example, suspend() and
+resume() methods of a ThreadGroup
+object call the suspend() and resume() methods of each of the Thread and ThreadGroup
+objects that belong to the particular ThreadGroup.
+When a Java program starts, a ThreadGroup object
+is created to own the first Thread. Any additional
+ThreadGroup objects are explicitly created by
+the program.
+Class Summary
+public class java.lang.ThreadGroup extends java.lang.Object {
+    // Constructors
+    public ThreadGroup(String name);
+    public ThreadGroup(ThreadGroup parent, String name;
+    // Instance Methods
+    public int activeCount();
+    public int activeGroupCount();
+    public boolean allowThreadSuspension(boolean b);       // New in 1.1
+    public final void checkAccess();
+    public final void destroy();
+    public int enumerate(Thread list[]);
+    public int enumerate(Thread list[], boolean recurse);
+    public int enumerate(ThreadGroup list[]);
+    public int enumerate(ThreadGroup list[], boolean recurse);
+    public final int getMaxPriority();
+    public final String getName();
+    public final ThreadGroup getParent();
+    public final boolean isDaemon();
+    public synchronized boolean isDestroyed();             // New in 1.1
+    public void list();
+    public final boolean parentOf(ThreadGroup g);
+    public final void resume();
+    public final void setDaemon(boolean daemon);
+    public final void setMaxPriority(int pri);
+    public final void stop();
+    public final void suspend();
+    public String toString();
+    public void uncaughtException(Thread t, Throwable e);
+}
+Constructors
+ThreadGroup
+public ThreadGroup(String name)
+Parameters
+name
+The name of this ThreadGroup
+object.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a ThreadGroup object that has the
+specified name and the same parent ThreadGroup
+as the current thread.
+public ThreadGroup(ThreadGroup parent, String name)
+Parameters
+parent
+The ThreadGroup object that this
+ThreadGroup object is to be added to.
+name
+The name of this ThreadGroup
+object.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+Creates a ThreadGroup object with the specified
+name and parent ThreadGroup object.
+Instance Methods
+activeCount
+public int activeCount()
+Returns
+An approximation of the current number of threads in this
+ThreadGroup object and any child ThreadGroup
+objects.
+Description
+This method returns an approximation of the number of threads
+that belong to this ThreadGroup object and any
+child ThreadGroup objects. The count is approximate
+because a thread can die after it is counted, but before the complete
+count is returned. Also, after a child ThreadGroup
+is counted but before the total count is returned, additional Thread
+and ThreadGroup objects can be added to a child
+ThreadGroup.
+activeGroupCount
+public int activeGroupCount()
+Returns
+An approximation of the current number of child ThreadGroup
+objects in this ThreadGroup object.
+Description
+This method returns an approximation of the number of child
+ThreadGroup objects that belong to this ThreadGroup
+object. The count is approximate because after a child ThreadGroup
+is counted but before the total count is returned, additional ThreadGroup
+objects can be added to a child ThreadGroup.
+allowThreadSuspension
+public boolean allowThreadSuspension(boolean b)
+Availability
+New as of JDK 1.1
+Parameters
+b
+A boolean value that specifies whether or not
+the run-time system is allowed to suspend threads due to low memory.
+Returns
+The boolean value true.
+Description
+This method specifies whether or not the Java virtual machine is allowed
+to suspend threads due to low memory.
+checkAccess
+public final void checkAccess()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method determines if the currently running thread has
+permission to modify this ThreadGroup object.
+destroy
+public final void destroy()
+Throws
+IllegalThreadStateException
+If this ThreadGroup object is
+not empty, or if it has already been destroyed.
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method destroys this ThreadGroup object
+and any child ThreadGroup objects. The ThreadGroup must not contain any Thread objects.
+This method also removes the ThreadGroup object
+from its parent ThreadGroup object.
+enumerate
+public int enumerate(Thread list[])
+Parameters
+list
+A reference to an array of Thread
+objects.
+Returns
+The number of Thread objects stored in
+the array.
+Description
+This method stores a reference in the array for each of the
+Thread objects that belongs to this ThreadGroup
+or any of its child ThreadGroup objects.
+If the array is not big enough to contain references to all
+the Thread objects, only as many references as
+will fit are put into the array. No indication is given that some
+Thread objects were left out, so it is a good
+idea to call activeCount() before calling this
+method, to get an idea of how large to make the array.
+public int enumerate(Thread list[], boolean recurse)
+Parameters
+list
+A reference to an array of Thread
+objects.
+recurse
+A boolean value that specifies
+whether or not to include Thread objects that
+belong to child ThreadGroup objects of this ThreadGroup
+object.
+Returns
+The number of Thread objects stored in
+the array.
+Description
+This method stores a reference in the array for each of the
+Thread objects that belongs to this ThreadGroup
+object. If recurse is true,
+the method also stores a reference for each of the Thread
+objects that belongs to a child ThreadGroup object
+of this ThreadGroup.
+If the array is not big enough to contain references to all
+the Thread objects, only as many references as
+will fit are put into the array. No indication is given that some
+Thread objects were left out, so it is a good
+idea to call activeCount() before calling this
+method, to get an idea of how large to make the array.
+public int enumerate(ThreadGroup list[])
+Parameters
+list
+A reference to an array of ThreadGroup
+objects.
+Returns
+The number of ThreadGroup objects stored
+in the array.
+Description
+This method stores a reference in the array
+for each ThreadGroup
+object that belongs to this ThreadGroup
+or any of its child ThreadGroup objects.
+If the array is not big enough to contain references to all
+the ThreadGroup objects, only as many references
+as will fit are put into the array. No indication is given that
+some ThreadGroup objects were left out, so it
+is a good idea to call activeGroupCount() before
+calling this method, to get an idea of how large to make the array.
+public int enumerate(Thread list[], boolean recurse)
+Parameters
+list
+A reference to an array of ThreadGroup
+objects.
+recurse
+A boolean value that specifies
+whether or not to include ThreadGroup objects
+that belong to child ThreadGroup objects of this
+ThreadGroup object.
+Returns
+The number of ThreadGroup objects stored
+in the array.
+Description
+This method stores a reference in the array for each of the
+ThreadGroup objects that belongs to this ThreadGroup
+object. If recurse is true,
+the method also stores a reference for each of the ThreadGroup
+objects that belongs to a child ThreadGroup object
+of this ThreadGroup.
+If the array is not big enough to contain references to all
+the ThreadGroup objects, only as many references
+as will fit are put into the array. No indication is given that
+some ThreadGroup objects were left out, so it
+is a good idea to call activeGroupCount() before
+calling this method, to get an idea of how large to make the array.
+getMaxPriority
+public final int getMaxPriority()
+Returns
+The maximum priority that can be assigned to Thread
+objects that belong to this ThreadGroup object.
+Description
+This method returns the maximum priority that can be assigned
+to Thread objects that belong to this ThreadGroup
+object.
+It is possible for a ThreadGroup to contain
+Thread objects that have higher priorities than
+this maximum, if they were given that higher priority before the
+maximum was set to a lower value.
+getName
+public final String getName()
+Returns
+The name of this ThreadGroup object.
+Description
+This method returns the name of this ThreadGroup
+object.
+getParent
+public final ThreadGroup getParent()
+Returns
+The parent ThreadGroup
+object of this ThreadGroup, or null 
+if this ThreadGroup
+is the root of the thread group hierarchy.
+Description
+This method returns the parent
+ThreadGroup object of this ThreadGroup
+object. If this ThreadGroup is at the root of
+the thread group hierarchy and has no parent, the method returns
+null.
+isDaemon
+public final boolean isDaemon()
+Returns
+true if this ThreadGroup
+is a daemon thread group; otherwise false.
+Description
+This method determines whether or not this ThreadGroup
+is a daemon thread group, based on the value of daemon
+attribute of this ThreadGroup object. A daemon
+thread group is destroyed when the last Thread
+in it is stopped, or the last ThreadGroup in
+it is destroyed.
+isDestroyed
+public synchronized boolean isDestroyed()
+Availability
+New as of JDK 1.1
+Returns
+true if this ThreadGroup
+has been destroyed; otherwise false.
+Description
+This method determines whether or not this ThreadGroup
+has been destroyed.
+list
+public void list()
+Description
+This method outputs a listing of the contents of this ThreadGroup
+object to System.out.
+parentOf
+public final boolean parentOf(ThreadGroup g)
+Parameters
+g
+A ThreadGroup object.
+Returns
+true if this ThreadGroup
+object is the same ThreadGroup, or a direct or indirect parent of
+the specified ThreadGroup; otherwise false.
+Description
+This method determines if this ThreadGroup
+object is the same as the specified ThreadGroup
+or one of its ancestors in the thread-group hierarchy.
+resume
+public final void resume()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method resumes each Thread object
+that directly or indirectly belongs to this ThreadGroup
+object by calling its resume() method.
+setDaemon
+public final void setDaemon(boolean daemon)
+Parameters
+daemon
+The new value for this ThreadGroup
+object's daemon attribute.
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method sets the daemon attribute
+of this ThreadGroup object to the given value.
+A daemon thread group is destroyed when the last Thread
+in it is stopped, or the last ThreadGroup in
+it is destroyed.
+setMaxPriority
+public final void setMaxPriority(int pri)
+Parameters
+pri
+The new maximum priority for Thread objects
+that belong to this ThreadGroup object.
+Description
+This method sets the maximum priority that can be assigned
+to Thread objects that belong to this ThreadGroup
+object.
+It is possible for a ThreadGroup to contain
+Thread objects that have higher priorities than
+this maximum, if they were given that higher priority before the
+maximum was set to a lower value.
+stop
+public final void stop()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method stops each Thread object that
+directly or indirectly belongs to this ThreadGroup
+object by calling its stop() method.
+suspend
+public final void suspend()
+Throws
+SecurityException
+If the checkAccess() method of
+the SecurityManager throws a SecurityException.
+Description
+This method suspends each Thread object
+that directly or indirectly belongs to this ThreadGroup
+object by calling its suspend() method.
+toString
+public String toString()
+Returns
+A string representation of this ThreadGroup
+object.
+Overrides
+Object.toString()
+Description
+This method returns a string representation of this ThreadGroup
+object.
+uncaughtException
+public void uncaughtException(Thread t, Throwable e)
+Parameters
+t
+A reference to a Thread that
+just died because of an uncaught exception.
+e
+The uncaught exception.
+Description
+This method is called when a Thread object
+that belongs to this ThreadGroup object dies
+because of an uncaught exception. If this ThreadGroup
+object has a parent ThreadGroup object, this
+method just calls the parent's uncaughtException()
+method. Otherwise, this method must determine whether the uncaught exception
+is an instance of ThreadDeath. If it is, nothing
+is done. If it is not, the method calls the printStackTrace()
+method of the exception object.
+If this method is overridden, the overriding method should
+end with a call to super.uncaughtException().
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+IllegalThreadStateException, 
+Object, 
+Runnable, 
+SecurityException, 
+SecurityManager, 
+Thread, 
+Throwable
+ThreadDeath
+Throwable
+ 
+ 
+ 
+ 
+ 
+ 
+ 

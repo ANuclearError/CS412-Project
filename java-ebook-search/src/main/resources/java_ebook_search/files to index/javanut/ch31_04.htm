@@ -1,0 +1,45 @@
+
+[Chapter 31] 31.4 java.util.zip.Checksum (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.4 java.util.zip.Checksum (JDK 1.1)
+This interface defines the methods required to compute a
+checksum on a stream of data.  The checksum is computed
+based on the bytes of data supplied by the update()
+methods, and the current value of the checksum can be
+obtained at any time with the getValue() method.
+reset() resets the checksum to its default
+value--use this method before beginning a new stream of
+data.
+Note that the checksum value computed by a Checksum object
+and returned through the getValue() method must fit
+into a long value.  Therefore, this interface is not
+suitable for the cryptographic checksum algorithms used in
+cryptography and security.
+The classes CheckedInputStream and
+CheckedOutputStream provide a higher-level API for
+computing a checksum on a stream of data.
+public abstract interface Checksum {
+    // Public Instance Methods
+            public abstract long getValue();
+            public abstract void reset();
+            public abstract void update(int b);
+            public abstract void update(byte[] b, int off, int len);
+}
+Implemented By:
+Adler32, 
+CRC32
+Passed To:
+CheckedInputStream(), 
+CheckedOutputStream()
+Returned By:
+CheckedInputStream.getChecksum(), 
+CheckedOutputStream.getChecksum()
+java.util.zip.CheckedOutputStream (JDK 1.1)
+java.util.zip.CRC32 (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,27 @@
+
+[Chapter 10] 10.3 Environment Variables
+Chapter 10Accessing the Environment
+10.3 Environment Variables
+Java does not provide any way to directly access environment variables 
+defined on a system. There is a System.getEnv() 
+method that served that purpose before Java 1.0 was released. However, 
+in released versions of Java, the System.getEnv() 
+method just throws an exception with a message explaining that it is not 
+supported. 
+However, an environment variable can be made available as a system property 
+if it is defined as a system property on the command line that invokes 
+the Java virtual machine. For example, to make the environment variable 
+PRINTER available as a system 
+property in a Windows environment, you can write: 
+C:\&gt; java -Dprinter=%PRINTER%
+In a UNIX environment, you can use: 
+% java -Dprinter=$PRINTER
+System Properties
+External Program Execution
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,139 @@
+
+[Chapter 5] 5.6 Packages and Compilation Units
+Chapter 5Objects in Java
+5.6 Packages and Compilation Units
+A package is a name for a group of related
+classes. In Chapter 3, Tools of the Trade, we discussed how Java uses
+package names to locate classes during compilation and at run-time. In
+this sense, packages are somewhat like libraries; they organize and manage sets of classes. Packages provide more than just
+source code-level organization though. They also create an additional
+level of scope for their classes and the variables and methods within
+them. We'll talk about the visibility of classes in this
+section. In the next section, we'll discuss the effect that
+packages have on access to variables and methods between classes.
+Compilation Units
+The source code for a Java class is called a compilation
+unit. A compilation unit normally contains a single class
+definition and is named for that class. The definition of a class
+named MyClass, for instance, should appear in a
+file named MyClass.java. For most of us, a
+compilation unit is just a file with a .java
+extension, but in an integrated development environment, it could be
+an arbitrary entity. For brevity here, we'll refer to a
+compilation unit simply as a file.
+The division of classes into their own compilation units is
+important because, as described in Chapter 3, Tools of the Trade, the Java
+compiler assumes much of the responsibility of a
+make utility. The compiler relies on the names
+of source files to find and compile dependent classes. It's possible
+(and common) to put more than one class definition into a single file,
+but there are some restrictions we'll discuss shortly.
+A class is declared to belong to a particular package with the
+package statement. The package
+statement must appear as the first statement in a compilation
+unit. There can be only one package statement, and
+it applies to the entire file:
+package mytools.text; 
+ 
+class TextComponent { 
+     ... 
+} 
+In the above example, the class TextComponent is
+placed in the package mytools.text.
+A Word About Package Names
+You should recall from Chapter 3, Tools of the Trade that package names
+are constructed in a hierarchical way, using a dot-separated naming
+convention. Package-name components construct a unique path for the
+compiler and run-time systems to locate files; however, they
+don't affect the contents directly in any other way. There is no
+such thing as a subpackage (the package name space is really flat, not
+hierarchical) and packages under a particular part of a package
+hierarchy are related only by association. For example, if we create
+another package called mytools.text.poetry
+(presumably for text classes specialized in some way to work with
+poetry), those classes would not be considered part of the
+mytools.text package and would have no special
+access to its members. In this sense, the package-naming convention
+can be misleading.
+Class Visibility
+By default, a class is accessible only to other classes within its
+package. This means that the class TextComponent is
+available only to other classes in the
+mytools.text package. To be visible elsewhere, a
+class must be declared as public:
+package mytools.text; 
+ 
+public class TextEditor { 
+     ... 
+} 
+The class TextEditor can now be referenced
+anywhere. There can be only a single public class
+defined in a compilation unit; the file must be named for that class.
+By hiding unimportant or extraneous classes, a package builds a subsystem that has a well-defined interface to the
+rest of the world. Public classes provide a facade for the operation
+of the system and the details of its inner workings can remain hidden,
+as shown in Figure 5.7. In this sense, packages
+hide classes in the way classes hide private
+members.
+Figure 5.7: Class visibility and packages
+Figure 5.7 shows part of the the hypothetical
+mytools.text package. The classes
+TextArea and TextEditor are
+declared public and can be used elsewhere in an
+application. The class TextComponent is part of the
+implementation of TextArea and is not accessible
+from outside of the package.
+Importing Classes
+Classes within a package can refer to each other by their simple
+names. However, to locate a class in another package, we have to
+supply a qualifier. Continuing with the above example, an application
+refers directly to our editor class by its fully qualified name of
+mytools.text.TextEditor. But we'd quickly grow
+tired of typing such long class names, so Java gives us the
+import statement. One or more
+import statements can appear at the top of a
+compilation unit, beneath the package
+statement. The import statements list the full
+names of classes to be used within the file. Like a
+package statement, import
+statements apply to the entire compilation unit. Here's how you
+might use an import statement:
+package somewhere.else; 
+ 
+import mytools.text.TextEditor; 
+ 
+class MyClass { 
+    TextEditor editBoy; 
+    ... 
+} 
+As shown in the example above, once a class is imported, it can be 
+referenced by its simple name throughout the code. It's also possible 
+to import all of the classes in a package using the * 
+notation: 
+import mytools.text.*; 
+Now we can refer to all public classes 
+in the mytools.text package by their simple names. 
+Obviously, there can be a problem with importing classes that
+have conflicting names. If two different packages contain classes that
+use the same name, you just have to fall back to using
+fully qualified names to refer to those classes. Other than the
+potential for naming conflicts, there's no penalty for importing
+classes. Java doesn't carry extra baggage into the compiled class
+files. In other words, Java class files don't contain other class
+definitions, they only reference them.
+The Unnamed Package
+A class that is defined in a compilation unit that doesn't specify a
+package falls into the large, amorphous unnamed package. Classes in
+this nameless package can refer to each other by their simple
+names. Their path at compile- and run-time is considered to be the
+current directory, so package-less classes are useful for experimentation, testing, and brevity in providing examples for books
+about Java.
+Subclassing and Inheritance
+Variable and Method Visibility
+ 
+ 
+ 
+ 
+ 
+ 
+ 

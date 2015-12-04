@@ -1,0 +1,34 @@
+
+[Chapter 20] 20.27 java.awt.event.TextListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.27 java.awt.event.TextListener (JDK 1.1)
+This interface defines the method that an object must
+implement to "listen" for text events on AWT components.
+When a TextEvent occurs, an AWT component
+notifies its registered TextListener objects by
+invoking their textValueChanged() methods.
+public abstract interface TextListener extends EventListener {
+    // Public Instance Methods
+            public abstract void textValueChanged(TextEvent e);
+}
+Implemented By:
+AWTEventMulticaster
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+TextComponent.addTextListener(), 
+TextComponent.removeTextListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+Type Of:
+TextComponent.textListener
+java.awt.event.TextEvent (JDK 1.1)
+java.awt.event.WindowAdapter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

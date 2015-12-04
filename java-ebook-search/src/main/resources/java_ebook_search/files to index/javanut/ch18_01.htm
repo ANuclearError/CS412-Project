@@ -1,0 +1,135 @@
+
+[Chapter 18] The java.awt Package
+Chapter 18
+18. The java.awt Package
+Contents:
+java.awt.AWTEvent (JDK 1.1)
+java.awt.AWTEventMulticaster (JDK 1.1)
+java.awt.AWTException (JDK 1.0)
+java.awt.Adjustable (JDK 1.1)
+java.awt.BorderLayout (JDK 1.0)
+java.awt.Button (JDK 1.0)
+java.awt.Canvas (JDK 1.0)
+java.awt.CardLayout (JDK 1.0)
+java.awt.Checkbox (JDK 1.0)
+java.awt.CheckboxGroup (JDK 1.0)
+java.awt.CheckboxMenuItem (JDK 1.0)
+java.awt.Choice (JDK 1.0)
+java.awt.Color (JDK 1.0)
+java.awt.Component (JDK 1.0)
+java.awt.Container (JDK 1.0)
+java.awt.Cursor (JDK 1.1)
+java.awt.Dialog (JDK 1.0)
+java.awt.Dimension (JDK 1.0)
+java.awt.Event (JDK 1.0)
+java.awt.EventQueue (JDK 1.1)
+java.awt.FileDialog (JDK 1.0)
+java.awt.FlowLayout (JDK 1.0)
+java.awt.Font (JDK 1.0)
+java.awt.FontMetrics (JDK 1.0)
+java.awt.Frame (JDK 1.0)
+java.awt.Graphics (JDK 1.0)
+java.awt.GridBagConstraints (JDK 1.0)
+java.awt.GridBagLayout (JDK 1.0)
+java.awt.GridLayout (JDK 1.0)
+java.awt.IllegalComponentStateException (JDK 1.1)
+java.awt.Image (JDK 1.0)
+java.awt.Insets (JDK 1.0)
+java.awt.ItemSelectable (JDK 1.1)
+java.awt.Label (JDK 1.0)
+java.awt.LayoutManager (JDK 1.0)
+java.awt.LayoutManager2 (JDK 1.1)
+java.awt.List (JDK 1.0)
+java.awt.MediaTracker (JDK 1.0)
+java.awt.Menu (JDK 1.0)
+java.awt.MenuBar (JDK 1.0)
+java.awt.MenuComponent (JDK 1.0)
+java.awt.MenuContainer (JDK 1.0)
+java.awt.MenuItem (JDK 1.0)
+java.awt.MenuShortcut (JDK 1.1)
+java.awt.Panel (JDK 1.0)
+java.awt.Point (JDK 1.0)
+java.awt.Polygon (JDK 1.0)
+java.awt.PopupMenu (JDK 1.1)
+java.awt.PrintGraphics (JDK 1.1)
+java.awt.PrintJob (JDK 1.1)
+java.awt.Rectangle (JDK 1.0)
+java.awt.ScrollPane (JDK 1.1)
+java.awt.Scrollbar (JDK 1.0)
+java.awt.Shape (JDK 1.1)
+java.awt.SystemColor (JDK 1.1)
+java.awt.TextArea (JDK 1.0)
+java.awt.TextComponent (JDK 1.0)
+java.awt.TextField (JDK 1.0)
+java.awt.Toolkit (JDK 1.0)
+java.awt.Window (JDK 1.0)
+The java.awt package is the Abstract Windowing
+Toolkit.  The classes of this package may be roughly divided
+into three categories (see
+Figure 18.1
+and
+Figure 18.2).
+Graphics: These classes define colors, fonts, images,
+polygons, and so forth.
+Components: These classes are GUI (graphical user
+interface) components such as buttons, menus, lists, and
+dialog boxes.
+Layout Managers: These classes control the layout of
+components within their container objects.
+Note that separate packages, java.awt.datatransfer,
+java.awt.event, and java.awt.image, contain
+classes for cut-and-paste, event handling, and image
+manipulation.
+Figure 18.1: Graphics, event, and exception classes of the java.awt package
+In the first category of classes, Graphics is
+probably the most important.  This class defines methods for
+doing line and text drawing and image painting.  It relies
+on other classes such as Color, Font,
+Image, and Polygon.  Image is itself
+an important class, used in many places in java.awt
+and throughout the related package java.awt.image.
+Event is another important class that describes a
+user or window system event that has occurred.  In Java 1.1,
+Event is superseded by the AWTEvent class.
+Component and MenuComponent are root classes
+in the second category of java.awt classes.  Their
+subclasses are GUI components that can appear in interfaces
+and menus.  The Container class is one that contains
+components and arranges them visually.  You add components
+to a container with the add() method and specify a
+layout manager for the container with the
+setLayout() method.
+There are three commonly used Container subclasses.
+Frame is a toplevel window that can contain a
+menu bar and have a custom cursor and an icon.
+Dialog is a dialog window.  Panel is a
+container that does not have its own window--it is contained
+within some other container.
+The third category of java.awt classes is the layout
+managers.  The subclasses of LayoutManager are
+responsible for arranging the Component objects
+contained within a specified Container.
+GridBagLayout, BorderLayout, and
+GridLayout are probably the most useful of these
+layout managers.
+See Chapter 8, New AWT Features, for
+examples of using some of the new Java 1.1 features of this package.
+Figure 18.2: Component and layout classes of the java.awt package
+18.1 java.awt.AWTError (JDK 1.0)
+Signals that an error has occurred in the
+java.awt package.
+public class AWTError extends Error {
+    // Public Constructor
+            public AWTError(String msg);
+}
+Hierarchy:
+Object->Throwable(Serializable)->Error->AWTError
+java.applet.AudioClip (JDK 1.0)
+java.awt.AWTEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

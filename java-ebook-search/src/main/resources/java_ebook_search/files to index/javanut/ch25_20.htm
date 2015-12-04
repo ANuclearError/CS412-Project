@@ -1,0 +1,28 @@
+
+[Chapter 25] 25.20 java.lang.ExceptionInInitializerError (JDK 1.1)
+Chapter 25The java.lang Package
+25.20 java.lang.ExceptionInInitializerError (JDK 1.1)
+This error is thrown by the Java Virtual Machine when an
+exception occurs in the static initializer of a class.  You
+can use the getException() method to obtain the
+Throwable object that was thrown from the
+initializer.
+public class ExceptionInInitializerError extends LinkageError {
+    // Public Constructors
+            public ExceptionInInitializerError();
+            public ExceptionInInitializerError(Throwable thrown);
+            public ExceptionInInitializerError(String s);
+    // Public Instance Methods
+            public Throwable getException();
+}
+Hierarchy:
+Object->Throwable(Serializable)->Error->LinkageError->ExceptionInInitializerError
+java.lang.Exception (JDK 1.0)
+java.lang.Float (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

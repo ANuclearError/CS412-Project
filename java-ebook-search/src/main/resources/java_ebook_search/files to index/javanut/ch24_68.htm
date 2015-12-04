@@ -1,0 +1,29 @@
+
+[Chapter 24] 24.68 java.io.WriteAbortedException (JDK 1.1)
+Chapter 24The java.io Package
+24.68 java.io.WriteAbortedException (JDK 1.1)
+This exception is thrown when reading a stream of data that
+is incomplete because an exception was thrown while it was
+being written.  The detail field may contain the
+exception that terminated the output stream.  The
+getMessage() method has been overridden to include
+the message of this detail exception, if any.
+public class WriteAbortedException extends ObjectStreamException {
+    // Public Constructor
+            public WriteAbortedException(String s, Exception ex);
+    // Public Instance Variables
+            public Exception detail;
+    // Public Instance Methods
+            public String getMessage();  // Overrides Throwable
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->ObjectStreamException->WriteAbortedException
+java.io.UTFDataFormatException (JDK 1.0)
+java.io.Writer (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

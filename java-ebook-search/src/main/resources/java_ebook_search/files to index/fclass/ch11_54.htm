@@ -1,0 +1,252 @@
+
+[Chapter 11] PushbackInputStream
+Chapter 11The java.io Package
+PushbackInputStream
+Name
+PushbackInputStream
+Synopsis
+Class Name:
+java.io.PushbackInputStream
+Superclass:
+java.io.FilterInputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The PushbackInputStream class represents a byte
+stream that allows data to be pushed back into the stream.  In other
+words, after data has been read from a
+PushbackInputStream, it can be pushed back into the
+stream so that it can be reread. This functionality is useful for
+implementing things like parsers that need to read data and then
+return it to the input stream.
+The PushbackInputStream has been enhanced as of JDK
+1.1 to support a pushback buffer that is larger than one byte. Prior
+to JDK 1.1, the class supported only a one-byte buffer using the
+protected variable pushBack.  As of 1.1, that
+variable has been replaced by the buf and
+pos variables.
+Class Summary
+public class java.io.PushbackInputStream extends java.io.FilterInputStream {
+  // Variables
+  protected byte[] buf;                           // New in 1.1
+  protected int pos;                              // New in 1.1
+  // Constructors
+  public PushbackInputStream(InputStream in);
+  public PushbackInputStream(InputStream in, 
+                             int size);           // New in 1.1
+  // Instance Methods
+  public int available(); 
+  public boolean markSupported();
+  public int read();
+  public int read(byte[] b, int off, int len);
+  public void unread(int b);
+  public void unread(byte[] b);                   // New in 1.1
+  public void unread(byte[] b, int off, int len); // New in 1.1
+}
+Variables
+buf
+protected byte[] buf
+Availability
+New as of JDK 1.1 
+Description
+The buffer that holds data that has been pushed back. 
+pos
+protected int pos
+Availability
+New as of JDK 1.1 
+Description
+The position of pushed-back data in the buffer. When there is no pushed-back 
+data, pos is buf.length. 
+As data is pushed back, pos 
+decreases. As pushed-back data is read, pos 
+increases. When the pushback buffer is full, pos 
+is 0. 
+Constructors
+PushbackInputStream
+public PushbackInputStream(InputStream in)
+Parameters
+in
+The input stream to 
+wrap. 
+Description
+This constructor creates a PushbackInputStream 
+that reads from the given InputStream, 
+using a pushback buffer with the default size of one byte. 
+public PushBackInputStream(InputStream in, int size)
+Availability
+New as of JDK 1.1 
+Parameters
+in
+The input stream to wrap.
+size
+The size of the pushback buffer. 
+Description
+This constructor creates a PushbackInputStream 
+that reads from the given InputStream, 
+using a pushback buffer of the given size. 
+Instance Methods
+available
+public int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.available() 
+Description
+This method returns the number of bytes that can be read without having 
+to wait for more data to become available. This is b 
++ u, where b 
+is the number of bytes in the pushback buffer and u 
+is the number of available bytes in the underlying stream. 
+markSupported
+public boolean markSupported()
+Returns
+The boolean value false. 
+Overrides
+FilterInputStream.markSupported() 
+Description
+This method returns false to 
+indicate that this class does not support mark() 
+and reset(). 
+read
+public int read() throws IOException
+Returns
+The next byte of data, or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.read() 
+Description
+This method reads a byte of data. If there is any data in the pushback 
+buffer, the method returns the next byte in the pushback buffer. Otherwise, 
+it calls the read() method 
+of the underlying stream. The method blocks until the byte is read, the 
+end of the stream is encountered, or an exception is thrown. 
+public int read(byte b[], int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read, or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+FilterInputStream.read(byte[], int, int) 
+Description
+This method copies bytes from the stream into the given array b, 
+starting at index off and continuing 
+for len bytes. If the array 
+can be populated solely from the pushback buffer, the method returns immediately. 
+Otherwise, the read(byte[], 
+int, int) 
+method of the underlying stream is called to make up the difference. The 
+method blocks until some data is available. 
+unread
+public void unread(int b) throws IOException
+Parameters
+b
+The value to push back. 
+Throws
+IOException
+If 
+the pushback buffer is full. 
+Description
+This method puts the given byte into the pushback buffer. 
+public void unread(byte[] b) throws IOException
+Availability
+New as of JDK 1.1 
+Parameters
+b
+An array of bytes to 
+push back. 
+Throws
+IOException
+If 
+the pushback buffer is full. 
+Description
+This method puts all of the bytes in the given array into the pushback 
+buffer. 
+public void unread(byte[] b, int off, int len) throws IOException
+Availability
+New as of JDK 1.1 
+Parameters
+b
+An array of bytes to push back.
+off
+An offset into the array.
+len
+The number of bytes to push back. 
+Throws
+IOException
+If 
+the pushback buffer is full. 
+Description
+This method puts len bytes 
+from the given array, starting at offset off, 
+into the pushback buffer. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+FilterInputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+FilterInputStream
+notify()
+Object
+notifyAll()
+Object
+read(byte[])
+FilterInputStream
+reset()
+FilterInputStream
+skip(long)
+FilterInputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FilterInputStream, 
+InputStream, 
+IOException 
+PrintWriter
+PushbackReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

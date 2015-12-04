@@ -1,0 +1,181 @@
+
+[Chapter 18] ZipInputStream
+Chapter 18The java.util.zip Package
+ZipInputStream
+Name
+ZipInputStream
+Synopsis
+Class Name:
+java.util.zip.ZipInputStream
+Superclass:
+java.util.zip.InflaterInputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+ 
+The ZipInputStream class reads 
+files that have been compressed using the ZIP format. To read uncompressed 
+data from a ZIP file, simply construct a ZipInputStream 
+that wraps a regular input stream. The getNextEntry() 
+method returns each entry in the ZIP file in order. Once you have a ZipEntry 
+object, you use the read() 
+method to retrieve uncompressed data from it. If you want to read the entries 
+in a nonsequential order, use a ZipFile 
+instead. 
+Class Summary
+public class java.util.zip.ZipInputStream
+             extends java.util.zip.InflaterInputStream {
+  // Constructors
+  public ZipInputStream(InputStream in);
+  // Instance Methods
+  public void close();
+  public void closeEntry();
+  public ZipEntry getNextEntry();
+  public int read(byte[] b, int off, int len);
+  public long skip(long n);
+}
+Constructors
+ZipInputStream
+public ZipInputStream(InputStream in)
+Parameters
+in
+The underlying input stream. 
+Description
+This constructor creates a ZipInputStream 
+that inflates data from the given InputStream. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException
+If any I/O error occurs. 
+Overrides
+FilterInputStream.close() 
+Description
+This method closes this stream and releases any system resources that are 
+associated with it. 
+closeEntry
+public void closeEntry() throws IOException
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method closes the currently open entry in the ZIP file. The stream 
+is then positioned to read the next entry using getNextEntry(). 
+getNextEntry
+public ZipEntry getNextEntry() throws IOException
+Returns
+The ZipEntry for the next entry 
+or null if there are no more 
+entries. 
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Description
+This method returns a ZipEntry 
+that represents the next entry in the ZIP file and positions the stream 
+to read that entry. 
+read
+public int read(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The number of bytes read or -1 if the end of the entry is encountered immediately. 
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any other kind of I/O error occurs. 
+Overrides
+InflaterInputStream.read(byte[], int, int) 
+Description
+This method reads enough data from the underlying InputStream 
+to return len bytes of uncompressed 
+data. The uncompressed data is placed into the given array starting at 
+off. The method blocks until 
+some data is available for decompression. 
+skip
+public long skip(long n) throws IOException
+Returns
+The actual number of bytes skipped. 
+Throws
+ZipException
+If a ZIP file format error occurs.
+IOException
+If any kind of I/O error occurs. 
+Overrides
+InflaterInputStream.skip() 
+Description
+This method skips over the specified number of uncompressed data bytes 
+by reading data from the underlying InputStream 
+and decompressing it. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+available()
+FilterInputStream
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+FilterInputStream
+markSupported()
+FilterInputStream
+notify()
+Object
+notifyAll()
+Object
+read()
+InflaterInputStream
+read(byte[])
+FilterInputStream
+reset()
+FilterInputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+Inflater, 
+InflaterInputStream, 
+InputStream, 
+IOException, 
+ZipEntry, 
+ZipException, 
+ZipFile 
+ZipFile
+ZipOutputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,176 @@
+
+[Chapter 19] TextComponent
+Chapter 19java.awt Reference
+TextComponent
+Name
+TextComponent
+Description
+The abstract TextComponent 
+class provides the base class for the text input components, TextArea 
+and TextField. 
+Class Definition
+public abstract class java.awt.TextComponent
+    extends java.awt.Component {
+  
+  // Instance Methods
+  public void addTextListener (TextListener l); 
+  public int getCaretPosition(); 
+  public synchronized String getSelectedText();
+  public synchronized int getSelectionEnd();
+  public synchronized int getSelectionStart();
+  public synchronized String getText();
+  public boolean isEditable();
+  public void removeNotify();
+  public void removeTextListener (TextListener l); 
+  public synchronized void select (int selectionStart, int selectionEnd);
+  public synchronized void selectAll();
+  public void setCaretPosition (int position); 
+  public synchronized void setEditable (boolean state);
+  public synchronized void setSelectionEnd (int selectionEnd); 
+  public synchronized void setSelectionStart (int selectionStart); 
+  public synchronized void setText (String text);
+  
+  // Protected Instance Methods
+  protected String paramString();
+  protected void processEvent (AWTEvent e); 
+  protected void processTextEvent (TextEvent e); 
+}
+Instance Methods
+addTextListener
+public void addTextListener (TextListener l) 
+Parameters 
+l
+An object that implements the TextListener 
+interface. 
+Description
+Add a listener for the text events. 
+getCaretPosition
+public int getCaretPosition() 
+Returns
+The position, in characters, of the caret (text cursor). 
+getSelectedText
+public synchronized String getSelectedText()
+Returns
+The currently selected text of the TextComponent. 
+getSelectionEnd
+public synchronized int getSelectionEnd()
+Returns
+The ending cursor position of any selected text. 
+getSelectionStart
+public synchronized int getSelectionStart()
+Returns
+The initial position of any selected text. 
+getText
+public synchronized String getText()
+Returns
+Current contents of the TextComponent. 
+isEditable
+public boolean isEditable()
+Returns
+true if editable, false 
+otherwise. 
+removeNotify
+public void removeNotify()
+Description
+Destroys the peer of the TextComponent. 
+removeTextListener
+public void removeTextListener (TextListener l) 
+Parameters 
+l
+One of this TextComponent's 
+TextListeners. 
+Description
+Remove a text event listener. 
+select
+public synchronized void select (int selectionStart, int selectionEnd)
+Parameters 
+selectionStart
+Beginning position of text to select. 
+selectionEnd
+Ending position of text to select. 
+Description
+Selects text in the TextComponent. 
+selectAll
+public synchronized void selectAll()
+Description
+Selects all the text in the TextComponent. 
+setCaretPosition
+public void setCaretPosition (int position) 
+Parameters 
+position
+The new character position for the caret. 
+Throws 
+IllegalArgumentException
+If 
+position is less than zero. 
+Description
+Allows you to change the location of the caret. 
+setEditable
+public synchronized void setEditable (boolean state)
+Parameters 
+state
+true to allow 
+the user to edit the text in the TextComponent; 
+false to prevent editing. 
+Description
+Allows you to make the TextComponent 
+editable or read-only. 
+setSelectionEnd
+public synchronized void setSelectionEnd (int selectionEnd) 
+Parameters 
+selectionEnd
+The character position of the end of the selection. 
+Description
+Allows you to change the location of the end of the selected text. 
+setSelectionStart
+public synchronized void setSelectionStart (int selectionStart) 
+Parameters 
+selectionStart
+The character position of the start of the selection. 
+Description
+Allows you to change the location of the start of the selected text. 
+setText
+public synchronized void setText (String text)
+Parameters 
+text
+New text for TextComponent. 
+Description
+Sets the content of the TextComponent. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of TextComponent. 
+Overrides 
+Component.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+processEvent
+protected void processEvent (AWTEvent e) 
+Parameters 
+e
+The event to process. 
+Description
+Low-level AWTEvents are passed 
+to this method for processing. 
+processTextEvent
+protected void processTextEvent (TextEvent e) 
+Parameters 
+e
+The event to process. 
+Description
+Text events are passed to this method for processing. Normally, this method 
+is called by processEvent(). 
+See Also
+Component, TextArea, 
+TextField, String 
+TextArea
+TextField
+ 
+ 
+ 
+ 
+ 
+ 
+ 

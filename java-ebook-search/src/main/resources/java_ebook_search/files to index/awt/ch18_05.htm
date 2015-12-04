@@ -1,0 +1,73 @@
+
+[Chapter 18] AppletStub
+Chapter 18java.applet Reference
+AppletStub
+Name
+AppletStub
+Description
+AppletStub is an interface 
+that provides the means to get information from the run-time browser environment. 
+Interface Definition
+public abstract interface java.applet.AppletStub {
+  // Interface Methods
+  public abstract void appletResize (int width, int height);
+  public abstract AppletContext getAppletContext();
+  public abstract URL getCodeBase();
+  public abstract URL getDocumentBase();
+  public abstract String getParameter (String name);
+  public abstract boolean isActive();
+}
+Interface Methods
+appletResize
+public abstract void appletResize (int width, int height)
+Parameters
+width
+Requested new width for applet.
+height
+Requested new height for applet.
+Description
+Changes the size of the applet. 
+getAppletContext
+public abstract AppletContext getAppletContext()
+Returns
+Current AppletContext of the 
+applet. 
+getCodeBase
+public abstract URL getCodeBase()
+Returns
+Complete URL for the applet's 
+.class file. 
+getDocumentBase
+public abstract URL getDocumentBase()
+Returns
+Complete URL for the applet's 
+.html file. 
+getParameter
+public abstract String getParameter (String name)
+Parameters
+name
+Name of a &lt;PARAM&gt; tag. 
+Returns
+Value associated with the parameter. 
+Description
+Gets a parameter value from the &lt;PARAM&gt; 
+tag(s) of the applet. 
+isActive
+public abstract boolean isActive()
+Returns
+true if the applet is active, 
+false otherwise 
+Description
+Returns current state of the applet. 
+See Also
+AppletContext, Object, 
+String, URL 
+AppletContext
+AudioClip
+ 
+ 
+ 
+ 
+ 
+ 
+ 

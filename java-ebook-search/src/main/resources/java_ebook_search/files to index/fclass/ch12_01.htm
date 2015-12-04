@@ -1,0 +1,196 @@
+
+[Chapter 12] The java.lang Package
+Chapter 12
+12. The java.lang Package
+Contents:
+ArithmeticException
+ArrayIndexOutOfBoundsException
+ArrayStoreException
+Boolean
+Byte
+Character
+Class
+ClassCastException
+ClassCircularityError
+ClassFormatError
+ClassLoader
+ClassNotFoundException
+Cloneable
+CloneNotSupportedException
+Compiler
+Double
+Error
+Exception
+ExceptionInInitializerError
+Float
+IllegalAccessError
+IllegalAccessException
+IllegalArgumentException
+IllegalMonitorStateException
+IllegalStateException
+IllegalThreadStateException
+IncompatibleClassChangeError
+IndexOutOfBoundsException
+Integer
+InstantiationError
+InstantiationException
+InternalError
+InterruptedException
+LinkageError
+Long
+Math
+NegativeArraySizeException
+NoClassDefFoundError
+NoSuchFieldError
+NoSuchFieldException
+NoSuchMethodError
+NoSuchMethodException
+NullPointerException
+Number
+NumberFormatException
+Object
+OutOfMemoryError
+Process
+Runnable
+Runtime
+RuntimeException
+SecurityException
+SecurityManager
+Short
+StackOverflowError
+String
+StringBuffer
+StringIndexOutOfBoundsException
+System
+Thread
+ThreadDeath
+ThreadGroup
+Throwable
+UnknownError
+UnsatisfiedLinkError
+VerifyError
+VirtualMachineError
+Void
+The package java.lang contains classes and interfaces that
+are essential to the Java language. These include:
+Object, the ultimate superclass of
+all classes in Java.
+Thread, the class that controls
+each thread in a multithreaded program.
+Throwable, the superclass of all error and exception
+classes in Java.
+Classes that encapsulate the primitive data types
+in Java.
+Classes for accessing system resources and other
+low-level entities.
+Math, a class that provides standard mathematical
+methods.
+String, the class that represents strings.
+Because the classes in the java.lang
+package are so essential, the java.lang
+package is implicitly imported by every Java source file. In other
+words, you can refer to all of the classes and interfaces in
+java.lang using their simple names.
+Figure 12.1 shows the class hierarchy for
+the java.lang package.
+The possible exceptions in a Java program are organized in a hierarchy
+of exception classes.  The Throwable class is at
+the root of the exception hierarchy. Throwable has
+two immediate subclasses: Exception and 
+Error.  
+Figure 12.2 shows the standard exception
+classes defined in the java.lang package, while
+Figure 12.3 shows the standard error
+classes defined in java.lang.
+Figure 12.1: The java.lang package
+Figure 12.2: The exception classes in the java.lang package
+Figure 12.3: The error classes in the java.lang package
+AbstractMethodError
+Name
+AbstractMethodError
+Synopsis
+Class Name:
+java.lang.AbstractMethodError
+Superclass:
+java.lang.IncompatibleClassChangeError 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+JDK 1.0 or later
+Description
+An AbstractMethodError is thrown 
+when there is an attempt to invoke an abstract method. 
+Class Summary
+public class java.lang.AbstractMethodError
+             extends java.lang.IncompatibleClassChangeError {
+  // Constructors
+  public AbstractMethodError();
+  public AbstractMethodError(String s);
+}
+Constructors
+AbstractMethodError
+public AbstractMethodError()
+Description
+This constructor creates an AbstractMethodError 
+with no associated detail message. 
+public AbstractMethodError(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an AbstractMethodError 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Error, 
+IncompatibleClassChangeError, 
+Throwable 
+Writer
+ArithmeticException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,51 @@
+
+[Chapter 7] Object Serialization
+Chapter 7
+7. Object Serialization
+Contents:
+Object Serialization Basics
+Writing Classes to Work with Serialization
+Versioning of Classes
+The object serialization mechanism in Java 1.1 provides a way for objects 
+to be written as a stream of bytes and then later recreated from that stream 
+of bytes. This facility supports a variety of interesting applications. 
+For example, object serialization provides persistent storage 
+for objects, whereby objects are stored in a file for later use. Also, 
+a copy of an object can be sent through a socket to another Java program. 
+Object serialization forms the basis for the remote method invocation mechanism 
+in Java that facilitates distributed programs. Object serialization is 
+supported by a number of new classes in the java.io 
+package in Java 1.1. 
+7.1 Object Serialization Basics
+If a class is designed to work with object serialization, reading and writing 
+instances of that class is quite simple. The process of writing an object 
+to a byte stream is called serialization. 
+For example, here is how you can write a Color 
+object to a file: 
+FileOutputStream out = new FileOutputStream("tmp");
+ObjectOutput objOut = new ObjectOutputStream(out);
+objOut.writeObject(Color.red);
+All you need to do is create an ObjectOutputStream
+around another output stream and then pass the object to be written to
+the writeObject() method. If you are writing
+objects to a socket or any other destination that is time-sensitive,
+you should call the flush() method after you are
+finished passing objects to the ObjectOutputStream.
+The process of reading an object from byte stream is called
+deserialization.  Here is how you can read that
+Color object from its file:
+FileInputStream in = new FileInputStream("tmp");
+ObjectInputStream objIn = new ObjectInputStream(in);
+Color c = (Color)objIn.readObject();
+Here all you need to do is create an
+ObjectInputStream object around another input
+stream and call its readObject() method.
+File Manipulation
+Writing Classes to Work with Serialization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

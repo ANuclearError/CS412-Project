@@ -1,0 +1,48 @@
+
+[Chapter 21] 21.8 java.awt.image.ImageObserver (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.8 java.awt.image.ImageObserver (JDK 1.0)
+This interface defines a method and associated constants
+used by classes that want to receive information
+asynchronously about the status of an image. Many methods
+that query information about an image take an
+ImageObserver as an argument. If the specified
+information is not available when requested, it is passed to
+the ImageObserver when it becomes available.
+Component implements this interface, and components
+are the most commonly used image observers.
+public abstract interface ImageObserver {
+    // Constants
+            public static final int ABORT;
+            public static final int ALLBITS;
+            public static final int ERROR;
+            public static final int FRAMEBITS;
+            public static final int HEIGHT;
+            public static final int PROPERTIES;
+            public static final int SOMEBITS;
+            public static final int WIDTH;
+    // Public Instance Methods
+            public abstract boolean imageUpdate(Image img, int infoflags, int x, int y, int width, int height);
+}
+Implemented By:
+Component
+Passed To:
+Component.checkImage(), 
+Component.prepareImage(), 
+ComponentPeer.checkImage(), 
+ComponentPeer.prepareImage(), 
+Graphics.drawImage(), 
+Image.getHeight(), 
+Image.getProperty(), 
+Image.getWidth(), 
+Toolkit.checkImage(), 
+Toolkit.prepareImage()
+java.awt.image.ImageFilter (JDK 1.0)
+java.awt.image.ImageProducer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

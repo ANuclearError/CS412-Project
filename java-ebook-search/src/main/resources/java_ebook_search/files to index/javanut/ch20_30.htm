@@ -1,0 +1,41 @@
+
+[Chapter 20] 20.30 java.awt.event.WindowListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.30 java.awt.event.WindowListener (JDK 1.1)
+This interface defines the methods that an object must
+implement to "listen" for window events on AWT components.
+When a WindowEvent occurs, an AWT component
+notifies its registered WindowListener objects by
+invoking one of their methods.
+An easy way to implement this interface is by subclassing
+the WindowAdapter class.
+public abstract interface WindowListener extends EventListener {
+    // Public Instance Methods
+            public abstract void windowActivated(WindowEvent e);
+            public abstract void windowClosed(WindowEvent e);
+            public abstract void windowClosing(WindowEvent e);
+            public abstract void windowDeactivated(WindowEvent e);
+            public abstract void windowDeiconified(WindowEvent e);
+            public abstract void windowIconified(WindowEvent e);
+            public abstract void windowOpened(WindowEvent e);
+}
+Implemented By:
+AWTEventMulticaster, 
+WindowAdapter
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Window.addWindowListener(), 
+Window.removeWindowListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.WindowEvent (JDK 1.1)
+The java.awt.image Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

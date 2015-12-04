@@ -1,0 +1,93 @@
+
+[Chapter 11] UTFDataFormatException
+Chapter 11The java.io Package
+UTFDataFormatException
+Name
+UTFDataFormatException
+Synopsis
+Class Name:
+java.io.UTFDataFormatException
+Superclass:
+java.io.IOException
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+A UTFDataFormatException is thrown when there is an
+attempt to read a UTF string from a stream that does not contain a
+properly formatted UTF string. See Appendix B, The UTF-8 Encoding, for a
+desciption of the UTF-8 encoding.
+Class Summary
+public class java.io.UTFDataFormatException extends java.io.IOException {
+  // Constructors
+  public UTFDataFormatException();
+  public UTFDataFormatException(String s);
+}
+Constructors
+UTFDataFormatException
+public UTFDataFormatException()
+Description
+This constructor creates a UTFDataFormatException 
+with no detail message. 
+public UTFDataFormatException(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates a UTFDataFormatException 
+with the specified detail message. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Exception, 
+IOException, 
+Throwable 
+UnsupportedEncodingException
+WriteAbortedException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

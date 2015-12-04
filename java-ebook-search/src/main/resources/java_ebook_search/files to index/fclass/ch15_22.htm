@@ -1,0 +1,93 @@
+
+[Chapter 15] URLEncoder
+Chapter 15The java.net Package
+URLEncoder
+Name
+URLEncoder
+Synopsis
+Class Name:
+java.net.URLEncoder
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The URLEncoder class defines 
+a single static method that 
+converts a String to its URL-encoded 
+form. More precisely, the String 
+is converted to a MIME type called x-www-form-urlencoded. 
+This is the format used when posting forms on the Web. The algorithm leaves 
+letters, numbers, and the dash (-), 
+underscore ( _ ), period (.), 
+and asterisk (*) characters 
+unchanged. Space characters are converted to plus signs (+). 
+All other characters are encoded with a percent sign (%) 
+followed by the character code represented as a two-digit hexadecimal number. 
+For example, consider the following string: 
+Jean-Louis Gass&eacute;e
+This string gets encoded as: 
+Jean-Louis+Gas%8ee
+The point of the URLEncoder 
+class is to provide a way to canonicalize a string into an 
+extremely portable subset of ASCII that can be handled properly by computers 
+around the world. 
+Class Summary
+public class java.net.URLEncoder extends java.lang.Object {
+  // Class Methods
+  public static String encode(String s);
+}
+Class Methods
+encode
+public static String encode(String s)
+Parameters
+s
+The string to encode. 
+Returns
+A URL-encoded string. 
+Description
+This method returns the contents of the String 
+in the x-www-form-urlencoded 
+format. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long timeout, int nanos)
+Object
+See Also
+String, URL 
+URLConnection
+URLStreamHandler
+ 
+ 
+ 
+ 
+ 
+ 
+ 

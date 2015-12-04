@@ -1,0 +1,45 @@
+
+[Chapter 21] 21.13 java.awt.image.RGBImageFilter (JDK 1.0)
+Chapter 21The java.awt.image Package
+21.13 java.awt.image.RGBImageFilter (JDK 1.0)
+This abstract class is an ImageFilter that provides
+an easy way to implement filters that modify the colors of
+an image. To create a color filter that modifies the colors
+of an image, you should subclass RGBImageFilter and
+provide a definition of filterRGB() that converts
+the input pixel value (in the default RGB color model) to an
+output value. If the conversion does not depend on the
+location of the pixel, set the
+canFilterIndexColorModel variable to true so
+that the RGBImageFilter can save time by filtering
+the colormap of an image that uses an
+IndexColorModel instead of filtering each pixel of
+the image.
+public abstract class RGBImageFilter extends ImageFilter {
+    // Default Constructor: public RGBImageFilter()
+    // Protected Instance Variables
+            protected boolean canFilterIndexColorModel;
+            protected ColorModel newmodel;
+            protected ColorModel origmodel;
+    // Public Instance Methods
+            public IndexColorModel filterIndexColorModel(IndexColorModel icm);
+            public abstract int filterRGB(int x, int y, int rgb);
+            public void filterRGBPixels(int x, int y, int w, int h, int[] pixels, int off, int scansize);
+            public void setColorModel(ColorModel model);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'byte[] pixels, int off, int scansize);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'int[] pixels, int off, int scansize);  // Overrides ImageFilter
+            public void substituteColorModel(ColorModel oldcm, ColorModel newcm);
+}
+Hierarchy:
+Object->ImageFilter(ImageConsumer, Cloneable)->RGBImageFilter
+java.awt.image.PixelGrabber (JDK 1.0)
+java.awt.image.ReplicateScaleFilter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

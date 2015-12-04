@@ -1,0 +1,501 @@
+
+[Chapter 15] Socket
+Chapter 15The java.net Package
+Socket
+Name
+Socket
+Synopsis
+Class Name:
+java.net.Socket
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The Socket class implements 
+stream-based, connection-oriented, reliable data communication. Although
+Socket objects are often used with the
+Transmission Control Protocol, commonly known as 
+TCP, they are independent of the actual protocol being used.
+The Socket class encapsulates client
+logic that is common to connection-oriented protocols. Sockets
+are two-way data pipes that are connected on either end to an address and 
+port number. As of JDK 1.1, new constructors allow you to specify the local 
+address and port as well as the remote address and port. 
+A Socket object uses an object that belongs
+to a subclass of the abstract 
+class SocketImpl to access protocol-specific logic.
+A program can specify the subclass of SocketImpl
+that is used by passing an appropriate SocketImplFactory 
+object to the setSocketImplFactory() 
+method before any Socket objects are created.
+This feature allows a program to create sockets that are
+able to accommodate such things as firewalls or even work with
+different protocols.
+Class Summary
+public class java.net.Socket extends java.lang.Object {
+  // Constructors
+  public Socket(String host, int port);
+  public Socket(InetAddress address, int port);
+  public Socket(String host, int port, 
+                InetAddress localAddr, int localPort);     // New in 1.1
+  public Socket(InetAddress address, int port, 
+                InetAddress localAddr, int localPort);     // New in 1.1
+  public Socket(String host, int port, 
+                boolean stream);                     // Deprecated in 1.1
+  public Socket(InetAddress host, int port, 
+                boolean stream);                     // Deprecated in 1.1
+  protected Socket();                                      // New in 1.1
+  protected Socket(SocketImpl impl);                       // New in 1.1
+  // Class Methods
+  public static synchronized void setSocketImplFactory(
+                                  SocketImplFactory fac); 
+  // Instance Methods
+  public synchronized void close();
+  public InetAddress getInetAddress();
+  public InputStream getInputStream();
+  public InetAddress getLocalAddress();                    // New in 1.1
+  public int getLocalPort();
+  public OutputStream getOutputStream();
+  public int getPort();
+  public int getSoLinger();                                // New in 1.1
+  public synchronized int getSoTimeout();                  // New in 1.1
+  public boolean getTcpNoDelay();                          // New in 1.1
+  public void setSoLinger(boolean on, int val);            // New in 1.1
+  public synchronized void setSoTimeout(int timeout);      // New in 1.1
+  public void setTcpNoDelay(boolean on);                   // New in 1.1
+  public String toString();
+}
+Constructors
+Socket
+   public Socket(String host, int port) throws IOException, UnknownHostException  
+Parameters
+host
+The name of a remote machine.
+port
+A port on a remote 
+machine. 
+Throws
+IOException
+If any kind of I/O error occurs.
+SecurityException
+If the application is not allowed to connect to the given host and port.
+UnknownHostException
+If the IP address of the given hostname cannot be determined. 
+Description
+This constructor creates a Socket 
+and connects it to the specified port on the given host.
+If a program has specified a socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+public Socket(InetAddress address, int port) throws IOException
+Parameters
+address
+The IP address 
+of a remote machine.
+port
+A port on a remote 
+machine. 
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+SecurityException
+If the application is not allowed to connect to the given address and port. 
+Description
+This constructor creates a Socket 
+and connects it to the specified port on the host at the given address.
+If a program has specified a socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+   public Socket(String host, int port, InetAddress localAddr, int localPort) throws IOException  
+Availability
+New as of JDK 1.1 
+Parameters
+host
+The name of a remote machine.
+port
+A port on a remote 
+machine.
+localAddr
+An IP address 
+on the local host.
+localPort
+A port on the 
+local host. 
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+SecurityException
+If the application is not allowed to connect to the given host and port. 
+Description
+This constructor creates a Socket 
+and connects it to the specified port on the given host. The constructor 
+also binds the Socket to the 
+specified local address and port.
+If a program has specified a socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+   public Socket(InetAddress address, int port, InetAddress localAddr, int localPort) throws IOException  
+Availability
+New as of JDK 1.1 
+Parameters
+address
+The IP address 
+of a remote machine.
+port
+A port on a remote 
+machine.
+localAddr
+An IP address 
+on the local host.
+localPort
+A port on the 
+local host. 
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+SecurityException
+If the application is not allowed to connect to the given address and port. 
+Description
+This constructor creates a Socket 
+and connects it to the specified port on the host at the given address. 
+The constructor also binds the Socket 
+to the specified local address and port.
+If a program has specified a socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+   public Socket(String host, int port, boolean stream) throws IOException  
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+host
+The name of a remote 
+machine.
+port
+A port on a remote 
+machine.
+stream
+A boolean 
+value that indicates if this socket is a stream socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+SecurityException
+If the application is not allowed to connect to the given host and port. 
+Description
+This constructor creates a Socket 
+and connects it to the specified port on the given host.
+If the stream argument is true, 
+a stream socket is created. Otherwise, a datagram socket is created. This 
+constructor is deprecated as of JDK 1.1; use DatagramSocket 
+for datagrams.
+If a program has specified a socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+   public Socket(InetAddress address, int port, boolean stream) throws IOException  
+Availability
+Deprecated as of JDK 1.1 
+Parameters
+address
+The IP address 
+of a remote machine.
+port
+A port on a remote 
+machine.
+stream
+A boolean 
+value that indicates if this socket is a stream socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs.
+SecurityException
+If the application is not allowed to connect to the given host and port. 
+Description
+This constructor creates a Socket 
+and connects it to the specified port on the host at the given address.
+If the stream argument is true, 
+a stream socket is created. Otherwise, a datagram socket is created. This 
+constructor is deprecated as of JDK 1.1; use DatagramSocket 
+for datagrams.
+If a program has specified a socket factory, the createSocketImpl() 
+method of that factory is called to create the actual socket implementation. 
+Otherwise, the constructor creates a plain socket. 
+protectedSocket()
+Availability
+New as of JDK 1.1 
+Description
+This constructor creates a Socket 
+that uses an instance of the system default SocketImpl 
+subclass for its low-level network access. 
+protectedSocket(SocketImpl impl) throws SocketException
+Availability
+New as of JDK 1.1 
+Parameters
+impl
+The socket implementation 
+to use. 
+Throws
+SocketException
+This exception is never thrown by this constructor. 
+Description
+This constructor creates a Socket 
+that uses the given object for its low-level network access. 
+Class Methods
+setSocketImplFactory
+   public static synchronized void setSocketImplFactory( SocketImplFactory fac) throws IOException  
+Parameters
+fac
+An object that implements 
+SocketImplFactory. 
+Throws
+IOException
+If the factory 
+has already been defined.
+SecurityException
+If the application does not have permission to set the factory. 
+Description
+This method sets the SocketImplFactory. 
+This factory produces instances of subclasses of SocketImpl 
+that do the low-level work of sockets. When a Socket 
+constructor is called, the createSocketImpl() 
+method 
+of the factory is called to create the socket implementation. 
+Instance Methods
+close
+public synchronized void close() throws IOException
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method closes this socket, releasing any system resources it holds. 
+getInetAddress
+public InetAddress getInetAddress()
+Returns
+The remote IP address to which this Socket 
+is connected. 
+Description
+This method returns the IP address of the remote host to which this socket 
+is connected. 
+getInputStream
+public InputStream getInputStream() throws IOException
+Returns
+An InputStream that wraps this socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns an InputStream 
+that reads data from the socket. 
+getLocalAddress
+public InetAddress getLocalAddress()
+Availability
+New as of JDK 1.1 
+Returns
+The local IP address from which this Socket 
+originates. 
+Description
+This method returns the local address that is the origin of the socket. 
+getLocalPort
+public int getLocalPort()
+Returns
+The local port number from which this Socket 
+originates. 
+Description
+This method returns the local port number that is the origin of the socket. 
+getOutputStream
+public OutputStream getOutputStream() throws IOException
+Returns
+An OutputStream that wraps this socket. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method returns an OutputStream 
+that sends data through the socket. 
+getPort
+public int getPort()
+Returns
+The remote port number to which this Socket 
+is connected. 
+Description
+This method returns the port number of the remote host to which this socket 
+is connected. 
+getSoLinger
+public int getSoLinger() throws SocketException
+Availability
+New as of JDK 1.1 
+Returns
+The close time-out value for the socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method returns the close time-out value for this socket. A value
+of -1 or 0 indicates that
+close()closes the socket immediately. A value
+greater than 0 indicates the amount of time, in
+seconds, that close() blocks, waiting for unsent
+data to be sent.
+getSoTimeout
+public synchronized int getSoTimeout() throws SocketException
+Availability
+New as of JDK 1.1 
+Returns
+The read time-out value for the socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method returns the read time-out value for this socket. A value of 
+zero indicates that the read() 
+method of the associated InputStream 
+waits indefinitely for an incoming packet, while a non-zero value indicates 
+the number of milliseconds it waits before throwing an
+InterruptedIOException.
+getTcpNoDelay
+public boolean getTcpNoDelay() throws SocketException
+Availability
+New as of JDK 1.1 
+Returns
+true if Nagle's algorithm 
+is disabled for this connection; false 
+otherwise. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method indicates whether Nagle's algorithm is disabled for this 
+socket or not. Said another way, it indicates whether the TCPNODELAY 
+option is enabled or not.
+In essence, Nagle's algorithm takes small outgoing packets that are 
+closely spaced in time and combines them into larger packets. This improves 
+overall efficiency, since each packet has a certain amount of overhead; 
+however, it does so at the expense of immediacy. 
+setSoLinger
+   public void setSoLinger(boolean on, int val) throws SocketException  
+Availability
+New as of JDK 1.1 
+Parameters
+on
+A boolean 
+value that specifies whether or not close() 
+blocks
+val
+The new close time-out 
+value, in seconds, for this socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method sets the close timeout value for this socket. If val 
+is -1 or 0, or if on is false, 
+close() closes 
+the socket immediately. If on 
+is true and val 
+is greater than 0, val indicates 
+the amount of time, in seconds, that close() blocks, waiting for unsent data to be sent. 
+setSoTimeout
+   public synchronized void setSoTimeout(int timeout) throws SocketException  
+Availability
+New as of JDK 1.1 
+Parameters
+timeout
+The new read time-out 
+value, in milliseconds, for the socket. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method is used to set the time-out value that is used for the read() 
+method of the corresponding InputStream. 
+A non-zero value is the length of time, in milliseconds, that the Socket 
+should wait for data before throwing an
+InterruptedIOException. 
+A value of zero indicates that the Socket 
+should wait indefinitely. If a timeout value is needed, this method must 
+be called before read(). 
+setTcpNoDelay
+public void setTcpNoDelay(boolean on) throws SocketException
+Availability
+New as of JDK 1.1 
+Parameters
+on
+A boolean 
+value that specifies whether or not to disable Nagle's algorithm. 
+Throws
+SocketException
+If any kind of socket error occurs. 
+Description
+This method specifies whether Nagle's algorithm is disabled for this 
+socket or not. Said another way, it determines whether the TCPNODELAY 
+option is enabled or not.
+In essence, Nagle's algorithm takes small outgoing packets that are 
+closely spaced in time and combines them into larger packets. This improves 
+overall efficiency, since each packet has a certain amount of overhead; 
+however, it does so at the expense of immediacy. 
+toString
+public String toString()
+Returns
+The string representation of this Socket. 
+Overrides
+Object.toString() 
+Description
+This method returns a String 
+that contains the address and port of this Socket. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DatagramSocket, 
+InetAddress, 
+InputStream, 
+IOException, 
+OutputStream, 
+SecurityException, 
+SocketException, 
+SocketImpl, 
+SocketImplFactory, 
+UnknownHostException 
+ServerSocket
+SocketException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,214 @@
+
+[Chapter 18] InflaterInputStream
+Chapter 18The java.util.zip Package
+InflaterInputStream
+Name
+InflaterInputStream
+Synopsis
+Class Name:
+java.util.zip.InflaterInputStream
+Superclass:
+java.io.FilterInputStream
+Immediate Subclasses:
+java.util.zip.GZIPInputStream, 
+java.util.zip.ZipInputStream
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The InflaterInputStream class 
+represents an InputStream with 
+an associated Inflater. In 
+other words, an InflaterInputStream 
+wraps a regular input stream, so that data read from the stream is read 
+from an underlying stream and decompressed. Two subclasses, GZIPInputStream 
+and ZipInputStream, read compressed 
+data in widely recognized formats. 
+Class Summary
+public class java.util.zip.InflaterInputStream
+             extends java.io.FilterInputStream {
+  // Variables
+  protected byte[] buf;
+  protected Inflater inf;
+  protected int len;
+  // Constructors
+  public InflaterInputStream(InputStream in);
+  public InflaterInputStream(InputStream in, Inflater inf);
+  public InflaterInputStream(InputStream in, Inflater inf, int size);
+  // Public Instance Methods
+  public int read();
+  public int read(byte[] b, int off, int len);
+  public long skip(long n);
+  // Protected Instance Methods
+  protected void fill();
+}
+Variables
+buf
+protected byte[] buf
+Description
+A buffer that holds the compressed data that is written to the underlying 
+stream. 
+inf
+protected Inflater inf
+Description
+The Inflater that is used internally. 
+len
+protected int len
+Description
+The amount of data that is in the input buffer. 
+Constructors
+InflaterInputStream
+public InflaterInputStream(InputStream in)
+Parameters
+in
+The underlying input stream. 
+Description
+This constructor creates an InflaterInputStream 
+that reads data from the given InputStream. 
+Before being read, the data is decompressed by a default Inflater. 
+The InflaterInputStream uses 
+a decompression buffer with the default size of 512 bytes. 
+public InflaterInputStream(InputStream in, Inflater inf)
+Parameters
+in
+The underlying input stream.
+inf
+The Inflater object. 
+Description
+This constructor creates an InflaterInputStream 
+that reads data from the given InputStream. 
+Before being read, the data is decompressed by the given Inflater. 
+The InflaterInputStream uses 
+a decompression buffer with the default size of 512 bytes. 
+public InflaterInputStream(InputStream in, Inflater inf, int size)
+Parameters
+in
+The underlying input stream.
+inf
+The Inflater object.
+size
+The size of the input buffer. 
+Description
+This constructor creates an InflaterInputStream 
+that reads data from the given InputStream. 
+Before being read, the data is decompressed by the given Inflater. 
+The InflaterInputStream uses 
+a decompression buffer of the given size. 
+Instance Methods
+read
+public int read() throws IOException
+Returns
+The next uncompressed byte or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.read() 
+Description
+This method reads enough data from the underlying InputStream 
+to return a byte of uncompressed data. The method blocks until enough data 
+is available for decompression, the end of the stream is detected, or an 
+exception is thrown. 
+public int read(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.read(byte[], int, int) 
+Description
+This method reads enough data from the underlying InputStream 
+to return len bytes of uncompressed 
+data. The uncompressed data is placed into the given array starting at 
+off. The method blocks until 
+some data is available for decompression. 
+skip
+public long skip(long n) throws IOException
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+FilterInputStream.skip() 
+Description
+This method skips over the specified number of uncompressed data bytes 
+by reading data from the underlying InputStream 
+and decompressing it. 
+Protected Instance Methods
+fill
+protected void fill() throws IOException
+Throws
+IOException
+If any kind of I/O error occurs. 
+Description
+This method fills the input buffer with compressed data from the underlying 
+InputStream. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+available()
+FilterInputStream
+clone()
+Object
+close()
+FilterInputStream
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+FilterInputStream
+markSupported()
+FilterInputStream
+notify()
+Object
+notifyAll()
+Object
+read()
+InflaterInputStream
+read(byte[])
+FilterInputStream
+reset()
+FilterInputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+FilterInputStream, 
+GZIPInputStream, 
+Inflater, 
+InputStream, 
+IOException, 
+ZipInputStream 
+Inflater
+ZipEntry
+ 
+ 
+ 
+ 
+ 
+ 
+ 

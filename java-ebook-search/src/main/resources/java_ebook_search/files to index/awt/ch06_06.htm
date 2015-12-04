@@ -1,0 +1,337 @@
+
+[Chapter 6] 6.6 Dialogs
+Chapter 6Containers
+6.6 Dialogs
+The Dialog class provides a 
+special type of display window that is normally used for pop-up messages 
+or input from the user. It should be associated with a Frame 
+(a required parameter for the constructor), and whenever anything happens 
+to this Frame, the same thing 
+will happen to the Dialog. 
+For instance, if the parent Frame 
+is iconified, the Dialog disappears 
+until the Frame is de-iconified. 
+If the Frame is destroyed, 
+so are all the associated dialogs. Figure 6.5 and Figure 6.6 show typical dialog boxes.
+In addition to being associated with a Frame, 
+Dialog is either modeless 
+or modal. A modeless Dialog 
+means a user can interact with both the Frame 
+and the Dialog at the same 
+time. A modal Dialog is one 
+that blocks input to the remainder of the application, including the Frame, 
+until the Dialog box is acted 
+upon. Note that the parent Frame 
+is still executing; unlike some windowing systems, Java does not suspend 
+the entire application for a modal Dialog. 
+Normally, blocking access would be done to get input from the user or to 
+show a warning message. Example 6.2 shows how to create and use a modal Dialog box, as we will see later in the chapter. 
+Since Dialog subclasses Window, 
+its default LayoutManager is 
+BorderLayout. 
+In applets, when you create a Dialog, 
+you need to provide a reference to the browser's Frame, 
+not the applet. In order to get this, you can try to go up the container 
+hierarchy of the Applet with 
+getParent() until it returns 
+null. (You cannot specify a 
+null parent as you can with a Window.) 
+See Example 6.1 for a utility method to do this. Simple include a line like the following in your applet: 
+Frame top = ComponentUtilities.getTopLevelParent (this);
+Then pass top to the Dialog 
+constructor. Another alternative is to create a new Frame 
+to associate with your dialog. 
+Dialog Constructors and MethodsConstructors
+If any constructor is passed a null 
+parent, the constructor throws the run-time exception IllegalArgumentException. 
+public Dialog (Frame parent)  
+This constructor creates an instance of Dialog 
+with no title and with parent 
+as the Frame owning it. It 
+is not modal and is initially resizable. 
+public Dialog (Frame parent, boolean modal) 
+This constructor creates an instance of Dialog 
+with no title and with parent 
+as the Frame owning it. If 
+modal is true, 
+the Dialog grabs all the user 
+input of the program until it is closed. If modal 
+is false, there is no special 
+behavior associated with the Dialog. 
+Initially, the Dialog will 
+be resizable. This constructor is comment-flagged as deprecated.
+public Dialog (Frame parent, String title)  
+This version of the constructor creates an instance of Dialog 
+with parent as the Frame 
+owning it and a window title of title. 
+It is not modal and is initially resizable. 
+public Dialog (Frame parent, String title, boolean modal) 
+This version of the constructor creates an instance of Dialog 
+with parent as the Frame 
+owning it and a window title of title. 
+If mode is true, 
+the Dialog grabs all the user 
+input of the program until it is closed. If modal 
+is false, there is no special 
+behavior associated with the Dialog. 
+Initially, the Dialog will 
+be resizable. 
+NOTE: 
+In some 1.0 versions of Java, modal dialogs were not supported properly. 
+You needed to create some multithreaded contraption that simulated modality. 
+Modal dialogs work properly in 1.1. 
+Figure 6.5: A Dialog in an application or local applet
+Figure 6.6: The same Dialog in an applet that came across the network
+Appearance methods
+public String getTitle () 
+The getTitle() method returns 
+the current title for the Dialog. 
+If there is no title for the Dialog, 
+getTitle() returns null. 
+public void setTitle (String title) 
+The setTitle() method changes 
+the current title of the Dialog 
+to title. To turn off any title 
+for the Dialog, use null 
+for title. 
+public boolean isResizable () 
+The isResizable() method tells 
+you if the current Dialog is 
+resizable. 
+public void setResizable (boolean resizable) 
+The setResizable() method changes 
+the resize state of the Dialog. 
+A resizable value of true 
+means the user can resize the Dialog, 
+while false means the user 
+cannot. This must be set before the Dialog 
+is shown or the peer created. 
+Modal methods
+public boolean isModal () 
+The isModal() method returns 
+the current mode of the Dialog. 
+true indicates the dialog traps 
+all user input. 
+public void setModal (boolean mode)  
+The setModal() method changes 
+the current mode of the Dialog 
+to mode. The next time the 
+dialog is displayed via show(), 
+it will be modal. If the dialog is currently displayed, setModal() 
+has no immediate effect. The change will take place the next time show() 
+is called. 
+public void show ()  
+The show() method brings the 
+Dialog to the front and displays 
+it. If the dialog is modal, show() 
+takes care of blocking events so that they don't reach the parent 
+Frame. 
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Dialog peer. The 
+peer is created automatically when you call the dialog's show() 
+method. If you override the method addNotify(), 
+first call super.addNotify(), 
+then add your customizations for the new class. You will then be able to 
+do everything you need with the information about the newly created peer. 
+protected String paramString () 
+When you call the toString() 
+method of Dialog, the default 
+toString() method of Component 
+is called. This in turn calls paramString() 
+which builds up the string to display. At the Dialog 
+level, paramString() appends 
+the current mode (modal/modeless) and title (if present). Using 
+the constructor Dialog (top, `Help`, true), 
+the results would be as follows: 
+java.awt.Dialog[0,0,0x0,invalid,hidden,layout=java.awt.BorderLayout,
+    modal,title=Help]
+Dialog Events
+In Java 1.0, a Dialog peer generates all the events 
+that are generated by the Component 
+class; it does not generate events that are specific to a particular type 
+of component. That is, it generates key events, mouse events, and focus 
+events; it doesn't generate action events or list events. If an event 
+happens within a child component of a Dialog, 
+the target of the event is the child component, not the Dialog.Window
+In addition to the Component 
+events, Dialog generates the 
+WINDOW events. These events are WINDOW_DESTROY, 
+WINDOW_EXPOSE, WINDOW_ICONIFY, 
+WINDOW_DEICONIFY, and WINDOW_MOVED. Listeners and 1.1 event handling
+With the 1.1 event model, you register listeners for different event types; 
+the listeners are told when the event happens. The Dialog class inherits all its listener handling from Window.
+Dialog Example
+Example 6.2 demonstrates how a modal Dialog 
+tries to work in Java 1.0. In some windowing systems, "modal" 
+means that the calling application, and sometimes the entire system stops, 
+and input to anything other than the Dialog 
+is blocked. With Java 1.0, a modal Dialog 
+acts only on the parent frame and simply prevents it from getting screen-oriented 
+input by disabling all components within the frame. The Java program as 
+a whole continues to execute. 
+Example 6.2 displays a Dialog 
+window with username and password fields, and an Okay button. 
+When the user selects the Okay button, a realistic application 
+would validate the username and password; in this case, they are just displayed 
+on a Frame. Since the Frame 
+must wait for the Dialog to 
+finish before looking at the values of the two fields, the Dialog 
+must tell the Frame when it 
+can look. This is done through a custom interface implemented by the parent 
+Frame and invoked by the Dialog 
+in its action method. 
+Figure 6.7 is the initial Dialog; 
+Figure 6.8 shows the result after you click Okay. Example 6.2 contains the source code. 
+Figure 6.7: Username and password Dialog
+Notice the use of the newly created DialogHandler 
+interface when the user selects the Okay button. Also, see 
+how the pre- and post-event-handling methods are separated. All the pre-event 
+processing takes place before the Dialog 
+is shown. The post-event processing is called by the Dialog 
+through the new DialogHandler 
+interface method, dialogDoer(). 
+The interface provides a common method name for all your Dialog 
+boxes to call. 
+Figure 6.8: Resulting Frame
+Example 6.2: Modal Dialog Usage
+import java.awt.*;
+interface DialogHandler {
+    void dialogDoer (Object o);
+}
+class modeTest extends Dialog {
+    TextField user;
+    TextField pass;
+    modeTest (DialogHandler parent) {
+        super ((Frame)parent, "Mode Test", true);
+        add ("North", new Label ("Please enter username/password"));
+        Panel left = new Panel ();
+        left.setLayout (new BorderLayout ());
+        left.add ("North", new Label ("Username"));
+        left.add ("South", new Label ("Password"));
+        add ("West", left);
+        Panel right = new Panel ();
+        right.setLayout (new BorderLayout ());
+        user = new TextField (15);
+        pass = new TextField (15);
+        pass.setEchoCharacter ('*');
+        right.add ("North", user);
+        right.add ("South", pass);
+        add ("East", right);
+        add ("South", new Button ("Okay"));
+        resize (250, 125);
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            dispose();
+            return true;
+        } else if ((e.target instanceof Button) &amp;&amp;
+             (e.id == Event.ACTION_EVENT)) {
+            ((DialogHandler)getParent ()).dialogDoer(e.arg);
+        }
+        return super.handleEvent (e);
+    }
+}
+public class modeFrame extends Frame implements DialogHandler {
+    modeTest d;
+    modeFrame (String s) {
+        super (s);
+        resize (100, 100);
+        d = new modeTest (this);
+        d.show ();
+    }
+    public static void main (String []args) {
+        Frame f = new modeFrame ("Frame");
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            hide();
+            dispose();
+            System.exit (0);
+        }
+        return super.handleEvent (e);
+    }
+    public void dialogDoer(Object o) {
+        d.dispose();
+        add ("North", new Label (d.user.getText()));
+        add ("South", new Label (d.pass.getText()));
+        show ();
+    }
+}
+Since the Java 1.1 modal Dialog 
+blocks the calling Frame appropriately, 
+the overhead of the DialogHandler 
+interface is not necessary and all the work can be combined into the main() 
+method, as shown in the following: 
+// only reliable in Java 1.1
+import java.awt.*;
+class modeTest11 extends Dialog {
+    TextField user;
+    TextField pass;
+    modeTest11 (Frame parent) {
+        super (parent, "Mode Test", true);
+        add ("North", new Label ("Please enter username/password"));
+        Panel left = new Panel ();
+        left.setLayout (new BorderLayout ());
+        left.add ("North", new Label ("Username"));
+        left.add ("South", new Label ("Password"));
+        add ("West", left);
+        Panel right = new Panel ();
+        right.setLayout (new BorderLayout ());
+        user = new TextField (15);
+        pass = new TextField (15);
+        pass.setEchoCharacter ('*');
+        right.add ("North", user);
+        right.add ("South", pass);
+        add ("East", right);
+        add ("South", new Button ("Okay"));
+        resize (250, 125);
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            dispose();
+            return true;
+        } else if ((e.target instanceof Button) &amp;&amp;
+             (e.id == Event.ACTION_EVENT)) {
+            hide();
+        }
+        return super.handleEvent (e);
+    }
+}
+public class modeFrame11 extends Frame {
+    modeFrame11 (String s) {
+        super (s);
+        resize (100, 100);
+    }
+    public static void main (String []args) {
+        Frame f = new modeFrame11 ("Frame");
+        modeTest11 d;
+        d = new modeTest11 (f);
+        d.show ();
+        d.dispose();
+        f.add ("North", new Label (d.user.getText()));
+        f.add ("South", new Label (d.pass.getText()));
+        f.show ();
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            hide();
+            dispose();
+            System.exit (0);
+        }
+        return super.handleEvent (e);
+    }
+}
+The remainder of the code is virtually identical. The most significant 
+difference is that the dialog's handleEvent()method 
+just hides the dialog, rather than calling DialogHandler.dialogDoer(). 
+Frames
+FileDialog
+ 
+ 
+ 
+ 
+ 
+ 
+ 

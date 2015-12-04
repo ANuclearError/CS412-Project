@@ -1,0 +1,110 @@
+
+[Chapter 22] ColorModel
+Chapter 22java.awt.image Reference
+ColorModel
+Name
+ColorModel
+Description
+The abstract ColorModel class 
+defines the way a Java program represents colors. It provides methods for 
+extracting different color components from a pixel. 
+Class Definition
+public class java.awt.image.ColorModel
+    extends java.lang.Object {
+  // Variables
+  protected int pixel_bits;
+  // Constructors
+  public ColorModel (int bits);
+  // Class Methods
+  public static ColorModel getRGBdefault();
+  // Instance Methods
+  public void finalize(); 
+  public abstract int getAlpha (int pixel);
+  public abstract int getBlue (int pixel);
+  public abstract int getGreen (int pixel);
+  public int getPixelSize();
+  public abstract int getRed (int pixel);
+  public int getRGB (int pixel);
+}
+ProtectedVariables
+pixel_bits
+protected int pixel_bits
+The pixel_bits variable saves the ColorModel's 
+bits setting (the total number 
+of bits per pixel). 
+Constructors
+ColorModel
+public ColorModel (int bits)
+Parameters
+bits
+The number of bits required per pixel using this model. 
+Description
+Constructs a ColorModel object. 
+Class Methods
+getRGBdefault
+public static ColorModel getRGBdefault()
+Returns
+The default ColorModel format, 
+which uses 8 bits for each of a pixel's color components: alpha (transparency), 
+red, green, and blue. 
+Instance Methods
+finalize
+public void finalize() 
+Overrides
+Object.finalize() 
+Description
+Cleans up when this object is garbage collected. 
+getAlpha
+public abstract int getAlpha (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current alpha setting of the pixel. 
+getBlue
+public abstract int getBlue (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current blue setting of the pixel. 
+getGreen
+public abstract int getGreen (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current green setting of the pixel. 
+getPixelSize
+public int getPixelSize()
+Returns
+The current pixel size for the color model. 
+getRed
+public abstract int getRed (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current red setting of the pixel. 
+getRGB
+public int getRGB (int pixel)
+Parameters
+pixel
+A pixel encoded with this ColorModel. 
+Returns
+The current combined red, green, and blue settings of the pixel.
+Description
+Gets the color of pixel in 
+the default RGB color model. 
+See Also
+DirectColorModel, IndexColorModel, 
+Object 
+AreaAveragingScaleFilter 
+CropImageFilter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

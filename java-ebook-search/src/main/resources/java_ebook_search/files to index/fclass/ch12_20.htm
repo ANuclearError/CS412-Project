@@ -1,0 +1,110 @@
+
+[Chapter 12] ExceptionInInitializerError
+Chapter 12The java.lang Package
+ExceptionInInitializerError
+Name
+ExceptionInInitializerError
+Synopsis
+Class Name:
+java.lang.ExceptionInInitializerError
+Superclass:
+java.lang.LinkageError 
+Immediate Subclasses:
+None 
+Interfaces Implemented:
+None 
+Availability:
+New as of JDK 1.1 
+Description
+A ExceptionInInitializerError 
+is thrown when an unexpected exception has been thrown in a static initializer. 
+Class Summary
+public class java.lang.ExceptionInInitializer 
+             extends java.lang.LinkageError {
+  // Constructors
+  public ExceptionInInitializerError();
+  public ExceptionInInitializerError(Throwable thrown);
+  public ExceptionInInitializerError(String s);
+  // Instance Methods
+  public Throwable getException();
+}
+Constructors
+ExceptionInInitializerError
+public ExceptionInInitializerError()
+Description
+This constructor creates an ExceptionInInitializerError 
+with no associated detail message. 
+public ExceptionInInitializerError(Throwable thrown)
+Parameters
+thrown
+The exception that 
+was thrown in the static initializer. 
+Description
+This constructor creates an ExceptionInInitializerError 
+that refers to the specified exception. 
+public ExceptionInInitializerError(String s)
+Parameters
+s
+The detail message. 
+Description
+This constructor creates an ExceptionInInitializerError 
+with the specified detail message. 
+Instance Methods
+getException
+public Throwable getException()
+Returns
+The exception object that was thrown in the static initializer. 
+Description
+This methods returns the exception that caused this error to be thrown. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone() 
+Object
+equals(Object)
+Object
+fillInStackTrace()
+Throwable
+finalize()
+Object
+getClass()
+Object
+getLocalizedMessage()
+Throwable
+getMessage()
+Throwable
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+printStackTrace()
+Throwable
+printStackTrace(PrintStream)
+Throwable
+printStackTrace(PrintWriter)
+Throwable
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Error, 
+LinkageError, 
+Throwable 
+Exception
+Float
+ 
+ 
+ 
+ 
+ 
+ 
+ 

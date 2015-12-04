@@ -1,0 +1,36 @@
+
+[Chapter 23] 23.20 java.beans.SimpleBeanInfo (JDK 1.1)
+Chapter 23The java.beans Package
+23.20 java.beans.SimpleBeanInfo (JDK 1.1)
+The SimpleBeanInfo class is a trivial implementation
+of the BeanInfo interface.  The methods of this
+class all return null or -1, indicating that
+no bean information is available.  To use this class, you
+need only to override the method or methods that return the
+particular type of bean information you want to provide.
+In addition, SimpleBeanInfo provides a convenience
+method, loadImage(), that takes a resource name as
+an argument and returns an Image object.  This method is
+useful when defining the getIcon() method.
+public class SimpleBeanInfo extends Object implements BeanInfo {
+    // Default Constructor: public SimpleBeanInfo()
+    // Public Instance Methods
+            public BeanInfo[] getAdditionalBeanInfo();  // From BeanInfo
+            public BeanDescriptor getBeanDescriptor();  // From BeanInfo
+            public int getDefaultEventIndex();  // From BeanInfo
+            public int getDefaultPropertyIndex();  // From BeanInfo
+            public EventSetDescriptor[] getEventSetDescriptors();  // From BeanInfo
+            public Image getIcon(int iconKind);  // From BeanInfo
+            public MethodDescriptor[] getMethodDescriptors();  // From BeanInfo
+            public PropertyDescriptor[] getPropertyDescriptors();  // From BeanInfo
+            public Image loadImage(String resourceName);
+}
+java.beans.PropertyVetoException (JDK 1.1)
+java.beans.VetoableChangeListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

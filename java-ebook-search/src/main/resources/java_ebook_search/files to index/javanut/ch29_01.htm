@@ -1,0 +1,116 @@
+
+[Chapter 29] The java.text Package
+Chapter 29
+29. The java.text Package
+Contents:
+java.text.CharacterIterator (JDK 1.1)
+java.text.ChoiceFormat (JDK 1.1)
+java.text.CollationElementIterator (JDK 1.1)
+java.text.CollationKey (JDK 1.1)
+java.text.Collator (JDK 1.1)
+java.text.DateFormat (JDK 1.1)
+java.text.DateFormatSymbols (JDK 1.1)
+java.text.DecimalFormat (JDK 1.1)
+java.text.DecimalFormatSymbols (JDK 1.1)
+java.text.FieldPosition (JDK 1.1)
+java.text.Format (JDK 1.1)
+java.text.MessageFormat (JDK 1.1)
+java.text.NumberFormat (JDK 1.1)
+java.text.ParseException (JDK 1.1)
+java.text.ParsePosition (JDK 1.1)
+java.text.RuleBasedCollator (JDK 1.1)
+java.text.SimpleDateFormat (JDK 1.1)
+java.text.StringCharacterIterator (JDK 1.1)
+The java.text package consists of classes and
+interfaces that are useful for writing internationalized programs
+that handle local customs, such as date and time formatting
+and string alphabetization, correctly.  This package is  new
+in Java 1.1.
+Figure 29.1
+shows its class hierarchy.
+The NumberFormat class formats numbers, monetary
+quantities, and percentages as appropriate for the default
+or specified locale.  DateFormat formats dates and
+times in a locale-specific way.  The concrete
+DecimalFormat and SimpleDateFormat
+subclasses of these classes can be used for customized
+number, date, and time formatting.  MessageFormat
+allows substitution of dynamic values, including formatted
+numbers and dates, into static message strings.
+ChoiceFormat formats a number using an enumerated
+set of string values.  Collator compares strings
+according to the customary sorting order for a locale.
+BreakIterator scans text to find word, line, and
+sentence boundaries following locale-specfic rules.
+Figure 29.1: The java.text package
+29.1 java.text.BreakIterator (JDK 1.1)
+This class is used to determine character, word, sentence,
+and line breaks in a block of text in a way that is
+independent of locale and text-encoding.  As an abstract
+class, BreakIterator cannot be instantiated
+directly.  Instead, you must use one of the class methods
+getCharacterInstance(), getWordInstance(),
+getSentenceInstance(), or getLineInstance() to
+return an instance of a nonabstract subclass of
+BreakIterator.  These various "factory" methods
+return a BreakIterator object that is configured to
+locate the requested boundary types, and is localized to
+work for the optionally specified locale.
+Once you have obtained an appropriate BreakIterator
+object, you use setText() to specify the text that
+it is to locate boundaries in.  To locate boundaries in a Java
+String object, simply specify the string.  To locate
+boundaries in text that uses some other encoding, you must
+specify a CharacterIterator object for that text so
+that the BreakIterator object can locate the
+individual characters of the text.
+Having set the text to be searched, you can determine the
+character positions of characters, words, sentences, or line
+breaks with the first(), last(),
+next(), previous(), current(), and
+following() methods, which perform the obvious functions.
+Note that these methods do not return text itself, but
+merely the position of the appropriate word,
+sentence, or line break.
+public abstract class BreakIterator extends Object implements Cloneable, Serializable {
+    // Protected Constructor
+            protected BreakIterator();
+    // Constants
+            public static final int DONE;
+    // Class Methods
+            public static synchronized Locale[] getAvailableLocales();
+            public static BreakIterator getCharacterInstance();
+            public static BreakIterator getCharacterInstance(Locale where);
+            public static BreakIterator getLineInstance();
+            public static BreakIterator getLineInstance(Locale where);
+            public static BreakIterator getSentenceInstance();
+            public static BreakIterator getSentenceInstance(Locale where);
+            public static BreakIterator getWordInstance();
+            public static BreakIterator getWordInstance(Locale where);
+    // Public Instance Methods
+            public Object clone();  // Overrides Object
+            public abstract int current();
+            public abstract int first();
+            public abstract int following(int offset);
+            public abstract CharacterIterator getText();
+            public abstract int last();
+            public abstract int next(int n);
+            public abstract int next();
+            public abstract int previous();
+            public void setText(String newText);
+            public abstract void setText(CharacterIterator newText);
+}
+Returned By:
+BreakIterator.getCharacterInstance(), 
+BreakIterator.getLineInstance(), 
+BreakIterator.getSentenceInstance(), 
+BreakIterator.getWordInstance()
+java.net.URLStreamHandlerFactory (JDK 1.0)
+java.text.CharacterIterator (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

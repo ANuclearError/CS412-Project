@@ -1,0 +1,42 @@
+
+[Chapter 12] 12.7 Absolute Positioning?
+Chapter 12Layout Managers
+12.7 Absolute Positioning?
+It's possible to set the layout manager to null: no
+layout control. You might do this to position an object on the display
+at some absolute coordinates. This is almost never the right approach.
+Components might have different minimum sizes on different platforms,
+and your interface would not be very portable.
+The following applet doesn't use a layout manager and
+works with absolute coordinates instead:
+import java.awt.*; 
+ 
+public class MoveButton extends java.applet.Applet {  
+    Button button = new Button("I Move"); 
+ 
+    public void init() { 
+        setLayout( null ); 
+        add( button ); 
+        button.setSize( button.getPreferredSize() ); 
+        button.move( 20, 20); 
+    } 
+ 
+    public boolean mouseDown( Event e, int x, int y ) { 
+        button.move( x, y ); 
+        return ( true ); 
+    } 
+ 
+} 
+Click in the applet area, outside of the button, to move the button to
+a new location. If you are running the example in an external viewer,
+try resizing the window and note that the button stays at a fixed
+position relative to the display origin.
+Nonstandard Layout Managers
+Drawing With the AWT
+ 
+ 
+ 
+ 
+ 
+ 
+ 

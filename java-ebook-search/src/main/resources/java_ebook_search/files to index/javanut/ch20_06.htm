@@ -1,0 +1,60 @@
+
+[Chapter 20] 20.6 java.awt.event.ComponentEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.6 java.awt.event.ComponentEvent (JDK 1.1)
+An event of this type serves as notification that the source
+Component has been moved, resized, shown, or hidden.
+Note that this event is a notification only: the AWT handles
+these Component operations internally, and the
+recipient of the event need take no action itself.
+getComponent() returns the component that was moved,
+resized, shown or hidden.  It is simply a convenient
+alternative to getSource().
+getID() returns one of four COMPONENT_
+constants to indicate what operation was performed on the
+Component.
+public class ComponentEvent extends AWTEvent {
+    // Public Constructor
+            public ComponentEvent(Component source, int id);
+    // Constants
+            public static final int COMPONENT_FIRST;
+            public static final int COMPONENT_HIDDEN;
+            public static final int COMPONENT_LAST;
+            public static final int COMPONENT_MOVED;
+            public static final int COMPONENT_RESIZED;
+            public static final int COMPONENT_SHOWN;
+    // Public Instance Methods
+            public Component getComponent();
+            public String paramString();  // Overrides AWTEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent
+Extended By:
+ContainerEvent, 
+FocusEvent, 
+InputEvent, 
+PaintEvent, 
+WindowEvent
+Passed To:
+AWTEventMulticaster.componentHidden(), 
+AWTEventMulticaster.componentMoved(), 
+AWTEventMulticaster.componentResized(), 
+AWTEventMulticaster.componentShown(), 
+Component.processComponentEvent(), 
+ComponentAdapter.componentHidden(), 
+ComponentAdapter.componentMoved(), 
+ComponentAdapter.componentResized(), 
+ComponentAdapter.componentShown(), 
+ComponentListener.componentHidden(), 
+ComponentListener.componentMoved(), 
+ComponentListener.componentResized(), 
+ComponentListener.componentShown()
+java.awt.event.ComponentAdapter (JDK 1.1)
+java.awt.event.ComponentListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

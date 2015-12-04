@@ -1,0 +1,48 @@
+
+[Chapter 9] 9.5 Advanced Serialization
+Chapter 9Object Serialization
+9.5 Advanced Serialization
+The Object Serialization API also has some advanced features
+beyond those demonstrated above.  One such feature is the
+Externalizable interface.  If a class implements
+this interface, the ObjectInputStream and
+ObjectOutputStream classes use an object's
+readExternal() and writeExternal() methods
+to read and write its state from a stream.  Most classes
+that want custom serialization behavior simply implement
+readObject() and writeObject() methods to
+do pre- and post-processing.
+Externalizable objects, on the other hand, take
+complete control over reading and writing their state.  This
+interface is intended for objects that do not even want to
+use the basic serialized object data format used for all
+Serializable objects.  A word processor object, for
+example, might "externalize" itself using its own native
+file format.
+Another advanced serialization feature is the ability to
+register an ObjectInputValidation object that can
+verify that an object graph has been deserialized in a
+consistent, valid state.  Typically, the root of an object
+graph registers such a validation object by calling the
+registerValidation() method of the
+ObjectInputStream from its own custom
+readObject() method.  Then, when the graph has been
+read completely, the validateObject() method of the
+ObjectInputValidation object is called to perform
+whatever validity checks are necessary.
+Finally, you may notice that ObjectOutputStream and
+ObjectInputStream have methods like
+annotateClass(), replaceObject(),
+resolveClass(), and resolveObject().  These
+are intended for use by subclasses of the object streams
+that implement special kinds of object serialization
+behavior.
+Serialized Applets
+Java Beans
+ 
+ 
+ 
+ 
+ 
+ 
+ 

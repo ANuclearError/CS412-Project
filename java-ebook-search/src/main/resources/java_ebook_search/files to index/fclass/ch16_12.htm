@@ -1,0 +1,162 @@
+
+[Chapter 16] Format
+Chapter 16The java.text Package
+Format
+Name
+Format
+Synopsis
+Class Name:
+java.text.Format
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.text.DateFormat, 
+java.text.MessageFormat,
+java.text.NumberFormat
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The Format class is an abstract 
+class that is the superclass of all classes that handle locale-sensitive 
+parsing and formatting of dates, numbers, and messages. The two format() 
+methods take the information in a supplied object and convert it to a string. 
+The two parseObject() methods 
+do the reverse; they take the information from a string and construct an 
+appropriate object. 
+Class Summary
+public abstract class java.text.Format extends java.lang.Object
+                      implements java.io.Serializable, java.lang.Cloneable {
+  // Instance Methods
+  public Object clone();
+  public final String format(Object obj);
+  public abstract StringBuffer format(Object obj, StringBuffer toAppendTo, 
+                               FieldPosition pos);
+  public Object parseObject(String source);
+  public abstract Object parseObject(String source, ParsePosition status);
+}
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this Format. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this Format 
+and returns it. 
+format
+public final String format(Object obj)
+Parameters
+obj
+The object to be formatted. 
+Returns
+A string that contains a formatted representation of the object. 
+Throws
+IllegalArgumentException
+If the given object cannot be formatted. 
+Description
+This method formats the given object by calling format(Object, 
+StringBuffer, FieldPosition) 
+with an empty StringBuffer 
+and a FieldPosition that has 
+a value of 0. 
+   public abstract StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition pos)  
+Parameters
+obj
+The object to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+pos
+A field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the object appended to it. 
+Throws
+IllegalArgumentException
+If the given object cannot be formatted. 
+Description
+This method formats the given object and appends the result to the
+given StringBuffer. After the object has been
+formatted, the beginning and ending indices of the given
+FieldPosition are updated to reflect the
+field's position in the formatted output.
+A subclass of Format must implement 
+this method. 
+parseObject
+public Object parseObject(String source) throws ParseException
+Parameters
+source
+The string to be parsed. 
+Returns
+The object represented by the given string. 
+Throws
+ParseException
+If the text cannot be parsed by this Format. 
+Description
+This method parses the given text and returns an appropriate object. It 
+does this by calling parseObject(String, 
+ParsePosition) with a ParsePosition 
+that has an index of 0. 
+   public abstract Object parseObject(String source, ParsePosition status)  
+Parameters
+source
+The string to be parsed.
+status
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+The object represented by the text starting at the given position. 
+Description
+This method parses the given text, starting at the specified position, 
+and returns an object created from the data. After the string has been 
+parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text.
+A subclass of Format must implement 
+this method. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DateFormat, 
+FieldPosition, 
+MessageFormat, 
+NumberFormat, 
+ParseException, 
+ParsePosition, 
+String, 
+StringBuffer 
+FieldPosition
+MessageFormat
+ 
+ 
+ 
+ 
+ 
+ 
+ 

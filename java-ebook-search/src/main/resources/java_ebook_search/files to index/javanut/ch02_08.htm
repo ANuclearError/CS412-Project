@@ -1,0 +1,91 @@
+
+[Chapter 2] 2.8 Objects
+Chapter 2How Java Differs from C
+2.8 Objects
+Now that you know objects are passed by reference, 
+we should discuss how they are created, used, and
+destroyed.  The following subsections provide a very brief
+overview of objects.  Chapter 3, Classes and Objects in Java explains
+classes and objects in much greater detail.
+Creating Objects
+Declaring a variable to hold
+an object does not create the object itself; the 
+variable only holds the reference to the object. 
+To actually create an object, you must use the
+new keyword.  This is followed by the object's class
+(i.e., its type) and an optional argument list in
+parentheses.  These arguments are passed to the constructor
+method for the class, which serves to initialize internal
+fields in the new object.  For example:
+java.awt.Button b = new java.awt.Button();
+ComplexNumber c = new ComplexNumber(1.0, 1.414);
+There are actually two other ways to create an object.
+First, you can create a String object simply by
+enclosing characters in double quotes:
+String s = "This is a test";
+Because strings are used so frequently, the Java compiler
+provides this technique as a shortcut.
+Another way to create objects is by calling the
+newInstance() method of a Class object.
+This technique is generally used only when dynamically
+loading classes, so we won't discuss it here.  In Java 1.1,
+objects can also be created by "de-serializing"
+them--i.e., recreating an object that had its state saved
+through "serialization."
+The memory for newly created objects is dynamically
+allocated.  Creating an object with new in Java is
+like calling malloc() in C to allocate memory for an
+instance of a struct.  It is also, of course, a lot
+like using the new operator in C++.  (Below,
+we'll see where this analogy to malloc() in C and
+new in C++ breaks down.)
+Accessing Objects
+As you've probably noticed in various example code fragments
+by now, the way you access the fields of an object is with a
+dot:
+ComplexNumber c = new ComplexNumber();
+c.x = 1.0;
+c.y = -1.414;
+This syntax is reminiscent of accessing the fields of a
+struct in C.  Recall, though, that Java
+objects are always accessed by reference, and that Java
+performs any necessary dereferencing for you.  Thus, the dot
+in Java is more like -&gt; in C.  Java hides the fact
+that there is a reference here in an attempt to make your
+programming easier.
+The other difference between C and Java when accessing
+objects is that in Java you refer to an object's methods 
+with the same syntax used for fields:
+ComplexNumber c = new ComplexNumber(1.0, -1.414);
+double magnitude = c.magnitude();
+Garbage Collection
+Objects in Java are created with the new keyword,
+but there is no corresponding old or delete
+keyword or free() method to get rid of them when
+they are no longer needed.  If creating an object with
+new is like calling malloc() in C or using
+new in C++, then it would seem that Java is full of
+memory leaks, because we never call free() or use
+the delete operator.
+In fact, this isn't the case.  Java uses a technique called
+garbage collection to automatically detect objects that are
+no longer being used (an object is no longer in use when
+there are no more references to it) and to free them.  This
+means that in our programs, we never need to worry about
+freeing memory or destroying objects--the garbage collector
+takes care of that.
+If you are a C or C++ programmer, it may take some getting
+used to to just let allocated objects go without
+worrying about reclaiming their memory.  Once you get used
+to it, however, you'll begin to appreciate what a nice
+feature this is.  We'll discuss garbage collection in more
+detail in the next chapter.
+Reference Data Types
+Arrays
+ 
+ 
+ 
+ 
+ 
+ 
+ 

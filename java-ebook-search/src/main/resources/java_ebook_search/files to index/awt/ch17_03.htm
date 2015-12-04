@@ -1,0 +1,25 @@
+
+[Chapter 17] 17.3 Component Methods
+Chapter 17Printing
+17.3 Component Methods
+The methods that start the printing process come from either the Component 
+or Container class and are 
+inherited by all their children. All components inherit the printAll() 
+and print() methods. Containers 
+also inherit the printComponents() 
+method, in addition to printAll() 
+and print(). A container should 
+call printComponents() to print 
+itself if it contains any components. Otherwise, it is sufficient to call 
+printAll(). 
+These methods end up calling paint(), 
+which does the actual drawing. 
+PrintJob Class
+Printing Example
+ 
+ 
+ 
+ 
+ 
+ 
+ 

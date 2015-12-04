@@ -1,0 +1,139 @@
+
+[Chapter 10] Java Beans
+Chapter 10
+10. Java Beans
+Contents:
+Bean Basics
+A Simple Bean
+A More Complex Bean
+Custom Events
+Specifying Bean Information
+Defining a Simple Property Editor
+Defining a Complex Property Editor
+Defining a Bean Customizer
+Naming Patterns and Conventions
+The JavaBeans API provides a framework for defining
+reusable, embeddable, modular software components.  The JavaBeans
+Specification includes the following definition of a bean:
+"a reusable software component that can be manipulated
+visually in a builder tool."  As you can see, this is a rather
+loose definition; beans can take a variety of forms.  At
+the simplest level, individual AWT components (in Java 1.1) are all
+beans, while
+at a much higher level, an embeddable spreadsheet
+application might also function as a bean.  Most beans, however,
+will probably fall somewhere between these two extremes.
+One of the goals of the JavaBeans model is interoperability
+with similar component frameworks.  So, for example, a native Windows
+program can, with an appropriate bridge or wrapper object,
+use a Java bean as if it were a COM or ActiveX component.
+The details of this sort of interoperability are beyond the
+scope of this chapter, however.
+Beans can be used at three levels, by three different
+categories of programmers:
+If you are developing GUI editors, application builders, or
+other "beanbox" tools, you need the JavaBeans API to manipulate beans
+within these tools.  beanbox is the name of the sample
+bean manipulation program provided by Sun in its Beans Development Kit
+(BDK).  The term is a useful one, and I'll use it to
+describe any kind of graphical design tool or application
+builder that manipulates beans.
+If you are writing actual beans, you need the JavaBeans API
+to write code that can be used in any conforming beanbox.
+If you are writing applications that use beans developed by
+other programmers, or using a beanbox tool to combine those beans
+into an application, you do not actually need to be familiar with
+the JavaBeans API.   You only need to be familiar with the
+documentation for individual beans that you are using.
+This chapter explains how to use the JavaBeans API at the second
+level, or in other words, it describes how to write beans.  It covers
+the following topics:
+Basic bean concepts and terminology
+Requirements for the simplest beans
+Packaging beans in JAR files
+Providing additional information about beans with the
+BeanInfo class
+Defining property editors to allow custom editing of bean
+properties
+Defining bean customizers to allow customization of an
+entire bean
+The various naming conventions and requirements imposed by
+the JavaBeans model
+10.1 Bean Basics
+We begin our discussion of beans with some basic concepts and
+terminology.  Any object that conforms to certain
+basic rules can be a bean; there is no Bean class
+that all beans are required to subclass.  Many beans are AWT
+components, but it is also quite possible, and often useful,
+to write "invisible" beans that do not have an on-screen
+appearance.  (Just because a bean does not have an on-screen
+appearance in a finished application does not mean that it
+won't be visually manipulated by a beanbox tool, however.)
+A bean exports properties, events, and methods.  A
+property is a piece of the bean's internal state that
+can be programmatically set and queried, usually through a
+standard pair of get and set accessor
+methods.  A bean may generate events in the same way
+that an AWT component, such as a Button, generates
+ActionEvent events.  The JavaBeans API uses the same
+event model as the Java 1.1 AWT does.  See Chapter 7, Events,
+for a full discussion of this model.  A bean
+defines an event if it provides methods for adding and
+removing event listener objects from a list of interested
+listeners for that event.  Finally, the methods
+exported by a bean are simply any public methods
+defined by the bean, excluding those methods used to get and
+set property values and register and remove event listeners.
+In addition to the regular sort of properties described
+above, the JavaBeans API also provides support for "indexed
+properties," "bound properties," and "constrained
+properties." An indexed property is any property that has
+an array value and for which the bean provides methods to
+get and set individual elements of the array, as well as
+methods to get and set the entire array.  A bound property
+is one that sends out a notification event when its value
+changes, while a constrained property is one that sends out
+a notification event when its value changes and allows the
+change to be vetoed by listeners.
+Because Java allows dynamic loading of classes, beanbox
+programs can load arbitrary beans.  The beanbox tool determines the
+properties, events, and methods a bean supports by using
+an "introspection" mechanism that is
+based on the java.lang.reflect reflection
+mechanism for obtaining information about the members of a class.
+A bean can also provide an auxiliary
+BeanInfo class that provides additional information
+about the bean.  The BeanInfo class provides this
+additional information in the form of a number of
+FeatureDescriptor objects, each one describing a
+single feature of the bean.  FeatureDescriptor has a
+number of subclasses: BeanDescriptor,
+PropertyDescriptor,
+IndexedPropertyDescriptor,
+EventSetDescriptor, MethodDescriptor, and
+ParameterDescriptor.
+One of the primary tasks of a beanbox application is
+to allow the user to customize a bean by setting property
+values.  A beanbox defines "property editors" for commonly
+used property types, such as numbers, strings, fonts, and
+colors.  If a bean has properties of more complicated types,
+however, it may need to define a PropertyEditor
+class that enables the beanbox to let the user set
+values for that property.
+In addition, a complex bean may not be satisfied with the
+property-by-property customization mechanism provided by
+most beanboxes.  Such a bean may want to define a
+Customizer class, which creates a graphical interface
+that allows the user to configure a bean in some useful way.
+A particularly complex bean may even define customizers that serve
+as "wizards" that guide the user step-by-step through the
+customization process.
+Advanced Serialization
+A Simple Bean
+ 
+ 
+ 
+ 
+ 
+ 
+ 

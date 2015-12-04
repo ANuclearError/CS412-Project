@@ -1,0 +1,56 @@
+
+[Chapter 18] 18.45 java.awt.MenuShortcut (JDK 1.1)
+Chapter 18The java.awt Package
+18.45 java.awt.MenuShortcut (JDK 1.1)
+This class represents a keystroke used to select a
+MenuItem without actually pulling down the menu.  A
+MenuShortcut object can be specified for a
+MenuItem when the MenuItem is created or by
+calling the item's setShortcut() method.  The
+keystroke sequence for the menu shortcut automatically
+appears in the label for the menu item, so you need not add this
+information yourself.
+When you create a MenuShortcut, you specify the key
+code of the shortcut--this is one of the VK_
+constants defined by java.awt.event.KeyEvent, and is
+not always the same as a corresponding character code.  You
+may also optionally specify a boolean value that, if
+true, indicates that the MenuShortcut requires the
+Shift key to be held down.
+Note that menu shortcuts are triggered in a
+platform-dependent way.  When you create a shortcut, you
+specify only the keycode and an optional Shift
+modifier.  The shortcut is not triggered, however, unless an
+additional modifier key is held down.  On Windows platforms,
+for example, the Ctrl key is used for menu shortcuts.
+You can query the platform-specific menu shortcut key with
+Toolkit.getMenuShortcutKeyMask(). 
+public class MenuShortcut extends Object implements Serializable {
+    // Public Constructors
+            public MenuShortcut(int key);
+            public MenuShortcut(int key, boolean useShiftModifier);
+    // Public Instance Methods
+            public boolean equals(MenuShortcut s);
+            public int getKey();
+            public String toString();  // Overrides Object
+            public boolean usesShiftModifier();
+    // Protected Instance Methods
+            protected String paramString();
+}
+Passed To:
+MenuBar.deleteShortcut(), 
+MenuBar.getShortcutMenuItem(), 
+MenuItem(), 
+MenuItem.setShortcut(), 
+MenuShortcut.equals()
+Returned By:
+MenuItem.getShortcut()
+java.awt.MenuItem (JDK 1.0)
+java.awt.Panel (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

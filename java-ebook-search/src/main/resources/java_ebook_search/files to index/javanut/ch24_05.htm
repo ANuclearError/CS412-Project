@@ -1,0 +1,40 @@
+
+[Chapter 24] 24.5 java.io.ByteArrayInputStream (JDK 1.0)
+Chapter 24The java.io Package
+24.5 java.io.ByteArrayInputStream (JDK 1.0)
+This class is a subclass of InputStream in which
+input data come from a specified array of byte
+values. This is useful when you want to read data in memory
+as if it were coming from a file or pipe or socket.
+Note that the specified array of bytes is not copied when a
+ByteArrayInputStream is created.
+See also CharArrayReader.
+public class ByteArrayInputStream extends InputStream {
+    // Public Constructors
+            public ByteArrayInputStream(byte[] buf);
+            public ByteArrayInputStream(byte[] buf, int offset, int length);
+    // Protected Instance Variables
+            protected byte[] buf;
+            protected int count;
+        1.1  protected int mark;
+            protected int pos;
+    // Public Instance Methods
+            public synchronized int available();  // Overrides InputStream
+        1.1  public void mark(int markpos);  // Overrides InputStream
+        1.1  public boolean markSupported();  // Overrides InputStream
+            public synchronized int read();  // Defines InputStream
+            public synchronized int read(byte[] b, int off, int len);  // Overrides InputStream
+            public synchronized void reset();  // Overrides InputStream
+            public synchronized long skip(long n);  // Overrides InputStream
+}
+Hierarchy:
+Object->InputStream->ByteArrayInputStream
+java.io.BufferedWriter (JDK 1.1)
+java.io.ByteArrayOutputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

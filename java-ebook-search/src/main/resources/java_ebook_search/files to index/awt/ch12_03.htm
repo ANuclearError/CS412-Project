@@ -1,0 +1,543 @@
+
+[Chapter 12] 12.3 ImageProducer
+Chapter 12Image Processing
+12.3 ImageProducer
+The ImageProducer interface 
+defines the methods that ImageProducer 
+objects must implement. Image producers serve as sources for pixel data; 
+they may compute the data themselves or interpret data from some external 
+source, like a GIF file. No matter how it generates the data, an image 
+producer's job is to hand that data to an image consumer, which usually 
+renders the data on the screen. The methods in the ImageProducer 
+interface let ImageConsumer 
+objects register their interest in an image. The business end 
+of an ImageProducer--that 
+is, the methods it uses to deliver pixel data to an image consumer--are 
+defined by the ImageConsumer 
+interface. Therefore, we can summarize the way an image producer works 
+as follows: 
+It waits for image consumers to register their interest in an image. 
+As image consumers register, it stores them in a Hashtable, 
+Vector, or some other collection mechanism. 
+As image data becomes available, it loops through all the registered consumers 
+and calls their methods to transfer the data. 
+There's a sense in which you have to take this process on 
+faith; image consumers are usually well hidden. If you call createImage(), 
+an image consumer will eventually show up. 
+Every Image has an ImageProducer 
+associated with it; to acquire a reference to the producer, use the getSource() 
+method of Image. 
+Because an ImageProducer must 
+call methods in the ImageConsumer 
+interface, we won't show an example of a full-fledged producer until 
+we have discussed ImageConsumer. 
+ImageProducer InterfaceMethods
+public void addConsumer (ImageConsumer ic) 
+The addConsumer() method registers 
+ic as an ImageConsumer 
+interested in the Image information. 
+Once an ImageConsumer is registered, 
+the ImageProducer can deliver 
+Image pixels immediately or 
+wait until startProduction() 
+has been called. 
+Note that one image may have many consumers; therefore, addConsumer() 
+usually stores image consumers in a collection like a Vector 
+or Hashtable. There is one 
+notable exception: if the producer has the image data in memory, addConsumer() 
+can deliver the image to the consumer immediately. When addConsumer() 
+returns, it has finished with the consumer. In this case, you don't 
+need to manage a list of consumers, because there is only one image consumer 
+at a time. (In this case, addConsumer() 
+should be implemented as a synchronized method.) 
+public boolean isConsumer (ImageConsumer ic) 
+The isConsumer() method checks 
+to see if ic is 
+a registered ImageConsumer 
+for this ImageProducer. If 
+ic is registered, true is returned. 
+If ic is not registered, false is returned. 
+public void removeConsumer (ImageConsumer ic) 
+The removeConsumer() method 
+removes ic as a registered 
+ImageConsumer for this ImageProducer. 
+If ic was not a registered 
+ImageConsumer, nothing should 
+happen. This is not an error that should throw an exception. Once ic 
+has been removed from the registry, the ImageProducer 
+should no longer send data to it. 
+public void startProduction (ImageConsumer ic) 
+The startProduction() method 
+registers ic as an ImageConsumer 
+interested in the Image information 
+and tells the ImageProducer 
+to start sending the Image 
+data immediately. The ImageProducer 
+sends the image data to ic 
+and all other registered ImageConsumer 
+objects, through addConsumer(). 
+public void requestTopDownLeftRightResend (ImageConsumer ic) 
+The requestTopDownLeftRightResend() 
+method is called by the ImageConsumer 
+ic requesting that the ImageProducer 
+retransmit the Image data in 
+top-down, left-to-right order. If the ImageProducer 
+is unable to send the data in that order or always sends the data in that 
+order (like with MemoryImageSource), 
+it can ignore the call. 
+FilteredImageSource
+The FilteredImageSource class 
+combines an ImageProducer and 
+an ImageFilter to create a 
+new Image. The image producer 
+generates pixel data for an original image. The FilteredImageSource 
+takes this data and uses an ImageFilter to produce a modified version: the image 
+may be scaled, clipped, or rotated, or the colors shifted, etc. The FilteredImageSource 
+is the image producer for the new image. The ImageFilter 
+object transforms the original image's data to yield the new image; 
+it implements the ImageConsumer 
+interface. We cover the ImageConsumer 
+interface in ImageConsumer and the ImageFilter 
+class in ImageFilter. Figure 12.1 shows the relationship between an ImageProducer, FilteredImageSource, ImageFilter, and the ImageConsumer. 
+Figure 12.1: Image producers, filters, and consumers
+Constructors
+public FilteredImageSource (ImageProducer original, ImageFilter filter) 
+The FilteredImageSource constructor 
+creates an image producer that combines an image, original, 
+and a filter, filter, to create 
+a new image. The ImageProducer 
+of the original image is the constructor's first parameter; given 
+an Image, you can acquire its 
+ImageProducer by using the 
+getSource() method. The following code 
+shows how to create a new image from an original. ImageFilter shows several extensive examples of image filters. 
+Image image = getImage (new URL
+      ("http://www.ora.com/graphics/headers/homepage.gif"));
+Image newOne = createImage (new FilteredImageSource
+      (image.getSource(), new SomeImageFilter()));
+ImageProducer interface methods
+The ImageProducer interface 
+methods maintain an internal table for the image consumers. Since this 
+is private, you do not have direct access to it. 
+public synchronized void addConsumer (ImageConsumer ic)  
+The addConsumer() method adds 
+ic as an ImageConsumer 
+interested in the pixels for this image. 
+public synchronized boolean isConsumer (ImageConsumer ic)  
+The isConsumer() method checks 
+to see if ic is a registered 
+ImageConsumer for this ImageProducer. 
+If ic is registered, true is 
+returned. If not registered, false is returned. 
+public synchronized void removeConsumer (ImageConsumer ic)  
+The removeConsumer() method 
+removes ic as a registered 
+ImageConsumer for this ImageProducer. 
+public void startProduction (ImageConsumer ic)  
+The startProduction() method 
+registers ic as an ImageConsumer 
+interested in the Image information 
+and tells the ImageProducer 
+to start sending the Image 
+data immediately. 
+public void requestTopDownLeftRightResend (ImageConsumer ic)  
+The requestTopDownLeftRightResend() 
+method registers ic as an ImageConsumer 
+interested in the Image information 
+and requests the ImageProducer 
+to retransmit the Image data 
+in top-down, left-to-right order. 
+MemoryImageSource
+The MemoryImageSource class 
+allows you to create images completely in memory; you generate pixel data, 
+place it in an array, and hand that array and a ColorModel 
+to the MemoryImageSource constructor. 
+The MemoryImageSource is an 
+image producer that can be used with a consumer to display the image on 
+the screen. For example, you might use a MemoryImageSource 
+to display a Mandelbrot image or some other image generated by your program. 
+You could also use a MemoryImageSource 
+to modify a pre-existing image; use PixelGrabber 
+to get the image's pixel data, modify that data, and then use a MemoryImageSource 
+as the producer for the modified image. Finally, you can use MemoryImageSource 
+to simplify implementation of a new image type; you can develop a class 
+that reads an image in some unsupported format from a local file or the 
+network; interprets the image file and puts pixel data into an array; and 
+uses a MemoryImageSource to 
+serve as an image producer. This is simpler than implementing an image 
+producer yourself, but it isn't quite as flexible; you lose the ability 
+to display partial images as the data becomes available. 
+In Java 1.1, MemoryImageSource 
+supports multiframe images to animate a sequence. In earlier versions, 
+it was necessary to create a dynamic ImageFilter 
+to animate the image. Constructors
+There are six constructors for MemoryImageSource, 
+each with slightly different parameters. They all create an image producer 
+that delivers some array of data to an image consumer. The constructors 
+are: 
+public MemoryImageSource (int w, int h, ColorModel cm, byte pix[], int off, int scan) public MemoryImageSource (int w, int h, ColorModel cm, byte pix[], int off, int scan, Hashtable props) public MemoryImageSource (int w, int h, ColorModel cm, int pix[],  int off, int scan) public MemoryImageSource (int w, int h, ColorModel cm, int pix[],  int off, int scan, Hashtable props) public MemoryImageSource (int w, int h, int pix[], int off, int scan) public MemoryImageSource (int w, int h, int pix[], int off, int scan,  Hashtable props) 
+The parameters that might be present are: 
+w
+Width of the image being created, in pixels.
+h
+Height of the image being created, in pixels.
+cm
+The ColorModel that describes the color 
+representation used in the pixel data. If this parameter is not present, the 
+MemoryImageSource uses the default RGB color model 
+(ColorModel.getRGBDefault()).
+pix[]
+The array of pixel information to be converted into an image. This may be either a byte array or an int array, depending on the color model. If you're using a direct color model (including the default RGB color model), 
+pix
+ is usually an int array; if it isn't, it won't be able to represent all 16 million possible colors. If you're using an indexed color model, the array should be a 
+byte array. However, if you use an int
+ array with an indexed color model, the MemoryImageSource
+ ignores the three high-order bytes because an indexed color model has at most 256 entries in the color map. In general: if your color model requires more than 8 bits of data per pixel, use an 
+int array; if it requires 8 bits or less, use a 
+byte array.
+off
+The first pixel used in the array (usually 0); prior pixels are ignored.
+scan
+The number of pixels per line in the array (usually equal to w). The number of pixels per scan line in the array may be larger than the number of pixels in the scan line. Extra pixels in the array are ignored.
+props
+A Hashtable of the properties associated 
+with the image. If this argument isn't present, the constructor 
+assumes there are no properties.
+The pixel at location (x, y) in the image is located at pix[y 
+* scan + x + off]. ImageProducer interface methods
+In Java 1.0, the ImageProducer 
+interface methods maintain a single internal variable for the image consumer 
+because the image is delivered immediately and synchronously. There is 
+no need to worry about multiple consumers; as soon as one registers, you 
+give it the image, and you're done. These methods keep track of this 
+single ImageConsumer. 
+In Java 1.1, MemoryImageSource 
+supports animation. One consequence of this new feature is that it isn't 
+always possible to deliver all the image's data immediately. Therefore, 
+the class maintains a list of image consumers that are notified when each 
+frame is generated. Since this list is private, you do not have direct 
+access to it. 
+public synchronized void addConsumer (ImageConsumer ic)  
+The addConsumer() method adds 
+ic as an ImageConsumer 
+interested in the pixels for this image. 
+public synchronized boolean isConsumer (ImageConsumer ic) 
+The isConsumer() method checks 
+to see if ic is a registered 
+ImageConsumer for this ImageProducer. 
+If ic is registered, true is 
+returned. If ic is not registered, false is returned. 
+public synchronized void removeConsumer (ImageConsumer ic) 
+The removeConsumer() method 
+removes ic as a registered 
+ImageConsumer for this ImageProducer. 
+public void startProduction (ImageConsumer ic) 
+The startProduction() method 
+calls addConsumer(). 
+public void requestTopDownLeftRightResend (ImageConsumer ic) 
+The requestTopDownLeftRightResend() 
+method does nothing since in-memory images are already in this format or 
+are multiframed, with each frame in this format. 
+Animation methods
+In Java 1.1, MemoryImageSource 
+supports animation; it can now pass multiple frames to interested image 
+consumers. This feature mimics GIF89a's multiframe functionality. (If you have GIF89a animations, you can display them using getImage() and drawImage(); you don't have to build a complicated creature using MemoryImageSource.)
+. An animation example 
+follows in Example 12.3 (later in this chapter). 
+public synchronized void setAnimated(boolean animated)  
+The setAnimated() method notifies 
+the MemoryImageSource if it 
+will be in animation mode (animated 
+is true) or not (animated is 
+false). By default, animation is disabled; you must call this method to 
+generate an image sequence. To prevent losing data, call this method immediately 
+after calling the MemoryImageSource 
+constructor. 
+public synchronized void setFullBufferUpdates(boolean fullBuffers)  
+The setFullBufferUpdates() 
+method controls how image updates are done during an animation. It is ignored 
+if you are not creating an animation. If fullBuffers 
+is true, this method tells 
+the MemoryImageSource that 
+it should always send all of an image's 
+data to the consumers whenever it received new data (by a call to newPixels()). 
+If fullBuffers is false, 
+the MemoryImageSource sends only the changed portion of the image and notifies consumers (by a call 
+to ImageConsumer.setHints()) 
+that frames sent will be complete. 
+Like setAnimated(), setFullBufferUpdates() 
+should be called immediately after calling the MemoryImageSource 
+constructor, before the animation is started. 
+To do the actual animation, you update the image array pix[] 
+that was specified in the constructor and call one of the overloaded newPixels() 
+methods to tell the MemoryImageSource 
+that you have changed the image data. The parameters to newPixels() 
+determine whether you are animating the entire image or just a portion 
+of the image. You can also supply a new array to take pixel data from, 
+replacing pix[]. In any case, 
+pix[] supplies the initial 
+image data (i.e., the first frame of the animation). 
+If you have not called setAnimated(true), 
+calls to any version of newPixels() 
+are ignored. 
+public void newPixels()  
+The version of newPixels() 
+with no parameters tells the MemoryImageSource 
+to send the entire pixel data (frame) to all the registered image consumers 
+again. Data is taken from the original array pix[]. 
+After the data is sent, the MemoryImageSource 
+notifies consumers that a frame is complete by calling imageComplete(ImageConsumer.SINGLEFRAMEDONE), 
+thus updating the display when the image is redisplayed. Remember that 
+in many cases, you don't need to update the entire image; updating 
+part of the image saves CPU time, which may be crucial for your application. 
+To update part of the image, call one of the other versions of newPixels(). 
+public synchronized void newPixels(int x, int y, int w, int h)  
+This newPixels() method sends 
+part of the image in the array pix[] 
+to the consumers. The portion of the image sent has its upper left corner 
+at the point (x, y), 
+width w and height h, 
+all in pixels. Changing part of the image rather than the whole thing saves 
+considerably on system resources. Obviously, it is appropriate only if 
+most of the image is still. For example, you could use this method to animate 
+the steam rising from a cup of hot coffee, while leaving the cup itself 
+static (an image that should be familiar to anyone reading JavaSoft's 
+Web site). After the data is sent, consumers are notified that a frame 
+is complete by a call to imageComplete(ImageConsumer.SINGLEFRAMEDONE), 
+thus updating the display when the image is redisplayed. 
+If setFullBufferUpdates() was 
+called, the entire image is sent, and the dimensions of the bounding box 
+are ignored. 
+public synchronized void newPixels(int x, int y, int w, int h, boolean frameNotify)  
+This newPixels() method is 
+identical to the last, with one exception: consumers are notified 
+that new image data is available only when frameNotify 
+is true. This method allows 
+you to generate new image data in pieces, updating the consumers only once 
+when you are finished. 
+If setFullBufferUpdates() was 
+called, the entire image is sent, and the dimensions of the bounding box 
+are ignored. 
+public synchronized void newPixels(byte[] newpix, ColorModel newmodel, 
+int offset, int scansize)  public synchronized void newPixels(int[] newpix, ColorModel newmodel, int 
+offset, int scansize)  
+These newPixels() methods change 
+the source of the animation to the byte 
+or int array newpix[], 
+with a ColorModel of newmodel. 
+offset marks the beginning 
+of the data in newpix to use, 
+while scansize states the number 
+of pixels in newpix per line 
+of Image data. Future calls 
+to other versions of newPixels() 
+should modify newpix[] rather 
+than pix[]. 
+Using MemoryImageSource to create a static image
+You can create an image by generating an integer or byte array in memory 
+and converting it to an image with MemoryImageSource. 
+The following MemoryImage applet generates two identical images that display 
+a series of color bars from left to right. Although the images look the 
+same, they were generated differently: the image on the left uses the default 
+DirectColorModel; the image 
+on the right uses an IndexColorModel. 
+Because the image on the left uses a DirectColorModel, 
+it stores the actual color value of each pixel in an array of integers 
+(rgbPixels[]). The image on 
+the right can use a byte array (indPixels[]) 
+because the IndexColorModel 
+puts the color information in its color map instead of the pixel array; 
+elements of the pixel array need to be large enough only to address the 
+entries in this map. Images that are based on IndexColorModel 
+are generally more efficient in their use of space (integer vs. byte arrays, although 
+IndexColorModel requires small 
+support arrays) and in performance (if you filter the image). 
+The output from this example is shown in Figure 12.2. 
+The source is shown in Example 12.2. 
+Figure 12.2: MemoryImage applet output
+Example 12.2: MemoryImage Test Program
+import java.applet.*;
+import java.awt.*;
+import java.awt.image.*;
+public class MemoryImage extends Applet {
+    Image i, j;
+    int width = 200;
+    int height = 200;
+    public void init () {
+        int rgbPixels[] = new int [width*height];
+        byte indPixels[] = new byte [width*height];
+        int index = 0;
+        Color colorArray[] = {Color.red, Color.orange, Color.yellow,
+                Color.green, Color.blue, Color.magenta};
+        int rangeSize = width / colorArray.length;
+        int colorRGB;
+        byte colorIndex;
+        byte reds[]   = new byte[colorArray.length];
+        byte greens[] = new byte[colorArray.length];
+        byte blues[]  = new byte[colorArray.length];
+        for (int i=0;i&lt;colorArray.length;i++) {
+            reds[i]   = (byte)colorArray[i].getRed();
+            greens[i] = (byte)colorArray[i].getGreen();
+            blues[i]  = (byte)colorArray[i].getBlue();
+        }
+        for (int y=0;y&lt;height;y++) {
+            for (int x=0;x&lt;width;x++) {
+                if (x &lt; rangeSize) {
+                    colorRGB = Color.red.getRGB();
+                    colorIndex = 0;
+                } else if (x &lt; (rangeSize*2)) {
+                    colorRGB = Color.orange.getRGB();
+                    colorIndex = 1;
+                } else if (x &lt; (rangeSize*3)) {
+                    colorRGB = Color.yellow.getRGB();
+                    colorIndex = 2;
+                } else if (x &lt; (rangeSize*4)) {
+                    colorRGB = Color.green.getRGB();
+                    colorIndex = 3;
+                } else if (x &lt; (rangeSize*5)) {
+                    colorRGB = Color.blue.getRGB();
+                    colorIndex = 4;
+                } else {
+                    colorRGB = Color.magenta.getRGB();
+                    colorIndex = 5;
+                }
+                rgbPixels[index] = colorRGB;
+                indPixels[index] = colorIndex;
+                index++;
+            }
+        }
+        i = createImage (new MemoryImageSource (width, height, rgbPixels,
+            0, width));
+        j = createImage (new MemoryImageSource (width, height,
+            new IndexColorModel (8, colorArray.length, reds, greens, blues),
+            indPixels, 0, width));
+    }
+    public void paint (Graphics g) {
+        g.drawImage (i, 0, 0, this);
+        g.drawImage (j, width+5, 0, this);
+    }
+}
+Almost all of the work is done in init() 
+(which, in a real applet, isn't a terribly good idea; ideally init() 
+should be lightweight). Previously, we explained the color model's 
+use for the images on the left and the right. Toward the end of init(), 
+we create the images i and 
+j by calling createImage() 
+with a MemoryImageSource as 
+the image producer. For image i, 
+we used the simplest MemoryImageSource 
+constructor, which uses the default RGB color model. For j, 
+we called the IndexColorModel 
+constructor within the MemoryImageSource 
+constructor, to create a color map that has only six entries: one for each 
+of the colors we use. Using MemoryImageSource for animation
+As we've seen, Java 1.1 gives you the ability to create an animation 
+using a MemoryImageSource by 
+updating the image data in memory; whenever you have finished an update, 
+you can send the resulting frame to the consumers. This technique gives 
+you a way to do animations that consume very little memory, since you keep 
+overwriting the original image. The applet in Example 12.3 demonstrates MemoryImageSource's 
+animation capability by creating a Mandelbrot image in memory, updating 
+the image as new points are added. Figure 12.3 shows 
+the results, using four consumers to display the image four times.
+Example 12.3: Mandelbrot Program
+// Java 1.1 only
+import java.awt.*;
+import java.awt.image.*;
+import java.applet.*;
+public class Mandelbrot extends Applet implements Runnable {
+    Thread animator;
+    Image im1, im2, im3, im4;
+    public void start() {
+        animator = new Thread(this);
+        animator.start();
+    }
+    public synchronized void stop() {
+        animator = null;
+    }
+    public void paint(Graphics g) {
+        if (im1 != null)
+            g.drawImage(im1, 0, 0, null);
+        if (im2 != null)
+            g.drawImage(im2, 0, getSize().height / 2, null);
+        if (im3 != null)
+            g.drawImage(im3, getSize().width / 2, 0, null);
+        if (im4 != null)
+            g.drawImage(im4, getSize().width / 2, getSize().height / 2, null);
+    }
+    public void update (Graphics g) {
+        paint (g);
+    }
+    public synchronized void run() {
+        Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
+        int width = getSize().width / 2;
+        int height = getSize().height / 2;
+        byte[] pixels = new byte[width * height];
+        int index = 0;
+        int iteration=0;
+        double a, b, p, q, psq, qsq, pnew, qnew;
+        byte[] colorMap = {(byte)255, (byte)255, (byte)255, // white
+                           (byte)0, (byte)0, (byte)0};      // black
+        MemoryImageSource mis = new MemoryImageSource(
+            width, height,
+            new IndexColorModel (8, 2, colorMap, 0, false, -1),
+            pixels, 0, width);
+        mis.setAnimated(true);
+        im1 = createImage(mis);
+        im2 = createImage(mis);
+        im3 = createImage(mis);
+        im4 = createImage(mis);
+        // Generate Mandelbrot
+        final int ITERATIONS = 16;
+        for (int y=0; y&lt;height; y++) {
+            b = ((double)(y-64))/32;
+            for (int x=0; x&lt;width; x++) {
+                a = ((double)(x-64))/32;
+                p=q=0;
+                iteration = 0;
+                while (iteration &lt; ITERATIONS) {
+                    psq = p*p;
+                    qsq = q*q;
+                    if ((psq + qsq) &gt;= 4.0)
+                        break;
+                    pnew = psq - qsq + a;
+                    qnew = 2*p*q+b;
+                    p = pnew;
+                    q = qnew;
+                    iteration++;
+                }
+                if (iteration == ITERATIONS) {
+                    pixels[index] = 1;
+                    mis.newPixels(x, y, 1, 1);
+                    repaint();
+                }
+                index++;
+            }
+        }
+    }
+}
+Figure 12.3: Mandelbrot output
+Most of the applet in Example 12.3 should be self-explanatory. The init() 
+method starts the thread in which we do our computation. paint() 
+just displays the four images we create. All the work, including the computation, 
+is done in the thread's run() 
+method. run() starts by setting 
+up a color map, creating a MemoryImageSource 
+with animation enabled and creating four images using that source as the 
+producer. It then does the computation, which I won't explain; for 
+our purposes, the interesting part is what happens when we've computed 
+a pixel. We set the appropriate byte in our data array, pixels[], 
+and then call newPixels(), 
+giving the location of the new pixel and its size (1 by 1) as arguments. 
+Thus, we redraw the images for every new pixel. In a real application, 
+you would probably compute a somewhat larger chunk of new data before updating 
+the screen, but the same principles apply. 
+ColorModel
+ImageConsumer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

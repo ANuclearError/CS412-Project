@@ -1,0 +1,41 @@
+
+[Chapter 24] 24.21 java.io.FileReader (JDK 1.1)
+Chapter 24The java.io Package
+24.21 java.io.FileReader (JDK 1.1)
+FileReader is a convenience subclass of
+InputStreamReader that is useful when you want to
+read text (as opposed to binary data) from a file.  You
+create a FileReader by specifying the file to be
+read, in any of three possible forms.  The
+FileReader constructor internally creates a
+FileInputStream to read bytes from the specified
+file, and uses the functionality of its superclass,
+InputStreamReader, to convert those bytes from
+characters in the local encoding to the Unicode characters
+used by Java.
+Because FileReader is a trivial subclass of
+InputStreamReader, it does not define any
+read() methods or other methods of its own.
+Instead, it inherits all its methods from its superclass.
+If you want to read Unicode characters from a file that uses
+some encoding other than the default encoding for the
+locale, you must explicitly create your own
+InputStreamReader to perform the byte-to-character
+conversion.
+public class FileReader extends InputStreamReader {
+    // Public Constructors
+            public FileReader(String fileName) throws FileNotFoundException;
+            public FileReader(File file) throws FileNotFoundException;
+            public FileReader(FileDescriptor fd);
+}
+Hierarchy:
+Object->Reader->InputStreamReader->FileReader
+java.io.FileOutputStream (JDK 1.0)
+java.io.FileWriter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

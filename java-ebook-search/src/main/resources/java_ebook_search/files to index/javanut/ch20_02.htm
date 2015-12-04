@@ -1,0 +1,38 @@
+
+[Chapter 20] 20.2 java.awt.event.ActionListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.2 java.awt.event.ActionListener (JDK 1.1)
+This interface defines the method that an object must
+implement to "listen" for action events on AWT components.
+When an ActionEvent occurs, an AWT component
+notifies its registered ActionListener objects by
+invoking their actionPerformed() methods.
+public abstract interface ActionListener extends EventListener {
+    // Public Instance Methods
+            public abstract void actionPerformed(ActionEvent e);
+}
+Implemented By:
+AWTEventMulticaster
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Button.addActionListener(), 
+Button.removeActionListener(), 
+List.addActionListener(), 
+List.removeActionListener(), 
+MenuItem.addActionListener(), 
+MenuItem.removeActionListener(), 
+TextField.addActionListener(), 
+TextField.removeActionListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.ActionEvent (JDK 1.1)
+java.awt.event.AdjustmentEvent (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

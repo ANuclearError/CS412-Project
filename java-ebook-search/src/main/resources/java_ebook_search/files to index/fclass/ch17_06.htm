@@ -1,0 +1,87 @@
+
+[Chapter 17] Enumeration
+Chapter 17The java.util Package
+Enumeration
+Name
+Enumeration
+Synopsis
+Interface Name:
+java.util.Enumeration
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+java.util.StringTokenizer
+Availability:
+JDK 1.0 or later 
+Description
+An object that implements the Enumeration 
+interface provides a way to access a set of objects sequentially.
+The Enumeration object hides the actual
+organization of the set of objects from the code that is using it.
+An Enumeration 
+can iterate through, or enumerate, its set of objects one at a time. A 
+specific implementation of the interface controls the order in which the 
+objects are presented. 
+The following is an example of how an Enumeration 
+is used. The example shows a method for printing the values in an Enumeration: 
+void printAll(Enumeration e) {
+    while ( e.hasMoreElements() ) {
+        System.out.println(e.nextElement());
+    }
+}
+Note that an Enumeration can 
+be used only once: it iterates through its collection of objects in one 
+direction and cannot be reset or rewound. 
+Normally, an Enumeration 
+is not instantiated directly, but instead returned by a method that needs 
+to enumerate a set of values. For example, the elements() 
+method of the Vector class 
+returns an Enumeration of the 
+elements in the Vector. By 
+the same token, the elements() 
+and keys() methods of the Hashtable 
+class return Enumeration objects 
+for the keys and values in the Hashtable. 
+Interface Declaration
+public abstract interface java.util.Enumeration {
+  // Methods
+  public abstract boolean hasMoreElements();
+  public abstract Object nextElement() throws NoSuchElementException;
+}
+Methods
+hasMoreElements
+public abstract boolean hasMoreElements()
+Returns
+true if the there are more 
+objects to retrieve; false 
+otherwise. 
+Description
+This method returns true if 
+the nextElement() 
+method of this Enumeration 
+returns an object the next time it is called. 
+nextElement
+public abstract Object nextElement()
+Returns
+The next object in this Enumeration. 
+Throws
+NoSuchElementException
+If there are no more objects to return. 
+Description
+This method returns the next object in the set of objects encapsulated 
+by this Enumeration. 
+See Also
+Hashtable, 
+StringTokenizer, 
+Vector 
+EmptyStackException
+EventListener
+ 
+ 
+ 
+ 
+ 
+ 
+ 

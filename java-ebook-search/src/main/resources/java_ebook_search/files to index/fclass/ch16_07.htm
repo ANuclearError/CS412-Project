@@ -1,0 +1,617 @@
+
+[Chapter 16] DateFormat
+Chapter 16The java.text Package
+DateFormat
+Name
+DateFormat
+Synopsis
+Class Name:
+java.text.DateFormat
+Superclass:
+java.text.Format
+Immediate Subclasses:
+java.text.SimpleDateFormat
+Interfaces Implemented:
+java.lang.Cloneable
+Availability:
+New as of JDK 1.1 
+Description
+The DateFormat class formats 
+and parses dates and times in a locale-specific manner. DateFormat 
+is an abstract class, but it 
+provides factory methods that return useful instances of DateFormat 
+subclasses. These factory methods come in three groups: 
+The getDateInstance() 
+methods return objects that format and parse only dates. 
+The getDateTimeInstance() 
+methods return objects that format and parse date and time combinations. 
+The getTimeInstance() 
+methods return objects that format only times. 
+Certain of these factory methods allow you to specify the style, or length, 
+of the resulting date and time strings. The interpretation of the style 
+parameter is locale-specific. For the locale Locale.US, 
+the styles and their results are as follows: 
+FULL
+Tuesday, March 04, 1997 12:00:00 o'clock AM EST
+LONG
+March 04, 1997 12:00:00 AM EST
+MEDIUM
+04-Mar-97 12:00:00 AM
+SHORT
+3/4/97 12:00 AM
+There is also a DEFAULT style, 
+which is equivalent to MEDIUM. 
+The DateFormat class defines 
+a number of field constants that represent the various fields in formatted 
+date and time strings. These field constants can create FieldPosition 
+objects. 
+Class Summary
+public abstract class java.text.DateFormat extends java.text.Format
+                      implements java.lang.Cloneable {
+  // Constants
+  public static final int AM_PM_FIELD;
+  public static final int DATE_FIELD;
+  public static final int DAY_OF_WEEK_FIELD;
+  public static final int DAY_OF_WEEK_IN_MONTH_FIELD;
+  public static final int DAY_OF_YEAR_FIELD;
+  public static final int DEFAULT;
+  public static final int ERA_FIELD;
+  public static final int FULL;
+  public static final int HOUR0_FIELD;
+  public static final int HOUR1_FIELD;
+  public static final int HOUR_OF_DAY0_FIELD;
+  public static final int HOUR_OF_DAY1_FIELD;
+  public static final int LONG;
+  public static final int MEDIUM;
+  public static final int MILLISECOND_FIELD;
+  public static final int MINUTE_FIELD;
+  public static final int MONTH_FIELD;
+  public static final int SECOND_FIELD;
+  public static final int SHORT;
+  public static final int TIMEZONE_FIELD;
+  public static final int WEEK_OF_MONTH_FIELD;
+  public static final int WEEK_OF_YEAR_FIELD;
+  public static final int YEAR_FIELD;
+  // Variables
+  protected Calendar calendar;
+  protected NumberFormat numberFormat;
+  // Constructors
+  protected DateFormat();
+  // Class Methods
+  public static Locale[] getAvailableLocales();
+  public static final DateFormat getDateInstance();
+  public static final DateFormat getDateInstance(int style);
+  public static final DateFormat getDateInstance(int style, Locale aLocale);
+  public static final DateFormat getDateTimeInstance();
+  public static final DateFormat getDateTimeInstance(int dateStyle, 
+                                 int timeStyle);
+  public static final DateFormat getDateTimeInstance(int dateStyle, 
+                                 int timeStyle, Locale aLocale);
+  public static final DateFormat getInstance();
+  public static final DateFormat getTimeInstance();
+  public static final DateFormat getTimeInstance(int style);
+  public static final DateFormat getTimeInstance(int style, Locale aLocale);
+  // Instance Methods
+  public Object clone();
+  public boolean equals(Object obj); 
+  public final String format(Date date);
+  public final StringBuffer format(Object obj, StringBuffer toAppendTo, 
+                            FieldPosition fieldPosition); 
+  public abstract StringBuffer format(Date date, StringBuffer toAppendTo, 
+                               FieldPosition fieldPosition);
+  public Calendar getCalendar();
+  public NumberFormat getNumberFormat();
+  public TimeZone getTimeZone();
+  public int hashCode();
+  public boolean isLenient();
+  public Date parse(String text);
+  public abstract Date parse(String text, ParsePosition pos);
+  public Object parseObject(String source, ParsePosition pos); 
+  public void setCalendar(Calendar newCalendar);
+  public void setLenient(boolean lenient);
+  public void setNumberFormat(NumberFormat newNumberFormat);
+  public void setTimeZone(TimeZone zone);
+}
+Constants
+AM_PM_FIELD
+public final static int AM_PM_FIELD
+Description
+A field constant that represents the A.M./P.M. 
+field. 
+DATE_FIELD
+public final static int DATE_FIELD
+Description
+A field constant that represents the date (day of month) field. 
+DAY_OF_WEEK_FIELD
+public final static int DAY_OF_WEEK_FIELD
+Description
+A field constant that represents the day-of-the-week field. 
+DAY_OF_WEEK_IN_MONTH_FIELD
+public final static int DAY_OF_WEEK_IN_MONTH_FIELD
+Description
+A field constant that represents the day of the week in the current month 
+field. 
+DAY_OF_YEAR_FIELD
+public final static int DAY_OF_YEAR_FIELD
+Description
+A field constant that represents the day-of-the-year field. 
+DEFAULT
+public final static int DEFAULT
+Description
+A constant that specifies the default style. 
+ERA_FIELD
+public final static int ERA_FIELD
+Description
+A field constant that represents the era field. 
+FULL
+public final static int FULL
+Description
+A constant that specifies the most complete style. 
+HOUR0_FIELD
+public final static int HOUR0_FIELD
+Description
+A field constant that represents the zero-based 
+hour field. 
+HOUR1_FIELD
+public final static int HOUR1_FIELD
+Description
+A field constant that represents the one-based 
+hour field. 
+HOUR_OF_DAY0_FIELD
+public final static int HOUR_OF_DAY0_FIELD
+Description
+A field constant that represents the zero-based 
+hour of the day field. 
+HOUR_OF_DAY1_FIELD
+public final static int HOUR_OF_DAY1_FIELD
+Description
+A field constant that represents the one-based 
+hour of the day field. 
+LONG
+public final static int LONG
+Description
+A constant that specifies the long style. 
+MEDIUM
+public final static int MEDIUM
+Description
+A constant that specifies the medium style. 
+MILLISECOND_FIELD
+public final static int MILLISECOND_FIELD
+Description
+A field constant that represents the millisecond 
+field. 
+MINUTE_FIELD
+public final static int MINUTE_FIELD
+Description
+A field constant that represents the minute field. 
+MONTH_FIELD
+public final static int MONTH_FIELD
+Description
+A field constant that represents the month field. 
+SECOND_FIELD
+public final static int SECOND_FIELD
+Description
+A field constant that represents the second field. 
+SHORT
+public final static int SHORT
+Description
+A constant that specifies the short style. 
+TIMEZONE_FIELD
+public final static int TIMEZONE_FIELD
+Description
+A field constant that represents the time-zone 
+field. 
+WEEK_OF_MONTH_FIELD
+public final static int WEEK_OF_MONTH_FIELD
+Description
+A field constant that represents the week-of-the-month field. 
+WEEK_OF_YEAR_FIELD
+public final static int WEEK_OF_YEAR_FIELD
+Description
+A field constant that represents the week-of-the-year field. 
+YEAR_FIELD
+public final static int YEAR_FIELD
+Description
+A field constant that represents the year field. 
+Variables
+calendar
+protected Calendar calendar
+Description
+A Calendar object that 
+internally generates the field values for formatting dates and times. 
+numberFormat
+protected NumberFormat numberFormat
+Description
+A NumberFormat object that 
+internally formats the numbers in dates and times. 
+Constructors
+DateFormat
+protected DateFormat()
+Description
+This constructor creates a DateFormat. 
+Class Methods
+getAvailableLocales
+public static Locale[] getAvailableLocales()
+Returns
+An array of Locale objects. 
+Description
+This method returns an array of the Locale 
+objects for which this class can create DateFormat 
+objects. 
+getDateInstance
+public static final DateFormat getDateInstance()
+Returns
+A DateFormat appropriate for 
+the default Locale that uses 
+the default style. 
+Description
+This method creates a DateFormat 
+that formats and parses dates in the default locale 
+with the default style. 
+public static final DateFormat getDateInstance(int style)
+Parameters
+style
+A style constant. 
+Returns
+A DateFormat appropriate for 
+the default Locale that uses 
+the given style. 
+Description
+This method creates a DateFormat 
+that formats and parses dates in the default locale 
+with the given style. 
+   public static final DateFormat getDateInstance(int style, Locale aLocale)  
+Parameters
+style
+A style constant.
+aLocale
+The Locale to use. 
+Returns
+A DateFormat appropriate for 
+the given Locale that uses 
+the given style. 
+Description
+This method creates a DateFormat 
+that formats and parses dates in the given locale with 
+the given style. 
+getDateTimeInstance
+public static final DateFormat getDateTimeInstance()
+Returns
+A DateFormat appropriate for 
+the default Locale that uses 
+the default date and time styles. 
+Description
+This method creates a DateFormat 
+that formats and parses dates and times in the default 
+locale with the default date and time styles. 
+   public static final DateFormat getDateTimeInstance(int dateStyle, int timeStyle)  
+Parameters
+dateStyle
+A style constant.
+timeStyle
+A style constant. 
+Returns
+A DateFormat appropriate for 
+the default Locale that uses 
+the given data and time styles. 
+Description
+This method creates a DateFormat 
+that formats and parses dates and times in the default 
+locale with the given date and time styles. 
+   public static final DateFormat getDateTimeInstance(int dateStyle, int timeStyle, Locale aLocale)  
+Parameters
+dateStyle
+A style constant.
+timeStyle
+A style constant.
+aLocale
+The Locale to use. 
+Returns
+A DateFormat appropriate for 
+the given Locale that uses 
+the given date and time styles. 
+Description
+This method creates a DateFormat 
+that formats and parses dates and times in the given 
+locale with the given date and time styles. 
+getInstance
+public static final DateFormat getInstance()
+Returns
+A DateFormat appropriate for 
+the default Locale. 
+Description
+This method creates a general purpose DateFormat 
+by calling getDateTimeInstance(DateFormat.SHORT, 
+DateFormat.SHORT). 
+getTimeInstance
+public static final DateFormat getTimeInstance()
+Returns
+A DateFormat appropriate for 
+the default Locale that uses 
+the default style. 
+Description
+This method creates a DateFormat 
+that formats and parses times in the default locale 
+with the default style. 
+public static final DateFormat getTimeInstance(int style)
+Parameters
+style
+A style constant. 
+Returns
+A DateFormat appropriate for 
+the default Locale that uses 
+the given style. 
+Description
+This method creates a DateFormat 
+that formats and parses times in the default locale 
+with the given style. 
+   public static final DateFormat getTimeInstance(int style, Locale aLocale)  
+Parameters
+style
+A style constant.
+aLocale
+The Locale to use. 
+Returns
+A DateFormat appropriate for 
+the given Locale that uses 
+the given style. 
+Description
+This method creates a DateFormat 
+that formats and parses times in the given locale with 
+the given style. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this DateFormat. 
+Overrides
+Format.clone() 
+Description
+This method creates a copy of this DateFormat 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of DateFormat 
+and is equivalent to this DateFormat. 
+format
+public final String format(Date date)
+Parameters
+date
+The Date 
+object to be formatted. 
+Returns
+A string that contains a formatted representation of the date. 
+Description
+This method formats the given date and returns the result as a string. 
+   public final StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition fieldPosition)  
+Parameters
+obj
+The object to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+fieldPosition
+A date or time field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the object appended to it. 
+Overrides
+Format.format(Object, 
+StringBuffer, FieldPosition) 
+Description
+This method formats the given object and appends the result to the given 
+StringBuffer. If fieldPosition 
+refers to one of the time or date fields, its beginning and ending indices 
+are filled with the beginning and ending positions of the given field in 
+the resulting formatted string. 
+   public abstract StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition)  
+Parameters
+date
+The Date 
+object to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+fieldPosition
+A date or time field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the date appended to it. 
+Description
+This method formats the given date and appends the result to the given 
+StringBuffer. If fieldPosition 
+refers to one of the time or date fields, its beginning and ending indices 
+are filled with the beginning and ending positions of the given field in 
+the resulting formatted string. 
+getCalendar
+public Calendar getCalendar()
+Returns
+The internal Calendar 
+object of this DateFormat. 
+Description
+This method returns the Calendar 
+object that this DateFormat 
+uses internally. 
+getNumberFormat
+public NumberFormat getNumberFormat()
+Returns
+The internal NumberFormat 
+object of this DateFormat. 
+Description
+This method returns the NumberFormat 
+object that this DateFormat 
+uses internally. 
+getTimeZone
+public TimeZone getTimeZone()
+Returns
+The internal TimeZone 
+object of this DateFormat. 
+Description
+This method returns the TimeZone 
+object that this DateFormat 
+uses internally. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this DateFormat. 
+isLenient
+public boolean isLenient()
+Returns
+A boolean value that indicates 
+the leniency of this DateFormat. 
+Description
+This method returns the current leniency of this DateFormat. 
+A value of false indicates 
+that the DateFormat throws 
+exceptions when it tries to parse questionable data, while a value of true 
+indicates that the DateFormat 
+makes its best guess to interpret questionable data. For example, if the 
+DateFormat is being lenient, 
+a date such as March 135, 1997 is interpreted as the 135th 
+day after March 1, 1997. 
+parse
+public Date parse(String text) throws ParseException
+Parameters
+text
+The string to be parsed. 
+Returns
+The Date object represented 
+by the given string. 
+Throws
+ParseException
+If the text cannot be parsed as a date. 
+Description
+This method parses a date from the given string, starting from the beginning 
+of the string. 
+public abstract Date parse(String text, ParsePosition pos)
+Parameters
+text
+The string to be parsed.
+pos
+A ParsePosition 
+object that can specify a position in the string. 
+Returns
+The Date object represented 
+by the text starting at the given position. 
+Description
+This method parses a date from the given string, starting from the given 
+position. After the string has been parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text. 
+parseObject
+public Object parseObject(String source, ParsePosition pos)
+Parameters
+source
+The string to be parsed.
+pos
+A ParsePosition 
+object that can specify a position in the string. 
+Returns
+The object represented by the text starting at the given position. 
+Overrides
+Format.parseObject(String, 
+ParsePosition) 
+Description
+This method parses a date from the given string, starting from the given 
+position. After the string has been parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text. 
+setCalendar
+public void setCalendar(Calendar newCalendar)
+Parameters
+newCalendar
+The new Calendar to use. 
+Description
+This method sets the Calendar 
+that this DateFormat uses internally. 
+setLenient
+public void setLenient(boolean lenient)
+Parameters
+lenient
+A boolean 
+value that specifies the leniency of this DateFormat. 
+Description
+This method sets the leniency of this DateFormat. 
+A value of false specifies 
+that the DateFormat throws 
+exceptions when it tries to parse questionable data, while a value of true 
+indicates that the DateFormat 
+makes its best guess to interpret questionable data. For example, if the 
+Calendar is being lenient, 
+a date such as March 135, 1997 is interpreted as the 135th 
+day after March 1, 1997. 
+setNumberFormat
+public void setNumberFormat(NumberFormat newNumberFormat)
+Parameters
+newNumberFormat
+The new NumberFormat to use. 
+Description
+This method sets the NumberFormat 
+that this DateFormat uses internally. 
+setTimeZone
+public void setTimeZone(TimeZone zone)
+Parameters
+zone
+The new TimeZone to use. 
+Description
+This method sets the TimeZone 
+that this DateFormat uses internally. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+format(Object)
+Format
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+parseObject(String)
+Format
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+Cloneable, 
+Date, 
+FieldPosition, 
+Format, 
+Locale, 
+NumberFormat, 
+ParsePosition, 
+String, 
+StringBuffer, 
+TimeZone 
+Collator
+DateFormatSymbols
+ 
+ 
+ 
+ 
+ 
+ 
+ 

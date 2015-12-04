@@ -1,0 +1,168 @@
+
+[Chapter 11] 11.6 Formatted Messages
+Chapter 11Internationalization
+11.6 Formatted Messages
+We've seen that in order to internationalize programs, you
+must place all user-visible messages into resource bundles.
+This is straightforward when the text to be localized
+consists of simple labels like those on buttons and menu
+items.  It is trickier, however, with messages that consist
+partially of static text and partially of dynamic values.
+For example, a compiler might have to display a message like
+"Error at line 5 of file 'hello.java'," in which the line
+number and filename are dynamic and locale-independent, while
+the rest of the message is static and needs to be localized.
+The MessageFormat class of the java.text
+package helps tremendously with these types of messages.  To
+use it, you store only the static parts of a message in the
+ResourceBundle and include special characters that
+indicate where the dynamic parts of the message are to be
+placed.  For example, one resource bundle might contain the
+message: "Error at line {0} of file {1}."  And another
+resource bundle might contain a "translation" that looks
+like this: "Erreur: {1}: {0}."
+To use such a localized message, you create a
+MessageFormat object from the static part of the
+message, and then call its format() method, passing
+in an array of the values to be substituted.  In this case,
+the array would contain an Integer object that
+specifies the line number and a String object that
+specifies the filename.  The MessageFormat class
+knows about other Format classes defined in
+java.text.  It creates and uses
+NumberFormat objects to format numbers and
+DateFormat objects to format dates and times.  In
+addition, you can design messages that create
+ChoiceFormat objects to convert from numbers to
+strings--this is useful when working with enumerated types
+such as numbers that correspond to month names, or when you
+need to use the singular or plural form of a word based on
+the value of some number.
+Example 11.6
+demonstrates this kind of MessageFormat usage.  It
+is a convenience class with a single static method for the
+localized display of exception and error messages. When
+invoked, the code attempts to load a ResourceBundle
+with the basename "Errors."  If found, it looks up a message resource
+using the class name of the exception object that was
+passed.  If such a resource is found, it is used to display
+the error message.  An array of five values is passed to the
+format() method.  The localized error message can
+include any or all of these arguments.
+The LocalizedError.display() method defined in this
+example was used in Example 11.1
+at the beginning of this chapter. Example 11.7
+shows the default Errors.properties resource bundle used in
+conjunction with that example.  Error message display for
+the program is nicely internationalized.  Porting the
+program's error message to a new locale is simply a matter of
+translating (localizing) the Errors.properties file.
+Example 11.6: Internationalizing Error Message Display with MessageFormat
+import java.text.*;
+import java.io.*;
+import java.util.*;
+/**
+ * A convenience class that can display a localized exception message
+ * depending on the class of the exception.  It uses a MessageFormat,
+ * and passes five arguments that the localized message may include:
+ *   {0}: the message included in the exception or error.
+ *   {1}: the full class name of the exception or error.
+ *   {2}: a guess at what file the exception was caused by.
+ *   {3}: a line number in that file.
+ *   {4}: the current date and time.
+ * Messages are looked up in a ResourceBundle with the basename
+ * "Errors," using the full class name of the exception object as
+ * the resource name.  If no resource is found for a given exception
+ * class, the superclasses are checked.
+ */
+public class LocalizedError {
+  public static void display(Throwable error) {
+    ResourceBundle bundle;
+    // Try to get the resource bundle.
+    // If none, print the error in a non-localized way.
+    try { bundle = ResourceBundle.getBundle("Errors"); }
+    catch (MissingResourceException e) {
+      error.printStackTrace(System.err);
+      return;
+    }
+    // Look up a localized message resource in that bundle, using the
+    // classname of the error (or its superclasses) as the resource name.
+    // If no resource was found, display the error without localization.
+    String message = null;
+    Class c = error.getClass();
+    while((message == null) &amp;&amp; (c != Object.class)) {
+      try { message = bundle.getString(c.getName()); }
+      catch (MissingResourceException e) { c = c.getSuperclass(); }
+    }
+    if (message == null) { error.printStackTrace(System.err);  return; }
+    // Try to figure out the filename and line number of the
+    // exception.  Output the error's stack trace into a string, and
+    // use the heuristic that the first line number that appears in
+    // the stack trace is after the first or  second colon.  We assume that
+    // this stack frame is the first one the programmer has any control
+    // over, and so report it as the location of the exception.
+    String filename = "";
+    int linenum = 0;
+    try {
+      StringWriter sw = new StringWriter();    // Output stream into a string.
+      PrintWriter out = new PrintWriter(sw);   // PrintWriter wrapper.
+      error.printStackTrace(out);              // Print stacktrace.
+      String trace = sw.toString();            // Get it as a string.
+      int pos = trace.indexOf(':');            // Look for first colon.
+      if (error.getMessage() != null)          // If the error has a message
+        pos = trace.indexOf(':', pos+1);       // look for second colon.
+      int pos2 = trace.indexOf(')', pos);      // Look for end of line number.
+      linenum = Integer.parseInt(trace.substring(pos+1,pos2));  // Get linenum.
+      pos2 = trace.lastIndexOf('(', pos);      // Back to start of filename.
+      filename = trace.substring(pos2+1, pos); // Get filename.
+    }
+    catch (Exception e) { ; }                  // Ignore exceptions.
+    // Set up an array of arguments to use with the message.
+    String errmsg = error.getMessage();
+    Object[] args = {
+      ((errmsg!= null)?errmsg:""), error.getClass().getName(),
+      filename, new Integer(linenum), new Date()
+    };
+    // Finally, display the localized error message, using
+    // MessageFormat.format() to substitute the arguments into the message.
+    System.out.println(MessageFormat.format(message, args));
+  }
+}
+Example 11.7
+shows the resource bundle properties file used to localize
+the set of possible error messages that could be thrown by
+the ConvertEncoding class shown at the beginning of
+this chapter.  With a resource bundle like this,
+ConvertEncoding produces error messages like the following:
+Error: Specified encoding not supported
+        Error occurred at line 46 of file "ConvertEncoding.java"
+        at 7:55:28 PM on 08-Apr-97
+Example 11.7: A ResourceBundle Properties File Containing Localized Error Messages
+#
+# This is the file Errors.properties.
+# One property for each class of exceptions that our program might
+# report.  Note the use of backslashes to continue long lines onto the
+# next.  Also note the use of \n and \t for newlines and tabs.
+#
+java.io.FileNotFoundException: \
+Error: File "{0}" not found\n\t\
+Error occurred at line {3} of file "{2}"\n\tat {4}
+java.io.UnsupportedEncodingException: \
+Error: Specified encoding not supported\n\t\
+Error occurred at line {3} of file "{2}"\n\tat {4,time} on {4,date}
+java.io.CharConversionException:\
+Error: Character conversion failure.  Input data is not in specified format.
+# A generic resource.  Display a message for any error or exception that
+# is not handled by a more specific resource.
+java.lang.Throwable:\
+Error: {1}: {0}\n\t\
+Error occurred at line {3} of file "{2}"\n\t{4,time,long} {4,date,long}
+Localizing User-Visible Messages
+Reflection
+ 
+ 
+ 
+ 
+ 
+ 
+ 

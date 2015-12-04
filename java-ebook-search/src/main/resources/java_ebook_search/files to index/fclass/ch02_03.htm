@@ -1,0 +1,88 @@
+
+[Chapter 2] 2.3 String Concatenation
+Chapter 2Strings and Related Classes
+2.3 String Concatenation
+Java's string concatenation operator (+) 
+provides special support for the String 
+and StringBuffer classes. If 
+either operand of the binary + 
+operator is a reference to a String 
+or StringBuffer object, the 
+operator is the string concatenation operator instead of the arithmetic 
+addition operator. The string concatenation operator produces a new String 
+object that contains the concatenation of its operands; the characters 
+of the left operand precede the characters of the right operand in the 
+newly created string. 
+If one of the operands of the + 
+operator is a reference to a string object and the other is not, the operator 
+converts the nonstring operand to a string object using the following 
+rules: 
+A null operand is converted 
+to the string literal "null". 
+If the operand is a non-null
+reference to an object that is not a string, the object's
+toString() method is called. The result of the
+conversion is the value returned by the object's
+toString() method, unless the return value is
+null, in which case the result of the conversion is
+the string literal "null".
+A char operand is converted 
+to a reference to a string object that has a length of one and contains 
+that character. 
+An integer operand (other than
+char) is converted to a string object that contains
+the base 10 string representation of its value. If the value is
+negative, the string starts with a minus sign; if it is positive there
+is no sign character. If the value is zero, the result of the
+conversion is "0".  Otherwise, the string
+representation of the integer does not have any leading zeros.
+If the operand is a floating-point value, the exact string representation 
+depends on the value being converted. If its absolute value is greater 
+than or equal to 10^-3 or 
+less than or equal to 10^7, 
+it is converted to a string with an optional minus sign (if the value is 
+negative) followed by up to eight digits before the decimal point, a decimal 
+point, and the necessary number of digits after the decimal point (but 
+no trailing zero if there is more than one significant digit). There is 
+always a minimum of one digit after the decimal point. 
+Otherwise, the value is converted to a string with an optional minus sign 
+(if the value is negative), followed by a single digit, a decimal point, 
+the necessary number of digits after the decimal point (but no trailing 
+zero if there is more than one significant digit), and the letter E 
+followed by a plus or a minus sign and a base 10 exponent of at least one 
+digit. Again, there is always a minimum of one digit after the decimal 
+point. 
+The values NaN, NEGATIVE_INFINITY, 
+POSITIVE_INFINITY, -0.0, 
+and +0.0 are represented by 
+the strings "NaN", "--Infinity", 
+"Infinity", "--0.0", 
+and "0.0", respectively. 
+A boolean operand is converted 
+to either the string literal "true" 
+or the string literal "false". 
+The following is a code example that uses the string concatenation 
+operator: 
+// format seconds into hours, minutes, and seconds
+String formatTime(int t) {
+    int minutes, seconds;
+    seconds = t%60;
+    t /= 60;
+    minutes = t%60;
+    return t/60 + ":" + minutes + ":" + seconds;
+}
+Java uses StringBuffer objects 
+to implement string concatenation. Consider the following code: 
+String s, s1, s2;
+s = s1 + s2
+To compute the string concatenation, Java's compiler generates this code: 
+s = new StringBuffer().append(s1).append(s2).toString()
+StringBuffer
+StringTokenizer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

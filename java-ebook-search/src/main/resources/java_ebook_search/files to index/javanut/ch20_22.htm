@@ -1,0 +1,40 @@
+
+[Chapter 20] 20.22 java.awt.event.MouseListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.22 java.awt.event.MouseListener (JDK 1.1)
+This interface defines the methods that an object must
+implement to "listen" for mouse events on AWT components.
+When a MouseEvent occurs, an AWT component
+notifies its registered MouseListener objects (or
+MouseMotionListener objects if the event involves
+mouse motion) by invoking one of their methods.
+An easy way to implement this interface is by subclassing
+the MouseAdapter class.
+public abstract interface MouseListener extends EventListener {
+    // Public Instance Methods
+            public abstract void mouseClicked(MouseEvent e);
+            public abstract void mouseEntered(MouseEvent e);
+            public abstract void mouseExited(MouseEvent e);
+            public abstract void mousePressed(MouseEvent e);
+            public abstract void mouseReleased(MouseEvent e);
+}
+Implemented By:
+AWTEventMulticaster, 
+MouseAdapter
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Component.addMouseListener(), 
+Component.removeMouseListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.MouseEvent (JDK 1.1)
+java.awt.event.MouseMotionAdapter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

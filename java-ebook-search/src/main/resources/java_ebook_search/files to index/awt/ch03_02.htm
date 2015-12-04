@@ -1,0 +1,336 @@
+
+[Chapter 3] 3.2 FontMetrics
+Chapter 3Fonts and Colors
+3.2 FontMetrics
+The abstract FontMetrics class 
+provides the tools for calculating the actual width and height of text 
+when displayed on the screen. You can use the results to position objects 
+around text or to provide special effects like shadows and underlining. 
+Like the Graphics class, FontMetrics 
+is abstract. The run-time Java platform provides a concrete implementation 
+of FontMetrics. You don't 
+have to worry about the actual class; it is guaranteed to implement all 
+the methods of FontMetrics. 
+In case you're curious, on a Windows 95 platform, either the class sun.awt.win32.Win32FontMetrics 
+ (JDK1.0) or the class sun.awt.windows.WFontMetrics 
+(JDK1.1) extends FontMetrics. 
+On a UNIX/Motif platform, the class is sun.awt.motif.X11FontMetrics. 
+With the Macintosh, the class is sun.awt.macos.MacFontMetrics. 
+If you're not using the JDK, the class names may be different, but the 
+principle still applies: you don't have to worry about the concrete 
+class. 
+The FontMetrics ClassVariables
+protected Font font 
+The font whose metrics are contained in this FontMetrics object; use the getFont() method 
+to get the value. 
+Constructors
+protected FontMetrics (Font font) 
+There is no visible constructor for FontMetrics. 
+Since the class is abstract, you cannot create a FontMetrics 
+object. The way to get the FontMetrics 
+for a font is to ask for it. Through the current graphics context, call 
+the method getGraphics().getFontMetrics() 
+to retrieve the FontMetrics 
+for the current font. If a graphics context isn't available, you 
+can get a FontMetrics object 
+from the default Toolkit by 
+calling the method Toolkit.getDefaultToolkit().getFontMetrics (aFontObject). 
+Font height
+Four variables describe the height of a font: leading (pronounced like 
+the metal), ascent, descent, and height. Leading is the amount of space 
+required between lines of the same font. Ascent is the space above the 
+baseline required by the tallest character in the font. Descent is the 
+space required below the baseline by the lowest descender (the "tail" 
+of a character like "y"). Height is the total of the three: 
+ascent, baseline, and descent. Figure 3.1 shows these 
+values graphically. 
+Figure 3.1: Font height metrics
+If that were the entire story, it would be simple. Unfortunately, it isn't. 
+Some special characters (for example, capitals with umlauts or accents) 
+are taller than the "tallest" character in the font; so Java 
+defines a value called maxAscent to account for these. Similarly, some 
+characters descend below the "greatest" descent, so Java defines 
+a maxDescent to handle these cases. 
+NOTE: 
+It seems that on Windows and Macintosh platforms there is no difference 
+between the return values of getMaxAscent() 
+and getAscent(), or between 
+getMaxDescent() and getDescent(). 
+On UNIX platforms, they sometimes differ. For developing truly portable 
+applications, the max methods should be used where necessary. 
+public int getLeading () 
+The getLeading()method retrieves the leading required for the FontMetrics of the font. The units for 
+this measurement are pixels. 
+public int getAscent () 
+The getAscent()method retrieves the space above the baseline required 
+for the tallest character in the font. The units for this measurement are 
+pixels. You cannot get the ascent value for a specific character. 
+public int getMaxAscent () 
+getMaxAscent() retrieves the 
+height above the baseline for the character that's really the tallest 
+character in the font, taking into account accents, umlauts, tildes, and 
+other special marks. The units for this measurement are pixels. If you 
+are using only ordinary ASCII characters below 128 (i.e., the English language 
+character set), getMaxAscent() 
+is not necessary. 
+If you're using getMaxAscent(), 
+avoid getHeight(); getHeight() 
+is based on getAscent() and 
+doesn't account for extra space. 
+For some fonts and platforms, getAscent() 
+may include the space for the diacritical marks. 
+public int getDescent () 
+The getDescent() method retrieves 
+the space below the baseline required for the deepest character for the 
+font. The units for this measurement are pixels. You cannot get the descent 
+value for a specific character. 
+public int getMaxDescent () public int getMaxDecent () 
+Some fonts may have special characters that extend farther below the baseline 
+than the value returned by getDescent(). 
+getMaxDescent() returns the 
+real maximum descent for the font, in pixels. In most cases, you can still 
+use the getDescent() method; visually, 
+it is okay for an occasional character to extend into the space between 
+lines. However, if it is absolutely, positively necessary that the descent 
+space does not overlap with the next line's ascent requirements, 
+use getMaxDescent() and avoid 
+getDescent() and getHeight(). 
+An early beta release of the AWT API included the method getMaxDecent(). 
+It is left for compatibility with early beta code. Avoid using it; it is 
+identical to getMaxDescent() 
+in every way except spelling. Unfortunately, it is not flagged as deprecated. 
+public int getHeight () 
+The getHeight() method returns 
+the sum of getDescent(), getAscent(), 
+and getLeading(). In most cases, 
+this will be the distance between successive baselines when you are displaying 
+multiple lines of text. The height of a font in pixels is not necessarily 
+the size of a font in points. 
+Don't use getHeight() 
+if you are displaying characters with accents, umlauts, and other marks 
+that increase the character's height. In this case, compute the height 
+yourself using the getMaxAscent() method. 
+Likewise, you shouldn't use the method getHeight() 
+if you are using getMaxDescent() 
+instead of getDescent(). 
+Character width
+In the horizontal dimension, positioning characters is relatively simple: 
+you don't have to worry about ascenders and descenders, you only 
+have to worry about how far ahead to draw the next character after you 
+have drawn the current one. The "how far" is called the advance 
+width of a character. For most cases, the advance width is the actual width 
+plus the intercharacter space. However, it's not a good idea to 
+think in these terms; in many cases, the intercharacter 
+space is actually negative (i.e., the bounding boxes for two adjacent characters 
+overlap). For example, consider an italic font. The top right corner of 
+one character probably extends beyond the character's advance width, 
+overlapping the next character's bounding box. (To see this, look 
+back at Figure 3.1; in particular, look at the ll 
+in O'Reilly.) If you think purely in terms of the advance width (the 
+amount to move horizontally after drawing a character), you won't 
+run into trouble. Obviously, the advance width depends on the character, 
+unless you're using a fixed width font. 
+public int charWidth (char character) 
+This version of the charWidth() 
+method returns the advance width of the given character 
+in pixels. 
+public int charWidth (int character) 
+The charWidth() method returns 
+the advance width of the given character 
+in pixels. Note that the argument has type int rather than char. This version 
+is useful when overriding the Component.keyDown() 
+method, which gets the integer value of the character pressed as a parameter. 
+With the KeyEvent class, you 
+should use the previous version with its getKeyChar() 
+method.
+public int stringWidth (String string) 
+The stringWidth() method calculates 
+the advance width of the entire string 
+in pixels. Among other things, you can use the results to underline or 
+center text within an area of the screen. Example 3.1 
+and Figure 3.2 show an example that centers several 
+text strings (taken from the command-line arguments) in a Frame. 
+Example 3.1: Centering Text in a Frame
+import java.awt.*;
+public class Center extends Frame {
+    static String text[];
+    private Dimension dim;
+    static public void main (String args[]) {
+        if (args.length == 0) {
+            System.err.println ("Usage: java Center &lt;some text&gt;");
+            return;
+        }
+        text = args;
+        Center f = new Center();
+        f.show();
+    }
+    public void addNotify() {
+        super.addNotify();
+        int maxWidth = 0;
+        FontMetrics fm = getToolkit().getFontMetrics(getFont());
+        for (int i=0;i&lt;text.length;i++) {
+            maxWidth = Math.max (maxWidth, fm.stringWidth(text[i]));
+        }
+        Insets inset = insets();
+        dim = new Dimension (maxWidth + inset.left + inset.right,
+            text.length*fm.getHeight() + inset.top + inset.bottom);
+        resize (dim);
+    }
+    public void paint (Graphics g) {
+        g.translate(insets().left, insets().top);
+        FontMetrics fm = g.getFontMetrics();
+        for (int i=0;i&lt;text.length;i++) {
+            int x,y;
+            x = (size().width - fm.stringWidth(text[i]))/2;
+            y = (i+1)*fm.getHeight()-1;
+            g.drawString (text[i], x, y);
+        }
+    }
+}
+Figure 3.2: Centering text in a frame
+This application extends the Frame 
+class. It stores its command-line arguments in the String 
+array text[]. The addNotify() 
+method sizes the frame appropriately. It computes the size needed to display 
+the arguments and resizes the Frame 
+accordingly. To compute the width, it takes the longest stringWidth() 
+and adds the left and right insets. To compute the height, it takes the 
+current font's height, multiplies it by the number of lines to display, 
+and adds insets. Then it is up to the paint() 
+method to use stringWidth() 
+and getHeight() to figure out 
+where to put each string. 
+public int charsWidth (char data[], int offset, int length) 
+The charsWidth() method allows 
+you to calculate the advance width of the char array data, 
+without first converting data 
+to a String and calling the stringWidth() method. 
+The offset specifies the element 
+of data to start with; length specifies the number of elements to use. The first element of the array 
+has an offset of zero. If offset 
+or length is invalid, charsWidth() 
+throws the run-time exception ArrayIndexOutOfBoundsException. 
+public int bytesWidth (byte data[], int offset, int length) 
+The bytesWidth() method allows 
+you to calculate the advance width of the byte array data, 
+without first converting data 
+to a String and calling the stringWidth()method. 
+The offset specifies the element 
+of data to start with; length 
+specifies the number of elements to use. The first element of the array 
+has an offset of zero. If offset 
+or length is invalid, bytesWidth() 
+throws the run-time exception 
+ArrayIndexOutOfBoundsException. 
+public int[] getWidths () 
+The getWidths() method returns 
+an integer array of the advance widths of the first 255 characters in the 
+FontMetrics font. getWidths() 
+is very useful if you are continually looking up the widths of ASCII characters. 
+Obtaining the widths as an array and looking up individual character widths 
+yourself results in less method invocation overhead than making many calls 
+to charWidth(). 
+public int getMaxAdvance () 
+The getMaxAdvance() method 
+returns the advance pixel width of the widest character in the font. This 
+allows you to reserve enough space for characters before you know what 
+they are. If you know you are going to display only ASCII characters, you 
+are better off calculating the maximum value returned from getWidths(). 
+When unable to determine the width in advance, the method getMaxAdvance() 
+returns -1. 
+Miscellaneous methods
+public Font getFont () 
+The getFont() method returns 
+the specific font for this FontMetrics 
+instance. 
+public String toString () 
+The toString() method of FontMetrics 
+returns a string displaying the current font, ascent, descent, and height. 
+For example: 
+sun.awt.win32.Win32FontMetrics[font=java.awt.Font[family=TimesRoman,
+name=TimesRoman,style=bolditalic,size=20]ascent=17, descent=6, height=24]
+Because this is an abstract class, the concrete implementation could return 
+something different. 
+Font Display Example
+Example 3.2 displays all the available fonts in the different styles 
+at 12 points. The code uses the FontMetrics 
+methods to ensure that there is enough space for each line. Figure 3.3 
+shows the results, using the Java 1.0 font names, on several platforms.
+Example 3.2: Font Display
+import java.awt.*;
+public class Display extends Frame {
+    static String[] fonts;
+    private Dimension dim;
+    Display () {
+        super ("Font Display");
+        fonts = Toolkit.getDefaultToolkit().getFontList();
+    }
+    public void addNotify() {
+        Font f;
+        super.addNotify();
+        int height   = 0;
+        int maxWidth = 0;
+        final int vMargin  = 5, hMargin = 5;
+        for (int i=0;i&lt;fonts.length;i++) {
+            f = new Font (fonts[i], Font.PLAIN, 12);
+            height += getHeight (f);
+            f = new Font (fonts[i], Font.BOLD, 12);
+            height += getHeight (f);
+            f = new Font (fonts[i], Font.ITALIC, 12);
+            height += getHeight (f);
+            f = new Font (fonts[i], Font.BOLD | Font.ITALIC, 12);
+            height += getHeight (f);
+            maxWidth = Math.max (maxWidth, getWidth (f, fonts[i] + " BOLDITALIC"));
+        }
+        Insets inset = insets();
+        dim = new Dimension (maxWidth + inset.left + inset.right + hMargin,
+                        height + inset.top + inset.bottom + vMargin);
+        resize (dim);
+    }
+    static public void main (String args[]) {
+        Display f = new Display();
+        f.show();
+    }
+    private int getHeight (Font f) {
+        FontMetrics fm = Toolkit.getDefaultToolkit().getFontMetrics(f);
+        return fm.getHeight();
+    }
+    private int getWidth (Font f, String s) {
+        FontMetrics fm = Toolkit.getDefaultToolkit().getFontMetrics(f);
+        return fm.stringWidth(s);
+    }
+    public void paint (Graphics g) {
+        int x = 0;
+        int y = 0;
+        g.translate(insets().left, insets().top);
+        for (int i=0;i&lt;fonts.length;i++) {
+            Font plain = new Font (fonts[i], Font.PLAIN, 12);
+            Font bold = new Font (fonts[i], Font.BOLD, 12);
+            Font italic = new Font (fonts[i], Font.ITALIC, 12);
+            Font bolditalic = new Font (fonts[i], Font.BOLD | Font.ITALIC, 12);
+            g.setFont (plain);
+            y += getHeight (plain);
+            g.drawString (fonts[i] + " PLAIN", x, y);
+            g.setFont (bold);
+            y += getHeight (bold);
+            g.drawString (fonts[i] + " BOLD", x, y);
+            g.setFont (italic);
+            y += getHeight (italic);
+            g.drawString (fonts[i] + " ITALIC", x, y);
+            g.setFont (bolditalic);
+            y += getHeight (bolditalic);
+            g.drawString (fonts[i] + " BOLDITALIC", x, y);
+        }
+        resize (dim);
+    }
+}
+Figure 3.3: Fonts available with the Netscape Navigator 3.0 and Internet Explorer 3.0
+Fonts
+Color
+ 
+ 
+ 
+ 
+ 
+ 
+ 

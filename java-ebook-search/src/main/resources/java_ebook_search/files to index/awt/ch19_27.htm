@@ -1,0 +1,861 @@
+
+[Chapter 19] Graphics
+Chapter 19java.awt Reference
+Graphics
+Name
+Graphics
+Description
+The Graphics class is an abstract 
+class that represents an object on which you can draw. The concrete classes 
+that are actually used to represent graphics objects are platform dependent, 
+but because they extend the Graphics 
+class, must implement the methods here. 
+Class Definition
+public abstract class java.awt.Graphics
+    extends java.lang.Object {
+  
+  // Constructors
+  protected Graphics();
+  
+  // Instance Methods
+  public abstract void clearRect (int x, int y, int width, int height);
+  public abstract void clipRect (int x, int y, int width, int height);
+  public abstract void copyArea (int x, int y, int width, int height, 
+      int deltax, int deltay);
+  public abstract Graphics create();
+  public Graphics create (int x, int y, int width, int height);
+  public abstract void dispose();
+  public void draw3DRect (int x, int y, int width, int height, 
+      boolean raised);
+  public abstract void drawArc (int x, int y, int width, int height, 
+      int startAngle, int arcAngle);
+  public void drawBytes (byte text[], int offset, int length, 
+      int x, int y);
+  public void drawChars (char text[], int offset, int length, 
+      int x, int y);
+  public abstract boolean drawImage (Image image, int x, int y, 
+      ImageObserver observer);
+  public abstract boolean drawImage (Image image, int x, int y, 
+      int width, int height, ImageObserver observer);
+  public abstract boolean drawImage (Image image, int x, int y, 
+      Color backgroundColor, ImageObserver observer);
+  public abstract boolean drawImage (Image image, int x, int y, 
+      int width, int height, Color backgroundColor, ImageObserver observer);
+  public abstract boolean drawImage(Image img, int dx1, int dy1, 
+      int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver 
+      observer); 
+  public abstract boolean drawImage(Image img, int dx1, int dy1, 
+      int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, Color bgcolor, 
+      ImageObserver observer); 
+  public abstract void drawLine (int x1, int y1, int x2, int y2);
+  public abstract void drawOval (int x, int y, int width, int height);
+  public abstract void drawPolygon (int xPoints[], int yPoints[], 
+      int numPoints);
+  public void drawPolygon (Polygon p);
+  public abstract void drawPolyline(int[ ] xPoints, int[ ] yPoints, 
+      int nPoints); 
+  public void drawRect (int x, int y, int width, int height);
+  public abstract void drawRoundRect (int x, int y, int width, 
+      int height, int arcWidth, int arcHeight);
+  public abstract void drawString (String text, int x, int y);
+  public void fill3DRect (int x, int y, int width, int height, 
+      boolean raised);
+  public abstract void fillArc (int x, int y, int width, int height, 
+      int startAngle, int arcAngle);
+  public abstract void fillOval (int x, int y, int width, int height);
+  public abstract void fillPolygon (int xPoints[], int yPoints[], 
+      int numPoints);
+  public void fillPolygon (Polygon p);
+  public abstract void fillRect (int x, int y, int width, int height);
+  public abstract void fillRoundRect (int x, int y, int width, 
+      int height, int arcWidth, int arcHeight);
+  public void finalize();
+  public abstract Shape getClip(); 
+  public abstract Rectangle getClipBounds(); 
+  public abstract Rectangle getClipRect();
+  public abstract Color getColor();
+  public abstract Font getFont();
+  public FontMetrics getFontMetrics();
+  public abstract FontMetrics getFontMetrics (Font font);
+  public abstract void setClip (int x, int y, int width, int height); 
+  public abstract void setClip (Shape clip); 
+  public abstract void setColor (Color color);
+  public abstract void setFont (Font font);
+  public abstract void setPaintMode();
+  public abstract void setXORMode (Color xorColor);
+  public String toString();
+  public abstract void translate (int x, int y);
+}
+Constructors
+Graphics
+protected Graphics()
+Description
+Called by constructors of platform specific subclasses. 
+Instance Methods
+clearRect
+public abstract void clearRect (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of origin 
+of area to clear. 
+y
+y coordinate of origin 
+of area to clear. 
+width
+size in horizontal 
+direction to clear. 
+height
+size in vertical direction 
+to clear. 
+Description
+Resets a rectangular area to the background color. 
+clipRect
+public abstract void clipRect (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of origin 
+of clipped area. 
+y
+y coordinate of origin 
+of clipped area. 
+width
+size in horizontal 
+direction to clip. 
+height
+size in vertical direction 
+to clip. 
+Description
+Reduces the drawing area to the intersection of the current drawing area 
+and the rectangular area defined by x, 
+y, width, 
+and height. 
+copyArea
+public abstract void copyArea (int x, int y, int width, int height, int deltax, int deltay)
+Parameters
+x
+x coordinate of origin 
+of area to copy. 
+y
+y coordinate of origin 
+of area to copy. 
+width
+size in horizontal 
+direction to copy. 
+height
+size in vertical direction 
+to copy. 
+deltax
+offset in horizontal 
+direction to copy area to. 
+deltay
+offset in vertical 
+direction to copy area to. 
+Description
+Copies a rectangular area to a new area, whose top left corner is (x+deltax, 
+y+deltay). 
+create
+public abstract Graphics create()
+Returns
+New graphics context. 
+Description
+Creates a second reference to the same graphics context. 
+public Graphics create (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of origin 
+of new graphics context. 
+y
+y coordinate of origin 
+of new graphics context. 
+width
+size in horizontal 
+direction. 
+height
+size in vertical direction. 
+Returns
+New graphics context 
+Description
+Creates a second reference to a subset of the same graphics context. 
+dispose
+public abstract void dispose()
+Description
+Frees system resources used by graphics context. 
+draw3DRect
+public void draw3DRect (int x, int y, int width, int height, boolean raised)
+Parameters
+x
+x coordinate of the rectangle 
+origin. 
+y
+y coordinate of the rectangle 
+origin 
+width
+Width of the rectangle 
+to draw. 
+height
+Height of the rectangle 
+to draw. 
+raised
+Determines if rectangle 
+drawn is raised or not; true 
+for a raised rectangle. 
+Description
+Draws an unfilled 3-D rectangle from (x, 
+y) of size width 
+x height. 
+drawArc
+public abstract void drawArc (int x, int y, int width, int height, int startAngle, int arcAngle)
+Parameters
+x
+x coordinate of the bounding 
+rectangle's origin. 
+y
+y coordinate of the bounding 
+rectangle's origin 
+width
+Width of the bounding 
+rectangle for the arc. 
+height
+Height of the bounding 
+rectangle for the arc. 
+startAngle
+Angle at which arc begins, in degrees 
+arcAngle
+length of arc, in 
+degrees 
+Description
+Draws an unfilled arc from startAngle 
+to arcAngle within bounding 
+rectangle from (x, y) 
+of size width x height. 
+Zero degrees is at three o'clock; positive angles are counter clockwise. 
+drawBytes
+public void drawBytes (byte text[], int offset, int length, int x, int y)
+Parameters
+text
+Text to draw, as a byte array. 
+offset
+Starting position within text to draw. 
+length
+Number of bytes to draw. 
+x
+x coordinate of baseline 
+origin. 
+y
+y coordinate of baseline 
+origin. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+offset or length 
+is invalid. 
+Description
+Draws text on screen, starting with text[offset] 
+and ending with text[offset+length-1]. 
+drawChars
+public void drawChars (char text[], int offset, int length, int x, int y)
+Parameters
+text
+Text to draw, as a char array. 
+offset
+Starting position within 
+text to draw. 
+length
+Number of bytes to draw. 
+x
+x coordinate of baseline 
+origin. 
+y
+y coordinate of baseline 
+origin. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+offset or length 
+is invalid. 
+Description
+Draws text on screen, starting with text[offset] 
+and ending with text[offset+length-1]. 
+drawImage
+public abstract boolean drawImage (Image image, int x, int y, ImageObserver observer)
+Parameters
+image
+Image to draw. 
+x
+x coordinate of image origin. 
+y
+y coordinate of image origin. 
+observer
+Object that watches 
+for image information; almost always this. 
+Returns
+true if the image has fully 
+loaded when the method returns, false 
+otherwise. 
+Description
+Draws image to screen at (x, 
+y), at its original size. Drawing 
+may be asynchronous. If image 
+is not fully loaded when the method returns, observer 
+is notified when additional information made available. 
+public abstract boolean drawImage (Image image, int x, int y, int width, int height, ImageObserver observer)
+Parameters
+image
+Image to draw. 
+x
+x coordinate of image origin. 
+y
+y coordinate of image origin. 
+width
+New image size in horizontal 
+direction. 
+height
+New image size in 
+vertical direction. 
+observer
+Object that watches 
+for image information; almost always this. 
+Returns
+true if the image has fully 
+loaded when the method returns, false 
+otherwise. 
+Description
+Draws image to screen at (x, 
+y), scaled to width 
+x height. Drawing may be asynchronous. 
+If image is not fully loaded 
+when the method returns, observer 
+is notified when additional information made available. 
+public abstract boolean drawImage (Image image, int x, int y, Color backgroundColor, ImageObserver observer)
+Parameters
+image
+Image to draw. 
+x
+x coordinate of image origin. 
+y
+y coordinate of image origin. 
+backgroundColor
+Color to 
+show through image where transparent. 
+observer
+Object that watches 
+for image information; almost always this. 
+Returns
+true if the image has fully 
+loaded when the method returns, false 
+otherwise. 
+Description
+Draws image to screen at (x, 
+y), at its original size. Drawing 
+may be asynchronous. If image 
+is not fully loaded when the method returns, observer 
+is notified when additional information made available. The background 
+color is visible through any transparent pixels. 
+public abstract boolean drawImage (Image image, int x, int y, int width, int height, Color backgroundColor, ImageObserver observer)
+Parameters
+image
+Image to draw. 
+x
+x coordinate of image origin. 
+y
+y coordinate of image origin. 
+width
+New image size in horizontal 
+direction. 
+height
+New image size in 
+vertical direction. 
+backgroundColor
+Color to 
+show through image where transparent. 
+observer
+Object that watches 
+for image information; almost always this. 
+Returns
+true if the image has fully 
+loaded when the method returns, false 
+otherwise. 
+Description
+Draws image to screen at (x, 
+y), scaled to width 
+x height. Drawing may be asynchronous. 
+If image is not fully loaded 
+when the method returns, observer 
+is notified when additional information made available. The background 
+color is visible through any transparent pixels. 
+public abstract boolean drawImage (Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, ImageObserver observer) 
+Parameters
+image
+Image to draw. 
+dx1
+x 
+coordinate of one corner of destination (device) rectangle. 
+dy1
+y coordinate of one 
+corner of destination (device) rectangle. 
+dx2
+x 
+coordinate of the opposite corner of destination (device) rectangle. 
+dy2
+y coordinate of the opposite corner of destination (device) rectangle. 
+sx1
+x 
+coordinate of one corner of source (image) rectangle. 
+sy1
+y coordinate of one corner of source (image) rectangle. 
+sx2
+x 
+coordinate of the opposite corner of source (image) rectangle. 
+sy2
+y coordinate of the opposite corner of source (image) rectangle. 
+observer
+Object that watches 
+for image information; almost always this. 
+Returns
+true if the image has fully 
+loaded when the method returns, false 
+otherwise. 
+Description
+Draws the part of image described by dx1, 
+dy1, dx2, 
+and dy2 to the screen into 
+the rectangle described by sx1, 
+sy1, sx2, 
+and sy2. Drawing may be asynchronous. 
+If image is not fully loaded 
+when the method returns, observer 
+is notified when additional information is made available. 
+public abstract boolean drawImage (Image image, int dx1, int dy1, int dx2, int dy2, int sx1, int sy1, int sx2, int sy2, Color backgroundColor, ImageObserver observer) 
+Parameters
+image
+Image to draw. 
+dx1
+x 
+coordinate of one corner of destination (device) rectangle. 
+dy1
+y coordinate of one corner of destination (device) rectangle. 
+dx2
+x 
+coordinate of the opposite corner of destination (device) rectangle. 
+dy2
+y coordinate of the opposite 
+corner of destination (device) rectangle. 
+sx1
+x 
+coordinate of one corner of source (image) rectangle. 
+sy1
+y coordinate of one 
+corner of source (image) rectangle. 
+sx2
+x 
+coordinate of the opposite corner of source (image) rectangle. 
+sy2
+y coordinate of the opposite 
+corner of source (image) rectangle. 
+backgroundColor
+Color to 
+show through image where transparent. 
+observer
+Object that watches 
+for image information; almost always this. 
+Returns
+true if the image has fully 
+loaded when the method returns, false 
+otherwise. 
+Description
+Draws the part of image described by dx1, 
+dy1, dx2, 
+and dy2 to the screen into 
+the rectangle described by sx1, 
+sy1, sx2, 
+and sy2. Drawing may be asynchronous. 
+If image is not fully loaded 
+when the method returns, observer 
+is notified when additional information made available. The background 
+color is visible through any transparent pixels. 
+drawLine
+public abstract void drawLine (int x1, int y1, int x2, int y2)
+Parameters
+x1
+x coordinate of one 
+point on line. 
+y1
+y coordinate of one 
+point on line. 
+x2
+x coordinate of the opposite 
+point on line. 
+y2
+y coordinate of the opposite 
+point on line. 
+Description
+Draws a line connecting (x1, y1) 
+and (x2, y2). 
+drawOval
+public abstract void drawOval (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of bounding 
+rectangle origin. 
+y
+y coordinate of bounding 
+rectangle origin 
+width
+Width of bounding rectangle 
+to draw in. 
+height
+Height of bounding 
+rectangle to draw in. 
+Description
+Draws an unfilled oval within bounding rectangle from (x, 
+y) of size width 
+x height. 
+drawPolygon
+public abstract void drawPolygon (int xPoints[], int yPoints[], int numPoints)
+Parameters
+xPoints[]
+The array of x coordinates for each point. 
+yPoints[]
+The array of y coordinates for each point. 
+numPoints
+The number of elements in both xPoints 
+and yPoints arrays to use. 
+Description
+Draws an unfilled polygon based on first numPoints 
+elements in xPoints and yPoints. 
+public void drawPolygon (Polygon p)
+Parameters
+p
+Points of object to draw. 
+Description
+Draws an unfilled polygon based on points within the Polygon 
+p. 
+drawPolyline
+public abstract void drawPolyline (int xPoints[], int yPoints[], int nPoints) 
+Parameters
+xPoints[]
+The array of x coordinates for each point. 
+yPoints[]
+The array of y coordinates for each point. 
+nPoints
+The number of elements in both xPoints 
+and yPoints arrays to use. 
+Description
+Draws a series of line segments based on first numPoints 
+elements in xPoints and yPoints. 
+drawRect
+public void drawRect (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of rectangle 
+origin. 
+y
+y coordinate of rectangle 
+origin 
+width
+Width of rectangle 
+to draw. 
+height
+Height of rectangle 
+to draw. 
+Description
+Draws an unfilled rectangle from (x, 
+y) of size width 
+x height. 
+drawRoundRect
+public abstract void drawRoundRect (int x, int y, int width, int height, int arcWidth, int arcHeight)
+Parameters
+x
+x coordinate of bounding 
+rectangle origin. 
+y
+y coordinate of bounding 
+rectangle origin 
+width
+Width of rectangle 
+to draw. 
+height
+Height of rectangle 
+to draw. 
+arcWidth
+Width of arc of 
+rectangle corner. 
+arcHeight
+Height of arc of 
+rectangle corner. 
+Description
+Draws an unfilled rectangle from (x, 
+y) of size width 
+x height with rounded corners. 
+drawString
+public abstract void drawString (String text, int x, int y)
+Parameters
+text
+Text to draw. 
+x
+x coordinate of baseline 
+origin. 
+y
+y coordinate of baseline 
+origin. 
+Description
+Draws text on screen. 
+fill3DRect
+public void fill3DRect (int x, int y, int width, int height, boolean raised)
+Parameters
+x
+x coordinate of rectangle 
+origin. 
+y
+y coordinate of rectangle 
+origin 
+width
+Width of rectangle 
+to draw. 
+height
+Height of rectangle 
+to draw. 
+raised
+true 
+to draw a rectangle that appears raised; false 
+to draw a rectangle that appears depressed. 
+Description
+Draws a filled 3-D rectangle from (x, 
+y) of size width 
+x height. 
+fillArc
+public abstract void fillArc (int x, int y, int width, int height, int startAngle, int arcAngle)
+Parameters
+x
+x coordinate of bounding 
+rectangle origin. 
+y
+y coordinate of bounding 
+rectangle origin 
+width
+Width of bounding rectangle 
+to draw in. 
+height
+Height of bounding 
+rectangle to draw in. 
+startAngle
+Starting angle 
+of arc. 
+arcAngle
+The extent of the 
+arc, measured from startAngle 
+Description
+Draws a filled arc from startAngle 
+to arcAngle within bounding 
+rectangle from (x, y) 
+of size width x height. 
+Zero degrees is at three o'clock; positive angles are counter clockwise. 
+fillOval
+public abstract void fillOval (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of bounding 
+rectangle origin. 
+y
+y coordinate of bounding 
+rectangle origin 
+width
+Width of bounding rectangle 
+to draw in. 
+height
+Height of bounding 
+rectangle to draw in. 
+Description
+Draws filled oval within bounding rectangle from (x, 
+y) of size width 
+x height. 
+fillPolygon
+public abstract void fillPolygon (int xPoints[], int yPoints[], int numPoints)
+Parameters
+xPoints[]
+The array of x coordinates for each point. 
+yPoints[]
+The array of y coordinates for each point. 
+numPoints
+The number of elements in both xPoints 
+and yPoints arrays to use. 
+Throws
+ArrayIndexOutOfBoundsException
+If 
+numPoints &gt; xPoints.length 
+or numPoints &gt; yPoints.length. 
+Description
+Draws filled polygon based on first numPoints 
+elements in xPoints and yPoints. 
+public void fillPolygon (Polygon p)
+Parameters
+p
+Points of object to draw. 
+Description
+Draws filled polygon based on points within the Polygon 
+p. 
+fillRect
+public abstract void fillRect (int x, int y, int width, int height)
+Parameters
+x
+x coordinate of rectangle 
+origin. 
+y
+y coordinate of rectangle 
+origin 
+width
+Width of rectangle 
+to draw. 
+height
+Height of rectangle 
+to draw. 
+Description
+Draws filled rectangle from (x, 
+y) of size width 
+x height. 
+fillRoundRect
+public abstract void fillRoundRect (int x, int y, int width, int height, int arcWidth, int arcHeight)
+Parameters
+x
+x coordinate of bounding 
+rectangle origin. 
+y
+y coordinate of bounding 
+rectangle origin 
+width
+Width of rectangle 
+to draw. 
+height
+Height of rectangle 
+to draw. 
+arcWidth
+Width of arc of 
+rectangle corner. 
+arcHeight
+Height of arc of 
+rectangle corner. 
+Description
+Draws a filled rectangle from (x, 
+y) of size width 
+x height with rounded corners. 
+finalize
+public void finalize()
+Overrides 
+Object.finalize() 
+Description
+Tells the garbage collector to dispose of graphics context. 
+getClip
+public abstract Shape getClip () 
+Returns
+Shape describing the clipping are of the graphics context. 
+getClipBounds
+public abstract Rectangle getClipBounds() 
+Returns
+Rectangle describing the clipping area of the graphics context. 
+getClipRect
+public abstract Rectangle getClipRect() 
+Returns
+Replaced by getClipBounds(). 
+getColor
+public abstract Color getColor()
+Returns
+The current drawing Color of 
+the graphics context. 
+getFont
+public abstract Font getFont()
+Returns
+The current Font of the graphics 
+context. 
+getFontMetrics
+public FontMetrics getFontMetrics()
+Returns
+The FontMetrics of the current 
+font of the graphics context. 
+public abstract FontMetrics getFontMetrics (Font font)
+Parameters
+font
+Font to get metrics 
+for. 
+Returns
+The FontMetrics of the given 
+font for the graphics context. 
+setClip
+public abstract void setClip (int x, int y, int width, int height) 
+Parameters
+x
+x coordinate of rectangle 
+y
+y coordinate of rectangle 
+width
+width of rectangle 
+height
+height of rectangle 
+Description
+Changes current clipping region to the specified rectangle. 
+public abstract void setClip (Shape clip) 
+Parameters
+clip
+The new clipping shape. 
+Description
+Changes current clipping region to the specified shape. 
+setColor
+public abstract void setColor (Color color)
+Parameters
+color
+New color. 
+Description
+Changes current drawing color of graphics context. 
+setFont
+public abstract void setFont (Font font)
+Parameters
+font
+New font. 
+Description
+Changes current font of graphics context. 
+setPaintMode
+public abstract void setPaintMode()
+Description
+Changes painting mode to normal mode. 
+setXORMode
+public abstract void setXORMode (Color xorColor)
+Parameters
+xorColor
+XOR mode drawing 
+color. 
+Description
+Changes painting mode to XOR mode; in this mode, drawing the same object 
+in the same color at the same location twice has no net effect. 
+toString
+public String toString()
+Returns
+A string representation of the Graphics 
+object. 
+Overrides 
+Object.toString() 
+translate
+public void translate (int x, int y)
+Parameters
+x
+x coordinate of new drawing 
+origin. 
+y
+y coordinate of new drawing 
+origin. 
+Description
+Moves the origin of drawing operations to (x, 
+y). 
+See Also
+Color, Font, 
+FontMetrics, Image, 
+ImageObserver, Object, 
+Polygon, Rectangle, 
+Shape, String 
+Frame
+GridBagConstraints
+ 
+ 
+ 
+ 
+ 
+ 
+ 

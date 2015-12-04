@@ -1,0 +1,42 @@
+
+[Chapter 20] 20.26 java.awt.event.TextEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.26 java.awt.event.TextEvent (JDK 1.1)
+An event of this type indicates that the user has edited the
+text value that appears in a TextField,
+TextArea, or other TextComponent.  This
+event is triggered by any change to the displayed text.  Note that this
+is not the same as the ActionEvent sent by the
+TextField object when the user edits the text and
+strikes the Return key.
+Use the inherited getSource() to determine the
+object that was the source of this event.  You have to cast
+that object to its TextComponent type.  Call
+getID() to determine the type of a TextEvent.
+The standard AWT components always generate text events of
+type TEXT_VALUE_CHANGED.
+public class TextEvent extends AWTEvent {
+    // Public Constructor
+            public TextEvent(Object source, int id);
+    // Constants
+            public static final int TEXT_FIRST;
+            public static final int TEXT_LAST;
+            public static final int TEXT_VALUE_CHANGED;
+    // Public Instance Methods
+            public String paramString();  // Overrides AWTEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->TextEvent
+Passed To:
+AWTEventMulticaster.textValueChanged(), 
+TextComponent.processTextEvent(), 
+TextListener.textValueChanged()
+java.awt.event.PaintEvent (JDK 1.1)
+java.awt.event.TextListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

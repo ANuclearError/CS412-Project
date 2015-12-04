@@ -1,0 +1,31 @@
+
+[Chapter 17] 17.4 java.applet.AudioClip (JDK 1.0)
+Chapter 17The java.applet Package
+17.4 java.applet.AudioClip (JDK 1.0)
+This interface describes the essential methods that an audio
+clip must have.
+AppletContext.getAudioClip() and
+Applet.getAudioClip() both return an object
+that implements this interface.  The current JDK
+implementations of this interface only work with sounds
+encoded in AU format.  The AudioClip interface
+is in the java.applet package only because there
+is not a better place for it.
+public abstract interface AudioClip {
+    // Public Instance Methods
+            public abstract void loop();
+            public abstract void play();
+            public abstract void stop();
+}
+Returned By:
+Applet.getAudioClip(), 
+AppletContext.getAudioClip()
+java.applet.AppletStub (JDK 1.0)
+The java.awt Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,45 @@
+
+[Chapter 24] 24.4 java.io.BufferedWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.4 java.io.BufferedWriter (JDK 1.1)
+This class applies buffering to a character output stream,
+improving output efficiency by coalescing many small write
+requests into a single larger request.  You create a
+BufferedWriter by specifying some other character
+output stream to which it sends its buffered and
+coalesced output.
+(You can also specify a buffer size at this time, although
+the default size is usually satisfactory.)  Typically you
+use this sort of buffering when you are using a
+FileWriter or OutputStreamWriter.
+BufferedWriter defines the standard write(),
+flush(), and close() methods that all output
+streams define, but it also adds a newLine() method,
+which outputs the platform-dependent line separator (usually
+a newline character, a carriage return character, or both)
+to the stream.
+BufferedWriter is the character-stream analog of
+BufferedOutputStream.
+public class BufferedWriter extends Writer {
+    // Public Constructors
+            public BufferedWriter(Writer out);
+            public BufferedWriter(Writer out, int sz);
+    // Public Instance Methods
+            public void close() throws IOException;  // Defines Writer
+            public void flush() throws IOException;  // Defines Writer
+            public void newLine() throws IOException;
+            public void write(int c) throws IOException;  // Overrides Writer
+            public void write(char[] cbuf, int off, int len) throws IOException;  // Defines Writer
+            public void write(String s, int off, int len) throws IOException;  // Overrides Writer
+}
+Hierarchy:
+Object->Writer->BufferedWriter
+java.io.BufferedReader (JDK 1.1)
+java.io.ByteArrayInputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

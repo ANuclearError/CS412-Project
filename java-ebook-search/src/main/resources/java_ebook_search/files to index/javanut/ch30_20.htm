@@ -1,0 +1,56 @@
+
+[Chapter 30] 30.20 java.util.ResourceBundle (JDK 1.1)
+Chapter 30The java.util Package
+30.20 java.util.ResourceBundle (JDK 1.1)
+This abstract class allows subclasses to define sets of
+localized resources which can then be dynamically loaded as
+needed by internationalized programs.  Such resources may
+include user-visible text and images that appear in an
+application, and even more complex things such as Menu objects.
+Use getBundle() to load a ResourceBundle
+subclass that is appropriate for the default or the
+specified locale.  Use getObject(),
+getString(), and getStringArray()
+to look up a named
+resource in a bundle.  To define a bundle, provide
+implementations of handleGetObject() and
+getKeys().  It is often easier, however, to subclass
+ListResourceBundle, or to provide a property file
+that is used by PropertyResourceBundle.  The
+name of any localized ResourceBundle class you
+define should include the locale language code, and,
+optionally, the locale country code.
+public abstract class ResourceBundle extends Object {
+    // Default Constructor: public ResourceBundle()
+    // Protected Instance Variables
+            protected ResourceBundle parent;
+    // Class Methods
+            public static final ResourceBundle getBundle(String baseName) throws MissingResourceException;
+            public static final ResourceBundle getBundle(String baseName, Locale locale);
+    // Public Instance Methods
+            public abstract Enumeration getKeys();
+            public final Object getObject(String key) throws MissingResourceException;
+            public final String getString(String key) throws MissingResourceException;
+            public final String[] getStringArray(String key) throws MissingResourceException;
+    // Protected Instance Methods
+            protected abstract Object handleGetObject(String key) throws MissingResourceException;
+            protected void setParent(ResourceBundle parent);
+}
+Extended By:
+ListResourceBundle, 
+PropertyResourceBundle
+Passed To:
+ResourceBundle.setParent()
+Returned By:
+ResourceBundle.getBundle()
+Type Of:
+ResourceBundle.parent
+java.util.Random (JDK 1.0)
+java.util.SimpleTimeZone (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

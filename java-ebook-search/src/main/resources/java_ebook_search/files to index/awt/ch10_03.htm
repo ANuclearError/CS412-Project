@@ -1,0 +1,72 @@
+
+[Chapter 10] 10.3 MenuShortcut
+Chapter 10Would You Like to Choose from the Menu?
+10.3 MenuShortcut
+MenuShortcut is a class used to represent a keyboard shortcut for a MenuItem. 
+When these events occur, an action event is generated that triggers the 
+menu component. When a shortcut is associated with a MenuItem, 
+the MenuItem automatically 
+displays a visual clue, which indicates that a keyboard accelerator is available. 
+MenuShortcut MethodsConstructors
+public MenuShortcut (int key)  
+The first MenuShortcut constructor 
+creates a MenuShortcut with 
+key as its designated hot key. 
+The key parameter can be any of the virtual key codes from the KeyEvent class (e.g., VK_A, VK_B, etc.). These constants are listed in Table 4.4. To use the shortcut, the user must combine the given key 
+with a platform-specific modifier key. On Windows and Motif platforms, 
+the modifier is the Control key; on the Macintosh, it is the Command key. 
+For example, if the shortcut key is F1 (VK_F1) and you're using Windows, 
+you would press Ctrl+F1 to execute the shortcut. To find out the platform's 
+modifier key, call the Toolkit.getMenuShortcutKeyMask() method. 
+public MenuShortcut(int key, boolean useShiftModifier)  
+This MenuShortcut constructor 
+creates a MenuShortcut with 
+key as its designated hot key. 
+If useShiftModifier is true, 
+the Shift key must be depressed for this shortcut to trigger the action 
+event (in addition to the shortcut key). The key 
+parameter represents the integer value of a KEY_PRESS 
+event, so in addition to ASCII values, possible values include the various 
+Event keyboard constants (listed in Table 4.2) like Event.F1, 
+Event.HOME, and Event.PAUSE. 
+For example, if key is the 
+ASCII value for A and useShiftModifier 
+is true, the shortcut key is 
+Shift+Ctrl+A on a Windows/Motif platform. 
+Miscellaneous methods
+public int getKey ()  
+The getKey() method retrieves 
+the virtual key code for the key that triggered this MenuShortcut. The virtual key codes are the VK constants defined by the KeyEvent class (see Table 4.4).
+public boolean usesShiftModifier()  
+The usesShiftModifier() method 
+returns true if this MenuShortcut 
+requires the Shift key be pressed, false 
+otherwise. 
+public boolean equals(MenuShortcut s)  
+The equals() method overrides 
+Object's equals() 
+method to define equality for menu shortcuts. Two MenuShortcut 
+objects are equal if their key 
+and useShiftModifier values 
+are equal. 
+protected String paramString ()  
+The paramString() method of 
+MenuShortcut helps build up 
+a string describing the shortcut; it appends the shortcut key and a shift 
+modifier indicator to the string under construction. Oddly, this method 
+is not currently used, nor can you call it; MenuShortcut 
+has its own toString() method 
+that does the job itself. 
+public String toString()  
+The toString() method of MenuShortcut 
+builds a String to display 
+the contents of the MenuShortcut. 
+MenuContainer
+MenuItem
+ 
+ 
+ 
+ 
+ 
+ 
+ 

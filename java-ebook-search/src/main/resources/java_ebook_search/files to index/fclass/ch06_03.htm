@@ -1,0 +1,178 @@
+
+[Chapter 6] 6.3 File Manipulation
+Chapter 6I/O
+6.3 File Manipulation
+While streams are used to handle most types of I/O in Java, there 
+are some nonstream-oriented classes in java.io 
+that are provided for file manipulation. Namely, the File 
+class represents a file on the local filesystem, while the RandomAccessFile 
+class provides nonsequential access to data in a file. In addition, the 
+FilenameFilter interface can 
+be used to filter a list of filenames. 
+File
+The File class represents a file on the local
+filesystem. You can use an instance of the File
+class to identify a file, obtain information about the file, and even
+change information about the file. The easiest way to create a
+File is to pass a filename to the
+File constructor, like this:
+new File("readme.txt")
+Although the methods that the File class provides
+for manipulating file information are relatively platform independent,
+filenames must follow the rules of the local filesystem.  The
+File class does provide some information that can
+be helpful in interpreting filenames and path
+specifications. The variable separatorChar
+specifies the system-specific character used to separate the name of a
+directory from what follows.[3]
+In a Windows environment, this is a backslash
+(\), while in a UNIX or Macintosh environment
+it is a forward slash (/).  You can create a
+File object that refers to a file called
+readme.txt in a directory called
+myDir as follows:
+[3] 
+ 
+This information is also available as
+System.getProperty('file.separator'),
+which is how the File class gets it.
+new File("myDir" + File.separatorChar + "readme.txt")
+The File class also provides some constructors that
+make this task easier. For example, there is a File
+constructor that takes two strings as arguments: the first string is
+the name of a directory and the second string is the name of a
+file. The following example does the exact same thing as the previous
+example:
+new File("myDir", "readme.txt")
+The File class has another 
+constructor that allows you to specify the directory of a file using a 
+File object instead of a String: 
+File dir = new File("myDir");
+File f = new File(dir, "readme.txt");
+Sometimes a program needs to process a list of files that have been passed 
+to it in a string. For example, such a list of files is passed to the Java 
+environment by the CLASSPATH 
+environment variable and can be accessed by the expression: 
+System.getProperty("java.class.path")
+This list contains one or more filenames separated by separator characters. 
+In a Windows or Macintosh environment, the separator character is a semicolon 
+(;), while in a UNIX environment, 
+the separator character is a colon (:). 
+The system-specific separator character is specified by the pathSeparatorChar 
+variable. Thus, to turn the value of CLASSPATH 
+into a collection of File objects, 
+we can write: 
+StringTokenizer s;
+Vector v = new Vector();
+s = new StringTokenizer(System.getProperty("java.class.path"), 
+                        File.pathSeparator);
+while (s.hasMoreTokens())
+    v.addElement(new File(s.nextToken()));
+You can retrieve the pathname of the file represented by a File 
+object with getPath(), the 
+filename without any path information with getName(), 
+and the directory name with getParent(). 
+The File class also defines 
+methods that return information about the actual file represented by a 
+File object. Use exists() 
+to check whether or not the file exists. isDirectory() 
+and isFile() tell whether the 
+file is a file or a directory. If the file is a directory, you can use 
+list() to get an array of filenames 
+for the files in that directory. The canRead() 
+and canWrite() methods indicate 
+whether or not a program is allowed to read from or write to a file. You 
+can also retrieve the length of a file with length() 
+and its last modified date with lastModified(). 
+A few File methods allow you 
+to change the information about a file. For example, you can rename a file 
+with rename() and delete it 
+with delete(). The mkdir() 
+and mkdirs() methods provide 
+a way to create directories within the filesystem. 
+Many of these methods can throw a SecurityException 
+if a program does not have permission to access the filesystem, or particular 
+files within it. If a SecurityManager 
+has been installed, the checkRead() 
+and checkWrite() methods of 
+the SecurityManager verify whether or not the program has permission to access the filesystem. 
+FilenameFilter
+The purpose of the FilenameFilter interface is to
+provide a way for an object to decide which filenames should be
+included in a list of filenames. A class that implements the
+FilenameFilter
+interface must define a method called
+accept().  This method is passed
+a File object that identifies a directory and a
+String that names a file. The
+accept() method is expected to
+return true if the specified file should be
+included in the list, or false if the file should
+not be included. Here is an example of a simple
+FilenameFilter
+class that only allows files with a specified suffix to be in a list:
+import java.io.File;
+import java.io.FilenameFilter;
+public class SuffixFilter implements FilenameFilter {
+    private String suffix;
+    public SuffixFilter(String suffix) {
+        this.suffix = "." + suffix;
+    }
+    public boolean accept(File dir, String name) {
+        return name.endsWith(suffix);
+    }
+}
+A FilenameFilter object can be passed as a
+parameter to the list() method
+of File to filter the list that it creates. You can
+also use a FilenameFilter to limit the choices
+shown in a FileDialog.
+RandomAccessFile
+The RandomAccessFile class provides a way to read
+from and write to a file in a nonsequential manner.  The
+RandomAccessFile class has two constructors that
+both take two arguments. The first argument specifies the file to
+open, either as a String or a
+File object. The second argument is a
+String that must be either "r"
+or "rw".  If the second argument is
+"r", the file is opened for reading only. If the
+argument is "rw", however, the file is opened for
+both reading and writing. The
+close() method closes the
+file. Both constructors and all the methods of the
+RandomAccessFile class can throw an
+IOException if they encounter an error.
+The RandomAccessFile class defines three different
+read() methods for reading bytes from a file. The
+RandomAccessFile class also implements the
+DataInput interface, so it provides additional
+methods for reading from a file. Most of these additional methods are
+related to reading Java primitive types in a machine-independent
+way. Multibyte quantities are read assuming the most significant byte
+is first and the least significant byte is last.  All of these methods
+handle an attempt to read past the end of file by throwing an
+EOFException.
+The RandomAccessFile class also defines three
+different write() methods for writing bytes of
+output. The RandomAccessFile class also implements
+the DataOutput interface, so it provides additional
+methods for writing to a file. Most of these additional methods are
+related to writing Java primitive types in a machine-independent
+way. Again, multibyte quantities are written with the most
+significant byte first and the least significant byte last.
+The RandomAccessFile class would not live up to its
+name if it did not provide a way to access a file in a nonsequential
+manner. The getFilePointer() method returns the
+current position in the file, while the seek()
+method provides a way to set the position. Finally, the
+length() method returns the length of the file in bytes.
+Output Streams and Writers
+Object Serialization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

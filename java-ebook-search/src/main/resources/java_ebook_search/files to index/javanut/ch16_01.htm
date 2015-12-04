@@ -1,0 +1,227 @@
+
+[Chapter 16] JDK Tools
+Chapter 16
+16. JDK Tools
+Contents:
+appletviewer
+jar
+java
+javac
+javadoc
+javah
+javakey
+javap
+jdb
+native2ascii
+serialver
+appletviewer
+Name
+appletviewer---The Java Applet Viewer
+Availability
+JDK 1.0 and later.
+Synopsis
+appletviewer [-debug]  [-Jjavaoption] [-encoding enc] url|file...
+Description
+appletviewer reads or downloads one or more HTML documents
+specified by filename or URL on the command line.  It reads
+or downloads all
+the applets referenced in each document and displays them,
+each in their own window.  If none of the named documents
+has an &lt;APPLET&gt; tag, appletviewer does
+nothing.
+Options
+-debug
+If this option is specified, the appletviewer is
+started within jdb (the Java debugger).  This allows
+you to debug the applets referenced by the document or
+documents.
+-Jjavaoption
+This option passes the following javaoption as a
+command-line argument to the Java interpreter.  The
+specified javaoption should not contain spaces.  If
+a multi-word option must be passed to the Java interpreter,
+multiple -J options should be used.  See java
+for a list of valid Java interpreter options.  Available in
+JDK 1.1 and later.
+-encodingenc
+This option specifies the character encoding that
+appletviewer should use when reading the contents of
+the specified files or URLs.  It is used in the
+conversion of applet parameter values to Unicode.
+Available in JDK 1.1 and later.
+Commands
+The window displayed by appletviewer contains a single
+Applet menu, with the following commands available:
+Restart
+Stops and destroys the current applet, then re-initializes
+and restarts it.
+Reload
+Stops, destroys, and unloads the applet, then reloads,
+reinitializes, and restarts it.
+Stop
+Stops the current applet.  Available in Java 1.1 and later.
+Save
+Serializes the applet and saves the serialized applet in the
+file Applet.ser in the user's home directory.  The
+applet should be stopped before selecting this option.
+Available in Java 1.1 and later.
+Start
+Restarts a stopped applet.
+Available in Java 1.1 and later.
+Clone
+Creates a new copy of the applet in a new appletviewer window.
+Tag
+Pops up a dialog box that displays the &lt;APPLET&gt; tag
+and all associated &lt;PARAM&gt; tags that created the
+current applet.
+Info
+Pops up a dialog box that contains information about the
+applet.  This information is provided by the
+getAppletInfo() and getParameterInfo()
+methods implemented by the applet.
+Edit
+This command is not implemented.  The Edit menu item
+is disabled.
+Character Encoding
+Displays the current character encoding in the status line.
+Available in Java 1.1 and later.
+Print
+Prints the applet.  Available in Java 1.1 and later.
+Properties
+Displays a dialog that allows the user to set appletviewer
+preferences, including settings for firewall and caching
+proxy servers.
+Close
+Closes the current appletviewer window.
+Quit
+Quits appletviewer, closing all open windows.
+Properties
+When it starts up, appletviewer reads property
+definitions from the file ~/.hotjava/properties (UNIX)
+or the .hotjava\properties file relative to the
+HOME environment variable (Windows).  These
+properties are stored in the system properties list and are
+used to specify the various error and status messages the
+applet viewer displays, as well as its security policies and
+use of proxy servers.  The properties that affect security
+and proxies are described below.
+Security
+The following properties specify the security restrictions
+that appletviewer places on untrusted applets:
+acl.read
+This is a list of files and directories that an untrusted applet is
+allowed to read.  The elements of the list should be
+separated with colons on UNIX systems and semicolons on
+Windows systems.  On UNIX systems, the ~ character
+is replaced with the home directory of the current user.  If
+the plus character appears as an element in the list,
+it is replaced by the value of the
+acl.read.default property.  This provides an easy
+way to enable read access--by simply setting
+acl.read to "+".  By default, untrusted applets are
+not allowed to read any files or directories.
+acl.read.default
+This is a list of files and directories that are readable by
+untrusted applets if the acl.read property contains
+a plus character.
+acl.write
+This is a list of files and directories that an untrusted applet is
+allowed to write to.  The elements of the list should be
+separated with colons on UNIX systems and semicolons on
+Windows systems.  On UNIX systems, the ~ character
+is replaced with the home directory of the current user.  If
+the plus character appears as an element in the list,
+it is replaced by the value of the
+acl.write.default property.  This provides an easy
+way to enable write access--by simply setting
+acl.write to "+".  By default, untrusted applets are
+not allowed to write to any files or directories.
+acl.write.default
+This is a list of files and directories that are writable by
+untrusted applets if the acl.write property contains
+a plus character.
+appletviewer.security.mode
+This property specifies the types of network access an
+untrusted applet is allowed to perform.  If it is set to
+"none", then the applet can perform no networking at all.
+The value "host" is the default, and specifies that the
+applet can connect only to the host from which it was
+loaded. The value "unrestricted" specifies that an applet
+may connect to any host without restrictions.
+package.restrict.access.package-prefix
+Properties of this form may be set to true to prevent
+untrusted applets from using classes in any package that
+has the specified package name prefix as the first component
+of its name.  For example, to prevent applets from using any
+of the Sun classes (such as the Java compiler and the
+appletviewer itself) that are shipped with the JDK, you
+could specify the following property:
+package.restrict.access.sun=true
+appletviewer sets this property to true by
+default for the sun.* and netscape.*
+packages.
+package.restrict.definition.package-prefix
+Properties of this form may be set to true to prevent
+untrusted applets from defining classes in a package that
+has the specified package name prefix as the first component
+of its name.  For example, to prevent an applet from
+defining classes in any of the standard Java packages, you
+could specify the following property:
+package.restrict.definition.java=true
+appletviewer sets this property to true by
+default for the java.*, sun.*, and
+netscape.* packages.
+property.applet
+When a property of this form is set to true in Java
+1.1, it specifies that an applet should be allowed to read
+the property named property from the system
+properties list.  By default, applets are only allowed to
+read ten standard system properties (see Chapter 14, System Properties, for a list).  For example, to allow
+an applet to read the user.home property, specify a
+property of the form
+user.home.applet=true
+Proxies
+appletviewer uses the following properties to
+configure its use of firewall and caching proxy servers:
+firewallHost
+This is the firewall proxy host to connect to if the
+firewallSet property is true.
+firewallPort
+This is the port of the firewall proxy host to connect to if the
+firewallSet property is true.
+firewallSet
+This tells you whether the applet viewer should use a firewall proxy.
+Values are true or false.
+proxyHost
+This is the caching proxy host to connect to if the proxySet
+property is true.
+proxyPort
+This is the port of the caching proxy host to connect to if the
+proxySet property is true.
+proxySet
+This tells you whether the applet viewer should use a caching proxy.
+Values are true or false.
+Environment
+CLASSPATH
+Specifies an ordered list (colon-separated on UNIX,
+semicolon-separated on Windows systems) of directories and
+ZIP files in which appletviewer should look for class
+definitions.  When a path is specified with this environment
+variable, appletviewer always implicitly appends the
+location of the system classes to the end of the path.  If
+this environment variable is not specified, the default path
+is the current directory and the system classes.  Note that
+appletviewer does not support the -classpath
+command-line argument, except indirectly through the
+-J option.
+See Also
+java, javac, jdb
+serialver
+jar
+ 
+ 
+ 
+ 
+ 
+ 
+ 

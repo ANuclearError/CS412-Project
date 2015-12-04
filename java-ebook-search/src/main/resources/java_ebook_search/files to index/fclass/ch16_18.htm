@@ -1,0 +1,390 @@
+
+[Chapter 16] SimpleDateFormat
+Chapter 16The java.text Package
+SimpleDateFormat
+Name
+SimpleDateFormat
+Synopsis
+Class Name:
+java.text.SimpleDateFormat
+Superclass:
+java.text.DateFormat
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The SimpleDateFormat class 
+is a concrete subclass of DateFormat 
+that formats and parses dates and times using a formatting pattern. Typically, 
+you do not need to instantiate SimpleDateFormat 
+yourself. Instead, the factory methods of DateFormat 
+return instances of SimpleDateFormat 
+that are appropriate for particular locales. 
+However, if you need a specialized date and time format, you can instantiate 
+your own SimpleDateFormat using 
+a pattern string. You can also modify the formatting pattern of an existing 
+SimpleDateFormat object using 
+the applyPattern() method. 
+The following symbols are significant in the pattern string. 
+Symbol
+Description
+Example
+Type
+G
+Era
+AD
+Text
+y
+Year
+1997
+Numeric
+M
+Month in year
+3 or March
+Text or numeric
+d
+Day in month
+4
+Numeric
+h
+Hour in A.M./P.M. (1-12)
+2
+Numeric
+H
+Hour in day (0-23)
+14
+Numeric
+m
+Minute in hour
+33
+Numeric
+s
+Second in minute
+21
+Numeric
+S
+Milliseconds
+333
+Numeric
+E
+Day of week
+Thursday
+Text
+D
+Day in year
+63
+Numeric
+F
+Day of week of month
+1
+Numeric
+w
+Week in year
+9
+Numeric
+W
+Week in month
+1
+Numeric
+a
+A.M./P.M.
+P.M.
+Text
+k
+Hour in day (1-24)
+14
+Numeric
+K
+Hour in A.M./P.M. (0-11)
+2
+Numeric
+z
+Time zone
+EST
+Text
+Symbols that are numeric can be repeated to specify a minimum number of 
+digits. For example, "hh" 
+produces an hour field that is always at least two digits, like "02". 
+Symbols that are textual can be repeated to specify whether the short form 
+or the long form of the text string is used, if there are both short and 
+long forms. If four or more symbols are specified, the long form is used; 
+otherwise the short form is used. For example, "E" 
+produces a short form of the day of the week, 
+such as "Tue", 
+while "EEEE" produces 
+the long form, such as "Tuesday". 
+For the month of the year, if one or two "M" 
+symbols are used, the field is numeric. If three or 
+more "M" 
+symbols are used, the field is textual. 
+Single quotes can be used to specify literal text that should be included 
+in the formatted output, and any unrecognized symbol is treated as literal 
+text. For example, the following pattern: 
+hh:mm a 'in the' zzzz 'zone.'
+produces output like: 
+02:33 PM in the Eastern Standard Time zone.
+Internally, the SimpleDataFormat 
+class uses a DateFormatSymbols 
+object to get the date and time strings that are appropriate for a particular 
+locale. If you want to modify these strings, you can get the DateFormatSymbols 
+object by calling getDateFormatSymbols(). 
+Class Summary
+public class java.text.SimpleDateFormat  extends java.text.DateFormat {
+  // Constructors
+  public SimpleDateFormat();
+  public SimpleDateFormat(String pattern);
+  public SimpleDateFormat(String pattern, Locale loc);
+  public SimpleDateFormat(String pattern, DateFormatSymbols formatData);
+  // Instance Methods
+  public void applyLocalizedPattern(String pattern);
+  public void applyPattern(String pattern);
+  public Object clone();
+  public boolean equals(Object obj); 
+  public StringBuffer format(Date date, StringBuffer toAppendTo, 
+                      FieldPosition pos); 
+  public DateFormatSymbols getDateFormatSymbols();
+  public int hashCode();
+  public Date parse(String text, ParsePosition pos); 
+  public void setDateFormatSymbols(DateFormatSymbols newFormatSymbols);
+  public String toLocalizedPattern();
+  public String toPattern();
+}
+Constructors
+SimpleDateFormat
+public SimpleDateFormat()
+Description
+This constructor creates a SimpleDateFormat 
+that uses a default formatting pattern and DateFormatSymbols 
+that are appropriate for the default locale. It produces the same result 
+as calling DateFormat.getDateTimeInstance(DateFormat.SHORT,  
+DateFormat.SHORT). 
+public SimpleDateFormat(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This constructor creates a SimpleDateFormat 
+that uses the given formatting pattern and a DateFormatSymbols object
+that is appropriate for the default locale. 
+public SimpleDateFormat(String pattern, Locale loc)
+Parameters
+pattern
+The pattern string.
+loc
+The Locale to use. 
+Description
+This constructor creates a SimpleDateFormat 
+that uses the given formatting pattern and a DateFormatSymbols object
+that is appropriate for the 
+given locale. 
+   public SimpleDateFormat(String pattern, DateFormatSymbols formatData)  
+Parameters
+pattern
+The pattern string.
+formatData
+The DateFormatSymbols to use. 
+Description
+This constructor creates a SimpleDateFormat 
+that uses the given formatting pattern and DateFormatSymbols 
+object. 
+Instance Methods
+applyLocalizedPattern
+public void applyLocalizedPattern(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This method tells this SimpleDateFormat 
+to use the given formating pattern to format and parse dates and times. 
+The pattern string is assumed to have been localized to the DateFormatSymbols 
+object this SimpleDateFormat 
+uses. 
+applyPattern
+public void applyPattern(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This method tells this SimpleDateFormat 
+to use the given formatting pattern to format and parse dates and times. 
+The pattern string is localized to the DateFormatSymbols 
+object this SimpleDateFormat 
+uses. 
+clone
+public Object clone()
+Returns
+A copy of this SimpleDateFormat. 
+Overrides
+DateFormat.clone() 
+Description
+This method creates a copy of this SimpleDateFormat 
+and returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+DateFormat.equals() 
+Description
+This method returns true if 
+obj is an instance of SimpleDateFormat 
+and is equivalent to this SimpleDateFormat. 
+format
+   public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos)  
+Parameters
+date
+The Date 
+object to be formatted.
+toAppendTo
+A StringBuffer 
+on which to append the formatted information.
+pos
+A date or time field. 
+Returns
+The given buffer toAppendTo 
+with the formatted representation of the object appended to it. 
+Overrides
+DateFormat.format(Date, 
+StringBuffer, FieldPosition) 
+Description
+This method formats the given date and appends the result to the given 
+StringBuffer. If pos 
+refers to one of the time or date fields, its beginning and ending indexes 
+are filled with the beginning and ending positions of the given field in 
+the resulting formatted string. 
+getDateFormatSymbols
+public DateFormatSymbols getDateFormatSymbols()
+Returns
+The DateFormatSymbols 
+object used by this SimpleDateFormat. 
+Description
+This method returns the DateFormatSymbols 
+object that this SimpleDateFormat 
+uses internally. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+DateFormat.hashCode() 
+Description
+This method returns a hashcode for this SimpleDateFormat. 
+parse
+public Date parse(String text, ParsePosition pos)
+Parameters
+text
+The string to be parsed.
+pos
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+The Date object represented 
+by the text starting at the given position. 
+Overrides
+DateFormat.parse(String, 
+ParsePosition) 
+Description
+This method parses a date from the given string, starting from the given 
+position. After the string has been parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text. 
+setDateFormatSymbols
+   public void setDateFormatSymbols( DateFormatSymbols newFormatSymbols)  
+Parameters
+newFormatSymbols
+The new DateFormatSymbols object to use. 
+Description
+This method sets the DateFormatSymbols 
+object that this SimpleDateFormat 
+uses internally. 
+toLocalizedPattern
+public String toLocalizedPattern()
+Returns
+The pattern string of this SimpleDateFormat. 
+Description
+This method returns the pattern string of this SimpleDateFormat, 
+localized with the DateFormatSymbols 
+object of this SimpleDateFormat. 
+toPattern
+public String toPattern()
+Returns
+The pattern string of this SimpleDateFormat. 
+Description
+This method returns the pattern string of this SimpleDateFormat. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+format(Object)
+Format
+format(Date)
+DateFormat
+format(Object, StringBuffer, FieldPosition)
+DateFormat
+getCalendar()
+DateFormat
+getClass()
+Object
+getNumberFormat()
+DateFormat
+getTimeZone()
+DateFormat
+isLenient()
+DateFormat
+notify()
+Object
+notifyAll()
+Object
+parse(String)
+DateFormat
+parseObject(String)
+Format
+parseObject(String, ParsePosition)
+DateFormat
+setCalendar(Calendar)
+DateFormat
+setLenient(boolean)
+DateFormat
+setNumberFormat(NumberFormat)
+DateFormat
+setTimeZone(TimeZone)
+DateFormat
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Calendar, 
+Date, 
+DateFormat, 
+DateFormatSymbols, 
+FieldPosition, 
+Format, 
+Locale, 
+ParsePosition, 
+String, 
+StringBuffer, 
+TimeZone 
+RuleBasedCollator
+StringCharacterIterator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,50 @@
+
+[Chapter 31] 31.12 java.util.zip.InflaterInputStream (JDK 1.1)
+Chapter 31The java.util.zip Package
+31.12 java.util.zip.InflaterInputStream (JDK 1.1)
+This class is a subclass of
+java.io.FilterInputStream; it reads a specified
+stream of compressed input data (typically one that was
+written with DeflaterOutputStream or a subclass) and
+"filters" that data by uncompressing ("inflating") it.  To
+create an InflaterInputStream, you must specify the
+input stream it is to read from, and also an
+Inflater object that is to perform the
+uncompresssion.  Once an InflaterInputStream is
+created, the read() and skip() methods are
+the same as those of other input streams.
+Note that the InflaterInputStream uncompresses raw
+data.  Applications often prefer one of its
+subclasses, GZIPInputStream or ZipInputStream,
+which work with compressed data written in the standard gzip
+and PKZip file formats.
+public class InflaterInputStream extends FilterInputStream {
+    // Public Constructors
+            public InflaterInputStream(InputStream in, Inflater inf, int size);
+            public InflaterInputStream(InputStream in, Inflater inf);
+            public InflaterInputStream(InputStream in);
+    // Protected Instance Variables
+            protected byte[] buf;
+            protected Inflater inf;
+            protected int len;
+    // Public Instance Methods
+            public int read() throws IOException;  // Overrides FilterInputStream
+            public int read(byte[] b, int off, int len) throws IOException;  // Overrides FilterInputStream
+            public long skip(long n) throws IOException;  // Overrides FilterInputStream
+    // Protected Instance Methods
+            protected void fill() throws IOException;
+}
+Hierarchy:
+Object->InputStream->FilterInputStream->InflaterInputStream
+Extended By:
+GZIPInputStream, 
+ZipInputStream
+java.util.zip.Inflater (JDK 1.1)
+java.util.zip.ZipEntry (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,236 @@
+
+[Chapter 19] SystemColor 
+Chapter 19java.awt Reference
+SystemColor 
+Name
+SystemColor 
+Description
+SystemColor provides information 
+on the colors that the windowing system uses to display windows and other 
+graphic components. Most windowing systems allow the user to choose different 
+color schemes; SystemColor 
+enables programs to find out what colors are in use in order to paint themselves 
+in a consistent manner. 
+Class Definition
+public final class java.awt.SystemColor
+    extends java.awt.Color
+    implements java.io.Serializable {
+  // Constants
+  public final static int ACTIVE_CAPTION;
+  public final static int ACTIVE_CAPTION_BORDER;
+  public final static int ACTIVE_CAPTION_TEXT;
+  public final static int CONTROL;
+  public final static int CONTROL_DK_SHADOW;
+  public final static int CONTROL_HIGHLIGHT;
+  public final static int CONTROL_LT_HIGHLIGHT;
+  public final static int CONTROL_SHADOW;
+  public final static int CONTROL_TEXT;
+  public final static int DESKTOP;
+  public final static int INACTIVE_CAPTION;
+  public final static int INACTIVE_CAPTION_BORDER;
+  public final static int INACTIVE_CAPTION_TEXT;
+  public final static int INFO;
+  public final static int INFO_TEXT;
+  public final static int MENU;
+  public final static int MENU_TEXT;
+  public final static int NUM_COLORS;
+  public final static int SCROLLBAR;
+  public final static int TEXT;
+  public final static int TEXT_HIGHLIGHT;
+  public final static int TEXT_HIGHLIGHT_TEXT;
+  public final static int TEXT_INACTIVE_TEXT;
+  public final static int TEXT_TEXT;
+  public final static int WINDOW;
+  public final static int WINDOW_BORDER;
+  public final static int WINDOW_TEXT;
+  public final static SystemColor activeCaption;
+  public final static SystemColor activeCaptionBorder;
+  public final static SystemColor activeCaptionText;
+  public final static SystemColor control;
+  public final static SystemColor controlDkShadow;
+  public final static SystemColor controlHighlight;
+  public final static SystemColor controlLtHighlight;
+  public final static SystemColor controlShadow;
+  public final static SystemColor controlText;
+  public final static SystemColor desktop;
+  public final static SystemColor inactiveCaption;
+  public final static SystemColor inactiveCaptionBorder;
+  public final static SystemColor inactiveCaptionText;
+  public final static SystemColor info;
+  public final static SystemColor infoText;
+  public final static SystemColor menu;
+  public final static SystemColor menuText;
+  public final static SystemColor scrollbar;
+  public final static SystemColor text;
+  public final static SystemColor textHighlight;
+  public final static SystemColor textHighlightText;
+  public final static SystemColor textInactiveText;
+  public final static SystemColor textText;
+  public final static SystemColor window;
+  public final static SystemColor windowBorder;
+  public final static SystemColor windowText;
+  // Public Instance Methods
+  public int getRGB();
+  public String toString();
+}
+Constants
+ACTIVE_CAPTION
+public static final int ACTIVE_CAPTION
+ACTIVE_CAPTION_BORDER
+public static final int ACTIVE_CAPTION_BORDER
+ACTIVE_CAPTION_TEXT
+public static final int ACTIVE_CAPTION_TEXT
+CONTROL
+public static final int CONTROL
+CONTROL_DK_SHADOW
+public static final int CONTROL_DK_SHADOW
+CONTROL_HIGHLIGHT
+public static final int CONTROL_HIGHLIGHT
+CONTROL_LT_HIGHLIGHT
+public static final int CONTROL_LT_HIGHLIGHT
+CONTROL_SHADOW
+public static final int CONTROL_SHADOW
+CONTROL_TEXT
+public static final int CONTROL_TEXT
+DESKTOP
+public static final int DESKTOP
+INACTIVE_CAPTION
+public static final int INACTIVE_CAPTION
+INACTIVE_CAPTION_BORDER
+public static final int INACTIVE_CAPTION_BORDER
+INACTIVE_CAPTION_TEXT
+public static final int INACTIVE_CAPTION_TEXT
+INFO
+public static final int INFO
+INFO_TEXT
+public static final int INFO_TEXT
+MENU
+public static final int MENU
+MENU_TEXT
+public static final int MENU_TEXT
+NUM_COLORS
+public static final int NUM_COLORS
+SCROLLBAR
+public static final int SCROLLBAR
+TEXT
+public static final int TEXT
+TEXT_HIGHLIGHT
+public static final int TEXT_HIGHLIGHT
+TEXT_HIGHLIGHT_TEXT
+public static final int TEXT_HIGHLIGHT_TEXT
+TEXT_INACTIVE_TEXT
+public static final int TEXT_INACTIVE_TEXT
+TEXT_TEXT
+public static final int TEXT_TEXT
+WINDOW
+public static final int WINDOW
+WINDOW_BORDER
+public static final int WINDOW_BORDER
+WINDOW_TEXT
+public static final int WINDOW_TEXT
+activeCaption
+public static final SystemColor activeCaption
+Background color for captions in window borders. 
+activeCaptionBorder
+public static final SystemColor activeCaptionBorder
+Border color for captions in window borders. 
+activeCaptionText
+public static final SystemColor activeCaptionText
+Text color for captions in window borders. 
+control
+public static final SystemColor control
+Background color for controls. 
+controlDkShadow
+public static final SystemColor controlDkShadow
+Dark shadow color for controls. 
+controlHighlight
+public static final SystemColor controlHighlight
+Highlight color for controls. 
+controlLtHighlight
+public static final SystemColor controlLtHighlight
+Light highlight color for controls. 
+controlShadow
+public static final SystemColor controlShadow
+Shadow color for controls. 
+controlText
+public static final SystemColor controlText
+Text color for controls. 
+desktop
+public static final SystemColor desktop
+Desktop background color. 
+inactiveCaption
+public static final SystemColor inactiveCaption
+Background color for inactive captions in window borders. 
+inactiveCaptionBorder
+public static final SystemColor inactiveCaptionBorder
+Border color for inactive captions in window borders. 
+inactiveCaptionText
+public static final SystemColor inactiveCaptionText
+Text color for inactive captions in window borders. 
+info
+public static final SystemColor info
+Background color for informational text. 
+infoText
+public static final SystemColor infoText
+Text color for informational text. 
+menu
+public static final SystemColor menu
+Background color for menus. 
+menuText
+public static final SystemColor menuText
+Text color for menus. 
+scrollbar
+public static final SystemColor scrollbar
+Background color for scrollbars. 
+text
+public static final SystemColor text
+Background color for text components. 
+textHighlight
+public static final SystemColor textHighlight
+Background color for highlighted text. 
+textHighlightText
+public static final SystemColor textHighlightText
+Text color for highlighted text. 
+textInactiveText
+public static final SystemColor textInactiveText
+Text color for inactive text. 
+textText
+public static final SystemColor textText
+Text color for text components. 
+window
+public static final SystemColor window
+Background color for windows. 
+windowBorder
+public static final SystemColor windowBorder
+Border color for windows. 
+windowText
+public static final SystemColor windowText
+Text color for windows. 
+Instance Methods
+getRGB
+public int getRGB()
+Returns
+Current color as a composite value 
+Overrides 
+Color.getRGB() 
+Description
+Gets integer value of current system color. 
+toString
+public String toString()
+Returns
+A string representation of the SystemColor 
+object. 
+Overrides 
+Color.toString() 
+See Also
+Color, Serializable, 
+String 
+Shape 
+TextArea
+ 
+ 
+ 
+ 
+ 
+ 
+ 

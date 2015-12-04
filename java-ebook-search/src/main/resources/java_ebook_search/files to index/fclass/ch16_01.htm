@@ -1,0 +1,409 @@
+
+[Chapter 16] The java.text Package
+Chapter 16
+16. The java.text Package
+Contents:
+CharacterIterator
+ChoiceFormat
+CollationElementIterator
+CollationKey
+Collator
+DateFormat
+DateFormatSymbols
+DecimalFormat
+DecimalFormatSymbols
+FieldPosition
+Format
+MessageFormat
+NumberFormat
+ParseException
+ParsePosition
+RuleBasedCollator
+SimpleDateFormat
+StringCharacterIterator
+The package java.text is new as of Java 1.1.
+It contains classes that support the internationalization of
+Java programs.  The internationalization classes can be grouped
+as follows:
+Classes for formatting string representations
+of dates, times, numbers, and messages based on the conventions
+of a locale.
+Classes that collate strings according to the rules of a
+locale.
+Classes for finding boundaries in text according to the rules
+of a locale.
+Many of the classes in java.text rely upon
+a java.util.Locale object to provide information
+about the locale that is in use.
+The Format class is the superclass of 
+all of the classes that generate and parse string representations 
+of various types of data.  The 
+DateFormat class formats and parses dates
+and times according to the customs and language of a particular
+locale.  Similarly, the NumberFormat class
+formats and parses numbers, including currency values, 
+in a locale-dependent manner.  
+The MessageFormat 
+class can create a textual message from a pattern
+string, while ChoiceFormat maps numerical
+ranges to strings.
+By themselves, these classes do not provide different results for
+different locales.  However, they can be used in conjunction with 
+java.util.ResourceBundle objects that 
+generate locale-specific pattern strings.
+The Collator class handles collating strings
+according to the rules of a particular locale.
+Different languages have different
+characters and different rules for sorting those characters; 
+Collator and its subclass, 
+RuleBasedCollator, 
+are designed to take those differences into account when collating
+strings.  In addition, 
+the CollationKey class can be used to
+optimize the sorting of a large collection of strings.
+The BreakIterator class finds various
+boundaries, such as word boundaries and line boundaries, in
+textual data.  Again, BreakIterator
+locates these boundaries according to the rules of a
+particular locale.
+Figure 16.1 shows the class hierarchy for
+the java.text package.
+Figure 16.1: The java.text package
+BreakIterator
+Name
+BreakIterator
+Synopsis
+Class Name:
+java.text.BreakIterator
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.Cloneable, 
+java.io.Serializable
+Availability:
+New as of JDK 1.1 
+Description
+The BreakIterator class is 
+an abstract class that defines 
+methods that find the locations of boundaries in text, such as word boundaries 
+and sentence boundaries. A BreakIterator 
+operates on the object passed to its setText() 
+method; that object must implement the CharacterIterator 
+interface or be a String object. 
+When a String is passed to setText(),
+the BreakIterator creates an internal
+StringCharacterIterator to iterate over the
+String.
+When you use a BreakIterator, you call
+first() to get the location of the first
+boundary and then repeatedly call next() 
+to iterate through the subsequent boundaries.
+The BreakIterator class defines 
+four static factory methods that return instances of BreakIterator 
+that locate various kinds of boundaries. 
+Each of these factory methods selects a concrete subclass of 
+BreakIterator based either on the default locale or
+a specified locale. You must create a separate instance 
+of BreakIterator to handle 
+each kind of boundary you are trying to locate:
+getWordInstance() 
+returns an iterator that locates word boundaries, which 
+is useful for search-and-replace 
+operations. A word iterator correctly handles punctuation marks.
+getSentenceInstance() 
+returns an iterator that locates sentence boundaries, which is useful for 
+textual selection. A sentence iterator correctly handle punctuation 
+marks. 
+getLineInstance() returns 
+an iterator that locates line boundaries, which is useful in line wrapping. 
+A line iterator correctly handles hyphenation and punctuation. 
+getCharacterInstance() 
+returns an iterator that locates boundaries between characters, which is 
+useful for allowing the cursor to interact with characters appropriately, 
+since some characters are stored as a base character and a diacritical 
+mark, but only represent one display character. 
+Class Summary
+public abstract class java.util.BreakIterator extends java.lang.Object
+                      implements java.lang.Cloneable, 
+                                 java.io.Serializable {
+  // Constants
+  public final static int DONE;
+  // Constructors
+  protected BreakIterator();
+  // Class Methods
+  public static synchronized Locale[] getAvailableLocales();
+  public static BreakIterator getCharacterInstance();
+  public static BreakIterator getCharacterInstance(Locale where);
+  public static BreakIterator getLineInstance();
+  public static BreakIterator getLineInstance(Locale where);
+  public static BreakIterator getSentenceInstance();
+  public static BreakIterator getSentenceInstance(Locale where);
+  public static BreakIterator getWordInstance();
+  public static BreakIterator getWordInstance(Locale where);
+  // Instance Methods
+  public Object clone();
+  public abstract int current();
+  public abstract int first();
+  public abstract int following(int offset);
+  public abstract CharacterIterator getText();
+  public abstract int last();
+  public abstract int next();
+  public abstract int next(int n)
+  public abstract int previous();
+  public abstract void setText(CharacterIterator newText);
+  public void setText(String newText);
+}
+Constants
+DONE
+public final static int DONE
+Description
+A constant that is returned by next() 
+or previous() if there are 
+no more breaks to be returned. 
+Constructors
+BreakIterator
+protected BreakIterator()
+Description
+This constructor should be called only from constructors of subclasses.
+Class Methods
+getAvailableLocales
+public static synchronized Locale[] getAvailableLocales()
+Returns
+An array of Locale objects.
+Description
+This method returns an array of the Locale 
+objects that can be passed to getCharacterInstance(),
+getLineInstance(), 
+getSentenceInstance(), 
+or getWordInstance().
+getCharacterInstance
+public static BreakIterator getCharacterInstance()
+Returns
+A BreakIterator appropriate 
+for the default Locale. 
+Description
+This method creates a BreakIterator 
+that can locate character boundaries in the default Locale. 
+public static BreakIterator getCharacterInstance(Locale where)
+Parameters
+where
+The Locale to use. 
+Returns
+A BreakIterator appropriate 
+for the given Locale. 
+Description
+This method creates a BreakIterator 
+that can locate character boundaries in the given Locale. 
+getLineInstance
+public static BreakIterator getLineInstance()
+Returns
+A BreakIterator appropriate 
+for the default Locale. 
+Description
+This method creates a BreakIterator 
+that can locate line boundaries in the default Locale. 
+public static BreakIterator getLineInstance(Locale where)
+Parameters
+where
+The Locale to use. 
+Returns
+A BreakIterator appropriate 
+for the given Locale. 
+Description
+This method creates a BreakIterator 
+that can locate line boundaries in the given Locale. 
+getSentenceInstance
+public static BreakIterator getSentenceInstance()
+Returns
+A BreakIterator appropriate 
+for the default Locale. 
+Description
+This method creates a BreakIterator 
+that can locate sentence boundaries in the default Locale. 
+public static BreakIterator getSentenceInstance(Locale where)
+Parameters
+where
+The Locale to use. 
+Returns
+A BreakIterator appropriate 
+for the given Locale. 
+Description
+This method creates a BreakIterator 
+that can locate sentence boundaries in the given Locale. 
+getWordInstance
+public static BreakIterator getWordInstance()
+Returns
+A BreakIterator appropriate 
+for the default Locale. 
+Description
+This method creates a BreakIterator 
+that can locate word boundaries in the default Locale. 
+public static BreakIterator getWordInstance(Locale where)
+Parameters
+where
+The Locale to use. 
+Returns
+A BreakIterator appropriate 
+for the given Locale. 
+Description
+This method creates a BreakIterator 
+that can locate word boundaries in the given Locale. 
+Instance Methods
+clone
+public Object clone()
+Returns
+A copy of this BreakIterator. 
+Overrides
+Object.clone() 
+Description
+This method creates a copy of this BreakIterator 
+and then returns it. 
+current
+public abstract int current()
+Returns
+The current position of this BreakIterator. 
+Description
+This method returns the current position of this BreakIterator. 
+The current position is the character index of the most recently returned 
+boundary. 
+first
+public abstract int first()
+Returns
+The position of the first boundary of this BreakIterator. 
+Description
+This method finds the first boundary in this BreakIterator 
+and returns its character index. The current position of the iterator is 
+set to this boundary. 
+following
+public abstract int following(int offset)
+Parameters
+offset
+An offset into this BreakIterator. 
+Returns
+The position of the first boundary after the given offset of this BreakIterator 
+or DONE if there are no more 
+boundaries. 
+Throws
+IllegalArgumentException
+If offset is not a valid value 
+for the CharacterIterator of 
+this BreakIterator. 
+Description
+This method finds the first boundary after the given offset in this BreakIterator 
+and returns its character index. 
+getText
+public abstract CharacterIterator getText()
+Returns
+The CharacterIterator 
+that this BreakIterator uses. 
+Description
+This method returns a CharacterIterator 
+that represents the text this BreakIterator 
+examines. 
+last
+public abstract int last()
+Returns
+The position of the last boundary of this BreakIterator. 
+Description
+This method finds the last boundary in this BreakIterator 
+and returns its character index. The current position of the iterator is 
+set to this boundary. 
+next
+public abstract int next()
+Returns
+The position of the next boundary of this BreakIterator 
+or DONE if there are no more 
+boundaries. 
+Description
+This method finds the next boundary in this BreakIterator 
+after the current position and returns its character index. The current 
+position of the iterator is set to this boundary. 
+public abstract int next(int n)
+Parameters
+n
+The boundary to return. A positive value moves to a later boundary  a
+negative value moves to a previous boundary; the value 0 does nothing.
+Returns
+The position of the requested boundary of this BreakIterator. 
+Description
+This method finds the nth boundary 
+in this BreakIterator, starting 
+from the current position, and returns its character index. The current 
+position of the iterator is set to this boundary.
+For example, next(-2) finds 
+the third previous boundary. Thus next(1) 
+is equivalent to next(), next(-1) 
+is equivalent to previous(), 
+and next(0) does nothing. 
+previous
+public abstract int previous()
+Returns
+The position of the previous boundary of this 
+BreakIterator. 
+Description
+This method finds the previous boundary in this BreakIterator, 
+starting from the current position, and returns its character index. The 
+current position of the iterator is set to this boundary. 
+setText
+public abstract void setText(CharacterIterator newText)
+Parameters
+newText
+The CharacterIterator 
+that contains the text to be examined. 
+Description
+This method tells this BreakIterator 
+to examine the piece of text specified by the CharacterIterator. 
+This current position of this BreakIterator 
+is set to first(). 
+public void setText(String newText)
+Parameters
+newText
+The String 
+that contains the text to be examined. 
+Description
+This method tells this BreakIterator 
+to examine the piece of text specified by the String, 
+using a StringCharacterIterator 
+created from the given string. This current position of this BreakIterator 
+is set to first(). 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+CharacterIterator, 
+Locale, 
+String, 
+StringCharacterIterator 
+UnknownServiceException
+CharacterIterator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

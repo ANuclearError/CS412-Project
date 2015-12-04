@@ -1,0 +1,233 @@
+
+[Chapter 18] 18.15 java.awt.Component (JDK 1.0)
+Chapter 18The java.awt Package
+18.15 java.awt.Component (JDK 1.0)
+Component is the superclass of all GUI components
+(except menu components) in the java.awt package.  You may
+not instantiate a Component directly; you must use
+a subclass.
+Component defines many methods.  Some of these are
+intended to be implemented by subclasses.  Some are used
+internally by the AWT.  Some are to be implemented to handle events.
+And many are useful utility methods for working with GUI
+components.  getParent() returns the
+Container that a Component is contained in.
+setBackground(), setForeground(), and
+setFont() set the specified display attributes of a
+component.  hide(), show(),
+enable(), and disable() perform the
+specified actions for a component.  createImage()
+creates an Image object from a specified
+ImageProducer, or creates an offscreen image that
+can be draw into and used for double-buffering during
+animation.  Component also has quite a few deprecated
+methods as a result of the Java 1.1 event model and the
+introduction of the JavaBeans method naming
+conventions. The class defines quite a few methods for
+handling many types of events using the 1.0 model and the
+1.1 model in both its high-level and low-level forms.
+public abstract class Component extends Object implements ImageObserver, MenuContainer, Serializable {
+    // Protected Constructor
+        1.1  protected Component();
+    // Constants
+        1.1  public static final float BOTTOM_ALIGNMENT;
+        1.1  public static final float CENTER_ALIGNMENT;
+        1.1  public static final float LEFT_ALIGNMENT;
+        1.1  public static final float RIGHT_ALIGNMENT;
+        1.1  public static final float TOP_ALIGNMENT;
+    // Public Instance Methods
+         #  public boolean action(Event evt, Object what);
+        1.1  public synchronized void add(PopupMenu popup);
+        1.1  public synchronized void addComponentListener(ComponentListener l);
+        1.1  public synchronized void addFocusListener(FocusListener l);
+        1.1  public synchronized void addKeyListener(KeyListener l);
+        1.1  public synchronized void addMouseListener(MouseListener l);
+        1.1  public synchronized void addMouseMotionListener(MouseMotionListener l);
+             public void addNotify();
+         #  public Rectangle bounds();
+             public int checkImage(Image image, ImageObserver observer);
+             public int checkImage(Image image, int width, int height, ImageObserver observer);
+        1.1  public boolean contains(int x, int y);
+        1.1  public boolean contains(Point p);
+             public Image createImage(ImageProducer producer);
+             public Image createImage(int width, int height);
+         #  public void deliverEvent(Event e);
+         #  public void disable();
+        1.1  public final void dispatchEvent(AWTEvent e);
+        1.1  public void doLayout();
+         #  public void enable();
+         #  public void enable(boolean b);
+        1.1  public float getAlignmentX();
+        1.1  public float getAlignmentY();
+             public Color getBackground();
+        1.1  public Rectangle getBounds();
+             public ColorModel getColorModel();
+        1.1  public Component getComponentAt(int x, int y);
+        1.1  public Component getComponentAt(Point p);
+        1.1  public Cursor getCursor();
+             public Font getFont();  // From MenuContainer
+             public FontMetrics getFontMetrics(Font font);
+             public Color getForeground();
+             public Graphics getGraphics();
+        1.1  public Locale getLocale();
+        1.1  public Point getLocation();
+        1.1  public Point getLocationOnScreen();
+        1.1  public Dimension getMaximumSize();
+        1.1  public Dimension getMinimumSize();
+        1.1  public String getName();
+             public Container getParent();
+         #  public ComponentPeer getPeer();
+        1.1  public Dimension getPreferredSize();
+        1.1  public Dimension getSize();
+             public Toolkit getToolkit();
+        1.1  public final Object getTreeLock();
+         #  public boolean gotFocus(Event evt, Object what);
+         #  public boolean handleEvent(Event evt);
+         #  public void hide();
+            public boolean imageUpdate(Image img, int flags, int x, int y, int w, int h);  // From ImageObserver
+         #  public boolean inside(int x, int y);
+            public void invalidate();
+            public boolean isEnabled();
+        1.1  public boolean isFocusTraversable();
+            public boolean isShowing();
+            public boolean isValid();
+            public boolean isVisible();
+         #  public boolean keyDown(Event evt, int key);
+         #  public boolean keyUp(Event evt, int key);
+         #  public void layout();
+            public void list();
+            public void list(PrintStream out);
+            public void list(PrintStream out, int indent);
+        1.1  public void list(PrintWriter out);
+        1.1  public void list(PrintWriter out, int indent);
+         #  public Component locate(int x, int y);
+         #  public Point location();
+         #  public boolean lostFocus(Event evt, Object what);
+         #  public Dimension minimumSize();
+         #  public boolean mouseDown(Event evt, int x, int y);
+         #  public boolean mouseDrag(Event evt, int x, int y);
+         #  public boolean mouseEnter(Event evt, int x, int y);
+         #  public boolean mouseExit(Event evt, int x, int y);
+         #  public boolean mouseMove(Event evt, int x, int y);
+         #  public boolean mouseUp(Event evt, int x, int y);
+         #  public void move(int x, int y);
+         #  public void nextFocus();
+            public void paint(Graphics g);
+            public void paintAll(Graphics g);
+         #  public boolean postEvent(Event e);  // From MenuContainer
+         #  public Dimension preferredSize();
+            public boolean prepareImage(Image image, ImageObserver observer);
+            public boolean prepareImage(Image image, int width, int height, ImageObserver observer);
+            public void print(Graphics g);
+            public void printAll(Graphics g);
+        1.1  public synchronized void remove(MenuComponent popup);  // From MenuContainer
+        1.1  public synchronized void removeComponentListener(ComponentListener l);
+        1.1  public synchronized void removeFocusListener(FocusListener l);
+        1.1  public synchronized void removeKeyListener(KeyListener l);
+        1.1  public synchronized void removeMouseListener(MouseListener l);
+        1.1  public synchronized void removeMouseMotionListener(MouseMotionListener l);
+            public void removeNotify();
+            public void repaint();
+            public void repaint(long tm);
+            public void repaint(int x, int y, int width, int height);
+            public void repaint(long tm, int x, int y, int width, int height);
+            public void requestFocus();
+         #  public void reshape(int x, int y, int width, int height);
+         #  public void resize(int width, int height);
+         #  public void resize(Dimension d);
+            public void setBackground(Color c);
+        1.1  public void setBounds(int x, int y, int width, int height);
+        1.1  public void setBounds(Rectangle r);
+        1.1  public synchronized void setCursor(Cursor cursor);
+        1.1  public void setEnabled(boolean b);
+            public synchronized void setFont(Font f);
+            public void setForeground(Color c);
+        1.1  public void setLocale(Locale l);
+        1.1  public void setLocation(int x, int y);
+        1.1  public void setLocation(Point p);
+        1.1  public void setName(String name);
+        1.1  public void setSize(int width, int height);
+        1.1  public void setSize(Dimension d);
+        1.1  public void setVisible(boolean b);
+        #   public void show();
+        #   public void show(boolean b);
+        #   public Dimension size();
+            public String toString();  // Overrides Object
+        1.1  public void transferFocus();
+            public void update(Graphics g);
+            public void validate();
+    // Protected Instance Methods
+        1.1  protected final void disableEvents(long eventsToDisable);
+        1.1  protected final void enableEvents(long eventsToEnable);
+            protected String paramString();
+        1.1  protected void processComponentEvent(ComponentEvent e);
+        1.1  protected void processEvent(AWTEvent e);
+        1.1  protected void processFocusEvent(FocusEvent e);
+        1.1  protected void processKeyEvent(KeyEvent e);
+        1.1  protected void processMouseEvent(MouseEvent e);
+        1.1  protected void processMouseMotionEvent(MouseEvent e);
+}
+Extended By:
+Button, 
+Canvas, 
+Checkbox, 
+Choice, 
+Container, 
+Label, 
+List, 
+Scrollbar, 
+TextComponent
+Passed To:
+BorderLayout.addLayoutComponent(), 
+BorderLayout.removeLayoutComponent(), 
+CardLayout.addLayoutComponent(), 
+CardLayout.removeLayoutComponent(), 
+ComponentEvent(), 
+Container.add(), 
+Container.addImpl(), 
+Container.isAncestorOf(), 
+Container.remove(), 
+ContainerEvent(), 
+FlowLayout.addLayoutComponent(), 
+FlowLayout.removeLayoutComponent(), 
+FocusEvent(), 
+GridBagLayout.addLayoutComponent(), 
+GridBagLayout.getConstraints(), 
+GridBagLayout.lookupConstraints(), 
+GridBagLayout.removeLayoutComponent(), 
+GridBagLayout.setConstraints(), 
+GridLayout.addLayoutComponent(), 
+GridLayout.removeLayoutComponent(), 
+KeyEvent(), 
+LayoutManager.addLayoutComponent(), 
+LayoutManager.removeLayoutComponent(), 
+LayoutManager2.addLayoutComponent(), 
+MediaTracker(), 
+MouseEvent(), 
+PaintEvent(), 
+PopupMenu.show(), 
+ScrollPane.addImpl(), 
+Toolkit.createComponent(), 
+Toolkit.getNativeContainer()
+Returned By:
+Component.getComponentAt(), 
+Component.locate(), 
+ComponentEvent.getComponent(), 
+Container.add(), 
+Container.getComponent(), 
+Container.getComponentAt(), 
+Container.getComponents(), 
+Container.locate(), 
+ContainerEvent.getChild(), 
+PropertyEditor.getCustomEditor(), 
+PropertyEditorSupport.getCustomEditor(), 
+Window.getFocusOwner()
+java.awt.Color (JDK 1.0)
+java.awt.Container (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

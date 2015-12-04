@@ -1,0 +1,45 @@
+
+[Chapter 18] 18.41 java.awt.MenuBar (JDK 1.0)
+Chapter 18The java.awt Package
+18.41 java.awt.MenuBar (JDK 1.0)
+This class represents a menu bar.
+add() adds Menu objects to the menu bar, and
+setHelpMenu() adds a Help menu in a reserved
+location of the menu bar.  A MenuBar object may be
+displayed within a Frame by passing it to
+Frame.setMenuBar().
+public class MenuBar extends MenuComponent implements MenuContainer {
+    // Public Constructor
+            public MenuBar();
+    // Public Instance Methods
+            public synchronized Menu add(Menu m);
+            public void addNotify();
+        #   public int countMenus();
+        1.1  public void deleteShortcut(MenuShortcut s);
+            public Menu getHelpMenu();
+            public Menu getMenu(int i);
+        1.1  public int getMenuCount();
+        1.1  public MenuItem getShortcutMenuItem(MenuShortcut s);
+            public synchronized void remove(int index);
+            public synchronized void remove(MenuComponent m);  // From MenuContainer
+            public void removeNotify();  // Overrides MenuComponent
+            public synchronized void setHelpMenu(Menu m);
+        1.1  public synchronized Enumeration shortcuts();
+}
+Hierarchy:
+Object->MenuComponent(Serializable)->MenuBar(MenuContainer)
+Passed To:
+Frame.setMenuBar(), 
+FramePeer.setMenuBar(), 
+Toolkit.createMenuBar()
+Returned By:
+Frame.getMenuBar()
+java.awt.Menu (JDK 1.0)
+java.awt.MenuComponent (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

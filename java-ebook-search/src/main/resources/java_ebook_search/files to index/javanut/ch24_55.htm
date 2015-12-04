@@ -1,0 +1,46 @@
+
+[Chapter 24] 24.55 java.io.PushbackReader (JDK 1.1)
+Chapter 24The java.io Package
+24.55 java.io.PushbackReader (JDK 1.1)
+This class is a character input stream that uses another
+input stream as its input source, and adds the ability to
+push characters back onto the stream.  This feature is often
+useful when writing parsers.
+When you create a PushbackReader stream, you specify
+the stream to be read from, and may optionally specify the
+size of the pushback buffer--i.e., the number of characters
+that may be pushed back onto the stream or "unread."  If you
+do not specify a size for this buffer, the default size is one
+character.
+PushbackReader inherits or overrides all the standard
+Reader methods, and also adds three unread()
+methods that are used to push a single character, an array
+of characters, or a portion of an array of characters back
+onto the stream.
+This class is the character stream analog of
+PushbackInputStream.  
+public class PushbackReader extends FilterReader {
+    // Public Constructors
+            public PushbackReader(Reader in, int size);
+            public PushbackReader(Reader in);
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides FilterReader
+            public boolean markSupported();  // Overrides FilterReader
+            public int read() throws IOException;  // Overrides FilterReader
+            public int read(char[] cbuf, int off, int len) throws IOException;  // Overrides FilterReader
+            public boolean ready() throws IOException;  // Overrides FilterReader
+            public void unread(int c) throws IOException;
+            public void unread(char[] cbuf, int off, int len) throws IOException;
+            public void unread(char[] cbuf) throws IOException;
+}
+Hierarchy:
+Object->Reader->FilterReader->PushbackReader
+java.io.PushbackInputStream (JDK 1.0)
+java.io.RandomAccessFile (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

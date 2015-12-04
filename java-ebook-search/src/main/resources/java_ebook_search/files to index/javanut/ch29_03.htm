@@ -1,0 +1,71 @@
+
+[Chapter 29] 29.3 java.text.ChoiceFormat (JDK 1.1)
+Chapter 29The java.text Package
+29.3 java.text.ChoiceFormat (JDK 1.1)
+This class is a subclass of Format that converts a
+number to a String in a way that is reminiscent of a
+switch statement or an enumerated type.  Each
+ChoiceFormat object has an array of doubles known as
+its "limits" and an array of strings known as its
+"formats."  When the format() method is called to
+format a number x, the ChoiceFormat finds an
+index i such that:
+limits[i] &lt;= x &lt; limits[i+1]
+If x is less than the first element of the array,
+the first element is used, and if it is greater than
+the last, the last element is used.  Once the index
+i has been determined, it is used as the index
+into the array of strings, and the indexed string is
+returned as the result of the format() method.
+A ChoiceFormat object may also be created by
+encoding its "limits" and "formats" into a single string
+known as its "pattern."  A typical pattern looks like the
+one that follows, used to return the singular or plural form of a
+word, based on the numeric value passed to the
+format() method:
+ChoiceFormat cf = new ChoiceFormat("0#errors|1#error|2#errors");
+A ChoiceFormat object created in this way returns
+the string "errors" when it formats the number 0, or any
+number greater than or equal to 2. It returns
+"error" when it formats the number 1.  In the syntax shown
+here, note the pound sign (#) used to separate the
+limit number from the string that corresponds to that case
+and the vertical bar (|) used to separate the
+individual cases.  You can use the applyPattern()
+method to change the pattern used by a ChoiceFormat
+object; use toPattern() to query the pattern it
+uses. 
+public class ChoiceFormat extends NumberFormat {
+    // Public Constructors
+            public ChoiceFormat(String newPattern);
+            public ChoiceFormat(double[] limits, String[] formats);
+    // Class Methods
+            public static final double nextDouble(double d);
+            public static double nextDouble(double d, boolean positive);
+            public static final double previousDouble(double d);
+    // Public Instance Methods
+            public void applyPattern(String newPattern);
+            public Object clone();  // Overrides NumberFormat
+            public boolean equals(Object obj);  // Overrides NumberFormat
+            public StringBuffer format(long number, StringBuffer toAppendTo,
+            FieldPosition status);  // Defines NumberFormat
+            public StringBuffer format(double number, StringBuffer toAppendTo,
+            FieldPosition status);  // Defines NumberFormat
+            public Object[] getFormats();
+            public double[] getLimits();
+            public int hashCode();  // Overrides NumberFormat
+            public Number parse(String text, ParsePosition status);  // Defines NumberFormat
+            public void setChoices(double[] limits, String[] formats);
+            public String toPattern();
+}
+Hierarchy:
+Object->Format(Serializable, Cloneable)->NumberFormat(Cloneable)->ChoiceFormat
+java.text.CharacterIterator (JDK 1.1)
+java.text.CollationElementIterator (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

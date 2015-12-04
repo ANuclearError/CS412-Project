@@ -1,0 +1,145 @@
+
+ Preface
+Preface
+Preface
+Contents:
+New Features of AWT in Java 1.1
+What This Book Covers
+About the Source Code
+Other Java Books and Resources
+About Java
+Conventions Used in This Book
+Request for Comments
+Acknowledgments
+The Abstract Window Tookit (AWT) provides the user interface for Java
+programs.  Unless you want to construct your own GUI or use a crude
+text-only interface, the AWT provides the tools you will use to
+communicate with the user. Although we are beginning to see some other
+APIs for building user interfaces, like Netscape's IFC (Internet
+Foundation Classes), those alternative APIs will not be in widespread
+use for some time, and some will be platform specific.  Likewise, we
+are beginning to see automated tools for building GUIs in Java;
+Sun's JavaBeans effort promises to make such tools much more
+widespread. (In fact, the biggest changes in Java 1.1 prepare the way
+for using the various AWT components as JavaBeans.) However, even with
+automated tools and JavaBeans in the future, an in-depth knowledge of
+AWT is essential for the practicing Java programmer.
+The major problem facing Java developers these days is that AWT is a
+moving target. Java 1.0.2 is being replaced by Java 1.1, with many
+significant new features. Java 1.1 was released on February 18, 1997,
+but it isn't clear how long it will take for 1.1 to be accepted
+in the market. The problem facing developers is not just learning
+about the new features and changes in Java 1.1, but also knowing when
+they can afford to use these new features in their code.  In practice,
+this boils down to one question: when will Netscape Navigator support
+Java 1.1? Rumor has it that the answer is "as soon as
+possible"--and we all hope this rumor is correct. But given
+the realities of maintaining a very complex piece of software, and the
+fact that Netscape is currently in the beta process for Navigator 4.0,
+there's a possibility that "as soon as possible" and
+"soon" aren't the same thing. In other words, you
+should expect Java 1.0.2 to stick around for a while, especially since
+Web users won't all replace their browsers as soon as Navigator has
+1.1 support.
+This state of affairs raises obvious problems for my book. Nothing would 
+have made me happier than to write a book that covered AWT 1.1 only. It 
+would be significantly shorter, for one thing, and I wouldn't have 
+to spend so much effort pointing out which features are present in which 
+release. But that's not the current reality. For the time being, 
+programmers still need to know about 1.0.2. Therefore, this book covers 
+both releases thoroughly. There are many examples using 1.0.2; many more 
+examples that require 1.1; and more examples showing you how to update 
+1.0.2 code to use 1.1's features. 
+Sun has done a good job of maintaining compatibility between versions: 
+1.0 code runs under Java 1.1, with very few exceptions. All of the 1.0 
+examples in this book have been tested under Java 1.1. However, Java 1.1--and 
+particularly, AWT 1.1--offer many advantages over older releases. 
+If nothing else, I hope this book convinces you that you should be looking 
+forward to the day when you can forget about writing code for Java 1.0.2. 
+New Features of AWT in Java 1.1
+Having spent all this time talking about 1.0.2 and 1.1 and the transitional 
+state we're currently in and having alluded briefly to the advantages 
+of Java 1.1, you deserve a brief summary of what has changed. Of course, you'll 
+find the details in the book. 
+Improved event handling
+Java 1.1 provides a completely new event model. Instead of propagating 
+events to all objects that might possibly have an interest, objects in
+Java 1.1 register their interest in particular kinds of events and 
+get only the events they're interested in hearing. The old event model 
+is still supported, but the new model is much more efficient. 
+The new event model is also important in the context of JavaBeans. The 
+old events were pretty much specific to AWT. The new model has been designed 
+as a general purpose feature for communication between software components. 
+Unfortunately, how to use events in this more general sense is beyond the 
+scope of this book, but you should be aware that it's possible. 
+New components and containers
+Java 1.1 provides one new component, the PopupMenu, 
+and one new container, the ScrollPane. 
+Pop-up menus are a staple of modern user interfaces; providing them fixes 
+a serious omission. ScrollPane 
+makes it trivial to implement scrolling; in Java 1.0, you had to do scrolling 
+"by hand." In Java 1.1, you also get menu shortcuts (i.e., 
+the ability to select menu items using the keyboard), another standard 
+feature of modern user interfaces. 
+Java 1.1 also introduces a LightweightPeer, 
+which means that it is possible to create "lightweight components." 
+To do so, you subclass Component 
+or Container directly; this 
+wasn't possible in earlier releases. For simple operations, lightweight 
+components are much more efficient than full-fledged components. 
+Clipboards
+Java 1.1 lets you read from and write to the system clipboard and create 
+private clipboards for use by your programs. The clipboard facility is 
+a down payment on a larger data transfer facility, which will support drag 
+and drop. (No promises about when drag and drop will appear.) 
+Printing
+Java 1.1 gives components the ability to print.
+The rest
+There are many other new features, including more flexible use of cursors; 
+the ability to use system color schemes, and thus make your program look 
+like other software in the run-time environment; more image filters to play 
+with; and the ability to prescale an image. 
+Deprecated Methods and JavaBeans
+One of the biggest changes in Java 1.1 doesn't concern the feature 
+set at all. This was the addition of many new methods that differ from 
+a method of Java 1.0 in name only. There are hundreds of these, particularly 
+in AWT. The new method names show an important future direction for the 
+AWT package (in fact, all of Java). The new names obey the naming conventions 
+used by JavaBeans, which means that all AWT classes are potentially Beans. 
+These conventions make it possible for an application builder to analyze 
+what a component does based on its public methods. For example, the method 
+setFont() changes the value 
+of the component's Font 
+property. In turn, this means that you will eventually be able to build 
+user interfaces and, in some cases, entire applications, inside some other 
+tool, without writing any Java code at all. An application builder will 
+be able to find out what it needs to know about any component by looking 
+at the component itself, and letting you customize the component and its 
+interactions with others. 
+Comments in the JDK source code indicate that the older method names have 
+been "deprecated," which means that you should consider the 
+old names obsolete and avoid using them; they could disappear in a future 
+release.
+Reworking AWT to comply with JavaBeans is both necessary and
+inevitable. Furthermore, it's a good idea to get into the habit of following the same
+conventions for your own code; the advantages of JavaBeans are much
+greater than the inconvenience of changing your coding style.
+Other Changes in Java
+Other new features are scattered throughout the rest of the Java 
+classes, most notably, improvements in the networking and I/O packages 
+and support for internationalization. Some new features were added to the 
+language itself, of which the most important is "inner classes." 
+For the most part, I don't discuss these changes; in fact, I stay 
+away from them and base non-AWT code on the 1.0.2. release. Though these 
+changes are important, covering the new material in AWT is enough for one 
+book. If I used a new feature at this point, I would feel that I owed 
+you an explanation, and this book is already long enough. A future edition 
+will update the code so that it doesn't rely on any older features. 
+What This Book Covers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,28 @@
+
+[Chapter 18] 18.50 java.awt.PrintGraphics (JDK 1.1)
+Chapter 18The java.awt Package
+18.50 java.awt.PrintGraphics (JDK 1.1)
+The Graphics object returned by the
+getGraphics() method of PrintJob always
+implements this PrintGraphics interface.  You can
+use this fact to distinguish a Graphics object that
+draws to the screen from one that generates hardcopy. This
+is a useful thing to do in a paint() method when you
+want to generate hardcopy that differs somewhat from what is
+displayed on-screen.
+The getPrintJob() method defined by this interface
+can also be used, of course, to return the PrintJob
+with which the PrintGraphics object is associated.
+public abstract interface PrintGraphics {
+    // Public Instance Methods
+            public abstract PrintJob getPrintJob();
+}
+java.awt.PopupMenu (JDK 1.1)
+java.awt.PrintJob (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

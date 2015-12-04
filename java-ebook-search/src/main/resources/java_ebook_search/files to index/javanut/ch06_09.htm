@@ -1,0 +1,65 @@
+
+[Chapter 6] 6.9 Signed Applets
+Chapter 6Applets
+6.9 Signed Applets
+In Java 1.1 it is possible to circumvent these applet
+security restrictions by attaching a digital signature to a
+JAR file.  When a Web browser or
+applet viewer loads a JAR file that has been signed by a
+trusted entity (the user specifies whom she trusts), the
+browser may
+grant the applet contained in the JAR file special
+privileges, such as the ability to read and write local
+files, that are not available to untrusted applets.
+Signing an applet with the javakey tool provided by
+the JDK is a somewhat cumbersome task.  First, of course,
+you must have a security database set up.  The database must
+contain the certificate and the public and private keys that you
+want to use to sign the applet.  See the
+javakey documentation in Chapter 16, JDK Tools for details on
+this process.
+Once you have a properly configured security database, you
+must create a simple "directive file" that gives
+javakey the information it needs to sign your JAR
+file.  A directive file might look like this:
+# The entity doing the signing
+signer=david
+# The certificate number to use
+cert=1
+# Currently unused
+chain=0
+# The base name of the signature files to be added to the JAR manifest
+signature.file=DAVIDSIG
+Having created a directive file named mysig,
+for example, you could then sign a JAR file like this:
+% javakey -gs mysig soundmap.jar
+This command creates a new JAR file named
+soundmap.jar.sig that you can use in an HTML
+archive attribute just as you would use an unsigned
+JAR file.
+The javakey tool is used for all aspects of
+administering the Java system security database.  One of the
+other things you can do with it is to declare which entities
+are trusted.  You do this with the -t option.  For
+example, you might declare your trust for the author as follows:
+% javakey -t DavidFlanagan true
+Or you could revoke your trust like this:
+% javakey -t DavidFlanagan false
+The appletviewer program makes use of any trust values
+declared in this way.  Note that javakey and
+appletviewer support only untrusted entities and
+fully-trusted entities, without any gradations in between.
+We may see additional levels of trust in the future.
+Bear in mind that the javakey techniques described
+here apply only to the JDK.  Other vendors may provide other
+mechanisms for signing applets, and Web browsers may provide
+other ways of declaring trusted entities.
+Applet Security Restrictions
+Events
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,779 @@
+
+[Chapter 11] RandomAccessFile
+Chapter 11The java.io Package
+RandomAccessFile
+Name
+RandomAccessFile
+Synopsis
+Class Name:
+java.io.RandomAccessFile
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.DataInput, 
+java.io.DataOutput
+Availability:
+JDK 1.0 or later
+Description
+The RandomAccessFile class reads data from and writes data to a file. The file is specified 
+using a File object or a String 
+that represents a pathname. Both constructors take a mode parameter 
+that specifies whether the file is being opened solely for reading, or 
+for reading and writing. Each of the constructors can throw a SecurityException 
+if the application does not have permission to access the specified file 
+using the given mode. 
+Unlike FileInputStream and 
+FileOutputStream, RandomAccessFile 
+supports random access to the data in the file; the seek() 
+method allows you to alter the current position of the file pointer to 
+any location in the file. RandomAccessFile 
+implements both the DataInput 
+and DataOutput interfaces, 
+so it supports reading and writing of all the primitive data types. 
+Class Summary
+public class java.io.RandomAccessFile extends java.lang.Object
+             implements java.io.DataInput, java.io.DataOutput {
+  // Constructors
+  public RandomAccessFile(File file, String mode);
+  public RandomAccessFile(String name, String mode); 
+  // Instance Methods
+  public native void close();
+  public final FileDescriptor getFD();
+  public native long getFilePointer();
+  public native long length();
+  public native int read();
+  public int read(byte[] b);
+  public int read(byte[] b, int off, int len);
+  public final boolean readBoolean();
+  public final byte readByte();
+  public final char readChar();
+  public final double readDouble();
+  public final float readFloat();
+  public final void readFully(byte[] b);
+  public final void readFully(byte[] b, int off, int len);
+  public final int readInt();
+  public final String readLine();
+  public final long readLong();
+  public final short readShort();
+  public final String readUTF();
+  public final int readUnsignedByte();
+  public final int readUnsignedShort();
+  public native void seek(long pos);
+  public int skipBytes(int n);
+  public native void write(int b);
+  public void write(byte[] b);
+  public void write(byte[] b, int off, int len);
+  public final void writeBoolean(boolean v);
+  public final void writeByte(int v);
+  public final void writeBytes(String s);
+  public final void writeChar(int v);
+  public final void writeChars(String s);
+  public final void writeDouble(double v);
+  public final void writeFloat(float v);
+  public final void writeInt(int v);
+  public final void writeLong(long v);
+  public final void writeShort(int v);
+  public final void writeUTF(String str);
+}
+Constructors
+RandomAccessFile
+public RandomAccessFile(File file, String mode) throws IOException
+Parameters
+file
+The file to be accessed.
+mode
+The mode of access to the file: either "r" for read
+access or "rw" for read/write access.
+Throws
+IOException
+If any kind of I/O error occurs.
+IllegalArgumentException
+If mode is not "r" 
+or "rw".
+SecurityException
+If the application does not have permission to read the named file, or 
+if mode is "rw" 
+and the application does not have permission to write to the named file. 
+Description
+This constructor creates a RandomAccessFile 
+to access the specified File 
+in the specified mode. 
+public RandomAccessFile(String name, String mode) throws IOException
+Parameters
+name
+A String 
+that contains the pathname of the file to be accessed. The path must conform 
+to the requirements of the native operating system.
+mode
+The mode of access to the file: either "r" for read
+access or "rw" for read/write access.
+Throws
+IOException
+If any kind of I/O error occurs.
+IllegalArgumentException
+If mode is not "r" 
+or "rw".
+SecurityException
+If the application does not have permission to read the named file, or 
+if mode is "rw" 
+and the application does not have permission to write to the named file. 
+Description
+This constructor creates a RandomAccessFile 
+to access the file with the specified name 
+in the specified mode. 
+Instance Methods
+close
+public native void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method closes the file and releases the system resources that are 
+associated with it. 
+getFD
+public final FileDescriptor getFD() throws IOException
+Returns
+The file descriptor for the file that supplies data for this object. 
+Throws
+IOException
+If 
+there is no FileDescriptor 
+associated with this object. 
+Description
+This method returns the file descriptor associated with this RandomAccessFile. 
+getFilePointer
+public native long getFilePointer() throws IOException
+Returns
+The current position in the file. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the current position in the file. The position is the 
+offset, in bytes, from the beginning of the file where the next read or 
+write operation occurs. 
+length
+public native long length() throws IOException
+Returns
+The length of the file. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the length of the file in bytes. 
+read
+public native int read() throws IOException
+Returns
+The next byte or -1 if the end of file is encountered. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method reads the next byte from the file. The method blocks until 
+the byte is read, the end of the file is encountered, or an exception is 
+thrown. 
+public int read(byte b[]) throws IOException
+Parameters
+b
+An array of bytes to 
+be filled from the stream. 
+Returns
+The number of bytes read or -1 if the end of file is encountered immediately. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method reads bytes from the file into the given array. The method 
+reads up to b.length bytes 
+of data from the stream. The method blocks until there is some data available. 
+public int read(byte b[], int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled.
+off
+An offset into the array.
+len
+The number of bytes to read. 
+Returns
+The number of bytes read or -1 if the end of file is encountered immediately. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method reads up to len 
+bytes from the file into the given array, starting at index off. 
+The method blocks until there is some input available. 
+readBoolean
+public final boolean readBoolean() throws IOException
+Returns
+The boolean value read from 
+the file. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readBoolean() 
+Description
+This method reads a byte as a boolean 
+value from the file. A byte that contains a zero is read as false. 
+A byte that contains any other value is read as true. 
+The method blocks until the byte is read, the end of the file is encountered, 
+or an exception is thrown. 
+readByte
+public final byte readByte() throws IOException
+Returns
+The byte value read from the 
+file. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readByte() 
+Description
+This method reads a signed 8-bit value, a byte, 
+from the file. The method blocks until the byte is read, the end of the 
+file is encountered, or an exception is thrown. 
+readChar
+public final char readChar() throws IOException
+Returns
+The char value read from the 
+file. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readChar() 
+Description
+This method reads a 16-bit Unicode character from the file. The method 
+reads two bytes from the file and then creates a char 
+value using the first byte read as the most significant byte. The method 
+blocks until the two bytes are read, the end of the file is encountered, 
+or an exception is thrown. 
+readDouble
+public final double readDouble() throws IOException
+Returns
+The double value read from 
+the file. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readDouble() 
+Description
+This method reads a 64-bit double 
+quantity from the file. The method reads a long 
+value from the file as if using the readLong() 
+method. The long value is then 
+converted to a double using 
+the longBitsToDouble() method 
+in Double. The method blocks 
+until the necessary eight bytes are read, the end of the file is encountered, 
+or an exception is thrown. 
+readFloat
+public final float readFloat() throws IOException
+Returns
+The float value read from the 
+file. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readFloat() 
+Description
+This method reads a 32-bit float 
+quantity from the file. The method reads an int 
+value from the file as if using the readInt() 
+method. The int value is then 
+converted to a float using 
+the intBitsToFloat() method 
+in Float. The method blocks 
+until the necessary four bytes are read, the end of the file is encountered, 
+or an exception is thrown. 
+readFully
+public final void readFully(byte b[]) throws IOException
+Parameters
+b
+The array to fill. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readFully(byte[]) 
+Description
+This method reads bytes into the given array b 
+until the array is full. The method reads repeatedly from the file to fill 
+the array. The method blocks until all of the bytes are read, the end of 
+the file is encountered, or an exception is thrown. 
+public final void readFully(byte b[], int off, int len) throws IOException
+Parameters
+b
+The array to fill.
+off
+An offset into the array.
+len
+The number of bytes to read. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readFully(byte[], int, int) 
+Description
+This method reads len bytes into the given array, starting 
+at offset off. The method reads repeatedly from the file 
+to fill the array. The method blocks until all of the bytes are read, the 
+end of the file is encountered, or an exception is thrown. 
+readInt
+public final int readInt() throws IOException
+Returns
+The int value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readInt() 
+Description
+This method reads a signed 32-bit int 
+quantity from the file. The method reads four bytes from the file and then 
+creates an int quantity, using 
+the first byte read as the most significant byte. The method blocks until 
+the four bytes are read, the end of the file is encountered, or an exception 
+is thrown. 
+readLine
+public final String readLine() throws IOException
+Returns
+A String that contains the 
+line read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other I/O error occurs. 
+Implements
+DataInput.readLine() 
+Description
+This method reads the next line of text from the file. The method reads 
+bytes of data from the file until it encounters a line terminator. A line 
+terminator is a carriage return ('\r'), 
+a newline character ('\n'), 
+a carriage return immediately followed by a newline character, or the end 
+of the file. The method blocks until a line terminator is read, the end 
+of the file is encountered, or an exception is thrown.
+The method does not convert bytes to characters correctly. 
+readLong
+public final long readLong() throws IOException
+Returns
+The long value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readLong() 
+Description
+This method reads a signed 64-bit long 
+quantity from the file. The method reads eight bytes from the file and 
+then creates a long quantity, 
+using the first byte read as the most significant byte. The method blocks 
+until the eight bytes are read, the end of the file is encountered, or 
+an exception is thrown. 
+readShort
+public final short readShort() throws IOException
+Returns
+The short value read from the 
+stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readShort() 
+Description
+This method reads a signed 16-bit short 
+quantity from the file. The method reads two bytes from the file and then 
+creates a short quantity, using 
+the first byte read as the most significant byte. The method blocks until 
+the two bytes are read, the end of the file is encountered, or an exception 
+is thrown. 
+readUnsignedByte
+public final int readUnsignedByte() throws IOException
+Returns
+The unsigned byte value read 
+from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Returns
+Implements
+DataInput.readUnsignedByte() 
+Description
+This method reads an unsigned 8-bit quantity from the file. The method 
+reads a byte from the file and returns that byte. The method blocks until 
+the byte is read, the end of the file is encountered, or an exception is 
+thrown. 
+readUnsignedShort
+public final int readUnsignedShort() throws IOException
+Returns
+The unsigned short value read 
+from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs. 
+Implements
+DataInput.readUnsignedShort() 
+Description
+This method reads an unsigned 16-bit quantity from the file. The method 
+reads two bytes from the file and creates an unsigned short 
+quantity using the first byte read as the most significant byte. The method 
+blocks until the two bytes are read, the end of the file is encountered, 
+or an exception is thrown. 
+readUTF
+public final String readUTF() throws IOException
+Returns
+The String 
+read from the stream. 
+Throws
+EOFException
+If the end of the file is encountered.
+IOException
+If any other kind of I/O error occurs.
+UTFDataFormatException
+If the bytes do not represent a valid UTF-8 encoding. 
+Implements
+DataInput.readUTF() 
+Description
+This method reads a UTF-8 encoded string from the file. The method reads 
+the first two bytes from the file as unsigned short 
+values, to get the number of bytes in the encoded string. Then the following 
+bytes are read and interpreted UTF-8 encoded bytes; these bytes are converted 
+into characters for the resulting String. 
+This method blocks until all of the bytes in the encoded string have been 
+read, the end of the file is encountered, or an exception is thrown. 
+See Appendix B, The UTF-8 Encoding for information about the UTF-8 encoding.
+seek
+public native void seek(long pos) throws IOException
+Parameters
+pos
+The new position in 
+the file. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Description
+This method sets the current file position to the specified position. The 
+position is the offset, in bytes, from the beginning of the file where 
+the next read or write operation occurs. 
+skipBytes
+public int skipBytes(int n) throws IOException
+Parameters
+n
+The number of bytes to 
+skip. 
+Returns
+The actual number of skipped bytes. 
+Throws
+EOFException
+If EOF is encountered.
+IOException
+If any I/O error occurs. 
+Implements
+DataInput.skipBytes() 
+Description
+This method skips over n bytes. 
+write
+public native void write(int b) throws IOException
+Parameters
+b
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.write(int) 
+Description
+This method writes the low-order eight bits of b 
+to the file as a byte. 
+public void write(byte b[]) throws IOException
+Parameters
+b
+An array of bytes to 
+write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.write(byte[]) 
+Description
+This method writes the bytes in the given array to the file. 
+public void write(byte b[], int off, int len) throws IOException
+Parameters
+b
+An array of bytes to write.
+off
+An offset into the byte array.
+len
+The number of bytes to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.write(byte[], int, int) 
+Description
+This method writes len bytes from the given array, starting off elements from the beginning of the array, to the 
+file. 
+writeBoolean
+public final void writeBoolean(boolean v) throws IOException
+Parameters
+v
+The boolean 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeBoolean() 
+Description
+If v is true, 
+this method writes a byte that contains the value 1 
+to the file. If v is false, 
+the method writes a byte that contains the value 0. 
+writeByte
+public final void writeByte(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeByte() 
+Description
+This method writes an 8-bit byte 
+to the file, using the low-order eight bits of the given integer v. 
+writeBytes
+public final void writeBytes(String s) throws IOException
+Parameters
+s
+The String to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeBytes() 
+Description
+This method writes the characters in the given String 
+to the file as a sequence of 8-bit bytes. The high-order bytes of the 
+characters in the string are ignored. 
+writeChar
+public final void writeChar(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeChar() 
+Description
+This method writes a 16-bit char 
+to the file, using the low-order 16 bits of the given integer v. 
+writeChars
+public final void writeChars(String s) throws IOException
+Parameters
+s
+The String to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeChars() 
+Description
+This method writes the characters in the given String 
+object to the file as a sequence of 16-bit characters. 
+writeDouble
+public final void writeDouble(double v) throws IOException
+Parameters
+v
+The double 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeDouble() 
+Description
+This method writes a 64-bit double 
+to the file. The double value 
+is converted to a long using 
+doubleToLongBits() of Double; 
+the long value is then written 
+to the file as eight bytes with the high-order byte first. 
+writeFloat
+public final void writeFloat(float v) throws IOException
+Parameters
+v
+The float 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeFloat() 
+Description
+This method writes a 32-bit float 
+to the file. The float value 
+is converted to a int using 
+floatToIntBits() of Float; 
+the int value is then written 
+to the file as four bytes with the high-order byte first. 
+writeInt
+public final void writeInt(int v) throws IOException
+Parameters
+v
+The int 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeInt() 
+Description
+This method writes a 32-bit int 
+to the file. The value is written as four bytes with the high-order byte first. 
+writeLong
+public final void writeLong(long v) throws IOException
+Parameters
+v
+The long 
+value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeLong() 
+Description
+This method writes a 64-bit long 
+to the file. The value is written as eight bytes with the high-order byte 
+first. 
+writeShort
+public final void writeShort(int v) throws IOException
+Parameters
+v
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeShort() 
+Description
+This method writes a 16-bit short 
+to the file, using the low-order 16 bits of the given integer v. 
+writeUTF
+public final void writeUTF(String str) throws IOException
+Parameters
+str
+The String 
+to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Implements
+DataOutput.writeUTF() 
+Description
+This method writes the given String 
+to the file using the UTF-8 encoding.
+See Appendix B, The UTF-8 Encoding for information about the UTF-8 encoding.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DataInput, 
+DataOutput, 
+File, 
+FileInputStream, 
+FileOutputStream, 
+Double, 
+Float, 
+Integer, 
+IllegalArgumentException, 
+IOException, 
+Long 
+PushbackReader
+Reader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

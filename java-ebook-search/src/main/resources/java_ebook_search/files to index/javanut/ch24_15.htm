@@ -1,0 +1,30 @@
+
+[Chapter 24] 24.15 java.io.Externalizable (JDK 1.1)
+Chapter 24The java.io Package
+24.15 java.io.Externalizable (JDK 1.1)
+This interface defines the methods that must be implemented
+by an object that wants complete control over the way it is
+serialized.  The writeExternal() and
+readExternal() methods should be implemented to
+write and read object data in some arbitrary format, using
+the methods of the DataOutput and DataInput
+objects. Externalizable objects must serialize their own
+fields, and are also responsible for serializing the fields
+of their superclasses.
+Most objects do not need to define a custom output format
+and can use the Serializable interface instead of
+Externalizable for serialization.
+public abstract interface Externalizable extends Serializable {
+    // Public Instance Methods
+            public abstract void readExternal(ObjectInput in) throws IOException, ClassNotFoundException;
+            public abstract void writeExternal(ObjectOutput out) throws IOException;
+}
+java.io.EOFException (JDK 1.0)
+java.io.File (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

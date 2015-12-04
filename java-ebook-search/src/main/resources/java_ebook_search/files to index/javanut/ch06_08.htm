@@ -1,0 +1,191 @@
+
+[Chapter 6] 6.8 Applet Security Restrictions
+Chapter 6Applets
+6.8 Applet Security Restrictions
+Applets loaded over the network are usually considered to be
+untrusted code.  (The exception, as we'll see in the next
+section, is when the applet bears the digital signature of an
+entity that you've specified you trust.)  The only way
+to be sure that an untrusted applet cannot perform any
+malicious actions (e.g., deleting your files, sending out
+fake email that looks like it came from you, using your
+computer as a remote file server) is to run it in a tightly
+controlled environment.  For this reason, Web browsers and
+applet viewers carefully restrict what an applet is
+allowed to do.
+When designing an applet, you must be aware of a fairly long
+list of things that an applet is not allowed to do.  The
+following list details the security restrictions imposed by the
+appletviewer application in Java 1.1.  Different Web
+browsers and applet viewers may impose somewhat different
+restrictions on applets, and some (including
+appletviewer) may allow the user to relax or customize
+the restrictions.  In general, however, you should assume
+that your applets will be restricted in the following ways:
+Untrusted code cannot read from or write to the local
+filesystem.  This means that untrusted code cannot:
+Read files.
+List directories.
+Check for the existence of files.
+Obtain the size or modification date of files.
+Obtain the read and write permissions of a file.
+Test whether a filename is a file or directory.
+Write files.
+Delete files.
+Create directories.
+Rename files.
+Read or write from FileDescriptor objects.
+appletviewer allows a system administrator to set
+properties that allow applets to read and write files within
+a specified list of directories.
+Untrusted code cannot perform networking operations, except in certain
+restricted ways.  Untrusted code cannot:
+Create a network connection to any computer other than the
+one from which the code was itself loaded.
+Listen for network connections on any of the privileged
+ports with numbers less than or equal to 1024.
+Accept network connections on ports less than or equal to
+1024 or from any host other than the one from which the
+code itself was loaded.
+Use multicast sockets.
+Create or register a SocketImplFactory,
+URLStreamHandlerFactory, or
+ContentHandlerFactory.
+appletviewer uses the "host-of-origin" policy
+described above by default, but can also be configured to
+disallow all networking or to allow all networking.
+Untrusted code cannot make use of certain system
+facilities.  It cannot:
+Exit the Java interpreter by calling System.exit()
+or Runtime.exit().
+Spawn new processes by calling any of the
+Runtime.exec() methods.
+Dynamically load native code libraries with the
+load() or loadLibrary() methods of
+Runtime or System.
+Untrusted code cannot make use of certain AWT facilities.
+One major restriction is that all windows created by
+untrusted code will display a prominent visual indication
+that they have been created by untrusted code and are
+"insecure." This is to prevent untrusted code from spoofing
+the on-screen appearance of trusted code.  Additionally,
+untrusted code cannot:
+Initiate a print job.
+Access the system clipboard.
+Access the system event queue.
+Untrusted code has restricted access to system properties.
+It cannot call System.getProperties(), and so cannot
+modify or insert properties into the system properties list.
+It can call System.getProperty() to read individual
+properties, but can only read system properties to which it
+has been explicitly granted access.  By default,
+appletviewer grants access to only the following ten
+properties.  Note that user.home and
+user.dir are excluded:
+java.version
+java.class.version
+java.vendor
+java.vendor.url
+os.name
+os.version
+os.arch
+file.separator
+path.separator
+line.separator
+Untrusted code cannot create or access threads or
+thread groups outside of the thread group in which the
+untrusted code is running.
+Untrusted code has restrictions on the classes it can load
+and define.  It cannot:
+Explicitly load classes from the sun.* packages.
+Define classes in any of the java.* or sun.*
+packages.
+Create a ClassLoader object or call any
+ClassLoader methods.
+Untrusted code cannot use the java.lang.Class
+reflection methods to obtain information about non-public
+members of a class, unless the class was loaded from the
+same host as the untrusted code.
+Untrusted code has restrictions on its use of the
+java.security package.  It cannot:
+Manipulate security identities in any way.
+Set or read security properties.
+List, lookup, insert, or remove security providers.
+Finally, to prevent untrusted code from circumventing all of
+these restrictions, it is not allowed to create or register a
+SecurityManager object.
+Local Applet Restrictions
+When an applet is loaded from the local file system, instead
+of through  a network protocol, Web browsers and applet viewers
+may relax some, or even many, of the above restrictions.  The
+reason for this is that local applets are assumed to be more
+trustworthy than anonymous applets from the network.
+Intermediate applet security policies are also possible.
+For example, an applet viewer could be written that would
+place fewer restrictions on applets loaded from an internal
+corporate network than on those loaded from the Internet.
+Applet Security Implementation
+Implementing the security restrictions described above is
+the responsibility of the java.lang.SecurityManager
+class.  This class defines a number of methods that the
+system calls to check whether a certain operation (such as
+reading a file) is permitted in the current environment.
+Applet viewers create a subclass of SecurityManager
+to implement a particular security policy.  A security
+policy is put in place by instantiating a
+SecurityManager object and registering it with
+System.setSecurityManager().  (One of the obvious
+security restrictions that must be enforced is that
+untrusted code may not register its own
+SecurityManager object!)
+Loading Classes Securely
+Another component of Java security is the way Java classes
+are loaded over the network.  The
+java.lang.ClassLoader class defines how this is
+done. Applet viewers and Web browsers create
+subclasses of this class that implement security policies and
+define how class files are loaded via various protocols.
+One important function of the class loader is to ensure that
+loaded classes reside in a separate namespace than classes
+loaded from the local system.  This prevents naming
+conflicts, and also prevents a malicious applet from
+replacing standard Java classes with its own versions.
+Byte-Code Verification
+Another important function of the class loader is to ensure
+that all untrusted Java code (generally code loaded over the
+network) is passed through the Java byte-code verification
+process.  This process ensures that the loaded code does not
+violate Java namespace restrictions or type conversion
+restrictions.  It also checks that the code:
+Is valid Java Virtual Machine code.
+Does not overflow or underflow the stack.
+Does not use registers incorrectly.
+Does not convert data types illegally.
+The purpose of these checks is to verify that the loaded
+code cannot forge pointers or do memory arithmetic,
+which could give it access to the underlying machine.
+The checks also ensure that the code cannot crash the Java
+interpreter or leave it in an undefined state, which might
+allow malicious code to take advantage of security flaws that could exist
+in some interpreter implementations. Essentially, the byte-code
+verification process protects against code from an "untrusted"
+Java compiler.
+Denial of Service Attacks
+The one "security hole" that remains when running an
+untrusted applet is that the applet can perform a "denial of
+service attack" on your computer. For example, it could
+frivolously allocate lots of memory, run many threads, or
+download lots of data. This sort of attack consumes system
+resources and can slow your computer (or your network
+connection) considerably. While this sort of attack by an
+applet is inconvenient, fortunately it cannot usually do any
+significant damage.
+JAR Files
+Signed Applets
+ 
+ 
+ 
+ 
+ 
+ 
+ 

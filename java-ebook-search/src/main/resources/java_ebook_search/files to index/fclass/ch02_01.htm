@@ -1,0 +1,127 @@
+
+[Chapter 2] Strings and Related Classes
+Chapter 2
+2. Strings and Related Classes
+Contents:
+String
+StringBuffer
+String Concatenation
+StringTokenizer
+As with most programming languages, strings are used extensively throughout 
+Java, so the Java API has quite a bit of functionality to help you manipulate 
+strings. This chapter describes the following classes: 
+The java.lang.String class represents all textual strings in Java. A String 
+object is immutable; once you create a String 
+object, there is no way to change the sequence of characters it represents 
+or the length of the string. 
+The java.lang.StringBuffer 
+class represents a variable-length, mutable sequence of characters. 
+With a StringBuffer object, 
+you can insert characters anywhere in the sequence and add characters to 
+the end of the sequence. 
+The java.util.StringTokenizer 
+class provides support for parsing a string into a sequence of words, 
+or tokens. 
+2.1 String
+You can create a String object 
+in Java simply by assigning a string literal to a String 
+variable: 
+String quote = "To be or not to be";
+All string literals are compiled into String
+objects. Although the Java compiler does not generally treat
+expressions involving object references as compile-time constants,
+references to String objects created from string
+literals are treated as compile-time constants.
+Of course, there are many other ways to create a String 
+object. The String class has 
+a number of constructors that let you create a String 
+from an array of bytes, an array of characters, another String 
+object, or a StringBuffer object. 
+If you are a C or C++ programmer, you may be wondering if String 
+objects are null-terminated. The answer is no, and, in fact, the question 
+is irrelevant. The String class 
+actually uses a character array internally. Since arrays in Java are actual 
+objects that know their own length, a String 
+object also knows its length and does not require a special terminator. 
+Use the length() method to 
+get the length of a String 
+object. 
+Although String objects are 
+immutable, the String class 
+does provide a number of useful methods for working with strings. Any operation 
+that would otherwise change the characters or the length of the string 
+returns a new String object 
+that copies the necessary portions of the original String. 
+The following methods access the contents of a String 
+object: 
+substring() creates 
+a new String object that contains 
+a sub-sequence of the sequence of characters represented by a String 
+object. 
+charAt() returns 
+the character at a given position in a String 
+object. 
+getChars() and getBytes() 
+return a range of characters in a char 
+array or a byte array. 
+toCharArray() returns 
+the entire contents of a String 
+object as a char array. 
+You can compare the contents of String 
+objects with the following methods: 
+equals() returns 
+true if two String 
+objects have the exact same contents, while equalsIgnoreCase() 
+returns true if two objects 
+have the same contents ignoring differences between upper- and lowercase 
+versions of the same character. 
+regionMatches() 
+determines if two sub-strings contain the same sequence of characters. 
+startsWith() and 
+endsWith() determine if a String 
+object begins or ends with a particular sequence of characters. 
+compareTo() determines 
+if the contents of one String 
+object are less than, equal to, or greater than the contents of another 
+String object. 
+Use the following methods to search for characters in a string: 
+indexOf() searches 
+forward through a string for a given character or string. 
+lastIndexOf() 
+searches backwards through a string for a given character or string. 
+The following methods manipulate the contents of a string and return a 
+new, related string: 
+concat() returns 
+a new String object that is 
+the concatenation of two String 
+objects. 
+replace() returns 
+a new String object that contains 
+the same sequence of characters as the original string, but with a given 
+character replaced by another given character. 
+toLowerCase() and toUpperCase() 
+return new String objects that 
+contain the same sequence of characters as the original string, but converted 
+to lower- or uppercase. 
+trim() returns a new String 
+object that contains the same character sequence as the original string, 
+but with leading and trailing white space and control characters removed. 
+The String class also defines 
+a number of static methods 
+named valueOf() that return 
+string representations of primitive Java data types and objects. The Object 
+class defines a toString() 
+method, and, since Object is 
+the ultimate superclass of every other class, every class inherits a basic 
+toString() method. Any class 
+that has a string representation should override the toString() 
+method to produce the appropriate string. 
+The java.util.zip Package
+StringBuffer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,52 @@
+
+[Chapter 23] ContainerPeer
+Chapter 23java.awt.peer Reference
+ContainerPeer
+Name
+ContainerPeer
+Description
+ContainerPeer is an interface 
+that defines the basis for containers. 
+Interface Definition
+public abstract interface java.awt.peer.ContainerPeer
+   extends java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract void beginValidate(); 
+  public abstract void endValidate(); 
+  public abstract Insets getInsets(); 
+  public abstract Insets insets(); 
+}
+Interface Methods
+beginValidate
+public abstract void beginValidate() 
+Description
+Notifies the peer that the Container 
+is going to validate its contents. 
+endValidate
+public abstract void endValidate() 
+Description
+Notifies the peer that the Container 
+is finished validating its contents. 
+getInsets
+public Insets getInsets() 
+Returns
+Current Insets of container's 
+peer. 
+insets
+public Insets insets() 
+Returns
+Current Insets of container's 
+peer. Replaced by getInsets(). 
+See Also
+ComponentPeer, Insets, 
+PanelPeer, ScrollPanePeer, 
+WindowPeer 
+ComponentPeer
+DialogPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,26 @@
+
+[Chapter 28] 28.19 java.net.SocketImplFactory (JDK 1.0)
+Chapter 28The java.net Package
+28.19 java.net.SocketImplFactory (JDK 1.0)
+This interface defines a method that creates
+SocketImpl objects. SocketImplFactory
+objects may be registered to create SocketImpl
+objects for the Socket and ServerSocket
+classes.
+Normal applications never need to use or implement this interface.
+public abstract interface SocketImplFactory {
+    // Public Instance Methods
+            public abstract SocketImpl createSocketImpl();
+}
+Passed To:
+ServerSocket.setSocketFactory(), 
+Socket.setSocketImplFactory()
+java.net.SocketImpl (JDK 1.0)
+java.net.UnknownHostException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

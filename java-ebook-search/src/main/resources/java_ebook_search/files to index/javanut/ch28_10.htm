@@ -1,0 +1,72 @@
+
+[Chapter 28] 28.10 java.net.InetAddress (JDK 1.0)
+Chapter 28The java.net Package
+28.10 java.net.InetAddress (JDK 1.0)
+This class represents an Internet address, and is used when
+creating DatagramPacket or Socket objects.
+The class does
+not have a public constructor function, but instead supports
+three static methods which return one or more instances of
+InetAddress. getLocalHost() returns an
+InetAddress for the local host. getByName()
+returns the InetAddress of a host specified by
+name. getAllByName() returns an array of
+InetAddress that represents all of the available
+addresses for a host specified by name. Instance methods
+are getHostName(), which returns the hostname of an
+InetAddress, and getAddress(), which returns
+the Internet IP address as an array of bytes, with the
+highest-order byte as the first element of the array.
+public final class InetAddress extends Object implements Serializable {
+    // No Constructor
+    // Class Methods
+            public static InetAddress[] getAllByName(String host) throws UnknownHostException;
+            public static InetAddress getByName(String host) throws UnknownHostException;
+            public static InetAddress getLocalHost() throws UnknownHostException;
+    // Public Instance Methods
+            public boolean equals(Object obj);  // Overrides Object
+            public byte[] getAddress();
+            public String getHostAddress();
+            public String getHostName();
+            public int hashCode();  // Overrides Object
+        1.1public boolean isMulticastAddress();
+            public String toString();  // Overrides Object
+}
+Passed To:
+DatagramPacket(), 
+DatagramPacket.setAddress(), 
+DatagramSocket(), 
+DatagramSocketImpl.bind(), 
+DatagramSocketImpl.join(), 
+DatagramSocketImpl.leave(), 
+DatagramSocketImpl.peek(), 
+MulticastSocket.joinGroup(), 
+MulticastSocket.leaveGroup(), 
+MulticastSocket.setInterface(), 
+SecurityManager.checkMulticast(), 
+ServerSocket(), 
+Socket(), 
+SocketImpl.bind(), 
+SocketImpl.connect()
+Returned By:
+DatagramPacket.getAddress(), 
+DatagramSocket.getLocalAddress(), 
+InetAddress.getAllByName(), 
+InetAddress.getByName(), 
+InetAddress.getLocalHost(), 
+MulticastSocket.getInterface(), 
+ServerSocket.getInetAddress(), 
+Socket.getInetAddress(), 
+Socket.getLocalAddress(), 
+SocketImpl.getInetAddress()
+Type Of:
+SocketImpl.address
+java.net.HttpURLConnection (JDK 1.1)
+java.net.MalformedURLException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

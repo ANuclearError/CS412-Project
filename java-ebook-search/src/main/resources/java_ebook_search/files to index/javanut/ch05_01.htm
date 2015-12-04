@@ -1,0 +1,165 @@
+
+[Chapter 5] Inner Classes and Other New Language Features
+Chapter 5
+5. Inner Classes and Other New Language Features
+Contents:
+An Overview of Inner Classes
+Nested Top-Level Classes and Interfaces
+Member Classes
+Local Classes
+Anonymous Classes
+Other New Features of Java 1.1
+The largest enhancement to the Java language in Java 1.1 is
+something called
+"inner classes."  With this addition to the language,
+classes can be defined as members of other classes, just as
+fields and methods can be defined within classes.
+Classes can also be defined within a block of Java code, just
+as local variables can be defined within a block of code.
+From one point of view, the addition of inner classes
+regularizes the syntax of Java.  From another point of view,
+though,
+inner classes create quite a few special cases, and a
+confusing array of new rules.  In practice, however, if you
+avoid the obscure and pathological cases, inner classes prove
+to be an elegant and extremely useful addition to the language.
+Their use is particularly common in conjunction with the new
+event model defined by the AWT in Java 1.1.
+5.1 An Overview of Inner Classes
+Java 1.0 allowed classes and interfaces to be defined in
+exactly one context: at the "top level," as members of
+packages.  Java 1.1 adds one new type of top-level classes
+and interfaces, and adds three new types of "inner classes,"
+as outlined below.  Later sections of this chapter describe
+each of these new types of classes and interfaces in more detail and
+present examples of their use.
+Nested top-level classes and interfaces
+A nested top-level class or interface is defined as a
+static member of an enclosing top-level class or interface.
+The definition of a nested top-level class uses the
+static modifier, just as the definition of a static
+method or static field does.  Nested interfaces are
+implicitly static (though they may be declared
+static to make this explicit) and so are always
+top-level. A nested top-level class or interface behaves
+just like a "normal" class or interface that is a member of
+a package.  The difference is that the name of a nested
+top-level class or interface includes the name of the class
+in which it is defined.  Thus, a LinkedList class
+could define a nested top-level interface Linkable.
+This interface would be referred to as
+LinkedList.Linkable.  Nested top-level classes and
+interfaces are typically used as a convenient way to group
+related classes.
+Member classes
+A member class is also defined as a member of an
+enclosing class, but unlike a nested top-level class, it is
+not defined with the static modifier.  This means
+that it is an inner class, rather than a top-level class.
+Nested interfaces are always implicitly static, so
+they are always top-level; there is no such thing as a
+"member interface," or any kind of "inner interface."
+In many ways, a member class is analogous to the other
+members--the instance fields and methods--of a class.
+Member classes are of interest because the code within a
+member class can implicitly refer to any of the fields and
+methods, including private fields and methods, of its
+enclosing class.
+[1]
+Every instance of a member class is associated with an
+enclosing instance of the class that defines it.  Because of
+the requirement for this enclosing instance, several new
+pieces of syntax have been introduced into the Java
+language.
+[1] 
+Unfortunately, in Java 1.1 and 1.1.1 there are compiler
+bugs that prevent access to the private fields and
+methods of enclosing classes from working correctly.  It is
+not yet clear when these bugs will be fixed.  So while
+access to private members of enclosing classes is
+part of the inner class specification, it is a feature that
+is currently best avoided.  If a field or method must be
+visible to nested classes, you should give it package
+visibility rather than private visibility.
+Local classes
+A local class is an inner class defined within a block
+of Java code; it is visible only within that block.
+Interfaces can not be defined locally.  Because a local
+class is defined within a block of code, it is analogous,
+in some ways, to a local variable.  Local classes are not
+member classes, but can still use the fields and methods of
+enclosing classes.  More important, however, the code
+within a local class definition can use any final
+local variables or parameters that are accessible in the
+scope of the block that defines the class.
+Local classes are useful primarily as "adapter
+classes" and are commonly used with the new event-handling
+model required by the Java 1.1 AWT and by JavaBeans.  For
+example, a block of Java 1.1 code that creates a
+java.awt.Button object could use a local class to
+define a simple implementation of the
+java.awt.event.ActionListener interface.  Then it
+could instantiate this simple implementation and pass the
+resulting object to the button's addActionListener()
+method, thereby connecting the button to the "callback" code
+that is executed when the button is pressed.
+Anonymous classes
+An anonymous class is an extension to the local class
+concept described above.  Instead of declaring a local class
+with one Java statement, and then instantiating and using it
+in another statement, an anonymous class combines the two
+steps in a single Java expression.  An anonymous class, as
+you might guess, does not have a name.  And because it is
+instantiated in the same expression that defines it, it can
+only be instantiated once.  Except for these differences,
+anonymous classes are quite similar to local classes in
+behavior and use.  Interfaces cannot be defined anonymously,
+of course.  When writing a simple adapter class, the choice
+between a named local class and an unnamed anonymous class
+typically comes down to a matter of style and code clarity,
+rather than any difference in functionality.
+Table 5.1
+summarizes the types of classes and interfaces that can be
+defined in Java 1.1; the remaining sections of the chapter
+document each type in more detail.
+Table 5.1: Inner Class Summary
+Class Type
+Description
+Top-level classes and interfaces
+Package member class or interface
+An ordinary class or interface that is a direct member of a package.
+The basic Java class understood by the VM.  All nested and
+inner classes are converted to this type.
+Nested top-level class or interface
+A conveniently nested top-level class or interface.
+Must be declared static within another top-level
+class or interface.  (Nested interfaces are implicitly
+static.)
+May use the static members of its containing type.
+Inner classes
+Member class
+A class defined as a member (non-static) of another.
+Each instance has an enclosing instance, and can use its members.
+New syntax for this, new, and super.
+Cannot have static members.  Cannot have same name
+as a containing class.
+Local class
+A class defined in a block of code.
+Can use members of enclosing classes and final
+local variables and parameters.  New this syntax.
+Same restrictions as member classes.
+Anonymous class
+Unnamed class defined within an expression.
+Has features of a local class.  Allows a one-shot class to
+be defined exactly where needed.
+Same restrictions as local class, plus has no name or
+constructor.  Only one instance of the class is created.
+New JDK Utilities
+Nested Top-Level Classes and Interfaces
+ 
+ 
+ 
+ 
+ 
+ 
+ 

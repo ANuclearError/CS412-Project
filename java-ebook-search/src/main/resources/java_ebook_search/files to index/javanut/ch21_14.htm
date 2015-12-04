@@ -1,0 +1,50 @@
+
+[Chapter 21] 21.14 java.awt.image.ReplicateScaleFilter (JDK 1.1)
+Chapter 21The java.awt.image Package
+21.14 java.awt.image.ReplicateScaleFilter (JDK 1.1)
+This class implements an ImageFilter that scales an
+image to a specified pixel size.  It uses a very simple
+scaling algorithm in which rows and columns of image pixels
+are duplicated
+or omitted as necessary to achieve the
+desired size. See AreaAveragingScaleFilter for a
+scaling filter that results in smoother images.
+The methods of this class are ImageConsumer methods
+used for communication between the image filter and the
+FilteredImageSource that uses it.  Applications
+do not usually call these methods directly.
+The easiest way to use this filter is to call
+Image.getScaledInstance(), specifying an appropriate
+hint constant.
+public class ReplicateScaleFilter extends ImageFilter {
+    // Public Constructor
+            public ReplicateScaleFilter(int width, int height);
+    // Protected Instance Variables
+            protected int destHeight;
+            protected int destWidth;
+            protected Object outpixbuf;
+            protected int srcHeight;
+            protected int srcWidth;
+            protected int[] srccols;
+            protected int[] srcrows;
+    // Public Instance Methods
+            public void setDimensions(int w, int h);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'byte[] pixels, int off, int scansize);  // Overrides ImageFilter
+            public void setPixels(int x, int y, int w, int h, ColorModel model,
+            public void setPixels'u'int[] pixels, int off, int scansize);  // Overrides ImageFilter
+            public void setProperties(Hashtable props);  // Overrides ImageFilter
+}
+Hierarchy:
+Object->ImageFilter(ImageConsumer, Cloneable)->ReplicateScaleFilter
+Extended By:
+AreaAveragingScaleFilter
+java.awt.image.RGBImageFilter (JDK 1.0)
+The java.awt.peer Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

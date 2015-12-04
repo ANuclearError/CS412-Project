@@ -1,0 +1,146 @@
+
+[Chapter 6] 6.8 The break Statement
+Chapter 6Statements and Control Structures
+6.8 The break Statement
+A break
+statement transfers control out of an enclosing statement:
+If a break statement
+does not contain an identifier, the statement attempts to transfer
+control to the statement that follows the innermost enclosing
+while,
+for, do, or switch
+statement. The Java compiler issues an error message if a
+break statement without an identifier occurs without
+an enclosing
+while, for, do,
+or switch statement. Here is an example of a
+break statement that contains no identifier:
+while (true) {
+    c = in.read();
+    if (Character.isSpace(c)
+        break;
+    s += (char)c;
+}
+In this example,
+the break statement is used to exit from the
+while loop.
+The innermost while, for, 
+do, or switch statement that
+encloses the break statement must be in the 
+immediately enclosing method or initializer block. In other words,
+a break statement cannot be used to leave
+a method or initializer block. The break statement 
+in the following example is used incorrectly and generates an error:
+while (true) {
+    class X {
+        void doIt() {
+            break;
+        } 
+    } 
+    new X().doIt();
+} 
+If a break statement
+contains an identifier, the identifier must be defined as the label
+of an enclosing statement. A break statement
+that contains an identifier attempts to transfer control to the
+statement that immediately follows the statement labeled with that
+identifier. Here's an example of a break statement
+that contains an identifier:
+foo:{
+    doIt();
+    if (n &gt; 4) break foo;
+    doIt();
+}
+In this example, the break statement transfers
+control to the statement following the block labeled foo.
+The label used in a break statement must be in 
+the immediately enclosing method or initializer block. 
+The break statement 
+in the following example is used incorrectly and generates an error:
+foo: {
+    class X {
+        void doIt() {
+            break foo;
+        } 
+    } 
+    new X().doIt();
+} 
+The statement to which a break statement
+attempts to transfer control is called the
+target statement. If
+a break statement occurs inside a try
+statement, control may not immediately transfer to the target statement.
+If a try statement has a finally
+clause, the finally block is executed before
+control leaves the try statement for any reason.
+This means that if a break statement occurs inside
+a try statement (but not in its finally
+block) and the target statement is outside of the
+try statement, the finally
+block is executed first, before the control transfer can take place.
+If the finally block contains a break,
+continue, return,
+or throw statement, the pending control transfer
+for the previously executed break statement
+is forgotten. Instead, control is transferred to the target of the
+break, continue,
+return, or throw statement in
+the finally block.
+If the finally block does not contain a
+break, continue,
+return,
+or throw statement, the pending control transfer
+happens after the finally block is done executing,
+unless the target statement is enclosed by another
+try statement. If there is another enclosing
+try
+statement and it has a finally clause,
+that finally block is also executed before the
+control transfer can take place. Execution proceeds in this manner
+until the target statement of the break is executed.
+Here is an example that illustrates a simple scenario:
+ll:{
+    try {
+        f = new FileInputStream(fname);
+        i = f.read();
+        if (i != ' ')
+            break ll;
+        i = f.read();
+    } catch (IOException e) {
+        System.out.println("Got an IO Exception!");
+        break ll;
+    } finally {
+        f.close();           // Always executed
+    }
+    // Only reached if we don't break out of the try
+    System.out.println("No breaks");
+}
+In this example, a break statement is executed
+if one of two things happens. First, if an
+IOException is thrown, the catch
+clause prints
+a message and then executes a break statement.
+Otherwise, if the first call to read() does not
+return a space, a break statement is executed.
+In either case, the finally clause is executed
+before control is transferred to the statement following the statement
+labeled with ll.
+References
+Identifiers;
+Labeled Statements;
+The continue Statement;
+The do Statement;
+The for Statement;
+The return Statement;
+The throw Statement;
+The try Statement;
+The while Statement
+Iteration Statements
+The continue Statement
+ 
+ 
+ 
+ 
+ 
+ 
+ 

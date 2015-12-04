@@ -1,0 +1,38 @@
+
+[Chapter 29] 29.17 java.text.RuleBasedCollator (JDK 1.1)
+Chapter 29The java.text Package
+29.17 java.text.RuleBasedCollator (JDK 1.1)
+This class is a concrete subclass of the abstract
+Collator class.  It performs collations using a
+table of rules that are specified in textual form.  Most
+applications do not use this class directly; instead they
+call Collator.getInstance() to obtain a
+Collator object (typically a RuleBasedCollator
+object) that implements the default collation order for a
+specified or default locale.  You should only need to use
+this class if you are collating strings for a locale that is
+not supported by default, or if you need to implement a
+highly customized collation order.
+public class RuleBasedCollator extends Collator {
+    // Public Constructor
+            public RuleBasedCollator(String rules) throws ParseException;
+    // Public Instance Methods
+            public Object clone();  // Overrides Collator
+            public int compare(String source, String target);  // Defines Collator
+            public boolean equals(Object obj);  // Overrides Collator
+            public CollationElementIterator getCollationElementIterator(String source);
+            public CollationKey getCollationKey(String source);  // Defines Collator
+            public String getRules();
+            public int hashCode();  // Defines Collator
+}
+Hierarchy:
+Object->Collator(Cloneable, Serializable)->RuleBasedCollator
+java.text.ParsePosition (JDK 1.1)
+java.text.SimpleDateFormat (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

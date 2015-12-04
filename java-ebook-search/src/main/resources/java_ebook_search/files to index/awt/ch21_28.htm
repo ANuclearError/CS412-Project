@@ -1,0 +1,89 @@
+
+[Chapter 21] WindowAdapter 
+Chapter 21java.awt.event Reference
+WindowAdapter 
+Name
+WindowAdapter 
+Description
+The WindowAdapter class implements the methods of WindowListener 
+with empty functions. It may be easier for you to extend WindowAdapter, 
+overriding only those methods you are interested in, than to implement 
+WindowListener and provide 
+the empty functions yourself. 
+Class Definition
+public abstract class java.awt.event.WindowAdapter
+   extends java.lang.Object
+   implements java.awt.event.WindowListener {
+  // Instance Methods
+  public void windowActivated (WindowEvent e);
+  public void windowClosed (WindowEvent e);
+  public void windowClosing (WindowEvent e);
+  public void windowDeactivated (WindowEvent e);
+  public void windowDeiconified (WindowEvent e);
+  public void windowIconified (WindowEvent e);
+  public void windowOpened (WindowEvent e);
+}
+Instance Methods
+windowActivated
+public void windowActivated (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a window is activated. 
+windowClosed
+public void windowClosed (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a window is closed. 
+windowClosing
+public void windowClosing (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a window is in 
+the process of closing. 
+windowDeactivated
+public void windowDeactivated (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a window is deactivated. 
+windowDeiconified
+public void windowDeiconified (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when an iconified window 
+is restored. 
+windowIconified
+public void windowIconified (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a window is iconified 
+(minimized). 
+windowOpened
+public void windowOpened (WindowEvent e)
+Parameters
+e
+The event that has occurred. 
+Description
+Does nothing. Override this function to be notified when a window is opened. 
+See Also
+WindowEvent, WindowListener 
+TextListener 
+WindowEvent 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

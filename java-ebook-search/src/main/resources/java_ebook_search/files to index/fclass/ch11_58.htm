@@ -1,0 +1,187 @@
+
+[Chapter 11] SequenceInputStream
+Chapter 11The java.io Package
+SequenceInputStream
+Name
+SequenceInputStream
+Synopsis
+Class Name:
+java.io.SequenceInputStream
+Superclass:
+java.io.InputStream
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The SequenceInputStream class allows a series of
+InputStream objects to be seamlessly concatenated
+into one stream. In other words, a
+SequenceInputStream appears and functions as a
+single InputStream. Internally, however, the
+SequenceInputStream reads data from each
+InputStream in the specified order. When the end of a stream is encountered, data is
+automatically read from the next stream.
+Class Summary
+public class java.io.SequenceInputStream extends java.io.InputStream {
+  // Constructors
+  public SequenceInputStream(Enumeration e);
+  public SequenceInputStream(InputStream s1, InputStream s2);
+  // Instance Methods
+  public int available();                         // New in 1.1
+  public void close();
+  public int read();
+  public int read(byte[] buf, int pos, int len);
+}
+Constructors
+SequenceInputStream
+public SequenceInputStream(Enumeration e)
+Parameters
+e
+An Enumeration of input streams. 
+Description
+This constructor creates a SequenceInputStream 
+that reads from each of the InputStream 
+objects in the given Enumeration. 
+Each object in the Enumeration 
+must be an InputStream. 
+public SequenceInputStream(InputStream s1, InputStream s2)
+Parameters
+s1
+An input stream.
+s2
+Another input stream. 
+Description
+This constructor creates a SequenceInputStream 
+that reads first from s1 and 
+then from s2. 
+Instance Methods
+available
+public int available() throws IOException
+Availability
+New as of JDK 1.1 
+Returns
+The number of bytes that can be read without blocking, or 0 if the end 
+of the final stream is encountered. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.available() 
+Description
+This method returns the number of bytes that can be read without having 
+to wait for more data to become available. The method returns the result 
+of calling available() on the 
+current stream. If the end of the final stream is encountered, the method 
+returns 0. 
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.close() 
+Description
+This method closes the stream and releases the system resources that are 
+associated with it. The method closes all the InputStream 
+objects attached to this object. 
+read
+public int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the final stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read() 
+Description
+This method reads the next byte of data from the
+current stream. When the end of the current stream is encountered,
+that stream is closed, and the first byte of the next
+InputStream is read. If there are no more
+InputStream objects in the
+SequenceInputStream, -1 is returned to signify the
+end of the SequenceInputStream.  The method blocks
+until the byte is read, the end of the final stream is encountered, or
+an exception is thrown.
+public int read(byte[] buf, int off, int len) throws IOException
+Parameters
+buf
+An array of bytes to be filled from the stream.
+off
+An offset into the byte array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the final stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+InputStream.read(byte[], int, int) 
+Description
+ 
+This method reads up to len bytes of input from the
+current stream into the given array starting at index
+off. When the end of the current stream is
+encountered, that stream is closed, and bytes are read from the next
+InputStream. If there are no more
+InputStream objects in the
+SequenceInputStream, -1 is
+returned to signify the end of the
+SequenceInputStream.  The method blocks until there
+is some data available.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+mark(int)
+InputStream
+markSupported()
+InputStream
+notify()
+Object
+notifyAll()
+Object
+reset()
+InputStream
+skip(long)
+InputStream
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+InputStream, 
+IOException 
+Reader
+Serializable
+ 
+ 
+ 
+ 
+ 
+ 
+ 

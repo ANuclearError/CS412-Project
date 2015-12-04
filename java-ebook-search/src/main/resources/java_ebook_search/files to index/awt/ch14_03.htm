@@ -1,0 +1,109 @@
+
+[Chapter 14] 14.3 AppletContext Interface
+Chapter 14And Then There Were Applets
+14.3 AppletContext Interface
+The AppletContext interface 
+provides the means to control the browser environment where the applet 
+is running. Methods
+Some of these methods are so frequently used that they are also provided 
+within the Applet class. 
+public abstract AudioClip getAudioClip (URL url) 
+The getAudioClip() method loads 
+the audio file located at url. 
+url must be a complete and 
+valid URL. Upon success, getAudioClip() 
+returns an instance of a class that implements the AudioClip 
+interface. You can then call methods in the AudioClip 
+interface (see AudioClip Interface) to play the clip. If 
+an error occurs during loading (e.g., because the file was not found or the URL was invalid), getAudioClip() 
+returns null. 
+public abstract Image getImage (URL url) 
+The getImage() method loads 
+the image file located at url. url 
+must be a complete and valid URL. The method returns a system-specific 
+object that subclasses Image and returns immediately. The Image 
+is not loaded until needed. A call to prepareImage(), 
+MediaTracker, or drawImage() forces loading to start. 
+public abstract Applet getApplet (String name) 
+The getApplet() method fetches 
+the Applet from the current 
+HTML page named name, which 
+can be the applet's class 
+name or the name provided in the NAME 
+parameter of the &lt;APPLET&gt; 
+tag. getApplet() returns null 
+if the applet does not exist in the current context. This method allows 
+you to call methods of other applets within the same context, loaded by 
+the same ClassLoader. For example: 
+MyApplet who = (MyApplet)getAppletContext().getApplet("hey");
+who.method();
+TIP:
+Netscape Navigator 3.0 restricts which applets can communicate with each other. Internet Explorer seems to have a similar restriction. For applets to communicate, they must:
+Have the same CODEBASE.
+Have the same or no ARCHIVES tag.
+Have MAYSCRIPT tags and appear in the same frame; alternatively, neither applet may have a MAYSCRIPT tag.
+If these conditions are not met and you try to cast the return value of 
+getApplet()  or getApplets()
+ to the appropriate class, either the cast will throw a 
+ClassCastException; or nothing will happen, and the method will not continue beyond the point of the failure.
+public abstract Enumeration getApplets () 
+The getApplets() method gathers 
+all the Applets in the current 
+context, loaded by the same ClassLoader, 
+into a collection and returns the Enumeration. 
+You can then cycle through them to perform some operation collectively. 
+For example: 
+Enumeration e = getAppletContext().getApplets();
+while (e.hasMoreElements()) {
+    Object o = e.nextElement();
+    if (o instance of MyApplet) {
+        MyApplet a = (Object)o;
+        a.MyAppletMethod();
+    }
+}
+TIP:
+If you want communication between applets on one page, be aware that there is no guarantee which applet will start first. Communications must be synchronized by using a controlling class or continual polling.
+public abstract void showDocument (URL url) 
+The showDocument() method shows 
+url in the current browser 
+window. The browser may ignore the request if it so desires. 
+public abstract void showDocument (URL url, String frame) 
+The showDocument() method shows 
+url in a browser window specified 
+by frame. Different frame 
+values and the results are shown in Table 14.1. 
+The browser may ignore the request, as appletviewer does. 
+try {
+    URL u = new URL (getDocumentBase(), (String) file);
+    getAppletContext().showDocument (u, "_blank");
+} catch (Exception e) {
+}
+Table 14.1: Target Values
+Target String
+Results
+_blank
+Show url  new browser window with no name.
+_parent
+Show url in the parent frame of the current window.
+_self
+Replace current url with url (i.e., display in the current window).
+_top
+Show url in top-most frame.
+name
+Show url in new browser window named name.
+public abstract void showStatus (String message) 
+The showStatus() method displays 
+message on the browser's 
+status line, if it has one. How to display this string is up to the browser, 
+and the browser can overwrite it whenever it wants. You should use 
+showStatus() only for messages that 
+the user can afford to miss. 
+AudioClip Interface
+AppletStub Interface
+ 
+ 
+ 
+ 
+ 
+ 
+ 

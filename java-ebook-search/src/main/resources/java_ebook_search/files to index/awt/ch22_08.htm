@@ -1,0 +1,113 @@
+
+[Chapter 22] ImageObserver
+Chapter 22java.awt.image Reference
+ImageObserver
+Name
+ImageObserver
+Description
+ImageObserver is an interface 
+that provides constants and the callback mechanism to receive asynchronous 
+information about the status of an image as it loads. 
+Interface Definition
+public abstract interface java.awt.image.ImageObserver {
+  // Constants
+  public static final int ABORT;
+  public static final int ALLBITS;
+  public static final int ERROR;
+  public static final int FRAMEBITS;
+  public static final int HEIGHT;
+  public static final int PROPERTIES;
+  public static final int SOMEBITS;
+  public static final int WIDTH;
+  // Interface Methods
+  public abstract boolean imageUpdate (Image image, int infoflags, 
+     int x, int y, int width, int height);
+}
+Constants
+ABORT
+public static final int ABORT
+The ABORT flag indicates that 
+the image aborted during loading. An attempt to reload the image may succeed, 
+unless ERROR is also set. 
+ALLBITS
+public static final int ALLBITS
+The ALLBITS flag indicates 
+that the image has completely loaded successfully. The x, 
+y, width, 
+and height arguments to imageUpdate() 
+should be ignored. 
+ERROR
+public static final int ERROR
+The ERROR flag indicates that 
+an error happened during the image loading process. An attempt to reload 
+the image will fail. 
+FRAMEBITS
+public static final int FRAMEBITS
+The FRAMEBITS flag indicates 
+that a complete frame of a multi-frame image has loaded. The x, 
+y, width, 
+and height arguments to imageUpdate() 
+should be ignored. 
+HEIGHT
+public static final int HEIGHT
+The HEIGHT flag indicates that 
+the height information is available for an image; the image's height 
+is in the height argument to 
+imageUpdate(). 
+PROPERTIES
+public static final int PROPERTIES
+The PROPERTIES flag indicates 
+that the properties information is available for an image. 
+SOMEBITS
+public static final int SOMEBITS
+The SOMEBITS flag indicates 
+that the image has started loading and some pixels are available. The bounding 
+rectangle for the pixels that have been delivered so far is indicated by 
+the x, y, 
+width, and height 
+arguments to imageUpdate(). 
+WIDTH
+public static final int WIDTH
+The WIDTH flag indicates that 
+the width information is available for an image; the image's width 
+is in the width argument to 
+imageUpdate(). 
+Interface Methods
+imageUpdate
+public abstract boolean imageUpdate (Image image, int infoflags, int x, int y, int width, int height)
+Parameters
+image
+Image that is being loaded.
+infoflags
+The ImageObserver 
+flags for the information that is currently available.
+x
+Meaning depends on infoflags 
+that are set.
+y
+Meaning depends on infoflags 
+that are set.
+width
+Meaning depends on infoflags 
+that are set.
+height
+Meaning depends on infoflags 
+that are set. 
+Returns
+true if image has completed 
+loading (successfully or unsuccessfully), false 
+if additional information needs to be loaded. 
+Description
+Provides the callback mechanism for the asynchronous loading of images. 
+See Also
+Component, Image, 
+Object 
+ImageFilter
+ImageProducer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

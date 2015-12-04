@@ -1,0 +1,74 @@
+
+[Chapter 5] 5.2 Lexical Scope of Declarations
+Chapter 5Declarations
+5.2 Lexical Scope of Declarations
+The lexical scope of a declaration determines where the named entity is
+a valid identifier. Every declaration is associated with a lexical
+level that corresponds to one of the following Java constructs:
+Package
+The names at this level include all of the non-nested, outer-level class
+and interface declarations in files that belong to the same
+package as the file that is being compiled. This level also includes non-nested, outer-level
+class and interface declarations that are declared public
+in other packages.
+.java file
+The names at this level include all of the class
+and interface declarations in the file, as well as all of the classes
+and interfaces that are imported by the file. The names declared
+directly in a file are defined from the beginning to the end of
+the file. An import statement defines simple
+identifiers as synonyms for names that are only fully qualified
+with the name of a package. These synonyms for fully qualified names
+are defined from the import statement that defines
+them to the end of the file.
+Class or interface declaration
+The names at this level include the names of methods, variables,
+and classes or interfaces 
+that are declared directly in the class or interface
+declaration, as well as names inherited from superclasses or super
+interfaces. The names declared in a class or interface are defined
+throughout the class or interface.
+Method declaration
+The names at this level include the formal parameters
+of the method. The formal parameters are defined throughout the
+method.
+Block
+The names at this level include the local variables, local classes,
+and statement labels declared in the block. Statement labels are
+defined throughout a block, while local variables and classes are defined from
+their declaration to the end of the block.
+A nested block or a for statement
+The names at this level include local variables declared in the
+initialization of the for statement or the local
+variables, classes, and statement labels declared in a nested block. Local
+variables declared in the initialization of a for
+statement are defined from their declaration to the end of the
+for statement. Statement labels are defined
+throughout a nested block, while local variables and classes are defined from
+their declaration to the end of the nested block.
+These lexical levels correspond to nested constructs. When
+the Java compiler encounters a name in a program, it finds the declaration
+for that name by first looking in the lexical level where the name
+is encountered. If the compiler does not find the name in that lexical
+level, it searches progressively higher lexical levels until it
+finds the declaration. If all of the lexical levels are exhausted,
+the compiler issues an error message.
+If, however, an
+identifier is qualified by a class or package name, the compiler
+only searches that lexical level for a declaration.
+References
+Blocks;
+Class Declarations;
+Interface Declarations;
+Packages;
+Methods;
+The for Statement
+Naming Conventions
+Object-Orientation Java Style
+ 
+ 
+ 
+ 
+ 
+ 
+ 

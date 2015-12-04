@@ -1,0 +1,341 @@
+
+[Chapter 23] ComponentPeer
+Chapter 23java.awt.peer Reference
+ComponentPeer
+Name
+ComponentPeer
+Description
+ComponentPeer is an interface 
+that defines the basis for all non-menu GUI peer interfaces. 
+Interface Definition
+public abstract interface java.awt.peer.ComponentPeer {
+  // Interface Methods
+  public abstract int checkImage (Image image, int width, int height, 
+    ImageObserver observer);
+  public abstract Image createImage (ImageProducer producer);
+  public abstract Image createImage (int width, int height);
+  public abstract void disable(); 
+  public abstract void dispose();
+  public abstract void enable(); 
+  public abstract ColorModel getColorModel();
+  public abstract FontMetrics getFontMetrics (Font f);
+  public abstract Graphics getGraphics();
+  public abstract Point getLocationOnScreen(); 
+  public abstract Dimension getMinimumSize(); 
+  public abstract Dimension getPreferredSize(); 
+  public abstract Toolkit getToolkit();
+  public abstract boolean handleEvent (Event e);
+  public abstract void hide(); 
+  public abstract boolean isFocusTraversable(); 
+  public abstract Dimension minimumSize(); 
+  public abstract void paint (Graphics g);
+  public abstract Dimension preferredSize (); 
+  public abstract boolean prepareImage (Image image, int width, int height, 
+    ImageObserver observer);
+  public abstract void print (Graphics g);
+  public abstract void repaint (long tm, int x, int y, int width, int height);
+  public abstract void requestFocus();
+  public abstract void reshape (int x, int y, int width, int height); 
+  public abstract void setBackground (Color c);
+  public abstract void setBounds (int x, int y, int width, int height); 
+  public abstract void setCursor (Cursor cursor); 
+  public abstract void setEnabled (boolean b); 
+  public abstract void setFont (Font f);
+  public abstract void setForeground (Color c);
+  public abstract void setVisible (boolean b); 
+  public abstract void show(); 
+}
+Interface Methods
+checkImage
+public abstract int checkImage (Image image, int width, int height, ImageObserver observer)
+Parameters
+image
+Image 
+to check.
+width
+Horizontal size to 
+which the image will be scaled.
+height
+Vertical size to 
+which the image will be scaled.
+observer
+An ImageObserver 
+to monitor image loading; normally, the object on which the image will 
+be rendered. 
+Returns
+ImageObserver flags ORed together 
+indicating status. 
+Description
+Checks status of image construction. 
+createImage
+public abstract Image createImage (ImageProducer producer)
+Parameters
+producer
+An object that 
+implements the ImageProducer 
+interface to create a new image. 
+Returns
+Newly created image instance. 
+Description
+Creates an Image based upon 
+an ImageProducer. 
+public abstract Image createImage (int width, int height)
+Parameters
+width
+Horizontal size for 
+in-memory Image.
+height
+Vertical size for 
+in-memory Image. 
+Returns
+Newly created image instance. 
+Description
+Creates an in-memory Image 
+for double buffering. 
+disable
+public abstract void disable() 
+Description
+Disables component so that it is unresponsive to user interactions. Replaced 
+by setEnabled(false). 
+dispose
+public abstract void dispose()
+Description
+Releases resources used by peer. 
+enable
+public abstract void enable() 
+Description
+Enables component so that it is responsive to user interactions. Replaced 
+by setEnabled(true). 
+getColorModel
+public abstract ColorModel getColorModel()
+Returns
+ColorModel used to display 
+the current component. 
+getFontMetrics
+public abstract FontMetrics getFontMetrics (Font f)
+Parameters
+f
+A font whose metrics 
+are desired. 
+Returns
+Font sizing information for the desired font. 
+getGraphics
+public abstract Graphics getGraphics()
+Throws
+InternalException
+If 
+acquiring a graphics context is unsupported 
+Returns
+Component's graphics context. 
+getLocationOnScreen
+public abstract Point getLocationOnScreen() 
+Returns
+The location of the component in the screen's coordinate space. 
+getMinimumSize
+public abstract Dimension getMinimumSize() 
+Returns
+The minimum dimensions of the component. 
+getPreferredSize
+public abstract Dimension getPreferredSize() 
+Returns
+The preferred dimensions of the component. 
+getToolkit
+public abstract Toolkit getToolkit()
+Returns
+Toolkit of Component. 
+handleEvent
+public abstract boolean handleEvent (Event e)
+Parameters
+e
+Event 
+instance identifying what caused the method to be called. 
+Returns
+true if the peer handled the 
+event, false to propagate the 
+event to the parent container. 
+Description
+High-level event handling routine. 
+hide
+public abstract void hide() 
+Description
+Hides the component. Replaced by setVisible(false). 
+isFocusTraversable
+public abstract boolean isFocusTraversable() 
+Returns
+true if the peer can be tabbed 
+onto, false otherwise. 
+Description
+Determines if this peer is navigable using the keyboard. 
+minimumSize
+public abstract Dimension minimumSize() 
+Returns
+The minimum dimensions of the component. Replaced by getMinimumSize(). 
+paint
+public abstract void paint (Graphics g)
+Parameters
+g
+Graphics context of the 
+component. 
+Description
+Draws something in graphics context. 
+preferredSize
+public abstract Dimension preferredSize() 
+Returns
+The preferred dimensions of the component. Replaced by getPreferredSize(). 
+prepareImage
+public abstract boolean prepareImage (Image image, int width, int height, ImageObserver observer)
+Parameters
+image
+Image 
+to load.
+width
+Horizontal size to 
+which the image will be scaled.
+height
+Vertical size to 
+which the image will be scaled.
+observer
+An ImageObserver 
+to monitor image loading; normally, the object on which the image will 
+be rendered. 
+Returns
+true if the image has already 
+loaded, false otherwise. 
+Description
+Forces the image to start loading. 
+print
+public abstract void print (Graphics g)
+Parameters
+g
+Graphics context of component. 
+Description
+Print something from the graphics context. 
+repaint
+public abstract void repaint (long tm, int x, int y, int width, int height)
+Parameters
+tm
+Millisecond delay allowed 
+before repaint.
+x
+Horizontal origin of 
+bounding box to redraw.
+y
+Vertical origin of bounding 
+box to redraw.
+width
+Width of bounding 
+box to redraw.
+height
+Height of bounding 
+box to redraw. 
+Description
+Requests scheduler to redraw portion of component within a time period. 
+requestFocus
+public abstract void requestFocus()
+Description
+Requests this Component gets 
+the input focus. 
+reshape
+public abstract void reshape (int x, int y, int width, int height) 
+Parameters
+x
+New horizontal position 
+for component.
+y
+New vertical position 
+for component.
+width
+New width for component.
+height
+New height for component. 
+Description
+Relocates and resizes the component's peer. Replaced by setBounds(int, 
+int, int, int). 
+setBackground
+public abstract void setBackground (Color c)
+Parameters
+c
+New color for the background. 
+Description
+Changes the background color of the component. 
+setBounds
+public abstract void setBounds (int x, int y, int width, int height) 
+Parameters
+x
+New horizontal position 
+for component.
+y
+New vertical position 
+for component.
+width
+New width for component.
+height
+New height for component. 
+Description
+Relocates and resizes the component's peer. 
+setCursor
+public abstract void setCursor (Cursor cursor) 
+Parameters
+cursor
+New 
+cursor. 
+Description
+Changes the cursor of the component. 
+setEnabled
+public abstract void setEnabled (boolean b) 
+Parameters
+b
+true 
+to enable the peer; false to 
+disable it. 
+Description
+Enables or disables the peer. 
+setFont
+public abstract void setFont (Font f)
+Parameters
+f
+New font for the component. 
+Description
+Changes the font used to display text in the component. 
+setForeground
+public abstract void setForeground (Color c)
+Parameters
+c
+New foreground color 
+for the component. 
+Description
+Changes the foreground color of the component. 
+setVisible
+public abstract void setVisible (boolean b) 
+Parameters
+b
+true 
+to show the peer; false to 
+hide it. 
+Description
+Shows or hides the peer. 
+show
+public abstract void show() 
+Description
+Makes the peer visible. Replaced by setVisible(true). 
+See Also
+ButtonPeer, CanvasPeer, 
+CheckboxPeer, ChoicePeer, 
+Color, ColorModel, 
+ContainerPeer, Cursor, 
+Dimension, Event, 
+Font, FontMetrics, 
+Graphics, Image, 
+ImageObserver, ImageProducer, 
+LabelPeer, ListPeer, 
+ScrollbarPeer, TextComponentPeer, 
+Toolkit 
+ChoicePeer
+ContainerPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

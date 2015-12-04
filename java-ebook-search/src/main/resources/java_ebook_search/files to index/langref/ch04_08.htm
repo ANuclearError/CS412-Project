@@ -1,0 +1,242 @@
+
+[Chapter 4] 4.8 Relational Comparison Operators
+Chapter 4Expressions
+4.8 Relational Comparison Operators
+The relational
+comparison operators in Java are used for less than (&lt;),
+less than or equal to (&lt;=), greater than
+or equal to (&gt;=), greater than (&gt;),
+and instanceof comparison operations. They
+may appear in a relational expression:
+The
+relational comparison operators are equal in precedence and are
+evaluated from left to right. The &lt;, &lt;=,
+&gt;=, and &gt; operators are numerical
+comparison operators, while instanceof is a type
+comparison operator. All of these operators produce boolean
+values.
+References
+Shift Operators;
+Order of Operations;
+Type 3
+Less-Than Operator &lt;
+The less-than operator &lt; performs a comparison between its operands
+and returns a boolean
+value. It returns the pure value true if its
+left operand is less than its right operand; otherwise the operator
+returns the pure value false. The &lt;
+operator may appear as part of a relational expression. The
+less-than operator never throws an exception.
+The types of
+both operands of the less-than operator must be arithmetic types,
+or a compile-time error occurs. The &lt; operator
+may perform type conversions on its operands:
+If either operand is of type double, then the other operand
+is converted to double.
+Otherwise,
+if either operand is of type float, the other
+operand is converted to float.
+Otherwise,
+if either operand is of type long, the other
+operand is converted to long.
+Otherwise,
+both operands are converted to int.
+The
+comparison of any two arithmetic values produces true
+if the value of the left operand is less than the value of the right
+operand; otherwise the comparison produces false.
+The comparison of floating-point data is governed by the following
+additional rules:
+If either operand is not-a-number
+(NaN), the comparison produces false.
+Negative
+infinity is the most negative value. If the left operand is negative
+infinity, the comparison produces true, unless
+the right operand is also negative infinity, in which case the comparison
+produces false.
+Positive infinity
+is the most positive value. If the right operand is positive infinity,
+the comparison produces true, unless the left
+operand is also positive infinity, in which case the comparison
+produces false.
+Positive and negative
+zero are treated as equal, so -0.0 &lt; 0.0
+produces false.
+References
+Arithmetic Types
+Less-Than-Or-Equal-To Operator &lt;=
+The less-than-or-equal-to operator &lt;= performs
+a comparison
+between its operands and returns a boolean value.
+It returns the pure value true if its left operand
+is less than or equal to its right operand; otherwise the operator
+returns the pure value false. The &lt;=
+operator may appear as part of a relational expression.
+The less-than-or-equal-to operator never throws an exception.
+The
+types of both operands of the less-than-or-equal-to operator must
+be arithmetic types, or a compile-time error occurs. The &lt;=
+operator may perform type conversions on its operands:
+If either operand is of type double, then the other operand
+is converted to double.
+Otherwise,
+if either operand is of type float, the other
+operand is converted to float.
+Otherwise,
+if either operand is of type long, the other
+operand is converted to long.
+Otherwise,
+both operands are converted to int.
+The
+comparison of any two arithmetic values produces true
+if the value of the left operand is less than or equal to the value
+of the right operand; otherwise the comparison produces false.
+The comparison of floating-point data is governed by the following
+additional rules:
+If either operand is not-a-number
+(NaN), the comparison produces false.
+Negative
+infinity is the most negative value. If the left operand is negative
+infinity, the comparison always produces true.
+Positive infinity is the most positive value. If the right
+operand is positive infinity, the comparison always produces true.
+Positive and negative zero are treated as equal, so
+0.0 &lt;= -0.0 produces true.
+References
+Arithmetic Types
+Greater-Than-Or-Equal-To Operator &gt;=
+The greater-than-or-equal-to operator &gt;= performs
+a comparison
+between its operands and returns a boolean value.
+It returns the pure value true if its left operand
+is greater than or equal to its right operand; otherwise the operator
+returns the pure value false. The &gt;=
+operator may appear as part of a relational expression. 
+The greater-than-or-equal-to operator never throws an exception.
+The types of both operands of the greater-than-or-equal-to operator
+must be arithmetic types, or a compile-time error occurs.
+The &gt;= operator may perform type conversions
+on its operands:
+If either operand is of type double, then the other operand
+is converted to double.
+Otherwise,
+if either operand is of type float, the other
+operand is converted to float.
+Otherwise,
+if either operand is of type long, the other
+operand is converted to long.
+Otherwise,
+both operands are converted to int.
+The
+comparison of any two arithmetic values produces true
+if the value of the left operand is greater than or equal to the
+value of the right operand; otherwise the comparison produces false.
+The comparison of floating-point data is governed by the following
+additional rules:
+If either operand is not-a-number
+(NaN), the comparison produces false.
+Negative
+infinity is the most negative value. If the right operand is negative
+infinity, the comparison always produces true.
+Positive infinity is the most positive value. If the left
+operand is positive infinity, the comparison always produces true.
+Positive and negative zero are treated as equal, so -0.0
+&gt;= 0.0 produces true.
+References
+Arithmetic Types
+Greater-Than Operator &gt;
+The greater-than operator &gt;
+performs a comparison between its operands and
+returns a boolean
+value. It returns the pure value true if its
+left operand is greater than its right operand; otherwise the operator
+returns the pure value false.
+The &gt;
+operator may appear as part of a relational expression. The greater-than
+operator never throws an exception.
+The types of
+both operands of the greater-than operator must be arithmetic types,
+or a compile-time error occurs. The &gt; operator
+may perform type conversions on its operands:
+If either operand is of type double, then the other operand
+is converted to double.
+Otherwise,
+if either operand is of type float, the other
+operand is converted to float.
+Otherwise, if either operand is of type long, the other
+operand is converted to long.
+Otherwise,
+both operands are converted to int.
+The
+comparison of any two arithmetic values produces true
+if the value of the left operand is greater than the value of the
+right operand; otherwise the comparison produces false.
+The comparison of floating-point data is governed by the following
+additional rules:
+If either operand is not-a-number
+(NaN), the comparison produces false.
+Negative
+infinity is the most negative value. If the right operand is negative
+infinity, the comparison produces true, unless
+the left operand is also negative infinity, in which case the comparison
+produces false.
+Positive infinity
+is the most positive value. If the left operand is positive infinity,
+the comparison produces true, unless the right
+operand is also positive infinity, in which case the comparison
+produces false.
+Positive and negative
+zero are treated as equal, so 0.0 &gt; -0.0 produces
+false.
+References
+Arithmetic Types
+The instanceof Operator
+The instanceof operator performs a type comparison
+between its operands and returns a boolean value.
+It returns the pure value true if the object
+referred to by the left operand can be cast to the type specified
+as the right operand; otherwise the operator returns the pure value
+false. If the value of the left operand is null,
+the instanceof operator returns the pure value
+false. The instanceof operator
+may appear as part of a relational expression. The instanceof
+operator never throws an exception.
+The type of the
+left operand of the instanceof
+operator must be a reference type, or a compile-time error occurs.
+All objects inherit a method called equals()
+from the Object class. The equals()
+method defined in the Object class returns true
+if the two objects being compared are the same object. For some
+classes, it is more appropriate to override the equals()
+method so that it compares the contents of two objects. Before
+such a method can do the comparison, it should verify that the objects
+are instances of the same class by using instanceof.
+For example, let's suppose that you are defining a class to represent
+complex numbers. Since you want the equals()
+method to compare the contents of complex number objects, you define
+an equals method for the complex number class
+that looks like this:
+boolean equals (Object o) {
+   if (o instanceof complexNumber)
+       return o.real == this.real 
+           &amp;&amp; o.imaginary == this.imaginary;
+}
+The instanceof
+operator can also be used to find out if an object is an instance
+of a class that implements an interface. For example:
+if (o instanceof Runnable)
+    (new Thread((Runnable)o).start;
+References
+Casts;
+Class Types;
+Interface Types
+Shift Operators
+Equality Comparison Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

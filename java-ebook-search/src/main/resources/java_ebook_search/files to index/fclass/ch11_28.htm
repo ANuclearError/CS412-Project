@@ -1,0 +1,258 @@
+
+[Chapter 11] InputStream
+Chapter 11The java.io Package
+InputStream
+Name
+InputStream
+Synopsis
+Class Name:
+java.io.InputStream
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.io.ByteArrayInputStream,
+java.io.FileInputStream,
+java.io.FilterInputStream,
+java.io.ObjectInputStream,
+java.io.PipedInputStream,
+java.io.SequenceInputStream,
+java.io.StringBufferInputStream
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The InputStream class is an 
+abstract class that is the 
+superclass of all classes that represent input byte streams. InputStream 
+defines the basic input methods that all input streams provide. A similar 
+hierarchy of classes, based around Reader, 
+deals with character streams instead of byte streams. 
+InputStream is designed so 
+that read(byte[]) and read(byte[], 
+int, int) 
+both call read(). Thus, a subclass 
+can simply override read(), 
+and all the read methods 
+will work. However, for efficiency sake, read(byte[], 
+int, int) 
+should also be overridden with a method that can read a block of data more 
+efficiently than reading each byte separately. 
+InputStream also defines a 
+mechanism for marking a position in the stream and returning to it later, 
+via the mark() and reset() 
+methods. Another method, markSupported(), 
+indicates whether or not this mark-and-reset functionality is available 
+in a particular subclass. 
+Class Summary
+public abstract class java.io.InputStream extends java.lang.Object {
+  // Instance Methods
+  public abstract int available();
+  public void close();
+  public synchronized void mark(int readlimit);
+  public boolean markSupported();
+  public abstract int read();
+  public int read(byte[] b);
+  public int read(byte[] b, int off, int len);
+  public synchronized void reset();
+  public long skip(long n);
+}
+Instance Methods
+available
+public abstract int available() throws IOException
+Returns
+The number of bytes that can be read without blocking. 
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method returns the number of bytes that can be read without having 
+to wait for more data to become available, or in other words,
+blocking.
+A subclass of InputStream must 
+implement this method. 
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Description
+This method closes the input stream and releases any resources associated 
+with it.
+The implementation of the close() 
+method in InputStream does 
+nothing; a subclass should override this method to handle cleanup for 
+the stream. 
+mark
+public synchronized void mark(int readlimit)
+Parameters
+readlimit
+The 
+maximum number of bytes that can be read before the saved position can 
+become invalid. 
+Description
+This method tells this InputStream 
+object to remember its current position, so that the position can be restored 
+by a call to the reset() method. 
+The InputStream can read readlimit 
+bytes beyond the marked position before the mark becomes invalid.
+The implementation of the mark() 
+method in InputStream does 
+nothing; a subclass must override the method to provide the mark-and-reset 
+functionality. 
+markSupported
+public boolean markSupported()
+Returns
+true if this input stream supports 
+mark() and reset(); 
+false otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not this object supports mark-and-reset 
+functionality.
+The markSupported() method 
+in InputStream always returns 
+false. A subclass that implements 
+the mark-and-reset functionality should override the method to return true. 
+read
+public abstract int read() throws IOException
+Returns
+The next byte of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads the next byte of input. The byte is returned as an integer 
+in the range 0 to 255. The method blocks until the byte is read, the end 
+of stream is encountered, or an exception is thrown.
+A subclass of InputStream must 
+implement this method. 
+public int read(byte[] b) throws IOException
+Parameters
+b
+An array of bytes to 
+be filled from the stream. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads bytes of input to fill the given array by calling
+read(b, 0, 
+b.length).  The method blocks until some
+data is available.
+A subclass does not usually need to override this method as it can override 
+read(byte[], 
+int, int) 
+and have read(byte[]) 
+work automatically. 
+public int read(byte[] b, int off, int len) throws IOException
+Parameters
+b
+An array of bytes to be filled from the stream.
+off
+An offset into the array.
+len
+The number of bytes to read. 
+Returns
+The actual number of bytes read or -1 if the end of the stream is encountered 
+immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method reads up to len 
+bytes of input into the given array starting at index off. 
+The method blocks until some data is available.
+The implementation of this method in InputStream 
+uses read() repeatedly to fill 
+the array. Although it is not strictly necessary, a subclass should override 
+this method to read a block of data more efficiently. 
+reset
+public synchronized void reset() throws IOException
+Throws
+IOException
+If there was 
+no previous call to the mark() 
+method or the saved position has been invalidated. 
+Description
+This method restores the position of the stream to the position that was 
+saved by a previous call to mark().
+The implementation of the reset() 
+method in InputStream throws 
+an exception to indicate that mark-and-reset functionality is not supported 
+by default. A subclass must override the method to provide the functionality. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of bytes to 
+skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Description
+This method skips n bytes of 
+input. In other words, it moves the position of the stream forward by n 
+bytes.
+The implementation of the skip() 
+method in InputStream simply 
+calls read(b) where b 
+is a byte array n bytes 
+long. A subclass may want to override this method to implement a more efficient 
+skipping algorithm. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+ByteArrayInputStream, 
+FileInputStream, 
+FilterInputStream, 
+IOException, 
+ObjectInputStream, 
+PipedInputStream, 
+SequenceInputStream, 
+StringBufferInputStream 
+FilterWriter
+InputStreamReader
+ 
+ 
+ 
+ 
+ 
+ 
+ 

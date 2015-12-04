@@ -1,0 +1,44 @@
+
+[Chapter 18] 18.42 java.awt.MenuComponent (JDK 1.0)
+Chapter 18The java.awt Package
+18.42 java.awt.MenuComponent (JDK 1.0)
+This class is the superclass of all menu-related classes: 
+You
+never need to instantiate a MenuComponent directly.
+setFont() specifies the font to be used for all text
+within the menu component.
+public abstract class MenuComponent extends Object implements Serializable {
+    // Default Constructor: public MenuComponent()
+    // Public Instance Methods
+        1.1  public final void dispatchEvent(AWTEvent e);
+            public Font getFont();
+        1.1  public String getName();
+            public MenuContainer getParent();
+        #   public MenuComponentPeer getPeer();
+            public boolean postEvent(Event evt);
+            public void removeNotify();
+            public void setFont(Font f);
+        1.1  public void setName(String name);
+            public String toString();  // Overrides Object
+    // Protected Instance Methods
+            protected String paramString();
+        1.1  protected void processEvent(AWTEvent e);
+}
+Extended By:
+MenuBar, 
+MenuItem
+Passed To:
+Component.remove(), 
+Frame.remove(), 
+Menu.remove(), 
+MenuBar.remove(), 
+MenuContainer.remove()
+java.awt.MenuBar (JDK 1.0)
+java.awt.MenuContainer (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

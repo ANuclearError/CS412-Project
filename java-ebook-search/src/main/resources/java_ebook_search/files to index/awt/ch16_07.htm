@@ -1,0 +1,101 @@
+
+[Chapter 16] 16.7 Reading and Writing the Clipboard
+Chapter 16Data Transfer
+16.7 Reading and Writing the Clipboard
+Now that you know about the different java.awt.datatransfer 
+classes required to use the clipboard, let's put them all together 
+in an example. Example 16.1 creates a TextField 
+for input (copying), a read-only TextArea 
+for output (pasting), and a couple of buttons to control its operation. 
+Figure 16.1 shows the program's user interface. When the user clicks on the Copy button or presses Return 
+in the TextField, the text 
+in the TextField is copied 
+to the Clipboard. When the 
+user clicks on the Paste button, the contents of the clipboard 
+are drawn in the TextArea. 
+Since the clipboard is not private, you can copy or paste from anywhere 
+on your desktop, not just this program. 
+Example 16.1: Using the System Clipboard
+// Java 1.1 only
+import java.io.*;
+import java.awt.*;
+import java.awt.datatransfer.*;
+public class ClipMe extends Frame {
+    TextField tf;
+    TextArea ta;
+    Button copy, paste;
+    Clipboard clipboard = null;
+    ClipMe() {
+        super ("Clipping Example");
+        add (tf = new TextField("Welcome"), "North");
+        add (ta = new TextArea(), "Center");
+        ta.setEditable(false);
+        Panel p = new Panel();
+        p.add (copy = new Button ("Copy"));
+        p.add (paste = new Button ("Paste"));
+        add (p, "South");
+        setSize (250, 250);
+    }
+    public static void main (String args[]) {
+        new ClipMe().show();
+    }
+    public boolean handleEvent (Event e) {
+        if (e.id == Event.WINDOW_DESTROY) {
+            System.exit(0);
+            return true;  // never gets here
+        }
+        return super.handleEvent (e);
+    }
+    public boolean action (Event e, Object o) {
+        if (clipboard == null)
+            clipboard = getToolkit().getSystemClipboard();
+        if ((e.target == tf) || (e.target == copy)) {
+            StringSelection data;
+            data = new StringSelection (tf.getText());
+            clipboard.setContents (data, data);
+        } else if (e.target == paste) {
+            Transferable clipData = clipboard.getContents(this);
+            String s;
+            try {
+                s = (String)(clipData.getTransferData(
+                       DataFlavor.stringFlavor));
+            } catch (Exception ee) {
+                s = ee.toString();
+            }
+            ta.setText(s);
+        }
+        return true;
+    }
+}
+Figure 16.1: Using the system clipboard
+We won't say anything about how the display is set up; that should 
+be familiar. All the interesting stuff happens in the action method, which 
+is called in response to a button click. We check which button the user 
+clicked; if the user clicked the Copy button, we read the 
+text field tf and use it to 
+create a new StringSelection 
+named data. If the user clicked 
+the Paste button, we retrieve the data from the clipboard 
+by calling getContents(). This 
+gives us an object about which (strictly speaking) we know nothing, except 
+that it implements Transferable. 
+In this case, we're pretty sure that we're getting text from 
+the clipboard, so we call getTransferData() 
+and ask for the data in the stringFlavor 
+form. We catch the exception that might occur if we're wrong about 
+the data flavor. This program has no way of placing anything but text on 
+the clipboard, but there's no guarantee that the user didn't 
+cut some other kind of object from a native application. 
+Once we have our String, we 
+call the setText() method of 
+the TextArea to tell it about 
+the new string, and we are finished. 
+UnsupportedFlavorException
+Printing
+ 
+ 
+ 
+ 
+ 
+ 
+ 

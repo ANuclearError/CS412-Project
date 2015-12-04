@@ -1,0 +1,64 @@
+
+[Chapter 7] Program Structure
+Chapter 7
+7. Program Structure
+Contents:
+Compilation Units
+Packages
+The import Directive
+Documentation Comments
+Applications
+Applets
+This chapter discusses
+the higher levels of program structure for Java programs. The two
+levels of organization discussed in this chapter are compilation
+units and packages. A compilation unit contains
+the source code for one or more classes or interfaces. A
+package is a collection of related compilation units.
+This
+chapter also discusses the two most common top-level Java program
+architectures: applications and applets. An
+application is a stand-alone Java program that
+can be run directly
+from the command line (or other operating system environment).
+An applet is a Java program that must be run
+from within another program, such as a Web browser. In the future,
+applets will even be hosted by other environments,
+such as cellular phones and personal digital assistants.
+7.1 Compilation Units
+A compilation unit
+is the highest-level syntactic structure that Java recognizes:
+Only one of the classes or interfaces declared in a compilation unit
+can be declared public.
+A compilation
+unit usually corresponds to a single source code file. However,
+the Java language specification allows compilation units to be stored
+in a database. If compilation units are stored in a database, the
+limit of one public class or interface per compilation
+unit does not apply, as long as there is a way to extract the compilation
+units from the database and place them in individual files that
+contain no more than one public class or interface
+per file. This exception to the one public class
+or interface per compilation unit rule is useful if you are implementing
+a Java development environment.
+Every compilation unit
+is part of exactly one package. That package is specified by the
+package directive that appears at the beginning
+of the compilation unit. If there is no package directive,
+the compilation unit is part of the default package.
+References
+ClassDeclaration 5.4;
+Class Modifiers;
+The import Directive;
+Interface Declarations;
+Interface Modifiers;
+PackageDirective 7.2
+The synchronized Statement
+Packages
+ 
+ 
+ 
+ 
+ 
+ 
+ 

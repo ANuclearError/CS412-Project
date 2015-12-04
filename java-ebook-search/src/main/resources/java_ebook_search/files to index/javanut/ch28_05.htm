@@ -1,0 +1,46 @@
+
+[Chapter 28] 28.5 java.net.DatagramPacket (JDK 1.0)
+Chapter 28The java.net Package
+28.5 java.net.DatagramPacket (JDK 1.0)
+This class implements a "packet" of data that may be sent or
+received over the network through a DatagramSocket.
+One of the DatagramPacket constructors specifies an
+array of binary data to be sent with its destination address
+and port. A packet created with this constructor may then
+be sent with the send() method of a
+DatagramSocket. The other DatagramPacket
+constructor specifies an array of bytes into which data
+should be received. The receive() method of
+DatagramSocket waits for data and stores it in a
+DatagramPacket created in this way. The contents
+and sender of a received packet may be queried with the
+DatagramPacket instance methods.
+public final class DatagramPacket extends Object {
+    // Public Constructors
+            public DatagramPacket(byte[] ibuf, int ilength);
+            public DatagramPacket(byte[] ibuf, int ilength, InetAddress iaddr, int iport);
+    // Public Instance Methods
+            public synchronized InetAddress getAddress();
+            public synchronized byte[] getData();
+            public synchronized int getLength();
+            public synchronized int getPort();
+        1.1public synchronized void setAddress(InetAddress iaddr);
+        1.1public synchronized void setData(byte[] ibuf);
+        1.1public synchronized void setLength(int ilength);
+        1.1public synchronized void setPort(int iport);
+}
+Passed To:
+DatagramSocket.receive(), 
+DatagramSocket.send(), 
+DatagramSocketImpl.receive(), 
+DatagramSocketImpl.send(), 
+MulticastSocket.send()
+java.net.ContentHandlerFactory (JDK 1.0)
+java.net.DatagramSocket (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

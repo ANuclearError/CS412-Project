@@ -1,0 +1,101 @@
+
+[Chapter 25] 25.61 java.lang.Thread (JDK 1.0)
+Chapter 25The java.lang Package
+25.61 java.lang.Thread (JDK 1.0)
+This class encapsulates all the information about a
+single thread of control running on the Java
+interpreter. To create a thread, you must pass a
+Runnable object (i.e., an object that implements
+the Runnable interface by defining a
+run() method) to the Thread
+constructor, or you must subclass Thread so
+that it defines its own run() method.
+The run() method of
+the Thread or of the specified Runnable object is the
+"body" of the thread. It begins executing when the
+start() method of the Thread object is
+called. The thread runs until the run() method
+returns or until the stop() method of its
+Thread object is called. The static methods of
+this class operate on the currently running thread. 
+The instance methods may be called from one thread to
+operate on a different thread.
+start() starts a thread running. stop()
+stops it by throwing a ThreadDeath error.
+suspend() temporarily halts a thread.
+resume() allows it to resume. sleep() makes
+the current thread stop for a specified amount of time.
+yield() makes the current thread give up control to
+any other threads of equal priority that are waiting to run.
+join() waits for a thread to die.
+interrupt() wakes up a waiting or sleeping thread
+(with an InterruptedException) or sets an
+"interrupted" flag on a non-sleeping thread.  A thread can
+test its own "interrupted" flag with interrupted()
+or can test the flag of another thread with
+isInterrupted().  The Object wait()
+method makes the current thread block until the object's
+notify() method is called by another thread.
+public class Thread extends Object implements Runnable {
+    // Public Constructors
+            public Thread();
+            public Thread(Runnable target);
+            public Thread(ThreadGroup group, Runnable target);
+            public Thread(String name);
+            public Thread(ThreadGroup group, String name);
+            public Thread(Runnable target, String name);
+            public Thread(ThreadGroup group, Runnable target, String name);
+    // Constants
+            public static final int MAX_PRIORITY;
+            public static final int MIN_PRIORITY;
+            public static final int NORM_PRIORITY;
+    // Class Methods
+            public static int activeCount();
+            public static native Thread currentThread();
+            public static void dumpStack();
+            public static int enumerate(Thread[] tarray);
+            public static boolean interrupted();
+            public static native void sleep(long millis) throws InterruptedException;
+            public static void sleep(long millis, int nanos) throws InterruptedException;
+            public static native void yield();
+    // Public Instance Methods
+            public void checkAccess();
+            public native int countStackFrames();
+            public void destroy();
+            public final String getName();
+            public final int getPriority();
+            public final ThreadGroup getThreadGroup();
+            public void interrupt();
+            public final native boolean isAlive();
+            public final boolean isDaemon();
+            public boolean isInterrupted();
+            public final synchronized void join(long millis) throws InterruptedException;
+            public final synchronized void join(long millis, int nanos) throws InterruptedException;
+            public final void join() throws InterruptedException;
+            public final void resume();
+            public void run();  // From Runnable
+            public final void setDaemon(boolean on);
+            public final void setName(String name);
+            public final void setPriority(int newPriority);
+            public synchronized native void start();
+            public final void stop();
+            public final synchronized void stop(Throwable o);
+            public final void suspend();
+            public String toString();  // Overrides Object
+}
+Passed To:
+SecurityManager.checkAccess(), 
+Thread.enumerate(), 
+ThreadGroup.enumerate(), 
+ThreadGroup.uncaughtException()
+Returned By:
+Thread.currentThread()
+java.lang.System (JDK 1.0)
+java.lang.ThreadDeath (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,107 @@
+
+[Chapter 29] 29.18 java.text.SimpleDateFormat (JDK 1.1)
+Chapter 29The java.text Package
+29.18 java.text.SimpleDateFormat (JDK 1.1)
+This is the concrete Format subclass used by
+DateFormat to handle formatting and parsing of
+dates.  Most applications should not use this class
+directly--instead, they should obtain a localized
+DateFormat object by calling one of the static
+methods of DateFormat.
+SimpleDateFormat formats dates and times according to a
+pattern, which specifies the positions of the various fields
+of the date, and a DateFormatSymbols object, which
+specifies important auxiliary data, such as the names of
+months.  Applications that require highly customized date or
+time formatting can create a custom SimpleDateFormat
+object by specifying the desired pattern.  This creates
+a SimpleDateFormat object that uses the
+DateFormatSymbols object for the default locale.
+You may also specify a locale explicitly to use the
+DateFormatSymbols object for that locale.  Or, you
+can even provide an explicit DateFormatSymbols
+object of your own, if you need to format dates and times
+for an unsupported locale.
+You can use the applyPattern() method of a
+SimpleDateFormat to change the formatting pattern
+used by the object.  The syntax of this pattern is described
+in the following table.  Any characters in the format string
+that do not appear in this table appear literally in the
+formatted date.
+Field
+Full Form
+Short Form
+Year
+yyyy (4 digits)
+yy (2 digits)
+Month
+MMM (name)
+MM (2 digits), M (1 or 2 digits)
+Day of week
+EEEE
+EE
+Day of month
+dd (2 digits)
+d (1 or 2 digits)
+Hour (1-12)
+hh (2 digits)
+h (1 or 2 digits)
+Hour (0-23)
+HH (2 digits)
+H (1 or 2 digits)
+Hour (0-11)
+KK
+K
+Hour (1-24)
+kk
+k
+Minute
+mm
+Second
+ss
+Millisecond
+SSS
+AM/PM
+a
+Time zone
+zzzz
+zz
+Day of week in month
+F (e.g., 3rd Thursday)
+Day in year
+DDD (3 digits)
+D (1, 2, or 3 digits)
+Week in year
+ww
+Era (e.g., BC/AD)
+G
+public class SimpleDateFormat extends DateFormat {
+    // Public Constructors
+            public SimpleDateFormat();
+            public SimpleDateFormat(String pattern);
+            public SimpleDateFormat(String pattern, Locale loc);
+            public SimpleDateFormat(String pattern, DateFormatSymbols formatData);
+    // Public Instance Methods
+            public void applyLocalizedPattern(String pattern);
+            public void applyPattern(String pattern);
+            public Object clone();  // Overrides DateFormat
+            public boolean equals(Object obj);  // Overrides DateFormat
+            public StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition pos);  // Defines DateFormat
+            public DateFormatSymbols getDateFormatSymbols();
+            public int hashCode();  // Overrides DateFormat
+            public Date parse(String text, ParsePosition pos);  // Defines DateFormat
+            public void setDateFormatSymbols(DateFormatSymbols newFormatSymbols);
+            public String toLocalizedPattern();
+            public String toPattern();
+}
+Hierarchy:
+Object->Format(Serializable, Cloneable)->DateFormat(Cloneable)->SimpleDateFormat
+java.text.RuleBasedCollator (JDK 1.1)
+java.text.StringCharacterIterator (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

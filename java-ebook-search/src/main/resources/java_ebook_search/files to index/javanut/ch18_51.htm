@@ -1,0 +1,73 @@
+
+[Chapter 18] 18.51 java.awt.PrintJob (JDK 1.1)
+Chapter 18The java.awt Package
+18.51 java.awt.PrintJob (JDK 1.1)
+A PrintJob object represents a single printing
+session or "job."  The job may consist of one or more
+individual pages.
+PrintJob is abstract so it cannot be instantiated
+directly.  Instead, you must call the getPrintJob()
+method of the Toolkit object.  Calling this method
+posts an appropriate print dialog box to request
+information from the user, such as which printer should be
+used.  An application has no control over this process, but
+may pass a Properties object in which the dialog
+stores the user's printing preferences.  This
+Properties object can then be reused when initiating
+subsequent print jobs.
+Once a PrintJob object has been obtained from the
+Toolkit object, you call the
+getGraphics() method of PrintJob to obtain a
+Graphics object.  Any drawing done with this
+Graphics object is printed rather than being
+displayed on-screen.  The object
+returned by getGraphics() implements the
+PrintGraphics interface.  Do not make any
+assumptions about the initial state of the Graphics
+object; in particular note that you must specify a font
+before you can draw any text.
+When you are done drawing all the desired output on a page, 
+call the dispose() method of the
+Graphics object to force the current page to be
+printed.  You can call PrintJob.getGraphics() and
+Graphics.dispose() repeatedly to print any number of
+pages required by your application.  Note, however, that if
+the lastPageFirst() method returns true,
+the user has requested that pages be printed in reverse
+order.  It is up to your application to implement this
+feature.
+The getPageDimension() method returns the size of
+the page in pixels.  getPageResolution() returns the
+resolution of the page in pixels per inch.  This resolution
+is closer to a screen resolution (70 to 100 pixels per
+inch) rather than a typical printer resolution (300 to 600
+pixels per inch).  This means that on-screen drawings can be
+drawn directly to the printer without scaling.  It also
+means, however, that you cannot take full advantage of the
+extra resolution provided by printers.
+When you are done with a PrintJob, and you have called
+dispose() on the Graphics object returned by
+getGraphics(), you should call end() to
+terminate the job.
+public abstract class PrintJob extends Object {
+    // Default Constructor: public PrintJob()
+    // Public Instance Methods
+            public abstract void end();
+            public void finalize();  // Overrides Object
+            public abstract Graphics getGraphics();
+            public abstract Dimension getPageDimension();
+            public abstract int getPageResolution();
+            public abstract boolean lastPageFirst();
+}
+Returned By:
+PrintGraphics.getPrintJob(), 
+Toolkit.getPrintJob()
+java.awt.PrintGraphics (JDK 1.1)
+java.awt.Rectangle (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

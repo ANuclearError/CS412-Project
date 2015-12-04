@@ -1,0 +1,43 @@
+
+[Chapter 2] 2.10 Strings
+Chapter 2How Java Differs from C
+2.10 Strings
+Strings in Java are not null-terminated arrays of
+characters as they are in C.  Instead, they are instances of
+the java.lang.String class.  Java strings are
+unusual, in that the compiler treats them almost as if they
+were primitive types--for example, it automatically creates a
+String object when it encounters a double-quoted
+constant in the program.  And, the language defines an
+operator that operates on String objects--the
++ operator for string concatenation.
+An important feature of String objects is that they
+are immutable--i.e., there are no methods defined that
+allow you to change the contents of a String.
+If you need to modify the contents of a String, you
+have to create a StringBuffer object from the
+String object, modify the contents of the
+StringBuffer, and then create a new String
+from the contents of the StringBuffer.
+Note that it is moot to ask whether Java strings are
+terminated with a NUL character (\u0000) or not.  Java
+performs run-time bounds checking on all array and string
+accesses, so there is no way to examine the value of any
+internal terminator character that appears after the last
+character of the string.
+Both the String and StringBuffer classes are
+documented in Chapter 25, The java.lang Package, and 
+you'll find a complete set of methods for string handling and 
+manipulation there. Some of the more important String methods are:
+length(), charAt(), equals(),
+compareTo(), indexOf(),
+lastIndexOf(), and substring().
+Arrays
+Operators
+ 
+ 
+ 
+ 
+ 
+ 
+ 

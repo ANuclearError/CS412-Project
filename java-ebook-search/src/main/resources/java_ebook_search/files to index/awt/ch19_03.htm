@@ -1,0 +1,622 @@
+
+[Chapter 19] AWTEventMulticaster 
+Chapter 19java.awt Reference
+AWTEventMulticaster 
+Name
+AWTEventMulticaster 
+Description
+This class multicasts events to event listeners. Each multicaster has two 
+listeners, cunningly named a 
+and b. When an event source 
+calls one of the listener methods of the multicaster, the multicaster calls 
+the same listener method on both a 
+and b. Multicasters are built 
+into trees using the static add() 
+and remove() methods. In this 
+way a single event can be sent to many listeners. 
+Static methods make it easy to implement event multicasting in component 
+subclasses. Each time an add&lt;type&gt;Listener() 
+function is called in the component subclass, call the corresponding AWTEventMulticaster.add() 
+method to chain together (or "tree up") listeners. Similarly, 
+when a remove&lt;type&gt;Listener() 
+function is called, AWTEventMulticaster.remove() 
+can be called to remove a chained listener. 
+Class Definition
+public class java.awt.AWTEventMulticaster
+  extends java.lang.Object
+  implements java.awt.event.ActionListener, java.awt.event.AdjustmentListener,
+             java.awt.event.ComponentListener, java.awt.event.ContainerListener,
+             java.awt.event.FocusListener, java.awt.event.ItemListener,
+             java.awt.event.KeyListener, java.awt.event.MouseListener,
+             java.awt.event.MouseMotionListener, java.awt.event.TextListener,
+             java.awt.event.WindowListener {
+  // Variables
+  protected EventListener a;
+  protected EventListener b;
+  // Constructors
+  protected AWTEventMulticaster(EventListener a, EventListener b);
+  // Class Methods
+  public static ActionListener add(ActionListener a, ActionListener b);
+  public static AdjustmentListener add(AdjustmentListener a, 
+      AdjustmentListener b);
+  public static ComponentListener add(ComponentListener a, 
+      ComponentListener b);
+  public static ContainerListener add(ContainerListener a, 
+      ContainerListener b);
+  public static FocusListener add(FocusListener a, FocusListener b);
+  public static ItemListener add(ItemListener a, ItemListener b);
+  public static KeyListener add(KeyListener a, KeyListener b);
+  public static MouseListener add(MouseListener a, MouseListener b);
+  public static MouseMotionListener add(MouseMotionListener a, 
+      MouseMotionListener b);
+  public static TextListener add(TextListener a, TextListener b);
+  public static WindowListener add(WindowListener a, WindowListener b);
+  protected static EventListener addInternal(EventListener a, EventListener b);
+  public static ActionListener remove(ActionListener l, ActionListener oldl);
+  public static AdjustmentListener remove(AdjustmentListener l, 
+      AdjustmentListener oldl);
+  public static ComponentListener remove(ComponentListener l, 
+      ComponentListener oldl);
+  public static ContainerListener remove(ContainerListener l, 
+      ContainerListener oldl);
+  public static FocusListener remove(FocusListener l, FocusListener oldl);
+  public static ItemListener remove(ItemListener l, ItemListener oldl);
+  public static KeyListener remove(KeyListener l, KeyListener oldl);
+  public static MouseListener remove(MouseListener l, MouseListener oldl);
+  public static MouseMotionListener remove(MouseMotionListener l, 
+      MouseMotionListener oldl);
+  public static TextListener remove(TextListener l, TextListener oldl);
+  public static WindowListener remove(WindowListener l, WindowListener;
+  protected static EventListener removeInternal(EventListener l, 
+      EventListener oldl);
+  // Instance Methods
+  public void actionPerformed(ActionEvent e);
+  public void adjustmentValueChanged(AdjustmentEvent e);
+  public void componentAdded(ContainerEvent e);
+  public void componentHidden(ComponentEvent e);
+  public void componentMoved(ComponentEvent e);
+  public void componentRemoved(ContainerEvent e);
+  public void componentResized(ComponentEvent e);
+  public void componentShown(ComponentEvent e);
+  public void focusGained(FocusEvent e);
+  public void focusLost(FocusEvent e);
+  public void itemStateChanged(ItemEvent e);
+  public void keyPressed(KeyEvent e);
+  public void keyReleased(KeyEvent e);
+  public void keyTyped(KeyEvent e);
+  public void mouseClicked(MouseEvent e);
+  public void mouseDragged(MouseEvent e);
+  public void mouseEntered(MouseEvent e);
+  public void mouseExited(MouseEvent e);
+  public void mouseMoved(MouseEvent e);
+  public void mousePressed(MouseEvent e);
+  public void mouseReleased(MouseEvent e);
+  public void textValueChanged(TextEvent e);
+  public void windowActivated(WindowEvent e);
+  public void windowClosed(WindowEvent e);
+  public void windowClosing(WindowEvent e);
+  public void windowDeactivated(WindowEvent e);
+  public void windowDeiconified(WindowEvent e);
+  public void windowIconified(WindowEvent e);
+  public void windowOpened(WindowEvent e);
+  // Protected Instance Methods
+  protected EventListener remove(EventListener oldl);
+  protected void saveInternal(ObjectOutputStream s, String k) throws IOException;
+}
+Variables
+a
+protected EventListener a
+One of the EventListeners this 
+AWTEventMulticaster sends events to. 
+b
+protected EventListener b
+One of the EventListeners this 
+AWTEventMulticaster sends events to. 
+Constructors
+AWTEventMulticaster
+protected AWTEventMulticaster (EventListener a, EventListener b)
+Parameters
+a
+A listener that receives events.
+b
+A listener that receives events.
+Description
+Constructs an AWTEventMulticaster 
+that sends events it receives to the supplied listeners. The constructor 
+is protected because it is only the class methods of AWTEventMulticaster 
+that ever instantiate this class. 
+Class Methods
+add
+public static ActionListener add (ActionListener a, ActionListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static AdjustmentListener add (AdjustmentListener a, AdjustmentListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static ComponentListener add (ComponentListener a, ComponentListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static ContainerListener add (ContainerListener a, ContainerListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static FocusListener add (FocusListener a, FocusListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static ItemListener add (ItemListener a, ItemListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static KeyListener add (KeyListener a, KeyListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static MouseListener add (MouseListener a, MouseListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static MouseMotionListener add (MouseMotionListener a, MouseMotionListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static TextListener add (TextListener a, TextListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+public static WindowListener add (WindowListener a, WindowListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+addInternal
+public static EventListener addInternal (EventListener a, EventListener b)
+Parameters
+a
+An event listener. 
+b
+An event listener. 
+Returns
+A listener object that passes events to a 
+and b. 
+Description
+This method is a helper for the add() methods. 
+remove
+public static ActionListener remove (ActionListener l, ActionListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static AdjustmentListener remove (AdjustmentListener l, AdjustmentListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static ComponentListener remove (ComponentListener l, ComponentListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static ContainerListener remove (ContainerListener l, ContainerListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static FocusListener remove (FocusListener l, FocusListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static ItemListener remove (ItemListener l, ItemListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static KeyListener remove (KeyListener l, KeyListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static MouseListener remove (MouseListener l, MouseListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static MouseMotionListener remove (MouseMotionListener l, MouseMotionListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static TextListener remove (TextListener l, TextListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static WindowListener remove (WindowListener l, WindowListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+public static WindowListener remove (WindowListener l, WindowListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+removeInternal
+public static EventListener removeInternal (EventListener l, EventListener oldl)
+Parameters
+l
+An event listener. 
+oldl
+An event listener. 
+Returns
+A listener object that multicasts to l 
+but not oldl. 
+Description
+This method is a helper for the remove() 
+methods. 
+Instance Methods
+actionPerformed
+public void actionPerformed (ActionEvent e)
+Parameters
+e
+The action event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+adjustmentValueChanged
+public void adjustmentValueChanged (AdjustmentEvent e)
+Parameters
+e
+The adjustment event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+componentAdded
+public void componentAdded (ContainerEvent e)
+Parameters
+e
+The container event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+componentHidden
+public void componentHidden (ComponentEvent e)
+Parameters
+e
+The component event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+componentMoved
+public void componentMoved (ComponentEvent e)
+Parameters
+e
+The component event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+componentRemoved
+public void componentRemoved (ContainerEvent e)
+Parameters
+e
+The container event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+componentResized
+public void componentResized (ComponentEvent e)
+Parameters
+e
+The component event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+componentShown
+public void componentShown (ComponentEvent e)
+Parameters
+e
+The component event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+focusGained
+public void focusGained (FocusEvent e)
+Parameters
+e
+The focus event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+focusLost
+public void focusLost (FocusEvent e)
+Parameters
+e
+The focus event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+itemStateChanged
+public void itemStateChanged (ItemEvent e)
+Parameters
+e
+The item event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+keyPressed
+public void keyPressed (KeyEvent e)
+Parameters
+e
+The key event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+keyReleased
+public void keyReleased (KeyEvent e)
+Parameters
+e
+The key event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+keyTyped
+public void keyTyped (KeyEvent e)
+Parameters
+e
+The key event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mouseClicked
+public void mouseClicked (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mouseDragged
+public void mouseDragged (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mouseEntered
+public void mouseEntered (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mouseExited
+public void mouseExited (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mouseMoved
+public void mouseMoved (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mousePressed
+public void mousePressed (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+mouseReleased
+public void mouseReleased (MouseEvent e)
+Parameters
+e
+The mouse event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+textValueChanged
+public void textValueChanged (TextEvent e)
+Parameters
+e
+The text event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowActivated
+public void windowActivated (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowClosed
+public void windowClosed (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowClosing
+public void windowClosing (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowDeactivated
+public void windowDeactivated (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowDeiconified
+public void windowDeiconified (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowIconified
+public void windowIconified (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+windowOpened
+public void windowOpened (WindowEvent e)
+Parameters
+e
+The window event that occurred. 
+Description
+Handles the event by passing it on to listeners a 
+and b. 
+Protected Instance Methods
+remove
+protected EventListener remove(EventListener oldl)
+Parameters
+oldl
+The listener to remove. 
+Returns
+The resulting EventListener. 
+Description
+This method removes oldl from the AWTEventMulticaster 
+and returns the resulting listener. 
+See Also
+ActionEvent, AdjustmentEvent, 
+ComponentEvent, Event, 
+EventListener, EventObject, 
+FocusEvent, ItemEvent, 
+KeyEvent, MouseEvent, 
+WindowEvent 
+AWTEvent 
+AWTException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

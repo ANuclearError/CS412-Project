@@ -1,0 +1,86 @@
+
+[Chapter 13] Member
+Chapter 13The java.lang.reflect Package
+Member
+Name
+Member
+Synopsis
+Interface Name:
+java.lang.reflect.Member
+Super-interface:
+None
+Immediate Sub-interfaces:
+None
+Implemented By:
+java.lang.reflect.Constructor,
+java.lang.reflect.Field,
+java.lang.reflect.Method
+Availability:
+New as of JDK 1.1 
+Description
+The Member 
+interface defines methods shared by members of a class: fields, methods, 
+and constructors. 
+Class Summary
+public abstract interface java.lang.reflect.Member {
+  // Constants
+  public final static int DECLARED;
+  public final static int PUBLIC;
+  // Methods
+  public abstract Class getDeclaringClass();
+  public abstract int getModifiers();
+  public abstract String getName();
+}
+Constants
+DECLARED
+public final static int DECLARED
+Description
+A constant that represents the set of all declared 
+members of a class or interface. This set does not include inherited members. 
+The set can be used in calls to SecurityManager.checkMemberAccess(). 
+PUBLIC
+public final static int PUBLIC
+Description
+A constant that represents the set of all public 
+members of a class or interface, including inherited members. The set can 
+be used in calls to SecurityManager.checkMemberAccess(). 
+Methods
+getDeclaringClass
+public abstract Class getDeclaringClass()
+Returns
+The Class 
+object that represents the class that declared this member. 
+Description
+This method returns the Class 
+object for the class in which this member is declared. 
+getModifiers
+public abstract int getModifiers()
+Returns
+An integer that represents the modifier keywords used 
+to declare this member. 
+Description
+This method returns an integer value that represents the modifiers of this 
+member. The Modifier class 
+should be used to decode the returned value. 
+getName
+public abstract String getName()
+Returns
+The name of this member as a String. 
+Description
+This method returns the name of this member. 
+See Also
+Class, 
+Constructor, 
+Field, 
+Method, 
+Modifier, 
+SecurityManager 
+InvocationTargetException
+Method
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,62 @@
+
+[Chapter 17] EventListener
+Chapter 17The java.util Package
+EventListener
+Name
+EventListener
+Synopsis
+Interface Name:
+java.util.EventListener
+Super-interfaces:
+None
+Immediate Sub-interfaces:
+java.awt.event.ActionListener,
+java.awt.event.AdjustmentListener,
+java.awt.event.ComponentListener,
+java.awt.event.ContainerListener,
+java.awt.event.FocusListener,
+java.awt.event.ItemListener,
+java.awt.event.KeyListener,
+java.awt.event.MouseListener,
+java.awt.event.MouseMotionListener,
+java.awt.event.TextListener,
+java.awt.event.WindowListener
+Implemented by:
+None
+Availability:
+New as of JDK 1.1 
+Description
+In order for instances of a class to receive events, the class
+must implement the EventListener interface. 
+It is a semantic interface, meaning that it declares no methods. 
+Classes do not normally implement the EventListener 
+interface directly, but instead implement an interface that 
+extends EventListener.
+Prior to Java 1.1, events could only be delivered to AWT components.  
+Java 1.1 introduces a new event model that allows events to be 
+delivered to any object that implements a listener interface and 
+registers to receive events from a particular source.
+Interface Declaration
+public abstract interface java.util.EventListener {
+}
+See Also
+ActionListener, 
+AdjustmentListener, 
+ComponentListener, 
+ContainerListener, 
+FocusListener, 
+ItemListener, 
+KeyListener, 
+MouseListener, 
+MouseMotionListener, 
+TextListener, 
+WindowListener 
+Enumeration
+EventObject
+ 
+ 
+ 
+ 
+ 
+ 
+ 

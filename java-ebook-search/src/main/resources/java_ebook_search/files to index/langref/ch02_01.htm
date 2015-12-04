@@ -1,0 +1,155 @@
+
+[Chapter 2] Lexical Analysis
+Chapter 2
+2. Lexical Analysis
+Contents:
+Pre-Processing
+Tokenization
+When
+the Java compiler compiles a program, the first thing it does is 
+determine the structure of the program. The compiler reads the
+characters in the program source and then applies rules to recognize
+progressively larger chunks of the file, such as identifiers, expressions,
+statements, and classes. The process of discovering the organization
+of the program is divided into two components:
+The lexical analyzer. This component looks for sequences of characters
+called tokens that form identifiers, literals,
+operators, and the like.
+The parser. This component is responsible for discovering
+higher levels of organization in the sequences of tokens discovered
+by lexical analysis.
+This chapter describes the rules
+governing the lexical analysis of Java programs. The rules governing
+the parsing of Java programs are described over the course of subsequent
+chapters.
+The lexical analysis rules for Java can appear
+slightly ambiguous. Where ambiguity occurs, the rules for interpreting
+character sequences specify that conflicts are resolved in favor
+of the interpretation that matches the most characters. That's a
+bit confusing, so an example should help. Take the character sequence:
++++
+The ambiguity is that the sequence could potentially be
+interpreted as either + followed
+by ++
+or the other way around; both are valid tokens. But according to
+the lexical analysis rules that insist that tokenization favor the
+longest character match, Java interprets the character sequence
+as:
+++ +
+Because ++
+is longer than +, Java first recognizes the
+token ++ and then the +.
+These
+rules can produce undesired results when character sequences are
+not separated by white space. For example, the following sequence is ambiguous:
+x++y
+The programmer probably intended this sequence to
+mean "x + (+y)", but the lexical analyzer
+always produces the token sequence "x ++ y".
+This sequence is syntactically incorrect.
+Java lexical analysis consists of two phases: pre-processing and tokenization.
+The pre-processing phase is discussed in the following section.
+The tokenization phase is responsible for recognizing the tokens
+in the pre-processed input and is discussed later in this chapter.
+2.1 Pre-Processing
+A Java program is a sequence of characters. These characters
+are represented using 16-bit numeric codes defined by the Unicode
+standard.[1]
+Unicode is a 16-bit character encoding standard that includes representations
+for all of the characters needed to write all major natural languages,
+as well as special symbols for mathematics. Unicode defines the
+codes 0 through 127 to be consistent with ASCII. Because
+of that consistency, Java programs can be written in ASCII without
+any need for programmers to be aware of Unicode.
+[1] 
+Unicode is defined by an organization called
+the Unicode Consortium. The
+defining document for Unicode is The Unicode Standard, 
+Version 2.0 (published by Addison-Wesley,
+ISBN 0-201-48345-9). More recent
+information about Unicode is 
+available at http://unicode.org/.
+Java
+is based on Unicode to allow Java programs to be useful in as many
+parts of the world as possible. Internally, Java programs store
+characters as 16-bit Unicode characters. The benefits of using Unicode
+are currently difficult to realize, however, because most operating
+environments do not support Unicode. And those environments that
+do support Unicode generally do not include fonts that cover more
+than a small subset of the Unicode character set.
+Since
+most operating environments do not support Unicode, Java uses a
+pre-processing phase to make sure that all of the characters of
+a program are in Unicode. This pre-processing comprises two steps:
+Translate the program source into Unicode characters if it
+is in an encoding other than Unicode. Java defines escape
+sequences that allow all characters that can be represented in Unicode
+to be represented in other character encodings, such as ASCII or
+EBCDIC. The escape sequences are recognized by the compiler, even
+if the program is already represented in Unicode.
+Divide the stream of Unicode characters into lines.
+Conversion to Unicode
+The first thing a Java compiler does is translate its input from the source
+character encoding (e.g., ASCII or EBCDIC) into Unicode.
+During the conversion process, Java translates escape sequences
+of the form \u followed by four hexadecimal digits
+into the Unicode characters indicated by the given hexadecimal values.
+These escape sequences let you represent Unicode characters in
+whatever character set you are using for your
+source code, even if it is not Unicode. For example,
+\u0000 is a way of representing the NUL character.
+More formally, the compiler input is converted from a stream
+of EscapedSourceCharacters into a stream of
+Unicode characters. EscapedSourceCharacter
+is defined as:
+HexDigit
+is either a Digit or one of the following letters:
+A, a, B,
+b, C, c,
+D, d, E,
+e, F, or f.
+A Digit
+is one of the following characters:
+0, 1,
+2, 3, 4,
+5, 6, 7,
+8, or 9.
+As you
+can see, the definition of EscapedSourceCharacter
+specifies that the `u' in the escape sequence
+can occur multiple times. Multiple occurrences have the same meaning
+as a single occurrence of `u'.
+If the program source is already
+in Unicode, this conversion step is still performed in order
+to process these \u escapes.
+The
+Java language specification recommends, but does not require, that
+the classes that come with Java use
+the \uxxxx
+escapes when called upon to display a character that would not otherwise
+be displayable.
+Division of the Input Stream into Lines
+The
+second step of pre-processing is responsible for recognizing sequences
+of characters that terminate lines. The character sequence that indicates
+the end of a line varies with the operating environment. By recognizing
+end-of-line character sequences during pre-processing, Java makes
+sure that subsequent compilation steps do not need to be concerned
+with multiple representations for the end of a line.
+In
+this step, the lexical analyzer recognizes the combinations of carriage
+return (\u000D) and line feed (\u000A)
+characters that are in widespread use as end-of-line indicators:
+As always, ambiguities in lexical rules are resolved by matching the
+longest possible sequence of characters. That means that the sequence
+of a carriage return character followed by a linefeed character
+is always recognized as a one-line terminator, never as two.
+Notational Conventions
+Tokenization
+ 
+ 
+ 
+ 
+ 
+ 
+ 

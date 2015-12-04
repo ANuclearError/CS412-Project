@@ -1,0 +1,211 @@
+
+[Chapter 11] OutputStreamWriter
+Chapter 11The java.io Package
+OutputStreamWriter
+Name
+OutputStreamWriter
+Synopsis
+Class Name:
+java.io.OutputStreamWriter
+Superclass:
+java.io.Writer
+Immediate Subclasses:
+java.io.FileWriter
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The OutputStreamWriter class 
+is a bridge between the byte-oriented world of the OutputStream 
+class and the character-oriented world of the Writer 
+class. The OutputStreamWriter 
+represents a character stream, but it sends its output to an underlying 
+byte stream. A character encoding scheme is responsible for translating the Unicode 
+characters to bytes. An OutputStreamWriter 
+can be created using an explicit encoding scheme or a default encoding 
+scheme. 
+For example, to write a Unicode character stream as an ISO-8859-5 byte 
+stream, you can construct an OutputStreamWriter 
+with the encoding 8859_5 as follows: 
+OutputStreamWriter outr = new OutputStreamWriter(out, "8859_5");
+Each time you write to an OutputStreamWriter 
+object, bytes may be written to the underlying byte stream. To improve 
+efficiency, you may want to wrap the OutputStreamWriter 
+in a BufferedWriter. 
+Class Summary
+public class java.io.OutputStreamWriter extends java.io.Writer {
+  // Constructors
+  public OutputStreamWriter(OutputStream out);
+  public OutputStreamWriter(OutputStream out, String enc);
+  // Instance Methods
+  public void close();
+  public void flush();
+  public String getEncoding();
+  public void write(int c);
+  public void write(char[] cbuf, int off, int len);
+  public void write(String str, int off, int len);
+}
+Constructors
+OutputStreamWriter
+public OutputStreamWriter(OutputStream out)
+Parameters
+out
+The output stream to 
+use. 
+Description
+This constructor creates an OutputStreamWriter 
+that writes its data to out 
+and translates characters to bytes using the system's default encoding 
+scheme. 
+   public OutputStreamWriter(OutputStream out, String enc) throws UnsupportedEncodingException  
+Parameters
+out
+The output stream to use.
+enc
+The name of an encoding scheme. 
+Throws
+UnsupportedEncodingException
+If enc is not a supported encoding scheme. 
+Description
+This constructor creates an OutputStreamWriter 
+that writes its data to out 
+and translates characters to bytes using the given encoding scheme. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Writer.close() 
+Description
+This method calls the close() 
+method of the underlying output stream, which releases any system resources 
+associated with this object. 
+flush
+public void flush() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Writer.flush() 
+Description
+This method writes out any buffered data in the internal buffer and calls 
+the flush() method of the underlying 
+output stream, which forces any bytes that may be buffered to be written 
+to the underlying device. 
+getEncoding
+public String getEncoding()
+Returns
+A String that contains the 
+name of the character encoding scheme of this writer. 
+Description
+This method returns the name of the character encoding scheme this OutputStreamWriter 
+is currently using. 
+write
+public void write(int c) throws IOException
+Parameters
+c
+The value to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(int) 
+Description
+This method converts the given character to bytes using the current encoding 
+scheme and places the converted bytes into an internal buffer. When the 
+buffer fills up, it is written to the underlying byte stream. 
+   public void write(char[] cbuf, int off, int len) throws IOException  
+Parameters
+cbuf
+An array of characters to write.
+off
+An offset into the character array.
+len
+The number of characters to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(char[], int, int) 
+Description
+This method converts len characters 
+from the array cbuf to bytes, 
+starting at offset off, using 
+the current encoding scheme. The method places the converted bytes into 
+an internal buffer. When the buffer fills up, it is written to the underlying 
+byte stream. 
+public void write(String str, int off, int len) throws IOException
+Parameters
+str
+The string to be written.
+off
+An offset into start in the string.
+len
+The number of characters to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(String, int, int) 
+Description
+This method converts len characters 
+from the string str to bytes, 
+starting at offset off, using 
+the current encoding scheme. The method places the converted bytes into 
+an internal buffer. When the buffer fills up, it is written to the underlying 
+byte stream. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+write(char[])
+Writer
+write(String)
+Writer
+See Also
+BufferedWriter, 
+FileWriter, 
+IOException, 
+OutputStream, 
+UnsupportedEncodingException, 
+Writer 
+OutputStream
+PipedInputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

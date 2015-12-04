@@ -1,0 +1,30 @@
+
+[Chapter 19] 19.2 java.awt.datatransfer.ClipboardOwner (JDK 1.1)
+Chapter 19The java.awt.datatransfer Package
+19.2 java.awt.datatransfer.ClipboardOwner (JDK 1.1)
+This interface defines the single method that an object that
+places data on a Clipboard must implement.  This
+method is used to notify the object when its data on the clipboard is
+replaced by other, more recent, data. An
+object that places data on a clipboard must remain ready to
+satisfy requests for that data until lostOwnership()
+is called.
+public abstract interface ClipboardOwner {
+    // Public Instance Methods
+            public abstract void lostOwnership(Clipboard clipboard, Transferable contents);
+}
+Implemented By:
+StringSelection
+Passed To:
+Clipboard.setContents()
+Type Of:
+Clipboard.owner
+java.awt.datatransfer.Clipboard (JDK 1.1)
+java.awt.datatransfer.DataFlavor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

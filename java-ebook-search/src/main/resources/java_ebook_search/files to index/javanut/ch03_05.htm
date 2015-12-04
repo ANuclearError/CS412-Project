@@ -1,0 +1,155 @@
+
+[Chapter 3] 3.5 Object Destruction
+Chapter 3Classes and Objects in Java
+3.5 Object Destruction
+Now that we've seen how you can create and use objects, the
+next obvious question, a question that C and C++ programmers have
+been itching to have answered, is how do you destroy
+objects when they are no longer needed?
+The answer is: You don't!  Objects are not passed to any
+free() method, as allocated memory in C is.  And
+there is no delete operator as there is in C++.
+Java takes care of object destruction for you, and lets you
+concentrate on other, more important things, like the
+algorithm you're working on.
+Garbage Collection
+The technique Java uses to get rid of objects once they are
+no longer needed is called garbage collection.  It is
+a technique that has been around for years in languages such
+as Lisp.  The Java interpreter knows what objects it has
+allocated.  It can also figure out which variables refer to
+which objects, and which objects refer to which other
+objects.  Thus, it can figure out when an allocated object
+is no longer referred to by any other object or variable.
+When it finds such an object, it knows that it can destroy
+it safely, and does so.  The garbage collector can also
+detect and destroy "cycles" of objects that refer to each
+other, but are not referred to by any other objects.
+The Java garbage collector runs as a low-priority thread,
+and does most of its work when nothing else is going on.
+Generally, it runs during idle time while waiting for
+user input in the form of keystrokes or mouse events.
+The only time the garbage collector must run while something
+high-priority is going on (i.e., the only time it will
+actually slow down the system) is when the interpreter has
+run out of memory.  This doesn't happen often because there
+is that low-priority thread cleaning things up in the
+background.
+This scheme may sound extremely slow and wasteful of memory.
+Actually though, good garbage collectors can be
+surprisingly efficient.  No, garbage collection will never
+be as efficient as explicit, well-written memory allocation
+and deallocation.  But it does make programming a lot easier
+and less prone to bugs.  And for most real-world programs,
+rapid development, lack of bugs, and easy maintenance are
+more important features than raw speed or memory efficiency.
+Putting the Trash Out
+What garbage collection means for your programs is that when
+you are done with an object, you can just forget about
+it--the garbage collector finds it and takes care of it.
+Example 3.7
+shows an example.
+Example 3.7: Leaving an Object Out for Garbage Collection
+String processString(String s)
+{
+    // Create a StringBuffer object to process the string in.
+    StringBuffer b = new StringBuffer(s);
+    // Process it somehow...
+    // Peturn it as a String. Just forget about the StringBuffer object:
+    // it will be automatically garbage collected.
+    return b.toString();
+}
+If you're a C or C++ programmer, conditioned to allocating and
+deallocating your own dynamic memory, you may at first feel
+a nagging sense of misgiving when you write procedures that
+allocate and then forget objects.  You'll get used to it
+though, and even learn to love it!
+There is an instance where you may want to take some action
+to help the garbage collection process along by "forgetting
+quickly."
+Example 3.8
+explains.
+Example 3.8: Forced Forgetting of an Object
+public static void main(String argv[]) 
+{
+    int big_array[] = new int[100000];
+    // Do some computations with big_array and get a result.
+    int result = compute(big_array);
+    // We no longer need big_array.  It will get garbage collected when 
+    // there are no more references.  Since big_array is a local variable, 
+    // it refers to the array until this method returns.  But this 
+    // method doesn't return.  So we've got to get rid of the reference 
+    // ourselves, just to help out the garbage collector.
+    big_array = null;
+    // Loop forever, handling the user's input.
+    for(;;) handle_input();
+}
+Object Finalization
+Just as a constructor method performs initialization for an
+object, a Java finalizer method performs
+finalization for an object.
+Garbage collection automatically frees up the memory
+resources used by objects.  But objects may hold other kinds
+of resources, such as file descriptors or sockets, as well.
+The garbage collector can't free these resources up for you,
+so you should write a finalizer method that takes care
+of things like closing open files, terminating network
+connections, and so on.
+Example 3.9
+shows the finalizer method from the Java FileOutputStream
+class. 
+Note that a finalizer is an instance method
+(i.e., non-static), takes no arguments, returns no
+value (i.e., void), and must be named
+finalize().
+[6]
+[6] 
+C++ programmers, take note!  Although Java constructor
+methods are named like C++ constructors, Java finalization
+methods are not named like C++ destructor methods.
+Example 3.9: A Finalizer Method
+/**
+ * Closes the stream when garbage is collected.
+ * Checks the file descriptor first to make sure it is not already closed.
+ */
+protected void finalize() throws IOException {
+    if (fd != null) close();
+}
+There are some additional things to be aware of about finalizers:
+If an object has a finalizer, that method is invoked before
+the system garbage collects the object.
+The Java interpreter may exit without garbage collecting all
+outstanding objects, so some finalizers may never be invoked.
+In this case, though, any outstanding resources are usually
+freed by the operating system.
+Java makes no guarantees about when garbage collection will
+occur, or what order objects will be collected in.
+Therefore, Java can make no guarantees about when a
+finalizer will be invoked, or in what order finalizers will be
+invoked, or what thread will execute finalizers.
+After a finalizer is invoked, objects are not freed right away.
+This is because a finalizer method may "resurrect" an object
+by storing the this pointer somewhere, so that the
+object once again has references.  Thus, after
+finalize() is called, an object must once again be
+determined to be unreferenced before it can actually be garbage
+collected.  Even if an object is "resurrected," the
+finalizer method is never invoked more than once.  Note that
+resurrecting an object is never a useful thing to do--just a
+strange quirk of object finalization.
+The finalizer shown in
+Example 3.9
+declares that it may throw an exception (exceptions are
+described in detail in Chapter 2, How Java Differs from C).  If an uncaught
+exception actually occurs in a finalizer method, however,
+the exception is
+ignored by the system.
+Class Methods
+Subclasses and Inheritance
+ 
+ 
+ 
+ 
+ 
+ 
+ 

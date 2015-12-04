@@ -1,0 +1,74 @@
+
+[Chapter 4] The Java Language
+Chapter 4
+4. The Java Language
+Contents:
+Text Encoding
+Comments
+Types
+Statements and Expressions
+Exceptions
+Arrays
+In this chapter, we'll introduce the framework of the
+Java language and some of its fundamental tools.  I'm not going
+to try to provide a full language reference here.  Instead, I'll
+lay out the basic structures of Java with special attention to how it
+differs from other languages.  For example, we'll take a close
+look at arrays in Java, because they are significantly different from
+those in some other languages.  We won't, on the other hand,
+spend much time explaining basic language constructs like loops and
+control structures.  We won't talk much about Java's
+object-oriented features here, as that's covered in Chapter 5, Objects in Java.
+As always, we'll try to provide meaningful examples to
+illustrate how to use Java in everyday programming tasks.
+4.1 Text Encoding
+Java is a language for the Internet. Since the people of the Net speak
+and write in many different human languages, Java must be able to
+handle a number of languages as well.  One of the ways in which Java supports
+international access is through Unicode character encoding. Unicode
+uses a 16-bit character encoding; it's a worldwide standard that
+supports the scripts (character sets) of most 
+languages.[1]
+[1] 
+For more information about Unicode, see the following
+URL: http://www.unicode.org/.
+Ironically, one listed "obsolete and archaic" scripts not currently supported 
+by the Unicode standard is Javanese--a historical language of the people 
+of the Island of Java.
+Java source code can be written using the Unicode character
+encoding and stored either in its full form or with
+ASCII-encoded Unicode character values. This makes
+Java a friendly language for non-English speaking programmers, as
+these programmers can use their native alphabet for class, method, and
+variable names in Java code.
+The Java char type and String
+objects also support Unicode. But if you're concerned about
+having to labor with two-byte characters, you can relax. The
+String API makes the character
+encoding transparent to you. Unicode is also
+ASCII-friendly; the first 256 characters are
+identical to the first 256 characters in the ISO8859-1 (Latin-1)
+encoding and if you stick with these values, there's really no
+distinction between the two.
+Most platforms can't display all currently defined
+Unicode characters.  As a result, Java programs can be written with
+special Unicode escape sequences.  A Unicode character can be
+represented with the escape sequence:
+\uxxxx 
+xxxx is a sequence of one to four hexadecimal
+digits. The escape sequence indicates an
+ASCII-encoded Unicode character.  This is also the
+form Java uses to output a Unicode character in an environment
+that doesn't otherwise support them.
+Java stores and manipulates characters and strings internally as Unicode 
+values. Java also comes with classes to read and write Unicode-formatted 
+character streams, as you'll see in Chapter 8, Input/Output Facilities. 
+The Applet Tag
+Comments
+ 
+ 
+ 
+ 
+ 
+ 
+ 

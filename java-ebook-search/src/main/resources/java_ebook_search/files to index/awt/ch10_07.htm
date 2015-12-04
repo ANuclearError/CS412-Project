@@ -1,0 +1,151 @@
+
+[Chapter 10] 10.7 MenuBar
+Chapter 10Would You Like to Choose from the Menu?
+10.7 MenuBar
+The MenuBar is the component 
+you add to the Frame that is 
+displayed on the top line of the Frame; 
+the MenuBar contains menus. 
+A Frame can display only one 
+MenuBar at a time. However, 
+you can change the MenuBar 
+based on the state of the program so that different menus can appear at 
+different points. The MenuBar 
+class extends MenuComponent 
+and implements the MenuContainer 
+interface. 
+A MenuBar can be used only 
+as a child component of a Frame. 
+An applet cannot have a MenuBar 
+attached to it, unless you implement the whole thing yourself. Normally, 
+you cannot modify the MenuBar 
+of the applet holder (the browser), unless it is Java based. In other 
+words, you cannot affect the menus of Netscape Navigator, but you can customize 
+appletviewer and HotJava, as shown in the following code with the result 
+shown in Figure 10.4. The getTopLevelParent() 
+method was introduced in Window with Window. 
+import java.awt.*;
+public class ChangeMenu extends java.applet.Applet {
+    public void init ()  {
+        Frame f = ComponentUtilities.getTopLevelParent(this);
+        if (f != null) {
+            MenuBar mb = f.getMenuBar();
+            Menu m = new Menu ("Cool");
+            mb.add (m);
+        }
+    }
+}
+Figure 10.4: Customizing appletviewer's MenuBar
+NOTE: 
+When you add a MenuBar 
+to a Frame, it takes up space 
+that is part of the drawing area. You need to get the top insets to find 
+out how much space is occupied by the MenuBar 
+and be careful not to draw under it. If you do, the MenuBar 
+will cover what you draw. 
+MenuBar MethodsConstructors
+public MenuBar() 
+The MenuBar constructor creates 
+an empty MenuBar. To add menus 
+to the MenuBar, use the add()method. 
+Menus
+public int getMenuCount () public int countMenus () 
+The getMenuCount() method returns 
+the number of top-level menus within the MenuBar. 
+countMenus() is the Java 1.0 
+name for this method. 
+public Menu getMenu (int index) 
+The getMenu() method returns 
+the Menu at position index. 
+If index is invalid, getMenu() 
+throws the run-time exception ArrayIndexOutOfBoundsException. 
+public synchronized Menu add (Menu m) 
+The add() method puts choice 
+m on the MenuBar. 
+The label used to create m 
+is displayed on the MenuBar. 
+If m is already in another 
+MenuBar, it is removed from 
+it. The order of items added determines the order displayed on the MenuBar, 
+with one exception: if a menu is designated as a help menu by setHelpMenu(), 
+it is placed at the right end of the menu bar. Only a Menu 
+can be added to a MenuBar; 
+you can't add a MenuItem. 
+In other words, a MenuItem has 
+to lie under at least one menu. 
+public synchronized void remove (int index) 
+The remove() method removes 
+the Menu at position index 
+from the MenuBar. If index 
+is invalid, remove() throws 
+the ArrayIndexOutOfBoundsException run-time exception. 
+index is zero based. 
+public synchronized void remove (MenuComponent component) 
+This version of remove() removes 
+the menu component from the 
+MenuBar. If component 
+is not in MenuBar, nothing 
+happens. The system calls this method when you add a new Menu 
+to make sure it does not exist on another MenuBar. 
+Shortcuts
+public MenuItem getShortcutMenuItem (MenuShortcut shortcut)  
+The getShortcutMenuItem() method 
+retrieves the MenuItem associated 
+with the MenuShortcut shortcut. 
+If MenuShortcut does not exist 
+for this Menu, the method returns 
+null. getShortcutMenuItem() 
+walks through the all submenus recursively to try to find shortcut. 
+public synchronized Enumeration shortcuts()  
+The shortcuts() method retrieves 
+an Enumeration of all the MenuShortcut 
+objects associated with this MenuBar. 
+public void deleteShortcut (MenuShortcut shortcut)  
+The deleteShortcut() method 
+removes MenuShortcut from the 
+associated MenuItem in the 
+MenuBar. If the shortcut is 
+not associated with any menu item, nothing happens. 
+Help menus
+It is the convention on many platforms to display help menus as the last 
+menu on the MenuBar. The MenuBar 
+class lets you designate one of the menus as this special menu. The physical 
+position of a help menu depends on the platform, but those giving special treatment to help menus place them on the right. A Menu 
+designated as a help menu doesn't have to bear the label "Help"; 
+the label is up to you. 
+public Menu getHelpMenu () 
+The getHelpMenu() method returns 
+the Menu that has been designated 
+as the help menu with setHelpMenu(). 
+If the menu bar doesn't have a help menu, getHelpMenu() 
+returns null. 
+public synchronized void setHelpMenu (Menu m) 
+The setHelpMenu() method sets 
+the menu bar's help menu to m. 
+This makes m the rightmost 
+menu on the MenuBar, possibly 
+right justified. If m is not 
+already on the MenuBar, nothing 
+happens. 
+Peers
+public synchronized void addNotify ()  
+The addNotify() method creates 
+the MenuBar peer with 
+all the menus on it, and in 
+turn their menu items. 
+public synchronized void removeNotify ()  
+The removeNotify() method destroys 
+the peer of the MenuBar and 
+removes it from the screen. The peers of the items on the MenuBar 
+are also destroyed. 
+MenuBar Events
+A MenuBar does not generate any events. 
+CheckboxMenuItem
+Putting It All Together
+ 
+ 
+ 
+ 
+ 
+ 
+ 

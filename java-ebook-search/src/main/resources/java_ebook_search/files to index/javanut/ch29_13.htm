@@ -1,0 +1,91 @@
+
+[Chapter 29] 29.13 java.text.MessageFormat (JDK 1.1)
+Chapter 29The java.text Package
+29.13 java.text.MessageFormat (JDK 1.1)
+This class formats and substitutes objects into specified
+positions in a message string (also known as the "pattern"
+string).  It provides the closest Java equivalent to the
+printf() function of the C programming language.
+If a message is to be displayed only a single time, the
+simplest way to use the MessageFormat class is
+through the static format() method which is passed
+a message or pattern string and an array of argument objects to
+be formatted and substituted into the string.  
+If the message is to be displayed
+several times, it makes more sense to create a
+MessageFormat object, supplying the pattern string, 
+and then to
+call the format() instance method of this object,
+supplying the array of objects to be formatted into the
+message.
+The message or pattern string used by the
+MessageFormat should contain digits enclosed in
+curly braces to indicate where each argument should be
+substituted.  The sequence "{0}" indicates that the
+first object should be converted to a string (if necessary)
+and inserted at that point, while the sequence "{3}"
+indicates that the fourth object should be inserted, for
+example.  If the object to be inserted is not a string,
+MessageFormat checks to see if it is a Date
+or a subclass of Number.  If so, it uses a default
+DateFormat or NumberFormat object to convert
+the value to a string.  If not, it simply invokes the
+object's toString() method to convert it.
+A digit within curly braces in a pattern string may be
+optionally followed by a comma, and one of the words "date",
+"time", "number", or "choice", to indicate that the
+corresponding argument should be formatted as a date, time,
+number, or choice before being substituted into the pattern
+string.  Any of these keywords may additionally be followed
+by a comma and additional pattern information to be used in
+formatting the date, time, number, or choice.  (See
+SimpleDateFormat, DecimalFormat, and
+ChoiceFormat for more information.)
+You can use the setLocale() method to specify a
+non-default Locale that the MessageFormat
+should use when obtaining DateFormat and
+NumberFormat objects to format dates, time, and
+numbers inserted into the pattern.
+You can change the Format object used at a
+particular position in the pattern with the
+setFormat() method.  You can set a new pattern for
+the MessageFormat object by calling
+applyPattern(), and you can obtain a string that
+represents the current formatting pattern by calling
+toPattern().
+MessageFormat also supports a parse() method
+that can parse an array of objects out of a specified
+string, according to the specified pattern.
+public class MessageFormat extends Format {
+    // Public Constructor
+            public MessageFormat(String pattern);
+    // Class Methods
+            public static String format(String pattern, Object[] arguments);
+    // Public Instance Methods
+            public void applyPattern(String newPattern);
+            public Object clone();  // Overrides Format
+            public boolean equals(Object obj);  // Overrides Object
+            public final StringBuffer format(Object[] source, StringBuffer result, FieldPosition ignore);
+            public final StringBuffer format(Object source, StringBuffer result, FieldPosition ignore);  // Defines Format
+            public Format[] getFormats();
+            public Locale getLocale();
+            public int hashCode();  // Overrides Object
+            public Object[] parse(String source, ParsePosition status);
+            public Object[] parse(String source) throws ParseException;
+            public Object parseObject(String text, ParsePosition status);  // Defines Format
+            public void setFormat(int variable, Format newFormat);
+            public void setFormats(Format[] newFormats);
+            public void setLocale(Locale theLocale);
+            public String toPattern();
+}
+Hierarchy:
+Object->Format(Serializable, Cloneable)->MessageFormat
+java.text.Format (JDK 1.1)
+java.text.NumberFormat (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

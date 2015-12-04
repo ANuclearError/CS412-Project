@@ -1,0 +1,216 @@
+
+[Chapter 13] Method
+Chapter 13The java.lang.reflect Package
+Method
+Name
+Method
+Synopsis
+Class Name:
+java.lang.reflect.Method
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.lang.reflect.Member
+Availability:
+New as of JDK 1.1 
+Description
+The Method 
+class represents a method of a class. A Method 
+object can be obtained by calling the getMethod() 
+method of a Class object. Method 
+provides methods for getting the name, modifiers, return type, parameters, 
+exceptions, and declaring class of a method. The invoke() 
+method can be used to run the method.  
+Class Summary
+public final class java.lang.reflect.Method extends java.lang.Object
+                   implements java.lang.reflect.Member {
+  // Instance Methods
+  public boolean equals(Object obj); 
+  public Class getDeclaringClass();
+  public Class[] getExceptionTypes();
+  public native int getModifiers();
+  public String getName();
+  public Class[] getParameterTypes();
+  public Class getReturnType();
+  public int hashCode();
+  public native Object invoke(Object obj, Object[] args);
+  public String toString();
+}
+Instance Methods
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+Object.equals() 
+Description
+This method returns true if 
+obj is an instance of Method, 
+and it is equivalent to this Method. 
+getDeclaringClass
+public Class getDeclaringClass()
+Returns
+The Class 
+object that represents the class that declared this method. 
+Implements
+Member.getDeclaringClass() 
+Description
+This method returns the Class 
+object for the class in which this method is declared. 
+getExceptionTypes
+public Class[] getExceptionTypes()
+Returns
+An array that contains the Class 
+objects that describe the exceptions that can be thrown by this method. 
+Description
+This method returns an array of Class 
+objects that represents the throws 
+clause of this method. If the method does not throw any exceptions, an 
+array of length 0 is returned. As of Java 1.1.2,
+this method is not properly supported: it always returns an empty array.
+getModifiers
+public native int getModifiers()
+Returns
+An integer that represents the modifier keywords used 
+to declare this method. 
+Implements
+Member.getModifiers() 
+Description
+This method returns an integer value that represents the modifiers of this 
+method. The Modifier class 
+should be used to decode the returned value. 
+getName
+public String getName()
+Returns
+The name of this method as a String. 
+Implements
+Member.getName() 
+Description
+This method returns the name of this method. 
+getParameterTypes
+public Class[] getParameterTypes()
+Returns
+An array that contains the Class 
+objects that describe the parameter types that this method accepts. 
+Description
+This method returns an array of Class 
+objects that represents the parameter types this method accepts. The parameter 
+types are listed in the order in which they are declared. If the method 
+does not take any parameters, an array of length 0 is returned. 
+getReturnType
+public Class getReturnType()
+Returns
+The Class 
+object that represents the return type of this method. 
+Description
+This method returns the Class 
+object for the type that this method returns. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+Object.hashCode() 
+Description
+This method returns a hashcode for this Method. 
+invoke
+   public native Object invoke(Object obj, Object[] args) throws IllegalAccessException, IllegalArgumentException, InvocationTargetException  
+Parameters
+obj
+The instance upon which 
+this method is invoked.
+args
+An array of arguments 
+to be passed to this method. 
+Returns
+A Object that contains the 
+return value of the invoked method. 
+Throws
+IllegalAccessException
+If the method is inaccessible.
+IllegalArgumentException
+If obj is not the correct type, 
+or if args is the wrong length 
+or contains the wrong types.
+InvocationTargetException
+If the method itself throws an exception.
+NullPointerException
+If obj is null. 
+Description
+This method executes the method represented by this object 
+on the given object using the given array 
+of arguments. If the method is declared static, 
+the obj parameter is ignored. 
+Otherwise, the object supplied must be an instance of the class that declares 
+this method.
+If a particular parameter is of a primitive type, the corresponding argument 
+is automatically unwrapped and converted to the appropriate type, if possible. 
+If that is not possible, an IllegalArgumentException 
+is thrown. If the method itself throws an exception, the exception is placed 
+in an InvocationTargetException, 
+which is then thrown to the caller of invoke().
+If the method completes normally, the value it returns is returned. If 
+the value is of a primitive type, the value is wrapped in an appropriate 
+object and the object is returned. If the return type is void, 
+null is returned. 
+toString
+public String toString()
+Returns
+A string representation of this object. 
+Overrides
+Object.toString() 
+Description
+This method returns a string representation of this Method. 
+This string contains the access modifiers of the method, if any, followed 
+by the return type, the fully qualified name of the declaring class, a 
+period, the name of the method, and a list of the parameters of the method, 
+if any. The list is enclosed by parentheses and the individual parameters 
+are separated by commas. If the method does not have any parameters, just 
+the parentheses are included in the string. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+Constructor, 
+Field, 
+IllegalAccessException, 
+IllegalArgumentException, 
+InvocationTargetException, 
+Member, 
+Modifier, 
+NullPointerException, 
+Object 
+Member
+Modifier
+ 
+ 
+ 
+ 
+ 
+ 
+ 

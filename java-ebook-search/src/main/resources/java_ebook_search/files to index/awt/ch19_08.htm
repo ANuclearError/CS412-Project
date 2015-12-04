@@ -1,0 +1,51 @@
+
+[Chapter 19] Canvas
+Chapter 19java.awt Reference
+Canvas
+Name
+Canvas
+Description
+Canvas is a Component 
+that provides a drawing area and is often used as a base class for new 
+components. 
+Class Definition
+public class java.awt.Canvas
+    extends java.awt.Component {
+  
+  // Constructors
+  public Canvas();
+  
+  // Instance Methods
+  public void addNotify();
+  public void paint (Graphics g);
+}
+Constructors
+Canvas
+public Canvas()
+Description
+Constructs a Canvas object. 
+Instance Methods
+addNotify
+public void addNotify()
+Overrides
+Component.addNotify() 
+Description
+Creates Canvas's peer. 
+paint
+public void paint (Graphics g)
+Parameters
+g
+Graphics context of component. 
+Description
+Empty method to be overridden in order to draw something in graphics context. 
+See Also
+Component, Graphics 
+Button
+CardLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

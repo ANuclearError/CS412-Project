@@ -1,0 +1,131 @@
+
+[Chapter 18] CRC32
+Chapter 18The java.util.zip Package
+CRC32
+Name
+CRC32
+Synopsis
+Class Name:
+java.util.zip.CRC32
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.util.zip.Checksum
+Availability:
+New as of JDK 1.1 
+Description
+The CRC32 class implements 
+the Checksum interface using 
+the CRC-32 algorithm. This algorithm is significantly slower than Adler-32 and only slightly more reliable. 
+Class Summary
+public class java.util.zip.CRC32 extends java.lang.Object
+             implements java.util.zip.Checksum {
+  // Constructors
+  public CRC32();
+  
+  // Instance Methods
+  public long getValue();
+  public void reset();
+  public void update(int b);
+  public void update(byte[] b);
+  public native void update(byte[] b, int off, int len);
+}
+Constructors
+CRC32
+public CRC32()
+Description
+This constructor creates an CRC32 
+object. 
+Instance Methods
+getValue
+public long getValue()
+Returns
+The current checksum value. 
+Implements
+Checksum.getValue() 
+Description
+This method returns the current value of this checksum. 
+reset
+public void reset()
+Implements
+Checksum.reset() 
+Description
+This method resets the checksum to its initial value, making it appear as though 
+it has not been updated by any data. 
+update
+public void update(int b)
+Parameters
+b
+The value to be added 
+to the data stream for the checksum calculation. 
+Implements
+Checksum.update(int) 
+Description
+This method adds the specified value to the data stream and updates the 
+checksum value. The method uses only the lowest eight bits of the given 
+int. 
+public void update(byte[] b)
+Parameters
+b
+An array of bytes to 
+be added to the data stream for the checksum calculation. 
+Description
+This method adds the bytes from the specified array to the data stream 
+and updates the checksum value. 
+public native void update(byte[] b, int off, int len)
+Parameters
+b
+An array of bytes to 
+be added to the data stream for the checksum calculation.
+off
+An offset into the byte array.
+len
+The number of bytes to use. 
+Implements
+Checksum.update(byte[], int, int) 
+Description
+This method adds len bytes 
+from the specified array, starting at off, 
+to the data stream and updates the checksum value. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, 
+int)
+Object
+See Also
+Adler32, 
+Checksum 
+Checksum
+DataFormatException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

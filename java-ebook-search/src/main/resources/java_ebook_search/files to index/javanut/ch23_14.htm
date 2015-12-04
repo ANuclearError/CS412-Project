@@ -1,0 +1,32 @@
+
+[Chapter 23] 23.14 java.beans.PropertyChangeSupport (JDK 1.1)
+Chapter 23The java.beans Package
+23.14 java.beans.PropertyChangeSupport (JDK 1.1)
+The PropertyChangeSupport class is a convenience
+class that maintains a list of registered
+PropertyChangeListener objects and provides the
+firePropertyChange() method for sending a
+PropertyChangeEvent object to all registered
+listeners.  Because there are some tricky thread
+synchronization issues involved in doing this correctly, it
+is recommended that all Java beans that support  "bound"
+properties either extend this class, or, more commonly,
+create an instance of this class to which they can delegate
+the task of maintaining the list of listeners.
+public class PropertyChangeSupport extends Object implements Serializable {
+    // Public Constructor
+            public PropertyChangeSupport(Object sourceBean);
+    // Public Instance Methods
+            public synchronized void addPropertyChangeListener(PropertyChangeListener listener);
+            public void firePropertyChange(String propertyName, Object oldValue, Object newValue);
+            public synchronized void removePropertyChangeListener(PropertyChangeListener listener);
+}
+java.beans.PropertyChangeListener (JDK 1.1)
+java.beans.PropertyDescriptor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

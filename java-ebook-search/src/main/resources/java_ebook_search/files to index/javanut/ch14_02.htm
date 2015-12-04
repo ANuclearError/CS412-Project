@@ -1,0 +1,110 @@
+
+[Chapter 14] 14.2 Working with System Properties
+Chapter 14System Properties
+14.2 Working with System Properties
+The system property list is not a static.  Other properties
+can be added to it (and read from it) to allow easy
+customization of application behavior.
+Specifying Individual Properties
+You can specify individual properties to be inserted into the
+system properties list with the -D option to the
+Java interpreter.  For example, you might invoke a program
+like this:
+% java -Dgames.tetris.level=9 -Dgames.tetris.sound=off games.tetris
+Note the format of each property specification: the property
+name, which is often a hierarchical one, followed by an
+equals sign, followed by the property value.  A property
+value may include spaces, but any -D option
+specifying a property value containing spaces would have to
+be quoted when passed to java, of course.
+If you write a platform-specific script file to invoke your
+Java application, you can use this -D option to
+translate native environment variable settings into Java
+system properties.  On a Unix system, for example, such a
+script might look like this:
+#!/bin/sh
+exec java -Dgames.tetris.level=$TETRIS_LEVEL \
+          -Dgames.tetris.sound=$TETRIS_SOUND \
+          games.tetris
+Using Property Files
+Properties in Java are represented by the
+java.util.Properties object, which is essentially a
+hash table that can be read from and written to a file.
+A program need not limit itself to the use of system
+properties.  It can also read in its own files of
+properties to support user preferences and user
+customization.  For example, when the appletviewer
+program starts up, it reads the properties from the
+lib/appletviewer.properties file in the JDK
+distribution.  This file contains the various messages that
+appletviewer displays to the user and provides the
+flexibility to translate those messages into other
+languages.  The following lines are an excerpt from
+appletviewer.properties:
+#
+# Applet status messages
+#
+appletloader.nocode=APPLET tag missing CODE parameter.
+appletloader.notfound=load: class %0 not found.
+appletloader.nocreate=load: %0 can't be instantiated.
+Note that comments in a properties file start with
+#, and that the property specification format is the
+same as with the -D option.  Also note that these
+property values do contain spaces.  Some of them also
+contain the % substitution character and are intended
+for use with the java.text.MessageFormat class.
+When reading in a file of properties, it can be convenient
+to merge those properties with the standard system
+properties, so that the program need only look in one place
+to find both loaded properties and standard properties (and
+properties specifed wiht the -D option).  Every
+Properties object can have a "parent" properties
+object; if a property is not found in the Properties
+object, it is searched for in the parent.  Thus, it is
+possible to merge in properties with code like this:
+// Create a new Properties object with system props as its parent.
+Properties props = new Properties(System.getProperties());
+// Load a file of properties into it.  We may get an exception here...
+props.load(new BufferedInputStream(new FileInputStream(propsfilename)));
+// Set these new combined properties as the system properties.
+System.setProperties(props);
+Specifying Font Properties
+As noted above, a program can read the string value of a
+system property with the System.getProperty()
+method.  There are also some convenience methods that read a
+property value and convert that value into some other type
+of object.  One of these convenience methods is
+Font.getFont().  This method reads the value of a
+named property and attempts to parse it into a font
+specification.
+The font specification syntax it uses is:
+name[-style][-size]
+Thestyle should be italic, bold or
+bolditalic.  If omitted, a plain font is used.
+The size should be an integer that specifies the
+font size in points.  If omitted, 12-point is used.  If the
+style is specified, the size must also
+be specified.  For example, you might specify font
+properties like the following:
+games.tetris.titlefont=sanserif-bolditalic-48
+games.tetris.mainfont=serif-14
+games.tetris.scorefont=monospaced
+Specifying Color Properties
+Color.getColor() is another convenience routine that
+reads a system property and converts it into a Color
+object.  To specify a color property, you specify the color
+as an integer value, typically as a hexadecimal value in the
+format 0xRRGGBB.  For example:
+# A green foreground
+games.tetris.foreground=0x00FF00
+# A light gray background
+games.tetris.background=0xD0D0D0
+Standard System Properties
+Java-Related HTML Tags
+ 
+ 
+ 
+ 
+ 
+ 
+ 

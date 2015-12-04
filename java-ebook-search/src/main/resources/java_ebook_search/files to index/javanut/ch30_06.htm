@@ -1,0 +1,55 @@
+
+[Chapter 30] 30.6 java.util.Enumeration (JDK 1.0)
+Chapter 30The java.util Package
+30.6 java.util.Enumeration (JDK 1.0)
+This interface defines the methods necessary to enumerate,
+or iterate through, a set of values, such as the set of
+values contained in a hashtable or binary tree. It is
+particularly useful for data structures, like hashtables,
+for which elements cannot simply be looked up by index, as
+they can in arrays. An Enumeration is usually not
+instantiated directly, but instead is created by the object
+that is to have its values enumerated. A number of classes,
+such as Vector and Hashtable, have methods
+that return Enumeration objects.
+To use an Enumeration object, you use its two
+methods in a loop: hasMoreElements() returns
+true if there are more values to be enumerated, and
+can be used to determine whether a loop should continue.
+Within a loop, a call to nextElement() returns a
+value from the enumeration. An Enumeration makes no
+guarantees about the order in which the values are returned.
+The values in an Enumeration may be iterated through
+only once--there is no way to reset it to the beginning.
+public abstract interface Enumeration {
+    // Public Instance Methods
+            public abstract boolean hasMoreElements();
+            public abstract Object nextElement();
+}
+Implemented By:
+StringTokenizer
+Passed To:
+SequenceInputStream()
+Returned By:
+AppletContext.getApplets(), 
+Dictionary.elements(), 
+Dictionary.keys(), 
+FeatureDescriptor.attributeNames(), 
+Hashtable.elements(), 
+Hashtable.keys(), 
+ListResourceBundle.getKeys(), 
+MenuBar.shortcuts(), 
+Properties.propertyNames(), 
+PropertyResourceBundle.getKeys(), 
+ResourceBundle.getKeys(), 
+Vector.elements(), 
+ZipFile.entries()
+java.util.EmptyStackException (JDK 1.0)
+java.util.EventListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

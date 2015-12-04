@@ -1,0 +1,466 @@
+
+[Chapter 16] DecimalFormat
+Chapter 16The java.text Package
+DecimalFormat
+Name
+DecimalFormat
+Synopsis
+Class Name:
+java.text.DecimalFormat
+Superclass:
+java.text.NumberFormat
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The DecimalFormat class is 
+a concrete subclass of NumberFormat 
+that formats and parses numbers using a formatting pattern. Typically, 
+you do not need to instantiate DecimalFormat 
+yourself. Instead, the factory methods of NumberFormat 
+return instances of DecimalFormat 
+that are appropriate for particular locales. 
+However, if you need a specialized number format, you can instantiate your 
+own DecimalFormat using a pattern 
+string. You can also modify the formatting pattern of an existing DecimalFormat 
+object using the applyPattern() 
+method. A pattern string has the following form: 
+positive-pattern[;negative-pattern]
+If the negative pattern is omitted, negative numbers are formatted using 
+the positive pattern with a - 
+character prepended to the result. Each pattern has the following form: 
+[prefix]integer[.fraction][suffix]
+The following symbols are significant in the pattern string. 
+Symbol
+Description
+0
+A digit
+#
+A digit where 0 is not shown
+.
+A placeholder for a decimal separator
+,
+A placeholder for a grouping separator
+;
+The format separator
+-
+The default negative prefix
+%
+Divides value by 100 and shows as a percentage
+Any characters other than these special characters can appear in the prefix 
+or the suffix. A single quote can be used to escape a special character, 
+if you need to use one of these symbols in a prefix or a suffix. 
+For example, the pattern string for U.S. currency values is: 
+$#,##0.00;($#,##0.00)
+This indicates that a $ 
+character is prepended to all formatted values. The grouping separator 
+character , is 
+inserted every three digits. Exactly two digits after the decimal place 
+are always shown. Negative values are shown in parentheses. Thus, the value 
+-1234.56 produces output like: 
+($1,234.56)
+Internally, the DecimalFormat 
+class uses a DecimalFormatSymbols 
+object to get the numerical strings that are appropriate for a particular 
+locale. If you want to modify these strings, you can get the DecimalFormatSymbols 
+object by calling getDecimalFormatSymbols(). 
+Class Summary
+public class java.text.DecimalFormat extends java.text.NumberFormat {
+  // Constructors
+  public DecimalFormat();
+  public DecimalFormat(String pattern);
+  public DecimalFormat(String pattern, DecimalFormatSymbols symbols);
+  // Instance Methods
+  public void applyLocalizedPattern(String pattern);
+  public void applyPattern(String pattern);
+  public Object clone();
+  public boolean equals(Object obj); 
+  public StringBuffer format(double number, StringBuffer result, 
+                      FieldPosition fieldPosition); 
+  public StringBuffer format(long number, StringBuffer result, 
+                      FieldPosition fieldPosition); 
+  public DecimalFormatSymbols getDecimalFormatSymbols();
+  public int getGroupingSize();
+  public int getMultiplier();
+  public String getNegativePrefix();
+  public String getNegativeSuffix();
+  public String getPositivePrefix();
+  public String getPositiveSuffix();
+  public int hashCode();
+  public boolean isDecimalSeparatorAlwaysShown();
+  public Number parse(String text, ParsePosition status); 
+  public void setDecimalFormatSymbols(DecimalFormatSymbols newSymbols);
+  public void setDecimalSeparatorAlwaysShown(boolean newValue);
+  public void setGroupingSize(int newValue);
+  public void setMultiplier(int newValue);
+  public void setNegativePrefix(String newValue);
+  public void setNegativeSuffix(String newValue);
+  public void setPositivePrefix(String newValue);
+  public void setPositiveSuffix(String newValue);
+  public String toLocalizedPattern();
+  public String toPattern();
+}
+Constructors
+DecimalFormat
+public DecimalFormat()
+Description
+This constructor creates a DecimalFormat 
+that uses the default formatting pattern and DecimalFormatSymbols 
+that are appropriate for the default locale. 
+public DecimalFormat(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This constructor creates a DecimalFormat 
+that uses the given formatting pattern and a DecimalFormatSymbols 
+that is appropriate for the default locale. 
+public DecimalFormat(String pattern, DecimalFormatSymbols symbols)
+Parameters
+pattern
+The pattern string.
+symbols
+The DecimalFormatSymbols to use. 
+Description
+This constructor creates a DecimalFormat 
+that uses the given formatting pattern and DecimalFormatSymbols 
+object. 
+Instance Methods
+applyLocalizedPattern
+public void applyLocalizedPattern(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This method tells this DecimalFormat 
+to use the given formatting pattern to format and parse numbers. The pattern 
+string is assumed to have been localized to the DecimalFormatSymbols 
+object this DecimalFormat uses. 
+applyPattern
+public void applyPattern(String pattern)
+Parameters
+pattern
+The pattern string. 
+Description
+This method tells this DecimalFormat 
+to use the given formatting pattern to format and parse numbers. The pattern 
+string is localized to the DecimalFormatSymbols 
+object this DecimalFormat uses. 
+clone
+public Object clone()
+Returns
+A copy of this DecimalFormat. 
+Overrides
+NumberFormat.clone() 
+Description
+This method creates a copy of this DecimalFormat
+and then returns it. 
+equals
+public boolean equals(Object obj)
+Parameters
+obj
+The object to be compared 
+with this object. 
+Returns
+true if the objects are equal; 
+false if they are not. 
+Overrides
+NumberFormat.equals() 
+Description
+This method returns true if 
+obj is an instance of DecimalFormat 
+and is equivalent to this DecimalFormat. 
+format
+   public StringBuffer format(double number, StringBuffer result, FieldPosition fieldPosition)  
+Parameters
+number
+The double 
+value to be formatted.
+result
+A StringBuffer 
+on which to append the formatted information.
+fieldPosition
+A number field. 
+Returns
+The given buffer result with 
+the formatted representation of the number appended to it. 
+Overrides
+NumberFormat.format(double, StringBuffer, FieldPosition) 
+Description
+This method formats the given number and appends the result to the given 
+StringBuffer. If fieldPosition 
+refers to one of the number fields, its beginning and ending indices are 
+filled with the beginning and ending positions of the given field in the 
+resulting formatted string. 
+   public StringBuffer format(long number, StringBuffer result, FieldPosition fieldPosition)  
+Parameters
+number
+The long 
+value to be formatted.
+result
+A StringBuffer 
+on which to append the formatted information.
+fieldPosition
+A number field. 
+Returns
+The given buffer result with 
+the formatted representation of the number appended to it. 
+Overrides
+NumberFormat.format(double, StringBuffer, FieldPosition) 
+Description
+This method formats the given number and appends the result to the given 
+StringBuffer. If fieldPosition 
+refers to one of the number fields, its beginning and ending indices are 
+filled with the beginning and ending positions of the given field in the 
+resulting formatted string. 
+getDecimalFormatSymbols
+public DecimalFormatSymbols getDecimalFormatSymbols()
+Returns
+The DecimalFormatSymbols 
+object used by this DecimalFormat. 
+Description
+This method returns the DecimalFormatSymbols 
+object that this DecimalFormat 
+uses internally. 
+getGroupingSize
+public int getGroupingSize()
+Returns
+The grouping size of this DecimalFormat. 
+Description
+This method returns the grouping size of this DecimalFormat. 
+The grouping size is the number of digits between grouping separators in 
+the integer portion of a number. For example, in the number 1,234.56, 
+the grouping size is 3 (and the grouping symbol is ","). 
+getMultiplier
+public int getMultiplier()
+Returns
+The multiplier of this DecimalFormat. 
+Description
+This method returns the multiplier of this DecimalFormat. 
+The multiplier is used to adjust a number before it is formatted or after 
+it is parsed. For example, a percent format has a multiplier of 100 and 
+a suffix of `%'. 
+Thus, a value of .42 could 
+be formatted as 42%. 
+getNegativePrefix
+public String getNegativePrefix()
+Returns
+The string that is prepended to negative values. 
+Description
+This method returns the prefix string for negative numbers. 
+getNegativeSuffix
+public String getNegativeSuffix()
+Returns
+The string that is appended to negative values. 
+Description
+This method returns the suffix string for negative numbers. 
+getPositivePrefix
+public String getPositivePrefix()
+Returns
+The string that is prepended to positive values. 
+Description
+This method returns the prefix string for positive numbers. 
+getPositiveSuffix
+public String getPositiveSuffix()
+Returns
+The string that is appended to positive values. 
+Description
+This method returns the suffix string for positive numbers. 
+hashCode
+public int hashCode()
+Returns
+A hashcode for this object. 
+Overrides
+NumberFormat.hashCode() 
+Description
+This method returns a hashcode for this DecimalFormat. 
+isDecimalSeparatorAlwaysShown
+public boolean isDecimalSeparatorAlwaysShown()
+Returns
+A boolean value that indicates 
+whether or not the decimal separator symbol is always shown. 
+Description
+This method returns true if 
+this DecimalFormat always shows 
+the decimal separator. The method returns false 
+if the decimal separator is only shown if there is a fractional portion 
+of the number being formatted. 
+parse
+public Number parse(String text, ParsePosition status)
+Parameters
+text
+The string to be parsed.
+status
+A ParsePosition 
+object that specifies a position in the string. 
+Returns
+The Number object represented 
+by the text starting at the given position. 
+Overrides
+NumberFormat.parse(String, 
+ParsePosition) 
+Description
+This method parses a number from the given string, starting from the given 
+position. After the string has been parsed, the given ParsePosition 
+object is updated so that its index is after the parsed text. 
+setDecimalFormatSymbols
+   public void setDecimalFormatSymbols( DecimalFormatSymbols newSymbols)  
+Parameters
+newSymbols
+The new DecimalFormatSymbols object to use. 
+Description
+This method sets the DecimalFormatSymbols 
+object that this DecimalFormat 
+uses internally. 
+setDecimalSeparatorAlwaysShown
+public void setDecimalSeparatorAlwaysShown(boolean newValue)
+Parameters
+newValue
+The new decimal separator value. 
+Description
+This method specifies whether or not the decimal separator symbol is always 
+shown in formatted numbers. If newValue 
+is false, the separator is 
+only shown for numbers that have a fractional part. Otherwise, the separator 
+is always shown. 
+setGroupingSize
+public void setGroupingSize(int newValue)
+Parameters
+newValue
+The new grouping size. 
+Description
+This method sets the grouping size of this DecimalFormat. 
+The grouping size is the number of digits between grouping separators in 
+the integer portion of a number. For example, in the number 1,234.56, 
+the grouping size is 3 (and the grouping symbol is ","). 
+setMultiplier
+public void setMultiplier(int newValue)
+Parameters
+newValue
+The new multiplier. 
+Description
+This method sets the multiplier of this DecimalFormat. 
+The multiplier is used to adjust a number before it is formatted or after 
+it is parsed. For example, a percent format has a multiplier of 100 and 
+a suffix of %. 
+Thus, a value of .42 could 
+be formatted as 42%. 
+setNegativePrefix
+public void setNegativePrefix(String newValue)
+Parameters
+newValue
+The new prefix. 
+Description
+This method sets the prefix string for negative values. 
+setNegativeSuffix
+public void setNegativeSuffix(String newValue)
+Parameters
+newValue
+The new suffix. 
+Description
+This method sets the suffix string for negative values. 
+setPositivePrefix
+public void setPositivePrefix(String newValue)
+Parameters
+newValue
+The new prefix. 
+Description
+This method sets the prefix string for positive values. 
+setPositiveSuffix
+public void setPositiveSuffix(String newValue)
+Parameters
+newValue
+The new suffix. 
+Description
+This method sets the suffix string for positive values. 
+toLocalizedPattern
+public String toLocalizedPattern()
+Returns
+The pattern string of this DecimalFormat. 
+Description
+This method returns the pattern string of this DecimalFormat, 
+localized with the DecimalFormatSymbols 
+object of this DecimalFormat. 
+toPattern
+public String toPattern()
+Returns
+The pattern string of this DecimalFormat. 
+Description
+This method returns the pattern string of this DecimalFormat. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+finalize()
+Object
+format(double)
+NumberFormat
+format(long)
+NumberFormat
+format(Object, StringBuffer, FieldPosition)
+NumberFormat
+getClass()
+Object
+getMaximumFractionDigits()
+NumberFormat
+getMaximumIntegerDigits()
+NumberFormat
+getMinimumFractionDigits()
+NumberFormat
+getMinimumIntegerDigits()
+NumberFormat
+isGroupingUsed()
+NumberFormat
+isParseIntegerOnly()
+NumberFormat
+notify()
+Object
+notifyAll()
+Object
+parse(String)
+NumberFormat
+parseObject(String)
+Format
+parseObject(String, ParsePosition)
+NumberFormat
+setGroupingUsed(boolean)
+NumberFormat
+setMaximumFractionDigits(int)
+NumberFormat
+setMaximumIntegerDigits(int)
+NumberFormat
+setMinimumFractionDigits(int)
+NumberFormat
+setMinimumIntegerDigits(int)
+NumberFormat
+setParseIntegerOnly(boolean)
+NumberFormat
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+DecimalFormatSymbols, 
+FieldPosition, 
+Number, 
+NumberFormat, 
+ParsePosition, 
+String, 
+StringBuffer 
+DateFormatSymbols
+DecimalFormatSymbols
+ 
+ 
+ 
+ 
+ 
+ 
+ 

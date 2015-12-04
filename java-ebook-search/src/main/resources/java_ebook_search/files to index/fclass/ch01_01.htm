@@ -1,0 +1,124 @@
+
+[Chapter 1] Introduction
+Chapter 1
+1. Introduction
+Contents:
+The java.lang Package
+The java.lang.reflect Package
+The java.io Package
+The java.net Package
+The java.util Package
+The java.text Package
+The java.math Package
+The java.util.zip Package
+The phenomenon that is Java continues to capture new supporters
+every day. What began as a programming environment for
+writing fancy animation applets that could be embedded in 
+web browsers is growing up to be a sophisticated platform
+for delivering all kinds of portable, distributed applications.
+If you are already an experienced Java programmer, you know
+just how powerful the portability of Java is. If you are just
+now discovering Java, you'll be happy to know that the days
+of porting applications are over. Once you write a Java
+application, it can run on UNIX workstations, PCs, and Macintosh
+computers, as well as on many other supported platforms.
+This book is a complete programmer's reference to the 
+"fundamental classes" in the Java programming environment.
+The fundamental classes in the Java Development Kit (JDK)
+provide a powerful set of
+tools for creating portable applications; they are 
+an important component of the toolbox used by every Java 
+programmer. This reference covers the classes in the
+java.lang, java.io,
+java.net, java.util,
+java.lang.reflect, java.math,
+java.text, and java.util.zip
+packages. This chapter offers an overview of the 
+fundamental classes in each of these packages.
+This reference assumes you are already familiar with the Java language
+and class libraries. If you aren't, Exploring
+Java, by Pat Niemeyer and Josh Peck, provides a general
+introduction, and other books in the O'Reilly Java series provide
+detailed references and tutorials on specific topics.  Note that the
+material herein does not cover the classes that comprise the Abstract
+Window Toolkit (AWT): the AWT is covered by a companion volume, the
+Java AWT Reference, by John Zukowski. In
+addition, this book does not cover any of the new "enterprise" APIs in
+the core 1.1 JDK, such as the classes in the
+java.rmi, java.sql, and
+java.security packages. These packages will be
+covered by forthcoming books on distributed computing and database
+programming.  See the Preface for a complete list of titles in the
+O'Reilly Java series.
+ 
+You should be aware that this book covers two versions of Java: 1.0.2
+and 1.1. Version 1.1 of the Java Development Kit (JDK) was released in
+February 1997. This release includes many improvements and additions
+to the fundamental Java classes; it represents a major step forward in
+the evolution of Java.  Although Java 1.1 has a number of great new
+features, you may not want to switch to the new version right away,
+especially if you are writing mostly Java applets. You'll need to keep
+an eye on the state of Java support in browsers to help you decide
+when to switch to Java 1.1. Of course, if you are writing Java
+applications, you can take the plunge today.
+This chapter points out new features of Java 1.1 as they 
+come up. However, there is one "feature" that deserves mention 
+that doesn't fit naturally into an overview. As of Java 1.1, 
+classes, methods, and constructors available in Java 1.0.2 
+can be deprecated in favor of new classes, methods, and constructors
+in Java 1.1. The Java 1.1 compiler issues a warning whenever 
+you use a deprecated entity.
+1.1 The java.lang Package
+The java.lang package contains classes and
+interfaces essential to the Java language. For example,
+the Object class is the ultimate superclass of
+all other classes in Java. Object defines
+some basic methods for thread synchronization that are inherited
+by all Java classes. In addition, Object
+defines basic methods for equality testing, hashcode
+generation, and string conversion that can be overridden by
+subclasses when appropriate.
+The java.lang package also contains the
+Thread class, which controls the operation
+of each thread in a multithreaded application. A
+Thread object can be used to 
+start, stop, and suspend a thread. A Thread
+must be associated with an object that implements the
+Runnable interface; the run()
+method of this interface specifies what the thread actually does.
+See Chapter 3, Threads, for a more detailed explanation of how threads
+work in Java.
+The Throwable class is the superclass of all
+error and exception classes in Java, so it defines the basic
+functionality of all such classes. The java.lang
+package also defines the standard error and exception classes
+in Java. The error and exception hierarchies are rooted
+at the Error and Exception
+subclasses of Throwable. See Chapter 4, Exception Handling,
+for more information about the exception-handling mechanism.
+The Boolean, Character,
+Byte, Double,
+Float, Integer,
+Long, and Short classes
+encapsulate the Java primitive data types. Byte and
+Short are new in Java 1.1, as is the
+Void class. All of these classes are necessary to
+support the new Reflection API and class literals in Java 1.1 The
+Class class also has a number of new methods in
+Java 1.1 to support reflection.  
+All strings in Java are represented by String
+objects. These objects are immutable. The StringBuffer
+class in java.lang can be used to work
+with mutable text strings. Chapter 2, Strings and Related Classes, offers a more detailed
+description of working with strings in Java.
+See Chapter 12, The java.lang Package, for complete reference material on all of the
+classes in the java.lang package.
+Acknowledgments
+The java.lang.reflect Package
+ 
+ 
+ 
+ 
+ 
+ 
+ 

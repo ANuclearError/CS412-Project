@@ -1,0 +1,239 @@
+
+[Chapter 11] LineNumberReader
+Chapter 11The java.io Package
+LineNumberReader
+Name
+LineNumberReader
+Synopsis
+Class Name:
+java.io.LineNumberReader
+Superclass:
+java.io.BufferedReader
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The LineNumberReader class 
+is a BufferedReader that keeps 
+track of line numbers. The line number starts at 0 and is incremented each 
+time an end-of-line character is encountered. LineNumberReader 
+recognizes "\n", 
+"\r", or "\r\n" 
+as the end of a line. Regardless of the end-of-line character it reads, 
+ReaderInputStream 
+returns only "\n". 
+The current line number is returned by getLineNumber(). 
+The LineNumberReader class 
+is the JDK 1.1 replacement for LineNumberInputStream. 
+Not only does it correctly handle byte to character conversions (via Reader), 
+it implements read(byte[], 
+int, int) 
+and skip() more efficiently 
+than its predecessor. 
+Class Summary
+public class java.io.LineNumberReader extends java.io.BufferedReader {
+  // Constructors
+  public LineNumberReader(Reader in);
+  public LineNumberReader(Reader in, int sz);
+  // Instance Methods
+  public int getLineNumber();
+  public void mark(int readAheadLimit);
+  public int read();
+  public int read(char[] cbuf, int off, int len);
+  public String readLine();
+  public void reset();
+  public void setLineNumber(int lineNumber);
+  public long skip(long n);
+}
+Constructors
+LineNumberReader
+public LineNumberReader(Reader in)
+Parameters
+in
+The reader to use. 
+Description
+This constructor creates a LineNumberReader 
+that gets its data from in 
+and uses a default sized buffer. The default buffer size for BufferedReader 
+is 8192 characters. 
+public LineNumberReader(Reader in, int sz)
+Parameters
+in
+The reader to use.
+sz
+The buffer size. 
+Description
+This constructor creates a LineNumberReader 
+that gets its data from in 
+and uses a buffer of the given size. 
+Instance Methods
+getLineNumber
+public int getLineNumber()
+Returns
+The current line number. 
+Description
+This method returns the current line number. 
+mark
+public void mark(int readAheadLimit) throws IOException
+Parameters
+readAheadLimit
+The maximum number of characters that can be read before the saved position 
+becomes invalid. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+BufferedReader.mark() 
+Description
+This method causes the LineNumberReader 
+to remember its current position. A subsequent call to reset() 
+causes the object to return to that saved position and thus reread a 
+portion of the input. 
+read
+public int read() throws IOException
+Returns
+The next character of data or -1 if the end of the stream is encountered. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+BufferedReader.read() 
+Description
+This method reads a character of input from the underlying reader. 
+If "\n", 
+"\r", or "\r\n" 
+is read from the stream, "\n" 
+is returned. Otherwise the character read from the underlying BufferedReader 
+is returned verbatim. The method blocks until it reads the character, the 
+end of stream is encountered, or an exception is thrown. 
+public int read(char[] cbuf, int off, int len) throws IOException
+Parameters
+cbuf
+An array of characters to be filled from the stream.
+off
+An offset into the array.
+len
+The number of characters to read. 
+Returns
+The actual number of characters read or -1 if the end of the stream is 
+encountered immediately. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+BufferedReader.read(char[], int, int) 
+Description
+This method reads up to len 
+characters of input into the given array starting at index off. 
+This method, unlike read(), 
+returns end-of-line characters exactly as they come from the underlying 
+BufferedReader. The method 
+blocks until data is available. 
+readLine
+public String readLine() throws IOException
+Returns
+A String containing the line 
+just read, or null if the end 
+of the stream has been reached. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+BufferedReader.readLine() 
+Description
+This method reads a line of text. Lines are terminated by "\n", 
+"\r", or "\r\n". 
+The line terminators are not returned with the line string. 
+reset
+public void reset() throws IOException
+Throws
+IOException
+If the reader 
+is closed, mark() has not been 
+called, or the saved position has been invalidated. 
+Overrides
+BufferedReader.reset() 
+Description
+This method sets the position of the reader to a position that was saved 
+by a previous call to mark(). 
+Subsequent characters read from this reader will begin from the saved position 
+and continue normally. The method also restores the line number to its 
+correct value for the mark location. 
+setLineNumber
+public void setLineNumber(int lineNumber)
+Parameters
+lineNumber
+The new line number. 
+Description
+This method sets the current line number of the LineNumberReader. 
+The method does not change the position of the reader. 
+skip
+public long skip(long n) throws IOException
+Parameters
+n
+The number of characters to skip. 
+Returns
+The actual number of bytes skipped. 
+Throws
+IOException
+If any kind of I/O error occurs. 
+Overrides
+BufferedReader.skip() 
+Description
+This method skips n characters 
+of input. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+close()
+BufferedReader
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+markSupported()
+BufferedReader
+read(char[])
+Reader
+ready()
+BufferedReader
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+BufferedReader, 
+Reader, 
+IOException, 
+LineNumberInputStream 
+LineNumberInputStream
+NotActiveException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,101 @@
+
+[Chapter 4] 4.11 Boolean Operators
+Chapter 4Expressions
+4.11 Boolean Operators
+The Boolean operators
+in Java are used for conditional AND (&amp;&amp;)
+and conditional OR (||) operations. These operators
+have different precedence; the &amp;&amp; operator
+has the higher precedence and || the lower precedence.
+Both of the operators are evaluated from left to right.
+The unary operator ! provides a Boolean negation
+operation.
+References
+Boolean Negation Operator !;
+Order of Operations
+Boolean AND Operator &amp;&amp;
+The conditional
+AND operator &amp;&amp; produces a pure boolean
+value that is the conditional AND of its operands. The &amp;&amp;
+operator may appear in a conditional AND expression:
+The
+conditional AND operator is evaluated from left to right. The operator
+never throws an exception.
+Here is a code example that
+shows the use of the conditional AND operator:
+public final short readShort() throws IOException {
+    int ch1, ch2;
+    if ((ch1 = in.read()) &gt;= 0 &amp;&amp; (ch2 = in.read()) &gt;= 0)
+        return (short)((ch1 &lt;&lt; 8) + ch2);
+    throw new EOFException();
+}
+The operands of the conditional AND operator must both be
+of type boolean, or a compile-time error occurs.
+The operands of the conditional AND operator are evaluated
+in a different way from the operands for most other operators in
+Java. Most other operators evaluate all of their operands before
+performing their operation; the conditional AND operator does not
+necessarily evaluate both of its operands.
+As with all
+binary operators, the left operand of &amp;&amp;
+is evaluated first. If the left operand evaluates to true,
+the conditional AND operator evaluates its right operand and produces
+a pure value that has the same value as its right operand. However,
+if the left operand evaluates to false, the right
+operand is not evaluated and the operator produces the pure value
+false.
+In the above example, the
+expression (ch2 = in.read()) is evaluated only
+if the expression (ch1 = in.read()) produces
+a value that is greater than or equal to zero.
+References
+Bitwise/Logical AND Operator &amp;;
+Boolean Type;
+Bitwise/Logical Inclusive OR Operator |;
+Order of Operations
+Boolean OR Operator ||
+The conditional
+OR operator || produces a pure boolean
+value that is the conditional OR of its operands. The ||
+operator may appear in a conditional OR expression:
+The
+conditional OR operator is evaluated from left to right. The operator
+never throws an exception.
+Here is a code example that
+shows the use of the conditional OR operator:
+public final short readShort() throws IOException {
+    int ch1, ch2;
+    if ((ch1 = in.read()) &lt; 0 || (ch2 = in.read()) &lt; 0)
+        throw new EOFException();
+    return (short)((ch1 &lt;&lt; 8) + ch2);
+}
+The operands of
+the conditional OR operator must both be of type boolean,
+or a compile-time error occurs.
+The operands of the
+conditional OR operator are evaluated in a different way from the
+operands for most other operators in Java. Most other operators
+evaluate all of their operands before performing their operation;
+the conditional OR operator does not necessarily evaluate both of
+its operands.
+As with all binary operators, the left
+operand of || is evaluated first. If the left
+operand evaluates to false, the conditional OR
+operator evaluates its right operand and produces a pure value that
+has the same value as its right operand. However, if the left operand
+evaluates to true, the right operand is not evaluated
+and the operator produces the pure value true.
+References
+Bitwise/Logical Inclusive OR Operator |;
+Boolean Type;
+Boolean AND Operator &amp;&amp;;
+Order of Operations
+Bitwise/Logical Operators
+Conditional Operator
+ 
+ 
+ 
+ 
+ 
+ 
+ 

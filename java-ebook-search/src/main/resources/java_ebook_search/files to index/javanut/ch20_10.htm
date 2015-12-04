@@ -1,0 +1,36 @@
+
+[Chapter 20] 20.10 java.awt.event.ContainerListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.10 java.awt.event.ContainerListener (JDK 1.1)
+This interface defines the methods that an object must
+implement to "listen" for container events on AWT components.
+When a ContainerEvent occurs, an AWT component
+notifies its registered ContainerListener objects by
+invoking one of their methods.
+An easy way to implement this interface is by subclassing
+the ContainerAdapter class.
+public abstract interface ContainerListener extends EventListener {
+    // Public Instance Methods
+            public abstract void componentAdded(ContainerEvent e);
+            public abstract void componentRemoved(ContainerEvent e);
+}
+Implemented By:
+AWTEventMulticaster, 
+ContainerAdapter
+Passed To:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Container.addContainerListener(), 
+Container.removeContainerListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.ContainerEvent (JDK 1.1)
+java.awt.event.FocusAdapter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

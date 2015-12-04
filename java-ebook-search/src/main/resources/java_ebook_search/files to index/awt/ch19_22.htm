@@ -1,0 +1,164 @@
+
+[Chapter 19] FileDialog
+Chapter 19java.awt Reference
+FileDialog
+Name
+FileDialog
+Description
+The FileDialog class provides 
+file selection capabilities for opening or saving files. Because FileDialog 
+is a subclass of Dialog, a 
+FileDialog is always associated 
+with a Frame and is hidden 
+by default. FileDialogs are 
+always modal (i.e., they always attract all user input). In addition, FileDialogs 
+have a load/save mode; the LOAD 
+mode is for selecting files for an application to load, SAVE 
+is for selecting a filename to save. 
+Class Definition
+public class java.awt.FileDialog
+    extends java.awt.Dialog {
+  
+  // Constants
+  public final static int LOAD;
+  public final static int SAVE;
+  
+  // Constructors
+  public FileDialog (Frame parent); 
+  public FileDialog (Frame parent, String title);
+  public FileDialog (Frame parent, String title, int mode);
+  
+  // Instance Methods
+  public void addNotify();
+  public String getDirectory();
+  public String getFile();
+  public FilenameFilter getFilenameFilter();
+  public int getMode();
+  public synchronized void setDirectory (String directory);
+  public synchronized void setFile (String file);
+  public synchronized void setFilenameFilter (FilenameFilter filter);
+  public void setMode(int mode); 
+  
+  // Protected Instance Methods
+  protected String paramString();
+}
+Constants
+LOAD
+public final static int LOAD
+Constant to specify the FileDialog's 
+load mode. 
+SAVE
+public final static int SAVE
+Constant to specify the FileDialog's 
+save mode. 
+Constructors
+FileDialog
+public FileDialog (Frame parent) 
+Parameters
+parent
+Frame that 
+is to act as parent of FileDialog. 
+Description
+Constructs a FileDialog object 
+in LOAD mode. 
+public FileDialog (Frame parent, String title)
+Parameters
+parent
+Frame that 
+is to act as parent of FileDialog. 
+title
+Title to use for FileDialog. 
+Description
+Constructs a FileDialog object 
+in LOAD mode. 
+public FileDialog (Frame parent, String title, int mode)
+Parameters
+parent
+Frame that 
+is to act as parent of Dialog. 
+title
+Title to use for FileDialog. 
+mode
+The constant LOAD 
+or SAVE, specifying the dialog's 
+mode. 
+Description
+Constructs a FileDialog object 
+in the given mode. 
+Instance Methods
+addNotify
+public void addNotify()
+Overrides 
+Dialog.addNotify() 
+Description
+Creates FileDialog's 
+peer for the native platform. 
+getDirectory
+public String getDirectory()
+Returns
+The current directory for the FileDialog. 
+getFile
+public String getFile()
+Returns
+The current file selected by the FileDialog. 
+getFilenameFilter
+public FilenameFilter getFilenameFilter()
+Returns
+The current filename filter for the FileDialog. 
+getMode
+public int getMode()
+Returns
+The current mode of the FileDialog. 
+setDirectory
+public synchronized void setDirectory (String directory)
+Parameters
+directory
+Directory to be 
+displayed by the FileDialog. 
+Description
+Changes the directory displayed in the FileDialog. 
+setFile
+public synchronized void setFile (String file)
+Parameters
+file
+Initial file string for FileDialog. 
+Description
+Change the default file selected by the FileDialog. 
+setFilenameFilter
+public synchronized void setFilenameFilter (FilenameFilter filter)
+Parameters
+filter
+Initial filter for FileDialog. 
+Description
+Changes the current filename filter of the FileDialog. 
+setMode
+public void setMode (int mode) 
+Parameters
+mode
+The constant LOAD 
+or SAVE, specifying the dialog's 
+mode. 
+Description
+Change the mode of the file dialog. 
+Protected Instance Methods
+paramString
+protected String paramString()
+Returns
+String with current settings of FileDialog. 
+Overrides 
+Dialog.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+Dialog, FilenameFilter, 
+String 
+EventQueue 
+FlowLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

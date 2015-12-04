@@ -1,0 +1,48 @@
+
+[Chapter 6] 6.2 A First Applet
+Chapter 6Applets
+6.2 A First Applet
+Figure 6.1
+shows what is probably the simplest possible applet you can
+write in Java.
+Example 6.1
+lists its code. This example introduces the paint()
+method, which is invoked by the applet viewer (or Web
+browser) when the applet needs to be drawn. This method
+should perform graphical output--such as drawing text or
+lines or displaying images--for your applet. The argument
+to paint() is a Graphics object that you
+use to do the drawing.
+Figure 6.1: A simple applet
+Example 6.1: The Simplest Applet
+import java.applet.*;   // Don't forget this import statement!
+import java.awt.*;          // Or this one for the graphics!
+public class FirstApplet extends Applet {
+  // This method displays the applet.
+  // The Graphics class is how you do all drawing in Java.
+  public void paint(Graphics g) {
+    g.drawString("Hello World", 25, 50);
+  }
+}
+To display an applet, you need an HTML file that references
+it. Here is an HTML fragment that can be used with our
+first applet:
+&lt;APPLET code="FirstApplet.class" width=150 height=100&gt;
+&lt;/APPLET&gt;
+With an HTML file that references the applet, you can now
+view the applet with an applet viewer or Web browser. Note
+that the width and height attributes of this
+HTML tag are required.  See Chapter 15, Java-Related HTML Tags for more details on the HTML
+&lt;APPLET&gt; tag.  For most applet examples in this
+book, we show only the Java code and not the
+corresponding HTML file that goes with it.  Typically, that
+HTML file contains a tag as simple as the one shown here.
+Introduction to Applets
+Drawing Graphics
+ 
+ 
+ 
+ 
+ 
+ 
+ 

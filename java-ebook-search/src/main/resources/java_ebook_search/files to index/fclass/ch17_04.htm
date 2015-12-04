@@ -1,0 +1,149 @@
+
+[Chapter 17] Dictionary
+Chapter 17The java.util Package
+Dictionary
+Name
+Dictionary
+Synopsis
+Class Name:
+java.util.Dictionary
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+java.util.Hashtable
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later 
+Description
+The Dictionary class is an 
+abstract class that associates 
+keys with values. Any non-null 
+object can be used as a key or as a value. Key/value pairs can be 
+stored in a Dictionary, and 
+values can be retrieved or removed using their associated keys. 
+A subclass of Dictionary should 
+use the equals() method to 
+decide if two keys are equivalent. 
+Class Summary
+public abstract class java.util.Dictionary extends java.lang.Object {
+  // Instance Methods
+  public abstract Enumeration elements();
+  public abstract Object get(Object key);
+  public abstract boolean isEmpty();
+  public abstract Enumeration keys();
+  public abstract Object put(Object key, Object value);
+  public abstract Object remove(Object key);
+  public abstract int size();
+}
+Instance Methods
+elements
+public abstract Enumeration elements()
+Returns
+The values in the dictionary as an Enumeration. 
+Description
+This method returns an Enumeration 
+that iterates through the values in this Dictionary. 
+get
+public abstract Object get(Object key)
+Parameters
+key
+The key of the value 
+to retrieve. 
+Returns
+The value that corresponds to this key. 
+Description
+This method returns the value that is associated with the given key. 
+isEmpty
+public abstract boolean isEmpty()
+Returns
+true if there are no values 
+in the Dictionary7thinsp;; false 
+otherwise. 
+Description
+This method returns a boolean 
+value that indicates whether or not the Dictionary 
+is empty. 
+keys
+public abstract Enumeration keys()
+Returns
+The keys in the dictionary as an Enumeration. 
+Description
+This method returns an Enumeration 
+that iterates through the keys in this Dictionary. 
+put
+public abstract Object put(Object key, Object value)
+Parameters
+key
+A key object.
+value
+A value object. 
+Returns
+The previous value associated with the given key or null 
+if key has not previously been 
+associated with a value. 
+Throws
+NullPointerException
+If either the key or the value is null. 
+Description
+This method associates the given key with the given value in this Dictionary. 
+remove
+public abstract Object remove(Object key)
+Parameters
+key
+The key of the value 
+to remove. 
+Returns
+The value associated with the given key or null 
+if key is not associated with 
+a value. 
+Description
+This method removes a key/value pair from this Dictionary. 
+If the given key is not in the Dictionary, 
+the method does nothing. 
+size
+public abstract int size()
+Returns
+The number of keys in the Dictionary. 
+Description
+This method returns the number of key/value pairs in this Dictionary. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Enumeration, 
+Hashtable, 
+NullPointerException 
+Date
+EmptyStackException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

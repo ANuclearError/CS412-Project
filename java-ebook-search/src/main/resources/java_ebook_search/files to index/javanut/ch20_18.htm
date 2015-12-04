@@ -1,0 +1,136 @@
+
+[Chapter 20] 20.18 java.awt.event.KeyEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.18 java.awt.event.KeyEvent (JDK 1.1)
+An event of this type indicates that the user has pressed or
+released a key or typed a character.
+Call getID() to determine the particular type of
+key event that has occurred.  The constant KEY_PRESSED
+indicates that a key has been pressed, while the constant
+KEY_RELEASED indicates that a key has been released.
+Not all keystrokes actually correspond to or generate Unicode
+characters.  Modifier keys and function keys, for example,
+do not correspond to characters.  Furthermore, for
+internationalized input, multiple keystrokes are sometimes
+required to generate a single character of input.
+Therefore, getID() returns a third constant,
+KEY_TYPED, to indicate a KeyEvent that
+actually contains a character value.
+For KEY_PRESSED and KEY_RELEASED key events,
+use getKeyCode() to obtain the "virtual key code" of
+the key that was pressed or released.  KeyEvent
+defines a number of VK_ constants that represent
+these "virtual keys."  Note that not all keys on all
+keyboards have corresponding constants in the
+KeyEvent class, and not all keyboards can generate
+all of the virtual key codes defined by the class.  In JDK
+1.1, the VK_ constants for letter keys, number keys, and some
+other keys have the same values as the ASCII encodings of the
+letters and numbers.  You should not rely on this to always be
+the case, however.  If the key that was pressed or released
+corresponds directly to a Unicode character, you can obtain
+that character by calling getKeyChar().  If there is
+not a corresponding Unicode character, this method
+returns the constant CHAR_UNDEFINED.  The
+isActionKey() method returns true if the key
+that was pressed or released does not have a corresponding
+character.
+For KEY_TYPED key events, use getKeyChar()
+to return the Unicode character that was typed.  If you call
+getKeyCode() for this type of key event, it returns
+VK_UNDEFINED.
+See InputEvent for information on inherited methods
+you can use to obtain the keyboard modifiers that were down
+during the event and other important methods.
+Use getComponent(), inherited from
+ComponentEvent, to determine what component the event
+occurred over.
+The static method getKeyText() returns a (possibly
+localized) textual name for a given key code.  The static
+method getKeyModifiersText() returns a (possibly
+localized) textual description for a set of modifiers.
+The KeyEvent has methods that allow you to change the
+key code, key character, or modifiers of an event.  These
+methods, along with the consume() method, allow a
+KeyListener to perform filtering of key
+events before they are passed to the underlying AWT
+component.
+public class KeyEvent extends InputEvent {
+    // Public Constructors
+            public KeyEvent(Component source, int id, long when, int modifiers, int keyCode, char keyChar);
+            public KeyEvent(Component source, int id, long when, int modifiers, int keyCode);
+    // Constants
+    // Event Type Constants
+            public static final int KEY_FIRST;
+            public static final int KEY_LAST;
+            public static final int KEY_PRESSED;
+            public static final int KEY_RELEASED;
+            public static final int KEY_TYPED;
+    // Undefined Key and Character
+            public static final int VK_UNDEFINED;
+            public static final char CHAR_UNDEFINED;
+    // Alphanumeric Keys
+            public static final int VK_A, VK_B, VK_C, VK_D, VK_E, VK_F, VK_G, VK_H, VK_I;
+            public static final int VK_J, VK_K, VK_L, VK_M, VK_N, VK_O, VK_P, VK_Q, VK_R;
+            public static final int VK_S, VK_T, VK_U, VK_V, VK_W, VK_X, VK_Y, VK_Z;
+            public static final int VK_SPACE;
+            public static final int VK_0, VK_1, VK_2, VK_3, VK_4, VK_5, VK_6, VK_7, VK_8, VK_9;
+            public static final int VK_NUMPAD0, VK_NUMPAD1, VK_NUMPAD2, VK_NUMPAD3, VK_NUMPAD4;
+            public static final int VK_NUMPAD5, VK_NUMPAD6, VK_NUMPAD7, VK_NUMPAD8, VK_NUMPAD9;
+    // Control Keys
+            public static final int VK_BACK_SPACE, VK_ENTER, VK_ESCAPE, VK_TAB;
+    // Modifier Keys
+            public static final int VK_ALT, VK_CAPS_LOCK, VK_CONTROL, VK_META, VK_SHIFT;
+    // Function Keys
+            public static final int VK_F1, VK_F2, VK_F3, VK_F4, VK_F5, VK_F6;
+            public static final int VK_F7, VK_F8, VK_F9, VK_F10, VK_F11, VK_F12;
+            public static final int VK_PRINTSCREEN, VK_SCROLL_LOCK, VK_PAUSE;
+            public static final int VK_DELETE, VK_INSERT;
+            public static final int VK_PAGE_DOWN, VK_PAGE_UP;
+            public static final int VK_DOWN, VK_LEFT, VK_RIGHT, VK_UP;
+            public static final int VK_END, VK_HOME;
+            public static final int VK_ACCEPT, VK_NUM_LOCK, VK_CANCEL;
+            public static final int VK_CLEAR, VK_CONVERT, VK_FINAL;
+            public static final int VK_HELP, VK_KANA, VK_KANJI;
+            public static final int VK_MODECHANGE, VK_NONCONVERT;
+    // Punctuation Keys
+            public static final int VK_ADD, VK_BACK_QUOTE, VK_BACK_SLASH;
+            public static final int VK_CLOSE_BRACKET, VK_COMMA, VK_DECIMAL;
+            public static final int VK_DIVIDE, VK_EQUALS, VK_MULTIPLY;
+            public static final int VK_OPEN_BRACKET, VK_PERIOD, VK_QUOTE;
+            public static final int VK_SEMICOLON, VK_SEPARATER, VK_SLASH;
+            public static final int VK_SUBTRACT;
+    // Class Methods
+            public static String getKeyModifiersText(int modifiers);
+            public static String getKeyText(int keyCode);
+    // Public Instance Methods
+            public char getKeyChar();
+            public int getKeyCode();
+            public boolean isActionKey();
+            public String paramString();  // Overrides ComponentEvent
+            public void setKeyChar(char keyChar);
+            public void setKeyCode(int keyCode);
+            public void setModifiers(int modifiers);
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ComponentEvent->InputEvent->KeyEvent
+Passed To:
+AWTEventMulticaster.keyPressed(), 
+AWTEventMulticaster.keyReleased(), 
+AWTEventMulticaster.keyTyped(), 
+Component.processKeyEvent(), 
+KeyAdapter.keyPressed(), 
+KeyAdapter.keyReleased(), 
+KeyAdapter.keyTyped(), 
+KeyListener.keyPressed(), 
+KeyListener.keyReleased(), 
+KeyListener.keyTyped()
+java.awt.event.KeyAdapter (JDK 1.1)
+java.awt.event.KeyListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

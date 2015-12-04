@@ -1,0 +1,196 @@
+
+[Chapter 7] 7.2 Writing Classes to Work with Serialization
+Chapter 7Object Serialization
+7.2 Writing Classes to Work with Serialization
+Writing a class that works with serialization is a bit more
+complicated than simply using that class for
+serialization. Essentially, an ObjectOutputStream
+must write enough of an object's state information so that the
+object can be reconstructed. If an object refers to other objects,
+those objects must be written, and so on, until all of the objects
+the original object refers to, directly or indirectly, are
+written. An ObjectOutputStream does not actually
+write a Class object that describes an object it is
+serializing. Instead, an ObjectOutputStream writes
+an ObjectStreamClass object that identifies the
+class of the object. Thus, a program that reads a serialized object
+must have access to a Class object that describes
+the object being deserialized.
+When you are writing a new class, you need to decide whether or not it
+should be serializable. Serialization does not make sense for every
+class.  For example, a Thread object encapsulates
+information that is meaningful only within the process that created
+it, so serialization is not appropriate. In order for instances of a
+class to be serializable, the class must implement the
+Serializable interface. The
+Serializable interface does not declare any methods
+or variables, so it simply acts as an indicator of
+serializability. The writeObject() method of an
+ObjectOutputStream throws a
+NotSerializableException if it is asked to
+serialize an object that does not implement the
+Serializable interface.
+The default serialization mechanism is implemented by the
+writeObject() method in
+ObjectOutputStream.  When an object is serialized,
+the class of the object is encoded, along with the class name, the
+signature of the class, the values of the
+non-static and non-transient
+fields of the object, including any other objects referenced by the
+object (except those that do not implement the
+Serializable interface themselves). Multiple
+references to the same object are encoded using a reference-sharing
+mechanism, so that a graph of objects can be restored
+appropriately. Strings and arrays are objects in Java, so they are
+treated as objects during serialization (and deserialization).
+The default deserialization mechanism mirrors the serialization
+mechanism.  The default deserialization mechanism is implemented by
+the readObject() method in
+ObjectInputStream.  When an object is deserialized,
+the non-static and non-transient
+fields of the object are restored to the values they had when the
+object was serialized, including any other objects referenced by the
+object (except for those objects that do not implement the
+Serializable interface themselves). New object
+instances are always allocated during the deserialization process, to
+prevent existing objects from being overwritten.  Deserialized objects
+are returned as instances of type Object, so they
+should be cast to the appropriate type.
+Some classes can simply implement the Serializable
+interface and make use of the default serialization and
+deserialization mechanisms. However, a class may need to handle two
+other issues in order to work with serialization:
+If any of the superclasses of the class do not
+implement the Serializable interface, the class
+must take care of writing any necessary state information for those
+superclasses during serialization and reading the information back
+during deserialization.
+When an object is serialized, all of the serializable state
+information defined by its class and any superclasses that implement
+the Serializable interface is written to the byte
+stream. However, any state information defined by superclasses that do
+not implement the Serializable interface is not
+written to the byte stream.
+When an object is deserialized, the state information defined by its
+Serializable superclasses is restored from the byte
+stream. By default, the state information for a superclass that does
+not implement the Serializable interface is
+initialized by called the no-argument constructor for the
+superclass. If that superclass does not have a no-argument
+constructor, deserialization fails and the
+readObject() method throws a
+NoSuchMethodError.
+If the objects of a class refer to other objects that are not
+Serializable, the class must take care of writing
+any necessary state information for the referenced objects during
+serialization and reading the information back during deserialization.
+A class can override the default serialization logic by defining the following 
+method: 
+private void writeObject(ObjectOutputStream stream) throws IOException
+Now, when an object of the class is serialized, this method is called instead 
+of the default mechanism. Note that writeObject() 
+is private, so it is not inherited 
+by subclasses. The implementation of a writeObject() 
+method normally begins by calling the defaultWriteObject() 
+method of ObjectOutputStream, 
+which implements the default serialization logic. After that, a writeObject() 
+method normally goes on to write whatever information is appropriate to 
+reconstruct values that are not directly serialized. 
+By the same token, a class can override the default deserialization logic 
+by defining the following method: 
+private void readObject(ObjectInputStream stream)
+             throws IOException, ClassNotFoundException
+Now, when an object of the class is deserialized, this method is called 
+instead of the default mechanism. readObject() 
+is also private and thus not inherited by subclasses. The implementation 
+of a readObject() method normally 
+begins by calling the defaultReadObject() 
+method of ObjectInputStream, 
+which implements the default deserialization logic. After that, a readObject() 
+method normally goes on to read whatever information is appropriate to 
+reconstruct the values that are not directly serialized. 
+Let's take a look at a Serializable 
+class that has writeObject() 
+and readObject() methods. The 
+example below is a partial listing of a class that accesses data using 
+a RandomAccessFile object. 
+RandomAccessFile objects are 
+not Serializable because they 
+encapsulate information that is meaningful only on the local system and 
+only for a limited amount of time. 
+public class TextFileReader implements Serializable {
+    private transient RandomAccessFile file;
+    private String browseFileName;
+    ...
+    private void writeObject(ObjectOutputStream stream) throws IOException{
+        stream.defaultWriteObject();
+        stream.writeLong(file.getFilePointer());
+    }
+    private void readObject(ObjectInputStream stream) throws IOException {
+        try {
+            stream.defaultReadObject();
+        }catch (ClassNotFoundException e) {
+            String msg = "Unable to find class";
+            if (e.getMessage() != null)
+                msg += ": " + e.getMessage();
+            throw new IOException(msg);
+        }
+        file = new RandomAccessFile(browseFileName, "r");
+        file.seek(stream.readLong());
+    }
+}
+The above example gets around being unable to serialize
+RandomAccessFile objects by having enough
+information during deserialization to construct a
+RandomAccessFile object that is similar to the
+original. The name of the file accessed by the
+RandomAccessFile object is specified by the
+browseFileName variable; this state information is
+handled by the default serialization mechanism. In addition, the
+writeObject() method writes out the current value
+returned by the original RandomAccessFile
+object's getFilePointer() method, so that
+readObject() can pass that value to the
+seek() method of a new
+RandomAccessFile object.
+Some sets of objects are more complicated to reconstruct than an instance 
+of the above class and its RandomAccessFile 
+object. In such cases, the information to reconstruct the objects may be 
+spread out over multiple objects in the set. The ObjectInputValidation 
+interface provides a way to handle this situation. As the readObject() 
+method of ObjectInputStream 
+reads a set of objects, it notices which of those objects implement the 
+ObjectInputValidation interface. 
+After readObject() is done 
+reading a set of objects, but before it returns, it calls the validateObject() 
+method for each object in the set that implements the ObjectInputValidation 
+interface. If one of those methods is unable to properly reconstruct something 
+or detects an inconsistency of some sort, it should throw an ObjectInvalidException. 
+Note that the order in which the validateObject() 
+methods are called is not documented. 
+It is also possible for a class to take complete control over its serialized 
+representation, using the Externalizable 
+interface. The Externalizable 
+interface extends the Serializable 
+interface and defines two methods: writeExternal() 
+and readExternal(). During 
+serialization, if an object implements Externalizable, 
+its writeExternal() method 
+is called. The writeExternal() 
+method is responsible for writing all of the information in the object. 
+Similarly, during deserialization, if an object implements Externalizable, 
+its readExternal() method is 
+called. The readExternal() 
+method is responsible for reading all of the information in the object. 
+Note that the Externalizable 
+mechanism is used instead of, not in addition to, the mechanism for handling 
+Serializable objects. 
+Object Serialization Basics
+Versioning of Classes
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,208 @@
+
+[Chapter 7] 7.4 GridLayout
+Chapter 7Layouts
+7.4 GridLayout
+The GridLayout layout manager 
+is ideal for laying out objects in rows and columns, where each cell in 
+the layout has the same size. Components are added to the layout from left 
+to right, top to bottom. setLayout(new GridLayout(2,3)) changes the LayoutManager 
+of the current container to a 2 row by 3 column GridLayout. Figure 7.6 
+shows an applet using this layout.
+Figure 7.6: Applet using GridLayout
+GridLayout MethodsConstructors
+public GridLayout ()  
+This constructor creates a GridLayout 
+initially configured to have one row, an infinite number of columns, and 
+no gaps. A gap is the space between adjacent components in the horizontal 
+or vertical direction. With a gap of zero, components in adjacent cells 
+will have no space between them. 
+public GridLayout (int rows, int columns) 
+This constructor creates a GridLayout 
+initially configured to be rows 
+x columns in size. The default 
+setting for horizontal and vertical gaps is zero pixels. The gap is the 
+space between adjacent components in the horizontal and vertical directions. 
+With a gap of zero, components in adjacent cells will have no space between 
+them. 
+You can set the number of rows or columns to zero; this means that the 
+layout will grow without bounds in that direction. If both rows 
+and columns are zero, the run-time 
+exception IllegalArgumentException 
+will be thrown. 
+NOTE: 
+The rows and columns passed to the GridLayout 
+constructor are only recommended values. It is possible that the system 
+will pick other values if the number of objects you add to the layout is 
+sufficiently different from the size you requested; for example, you placed 
+nine objects in a six-element grid. 
+public GridLayout (int rows, int columns, int hgap, int vgap) 
+This version of the constructor is called by the previous one. It creates 
+a GridLayout with an initial 
+configuration of rows x columns, 
+with a horizontal gap of hgap 
+and vertical gap of vgap. 
+The gap is the space between the different components in the different 
+directions, measured in pixels. It is possible to have negative gaps if 
+you want components to overlap. 
+You can set the number of rows or columns to zero; this means that the 
+layout will grow without bounds in that direction. If both rows 
+and columns are zero, the run-time 
+exception IllegalArgumentException 
+will be thrown. 
+Informational methods
+public int getColumns ()  
+The getColumns() method retrieves 
+the current column setting, which may differ from the number of columns 
+displayed. 
+public void setColumns (int columns)  
+The setColumns() method changes 
+the current column setting to columns. 
+After changing the setting, you must validate() 
+the Container. If you try to 
+set the number of rows and the number of columns to zero, this method throws 
+the run-time exception IllegalArgumentException. 
+public int getRows ()  
+The getRows() method retrieves 
+the current row setting; this may differ from the number of rows displayed. 
+public void setRows (int rows)  
+The setRows() method changes 
+the current row setting to rows. 
+After changing the setting, you must validate() 
+the Container. If you try to 
+set the number of rows and the number of columns to zero, this method throws 
+the run-time exception IllegalArgumentException. 
+public int getHgap ()  
+The getHgap() method retrieves 
+the current horizontal gap setting. 
+public void setHgap (int hgap)  
+The setHgap() method changes 
+the current horizontal gap setting to hgap. 
+After changing the gaps, you must validate() 
+the Container. 
+public int getVgap ()  
+The getVgap() method retrieves 
+the current vertical gap setting. 
+public void setVgap (int hgap)  
+The setVgap() method changes 
+the current vertical gap setting to vgap. 
+After changing the gaps, you must validate() 
+the Container. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component)  
+The addLayoutComponent() method 
+of GridLayout does nothing. 
+public void removeLayoutComponent (Component component)  
+The removeLayoutComponent() 
+method of GridLayout does nothing. 
+public Dimension preferredLayoutSize (Container target) 
+The preferredLayoutSize() method 
+of GridLayout calculates the 
+preferred dimensions for the components in target. 
+The preferred size depends on the size of the grid, which may not be the 
+size requested by the constructor; the GridLayout 
+treats the constructor's arguments as recommendations and may ignore 
+them if appropriate. 
+The actual number of rows and columns is based upon the number of components 
+within the Container. The GridLayout 
+tries to observe the number of rows requested first, calculating the number 
+of columns. If the requested number of rows is nonzero, the number of 
+columns is determined by (# components + rows - 1) / rows. If request 
+is for zero rows, the number of rows to use is determined by a similar 
+formula: (# components + columns - 1) / columns. Table 7.1 
+demonstrates this calculation. The last entry in this table is of special 
+interest: if you request a 3x3 grid but only place four components in the 
+layout, you get a 2x2 layout as a result. If you do not want to be surprised, 
+size the GridLayout based on 
+the number of objects you plan to put into the display. 
+Table 7.1: GridLayout Row/Column Calculation
+Rows
+Columns
+# Components
+Display Rows
+Display Columns
+0
+1
+10
+10
+1
+0
+2
+10
+5
+2
+1
+0
+10
+1
+10
+2
+0
+10
+2
+5
+2
+3
+10
+2
+5
+2
+3
+20
+2
+10
+3
+2
+10
+3
+4
+3
+3
+3
+3
+1
+3
+3
+4
+2
+2
+Once we know the dimensions of the grid, it's easy to compute the 
+preferred size for the layout. The GridLayout 
+takes the maximum height and maximum width of the preferred sizes for all 
+the components in the layout. (Note that the maximum width and maximum 
+height aren't necessarily from the same component.) This becomes 
+the preferred size of each cell within the layout. The preferred size of 
+the layout as a whole is computed using the preferred size of a cell and 
+adding gaps and insets as appropriate. 
+public Dimension minimumLayoutSize (Container target)  
+The minimumLayoutSize() method 
+of GridLayout calculates the 
+minimum dimensions for the components in target. 
+First it determines the actual number of rows and columns in the final 
+layout, using the method described previously. The minimumLayoutSize() 
+method then determines the widest and tallest getMinimumSize() 
+of a component, and this becomes the minimum size of a cell within the layout. 
+The minimum size of the layout as a whole is computed using the minimum 
+size of a cell and adding gaps and insets as appropriate. 
+public void layoutContainer (Container target)  
+The layoutContainer() method 
+draws target's components 
+on the screen in a series of rows and columns. Each component within a 
+GridLayout will be the same 
+size, if it is possible. If there is insufficient space for all the components, 
+the size of each is reduced proportionally. 
+Miscellaneous methods
+public String toString () 
+The toString() method of GridLayout 
+returns a string including the current horizontal and vertical gap settings, 
+along with the rows and columns settings. For a GridLayout 
+created with 2 rows and 3 columns, the result would be: 
+java.awt.GridLayout[hgap=0,vgap=0,rows=2,cols=3]
+BorderLayout
+CardLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

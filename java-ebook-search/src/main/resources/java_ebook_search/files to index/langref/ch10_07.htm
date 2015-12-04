@@ -1,0 +1,122 @@
+
+[Chapter 10] Compiler
+Chapter 10The java.lang Package
+Compiler
+Name
+Compiler
+Synopsis
+Class Name:
+java.lang.Compiler
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+JDK 1.0 or later
+Description
+The Compiler class encapsulates a facility
+for compiling Java classes to native code. As provided by Sun, the
+methods of this class do not actually do anything. However, if the
+system property java.compiler has been defined and
+if the method System.loadLibrary() is able to
+load the library named by the property, the methods of this class
+use the implementations provided in the library.
+The Compiler class has no public
+constructors, so it cannot be instantiated.
+Class Summary
+public final class java.lang.Compiler extends java.lang.Object {
+    // Class Methods
+    public static native Object command(Object any);
+    public static native boolean compileClass(Class clazz);
+    public static native boolean compileClasses(String string);
+    public static native void disable();
+    public static native void enable();
+}
+Class Methods
+command
+public static native Object command(Object any)
+Parameters
+any
+The permissible value and its meaning is determined
+by the compiler library.
+Returns
+A value determined by the compiler library, or null
+if no compiler library is loaded.
+Description
+This method directs the compiler to perform an operation specified
+by the given argument. The available operations, if any, are determined
+by the compiler library.
+compileClass
+public static native boolean compileClass(Class clazz)
+Parameters
+clazz
+The class to be compiled to native code.
+Returns
+true if the compilation succeeds,
+or false
+if the compilation fails or no compiler library is loaded.
+Description
+This method requests the compiler to compile the specified
+class to native code.
+compileClasses
+public static native boolean compileClasses(String string)
+Parameters
+string
+A string that specifies the names of the classes
+to be compiled.
+Returns
+true if the compilation succeeds
+or false if the compilation fails
+or no compiler library is loaded.
+Description
+This method requests the compiler to compile all of the classes
+named in the string.
+disable
+public static native void disable()
+Description
+This method disables the compiler if one is loaded.
+enable
+public static native void enable()
+Description
+This method enables the compiler if one is loaded.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Object;
+System
+Cloneable
+Double
+ 
+ 
+ 
+ 
+ 
+ 
+ 

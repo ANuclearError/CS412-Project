@@ -1,0 +1,723 @@
+
+[Chapter 4] 4.2 The Event Class
+Chapter 4Events
+4.2 The Event Class
+An instance of the Event class 
+is a platform-independent representation that encapsulates the specifics 
+of an event that happens within the Java 1.0 model. It contains everything 
+you need to know about an event: who, what, when, where, and why the event 
+happened. Note that the Event 
+class is not used in the Java 1.1 event model; instead, Java 1.1 has an 
+AWTEvent class, with subclasses 
+for different event types. 
+When an event occurs, you decide whether or not to process the event. If 
+you decide against reacting, the event passes through your program quickly 
+without anything happening. If you decide to handle the event, you must 
+deal with it quickly so the system can process the next event. If handling 
+the event requires a lot of work, you should move the event-handling code 
+into its own thread. That way, the system can process the next event while 
+you go off and process the first. If you do not multithread your event 
+processing, the system becomes slow and unresponsive and could lose events. 
+A slow and unresponsive program frustrates users and may convince them 
+to find another solution for their problems. 
+Variables
+Event contains ten instance 
+variables that offer all the specific information for a particular event. Instance variables
+public Object arg 
+The arg field contains some 
+data regarding the event, to be interpreted by the recipient. For example, 
+if the user presses Return 
+within a TextField, an Event 
+with an id of ACTION_EVENT 
+is generated with the TextField 
+as the target and the string 
+within it as the arg. See a 
+description of each specific event to find out what its arg 
+means. 
+public int clickCount 
+The clickCount field allows 
+you to check for double clicking of the mouse. This field is relevant only 
+for MOUSE_DOWN events. There 
+is no way to specify the time delta used to determine how quick a double-click 
+needs to be, nor is there a maximum value for clickCount. 
+If a user quickly clicks the mouse four times, clickCount 
+is four. Only the passage of a system-specific time delta will reset the 
+value so that the next MOUSE_DOWN 
+is the first click. The incrementing of clickCount 
+does not care which mouse button is pressed. 
+public Event evt 
+The evt field does not appear 
+to be used anywhere but is available if you wish to pass around a linked 
+list of events. Then your program can handle this event and tell the system 
+to deal with the next one (as demonstrated in the following code), or you can 
+process the entire chain yourself. 
+public boolean mouseDown (Event e, int x, int y) {
+    System.out.println ("Coordinates: " + x + "-" + y);
+    if (e.evt != null)
+        postEvent (e.evt);
+    return true;
+}
+public int id 
+The id field of Event 
+contains the identifier of the event. The system-generated events are the 
+following Event constants:
+WINDOW_DESTROY
+MOUSE_ENTER
+WINDOW_EXPOSE
+MOUSE_EXIT
+WINDOW_ICONIFY
+MOUSE_DRAG
+WINDOW_DEICONIFY
+SCROLL_LINE_UP
+KEY_PRESS
+SCROLL_LINE_DOWN
+KEY_RELEASE
+SCROLL_PAGE_UP
+KEY_ACTION
+SCROLL_PAGE_DOWN
+KEY_ACTION_RELEASE
+SCROLL_ABSOLUTE
+MOUSE_DOWN
+LIST_SELECT
+MOUSE_UP
+LIST_DESELECT
+MOUSE_MOVE
+ACTION_EVENT
+As a user, 
+you can create your own event types and store your own unique event ID 
+here. In Java 1.0, there is no formal way to prevent conflicts between your events and system events, but using a negative IO is a good ad-hoc method. It is up to you to check all the user events generated 
+in your program in order to avoid conflicts among user events. 
+public int key 
+For keyboard-related events, the key 
+field contains the integer representation of the keyboard element that 
+caused the event. Constants are available for the keypad keys. To 
+examine key as a character, 
+just cast it to a char. For 
+nonkeyboard-related events, the value is zero. 
+pubic int modifiers 
+The modifiers field shows the 
+state of the modifier keys when the event happened. A flag is set for each 
+modifier key pressed by the user when the event happened. Modifier keys 
+are Shift, Control, Alt, and Meta. Since the middle and right mouse key 
+are indicated in a Java event by a modifier key, one reason to use the 
+modifiers field is to determine 
+which mouse button triggered an event. See Working With Mouse Buttons in Java 1.0 
+for an example. 
+public Object target 
+The target field contains a 
+reference to the object that is the cause of the event. For example, if 
+the user selects a button, the button is the target of the event. If the 
+user moves the mouse into a Frame, 
+the Frame is the target. The 
+target indicates where the 
+event happened, not the component that is dealing with it. 
+public long when 
+The when field contains the 
+time of the event in milliseconds. The following code converts this
+long value to a Date 
+to examine its contents: 
+Date d = new Date (e.when);
+public int x public int y 
+The x and y 
+fields show the coordinates where the event happened. The coordinates are 
+always relative to the top left corner of the target of the event and get 
+translated based on the top left corner of the container as the event gets 
+passed through the containing components. (See the previous Identifying the Target for an example 
+of this translation.) It is possible for either or both of these to be 
+outside the coordinate space of the applet (e.g., if user quickly moves 
+the mouse outside the applet). 
+Constants
+Numerous constants are provided with the Event 
+class. Several designate which event happened (the why). Others are available 
+to help in determining the function key a user pressed (the what). And 
+yet more are available to make your life easier. 
+When the system generates an event, it calls a handler method for it. To 
+deal with the event, you have to override the appropriate method. The different 
+event type sections describe which methods you override. Key constants
+These constants are set when a user presses a key. Most of them correspond 
+to function and keypad keys; since such keys are generally used to invoke 
+an action from the program or the system, Java calls them action 
+keys and causes them to generate a 
+different Event type (KEY_ACTION) 
+from regular alphanumeric keys (KEY_PRESS). 
+Table 4.2 shows the constants used to represent 
+keys and the event type that uses each constant. The values, which are 
+all declared public static final int, 
+appear in the key variable 
+of the event instance. A few keys represent ASCII characters that have 
+string equivalents such as \n. 
+Black stars () mark the constants that are new in Java 1.1; they can be used 
+with the 1.0 event model, provided that you are running Java 1.1. Java 
+1.1 events use a different set of key constants defined in the KeyEvent 
+class. 
+Table 4.2: Constants for Keys in Java 1.0
+Constant
+Event Type
+Constant
+Event Type
+HOME
+KEY_ACTION
+F9
+KEY_ACTION
+END
+KEY_ACTION
+F10
+KEY_ACTION
+PGUP
+KEY_ACTION
+F11
+KEY_ACTION
+PGDN
+KEY_ACTION
+F12
+KEY_ACTION
+UP
+KEY_ACTION
+PRINT_SCREEN
+KEY_ACTION
+DOWN
+KEY_ACTION
+SCROLL_LOCK
+KEY_ACTION
+LEFT
+KEY_ACTION
+CAPS_LOCK
+KEY_ACTION
+RIGHT
+KEY_ACTION
+NUM_LOCK
+KEY_ACTION
+F1
+KEY_ACTION
+PAUSE
+KEY_ACTION
+F2
+KEY_ACTION
+INSERT
+KEY_ACTION
+F3
+KEY_ACTION
+ENTER (\n)
+KEY_PRESS
+F4
+KEY_ACTION
+BACK_SPACE (\b)
+KEY_PRESS
+F5
+KEY_ACTION
+TAB (\t)
+KEY_PRESS
+F6
+KEY_ACTION
+ESCAPE
+KEY_PRESS
+F7
+KEY_ACTION
+DELETE
+KEY_PRESS
+F8
+KEY_ACTION
+Modifiers
+Modifiers are keys like Shift, Control, Alt, or Meta. When a user presses 
+any key or mouse button that generates an Event, 
+the modifiers field of the 
+Event instance is set. You 
+can check whether any modifier key was pressed by ANDing its constant with 
+the modifiers field. If multiple 
+modifier keys were down at the time the event occurred, the constants for 
+the different modifiers are ORed together in the field. 
+public static final int ALT_MASK
+public static final int CTRL_MASK
+public static final int META_MASK
+public static final int SHIFT_MASK
+When reporting a mouse event, the system automatically sets the modifiers 
+field. Since Java is advertised as supporting the single-button mouse model, 
+all buttons generate the same mouse events, and the system uses the modifiers 
+field to differentiate between mouse buttons. That way, a user with a one- 
+or two-button mouse can simulate a three-button mouse by clicking on his 
+mouse while holding down a modifier key. Table 4.3 
+lists the mouse modifier keys; an applet in Working With Mouse Buttons in Java 1.0
+demonstrates how to differentiate between mouse buttons. 
+Table 4.3: Mouse Button Modifier Keys
+Mouse Button
+Modifier Key
+Left mouse button
+None
+Middle mouse button
+ALT_MASK
+Right mouse button
+META_MASK
+For example, if you have a three-button mouse, and click the right button, 
+Java generates some kind of mouse event with the META_MASK 
+set in the modifiers 
+field. If you have a one-button mouse, you can generate the same event 
+by clicking the mouse while depressing the Meta key. 
+NOTE: 
+If you have a multibutton mouse and do an Alt+right 
+mouse or Meta+left mouse, the results are platform specific. You should get a mouse event with two masks set.
+Key events
+The component peers deliver separate key events when a user presses and 
+releases nearly any key. KEY_ACTION 
+and KEY_ACTION_RELEASE are 
+for the function and arrow keys, while KEY_PRESS 
+and KEY_RELEASE are for the 
+remaining control and alphanumeric keys. 
+public static final int KEY_ACTION 
+The peers deliver the KEY_ACTION 
+event when the user presses a function or keypad key. The default Component.handleEvent() 
+method calls the keyDown() 
+method for this event. If the user holds down the key, this event is generated 
+multiple times. If you are using the 1.1 event model, the interface method KeyListener.keyPressed() 
+handles this event. 
+public static final int KEY_ACTION_RELEASE 
+The peers deliver the KEY_ACTION_RELEASE 
+event when the user releases a function or keypad key. The default handleEvent() 
+method for Component calls 
+the keyUp() method for this 
+event. If you are using the 1.1 event model, the KeyListener.keyReleased() 
+interface method handles this event. 
+public static final int KEY_PRESS 
+The peers deliver the KEY_PRESS 
+event when the user presses an ordinary key. The default Component.handleEvent() 
+method calls the keyDown() 
+method for this event. Holding down the key causes multiple KEY_PRESS 
+events to be generated. If you are using the 1.1 event model, the interface method KeyListener.keyPressed() 
+handles this event. 
+public static final int KEY_RELEASE 
+The peers deliver KEY_RELEASE 
+events when the user releases an ordinary key. The default handleEvent() 
+method for Component calls 
+the keyUp() method for this 
+event. If you are using the 1.1 event model, the interface method KeyListener.keyReleased() 
+ handles this event. 
+NOTE: 
+If you want to capture arrow and keypad keys under the X Window System, 
+make sure the key codes are set up properly, using the xmodmap 
+command. 
+NOTE: 
+Some platforms generate events for the modifier keys by themselves, 
+whereas other platforms require modifier keys to be pressed with another 
+key. For example, on a Windows 95 platform, if Ctrl+A is pressed, 
+you would expect one KEY_PRESS 
+and one KEY_RELEASE. However, 
+there is a second KEY_RELEASE 
+for the Control key. Under Motif, you get only a single KEY_RELEASE. 
+Window events
+Window events happen only for components that are children of Window. 
+Several of these events are available only on certain platforms. Like other 
+event types, the id variable 
+holds the value of the specific event instance. 
+public static final int WINDOW_DESTROY 
+The peers deliver the WINDOW_DESTROY 
+event whenever the system tells a window to destroy itself. This is usually 
+done when the user selects the window manager's Close or Quit window 
+menu option. By default, Frame instances 
+do not deal with this event, and you must remember to catch it yourself. 
+If you are using the 1.1 event model, the WindowListener.windowClosing() 
+interface method handles this event.
+public static final int WINDOW_EXPOSE 
+The peers deliver the WINDOW_EXPOSE 
+event whenever all or part of a window becomes visible. To find out what 
+part of the window has become uncovered, use the getClipRect() method 
+(or getClipBounds() in Java version 
+1.1) of the Graphics parameter 
+to the paint() method. If you 
+are using the 1.1 event model, the WindowListener.windowOpening() 
+interface method most closely corresponds to the handling of this event. 
+public static final int WINDOW_ICONIFY 
+The peers deliver the WINDOW_ICONIFY 
+event when the user iconifies the window. If you are using the 1.1 event 
+model, the interface method WindowListener.windowIconified() 
+ handles this event. 
+public static final int WINDOW_DEICONIFY 
+The peers deliver the WINDOW_DEICONIFY 
+event when the user de-iconifies the window. If you are using the 1.1 event 
+model, the interface method WindowListener.windowDeiconified() 
+handles this event. 
+public static final int WINDOW_MOVED 
+The WINDOW_MOVED event signifies 
+that the user has moved the window. If you are using the 1.1 event model, 
+the ComponentListener.componentMoved() 
+interface method handles this event. 
+Mouse events
+The component peers deliver mouse events when a user presses or releases 
+a mouse button. Events are also delivered whenever the mouse moves. In 
+order to be platform independent, Java pretends that all mice have a single 
+button. If you press the second or third button, Java generates a regular 
+mouse event but sets the event's modifers 
+field with a flag that indicates which button was pressed. If you press 
+the left button, no modifiers 
+flags are set. Pressing the center button sets the ALT_MASK 
+flag; pressing the right button sets the META_MASK 
+flag. Therefore, you can determine which mouse button was pressed by looking 
+at the Event.modifiers attribute. 
+Furthermore, users with a one-button or two-button mouse can generate the 
+same events by pressing a mouse button while holding down the Alt or Meta 
+keys. 
+NOTE: 
+Early releases of Java (1.0.2 and earlier) only propagated mouse events 
+from Canvas and Container 
+objects. With the 1.1 event model, the events that different components 
+process are better defined. 
+public static final int MOUSE_DOWN 
+The peers deliver the MOUSE_DOWN 
+event when the user presses any mouse button. This action must occur over 
+a component that passes along the MOUSE_DOWN 
+event. The default Component.handleEvent() 
+method calls the mouseDown() 
+method for this event. If you are using the 1.1 event model, the MouseListener.mousePressed() 
+interface method handles this event. 
+public static final int MOUSE_UP 
+The peers deliver the MOUSE_UP 
+event when the user releases the mouse button. This action must occur over 
+a component that passes along the MOUSE_UP 
+event. The default handleEvent() 
+method for Component calls 
+the mouseUp() method for this 
+event. If you are using the 1.1 event model, the interface method MouseListener.mouseReleased() 
+ handles this event. 
+public static final int MOUSE_MOVE 
+The peers deliver the MOUSE_MOVE 
+event whenever the user moves the mouse over any part of the applet. This 
+can happen many, many times more than you want to track, so make sure you 
+really want to do something with this event before trying to capture it. 
+(You can also capture MOUSE_MOVE 
+events and without losing much, choose to deal with only every third or fourth movement.) The default handleEvent() 
+method calls the mouseMove() 
+method for the event. If you are using the 1.1 event model, the interface method MouseMotionListener.mouseMoved() 
+handles this event. 
+public static final int MOUSE_DRAG 
+The peers deliver the MOUSE_DRAG 
+event whenever the user moves the mouse over any part of the applet with 
+a mouse button depressed. The default method handleEvent() 
+ calls the mouseDrag() 
+method for the event. If you are using the 1.1 event model, the interface method MouseMotionListener.mouseDragged() 
+ handles this event. 
+public static final int MOUSE_ENTER 
+The peers deliver the MOUSE_ENTER 
+event whenever the cursor enters a component. The default handleEvent() 
+method calls the mouseEnter() 
+method for the event. If you are using the 1.1 event model, the interface method MouseListener.mouseEntered() 
+ handles this event. 
+public static final int MOUSE_EXIT 
+The peers deliver the MOUSE_EXIT 
+event whenever the cursor leaves a component. The default handleEvent() 
+method calls the mouseExit() 
+method for the event. If you are using the 1.1 event model, the interface method MouseListener.mouseExited() 
+ handles this event. 
+Scrolling events
+The peers deliver scrolling events for the Scrollbar 
+component. The objects that have a built-in scrollbar (like List, 
+ScrollPane, and TextArea) 
+do not generate these events. No default methods are called for any of 
+the scrolling events. They must be dealt with in the handleEvent() 
+method of the Container or a subclass of the Scrollbar. You can determine 
+which particular event occurred by checking the id 
+variable of the event, and find out the new position of the thumb by looking 
+at the arg variable or calling 
+getValue() on the scrollbar. 
+See also the description of the AdjustmentListener 
+interface later in this chapter. 
+public static final int SCROLL_LINE_UP 
+The scrollbar peers deliver the SCROLL_LINE_UP 
+event when the user presses the arrow pointing up for the vertical scrollbar 
+or the arrow pointing left for the horizontal scrollbar. This decreases 
+the scrollbar setting by one back toward the minimum value. If you are 
+using the 1.1 event model, the interface method AdjustmentListener.adjustmentValueChanged()
+ handles this event. 
+public static final int SCROLL_LINE_DOWN 
+The peers deliver the SCROLL_LINE_DOWN 
+event when the user presses the arrow pointing down for the vertical scrollbar 
+or the arrow pointing right for the horizontal scrollbar. This increases 
+the scrollbar setting by one toward the maximum value. If you are using 
+the 1.1 event model, the interface method AdjustmentListener.adjustmentValueChanged() 
+ handles this event. 
+public static final int SCROLL_PAGE_UP 
+The peers deliver the SCROLL_PAGE_UP 
+event when the user presses the mouse with the cursor in the area between the slider and 
+the decrease arrow. This decreases the scrollbar setting by the paging 
+increment, which defaults to 10, back toward the minimum value. If you 
+are using the 1.1 event model, the interface method AdjustmentListener.adjustmentValueChanged() 
+handles this event. 
+public static final int SCROLL_PAGE_DOWN 
+The peers deliver the SCROLL_PAGE_DOWN 
+event when the user presses the mouse with the cursor in the area between the slider and 
+the increase arrow. This increases the scrollbar setting by the paging 
+increment, which defaults to 10, toward the maximum value. If you are 
+using the 1.1 event model, the interface method AdjustmentListener.adjustmentValueChanged() 
+ handles this event. 
+public static final int SCROLL_ABSOLUTE 
+The peers deliver the SCROLL_ABSOLUTE 
+event when the user drags the slider part of the scrollbar. 
+There is no set time period or distance between multiple SCROLL_ABSOLUTE 
+events. If you are using the Java version 1.1 event model, the AdjustmentListener.adjustmentValueChanged() 
+interface method handles this event. 
+public static final int SCROLL_BEGIN  
+The SCROLL_BEGIN event is not 
+delivered by peers, but you may wish to use it to signify when a user drags 
+the slider at the beginning of a series of SCROLL_ABSOLUTE 
+events. SCROLL_END, described next, would 
+then be used to signify the end of the series. 
+public static final int SCROLL_END  
+The SCROLL_END event is not 
+delivered by peers, but you may wish to use it to signify when a user drags 
+the slider at the end of a series of SCROLL_ABSOLUTE 
+events. SCROLL_BEGIN, described previously,
+would have been used to signify the beginning of the series. 
+List events
+Two events specific to the List 
+class are passed along by the peers. They signify when the user has selected 
+or deselected a specific choice in the List. 
+It is not ordinarily necessary to capture these events, because the peers 
+deliver the ACTION_EVENT when 
+the user double-clicks on a specific item in the List 
+and it is this ACTION_EVENT 
+that triggers something to happen. However, if there is reason to do something 
+when the user has just single-clicked on a choice, these events may be 
+useful. An example of how they would prove useful is if you are displaying 
+a list of filenames with the ability to preview files before loading. Single 
+selection would preview, double-click would load, and deselect would stop 
+previewing. 
+No default methods are called for any of the list events. They must be 
+dealt with in the handleEvent() 
+method of the Container of 
+the List or a subclass of the 
+List. You can determine which 
+particular event occurred by checking the id 
+variable of the event. 
+public static final int LIST_SELECT 
+The peers deliver the LIST_SELECT 
+event when the user selects an item in a List. 
+If you are using the 1.1 event model, the interface method ItemListener.itemStateChanged() 
+handles this event. 
+public static final int LIST_DESELECT 
+The peers deliver the LIST_DESELECT 
+event when an item in a List 
+has been deselected. This is generated only if the List 
+permits multiple selections. If you are using the 1.1 event model, the 
+ItemListener.itemStateChanged() 
+interface method handles this event. 
+Focus events
+The peers deliver focus events when a component gains (GOT_FOCUS) 
+or loses (LOST_FOCUS) the input 
+focus. No default methods are called for the focus events. They must be 
+dealt with in the handleEvent() 
+method of the Container of 
+the component or a subclass of the component. You can determine which particular 
+event occurred by checking the id 
+variable of the event. 
+NOTE: 
+Early releases of Java (1.0.2 and before) did not propagate focus 
+events on all platforms. This is fixed in release 1.1 of Java. Still, 
+you should avoid capturing focus events if you want to write portable 1.0 
+code. 
+public static final int GOT_FOCUS 
+The peers deliver the GOT_FOCUS 
+event when a component gets the input focus. If you are using the 1.1 event 
+model, the FocusListener.focusGained() 
+interface method handles this event. 
+public static final int LOST_FOCUS 
+The peers deliver the LOST_FOCUS 
+event when a component loses the input focus. If you are using the 1.1 
+event model, the FocusListener.focusLost() 
+interface method handles this event. 
+FileDialog events
+The FileDialog events are another 
+set of nonportable events. Ordinarily, the FileDialog 
+events are completely dealt with by the system, and you never see them. 
+Refer to Chapter 6, Containers for exactly how to work with the FileDialog 
+object. If you decide to create a generic FileDialog 
+object, you can use these events to indicate file loading and saving. These 
+constants would be used in the id 
+variable of the specific event instance: 
+public static final int LOAD_FILE
+public static final int SAVE_FILE
+Miscellaneous events
+ACTION_EVENT is probably the 
+event you deal with most frequently. It is generated when the user performs 
+the desired action for a specific component type (e.g., when a user selects 
+a button or toggles a checkbox). This constant would be found in the id 
+variable of the specific event instance.
+public static final int ACTION_EVENT 
+The circumstances that lead to the peers delivering the ACTION_EVENT 
+event depend upon the component that is the target of the event and the 
+user's platform. Although the event can be passed along differently 
+on different platforms, users will be accustomed to how the peers work 
+on their specific platforms and will not care that it is different on the 
+other platforms. For example, a Java 1.0 List 
+component on a Microsoft Windows platform allows the user to select an 
+item by pressing the first letter of the choice, whereupon the List 
+tries to find an item that starts with the letter. The X Window System 
+List component does not provide 
+this capability. It works like a normal X List, 
+where the user must scroll to locate the item and then select it. 
+When the ACTION_EVENT is generated, 
+the arg variable of the specific 
+Event instance is set based 
+upon the component type. In Chapters 5-11, which describe Java's GUI components, the description of each component contains an "Events" subsection that describes the value of the event's arg field. If you are using the 
+1.1 event model, the ActionListener.actionPerformed() 
+and ItemListener.itemStateChanged() 
+interface methods handle this event, depending upon the component type. 
+Event MethodsConstructors
+Ordinarily, the peers deliver all your events for you. However, if you are 
+creating your own components or want to communicate across threads, it 
+may be necessary to create your own events. You can also create your own 
+events to notify your component's container of application-specific occurrences. 
+For example, if you were implementing your own tab sequencing for text 
+fields, you could create a "next text field" event to tell your container 
+to move to the next text field. Once you create the event, you send it 
+through the system using the Component.postEvent() 
+method. 
+public Event (Object target, long when, int id, int x, int y, int key, 
+int modifiers, Object arg) 
+The first version of the constructor is the most complete and is what the 
+other two call. It initializes all the fields of the Event 
+to the parameters passed and sets clickCount 
+to 0. See the descriptions of the instance variables Variables 
+for the meanings of the arguments. 
+public Event (Object target, long when, int id, int x, int y, int key, 
+int modifiers) 
+The second constructor version calls the first with arg 
+set to null. 
+public Event (Object target, int id, Object arg) 
+The final version calls the first constructor with the when, 
+x, y, 
+key, and modifiers 
+parameters set to 0. 
+Modifier methods
+The modifier methods check to see if the different modifier mask values 
+are set. They report the state of each modifier key at the moment an event 
+occurred. It is possible for multiple masks to be set if multiple modifiers 
+are pressed when the event occurs. 
+There is no altDown() method; 
+to check whether the Alt key is pressed you must directly compare the event's 
+modifiers against the Event.ALT_MASK 
+constant. The metaDown() method 
+is helpful when dealing with mouse events to see if the user pressed the 
+right mouse button. 
+public boolean shiftDown () 
+The shiftDown() method returns 
+true if the Shift key was pressed and false otherwise. There is no way 
+to differentiate left and right shift keys. 
+public boolean controlDown () 
+The controlDown() method returns 
+true if the Control key was pressed and false otherwise. 
+public boolean metaDown () 
+The metaDown() method returns 
+true if the Meta key was pressed and false otherwise. 
+Miscellaneous methods
+public void translate (int x, int y)
+The translate() method translates 
+the x and y coordinates of the Event 
+instance by x and y. 
+The system does this so that the coordinates of the event are relative 
+to the component receiving the event, rather than the container of the 
+component. The system takes care of all this for you when passing the event 
+through the containment hierarchy (not the object hierarchy), so you do 
+not have to bother with translating them yourself. Figure 4.3 
+shows how this method would change the location of an event from a container 
+down to an internal component. 
+Figure 4.3: Translating an event's location relative to a component
+protected String paramString () 
+When you call the toString() 
+method of Event, the paramString() 
+method is called in turn to build the string to display. In the event you 
+subclass Event to add additional 
+information, instead of having to provide a whole new toString() 
+method, you need only add the new information to the string already generated 
+by paramString(). Assuming 
+the new information is foo, this would result in the following 
+method declaration: 
+protected String paramString() {
+    return super.paramString() + ",foo=" + foo;
+}
+public String toString () 
+The toString() method of Event 
+returns a string with numerous components. The only variables that will 
+always be in the output will be the event ID and the x and y coordinates. 
+The others will be present if necessary (i.e., non-null): key (as the integer 
+corresponding to a keyboard event), shift when shiftDown() 
+is true; control, when controlDown() 
+is true; meta, when metaDown() 
+is true; target (if it was a Component); 
+and arg (the value depends on the target and ID). toString() 
+does not display all pieces of the Event 
+information. An event when moving a Scrollbar 
+might result in the following: 
+java.awt.Event[id=602,x=374,y=110,target=java.awt.Scrollbar[374,
+110,15x50,val=1,vis=true,min=0,max=255,vert],arg=1]
+Working With Mouse Buttons in Java 1.0
+As stated earlier, the modifiers 
+component of Event can be used 
+to differentiate the different mouse buttons. If the user has a multibutton 
+mouse, the modifiers field 
+is set automatically to indicate which button was pressed. If the user 
+does not own a multibutton mouse, he or she can press the mouse button 
+in combination with the Alt or Meta keys to simulate a three-button mouse. 
+Example 4.2 is a sample program called mouseEvent 
+that displays the mouse button selected. 
+Example 4.2: Differentiating Mouse Buttons in Java 1.0
+import java.awt.*;
+import java.applet.*;
+public class mouseEvent extends Applet {
+    String theString = "Press a Mouse Key";
+    public synchronized void setString (String s) {
+        theString = s;
+    }
+    public synchronized String getString () {
+        return theString;
+    }
+    public synchronized void paint (Graphics g) {
+        g.drawString (theString, 20, 20);
+    }
+    public boolean mouseDown (Event e, int x, int y) {
+        if (e.modifiers == Event.META_MASK) {
+            setString ("Right Button Pressed");
+        } else if (e.modifiers == Event.ALT_MASK) {
+            setString ("Middle Button Pressed");
+        } else {
+            setString ("Left Button Pressed");
+        }
+        repaint ();
+        return true;
+    }
+    public boolean mouseUp (Event e, int x, int y) {
+        setString ("Press a Mouse Key");
+        repaint ();
+        return true;
+    }
+}
+Unfortunately, this technique does not always work. With certain components 
+on some platforms, the peer captures the mouse event and does not pass 
+it along; for example, on Windows, the display-edit menu of a TextField appears when you select the right mouse button. 
+Be cautious about relying on multiple mouse buttons; better yet, if you 
+want to ensure absolute portability, stick to a single button. 
+Comprehensive Event List
+Unfortunately, there are many platform-specific differences in the way 
+event handling works. It's not clear whether these differences are 
+bugs or whether vendors think they are somehow improving their product by introducing 
+portability problems. We hope that as Java matures, different platforms 
+will gradually come into synch. Until that happens, you might want your 
+programs to assume the lowest common denominator. If you are willing to 
+take the risk, you can program for a specific browser or platform, but 
+should be aware of the possibility of changes. 
+Appendix C, Platform-Specific Event Handling, includes a table that shows which components pass along which 
+events by default in the most popular environments. This table was developed 
+using an interactive program called compList, 
+which generates a list of supported events for each component. You can 
+find compList on this book's 
+Web site, http://www.ora.com/catalog/javawt. 
+If you want to check the behavior of some new platform, or a newer version 
+of one of the platforms in Appendix C, Platform-Specific Event Handling, feel free to use compList. 
+It does require a little bit of work on your part. You have to click, toggle, 
+type, and mouse over every object. Hopefully, as Java matures, this program 
+will become unnecessary. 
+Java 1.0 Event Model
+The Java 1.1 Event Model
+ 
+ 
+ 
+ 
+ 
+ 
+ 

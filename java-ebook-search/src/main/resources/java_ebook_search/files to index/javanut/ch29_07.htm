@@ -1,0 +1,116 @@
+
+[Chapter 29] 29.7 java.text.DateFormat (JDK 1.1)
+Chapter 29The java.text Package
+29.7 java.text.DateFormat (JDK 1.1)
+This class formats and parses dates and times in a
+locale-specific way.  As an abstract class, it cannot be
+instantiated directly, but it provides a number of static
+methods that return instances of a concrete subclass which
+you can use to format dates in a variety of ways.  The
+getDateInstance() methods return a
+DateFormat object suitable for formatting dates in
+either the default locale or a specified locale.  A
+formatting style may also optionally be specified--the
+constants FULL, LONG, MEDIUM,
+SHORT, and DEFAULT specify this style.
+Similarly, the getTimeInstance() methods return a
+DateFormat object that formats and parses times, and
+the getDateTimeInstance() methods return a
+DateFormat object that formats both dates and times.
+These methods also optionally take a format style constant
+and a Locale.  Finally, getInstance()
+returns a default DateFormat object that formats
+both dates and times in the SHORT format.
+Once you have created a DateFormat object, you can
+use the setCalendar() and setTimeZone()
+methods if you want to format the date using a calendar or
+time zone other than the default.
+The various format() methods convert
+java.util.Date objects to strings, using whatever
+format is encapsulated in the DateFormat object.  The
+parse() and parseObject() methods perform
+the reverse operation--they parse a string formatted
+according to the rules of the DateFormat object and convert
+it into a Date object.
+The DEFAULT, FULL, MEDIUM,
+LONG, and SHORT constants are used to
+specify how verbose or compact the formatted date or time
+should be.  The remaining constants, which all end with
+_FIELD, specify various fields of formatted dates and
+times and are used with the FieldPosition object
+that is optionally passed to format().
+public abstract class DateFormat extends Format implements Cloneable {
+    // Protected Constructor
+            protected DateFormat();
+    // Format Style Constants
+            public static final int DEFAULT;
+            public static final int FULL;
+            public static final int LONG;
+            public static final int MEDIUM;
+            public static final int SHORT;
+    // Date and Time Field Constants
+            public static final int ERA_FIELD;
+            public static final int YEAR_FIELD;
+            public static final int MONTH_FIELD;
+            public static final int WEEK_OF_MONTH_FIELD, WEEK_OF_YEAR_FIELD;
+            public static final int DATE_FIELD, DAY_OF_YEAR_FIELD;
+            public static final int DAY_OF_WEEK_FIELD, DAY_OF_WEEK_IN_MONTH_FIELD;
+            public static final int TIMEZONE_FIELD;
+            public static final int AM_PM_FIELD;
+            public static final int HOUR0_FIELD, HOUR1_FIELD;
+            public static final int HOUR_OF_DAY0_FIELD, HOUR_OF_DAY1_FIELD;
+            public static final int MINUTE_FIELD;
+            public static final int SECOND_FIELD;
+            public static final int MILLISECOND_FIELD;
+    // Protected Instance Variables
+            protected Calendar calendar;
+            protected NumberFormat numberFormat;
+    // Class Methods
+            public static Locale[] getAvailableLocales();
+            public static final DateFormat getDateInstance();
+            public static final DateFormat getDateInstance(int style);
+            public static final DateFormat getDateInstance(int style, Locale aLocale);
+            public static final DateFormat getDateTimeInstance();
+            public static final DateFormat getDateTimeInstance(int dateStyle, int timeStyle);
+            public static final DateFormat getDateTimeInstance(int dateStyle, int timeStyle, Locale aLocale);
+            public static final DateFormat getInstance();
+            public static final DateFormat getTimeInstance();
+            public static final DateFormat getTimeInstance(int style);
+            public static final DateFormat getTimeInstance(int style, Locale aLocale);
+    // Public Instance Methods
+            public Object clone();  // Overrides Format
+            public boolean equals(Object obj);  // Overrides Object
+            public final StringBuffer format(Object obj, StringBuffer toAppendTo, FieldPosition fieldPosition);  // Defines Format
+            public abstract StringBuffer format(Date date, StringBuffer toAppendTo, FieldPosition fieldPosition);
+            public final String format(Date date);
+            public Calendar getCalendar();
+            public NumberFormat getNumberFormat();
+            public TimeZone getTimeZone();
+            public int hashCode();  // Overrides Object
+            public boolean isLenient();
+            public Date parse(String text) throws ParseException;
+            public abstract Date parse(String text, ParsePosition pos);
+            public Object parseObject(String source, ParsePosition pos);  // Defines Format
+            public void setCalendar(Calendar newCalendar);
+            public void setLenient(boolean lenient);
+            public void setNumberFormat(NumberFormat newNumberFormat);
+            public void setTimeZone(TimeZone zone);
+}
+Hierarchy:
+Object->Format(Serializable, Cloneable)->DateFormat(Cloneable)
+Extended By:
+SimpleDateFormat
+Returned By:
+DateFormat.getDateInstance(), 
+DateFormat.getDateTimeInstance(), 
+DateFormat.getInstance(), 
+DateFormat.getTimeInstance()
+java.text.Collator (JDK 1.1)
+java.text.DateFormatSymbols (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

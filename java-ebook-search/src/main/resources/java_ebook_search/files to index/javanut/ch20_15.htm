@@ -1,0 +1,57 @@
+
+[Chapter 20] 20.15 java.awt.event.ItemEvent (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.15 java.awt.event.ItemEvent (JDK 1.1)
+An event of this type indicates that an item within an
+ItemSelectable component has had its selection state
+changed.
+getItemSelectable() is a convenient alternative to
+getSource() that returns the ItemSelectable
+object that originated the event.  getItem() returns
+an object that represents the item that was selected or
+deselected.
+getID() returns the type of the ItemEvent.
+The standard AWT components always generate item events of
+type ITEM_STATE_CHANGED.  The
+getStateChange() method returns the new selection
+state of the item: it returns one of the constants
+SELECTED or DESELECTED.  (This value can be
+misleading for Checkbox components that are part of
+a CheckboxGroup.  If the user attempts to deselect a
+selected component, a DESELECTED event is delivered,
+but the CheckboxGroup immediately re-selects the
+component to enforce its requirement that at least one
+Checkbox be selected at all times.)
+public class ItemEvent extends AWTEvent {
+    // Public Constructor
+            public ItemEvent(ItemSelectable source, int id, Object item, int stateChange);
+    // Constants
+            public static final int DESELECTED;
+            public static final int ITEM_FIRST;
+            public static final int ITEM_LAST;
+            public static final int ITEM_STATE_CHANGED;
+            public static final int SELECTED;
+    // Public Instance Methods
+            public Object getItem();
+            public ItemSelectable getItemSelectable();
+            public int getStateChange();
+            public String paramString();  // Overrides AWTEvent
+}
+Hierarchy:
+Object->EventObject(Serializable)->AWTEvent->ItemEvent
+Passed To:
+AWTEventMulticaster.itemStateChanged(), 
+Checkbox.processItemEvent(), 
+CheckboxMenuItem.processItemEvent(), 
+Choice.processItemEvent(), 
+ItemListener.itemStateChanged(), 
+List.processItemEvent()
+java.awt.event.InputEvent (JDK 1.1)
+java.awt.event.ItemListener (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

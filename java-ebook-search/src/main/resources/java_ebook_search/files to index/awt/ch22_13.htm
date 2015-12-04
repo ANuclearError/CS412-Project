@@ -1,0 +1,157 @@
+
+[Chapter 22] ReplicateScaleFilter 
+Chapter 22java.awt.image Reference
+ReplicateScaleFilter 
+Name
+ReplicateScaleFilter 
+Description
+The ReplicateScaleFilter class 
+uses a simple-minded algorithm to scale an image. If the image is to be 
+reduced, rows and columns of pixels are removed. If the image is to be 
+expanded, rows and columns are duplicated (replicated). 
+Class Definition
+public class ReplicateScaleFilter
+    extends java.awt.image.ImageFilter {
+  // Variables
+  protected int destHeight;
+  protected int destWidth;
+  protected Object outpixbuf;
+  protected int srcHeight;
+  protected int srcWidth;
+  protected int[] srccols;
+  protected int[] srcrows;
+  // Constructor
+  public ReplicateScaleFilter(int width, int height);
+  // Instance Methods
+  public void setDimensions (int w, int h);
+  public void setPixels(int x, int y, int w, int h, ColorModel model, 
+      byte[] pixels, int off, int scansize);
+  public void setPixels(int x, int y, int w, int h, ColorModel model, 
+      int[] pixels, int off, int scansize);
+  public void setProperties(Hashtable props);
+}
+Variables
+destHeight
+protected int destHeight
+Height of the scaled image. 
+destWidth
+protected int destWidth
+Width of the scaled image. 
+outpixbuf
+protected Object outpixbuf
+An internal buffer. 
+srcHeight
+protected int srcHeight
+Height of the original image. 
+srcWidth
+protected int srcWidth
+Width of the original image. 
+srccols
+protected int[] srccols
+Internal array used to map incoming columns to outgoing columns. 
+srcrows
+protected int[] srcrows
+Internal array used to map incoming rows to outgoing rows. 
+Constructor
+ReplicateScaleFilter
+public ReplicateScaleFilter (int width, int height)
+Parameters
+width
+Width of scaled image.
+height
+Height of scaled image. 
+Description
+Constructs a ReplicateScaleFilter 
+that scales the original image to the specified size. If both width 
+and height are -1, the destination 
+image size will be set to the source image size. If either one of the parameters 
+is -1, it will be set to preserve the aspect ratio of the original image. 
+Instance Methods
+setDimensions
+public void setDimensions (int w, int h)
+Parameters
+w
+Width of the source image.
+h
+Height of the source image. 
+Overrides
+ImageFilter.setDimensions(int, int) 
+Description
+Sets the size of the source image. 
+setPixels
+void setPixels (int x, int y, int w, int h, ColorModel model, byte[] pixels, int off, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+w
+Width of the rectangle of pixel data delivered with 
+this method call.
+h
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+off
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ImageFilter.setPixels(int, 
+int, int, int, ColorModel, byte[], int, int) 
+Description
+Receives a rectangle of image data from the ImageProducer; 
+scales these pixels and delivers them to any ImageConsumers. 
+void setPixels (int x, int y, int w, int h, ColorModel model, int[] pixels, int off, int scansize)
+Parameters
+x
+x-coordinate of top-left corner of pixel data delivered 
+with this method call.
+y
+y-coordinate of top-left corner of pixel data delivered 
+with this method call.
+w
+Width of the rectangle of pixel data delivered with 
+this method call.
+h
+Height of the rectangle of pixel data delivered with 
+this method call.
+model
+Color model of image data.
+pixels
+Image data.
+off
+Offset from beginning of the pixels array.
+scansize
+Size of each line of data in pixels array. 
+Overrides
+ImageFilter.setPixels(int, 
+int, int, int, ColorModel, int[], int, int) 
+Description
+Receives a rectangle of image data from the ImageProducer; 
+scales these pixels and delivers them to any ImageConsumers. 
+setProperties
+public void setProperties (Hashtable props)
+Parameters
+props
+The properties for the image. 
+Overrides
+ImageFilter.setProperties(Hashtable) 
+Description
+Adds the "rescale" image property to the properties list. 
+See Also
+ColorModel, Hashtable, ImageConsumer, ImageFilter, ImageProducer 
+PixelGrabber
+RGBImageFilter
+ 
+ 
+ 
+ 
+ 
+ 
+ 

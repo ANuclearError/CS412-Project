@@ -1,0 +1,87 @@
+
+[Chapter 19] CheckboxGroup
+Chapter 19java.awt Reference
+CheckboxGroup
+Name
+CheckboxGroup
+Description
+The CheckboxGroup class provides 
+the means to group multiple Checkbox 
+items into a mutual exclusion set, so that only one checkbox in the set 
+has the value true at any time. 
+The checkbox with the value true 
+is the currently selected checkbox. Mutually exclusive checkboxes usually 
+have a different appearance from regular checkboxes and are also called 
+"radio buttons." 
+Class Definition
+public class java.awt.CheckboxGroup
+    extends java.lang.Object
+    implements java.io.Serializable {
+  
+  // Constructors
+  public CheckboxGroup();
+  
+  // Instance Methods
+  public Checkbox getCurrent(); 
+  public Checkbox getSelectedCheckbox() 
+  public synchronized void setCurrent (Checkbox checkbox); 
+  public synchronized void setSelectedCheckbox (Checkbox checkbox); 
+  public String toString();
+}
+Constructors
+CheckboxGroup
+public CheckboxGroup()
+Description
+Constructs a CheckboxGroup 
+object. 
+Instance Methods
+getCurrent
+public Checkbox getCurrent() 
+Returns
+The currently selected Checkbox 
+within the CheckboxGroup. 
+Description
+Replaced by the more aptly named getSelectedCheckbox(). 
+getSelectedCheckbox
+public Checkbox getSelectedCheckbox() 
+Returns
+The currently selected Checkbox 
+within the CheckboxGroup. 
+setCurrent
+public synchronized void setCurrent (Checkbox checkbox) 
+Parameters
+checkbox
+The Checkbox 
+to select. 
+Description
+Changes the currently selected Checkbox 
+within the CheckboxGroup. 
+Description
+Replaced by setSelectedCheckbox(Checkbox). 
+setSelectedCheckbox
+public synchronized void setSelectedCheckbox (Checkbox checkbox) 
+Parameters
+checkbox
+The Checkbox 
+to select. 
+Description
+Changes the currently selected Checkbox 
+within the CheckboxGroup. 
+toString
+public String toString()
+Returns
+A string representation of the CheckboxGroup object. 
+Overrides
+Object.toString() 
+See Also
+Checkbox, Object, 
+String 
+Checkbox
+CheckboxMenuItem
+ 
+ 
+ 
+ 
+ 
+ 
+ 

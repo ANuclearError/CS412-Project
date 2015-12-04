@@ -1,0 +1,52 @@
+
+[Chapter 18] 18.9 java.awt.CardLayout (JDK 1.0)
+Chapter 18The java.awt Package
+18.9 java.awt.CardLayout (JDK 1.0)
+This class is a LayoutManager that makes each of
+the components it manages as large as the container and
+ensures that only one is visible at a time.  The standard
+LayoutManager methods are called by the
+Container object, and should not be called directly
+by applet or application code.  first(),
+last(), next(), previous(), and
+show() make a particular Component in the
+Container visible.  The names with which the
+components are added to the container are used only by the
+show() method.
+public class CardLayout extends Object implements LayoutManager2, Serializable {
+    // Public Constructors
+            public CardLayout();
+            public CardLayout(int hgap, int vgap);
+    // Public Instance Methods
+        1.1 public void addLayoutComponent(Component comp, Object constraints);  // From LayoutManager2
+          # public void addLayoutComponent(String name, Component comp);  // From LayoutManager
+            public void first(Container parent);
+        1.1 public int getHgap();
+        1.1 public float getLayoutAlignmentX(Container parent);  // From LayoutManager2
+        1.1 public float getLayoutAlignmentY(Container parent);  // From LayoutManager2
+        1.1 public int getVgap();
+        1.1 public void invalidateLayout(Container target);  // From LayoutManager2
+            public void last(Container parent);
+            public void layoutContainer(Container parent);  // From LayoutManager
+        1.1 public Dimension maximumLayoutSize(Container target);  // From LayoutManager2
+            public Dimension minimumLayoutSize(Container parent);  // From LayoutManager
+            public void next(Container parent);
+            public Dimension preferredLayoutSize(Container parent);  // From LayoutManager
+            public void previous(Container parent);
+            public void removeLayoutComponent(Component comp);  // From LayoutManager
+        1.1 public void setHgap(int hgap);
+        1.1 public void setVgap(int vgap);
+            public void show(Container parent, String name);
+            public String toString();  // Overrides Object
+}
+Hierarchy:
+Object->CardLayout(LayoutManager2(LayoutManager), Serializable)
+java.awt.Canvas (JDK 1.0)
+java.awt.Checkbox (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,42 @@
+
+[Chapter 25] 25.15 java.lang.Cloneable (JDK 1.0)
+Chapter 25The java.lang Package
+25.15 java.lang.Cloneable (JDK 1.0)
+This interface defines no methods or variables, but
+indicates that the class that implements it may be cloned
+(i.e., copied) by calling the Object method
+clone(). Calling clone() for an object that
+does not implement this interface (and does not override
+clone() with its own implementation)
+causes a CloneNotSupportedException to be thrown.
+public interface Cloneable {
+}
+Extended By:
+CharacterIterator
+Implemented By:
+BitSet, 
+BreakIterator, 
+Calendar, 
+Collator, 
+Date, 
+DateFormat, 
+DateFormatSymbols, 
+DecimalFormatSymbols, 
+Format, 
+GridBagConstraints, 
+Hashtable, 
+ImageFilter, 
+Insets, 
+Locale, 
+NumberFormat, 
+TimeZone, 
+Vector
+java.lang.CloneNotSupportedException (JDK 1.0)
+java.lang.Compiler (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

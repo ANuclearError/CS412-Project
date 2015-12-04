@@ -1,0 +1,51 @@
+
+[Chapter 23] 23.18 java.beans.PropertyEditorSupport (JDK 1.1)
+Chapter 23The java.beans Package
+23.18 java.beans.PropertyEditorSupport (JDK 1.1)
+The PropertyEditorSupport class is a trivial
+implementation of the PropertyEditor interface.  It
+provides "no-op" default implementations of most methods,
+so that you can can define simple PropertyEditor
+subclasses that only override a few required methods.
+In addition, PropertyEditorSupport defines working
+versions of addPropertyChangeListener() and
+removePropertyChangeListener(), along with a
+firePropertyChange() method that sends a
+PropertyChangeEvent to all registered listeners.
+PropertyEditor classes may choose to instantiate a
+PropertyEditorSupport object simply to handle the
+job of managing the list of listeners.  When used in this
+way, the PropertyEditorSupport object should be
+instantiated with a source object specified, so that that
+source object can be used in the PropertyChangeEvent
+objects that are sent.
+public class PropertyEditorSupport extends Object implements PropertyEditor {
+    // Protected Constructors
+            protected PropertyEditorSupport();
+            protected PropertyEditorSupport(Object source);
+    // Public Instance Methods
+            public synchronized void addPropertyChangeListener(PropertyChangeListener
+            public synchronized void addPropertyChangeListener'u'listener);  // From PropertyEditor
+            public void firePropertyChange();
+            public String getAsText();  // From PropertyEditor
+            public Component getCustomEditor();  // From PropertyEditor
+            public String getJavaInitializationString();  // From PropertyEditor
+            public String[] getTags();  // From PropertyEditor
+            public Object getValue();  // From PropertyEditor
+            public boolean isPaintable();  // From PropertyEditor
+            public void paintValue(Graphics gfx, Rectangle box);  // From PropertyEditor
+            public synchronized void removePropertyChangeListener(PropertyChangeListener
+            public synchronized void removePropertyChangeListener'u'listener);  // From PropertyEditor
+            public void setAsText(String text) throws IllegalArgumentException;  // From PropertyEditor
+            public void setValue(Object value);  // From PropertyEditor
+            public boolean supportsCustomEditor();  // From PropertyEditor
+}
+java.beans.PropertyEditorManager (JDK 1.1)
+java.beans.PropertyVetoException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

@@ -1,0 +1,227 @@
+
+[Chapter 2] 2.11 Operators
+Chapter 2How Java Differs from C
+2.11 Operators
+Java supports almost all of the standard C operators.  These
+standard operators have the same precedence and
+associativity in Java as they do in C.  They are listed in
+Table 2.3
+and also in quick reference form in Chapter 13, Java Syntax.
+Table 2.3: Java Operators
+Prec.
+Operator
+Operand Type(s)
+Assoc.
+Operation Performed
+1
+++
+arithmetic
+R
+pre-or-post increment 
+(unary)
+--
+arithmetic
+R
+pre-or-post decrement (unary)
++, -
+arithmetic
+R
+unary plus, unary minus
+~
+integral
+R
+bitwise complement (unary)
+!
+boolean
+R
+logical complement (unary)
+(type)
+any
+R
+cast
+2
+*, /, %
+arithmetic
+L
+multiplication, division, remainder
+3
++, -
+arithmetic
+L
+addition, subtraction
++
+string
+L
+string concatenation
+4
+&lt;&lt;
+integral
+L
+left shift
+&gt;&gt;
+integral
+L
+right shift with sign extension
+&gt;&gt;&gt;
+integral
+L
+right shift with zero extension
+5
+&lt;, &lt;=
+arithmetic
+L
+less than, less than or equal
+&gt;, &gt;=
+arithmetic
+L
+greater than, greater than or equal
+instanceof
+object, type
+L
+type comparison
+6
+==
+primitive
+L
+equal (have identical 
+values)
+!=
+primitive
+L
+not equal (have different values)
+==
+object
+L
+equal (refer to same object)
+!=
+object
+L
+not equal (refer to different objects)
+7
+&amp;
+integral
+L
+bitwise AND
+&amp;
+boolean
+L
+boolean AND
+8
+^
+integral
+L
+bitwise XOR
+^
+boolean
+L
+boolean XOR
+9
+|
+integral
+L
+bitwise OR
+|
+boolean
+L
+boolean OR
+10
+&amp;&amp;
+boolean
+L
+conditional AND
+11
+||
+boolean
+L
+conditional OR
+12
+?:
+boolean, any, any
+R
+conditional (ternary) operator
+13
+=
+variable, any
+R
+assignment
+*=, /=, %=, +=, -=, &lt;&lt;=, &gt;&gt;=, &gt;&gt;&gt;=, &amp;=, ^=, |=
+variable, any
+R
+assignment with operation
+Note the following Java operator differences from C. Java
+does not support the comma operator for combining two
+expressions into one (although the for statement
+simulates this operator in a useful way).  
+Since Java does not allow you to
+manipulate pointers directly, it does not support the
+reference and dereference operators *, -&gt;, and &amp;,
+nor the sizeof operator.  Further, Java doesn't
+consider [] (array access) and . (field
+access) to be operators, as C does.
+Java also adds some new operators:
+The + operator applied to String values
+concatenates them.
+[5]
+If only one operand of + is a
+String, the other one is converted to a string.
+The conversion is done automatically for primitive types,
+and by calling the toString() method of non-primitive
+types.  This String + operator has the same
+precedence as the arithmetic + operator.  The
++= operator works as you would expect for
+String values.
+[5] 
+To C++ programmers, this looks like operator
+overloading.  In fact, Java does not support operator
+overloading--the language designers decided (after much
+debate) that overloaded operators were a neat idea, but that
+code that relied on them became hard to read and understand.
+The instanceof operator returns true if the
+object o on its left-hand side is an instance of the
+class C or implements the interface I
+specified on its right-hand side.  It also returns
+true if o is an instance of a subclass of
+C or is an instance of a subclass of some class that
+implements I.  instanceof returns
+false if o is not an instance of C
+or does not implement I.  It also returns
+false if the value on its left is null.  If
+instanceof returns true, it means that
+o is assignable to variables of type C
+or I.  The instanceof operator has the same
+precedence as the &lt;, &lt;=, &gt;, and
+&gt;= operators.
+Because all integral types in Java are signed values, the
+Java &gt;&gt; operator is defined to do a right shift with
+sign extension.  The &gt;&gt;&gt; operator treats the value
+to be shifted as an unsigned number and shifts the bits
+right with zero extension.  The &gt;&gt;&gt;= operator works
+as you would expect.
+&amp; and |
+When &amp; and | are applied to integral types
+in Java, they perform the expected bitwise AND and OR
+operations.  Java makes a strong distinction between
+integral types and the boolean type, however.  Thus,
+if these operators are applied to boolean types,
+they perform logical AND and logical OR operations.  These
+logical AND and logical OR operators always evaluate both of
+their operands, even when the result of the operation is
+determined after evaluating only the left operand.  This is
+useful when the operands are expressions with side effects
+(such as method calls) and you always want the side effects
+to occur.  However, when you do not want the right operand
+evaluated if it is not necessary, you can use the &amp;&amp;
+and || operators, which perform "short-circuited" logical AND and
+logical OR operations just as in C.  The &amp;= and
+|= operators perform a bitwise or logical operation
+depending on the type of the operands, as you would
+expect.
+Strings
+Statements
+ 
+ 
+ 
+ 
+ 
+ 
+ 

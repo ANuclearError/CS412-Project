@@ -1,0 +1,26 @@
+
+[Chapter 24] 24.30 java.io.InterruptedIOException (JDK 1.0)
+Chapter 24The java.io Package
+24.30 java.io.InterruptedIOException (JDK 1.0)
+An IOException that signals that an input or output
+operation was interrupted. The bytesTransferred
+variable contains the number of bytes read or written before
+the operation was interrupted.
+public class InterruptedIOException extends IOException {
+    // Public Constructors
+            public InterruptedIOException();
+            public InterruptedIOException(String s);
+    // Public Instance Variables
+            public int bytesTransferred;
+}
+Hierarchy:
+Object->Throwable(Serializable)->Exception->IOException->InterruptedIOException
+java.io.InputStreamReader (JDK 1.1)
+java.io.InvalidClassException (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

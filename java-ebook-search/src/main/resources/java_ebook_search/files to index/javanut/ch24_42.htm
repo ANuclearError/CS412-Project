@@ -1,0 +1,63 @@
+
+[Chapter 24] 24.42 java.io.ObjectOutputStream (JDK 1.1)
+Chapter 24The java.io Package
+24.42 java.io.ObjectOutputStream (JDK 1.1)
+The ObjectOutputStream is used to serialize objects,
+arrays, and other values to a stream.  The
+writeObject() method serializes an object or array,
+and various other methods are used to write primitive data
+values to the stream.  Note that only objects that implement
+the Serializable interface or the
+Externalizable interface can be serialized.
+The defaultWriteObject() may only be called from the
+writeObject() method of a Serializable
+object.  It allows an object to perform additional processing before
+or after serializing itself.
+The remaining methods of ObjectOutputStream are
+miscellaneous stream manipulation methods and protected
+methods for use by subclasses that want to customize its
+serialization behavior.
+public class ObjectOutputStream extends OutputStream implements ObjectOutput {
+    // Public Constructor
+            public ObjectOutputStream(OutputStream out) throws IOException;
+    // Public Instance Methods
+            public void close() throws IOException;  // Overrides OutputStream
+            public final void defaultWriteObject() throws IOException;
+            public void flush() throws IOException;  // Overrides OutputStream
+            public void reset() throws IOException;
+            public void write(int data) throws IOException;  // Defines OutputStream
+            public void write(byte[] b) throws IOException;  // Overrides OutputStream
+            public void write(byte[] b, int off, int len) throws IOException;  // Overrides OutputStream
+            public void writeBoolean(boolean data) throws IOException;  // From DataOutput
+            public void writeByte(int data) throws IOException;  // From DataOutput
+            public void writeBytes(String data) throws IOException;  // From DataOutput
+            public void writeChar(int data) throws IOException;  // From DataOutput
+            public void writeChars(String data) throws IOException;  // From DataOutput
+            public void writeDouble(double data) throws IOException;  // From DataOutput
+            public void writeFloat(float data) throws IOException;  // From DataOutput
+            public void writeInt(int data) throws IOException;  // From DataOutput
+            public void writeLong(long data) throws IOException;  // From DataOutput
+            public final void writeObject(Object obj) throws IOException;  // From ObjectOutput
+            public void writeShort(int data) throws IOException;  // From DataOutput
+            public void writeUTF(String data) throws IOException;  // From DataOutput
+    // Protected Instance Methods
+            protected void annotateClass(Class cl) throws IOException;
+            protected void drain() throws IOException;
+            protected final boolean enableReplaceObject(boolean enable) throws SecurityException;
+            protected Object replaceObject(Object obj) throws IOException;
+            protected void writeStreamHeader() throws IOException;
+}
+Hierarchy:
+Object->OutputStream->ObjectOutputStream(ObjectOutput(DataOutput))
+Passed To:
+AWTEventMulticaster.save(), 
+AWTEventMulticaster.saveInternal()
+java.io.ObjectOutput (JDK 1.1)
+java.io.ObjectStreamClass (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

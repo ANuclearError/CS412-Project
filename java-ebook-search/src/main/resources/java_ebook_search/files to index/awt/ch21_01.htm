@@ -1,0 +1,154 @@
+
+[Chapter 21] java.awt.event Reference
+Chapter 21
+21. java.awt.event Reference
+Contents:
+ActionListener 
+AdjustmentEvent 
+AdjustmentListener 
+ComponentAdapter 
+ComponentEvent 
+ComponentListener 
+ContainerAdapter 
+ContainerEvent 
+ContainerListener 
+FocusAdapter 
+FocusEvent 
+FocusListener 
+InputEvent 
+ItemEvent 
+ItemListener 
+KeyAdapter 
+KeyEvent 
+KeyListener 
+MouseAdapter 
+MouseEvent 
+MouseListener 
+MouseMotionAdapter 
+MouseMotionListener 
+PaintEvent 
+TextEvent 
+TextListener 
+WindowAdapter 
+WindowEvent 
+WindowListener 
+ActionEvent 
+Name
+ActionEvent 
+Description
+Action events are fired off when the user performs an action on a component, 
+such as pushing a button, double-clicking on a list item, or selecting 
+a menu item. There is only one action event type, ACTION_PERFORMED. 
+Class Definition
+public class java.awt.event.ActionEvent
+   extends java.awt.AWTEvent {
+  // Constants
+  public final static int ACTION_FIRST;
+  public final static int ACTION_LAST;
+  public final static int ACTION_PERFORMED;
+  public final static int ALT_MASK;
+  public final static int CTRL_MASK;
+  public final static int META_MASK;
+  public final static int SHIFT_MASK;
+  // Constructors
+  public ActionEvent (Object source, int id, String command);
+  public ActionEvent (Object source, int id, String command, int modifiers);
+  // Instance Methods
+  public String getActionCommand();
+  public int getModifiers();
+  public String paramString();
+}
+Constants
+ACTION_FIRST
+public final static int ACTION_FIRST
+Specifies the beginning range of action event ID values. 
+ACTION_LAST
+public final static int ACTION_LAST
+Specifies the ending range of action event ID values. 
+ACTION_PERFORMED
+public final static int ACTION_PERFORMED
+The only action event type; it indicates that the user has performed an 
+action. 
+ALT_MASK
+public final static int ALT_MASK
+A constant representing the ALT key. ORed with other masks to form modifiers setting of an AWTEvent. 
+CTRL_MASK
+public final static int CTRL_MASK
+A constant representing the Control key. ORed with other masks to 
+form modifiers setting of an AWTEvent. 
+META_MASK
+public final static int META_MASK
+A constant representing the META key. ORed with other masks to form modifiers setting of an AWTEvent. 
+SHIFT_MASK
+public final static int SHIFT_MASK
+A constant representing the Shift key. ORed with other masks to 
+form modifiers setting of an AWTEvent. 
+Constructors
+ActionEvent
+public ActionEvent (Object source, int id, String command)
+Parameters
+source
+The object that 
+generated the event.
+id
+The type ID of the event.
+command
+The action command 
+string. 
+Description
+Constructs an ActionEvent with 
+the given characteristics. 
+public ActionEvent (Object source, int id, String command, int modifiers)
+Parameters
+source
+The object that 
+generated the event.
+id
+The type ID of the event.
+command
+The action command 
+string.
+modifiers
+A combination 
+of the key mask constants. 
+Description
+Constructs an ActionEvent with 
+the given characteristics. 
+Instance Methods
+getActionCommand
+public String getActionCommand()
+Returns
+The action command string for this ActionEvent. 
+Description
+Generally the action command string is the label of the component that 
+generated the event. Also, when localization is necessary, the action command 
+string can provide a setting that does not get localized. 
+getModifiers
+public int getModifiers()
+Returns
+A combination of the key mask constants. 
+Description
+Returns the modifier keys that were held down when this action was performed. 
+This enables you to perform special processing if, for example, the user 
+holds down Shift while pushing a button. 
+paramString
+public String paramString()
+Returns
+String with current settings of ActionEvent. 
+Overrides
+AWTEvent.paramString() 
+Description
+Helper method for toString() 
+to generate string of current settings. 
+See Also
+ActionListener, AWTEvent, 
+String 
+WindowListener 
+ActionListener 
+ 
+ 
+ 
+ 
+ 
+ 
+ 

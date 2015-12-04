@@ -1,0 +1,34 @@
+
+[Chapter 24] 24.23 java.io.FilenameFilter (JDK 1.0)
+Chapter 24The java.io Package
+24.23 java.io.FilenameFilter (JDK 1.0)
+This interface defines the accept() method that must
+be implemented by any object that filters filenames
+(i.e., selects a subset of filenames from a list of
+filenames). There are no standard FilenameFilter
+classes implemented by Java, but objects that implement this
+interface are used by the java.awt.FileDialog
+object, and by the File.list() method. A typical
+FilenameFilter object might check that the specified
+File represents a file (not a directory), is
+readable (and possibly writable as well), and that its name
+ends with some desired extension.
+public abstract interface FilenameFilter {
+    // Public Instance Methods
+            public abstract boolean accept(File dir, String name);
+}
+Passed To:
+File.list(), 
+FileDialog.setFilenameFilter(), 
+FileDialogPeer.setFilenameFilter()
+Returned By:
+FileDialog.getFilenameFilter()
+java.io.FileWriter (JDK 1.1)
+java.io.FilterInputStream (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

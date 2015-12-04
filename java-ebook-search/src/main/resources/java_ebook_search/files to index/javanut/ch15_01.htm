@@ -1,0 +1,113 @@
+
+[Chapter 15] Java-Related HTML Tags
+Chapter 15
+15. Java-Related HTML Tags
+Contents:
+The &lt;APPLET&gt; Tag
+The &lt;PARAM&gt; Tag
+An Example HTML File
+This chapter explains what you need to know about HTML
+to work with Java applets.
+15.1 The &lt;APPLET&gt; Tag
+A Java applet is included in a Web page with the
+&lt;APPLET&gt; tag, which has the following syntax.  Items
+in brackets ([]) are optional.
+&lt;APPLET
+    CODE = applet-filename
+    WIDTH = pixel-width
+    HEIGHT = pixel-height
+    [OBJECT = serialized-applet-filename]
+    [ARCHIVE = jar-file-list]
+    [CODEBASE = applet-url]
+    [ALT = alternate-text]
+    [NAME = applet-name]
+    [ALIGN = alignment]
+    [VSPACE = vertical-pixel-space]
+    [HSPACE = horizontal-pixel-space]
+&gt;
+[&lt;PARAM NAME = parameter VALUE = value&gt;]
+[&lt;PARAM NAME = parameter VALUE = value&gt;]
+    ...
+[alternate-text]
+&lt;/APPLET&gt;
+APPLET
+The &lt;APPLET&gt; tag specifies an applet to be run
+within a Web document. A Web browser that does not support Java
+and does not understand the &lt;APPLET&gt; tag ignores
+this tag and any related &lt;PARAM&gt; tags, and simply
+displays any alternate-text that appears between
+&lt;APPLET&gt; and &lt;/APPLET&gt;. A browser that does
+support Java runs the specified applet, and does
+not display the alternate-text.
+CODE
+This required attribute specifies the file that contains the
+compiled Java code for the applet.  It must be relative to
+the CODEBASE if that attribute is specified, or
+relative to the current document's URL.  It must not be an
+absolute URL.  In Java 1.1, this attribute can be replaced
+with an OBJECT attribute.
+WIDTH
+This attribute specifies the initial width, in pixels, that
+the applet needs in the browser's window.  It is required.
+HEIGHT
+This attribute specifies the initial height, in pixels, that
+the applet needs in the browser's window.  It is required.
+OBJECT
+As of Java 1.1, this attribute specifies the name of
+a file that contains a serialized applet that is to be
+created by deserialization.  An applet specified in this way
+does not have its init() method invoked, but does have
+its start() method invoked.  Thus, before an
+applet is saved through serialization, it should be
+initialized, but should not be started, or, if started, it
+should be stopped.  An applet must have either the
+CODE or OBJECT attribute specified, but not
+both.
+ARCHIVE
+As of Java 1.1, this attribute specifies a
+comma-separate list of JAR (Java Archive) files that are
+"preloaded" by the Web browser or applet viewer.  These
+archive files may contain Java class files, images, sounds,
+properties, or any other resources required by the applet.
+The Web browser or applet viewer searches for required
+files in the archives before attempting to load them over
+the network.
+CODEBASE
+This optional attribute specifies the base URL (absolute or
+relative) of the applet to be displayed.  This should be a
+directory, not the applet file itself.  If this attribute is
+unspecified, then the URL of the current document is used.
+ALT
+This optional attribute specifies text that should be
+displayed by browsers that understand the &lt;APPLET&gt;
+tag but do not support Java.
+NAME
+This optional attribute gives a name to the applet instance.
+Applets that are running at the same time can look each
+other up by name and communicate with each other.
+ALIGN
+This optional attribute specifies the applet's alignment on
+the page.  It behaves just like the ALIGN attribute
+of the &lt;IMG&gt; tag.  Its allowed values are:
+left, right, top, texttop,
+middle, absmiddle, baseline,
+bottom, and absbottom.
+VSPACE
+This optional attribute specifies the margin, in pixels,
+that the browser should put above and below the applet.  It
+behaves just like the VSPACE attribute of the
+&lt;IMG&gt; tag.
+HSPACE
+This optional attribute specifies the margin, in pixels,
+that the browser should put on either side of the applet.
+It behaves just like the HSPACE attribute of the
+&lt;IMG&gt; tag.
+Working with System Properties
+The &lt;PARAM&gt; Tag
+ 
+ 
+ 
+ 
+ 
+ 
+ 

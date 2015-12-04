@@ -1,0 +1,107 @@
+
+[Chapter 5] 5.2 Labels
+Chapter 5Components
+5.2 Labels
+Having covered the features of the Component 
+class, we can now look at some of the simplest components. The first component 
+introduced here is a Label. 
+A label is a Component that 
+displays a single line of static text.[3] 
+It is useful for putting a title or message next to another component. 
+The text can be centered or justified to the left or right. Labels react 
+to all events they receive. However, they do not get any events from their 
+peers. 
+[3] 
+ 
+Java in A Nutshell 
+(from O'Reilly &amp; Associates) includes a multiline Label component.
+Label MethodsConstants
+There are three alignment specifiers for labels. The alignment tells the 
+Label where to position its 
+text within the space allotted. Setting an alignment for a Label 
+might not do anything noticeable if the LayoutManager 
+being used does not resize the Label 
+to give it more space. With FlowLayout, 
+the alignment is barely noticeable. See Chapter 7, Layouts, for 
+more information. 
+public final static int LEFT 
+LEFT is the constant for left 
+alignment. If no alignment is specified in the constructor, left alignment 
+is the default. 
+public final static int CENTER 
+CENTER is the constant for 
+center alignment. 
+public final static int RIGHT 
+RIGHT is the constant for right 
+alignment. 
+Constructors
+public Label () 
+This constructor creates an empty Label. 
+By default, the label's text is left justified. 
+public Label (String label) 
+This constructor creates a Label 
+whose initial text is label. 
+By default, the label's text is left justified. 
+public Label (String label, int alignment) 
+This constructor creates a Label 
+whose initial text is label. 
+The alignment of the label is alignment. 
+If alignment is invalid (not 
+LEFT, RIGHT, 
+or CENTER), the constructor 
+throws the run-time exception IllegalArgumentException. 
+Text
+public String getText () 
+The getText() method returns 
+the current value of Label. 
+public void setText (String label) 
+The setText() method changes 
+the text of the Label to label. 
+If the new label is a different size from the old one, you should revalidate 
+the display to ensure the label's entire contents will be seen. 
+Alignment
+public int getAlignment () 
+The getAlignment() method returns 
+the current alignment of the Label. 
+public void setAlignment (int alignment) 
+The setAlignment() method changes 
+the alignment of the Label 
+to alignment. If alignment 
+is invalid (not LEFT, RIGHT, 
+or CENTER), setAlignment() 
+throws the run-time exception IllegalArgumentException. 
+Figure 5.2 shows all three alignments. 
+Figure 5.2: Labels with different alignments
+Miscellaneous methods
+public synchronized void addNotify () 
+The addNotify() method creates 
+the Label peer. If 
+you override this method, first call super.addNotify(), 
+then put in your customizations. Then you will be able to do everything 
+you need with the information about the newly created peer. 
+protected String paramString () 
+The paramString() method overrides 
+Component's paramString() 
+method. It is a protected method that calls the overridden paramString() 
+to build a String from the 
+different parameters of the Component. 
+When the method paramString() is called for a Label, the 
+alignment and label's text are added. Thus, for the Label 
+created by the constructor new Label (`ZapfDingbats`, 
+Label.RIGHT), the results displayed from a call 
+to toString() would be: 
+java.awt.Label[0,0,0x0,invalid,align=right,label=ZapfDingbats]
+Label Events
+The Label component can react 
+to any event it receives, though the Label 
+peer normally does not send any. However, there is nothing to stop you 
+from posting an event yourself. 
+Component
+Buttons
+ 
+ 
+ 
+ 
+ 
+ 
+ 

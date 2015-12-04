@@ -1,0 +1,154 @@
+
+[Chapter 25] 25.8 java.lang.Class (JDK 1.0)
+Chapter 25The java.lang Package
+25.8 java.lang.Class (JDK 1.0)
+This class represents a Java class or interface, or, in Java
+1.1, any Java type.  There is one Class object for
+each class that is loaded into the Java Virtual Machine, and
+in Java 1.1 there are special Class objects that
+represent the Java primitive types.  The TYPE
+constants defined by Boolean, Integer, and
+the other primitive "wrapper classes" hold these special
+Class objects.  Array types are also represented by
+Class objects in Java 1.1.
+There is no constructor for this class.  You can obtain a
+Class object by calling the getClass()
+method of any instance of the desired class.  In Java 1.1, a
+Class object may also be referred to by
+appending .class to the name of a class.  Finally, and most
+interestingly, a class can be dynamically loaded by passing
+its fully-qualified name (i.e., package name plus class name)
+to the static Class.forName() method.  This method
+loads the named class, if it is not already loaded, into the
+Java interpreter, and returns a Class object for it.
+The newInstance() method
+creates an instance of a given class--this allows you to
+create instances of dynamically loaded classes for which you
+cannot use the new keyword.  Note that this method
+only works when the target class has a no-argument
+constructor.  See newInstance() in
+java.lang.reflect.Constructor for a more powerful
+way to instantiate dynamically loaded classes.
+getName() returns the name of the class.
+getSuperclass() returns its superclass.
+isInterface() tests whether the Class
+object represents an interface, and
+getInterfaces() returns an array of the interfaces
+that this class implements.  The various other get
+and is methods return other information about the
+represented class, and form part of the Java Reflection API,
+along with the classes in java.lang.reflect.
+public final class Class extends Object implements Serializable {
+    // No Constructor
+    // Class Methods
+            public static native Class forName(String className) throws ClassNotFoundException;
+    // Public Instance Methods
+            public native ClassLoader getClassLoader();
+        1.1public Class[] getClasses();
+        1.1public native Class getComponentType();
+        1.1public Constructor getConstructor(Class[] parameterTypes) throws NoSuchMethodException, SecurityException;
+        1.1public Constructor[] getConstructors() throws SecurityException;
+        1.1public Class[] getDeclaredClasses() throws SecurityException;
+        1.1public Constructor getDeclaredConstructor(Class[] parameterTypes) throws NoSuchMethodException, SecurityException;
+        1.1public Constructor[] getDeclaredConstructors() throws SecurityException;
+        1.1public Field getDeclaredField(String name) throws NoSuchFieldException, SecurityException;
+        1.1public Field[] getDeclaredFields() throws SecurityException;
+        1.1public Method getDeclaredMethod(String name, Class[] parameterTypes) throws NoSuchMethodException, SecurityException;
+        1.1public Method[] getDeclaredMethods() throws SecurityException;
+        1.1public Class getDeclaringClass();
+        1.1public Field getField(String name) throws NoSuchFieldException, SecurityException;
+        1.1public Field[] getFields() throws SecurityException;
+            public native Class[] getInterfaces();
+        1.1public Method getMethod(String name, Class[] parameterTypes) throws NoSuchMethodException, SecurityException;
+        1.1public Method[] getMethods() throws SecurityException;
+        1.1public native int getModifiers();
+            public native String getName();
+        1.1public URL getResource(String name);
+        1.1public InputStream getResourceAsStream(String name);
+        1.1public native Object[] getSigners();
+            public native Class getSuperclass();
+        1.1public native boolean isArray();
+        1.1public native boolean isAssignableFrom(Class cls);
+        1.1public native boolean isInstance(Object obj);
+            public native boolean isInterface();
+        1.1public native boolean isPrimitive();
+            public native Object newInstance() throws InstantiationException, IllegalAccessException;
+            public String toString();  // Overrides Object
+}
+Passed To:
+Array.newInstance(), 
+BeanDescriptor(), 
+Beans.getInstanceOf(), 
+Beans.isInstanceOf(), 
+Class.getConstructor(), 
+Class.getDeclaredConstructor(), 
+Class.getDeclaredMethod(), 
+Class.getMethod(), 
+Class.isAssignableFrom(), 
+ClassLoader.resolveClass(), 
+ClassLoader.setSigners(), 
+Compiler.compileClass(), 
+DataFlavor(), 
+EventSetDescriptor(), 
+IndexedPropertyDescriptor(), 
+Introspector.getBeanInfo(), 
+ObjectOutputStream.annotateClass(), 
+ObjectStreamClass.lookup(), 
+PropertyDescriptor(), 
+PropertyDescriptor.setPropertyEditorClass(), 
+PropertyEditorManager.findEditor(), 
+PropertyEditorManager.registerEditor(), 
+SecurityManager.checkMemberAccess()
+Returned By:
+BeanDescriptor.getBeanClass(), 
+BeanDescriptor.getCustomizerClass(), 
+Class.forName(), 
+Class.getClasses(), 
+Class.getComponentType(), 
+Class.getDeclaredClasses(), 
+Class.getDeclaringClass(), 
+Class.getInterfaces(), 
+Class.getSuperclass(), 
+ClassLoader.defineClass(), 
+ClassLoader.findLoadedClass(), 
+ClassLoader.findSystemClass(), 
+ClassLoader.loadClass(), 
+Constructor.getDeclaringClass(), 
+Constructor.getExceptionTypes(), 
+Constructor.getParameterTypes(), 
+DataFlavor.getRepresentationClass(), 
+EventSetDescriptor.getListenerType(), 
+Field.getDeclaringClass(), 
+Field.getType(), 
+IndexedPropertyDescriptor.getIndexedPropertyType(), 
+Member.getDeclaringClass(), 
+Method.getDeclaringClass(), 
+Method.getExceptionTypes(), 
+Method.getParameterTypes(), 
+Method.getReturnType(), 
+Object.getClass(), 
+ObjectInputStream.resolveClass(), 
+ObjectStreamClass.forClass(), 
+PropertyDescriptor.getPropertyEditorClass(), 
+PropertyDescriptor.getPropertyType(), 
+SecurityManager.currentLoadedClass(), 
+SecurityManager.getClassContext()
+Type Of:
+Boolean.TYPE, 
+Byte.TYPE, 
+Character.TYPE, 
+Double.TYPE, 
+Float.TYPE, 
+Integer.TYPE, 
+Long.TYPE, 
+Short.TYPE, 
+Void.TYPE
+java.lang.Character (JDK 1.0)
+java.lang.ClassCastException (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

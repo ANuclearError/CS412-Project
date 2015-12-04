@@ -1,0 +1,46 @@
+
+[Chapter 23] 23.10 java.beans.MethodDescriptor (JDK 1.1)
+Chapter 23The java.beans Package
+23.10 java.beans.MethodDescriptor (JDK 1.1)
+A MethodDescriptor object is a type of
+FeatureDescriptor that describes a method supported
+by a Java bean.  The BeanInfo class for a Java bean
+optionally creates MethodDescriptor objects that
+describe the methods the bean exports.  While a
+BeanInfo class creates and initializes
+MethodDescriptor objects, it is typically only
+application builders and similar tools that use these
+objects to obtain information about the methods supported by
+a bean.
+To create a MethodDescriptor, you must specify the
+java.lang.reflect.Method object for the method, and
+optionally specify an array of ParameterDescriptor
+objects that describe the parameters of the method.  Once
+you have created a MethodDescriptor object, you can
+use FeatureDescriptor methods to provide additional
+information about each method.
+public class MethodDescriptor extends FeatureDescriptor {
+    // Public Constructors
+            public MethodDescriptor(Method method);
+            public MethodDescriptor(Method method, ParameterDescriptor[] parameterDescriptors);
+    // Public Instance Methods
+            public Method getMethod();
+            public ParameterDescriptor[] getParameterDescriptors();
+}
+Hierarchy:
+Object->FeatureDescriptor->MethodDescriptor
+Passed To:
+EventSetDescriptor()
+Returned By:
+BeanInfo.getMethodDescriptors(), 
+EventSetDescriptor.getListenerMethodDescriptors(), 
+SimpleBeanInfo.getMethodDescriptors()
+java.beans.Introspector (JDK 1.1)
+java.beans.ParameterDescriptor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

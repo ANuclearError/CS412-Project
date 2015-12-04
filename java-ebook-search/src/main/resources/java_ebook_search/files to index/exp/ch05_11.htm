@@ -1,0 +1,362 @@
+
+[Chapter 5] 5.11 Reflection
+Chapter 5Objects in Java
+5.11 Reflection
+In this section we'll take a look at the Java reflection API,
+supported by the classes in the
+java.lang.reflect package.  As its 
+name suggests, reflection is the ability for a programming language to
+examine itself.  The Java reflection API lets Java code look at an
+object (more precisely, the class of the object) and determine its
+structure.  Within the limits imposed by the security manager, you can
+find out what constructors, methods, fields a class has, and their
+attributes.  You can even change the value of fields, dynamically
+invoke methods, and construct new objects, much as if Java had
+primitive pointers to variables and methods.
+We don't have room here to cover the full reflection API.  As you
+might expect, 
+the reflect package is complex and rich in
+details. But reflection has been designed so that you can do a lot
+with relatively little effort; 20% of the effort will give you 80% of
+the fun.
+The reflection API is used by Java Beans to determine the capabilities
+of objects at runtime.  It's also used at a lower level by object
+serialization (see Chapter 8) to tear apart and build objects for
+transport over streams or into persistent storage.  Obviously, the
+power to pick apart objects and see their internals must be zealously
+watched by the security manager. Your code is not allowed to do
+anything with the reflection API that it couldn't do with static Java
+code. In short, reflection is a powerful tool, but it isn't a
+loophole. An object can't use it to find out about data fields that it
+wouldn't normally be able to access (for example, another object's
+private fields), and you can't use it to modify any data
+inappropriately.
+The three primary features of a class are its fields (variables), 
+its methods, and its constructors.  For purposes of describing or accessing an 
+object, these three features are represented by the classes in the reflection
+API: the java.lang.reflect.Field,
+java.lang.reflect.Method, and
+java.lang.reflect.Constructor classes
+represent the fields, methods, and constructors of a class.
+To get one of these objects, we use the class's
+Class.
+Field[] getFields()
+Get the public variables, including inherited ones.
+Field getField(String name)
+Get the specified public variable, which may be inherited.
+Field[] getDeclaredFields()
+Get all, public and nonpublic,
+variables declared in this class (not including those inherited from 
+superclasses).
+Field getDeclaredField(String name)
+Get the specified
+variable, public or nonpublic, declared in this class (inherited 
+variables not considered).
+Method[] getMethods()
+Get the public methods, including inherited ones.
+Method getMethod(String name, Class [] argumentTypes)
+Get the specified public method, who's arguments match the types listed in
+argumentTypes.  The method may be inherited.
+Method[] getDeclaredMethods()
+Get all, public and
+nonpublic, methods declared in this class (not including those inherited
+from superclasses).
+Method getDeclaredMethod(String name, Class[] argumentTypes)
+Get the specified method, public or nonpublic, who's arguments match the 
+types listed in argumentTypes, and which is declared in this class 
+(inherited methods not considered).
+Constructor[] getConstructors() 
+Get the public constructors of this class.
+Constructor getConstructor(Class[] argumentTypes)
+Get the specified public constructor of this class, who's arguments match the
+types listed in argumentTypes.
+Constructor[] getDeclaredConstructors() 
+Get all, public and nonpublic, constructors of this class.
+Constructor getDeclaredConstructor(Class[] argumentTypes)
+Get the specified constructor, public or nonpublic, who's arguments match
+the types listed in argumentTypes.
+The table above shows that the Class class provides
+two pairs of methods for getting at each type of feature.  One pair
+allows access to a class's public features (including those inherited
+from its superclases), while the other pair allows access to any
+public or nonpublic item declared within the class (but not features
+that are inherited), subject to security considerations.  For example,
+getFields() returns an array of
+Field objects representing all of a class's public
+variables, including those it
+inherits. getDeclaredFields() returns an array
+representing all the variables declared in the class, regardless of
+their access modifiers (not including variables the security manager
+won't let you see), but not including inherited variables.  (For
+constructors, the distinction between "all constructors" and "declared
+constructors" is meaningful, so getConstructors()
+and getDeclaredConstructors() differ only in that
+the former returns public constructors, while the latter returns
+all the class's constructors.)  Each pair of methods includes a method
+for listing all of the items at once (for example,
+getFields()), and a method for looking up a
+particular item by name and (for methods and constructors) signature
+(for example, getField(), which takes the field
+name as an argument).
+As a quick example, we'll show how easy it is to list all of the 
+public methods of the java.util.Calendar
+class: 
+Method [] methods = Calendar.class.getMethods();
+for (int i=0; i &lt; methods.length; i++)
+    System.out.println( methods[i] );
+Here we have used the .class notation to
+get a reference the Class of
+Calendar.  Remember the discussion of the
+Class class--the reflection methods don't
+belong to the Calendar class itself; they
+belong to the java.lang.Class object that
+describes the Calendar class.  If we
+wanted to start from an instance of
+Calendar (or, say, an unknown object) we
+could have used the getClass() method of
+the object instead:
+Method [] methods = myUnknownObject.getClass().getMethods();
+Security
+Access to the reflection API is governed by a security manager. A
+fully trusted application has access to all of the above
+functionality--it can gain access to members of classes at the level
+of restriction normally granted code within its scope.  There is
+currently no "special" access granted by the reflection API.  It is
+possible that in the future, the full power of the reflection API will
+be available to completely trusted code such as debuggers; right now,
+user code can only see what it could have seen at compile-time.
+Untrusted code (for example, an unsigned applet) has the normal level
+of access to classes loaded from its own origin (classes sharing its
+classloader), but can only rely on the ability to access the public
+members of public classes coming from the rest of the system.
+Accessing Fields
+The class java.lang.reflect.Field is used
+to represent static variables and instance variables.
+Field has a full set of accessor methods
+for all of the base types (for example,
+getInt() and
+setInt(),
+getBoolean() and
+setBoolean()), and
+get() and
+set() methods for accessing members that
+are object references.
+For example, given the following class:
+class BankAccount {
+    public int balance;
+}
+With the reflection API we can read and modify the value of the public
+integer field balance:
+BankAccount myBankAccount = ...;
+...
+try {
+    Field balanceField = BankAccount.class.getField("balance");
+    int balance = balanceField.getInt( myBankAccount );  // read it
+    balanceField.setInt( myBankAccount, 42 );            // change it
+} catch ( NoSuchFieldException e ) { 
+    // There is no "balance" field in this class
+} catch ( IllegalAccessException e2) {
+    // We don't have permission to access the field.
+}
+ 
+The various methods of Field take a
+reference to the particular object instance that we want to access.
+In the code above, the getField() method returns a
+Field object that represents the
+balance of the BankAccount
+class; this object doesn't refer to any specific
+BankAccount. Therefore, to read or modify any
+specific BankAccount, we call
+getInt() and setInt() with a
+reference to myBankAccount, which is the account we
+want to work with.  As you can see, an exception occurs if we ask for
+access to a field that doesn't exist, or if we don't have the proper
+permission to read or write the field.  If we make
+balance a private field, we can
+still look up the Field object that describes it,
+but we won't be able to read or write its value.
+Therefore, we aren't doing anything that we couldn't have done with
+static code at compile-time; as long as
+balance is a
+public member of a class that we can
+access, we can write code to read and modify its value. What's
+important is that we're accessing balance
+at run-time, and could use this technique to examine the
+balance field in a class that was
+dynamically loaded.
+Accessing Methods
+The class java.lang.reflect.Method
+represents a static or instance method.  Subject to the normal
+security rules, a Method object's
+invoke() method can be used to call the
+underlying object's method with specified arguments.  Yes, Java has
+something like a method pointer!
+As an example, we'll write a Java application called
+invoke that 
+takes as command line arguments the name of a Java class and the name of
+a method to invoke.  For simplicity, we'll assume that the method is
+static and takes no arguments:
+import java.lang.reflect.*;
+class invoke {
+    public static void main( String [] args ) {
+        try {
+            Class c = Class.forName( args[0] );
+            Method m = c.getMethod( args[1], new Class [] { } );
+            Object ret =  m.invoke( null, null );
+            System.out.println( "Invoked static method: " + args[1] + 
+                " of class: " + args[0] + " with no args\nResults: " + ret );
+        } catch ( ClassNotFoundException e ) {
+            // Class.forName() can't find the class
+        } catch ( NoSuchMethodException e2 ) {
+            // that method doesn't exist
+        } catch ( IllegalAccessException e3 ) {
+            // we don't have permission to invoke that method
+        } catch ( InvocationTargetException e4 ) {
+            // an exception ocurred while invoking that method
+            System.out.println("Method threw an: " + e4.getTargetException() );
+        }
+    }
+}
+We can run invoke to fetch the value of
+the system clock: 
+% java invoke java.lang.System currentTimeMillis
+Invoked static method: currentTimeMillis of class: java.lang.System
+with no args 
+Results: 861129235818
+Cool, eh?  Maybe you'll consider this the first step towards writing a
+full blown scripting language for Java, in Java.  If you do, please
+let me know.
+Turning to the code, our first task is to look up the specified
+Class by name. To do so, we call the
+forName() method with the name of the desired class
+(the first command line argument).  We then ask for the specified
+method by its name. getMethod() has two arguments:
+the first is the method name (the second command line argument) and
+the second is an array of Class objects that
+specifies the method's signature. (Remember that any method may be
+overloaded; you must specify the signature to make it clear which
+version you want.) Since our simple program only calls methods with no
+arguments, we create an anonymous empty array of
+Class objects.  Had we wanted to invoke a method
+that takes arguments, we would have passed an array of the classes of
+their respective types, in the proper order.  (An
+IllegalArgumentException can be thrown at run-time
+if they are wrong).  The classes of primitive types can be found in
+the static TYPE fields of their respective
+wrappers; for example, use Integer.TYPE for the
+class of a primitive integer.
+Once we have the Method object, we call its
+invoke() method. This calls our target method, and
+returns the result as an Object. (To do anything
+nontrivial with this object, you have to cast it to something more
+specific. Presumably, since you're calling the method, you know what
+kind of object to expect.)  If the returned value is a primitive type
+like int or boolean, it will be
+wrapped in the standard wrapper class for its type. (Wrappers for
+primitive types are discussed in Chapter 7, Basic Utility Classes.) If the method returns
+void, invoke() returns a
+Void object.  (This is why a wrapper class is
+needed for void; we need a class to represent
+void return values.)
+The first argument to invoke() is the
+object on which we would like to invoke the method. If the method is
+static, there is no object, so we set the first argument to
+null. That's the case in our example.  The
+second argument is an array of objects to be passed as arguments to
+the methods.  The types of these should match the types specified in
+the getMethod() call.  Because we're
+calling a method with no arguments, we can pass
+null for the second argument to
+invoke(). As with the return value, the
+types of primitive arguments are expected to be wrapped in wrapper
+classes.  The reflection API automatically unpacks them for the method
+invocation.
+The exceptions shown in the code above occur if we cannot find or
+don't have permission to access the method.  Additionally, an
+InvocationTargetException occurs if the
+method being invoked throws some kind of exception itself.  You can
+find out what it threw by calling the
+getTargetException() method of
+InvocationTargetException.
+Accessing Constructors
+ 
+The java.lang.reflect.Constructor class
+represents an object constructor.  Subject to the security manager,
+you can use it to create a new instance of an object, with arguments.
+Although you can load new classes dynamically and create instances of
+them with Class.forName() and
+Class.newInstance(), you cannot specify
+arguments with those methods.
+Here we'll create an instance of
+java.util.Date, passing a string argument
+to the constructor:
+try {
+    Constructor c = Date.class.getConstructor( new Class [] { String.class } );
+    Object o = c.newInstance( new Object [] { "Jan 1, 1997" } );
+    Date d = (Date)o;
+    System.out.println(d);
+} catch ( NoSuchMethodException e ) {
+        // getConstructor() couldn't find the constructor we described
+} catch ( InstantiationException e2 ) {
+    // the class is abstract 
+} catch ( IllegalAccessException e3 ) {
+    // we don't have permission to create an instance
+} catch ( InvocationTargetException e4 ) {
+    // the construct threw an exception
+}
+The story is much the same as with a method invocation; after all, a
+constructor is really no more than a method with some strange
+properties.  We look up the appropriate constructor for our
+Date class--the one that takes a single
+String as its argument--by passing
+getConstructor() an array containing the
+String class as its only element. (If the
+constructor required more arguments, we would put additional objects
+in the array, representing the classes of each argument.)  We can then
+invoke newInstance(), passing it a
+corresponding array of argument objects.  Again, to pass primitive
+types we would wrap them in their wrapper types first.  Finally, we
+cast the resulting object to a Date, and
+print it.
+The same exceptions seen in the previous example apply here, including
+the possible IllegalArgumentException. In
+addition, newInstance() throws an
+InstantiationException if the class is
+abstract and cannot be instantiated.
+What about arrays?
+The reflection API allows you to create and inspect array of base
+types using the java.lang.reflect.Array
+class.  The process is much the same as with the other classes.  For
+more information, look in a language reference.
+What is Reflection good for?
+Well, we've already said that reflection is used by the serialization
+process (Chapter 8, Input/Output Facilities), and that it is used by graphical
+development environments, like Borland's JBuilder and Symantec's
+Visual Cafe.  But these are pretty much behind the scenes
+applications. What can reflection do for the average Java programmer?
+First, it's there when you really need a method pointer. However, in
+most situations where a method pointer is convenient, there are other
+solutions to try; writing an anonymous adapter class is likely to be
+clearer and more efficient.  Reflection would let you write a generic
+adapter class; that is, an adapter that doesn't know in advance what
+method to call.  The adapter's client could pass a method name to the
+adapter as a string; the adapter would then use reflection to find the
+given Method in its client. 
+Even more generally, you can use reflection in any situation where you
+need to call methods that you don't know about in advance. It's hard
+to think of good examples--but then, that's the beauty of Java: it
+opens possibilities for new kinds of applications. Perhaps you'll need
+to write some kind of self-extending program, that loads new modules
+dynamically and uses reflection to find out how to use them. In short,
+don't relegate reflection to the dusty toolbox of tricks that are only
+useful for experts. With some experimentation, you'll find that
+reflection greatly adds to Java's capabilities. 
+The Object and Class Classes
+Threads
+ 
+ 
+ 
+ 
+ 
+ 
+ 

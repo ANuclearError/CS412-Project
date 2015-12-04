@@ -1,0 +1,132 @@
+
+[Chapter 13] 13.4 Modifiers
+Chapter 13Java Syntax
+13.4 Modifiers
+There are quite a few Java keywords that serve as modifiers
+for Java classes, interfaces, methods, and fields.
+They are described in Table 13.4.
+Table 13.4: Java Modifiers
+Modifier
+Used On
+Meaning
+abstract
+class
+The class contains unimplemented methods and cannot be
+instantiated.
+interface
+All interfaces are abstract.  The modifier is
+optional in interface declarations.
+method
+No body is provided for the method (it is provided by a
+subclass).  The signature is followed by a semicolon.  The
+enclosing class must also be abstract.
+final
+class
+The class may not be subclassed.
+field
+The field may not have its value changed (compiler may
+precompute expressions).
+method
+The method may not be overridden (compiler may optimize).
+variable
+Java 1.1 and later: the local variable or method or
+exception parameter may not have its value changed.
+native
+method
+The method is implemented in C, or in some other
+platform-dependent way.  No body is provided; the signature
+is followed by a semicolon.
+none (package)
+class
+A non-public class is accessible only in its package
+interface
+A non-public interface is accessible only in its package
+member
+A member that is not private, protected, or
+public has package visiblity and is accessible only
+within its package.
+private
+member
+The member is only accessible within the class that defines it.
+protected
+member
+The member is only accessible within the package in which it
+is defined, and within subclasses.
+public
+class
+The class is accessible anywhere its package is.
+interface
+The interface is accessible anywhere its package is.
+member
+The member is accessible anywhere its class is.
+static
+class
+In Java 1.1, a class delared static is a toplevel
+class, not an inner class.
+field
+A static field is a "class field." There is only one
+instance of the field, regardless of the number of class
+instances created.  It may be accessed through the class name.
+initializer
+The intializer is run when the class is loaded, rather than
+when an instance is created.
+method
+A static method is a "class method."  It is not passed as an
+implicit this object reference.  It may be invoked through the
+class name.
+synchronized
+method
+The method makes non-atomic modifications to the class or
+instance, and care must be taken to ensure that two threads
+cannot modify the class or instance at the same time.  For a
+static method, a lock for the class is acquired
+before executing the method.  For a non-static
+method, a lock for the specific object instance is acquired.
+transient
+field
+The field is not part of the persistent state of the
+object, and should not be serialized with the object.
+volatile
+field
+The field may be accessed by unsynchronized threads, so certain code
+optimizations must not be performed on it.
+Table 13.5
+summarizes the visibility modifiers; it shows the
+circumstances under which class members of the various
+visibility types are accessible.
+Table 13.5: Class Member Accessibility
+Accessible to:
+Member Visibility
+public
+protected
+package
+private
+Same class
+yes
+yes
+yes
+yes
+Class in same package
+yes
+yes
+yes
+no
+Subclass in different package
+yes
+yes
+no
+no
+Non-subclass, different package
+yes
+no
+no
+no
+Operators
+Reserved Words
+ 
+ 
+ 
+ 
+ 
+ 
+ 

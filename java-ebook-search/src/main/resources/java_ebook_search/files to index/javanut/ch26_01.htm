@@ -1,0 +1,101 @@
+
+[Chapter 26] The java.lang.reflect Package
+Chapter 26
+26. The java.lang.reflect Package
+Contents:
+java.lang.reflect.Array (JDK 1.1)
+java.lang.reflect.Constructor (JDK 1.1)
+java.lang.reflect.Field (JDK 1.1)
+java.lang.reflect.InvocationTargetException (JDK 1.1)
+java.lang.reflect.Member (JDK 1.1)
+java.lang.reflect.Method (JDK 1.1)
+java.lang.reflect.Modifier (JDK 1.1)
+The java.lang.reflect package contains the classes
+and interfaces that, along with java.lang.Class,
+comprise the Java Reflection API.  This package is new in
+Java 1.1.  
+Figure 26.1
+shows the class hierarchy.
+The Constructor, Field, and Method
+classes represent constructors, fields, and methods of a
+class.  Because these types all represent members of a
+class, they each implement the Member interface,
+which defines a simple set of methods that can be invoked
+for any class member.  These classes allow information about
+the class members to be obtained, and allow methods and
+constructors to be invoked and fields to be queried and set.
+Class member modifiers are represented as integers
+that specify a number of bit flags.  The Modifier class
+defines static methods that are useful in interpreting the meanings of
+these flags.  The Array class defines static methods
+for creating arrays and reading and writing array elements.
+See Chapter 12, Reflection for examples of using
+these classes.
+Figure 26.1: The java.lang.reflect package
+26.1 java.lang.reflect.Array (JDK 1.1)
+This class contains methods that allow you to set and query
+the values of array elements, to determine the length of an
+array, and to create new instances of arrays.  Note that the
+Array class is used for manipulating array values,
+not array types; Java data types, including array types, are
+represented by java.lang.Class.  Since the
+Array class represents a Java value, unlike the
+Field, Method, and Constructor
+classes which represent class members, the Array class
+is significantly different (despite some surface
+similarities) from those other classes in this package.
+Most notably, all the methods of Array are static
+and apply to all array values, rather than applying only to
+a specific field, method, or constructor.
+The get() method returns the value of the specified
+element of the specified array as an Object.  If the
+array elements are of a primitive type, the value is
+converted to a wrapper object before being returned.  You
+can also use getInteger() and related methods to
+query array elements and return them as specific primitive
+types.  The set() method and its primitive type
+variants perform the opposite operation.  Also, the
+getLength() method returns the length of the array.
+The newInstance() methods create new arrays.  One
+version of this method is passed the number of elements in
+the array and the type of those elements.  The other version
+of this method creates multidimensional arrays.  Besides just
+specifying the component type of the array, it is passed an
+array of numbers.  The length of this array specifies the
+number of dimensions for the array to be created, and the
+values of each array element specify the size of each
+dimension of the created array.
+public final class Array extends Object {
+    // No Constructor
+    // Class Methods
+            public static native Object get(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native boolean getBoolean(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native byte getByte(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native char getChar(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native double getDouble(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native float getFloat(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native int getInt(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native int getLength(Object array) throws IllegalArgumentException;
+            public static native long getLong(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native short getShort(Object array, int index) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static Object newInstance(Class componentType, int length) throws NegativeArraySizeException;
+            public static Object newInstance(Class componentType, int[] dimensions) throws IllegalArgumentException, NegativeArraySizeException;
+            public static native void set(Object array, int index, Object value) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setBoolean(Object array, int index, boolean z) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setByte(Object array, int index, byte b) Xsthrows IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setChar(Object array, int index, char c) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setDouble(Object array, int index, double d) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setFloat(Object array, int index, float f) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setInt(Object array, int index, int i) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setLong(Object array, int index, long l) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+            public static native void setShort(Object array, int index, short s) throws IllegalArgumentException, ArrayIndexOutOfBoundsException;
+}
+java.lang.Void (JDK 1.1)
+java.lang.reflect.Constructor (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

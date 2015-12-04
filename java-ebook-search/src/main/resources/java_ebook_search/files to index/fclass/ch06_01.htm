@@ -1,0 +1,479 @@
+
+[Chapter 6] I/O
+Chapter 6
+6. I/O
+Contents:
+Input Streams and Readers
+Output Streams and Writers
+File Manipulation
+The java.io package contains the fundamental
+classes for performing input and output operations in Java. These I/O classes can be divided into four basic groups:
+Classes for reading input from a stream. 
+Classes for writing output to a stream. 
+Classes for manipulating files. 
+Classes for serializing objects. 
+All fundamental I/O in Java is based on streams.
+A stream represents a flow of data, or a channel of
+communication. Conceptually, there is a reading process at one end of
+the stream and a writing process at the other end. Java 1.0 supported
+only byte streams, which meant that Unicode characters were not always
+handled correctly. As of Java 1.1, there are classes in
+java.io for both byte streams and character
+streams. The character stream classes, which are called
+readers and writers, handle
+Unicode characters appropriately.
+The rest of this chapter describes the classes in
+java.io that read from and write to streams, as
+well as the classes that manipulate files. The classes for serializing
+objects are described in Chapter 7, Object Serialization.
+6.1 Input Streams and Readers
+The InputStream class is an
+abstract class that defines methods to read
+sequentially from a stream of bytes. Java provides subclasses of the
+InputStream class for reading from files,
+StringBuffer objects, and byte arrays, among other
+things. Other subclasses of InputStream can be
+chained together to provide additional logic, such as keeping track of
+the current line number or combining multiple input sources into one
+logical input stream. It is also easy to define a subclass of
+InputStream that reads from any other kind of data
+source.
+In Java 1.1, the Reader class 
+is an abstract class that defines 
+methods to read sequentially from a stream of characters. Many of the byte-oriented 
+InputStream subclasses have 
+character-based Reader counterparts. 
+Thus, there are subclasses of Reader 
+for reading from files, character arrays, and String 
+objects. 
+InputStream
+The InputStream class is the 
+abstract superclass of all 
+other byte input stream classes. It defines three read() 
+methods for reading from a raw stream of bytes: 
+read()
+read(byte[] b)
+read(byte[] b, int off, int len)
+If there is no data available to read, these methods block until input 
+is available. The class also defines an available() 
+method that returns the number of bytes that can be read without blocking 
+and a skip() method that skips 
+ahead a specified number of bytes. The InputStream 
+class defines a mechanism for marking a position in the stream and returning 
+to it later, via the mark() 
+and reset() methods. The markSupported() 
+method returns true in subclasses 
+that support these methods. 
+Because the InputStream class 
+is abstract, you cannot create 
+a "pure" InputStream. 
+However, the various subclasses of InputStream 
+can be used interchangeably. For example, methods often take an InputStream 
+as a parameter. Such a method accepts any subclass of InputStream 
+as an argument. 
+InputStream is designed so that
+read(byte[]) and read(byte[],
+int, int) both call
+read(). Thus, when you subclass
+InputStream, you only need to define the
+read() method. However, for efficiency's sake, you
+should also override read(byte[],
+int, int) with a method that can
+read a block of data more efficiently than reading each byte
+separately.
+Reader
+The Reader class is the abstract 
+superclass of all other character input stream classes. It defines nearly 
+the same methods as InputStream, 
+except that the read() methods 
+deal with characters instead of bytes: 
+read()
+read(char[] cbuf)
+read(char[] cbuf, int off, int len)
+The available() method of InputStream 
+has been replaced by the ready() 
+method of Reader, which simply 
+returns a flag that indicates whether or not the stream must block to read 
+the next character. 
+Reader is designed so that 
+read() and read(char[]) 
+both call read(char[], int, 
+int). Thus, when you subclass 
+Reader, you only need to define 
+the read(char[], int, 
+int) method. Note that this 
+design is different from, and more efficient than, that of InputStream. 
+InputStreamReader
+The InputStreamReader class serves as a bridge
+between InputStream objects and
+Reader objects. Although an
+InputStreamReader acts like a character stream, it
+gets its input from an underlying byte stream and uses a character
+encoding scheme to translate bytes into characters. When you create
+an InputStreamReader, specify the underlying
+InputStream and, optionally, the name of an
+encoding scheme. For example, the following code fragment creates an
+InputStreamReader that reads characters from a file
+that is encoded using the ISO 8859-5 encoding:
+String fileName = "encodedfile.txt"; String encodingName = "8859_5";
+InputStreamReader in;
+try {
+   x FileInputStream fileIn = new FileInputStream(fileName);
+    in = new InputStreamReader(fileIn, encodingName);
+} catch (UnsupportedEncodingException e1) {
+    System.out.println(encodingName + " is not a supported encoding scheme.");
+} catch (IOException e2) {
+    System.out.println("The file " + fileName + " could not be opened.");
+}
+FileInputStream and FileReader
+The FileInputStream class is 
+a subclass of InputStream that 
+allows a stream of bytes to be read from a file. The FileInputStream 
+class has no explicit open method. Instead, the file is implicitly opened, 
+if appropriate, when the FileInputStream 
+is created. There are three ways to create a FileInputStream: 
+You can create a FileInputStream 
+by passing the name of a file to be read: 
+FileInputStream f1 = new FileInputStream("foo.txt");
+You can create a FileInputStream 
+with a File object: 
+File f = new File("foo.txt");
+FileInputStream f2 = new FileInputStream(f);
+You can create a FileInputStream 
+with a FileDescriptor object. 
+A FileDescriptor object encapsulates 
+the native operating system's representation of an open file. You 
+can get a FileDescriptor from 
+a RandomAccessFile by calling 
+its getFD() 
+method. You create a FileInputStream 
+that reads from the open file associated with a RandomAccessFile 
+as follows: 
+RandomAccessFile raf;
+raf = new RandomAccessFile("z.txt","r");
+FileInputStream f3 = new FileInputStream(raf.getFD());
+The FileReader class is a subclass of
+Reader that reads a stream of
+characters from a file. The bytes in the file are converted to
+characters using the default character encoding scheme. If you do not
+want to use the default encoding scheme, you need to wrap an
+InputStreamReader around a
+FileInputStream, as shown above. You can create a
+FileReader from a filename, a
+File object, or a FileDescriptor
+object, as described above for FileInputStream.
+StringReader and StringBufferInputStream
+The StringReader class is a 
+subclass of Reader that gets 
+its input from a String object. 
+The StringReader class supports 
+mark-and-reset functionality via the mark() 
+and reset() methods. The following 
+example shows the use of StringReader: 
+StringReader sr = new StringReader("abcdefg");
+try {
+    char[] buffer = new char[3];
+    sr.read(buffer);
+    System.out.println(buffer);
+} catch (IOException e) {
+    System.out.println("There was an error while reading.");
+}
+This code fragment produces the following output: 
+abc
+The StringBufferInputStream 
+class is the byte-based relative of StringReader. 
+The entire class is deprecated as of Java 1.1 because it does not properly 
+convert the characters of the string to a byte stream; it simply chops 
+off the high eight bits of each character. Although the markSupported() 
+method of StringBufferInputStream 
+returns false, the reset() 
+method causes the next read operation to read from the beginning of 
+the String. 
+CharArrayReader and ByteArrayInputStream
+The CharArrayReader 
+class is a subclass of Reader 
+that reads a stream of characters from an array of characters. The CharArrayReader 
+class supports mark-and-reset functionality via the mark() 
+and reset() methods. You can 
+create a CharArrayReader 
+by passing a reference to a char 
+array to a constructor like this:
+char[] c;
+...
+CharArrayReader r;
+r = new CharArrayReader(c);
+You can also create a CharArrayReader 
+that only reads from part of an array of characters by passing an offset 
+and a length to the constructor. For example, to create a CharArrayReader 
+that reads elements 5 through 24 of a char 
+array you would write: 
+r = new CharArrayReader(c, 5, 20);
+The ByteArrayInputStream class 
+is just like CharArrayReader, 
+except that it deals with bytes instead of characters. In Java 1.0, ByteArrayInputStream 
+did not fully support mark() 
+and reset(); in Java 1.1 these 
+methods are completely supported. 
+PipedInputStream and PipedReader
+The PipedInputStream class is a subclass of
+InputStream that facilitates communication between
+threads. Because it reads bytes written by a connected
+PipedOutputStream, a
+PipedInputStream must be connected to a
+PipedOutputStream to be useful. There are a few
+ways to connect a PipedInputStream to a
+PipedOutputStream. You can first create the
+PipedOutputStream and pass it to the
+PipedInputStream constructor like this:
+PipedOutputStream po = new PipedOutputStream();
+PipedInputStream pi = new PipedInputStream(po);
+You can also create the PipedInputStream 
+first and pass it to the PipedOutputStream 
+constructor like this: 
+PipedInputStream pi = new PipedInputStream();
+PipedOutputStream po = new PipedOutputStream(pi);
+The PipedInputStream and
+PipedOutputStream classes each have a
+connect() method you can use to explicitly connect
+a PipedInputStream and a
+PipedOutputStream as follows:
+PipedInputStream pi = new PipedInputStream();
+PipedOutputStream po = new PipedOutputStream();
+pi.connect(po);
+Or you can use connect() as 
+follows: 
+PipedInputStream pi = new PipedInputStream();
+PipedOutputStream po = new PipedOutputStream();
+po.connect(pi);
+Multiple PipedOutputStream objects can be connected
+to a single PipedInputStream at one time, but the
+results are unpredictable. If you connect a
+PipedOutputStream to an already connected PipedInputStream,
+any unread bytes from the previously connected
+PipedOutputStream are lost. Once the two
+PipedOutputStream objects are connected, the
+PipedInputStream reads bytes written by either
+PipedOutputStream in the order that it receives
+them. The scheduling of different threads may vary from one execution
+of the program to the next, so the order in which the
+PipedInputStream receives bytes from multiple
+PipedOutputStream objects can be inconsistent.
+The PipedReader class is the character-based
+equivalent of PipedInputStream.  It works in the
+same way, except that a PipedReader is connected to
+a PipedWriter to complete the pipe, using either
+the appropriate constructor or the connect()
+method.
+FilterInputStream and FilterReader
+The FilterInputStream class 
+is a wrapper class for InputStream 
+objects. Conceptually, an object that belongs to a subclass of FilterInputStream 
+is wrapped around another InputStream 
+object. The constructor for this class requires an InputStream. 
+The constructor sets the object's in 
+instance variable to reference the specified InputStream, 
+so from that point on, the FilterInputStream 
+is associated with the given InputStream. 
+All of the methods in FilterInputStream 
+work by calling the corresponding methods in the underlying InputStream. 
+Because the close() 
+method of a FilterInputStream 
+calls the close() 
+method of the InputStream that 
+it wraps, you do not need to explicitly close the underlying InputStream. 
+A FilterInputStream does not 
+add any functionality to the object that it wraps, so by itself it is not 
+very useful. However, subclasses of the FilterInputStream 
+class do add functionality to the objects that they wrap in two ways: 
+Some subclasses add logic to the InputStream 
+methods. For example, the InflaterInputStream 
+class in the java.util.zip 
+package decompresses data automatically in the read() 
+methods. 
+Some subclasses add new methods. An example is DataInputStream, 
+which provides methods for reading primitive Java data types from the stream. 
+The FilterReader class is the 
+character-based equivalent of FilterInputStream. 
+A FilterReader is wrapped around 
+an underlying Reader object; 
+the methods of FilterReader 
+call the corresponding methods of the underlying Reader. 
+However, unlike FilterInputStream, 
+FilterReader is an abstract 
+class, so you cannot instantiate it directly. 
+DataInputStream
+The DataInputStream class is 
+a subclass of FilterInputStream 
+that provides methods for reading a variety of data types. The DataInputStream 
+class implements the DataInput 
+interface, so it defines methods for reading all of the primitive Java 
+data types. 
+You create a DataInputStream by passing a reference
+to an underlying InputStream to the
+constructor. Here is an example that creates a
+DataInputStream and uses it to read an
+int that represents the length of an array and then
+to read the array of long values:
+long[] readLongArray(InputStream in) throws IOException {
+    DataInputStream din = new DataInputStream(in);
+    int count = din.readInt();
+    long[] a = new long[count];
+    for (int i = 0; i &lt; count; i++) {
+        a[i] = din.readLong();
+    }
+    return a;
+}
+BufferedReader and BufferedInputStream
+The BufferedReader 
+class is a subclass of Reader 
+that buffers input from an underlying Reader. 
+A BufferedReader 
+object reads enough characters from its underlying Reader 
+to fill a relatively large buffer, and then it satisfies read operations 
+by supplying characters that are already in the buffer. If most read operations 
+read just a few characters, using a BufferedReader 
+can improve performance because it reduces the number of read operations 
+that the program asks the operating system to perform. There is generally 
+a measurable overhead associated with each call to the operating system, 
+so reducing the number of calls into the operating system improves performance. 
+The BufferedReader class supports 
+mark-and-reset functionality via the mark() 
+and reset() methods. 
+Here is an example that shows how to create a
+BufferedReader to improve the efficiency of reading
+from a file:
+try {
+    FileReader fileIn = new FileReader("data.dat");
+    BufferedReader in = new BufferedReader(fileIn);
+    // read from the file
+} catch (IOException e) {
+    System.out.println(e);
+}
+The BufferedInputStream class 
+is the byte-based counterpart of BufferedReader. 
+It works in the same way as BufferedReader, 
+except that it buffers input from an underlying InputStream. 
+LineNumberReader and LineNumberInputStream
+The LineNumberReader 
+class is a subclass of BufferedReader. 
+Its read() methods contain 
+additional logic to count end-of-line characters and thereby maintain a 
+line number. Since different platforms use different characters to represent 
+the end of a line, LineNumberReader 
+takes a flexible approach and recognizes "\n", 
+"\r", or "\r\n" 
+as the end of a line. Regardless of the end-of-line character it reads, 
+LineNumberReader returns only 
+"\n" from 
+its read() methods. 
+You can create a LineNumberReader 
+by passing its constructor a Reader. 
+The following example prints out the first five lines of a file, with each 
+line prefixed by its number. If you try this example, you'll see 
+that the line numbers begin at 0 by default: 
+try {
+    FileReader fileIn = new FileReader("text.txt");
+    LineNumberReader in = new LineNumberReader(fileIn);
+    for (int i = 0; i &lt; 5; i++)
+        System.out.println(in.getLineNumber() + " " + in.readLine());
+}catch (IOException e) {
+    System.out.println(e);
+}
+The LineNumberReader 
+class has two methods pertaining to line numbers. The getLineNumber() 
+method returns the current line number. If you want to change the current 
+line number of a LineNumberReader, 
+use setLineNumber(). This method 
+does not affect the stream position; it merely sets the value of the line 
+number. 
+The LineNumberInputStream is 
+the byte-based equivalent of LineNumberReader. 
+The entire class is deprecated in Java 1.1 because it does not convert 
+bytes to characters properly. Apart from the conversion problem, LineNumberInputStream 
+works the same as LineNumberReader, 
+except that it takes its input from an InputStream 
+instead of a Reader. 
+SequenceInputStream
+The SequenceInputStream class 
+is used to sequence together multiple InputStream 
+objects. Consider this example: 
+FileInputStream f1 = new FileInputStream("data1.dat");
+FileInputStream f2 = new FileInputStream("data2.dat");
+SequenceInputStream s = new SequenceInputStream(f1, f2);
+This example creates a SequenceInputStream 
+that reads all of the bytes from f1 
+and then reads all of the bytes from f2 
+before reporting that it has encountered the end of the stream. You can 
+also cascade SequenceInputStream 
+object themselves, to allow more than two input streams to be read as if 
+they were one. You would write it like this: 
+FileInputStream f3 = new FileInputStream("data3.dat");
+SequenceInputStream s2 = new SequenceInputStream(s, f3);
+The SequenceInputStream class 
+has one other constructor that may be more appropriate for wrapping more 
+than two InputStream objects 
+together. It takes an Enumeration 
+of InputStream objects as its 
+argument. The following example shows how to create a SequenceInputStream 
+in this manner: 
+Vector v = new Vector();
+v.add(new FileInputStream("data1.dat"));
+v.add(new FileInputStream("data2.dat"));
+v.add(new FileInputStream("data3.dat"));
+Enumeration e = v.elements();
+SequenceInputStream s = new SequenceInputStream(e);
+PushbackInputStream and PushbackReader
+The PushbackInputStream class 
+is a FilterInputStream that 
+allows data to be pushed back into the input stream and reread by the 
+next read operation. This functionality is useful for implementing things 
+like parsers that need to read data and then return it to the input stream. 
+The Java 1.0 version of PushbackInputStream 
+supported only a one-byte pushback buffer; in Java 1.1 this class has been 
+enhanced to support a larger pushback buffer. 
+To create a PushbackInputStream, 
+pass an InputStream to 
+its constructor like this: 
+FileInputStream ef = new FileInputStream("expr.txt");
+PushbackInputStream pb = new PushbackInputStream(ef);
+This constructor creates a PushbackInputStream 
+that uses a default one-byte pushback buffer. When you have data that you 
+want to push back into the input stream to be read by the next read operation, 
+you pass the data to one of the unread() 
+methods. 
+The PushbackReader class is 
+the character-based equivalent of PushbackInputStream. 
+In the following example, we create a PushbackReader 
+with a pushback buffer of 48 characters: 
+FileReader fileIn = new FileReader("expr.txt");
+PushbackReader in = new PushbackReader(fileIn, 48);
+Here is an example that shows the use of a PushbackReader: 
+public String readDigits(PushbackReader pb) {
+    char c;
+    StringBuffer buffer = new StringBuffer();
+    try {
+        while (true) {
+            c = (char)pb.read();
+            if (!Character.isDigit(c))
+                break;
+            buffer.append(c);
+        }
+        if (c != -1)
+            pb.unread(c);
+    }catch (IOException e) {}
+    return buffer.toString();
+}
+The above example shows a method that reads characters corresponding to 
+digits from a PushbackReader. 
+When it reads a character that is not a digit, it calls the unread() 
+method so that the nondigit can be read by the next read operation. It 
+then returns a string that contains the digits that were read. 
+Hashtables
+Output Streams and Writers
+ 
+ 
+ 
+ 
+ 
+ 
+ 

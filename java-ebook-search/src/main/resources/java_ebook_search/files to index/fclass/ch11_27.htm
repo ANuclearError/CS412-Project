@@ -1,0 +1,183 @@
+
+[Chapter 11] FilterWriter
+Chapter 11The java.io Package
+FilterWriter
+Name
+FilterWriter
+Synopsis
+Class Name:
+java.io.FilterWriter
+Superclass:
+java.io.Writer
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1
+Description
+The FilterWriter class is the 
+superclass of all of the writer classes that filter output. A subclass 
+of FilterWriter works by wrapping 
+an existing writer, called the underlying writer, and providing additional 
+functionality. The methods of FilterWriter 
+simply override the methods of Writer 
+with versions that call the corresponding methods of the underlying writer. 
+FilterWriter cannot be instantiated 
+directly; it must be subclassed. An instance of a subclass of FilterWriter 
+is constructed with another Writer 
+object. The methods of a subclass of FilterWriter 
+should override some methods in order to extend their behavior or 
+provide some sort of filtering. 
+FilterWriter is like 
+FilterOutputStream, except 
+that it deals with a character stream instead of a byte stream. 
+Class Summary
+public abstract class java.io.FilterWriter extends java.io.Writer {
+  // Variables
+  protected Writer out;
+  // Constructors
+  protected FilterWriter(Writer out);
+  // Instance Methods
+  public void close();
+  public void flush();
+  public void write(int c);
+  public void write(char[] cbuf, int off, int len);
+  public void write(String str, int off, int len);
+}
+Variables
+out
+protected Writer out
+Description
+The underlying writer that this FilterWriter 
+wraps or filters. 
+Constructors
+FilterWriter
+public FilterWriter(Writer out)
+Parameters
+out
+The output writer to 
+filter. 
+Description
+This constructor creates a FilterWriter 
+that sends data to out. 
+Instance Methods
+close
+public void close() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Writer.close() 
+Description
+This method calls the close() 
+method of the underlying writer, which releases any system resources associated 
+with this object. 
+flush
+public void flush() throws IOException
+Throws
+IOException 
+If any kind 
+of I/O error occurs. 
+Overrides
+Writer.flush() 
+Description
+This method calls the flush() 
+method of the underlying writer, which forces any characters that may be 
+buffered by this FilterWriter 
+to be written to the underlying device. 
+write
+public void write(int c) throws IOException
+Parameters
+c
+The value to write. 
+Throws
+IOException
+If any kind 
+of I/O error occurs. 
+Overrides
+Writer.write(int) 
+Description
+This method writes a character containing the low-order 16 bits of the given 
+integer value. It calls the write(int) 
+method of the underlying writer. 
+   public void write(char[] cbuf, int off, int len) throws IOException  
+Parameters
+cbuf
+An array of characters to write to the stream.
+off
+An offset into the array.
+len
+The number of characters to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(char[], int, int) 
+Description
+This method writes len characters 
+contained in the given array, starting at offset off. 
+It does this by calling the write(char[], int, int) 
+method of the underlying writer. 
+public void write(String str, int off, int len) throws IOException
+Parameters
+str
+A string to write to the stream.
+off
+An offset into the string.
+len
+The number of characters to write. 
+Throws
+IOException
+If 
+any kind of I/O error occurs. 
+Overrides
+Writer.write(String, int, int) 
+Description
+This method writes len characters 
+contained in the given string, starting at offset off. 
+It does this by calling the write(String, int, int) 
+method of the underlying writer. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+toString()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+FilterOutputStream, 
+IOException, 
+String, 
+Writer 
+FilterReader
+InputStream
+ 
+ 
+ 
+ 
+ 
+ 
+ 

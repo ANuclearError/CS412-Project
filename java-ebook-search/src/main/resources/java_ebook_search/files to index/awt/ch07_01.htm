@@ -1,0 +1,226 @@
+
+[Chapter 7] Layouts
+Chapter 7
+7. Layouts
+Contents:
+FlowLayout
+BorderLayout
+GridLayout
+CardLayout
+GridBagLayout
+GridBagConstraints
+Combining Layouts
+Disabling the LayoutManager
+Designing Your Own LayoutManager
+The sun.awt Layout Collection
+Other Layouts Available on the Net
+This chapter expands upon the idea of a layout manager, which was mentioned 
+briefly in the previous chapter. Every container has a LayoutManager 
+that is responsible for positioning the component objects within it, regardless 
+of the platform or the screen size. Layout managers eliminate the need 
+to compute component placement on your own, which would be a losing 
+proposition since the size required for any component depends on the platform 
+on which it is displayed. Even for a simple layout, the code required to 
+discover component sizes and compute absolute positions could be hundreds 
+of lines, particularly if you concern yourself with what happens when the 
+user resizes a window. A layout manager takes care of this for you. It 
+asks each component in the layout how much space it requires, then arranges 
+the components on the screen as best it can, based on the component sizes 
+on the platform in use and the space available, resizing the components 
+as needed.
+To find out how much space a component needs, a layout manager 
+calls the component's getMinimumSize() 
+and getPreferredSize() methods. 
+(Java 1.1 also has a getMaximumSize() method; the existing layout managers don't take advantage of it.) These methods report the minimum space that a component requires to be displayed 
+correctly and the optimal size at which it looks best. Thus, 
+each component must know its space requirements; the layout manager uses 
+these to arrange the screen; and your Java program never has to worry 
+about platform-dependent positioning. 
+The java.awt package provides 
+five layout managers: FlowLayout, 
+BorderLayout, GridLayout, 
+CardLayout, and GridBagLayout. 
+Four additional layouts are provided in the sun.awt 
+package: HorizBagLayout, VerticalBagLayout, 
+OrientableFlowLayout, and VariableGridLayout. 
+OrientableFlowLayout is new 
+to Java 1.1. Of the 1.0 layouts, all are available in the JDK and Internet 
+Explorer. The VariableGridLayout 
+is also available with Netscape Navigator. This chapter discusses all of 
+them, along with the LayoutManager 
+and LayoutManager2 interfaces; 
+we'll pay particular attention to how each layout manager computes 
+positions for its components. We will also discuss how to combine layouts 
+to generate more complex screens and how to create your own LayoutManager 
+for special situations. 
+7.1 The LayoutManager Interface
+The LayoutManager interface 
+defines the responsibilities of something that wants to lay out Components 
+within a Container. It is the 
+LayoutManager's duty 
+to determine the position and size of each component within the Container. 
+You will never directly call the methods of the LayoutManager 
+interface; for the most part, layout managers do their work behind 
+the scenes. Once you have created a LayoutManager 
+object and told the container to use it (by calling setLayout()), 
+you're finished with it. The system calls the appropriate methods 
+in the layout manager when necessary. 
+Therefore, the LayoutManager 
+interface is most important when you are writing a new layout manager; 
+we'll discuss it here because it's the scaffolding on which 
+all layout managers are based. Like any interface, LayoutManager 
+specifies the methods a layout manager must implement but says nothing 
+about how the LayoutManager 
+does its job. Therefore, we'll make a few observations before proceeding. 
+First, a layout manager is free to ignore some of its components; there 
+is no requirement that a layout manager display everything. For example, 
+a Container using a BorderLayout 
+might include thirty or forty components. However, the BorderLayout 
+will display at most five of them (the last component placed in each of 
+its five named areas). Likewise, a CardLayout 
+may manage many components but displays only one at a time. 
+Second, a layout manager can do anything it wants with the components' 
+minimum and preferred sizes. It is free to ignore either. It makes sense 
+that a layout manager can ignore a preferred size; after all, "preferred" 
+means "give me this if it's available." However, a layout 
+manager can also ignore a minimum size. At times, there is no reasonable 
+alternative: the container may not have enough room to display a 
+component at its minimum size. How to handle this situation is left to 
+the layout manager's discretion. All layout managers currently ignore a component's maximum size, though this may change in the future. 
+Methods of the LayoutManager Interface
+Five methods make up the LayoutManager 
+interface. If you create your own class that implements LayoutManager, 
+you must define all five. As you will see, many of the methods do not have 
+to do anything, but there must still be a stub with the appropriate method 
+signature. 
+public abstract void addLayoutComponent (String name, Component component) 
+  
+The addLayoutComponent() method 
+is called only when the program assigns a name 
+to the component when adding 
+it to the layout (i.e., the program calls add(String, 
+Component) rather than simply calling add(Component) 
+or the Java 1.1 add(Component, Object)). 
+It is up to the layout manager to decide what, if anything, to do with 
+the name. For example, BorderLayout 
+uses name to specify an area 
+on the screen in which to display the component. Most layout managers don't 
+require a name and will only implement a stub. 
+public abstract void removeLayoutComponent (Component component)  
+The removeLayoutComponent() 
+method's responsibility is to remove component 
+from any internal storage used by the layout manager. This method will 
+probably be stubbed out for your own layouts and do nothing. However, it may need to do something if your layout manager associates components 
+with names. 
+public abstract Dimension preferredLayoutSize (Container parent)  
+The preferredLayoutSize() method 
+is called to determine the preferred size of the components within the 
+Container. It returns a Dimension 
+object that contains the required height and width. parent 
+is the object whose components need to be laid out. Usually, the LayoutManager 
+determines how to size parent 
+by calculating the sizes of the components within it and calculating the 
+dimensions required to display them. On other occasions, it may just return 
+parent.setSize(). 
+public abstract Dimension minimumLayoutSize (Container parent)  
+The minimumLayoutSize() method 
+is called to determine the minimum size of the components within the Container. 
+It returns a Dimension object 
+that contains the required height and width. parent 
+is the object whose components need to be laid out. 
+public abstract void layoutContainer (Container parent)  
+The layoutContainer() method 
+is where a LayoutManager does 
+most of its work. The layoutContainer() 
+method is responsible for the positioning of all the Components 
+of parent. Each specific layout 
+positions the enclosed components based upon its own rules. 
+The LayoutManager2 Interface
+Numerous changes were introduced in Java 1.1 to make it conform to various 
+design patterns. These patterns provide consistency in usage and make Java 
+programming easier. The LayoutManager2 
+interface was introduced for this reason. This new interface solves a problem 
+that occurs when working with the GridBagLayout. 
+While the addLayoutComponent(String, Component) 
+method of LayoutManager works 
+great for BorderLayout and 
+CardLayout, you can't 
+use it for a GridBagLayout. 
+The position of a component in a GridBagLayout 
+is controlled by a number of constraints, which are encapsulated in a GridBagConstraints 
+object. To associate constraints with a component, you needed to call a 
+setConstraints() method. Although 
+this works, it is not consistent with the way you add components to other 
+layouts. Furthermore, as more and more people create their own layout managers, 
+the number of ways to associate positioning information with a component 
+could grow endlessly. LayoutManager2 
+defines a version of addLayoutComponent() 
+that can be used by all constraint-based layout managers, including older 
+managers like BorderLayout 
+and CardLayout. This method 
+lets you pass an arbitrary object to the layout manager to provide positioning 
+information. Layout managers that need additional information (like the 
+GridBagConstraints object) 
+now implement LayoutManager2 
+instead of LayoutManager. 
+In addition to swapping the parameters to the addLayoutComponent(Component, 
+Object), the new LayoutManager2 
+interface also defines several methods that aren't really needed 
+now but will facilitate the introduction of "peerless components" 
+in a later release. Methods of the LayoutManager2 interface
+public abstract void addLayoutComponent(Component comp, Object constraints) 
+  
+The addLayoutComponent() method 
+is called when a program assigns constraints 
+to the component comp when 
+adding it to the layout. In practice, this means that the program added 
+the component by calling the new method add(Component 
+component, Object constraints) rather than the 
+older methods add(Component component) 
+or add(String name, Component component)). 
+It is up to the layout manager to decide what, if anything, to do with 
+the constraints. For example, 
+GridBagLayout uses constraints 
+to associate a GridBagConstraints 
+object to the component comp. 
+BorderLayout uses constraints 
+to associate a location string (like "Center") with the component. 
+public abstract Dimension maximumLayoutSize(Container target)  
+The maximumLayoutSize() method 
+must return the maximum size of the target 
+container under this layout manager. Previously, only minimum and preferred 
+sizes were available. Now a container can have a maximum size. Once layout 
+managers support the concept of maximum sizes, containers will not grow 
+without bounds when additional space is available. If there is no actual 
+maximum, the Dimension should 
+have a width and height of the constant Integer.MAX_VALUE. 
+public abstract float getLayoutAlignmentX(Container target)  
+The getLayoutAlignmentX() method 
+must return the alignment of target 
+along the x axis. The return value should be between 0.0 and 1.0. Values 
+nearer 0 mean that the container will be positioned closer to the left 
+edge of the area available. Values nearer 1 mean that the container will 
+be positioned closer to the right. The value 0.5 means the container should be centered. 
+public abstract float getLayoutAlignmentY(Container target)  
+The getLayoutAlignmentY() method 
+must return the alignment of target 
+along the y axis. The return value should be between 0.0 and 1.0. Values 
+nearer 0 mean that the container will be positioned closer to the top of 
+the area available. Values nearer 1 mean that the container will be positioned 
+closer to the bottom. The value 0.5 means the container should be centered. 
+public abstract void invalidateLayout(Container target)  
+The invalidateLayout() method 
+tells the layout manager that any layout information it has for target 
+is invalid. This method will usually be implemented as a stub (i.e., {}). 
+However, if the layout manager caches any information about target 
+when this method is called, the manager should consider that information 
+invalid and discard it. 
+FileDialog
+FlowLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

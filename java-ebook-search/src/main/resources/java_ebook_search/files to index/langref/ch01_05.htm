@@ -1,0 +1,88 @@
+
+[Chapter 1] 1.5 Notational Conventions
+Chapter 1Introduction
+1.5 Notational Conventions
+One of the topics of this manual is the syntax
+of Java: the way that identifiers such as foobar,
+operators such as +, and punctuation such as
+; can be put together to form a valid Java program.
+This book also talks about
+lexical structure :
+the sequences of characters that can be put together to form valid
+numbers, identifiers, operators, and the like.
+To describe syntax and lexical structure, many language reference
+manuals use a notation called BNF. BNF notation is very helpful
+to language implementors because it defines language constructs
+in a way that can easily be turned into a working language parser.
+Unfortunately, however, BNF can be difficult for human beings to
+understand. This reference manual uses a different notation, called
+a railroad diagram, to describe syntax and
+lexical structure. Railroad
+diagrams are much easier for people to understand. A railroad diagram
+provides a visual means of specifying the sequence of words, symbols,
+and punctuation that can be used to write a syntactic
+construct
+or a lexical structure.
+Here is a simple example:
+The idea is to follow the lines from left to right. The sequence
+of words or symbols that you pass along the way is the sequence
+of words or symbols that the railroad diagram specifies. The primary
+rule when navigating railroad diagrams is that you can follow
+lines from left to right only, unless there is an arrow pointing to
+the left. In the above example, there are no arrows, so there
+is only one way to navigate through the diagram. Therefore, the
+above railroad diagram specifies exactly one sequence of words:
+ROW YOUR BOAT.
+The next example provides you with a choice of sequences:
+You can navigate the above diagram with one of three sequences:
+ROW YOUR BOAT
+ROW YOUR CANOE
+ROW YOUR KAYAK
+The following example contains an arrow:
+In the above diagram, there is a left-pointing arrow on
+the line under the word ROW. That arrow means
+that the line can only be traversed from right to left. The line
+with the arrow provides a loop that allows the word ROW
+to be repeated one or more times, separated by commas. This allows
+a sequence like: ROW,ROW,ROW YOUR BOAT.
+The railroad diagrams shown so far lack a feature that is
+typically needed to make them useful: a name. A name allows
+one railroad diagram to refer to another diagram. The following
+railroad diagram defines a construct named color :
+To further illustrate this point, let's look at two more railroad
+diagrams. The first diagram defines a construct named size :
+The second railroad diagram is similar to previous ones
+except that now it allows an optional color or size to precede BOAT,
+CANOE, or KAYAK. The diagram
+does this by referring to the names of the railroad diagrams that
+define these things:
+In the diagrams in this book, the font for words such as ROW
+that are directly contained in railroad diagrams is different from
+the font used for words like color that are
+names of railroad diagrams. The preceding railroad diagram allows
+size and color to occur
+more than once. The next diagram limits size and color to at most
+one occurrence:
+The lines that refer to the size and
+color diagrams both have semi-circles with
+the number one under them. The semi-circles represent bridges that
+collapse if crossed more than a certain number of times. The number
+under the semi-circle is the number of times a bridge can be crossed.
+Adding bridges that can be crossed only once creates a railroad
+diagram that permits no more than one occurrence
+of color  and size.
+The other new feature introduced in the above railroad diagram
+is a circle enclosing a number. These circles are connectors
+used when a diagram does not fit across a page. The numbered
+connector at the right end of one part of a railroad diagram attaches
+to a connector with a matching number at the left end of another
+part of the railroad diagram.
+Running a Java Application
+Lexical Analysis
+ 
+ 
+ 
+ 
+ 
+ 
+ 

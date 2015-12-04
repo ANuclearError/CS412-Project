@@ -1,0 +1,137 @@
+
+[Chapter 7] 7.2 FlowLayout
+Chapter 7Layouts
+7.2 FlowLayout
+FlowLayout is the default LayoutManager 
+for a Panel. A FlowLayout 
+adds components to the container in rows, working from left to right. When 
+it can't fit any more components in a row, it starts a new row--not 
+unlike a word processor with word wrap enabled. When the container gets 
+resized, the components within it get repositioned based on the container's 
+new size. If sufficient space is available, components within FlowLayout 
+containers are given their preferred size. If there is insufficient space, 
+you do not see the components in their entirety. 
+FlowLayout MethodsConstants
+FlowLayout defines three constants, 
+all of which are used to specify alignment. The alignment tells FlowLayout 
+where to start positioning the components 
+on each row. Each component is still added from left to right, no matter 
+what the alignment setting is. 
+public final static int LEFT 
+LEFT is the constant for left 
+alignment. 
+public final static int CENTER 
+CENTER is the constant for 
+center alignment and is the default. 
+public final static int RIGHT 
+RIGHT is the constant for right 
+alignment. 
+Constructors
+public FlowLayout () 
+This constructor creates a FlowLayout 
+using default settings: center alignment with a horizontal and vertical 
+gap of five pixels. The gap is the space between the different components 
+in the different directions. By default, there will be five pixels between 
+components. The constructor is usually called within a call to setLayout(): 
+setLayout (new FlowLayout()). 
+Figure 7.1 shows how the default FlowLayout 
+behaves with different screen sizes. As the screen C shows, if the screen 
+is too small, the components will not be 
+shrunk so that they can fit better. 
+Figure 7.1: FlowLayout with six buttons and three different screen sizes
+public FlowLayout (int alignment) 
+This version of the constructor creates a FlowLayout 
+using the specified alignment 
+and a horizontal and vertical gap of five pixels. Valid alignments are 
+the FlowLayout constants, although 
+there is no verification. Figure 7.2 shows the effect 
+of different alignments: FlowLayout.LEFT (screen A), 
+FlowLayout.CENTER (B), and FlowLayout.RIGHT (C). 
+Figure 7.2: FlowLayout with three different alignments
+public FlowLayout (int alignment, int hgap, int vgap) 
+The final version of the constructor is called by the other two. It requires 
+you to explicitly specify the alignment, horizontal gap (hgap), 
+and vertical gap (vgap). 
+This creates a FlowLayout with 
+an alignment of alignment, 
+horizontal gap of hgap, and 
+vertical gap of vgap. The units 
+for gaps are pixels. It is possible to have negative gaps if you want components 
+to be placed on top of one another. Figure 7.3
+ shows the effect of changing the gap sizes.
+Figure 7.3: FlowLayout with hgap of 0 and vgap of 20
+Informational methods
+public int getAlignment ()  
+The getAlignment() method retrieves 
+the current alignment of the FlowLayout. 
+The return value should equal one of the class constants LEFT, 
+CENTER, or RIGHT. 
+public void setAlignment (int alignment)  
+The setAlignment() method changes 
+the FlowLayout alignment to 
+alignment. The alignment value 
+should equal one of the class constants LEFT, 
+CENTER, or RIGHT, 
+but this method does not check. After changing the alignment, you must 
+validate() the Container. 
+public int getHgap ()  
+The getHgap() method retrieves 
+the current horizontal gap setting. 
+public void setHgap (int hgap)  
+The setHgap() method changes 
+the current horizontal gap setting to hgap. 
+After changing the gaps, you must validate() 
+the Container. 
+public int getVgap ()  
+The getVgap() method retrieves 
+the current vertical gap setting. 
+public void setVgap (int hgap)  
+The setVgap() method changes 
+the current vertical gap setting to vgap. 
+After changing the gaps, you must validate() 
+the Container. 
+LayoutManager methods
+public void addLayoutComponent (String name, Component component)  
+The addLayoutComponent() method 
+of FlowLayout does nothing. 
+public void removeLayoutComponent (Component component)  
+The removeLayoutComponent() 
+method of FlowLayout does nothing. 
+public Dimension preferredLayoutSize (Container target)  
+The preferredLayoutSize() method 
+of FlowLayout calculates the 
+preferred dimensions for the target 
+container. The FlowLayout computes 
+the preferred size by placing all the components in one row and adding 
+their individual preferred sizes along with gaps and insets. 
+public Dimension minimumLayoutSize (Container target)  
+The minimumLayoutSize() method 
+of FlowLayout calculates the 
+minimum dimensions for the container by adding up the sizes of the components. 
+The FlowLayout computes the 
+minimum size by placing all the components in one row and adding their 
+individual minimum sizes along with gaps and insets. 
+public void layoutContainer (Container target)  
+The layoutContainer() method 
+draws target's components 
+on the screen, starting with the first row of the display, going left to 
+right across the screen, based on the current alignment setting. When it 
+reaches the right margin of the container, it skips down to the next row, 
+and continues drawing additional components. 
+Miscellaneous methods
+public String toString () 
+The toString() method of FlowLayout 
+returns the current horizontal and vertical gap settings along with the 
+alignment (left, center, right). For a FlowLayout 
+that uses all the defaults, toString() 
+produces: 
+java.awt.FlowLayout[hgap=5,vgap=5,align=center]
+The LayoutManager Interface
+BorderLayout
+ 
+ 
+ 
+ 
+ 
+ 
+ 

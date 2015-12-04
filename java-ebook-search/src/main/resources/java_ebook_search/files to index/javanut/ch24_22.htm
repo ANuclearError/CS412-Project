@@ -1,0 +1,41 @@
+
+[Chapter 24] 24.22 java.io.FileWriter (JDK 1.1)
+Chapter 24The java.io Package
+24.22 java.io.FileWriter (JDK 1.1)
+FileWriter is a convenience subclass of
+OutputStreamWriter that is useful when you want to
+write text (as opposed to binary data) to a file.  You
+create a FileWriter by specifying the file to be
+written to, and optionally specifying whether the data
+should be appended to the end of an existing file instead of
+overwriting that file.
+The FileWriter class creates an internal
+FileOutputStream to write bytes to the specified
+file, and uses the functionality of its superclass,
+OutputStreamWriter, to convert the Unicode characters
+written to the stream characters into bytes using the
+default encoding of the default locale.  (If you want to use
+an encoding other than the default, you cannot use
+FileWriter; in that case you must create your own
+OutputStreamWriter and FileOutputStream.)
+Because FileWriter is a trivial subclass of
+OutputStreamWriter, it does not define any methods
+of its own, but simply inherits them from its superclass.
+public class FileWriter extends OutputStreamWriter {
+    // Public Constructors
+            public FileWriter(String fileName) throws IOException;
+            public FileWriter(String fileName, boolean append) throws IOException;
+            public FileWriter(File file) throws IOException;
+            public FileWriter(FileDescriptor fd);
+}
+Hierarchy:
+Object->Writer->OutputStreamWriter->FileWriter
+java.io.FileReader (JDK 1.1)
+java.io.FilenameFilter (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

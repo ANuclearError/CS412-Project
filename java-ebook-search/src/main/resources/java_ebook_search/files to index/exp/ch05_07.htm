@@ -1,0 +1,109 @@
+
+[Chapter 5] 5.7 Variable and Method Visibility
+Chapter 5Objects in Java
+5.7 Variable and Method Visibility
+One of the most important aspects of object-oriented design is data hiding, 
+or encapsulation.
+By treating an object in some respects as a "black box" and 
+ignoring the details of its implementation, we can write stronger, simpler 
+code with components that can be easily reused. 
+Basic Access Modifiers
+By default, the variables and methods of a class are accessible to
+members of the class itself and other classes in the same package. To
+borrow from C++ terminology, classes in the same package are
+friendly. We'll call this the default level
+of visibility. As you'll see as we go on, the default visibility
+lies in the middle of the range of restrictiveness that can be
+specified.
+The modifiers public and
+private, on the other hand, define the extremes. As
+we mentioned earlier, methods and variables declared as
+private are accessible only within their class. At
+the other end of the spectrum, members declared as
+public are always accessible, from any class in any
+package. Of course, the class that contains the methods must also be
+public, as we just discussed. The
+public members of a class should define its most
+general functionality--what the black box is supposed to do.
+Figure 5.8 illustrates the three simplest levels
+of visibility.
+Figure 5.8: Private, default, protected, and public visibility
+Figure 5.8 continues with the example from
+the previous section. Public members in TextArea
+are accessible from anywhere. Private members are not visible from
+outside the class. The default visibility allows access by other
+classes in the package.
+The protected modifier allows special access
+permissions for subclasses. Contrary to how it might sound,
+protected is slightly less restrictive than the
+default level of accessibility. In addition to the default access
+afforded classes in the same package, protected
+members are visible to subclasses of the class, even if they are
+defined in a different package. If you are a C++ programmer and so
+used to more restrictive meanings for both the default and
+protected levels of access, this may rub you the
+wrong way.
+What was private protected?
+Early on, the Java language allowed for certain combinations of modifiers,
+one of which was private protected.
+The meaning of private protected was to limit visibility strictly to 
+subclasses (and remove package access).  This was later deemed somewhat
+inconsistent and overly complex and is no longer supported.[5]
+[5] 
+The meaning of the protected modifier changed in
+the Beta2 release of Java, and the private protected
+combination appeared at the same time. They patched some potential
+security holes, but confused many people.
+Table 5.1 summarizes the levels of
+visibility available in Java; it runs generally from most restrictive
+to least. Methods and variables are always visible within a class, so
+the table doesn't address those:
+Table 5.1: Visibility Modifiers
+Modifier
+Visibility
+private
+None
+none (default)
+Classes in the package
+protected
+Classes in package and subclasses inside or outside the package
+public
+All classes
+Subclasses and Visibility
+There are two important (but unrelated) notes we need to add to the
+discussion of visibility with regards to class members in
+subclasses. First, when you override methods of a class in a subclass,
+it's not possible to reduce their visibility. While it is possible to
+take a private method of a class and override it to
+be public in a subclass, the reverse is not
+possible. This makes sense when you think about the fact that subtypes
+have to be usable as instances of their supertype (e.g., a
+Mammal is a type of Animal).  If
+we could reduce the visibility of an overridden method, this would be
+a problem. However, we can reduce the visibility of a variable because
+it simply results in a shadowed variable. As with all shadowed
+variables, the two variables are distinct and can have separate
+visibilities in their different class forms.
+The second point is that protected variables
+of a class are visible to its subclasses, but unlike C++, only in
+objects of the subclass's type or its subtypes. In other words,
+a subclass can see a protected variable from its
+superclass as an inherited variable, but it can't access the variable in
+a separate instance of the superclass itself.
+This can be confusing because often we forget that visibility modifiers
+don't resrtict between multiple instances of the same class in the same way 
+that they do instances of different classes.  Two instances of the same type 
+of object can normally access all of each other's members, 
+including private ones.  Said another way: two instances of Cat can access
+all of each other's variables and methods (including private ones), but a 
+Cat can't access a protected member in an instance of Animal, unless it 
+can prove that the Animal is a Cat.
+Packages and Compilation Units
+Interfaces
+ 
+ 
+ 
+ 
+ 
+ 
+ 

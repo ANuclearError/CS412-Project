@@ -1,0 +1,34 @@
+
+[Chapter 20] 20.4 java.awt.event.AdjustmentListener (JDK 1.1)
+Chapter 20The java.awt.event Package
+20.4 java.awt.event.AdjustmentListener (JDK 1.1)
+This interface defines the method that an object must
+implement to "listen" for adjustment events on AWT components.
+When an AdjustmentEvent occurs, an AWT component
+notifies its registered AdjustmentListener objects by
+invoking their adjustmentValueChanged() methods.
+public abstract interface AdjustmentListener extends EventListener {
+    // Public Instance Methods
+            public abstract void adjustmentValueChanged(AdjustmentEvent e);
+}
+Implemented By:
+AWTEventMulticaster
+Passed To:
+Adjustable.addAdjustmentListener(), 
+Adjustable.removeAdjustmentListener(), 
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove(), 
+Scrollbar.addAdjustmentListener(), 
+Scrollbar.removeAdjustmentListener()
+Returned By:
+AWTEventMulticaster.add(), 
+AWTEventMulticaster.remove()
+java.awt.event.AdjustmentEvent (JDK 1.1)
+java.awt.event.ComponentAdapter (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

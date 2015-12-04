@@ -1,0 +1,81 @@
+
+[Chapter 23] TextFieldPeer
+Chapter 23java.awt.peer Reference
+TextFieldPeer
+Name
+TextFieldPeer
+Description
+TextFieldPeer is an interface 
+that defines the basis for text fields. 
+Interface Definition
+public abstract interface java.awt.peer.TextFieldPeer
+   extends java.awt.peer.TextComponentPeer {
+  // Interface Methods
+  public abstract Dimension getMinimumSize (int rows, int columns); 
+  public abstract Dimension getPreferredSize (int rows, int columns); 
+  public abstract Dimension minimumSize (int rows, int columns); 
+  public abstract Dimension preferredSize (int rows, int columns); 
+  public abstract void setEchoChar (char echoChar); 
+  public abstract void setEchoCharacter (char c); 
+}
+Interface Methods
+getMinimumSize
+public abstract Dimension getMinimumSize (int rows) 
+Parameters
+rows
+Number of rows within 
+the text field's peer. 
+Returns
+The minimum dimensions of a text field's peer of the given size. 
+getPreferredSize
+public abstract Dimension getPreferredSize (int rows) 
+Parameters
+rows
+Number of rows within 
+the text field's peer. 
+Returns
+The preferred dimensions of a text field's peer of the given size. 
+minimumSize
+public abstract Dimension minimumSize (int rows) 
+Parameters
+rows
+Number of rows within 
+the text field's peer. 
+Returns
+Replaced by getMinimumSize(int). 
+preferredSize
+public abstract Dimension preferredSize (int rows) 
+Parameters
+rows
+Number of rows within 
+the text field's peer. 
+Returns
+Replaced by getPreferredSize(int). 
+setEchoChar
+public abstract void setEchoChar (char c) 
+Parameters
+c
+The character to display 
+for all input. 
+Description
+Changes the character that is displayed to the user for every character 
+he or she types in the text field. 
+setEchoCharacter
+public abstract void setEchoCharacter (char c) 
+Parameters
+c
+The character to display 
+for all input. 
+Description
+Replaced by setEchoChar(char). 
+See Also
+Dimension, TextComponentPeer 
+TextComponentPeer
+WindowPeer
+ 
+ 
+ 
+ 
+ 
+ 
+ 

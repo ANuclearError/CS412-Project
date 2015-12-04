@@ -1,0 +1,92 @@
+
+[Chapter 21] WindowListener 
+Chapter 21java.awt.event Reference
+WindowListener 
+Name
+WindowListener 
+Description
+Objects that implement the WindowListener 
+interface can receive WindowEvent 
+objects. Listeners must first register themselves with objects that produce 
+events. When events occur, they are then automatically propagated to all 
+registered listeners. 
+Interface Definition
+public abstract interface java.awt.event.WindowListener
+   extends java.util.EventListener {
+  // Instance Methods
+  public abstract void windowActivated (WindowEvent e);
+  public abstract void windowClosed (WindowEvent e);
+  public abstract void windowClosing (WindowEvent e);
+  public abstract void windowDeactivated (WindowEvent e);
+  public abstract void windowDeiconified (WindowEvent e);
+  public abstract void windowIconified (WindowEvent e);
+  public abstract void windowOpened (WindowEvent e);
+}
+Interface Methods
+windowActivated
+public abstract void windowActivated (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window has been activated. 
+windowClosed
+public abstract void windowClosed (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window has closed. 
+windowClosing
+public abstract void windowClosing (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window is closing. 
+windowDeactivated
+public abstract void windowDeactivated (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window has been deactivated. 
+windowDeiconified
+public abstract void windowDeiconified (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window has been restored from an iconified state. 
+windowIconified
+public abstract void windowIconified (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window has iconified (minimized). 
+windowOpened
+public abstract void windowOpened (WindowEvent e)
+Parameters
+e
+The event that occurred. 
+Description
+Notifies the WindowListener 
+that a window has opened. 
+See Also
+AWTEventMulticaster, EventListener, Window, WindowAdapter, WindowEvent 
+WindowEvent 
+java.awt.image Reference
+ 
+ 
+ 
+ 
+ 
+ 
+ 

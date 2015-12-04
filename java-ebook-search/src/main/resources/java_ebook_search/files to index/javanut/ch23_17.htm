@@ -1,0 +1,42 @@
+
+[Chapter 23] 23.17 java.beans.PropertyEditorManager (JDK 1.1)
+Chapter 23The java.beans Package
+23.17 java.beans.PropertyEditorManager (JDK 1.1)
+The PropertyEditorManager class is never meant to be
+instantiated; it defines static methods for registering and
+looking up PropertyEditor classes for a specified
+property type.  
+A Java bean may specify a particular PropertyEditor
+class for a given property by specifying it in a
+PropertyDescriptor object for the property.  If it
+does not do this, the PropertyEditorManager
+is used to register and look up editors.  A bean or an
+application builder tool may call the
+registerEditor() method to register a
+PropertyEditor for properties of a specified type.
+Application builders and bean Customizer classes may
+call the findEditor() method to obtain a
+PropertyEditor for a given property type.
+If no editor has been registered for a given type, the
+PropertyEditorManager attempts to locate one.
+For a type x, it looks for a class
+xEditor first in the same package as
+x, and then in each package listed in the
+property editor search path.
+public class PropertyEditorManager extends Object {
+    // Default Constructor: public PropertyEditorManager()
+    // Class Methods
+            public static PropertyEditor findEditor(Class targetType);
+            public static String[] getEditorSearchPath();
+            public static void registerEditor(Class targetType, Class editorClass);
+            public static void setEditorSearchPath(String[] path);
+}
+java.beans.PropertyEditor (JDK 1.1)
+java.beans.PropertyEditorSupport (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

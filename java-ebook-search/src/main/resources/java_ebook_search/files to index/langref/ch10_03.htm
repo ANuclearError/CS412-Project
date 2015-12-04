@@ -1,0 +1,931 @@
+
+[Chapter 10] Character
+Chapter 10The java.lang Package
+Character
+Name
+Character
+Synopsis
+Class Name:
+java.lang.Character
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+java.io.Serializable
+Availability:
+JDK 1.0 or later
+Description
+The Character class provides an object
+wrapper for a char value. This is useful when
+you need to treat a char value as an object.
+For example, there are a number of utility methods that take a reference
+to an Object as one of their arguments. You cannot
+specify a char value for one of these arguments,
+but you can provide a reference to a Character object
+that encapsulates the char value. Furthermore,
+as of JDK 1.1, the Character class is necessary to 
+support the Reflection API and class literals.
+In Java, Character objects represent values defined
+by the Unicode standard. Unicode is defined
+ 
+by an organization called the Unicode Consortium. The defining document for
+Unicode is The Unicode Standard, Version 2.0
+(ISBN 0-201-48345-9). More recent information about Unicode is
+available at http://unicode.org. 
+Appendix a, The Unicode 2.0 Character Set, contains a table that lists the characters
+defined by the Unicode 2.0 standard.
+The Character class provides some utility
+methods, such as methods for determining the type (e.g., uppercase
+or lowercase, digit or letter) of a character and for converting
+from uppercase to lowercase. The logic for these utility methods
+is based on a Unicode attribute table that is part of the Unicode
+standard. That table is available at
+ftp://unicode.org/pub/2.0-Update/UnicodeData-2.0.14.txt.
+Some of the methods in the Character class
+are concerned with characters that are digits; these characters are used by
+a number of other classes to convert strings that contain numbers
+into actual numeric values. The digit-related methods all use a
+radix value to interpret characters.
+The radix is the numeric base used to represent numbers
+as characters or strings. Octal is a radix 8 representation, while
+hexadecimal is a radix 16 representation. The methods that require
+a radix parameter use it to determine which characters
+should be treated as valid digits. In radix 2, only the characters
+`0' and `1' are valid digits. In radix 16, the characters `0' through
+`9', `a' through `z', and `A' through `Z' are considerd valid digits.
+Class Summary
+public final class java.lang.Character extends java.lang.Object 
+                                       implements java.io.Serializable {
+    // Constants
+    public final static byte COMBINING_SPACING_MARK;        // New in 1.1
+    public final static byte CONNECTOR_PUNCTUATION;         // New in 1.1
+    public final static byte CONTROL;                       // New in 1.1
+    public final static byte CURRENCY_SYMBOL;               // New in 1.1
+    public final static byte DASH_PUNCTUATION;              // New in 1.1
+    public final static byte DECIMAL_DIGIT_NUMBER;          // New in 1.1 
+    public final static byte ENCLOSING_MARK;                // New in 1.1
+    public final static byte END_PUNCTUATION;               // New in 1.1
+    public final static byte FORMAT;                        // New in 1.1 
+    public final static byte LETTER_NUMBER;                 // New in 1.1
+    public final static byte LINE_SEPARATOR;                // New in 1.1
+    public final static byte LOWERCASE_LETTER;              // New in 1.1
+    public final static byte MATH_SYMBOL;                   // New in 1.1
+    public final static int MAX_RADIX;
+    public final static char MAX_VALUE;
+    public final static int MIN_RADIX;
+    public final static char MIN_VALUE;
+    public final static byte MODIFIER_LETTER;               // New in 1.1
+    public final static byte MODIFIER_SYMBOL;               // New in 1.1
+    public final static byte NON_SPACING_MARK;              // New in 1.1
+    public final static byte OTHER_LETTER;                  // New in 1.1
+    public final static byte OTHER_NUMBER;                  // New in 1.1
+    public final static byte OTHER_PUNCTUATION;             // New in 1.1
+    public final static byte OTHER_SYMBOL;                  // New in 1.1
+    public final static byte PARAGRAPH_SEPARATOR;           // New in 1.1
+    public final static byte PRIVATE_USE;                   // New in 1.1
+    public final static byte SPACE_SEPARATOR;               // New in 1.1
+    public final static byte START_PUNCTUATION;             // New in 1.1
+    public final static byte SURROGATE;                     // New in 1.1
+    public final static byte TITLECASE_LETTER;              // New in 1.1
+    public final static Class TYPE;                         // New in 1.1
+    public final static byte UNASSIGNED;                    // New in 1.1
+    public final static byte UPPERCASE_LETTER;              // New in 1.1
+    // Constructors
+    public Character(char value);
+    // Class Methods
+    public static int digit(char ch, int radix);
+    public static char forDigit(int digit, int radix);
+    public static int getNumericValue(char ch);             // New in 1.1
+    public static int getType(char ch);                     // New in 1.1
+    public static boolean isDefined(char ch);
+    public static boolean isDigit(char ch);
+    public static boolean isIdentifierIgnorable(char ch);   // New in 1.1
+    public static boolean isISOControl(char ch);            // New in 1.1
+    public static boolean isJavaIdentifierPart(char ch);    // New in 1.1
+    public static boolean isJavaIdentifierStart(char ch);   // New in 1.1
+    public static boolean isJavaLetter(char ch);        // Deprecated in 1.1
+    public static boolean isJavaLetterOrDigit(char ch); // Deprecated in 1.1
+    public static boolean isLetter(char ch);
+    public static boolean isLetterOrDigit(char ch);
+    public static boolean isLowerCase(char ch);
+    public static boolean isSpace(char ch);             // Deprecated in 1.1
+    public static boolean isSpaceChar(char ch);             // New in 1.1
+    public static boolean isTitleCase(char ch);
+    public static boolean isUnicodeIdentifierPart(char ch); // New in 1.1
+    public static boolean isUnicodeIdentifierStart(char ch);// New in 1.1
+    public static boolean isUpperCase(char ch);
+    public static boolean isWhitespace(char ch);            // New in 1.1
+    public static char toLowerCase(char ch);
+    public static char toTitleCase(char ch);
+    public static char toUpperCase(char ch);
+    // Instance Methods
+    public char charValue();
+    public boolean equals(Object obj);
+    public int hashCode();
+    public String toString();
+}
+Constants
+COMBINING_SPACING_MARK
+public final static byte COMBINING_SPACING_MARK
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+CONNECTOR_PUNCTUATION
+public final static byte CONNECTOR_PUNCTUATION
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+CONTROL
+public final static byte CONTROL
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+CURRENCY_SYMBOL
+public final static byte CURRENCY_SYMBOL
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+DASH_PUNCTUATION
+public final static byte DASH_PUNCTUATION
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+DECIMAL_DIGIT_NUMBER
+public final static byte DECIMAL_DIGIT_NUMBER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+ENCLOSING_MARK
+public final static byte ENCLOSING_MARK
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+END_PUNCTUATION
+public final static byte END_PUNCTUATION
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+FORMAT
+public final static byte FORMAT
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+LETTER_NUMBER
+public final static byte LETTER_NUMBER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+LINE_SEPARATOR
+public final static byte LINE_SEPARATOR
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+LOWERCASE_LETTER
+public final static byte LOWERCASE_LETTER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+MATH_SYMBOL
+public final static byte MATH_SYMBOL
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+MAX_RADIX
+public static final int MAX_RADIX = 36
+Description
+The maximum value that can be specified for a radix.
+MAX_VALUE
+public final static char MAX_VALUE = '\ufff'f
+Description
+The largest value that can be represented by a char.
+MIN_RADIX
+public static final int MIN_RADIX = 2
+Description
+The minimum value that can be specified for a radix.
+MIN_VALUE
+public final static char MIN_VALUE = '\u0000'
+Description
+The smallest value that can be represented by a char.
+MODIFIER_LETTER
+public final static byte MODIFIER_LETTER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+MODIFIER_SYMBOL
+public final static byte MODIFIER_SYMBOL
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+NON_SPACING_MARK
+public final static byte NON_SPACING_MARK
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+OTHER_LETTER
+public final static byte OTHER_LETTER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+OTHER_NUMBER
+public final static byte OTHER_NUMBER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+OTHER_PUNCTUATION
+public final static byte OTHER_PUNCTUATION
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+OTHER_SYMBOL
+public final static byte OTHER_SYMBOL
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+PARAGRAPH_SEPARATOR
+public final static byte PARAGRAPH_SEPARATOR
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+PRIVATE_USE
+public final static byte PRIVATE_USE
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+SPACE_SEPARATOR
+public final static byte SPACE_SEPARATOR
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+START_PUNCTUATION
+public final static byte START_PUNCTUATION
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+SURROGATE
+public final static byte SURROGATE
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+TITLECASE_LETTER
+public final static byte TITLECASE_LETTER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+TYPE
+public static final Class TYPE 
+Availability
+New as of JDK 1.1
+Description
+The Class object that represents the type
+char.
+It is always true that Character.TYPE 
+== char.class.
+UNASSIGNED
+public final static byte UNASSIGNED
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+UPPERCASE_LETTER
+public final static byte UPPERCASE_LETTER
+Availability
+New as of JDK 1.1
+Description
+This constant can be returned by the getType()
+method as the general category of a Unicode character.
+Constructors
+Character
+public Character(char value)
+Parameters
+value
+The char value to be encapsulated
+by this object.
+Description
+Creates a Character object with the given
+char value.
+Class Methods
+digit
+public static int digit(char ch, int radix)
+Parameters
+ch
+A char value that is a legal
+digit in the given radix.
+radix
+The radix used in interpreting the specified character
+as a digit. If radix is in the range 2 through
+10, only characters for which the isDigit() method
+returns true are considered to be valid digits.
+If radix is in the range 11 through 36, characters
+in the ranges `A' through `Z' and `a' through `z' may be considered
+valid digits.
+Returns
+The numeric value of the digit. This method returns -1 if
+the value of ch is not considered a valid digit,
+if radix is less than MIN_RADIX,
+or if radix is greater than MAX_RADIX.
+Description
+Returns the numeric value represented by a digit character.
+For example, digit('7',10) returns 7. If the
+value of ch is not a valid digit, the method
+returns -1. For example,
+digit('7',2) returns
+-1 because '7' is not a valid digit in radix 2. A number of methods
+in other classes use this method to convert strings that contain
+numbers to actual numeric values. The forDigit() method
+is an approximate inverse of this method.
+If radix is greater than 10, characters
+in the range `A' to `A'+radix-11 are treated
+as valid digits. Such a character has the numeric value ch-`A'+10.
+By the same token, if radix is greater than 10,
+characters in the range `a' to `a'+radix-11 are
+treated as valid digits. Such a character has the numeric value
+ch-`a'+10.
+forDigit
+public static char forDigit(int digit, int radix)
+Parameters
+digit
+The numeric value represented as a digit character.
+radix
+The radix used to represent the specified value.
+Returns
+The character that represents the digit corresponding to the specified
+numeric value. The method returns `\ 0' if digit is
+less than 0, if digit is equal to or greater than
+radix, if radix is less than
+MIN_RADIX, or if radix is
+greater than MAX_RADIX.
+Description
+This method returns the character that represents the digit
+corresponding to the specified numeric value. If digit
+is in the range 0 through 9, the method returns `0'+digit.
+If digit is in the range 10
+through MAX_RADIX-1,
+the method returns `a'+digit-10. The method
+returns `\ 0' if digit is less than 0, if
+digit
+is equal to or greater than radix,
+if radix is less than MIN_RADIX,
+or if radix is greater than MAX_RADIX.
+getNumericValue
+public static int getNumericValue(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value.
+Returns
+The Unicode numeric value of the character as a nonnegative
+integer. This method returns -1 if the character has no numeric
+value; it returns -2 if the character has a numeric value that is
+not a nonnegative integer, such as 1/2.
+Description
+This method returns the Unicode numeric value of the specified
+character as a nonnegative integer. 
+getType
+public static int getType(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value.
+Returns
+An int value that represents the Unicode general 
+category type of the character.
+Description
+This method returns the Unicode general category type of the specified
+character. The value corresponds to one of the general category
+constants defined by Character. 
+isDefined
+public static boolean isDefined(char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character has an
+assigned meaning in the Unicode character set; otherwise false.
+Description
+This method returns true if the specified
+character value has an assigned meaning in the Unicode character
+set. 
+isDigit
+public static boolean isDigit(char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as a digit in the Unicode character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is a digit, based on the definition of the character in Unicode.
+isIdentifierIgnorable
+public static boolean isIdentifierIgnorable(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is ignorable
+in a Java or Unicode identifier; otherwise false.
+Description
+This method determines whether or not the specified character is 
+ignorable in a Java or Unicode identifier. The following characters
+are ignorable in a Java or Unicode identifier:
+\u0000
+- \u0008 \u000E - \u001B \u007F - \u009F 
+ISO control characters that aren't whitespace
+\u200C
+- \u200F
+Join controls
+\u200A
+- \u200E
+Bidirectional controls
+\u206A
+- \u206F
+Format controls
+\uFEFF
+Zero-width no-break space
+isISOControl
+public static boolean isISOControl(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is an ISO
+control character; otherwise false.
+Description
+This method determines whether or not the specified character is an
+ISO control character. A character is an ISO control character if
+it falls in the range \u0000
+through \u001F or \u007F
+through \u009F.
+isJavaIdentifierPart
+public static boolean isJavaIdentifierPart(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character can appear after the
+first character in a Java identifier; otherwise false.
+Description
+This method returns true if the specified character
+can appear in a Java identifier after the first character. A character
+is considered part of a Java identifier if and only if it is a letter,
+a digit, a currency symbol (e.g., $), a connecting punctuation
+character (e.g., _), a numeric letter (e.g., a
+Roman numeral), a combining mark, a nonspacing mark, or an ignorable
+control character.
+isJavaIdentifierStart
+public static boolean isJavaIdentifierStart(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character can appear as the
+first character in a Java identifier; otherwise false.
+Description
+This method returns true if the specified character
+can appear in a Java identifier as the first character. A character
+is considered a start of a Java identifier if and only if it is a letter,
+a currency symbol (e.g., $), or a connecting punctuation character 
+(e.g., _).
+isJavaLetter
+public static boolean isJavaLetter(char ch)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character can appear
+as the first character in a Java identifier;
+otherwise false.
+Description
+This method returns true if the specified
+character can appear as the first character in a Java identifier.
+A character is considered a Java letter if and only if it is a letter,
+the character $, or the character _ .
+This method returns false for digits because digits are not
+allowed as the first character of an identifier.
+This method is deprecated as of JDK 1.1. You should use 
+isJavaIdentifierStart() instead.
+isJavaLetterOrDigit
+public static boolean isJavaLetterOrDigit(char ch)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character can appear
+after the first character in a Java identifier;
+otherwise false.
+Description
+This method returns true if the specified
+character can appear in a Java identifier after the
+first character. A character is considered a Java letter or digit
+if and only if it is a letter, a digit, the character $,
+or the character _.
+This method is deprecated as of JDK 1.1. You should use 
+isJavaIdentifierPart() instead.
+isLetter
+public static boolean isLetter(char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as a letter in the Unicode character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is a letter, based on the definition of the character in Unicode.
+This method does not consider character values in ranges that
+have not been assigned meanings by Unicode to be letters.
+isLetterOrDigit
+public static boolean isLetterOrDigit(char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as a letter in the Unicode character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is a letter or a digit, based on the definition of the character
+in Unicode. 
+There are some ranges that have not been assigned meanings by
+Unicode. If a character value is in one of these ranges, this method
+does not consider the character to be a letter.
+isLowerCase
+public static boolean isLowerCase (char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as lowercase in the Unicode character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is lowercase. Unicode defines a number of characters that do not
+have case mappings; if the specified character is one of these characters,
+the method returns false.
+isSpace
+public static boolean isSpace(char ch)
+Availability
+Deprecated as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as whitespace in the ISO-Latin-1 character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is whitespace. This method recognizes the whitespace
+characters shown in the following table.
+\u0009
+Horizontal tab
+\u000A
+Newline
+\u000C
+Formfeed
+\u000D
+Carriage return
+\u0020 ` `
+Space
+This method is deprecated as of JDK 1.1. You should use 
+isWhitespace() instead.
+isSpaceChar
+public static boolean isSpaceChar(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is a Unicode 2.0 space
+characters; otherwise false.
+Description
+This method determines if the specified character
+is a space character according to the Unicode 2.0 specification.
+A character is considered to be a Unicode space character if and only
+if it has the general category "Zs", "Zl", or "Zp" in the 
+Unicode specification.
+isTitleCase
+public static boolean isTitleCase(char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as titlecase in the Unicode character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is a titlecase character. Unicode defines a number of characters that do not
+have case mappings; if the specified character is one of these characters,
+the method returns false.
+Many characters are defined by the Unicode standard as having
+upper- and lowercase forms. There are some characters defined
+by the Unicode standard that also have a titlecase form. The glyphs
+for these characters look like a combination of two Latin letters.
+The titlecase form of these characters has a glyph that looks like
+a combination of an uppercase Latin character and a lowercase
+Latin character; this case should be used when the character appears
+as the first character of a word in a title. For example, one of
+the Unicode characters that has a titlecase form looks like the
+letter `D' followed by the letter `Z'. Here is what the three forms
+of this letter look like:
+Uppercase
+`DZ'
+Titlecase
+`Dz'
+Lowercase
+`dz'
+isUnicodeIdentifierPart
+public static boolean isUnicodeIdentifierPart(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character can appear after the
+first character in a Unicode identifier; otherwise false.
+Description
+This method returns true if the specified character
+can appear in a Unicode identifier after the first character. A character
+is considered part of a Unicode identifier if and only if it is a letter,
+a digit, a connecting punctuation character 
+(e.g., _), a numeric letter (e.g., a Roman numeral), a combining mark,
+a nonspacing mark, or an ignorable control character.
+isUnicodeIdentifierStart
+public static boolean isUnicodeIdentifierStart(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character can appear as the
+first character in a Unicode identifier; otherwise false.
+Description
+This method returns true if the specified character
+can appear in a Unicode identifier as the first character. A character
+is considered a start of a Unicode identifier if and only if it is a letter.
+isUpperCase
+public static boolean isUpperCase(char ch)
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined
+as uppercase in the Unicode character set; otherwise false.
+Description
+This method determines whether or not the specified character
+is uppercase. Unicode defines a number of characters that do not
+have case mappings; if the specified character is one of these characters,
+the method returns false.
+isWhitespace
+public static boolean isWhitespace(char ch)
+Availability
+New as of JDK 1.1
+Parameters
+ch
+A char value to be tested.
+Returns
+true if the specified character is defined as
+whitespace according to Java; otherwise false.
+Description
+This method determines whether or not the specified character is
+whitespace. This method recognizes the following as whitespace:
+Unicode category "Zs" except
+\u00A0 and \uFEFF
+Unicode space separators except no-break spaces
+Unicode category "Zl"
+Unicode line separators
+Unicode category "Zp"
+Unicode paragraph separators
+\u0009
+Horizontal tab
+\u000A
+Linefeed
+\u000B
+Vertical tab
+\u000C
+Formfeed
+\u000D
+Carriage return
+\u001C
+File separator
+\u001D
+Group separator
+\u001E
+Record separator
+\u001F
+Unit separator
+toLowerCase
+public static char toLowerCase(char ch)
+Parameters
+ch
+A char value to be converted
+to lowercase.
+Returns
+The lowercase equivalent of the specified character, or the
+character itself if it cannot be converted to lowercase.
+Description
+This method returns the lowercase equivalent of the specified
+character value. If the specified character is not uppercase or
+if it has no lowercase equivalent, the character is returned unmodified.
+The Unicode attribute table determines if a character has a mapping
+to a lowercase equivalent.
+Some Unicode characters in the range \u2000
+through \u2FFF have lowercase mappings. For
+example, \u2160 (Roman numeral one) has a lowercase
+mapping to \u2170 (small Roman numeral one).
+The toLowerCase() method maps such characters
+to their lowercase equivalents even though the method isUpperCase()
+does not return true for such characters.
+toTitleCase
+public static char toTitleCase(char ch)
+Parameters
+ch
+A char value to be converted
+to titlecase.
+Returns
+The titlecase equivalent of the specified character, or the
+character itself if it cannot be converted to titlecase.
+Description
+This method returns the titlecase equivalent of the specified
+character value. If the specified character has no titlecase equivalent,
+the character is returned unmodified. The Unicode attribute table
+is used to determine the character's titlecase equivalent.
+Many characters are defined by the Unicode standard as having
+upper- and lowercase forms. There are some characters defined
+by the Unicode standard that also have a titlecase form. The glyphs
+for these characters look like a combination of two Latin letters.
+The titlecase form of these characters has a glyph that looks like
+a combination of an uppercase Latin character and a lowercase
+Latin character; this case should be used when the character appears
+as the first character of a word in a title. For example, one of
+the Unicode characters that has a titlecase form looks like the
+letter `D' followed by the letter `Z'. Here is what the three forms
+of this letter look like:
+Uppercase
+`DZ'
+Titlecase
+`Dz'
+Lowercase
+`dz'
+toUpperCase
+public static char toUpperCase(char ch)
+Parameters
+ch
+A char value to be converted
+to lowercase.
+Returns
+The uppercase equivalent of the specified character, or the
+character itself if it cannot be converted to uppercase.
+Description
+This method returns the uppercase equivalent of the specified
+character value. If the specified character is not lowercase or
+if it has no uppercase equivalent, the character is returned unmodified.
+The Unicode attribute table determines if a character has a mapping
+to an uppercase equivalent.
+Some Unicode characters in the range \u2000
+through \u2FFF have uppercase mappings. For
+example, \u2170 (small Roman numeral one) has
+a lowercase mapping to \u2160 (Roman numeral
+one). The toUpperCase() method maps such characters
+to their uppercase equivalents even though the method isLowerCase()
+does not return true for such characters.
+Instance Methods
+charValue
+public char charValue()
+Returns
+The char value contained by the object.
+equals
+public boolean equals(Object obj)
+Parameters
+The object to be compared with this object.
+Returns
+true if the objects are equal; false
+if they are not.
+Overrides
+Object.equals()
+Description
+This method returns true if obj
+is an instance of Character, and it contains the
+same value as the object this method is associated with.
+hashCode
+public int hashCode()
+Returns
+A hashcode based on the char value of
+the object.
+Overrides
+Object.hashCode()
+toString
+public String toString()
+Returns
+A String of length one that contains the
+character value of the object.
+Overrides
+Object.toString()
+Description
+This method returns a string representation of the Character
+object.
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+finalize()
+Object
+getClass()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Character literals;
+Class;
+Integer types;
+Object
+Byte
+Class
+ 
+ 
+ 
+ 
+ 
+ 
+ 

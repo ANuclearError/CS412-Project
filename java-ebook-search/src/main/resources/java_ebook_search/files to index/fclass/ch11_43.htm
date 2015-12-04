@@ -1,0 +1,126 @@
+
+[Chapter 11] ObjectStreamClass
+Chapter 11The java.io Package
+ObjectStreamClass
+Name
+ObjectStreamClass
+Synopsis
+Class Name:
+java.io.ObjectStreamClass
+Superclass:
+java.lang.Object
+Immediate Subclasses:
+None
+Interfaces Implemented:
+None
+Availability:
+New as of JDK 1.1 
+Description
+The ObjectStreamClass class 
+represents a Java class during object serialization. When an object is 
+deserialized, its class information is read into an ObjectStreamClass, 
+which is then resolved to a Class 
+if possible. An ObjectStreamClass 
+instance contains the name and version information for a class. 
+Class Summary
+public class java.io.ObjectStreamClass extends java.lang.Object
+             implements java.io.Serializable {
+  // Class Methods
+  public static ObjectStreamClass lookup(Class cl);
+  // Instance Methods
+  public Class forClass();
+  public String getName();
+  public long getSerialVersionUID();
+  public String toString();
+}
+Class Methods
+lookup
+public static ObjectStreamClass lookup(Class cl)
+Parameters
+cl
+The Class 
+to find. 
+Returns
+An ObjectStreamClass that corresponds 
+to the given Class. 
+Description
+This method finds an ObjectStreamClass 
+for the given Class. If the appropriate
+ObjectStreamClass does not already exist, this
+method creates an ObjectStreamClass for
+the given Class. The method returns 
+null if cl 
+is not serializable. 
+Instance Methods
+forClass
+public Class forClass()
+Returns
+The Class that corresponds 
+to this ObjectStreamClass. 
+Description
+This method returns the Class 
+in the run-time system that corresponds to this ObjectStreamClass. 
+If there is no corresponding class, null 
+is returned. 
+getName
+public String getName()
+Returns
+The class name. 
+Description
+This method returns the name of the class this ObjectStreamClass 
+represents. 
+getSerialVersionUID
+public long getSerialVersionUID()
+Returns
+The class version. 
+Description
+This method returns the version of the class this ObjectStreamClass 
+represents. 
+toString
+public String toString()
+Returns
+A string representation of this object. 
+Overrides
+Object.toString() 
+Description
+This method returns a string that contains the class name and version information 
+for this ObjectStreamClass. 
+Inherited Methods
+Method
+Inherited From
+Method
+Inherited From
+clone()
+Object
+equals(Object)
+Object
+finalize()
+Object
+getClass()
+Object
+hashCode()
+Object
+notify()
+Object
+notifyAll()
+Object
+wait()
+Object
+wait(long)
+Object
+wait(long, int)
+Object
+See Also
+Class, 
+ObjectInputStream, 
+ObjectOutputStream, 
+Serializable 
+ObjectOutputStream
+ObjectStreamException
+ 
+ 
+ 
+ 
+ 
+ 
+ 

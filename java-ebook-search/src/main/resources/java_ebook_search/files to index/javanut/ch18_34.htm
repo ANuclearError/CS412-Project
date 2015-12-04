@@ -1,0 +1,38 @@
+
+[Chapter 18] 18.34 java.awt.ItemSelectable (JDK 1.1)
+Chapter 18The java.awt Package
+18.34 java.awt.ItemSelectable (JDK 1.1)
+This interface abstracts the functionality of an AWT
+component that presents one or more items to the user and
+allows the user to select zero or more of them.  It is
+implemented by several components in the AWT.
+getSelectedObjects() returns an array of selected
+objects, or null, if none are selected.
+addItemListener() and removeItemListener()
+are standard methods for adding and removing
+ItemListener objects to be notified when an item is
+selected.
+public abstract interface ItemSelectable {
+    // Public Instance Methods
+            public abstract void addItemListener(ItemListener l);
+            public abstract Object[] getSelectedObjects();
+            public abstract void removeItemListener(ItemListener l);
+}
+Implemented By:
+Checkbox, 
+CheckboxMenuItem, 
+Choice, 
+List
+Passed To:
+ItemEvent()
+Returned By:
+ItemEvent.getItemSelectable()
+java.awt.Insets (JDK 1.0)
+java.awt.Label (JDK 1.0)
+ 
+ 
+ 
+ 
+ 
+ 
+ 

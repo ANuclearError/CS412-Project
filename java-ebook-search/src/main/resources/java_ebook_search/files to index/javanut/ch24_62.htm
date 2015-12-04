@@ -1,0 +1,37 @@
+
+[Chapter 24] 24.62 java.io.StringBufferInputStream (JDK 1.0; Deprecated.)
+Chapter 24The java.io Package
+24.62 java.io.StringBufferInputStream (JDK 1.0; Deprecated.)
+This class is a subclass of InputStream in which
+input bytes come from the characters of a specified
+String object.
+This class does not correctly convert the characters of a
+StringBuffer into bytes, and is deprecated in Java
+1.1.  Use StringReader instead to correctly convert
+characters into bytes, or use ByteArrayInputStream
+to read bytes from an array of bytes.
+public class StringBufferInputStream extends InputStream {
+    // Public Constructor
+            public StringBufferInputStream(String s);
+    // Protected Instance Variables
+            protected String buffer;
+            protected int count;
+            protected int pos;
+    // Public Instance Methods
+            public synchronized int available();  // Overrides InputStream
+            public synchronized int read();  // Defines InputStream
+            public synchronized int read(byte[] b, int off, int len);  // Overrides InputStream
+            public synchronized void reset();  // Overrides InputStream
+            public synchronized long skip(long n);  // Overrides InputStream
+}
+Hierarchy:
+Object->InputStream->StringBufferInputStream
+java.io.StreamTokenizer (JDK 1.0)
+java.io.StringReader (JDK 1.1)
+ 
+ 
+ 
+ 
+ 
+ 
+ 
