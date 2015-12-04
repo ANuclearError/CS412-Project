@@ -1,4 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.web.WebView?>
@@ -7,20 +12,19 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 
-<VBox fx:id="searchView"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="java_ebook_search.controller.SearchController">
+<VBox fx:id="searchView" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="java_ebook_search.controller.SearchController">
     <children>
         <HBox>
-            <TextField fx:id="query" HBox.hgrow="ALWAYS"
-                       promptText="Search here..."/>
-            <Button text="Search" onAction="#search"/>
-            <Button text="Filters" onAction="#filters"/>
+           <children>
+               <TextField fx:id="query" promptText="Search here..." HBox.hgrow="ALWAYS" />
+               <Button defaultButton="true" onAction="#search" text="Search" />
+               <Button onAction="#filters" text="Filters" />
+           </children>
         </HBox>
-        <SplitPane VBox.vgrow="ALWAYS" dividerPositions="0.25">
+        <SplitPane dividerPositions="0.25" VBox.vgrow="ALWAYS">
             <items>
-                <ListView fx:id="results"/>
-                <WebView fx:id="webView"/>
+                <ListView fx:id="results" />
+                <WebView fx:id="webView" />
             </items>
         </SplitPane>
     </children>
