@@ -9,6 +9,8 @@
 
 	<properties>
 		<luceneVersion>5.3.1</luceneVersion>
+		<javaVersion>1.8</javaVersion>
+		<mavenCompilerVersion>3.3</mavenCompilerVersion>
 	</properties>
 
 	<dependencies>
@@ -59,4 +61,23 @@
 			<version>3.1</version>
 		</dependency>
 	</dependencies>
+	
+	
+	<!-- Java build settings -->
+	
+		<build>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>${mavenCompilerVersion}</version>
+				<configuration>
+					<source>${javaVersion}</source>
+					<target>${javaVersion}</target>
+				</configuration>
+			</plugin>
+		</plugins>
+
+	</build>
 </project>
