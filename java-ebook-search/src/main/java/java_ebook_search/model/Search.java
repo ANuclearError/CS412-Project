@@ -100,7 +100,7 @@ public class Search {
 				String path = doc.get("path");
 				if (path != null) {
 					// System.out.println((i + 1) + ". " + path);
-					toReturn.add(new MyFile(path));
+					toReturn.add(new MyFile(path, doc.get("title")));
 				} else {
 					System.out.println((i + 1) + ". " + "No path for this document");
 				}

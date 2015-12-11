@@ -13,6 +13,8 @@ import java.io.File;
 public class MyFile extends File {
 	
 	private int data;
+
+	private String book;
 	
 	public int getData() {
 		return data;
@@ -24,15 +26,17 @@ public class MyFile extends File {
 
 	private static final long serialVersionUID = -7307250172058813456L;
 
-	public MyFile(String pathname) {
+	public MyFile(String pathname, String book) {
 		super(pathname);
+		this.book = book;
 	}
 	
 	@Override
 	public String toString(){
 		
 		//Stick a number infront of it, if not 0
-		return data == 0 ? this.getName() : (data + ": " + this.getName() );
+		return data == 0 ? this.getName() + "\n" + book :
+				(data + ": " + this.getName() + "\n" + book);
 	}
 
 }
