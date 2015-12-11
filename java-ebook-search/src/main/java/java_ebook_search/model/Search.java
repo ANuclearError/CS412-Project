@@ -55,7 +55,6 @@ public class Search {
 
 		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
 		queryParser = new QueryParser(field, analyzer);
-
 	}
 
 	/**

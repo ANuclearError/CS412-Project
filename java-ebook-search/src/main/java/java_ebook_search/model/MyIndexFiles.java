@@ -183,7 +183,32 @@ public class MyIndexFiles {
       // Note that FileReader expects the file to be in UTF-8 encoding.
       // If that's not the case searching for special characters will fail.
       doc.add(new TextField("contents", new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
-      
+
+      String path = "src/main/resources/java_ebook_search/indexed_files/";
+      String title = file.toString().replace(path, "");
+      title = title.split("/")[0];
+      String titleField = "";
+
+      // This horrible if you're required to add/remove books.
+      switch(title) {
+        case "awt":
+          titleField = "Java AWT Reference";
+          break;
+        case "exp":
+          titleField = "Exploring Java";
+          break;
+        case "fclass":
+          titleField = "Java Fundamental Classes Reference";
+          break;
+        case "javanut":
+          titleField = "Java in a Nutshell";
+          break;
+        case "langref":
+          titleField = "Java Language Reference";
+          break;
+      }
+      doc.add(new StringField("title", titleField, Field.Store.YES));
+
       if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
         // New index, so we just add the document (no old document can be there):
         System.out.println("adding " + file);
