@@ -49,8 +49,8 @@ public class Search {
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource(index).getFile());
 
-		Directory indexDir = FSDirectory.open(Paths.get(file.getAbsolutePath()));
-		IndexReader reader = DirectoryReader.open(indexDir);
+		Directory dir = FSDirectory.open(Paths.get(file.getAbsolutePath()));
+		IndexReader reader = DirectoryReader.open(dir);
 		indexSearcher = new IndexSearcher(reader);
 
 		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());

@@ -14,7 +14,8 @@ public class Indexer {
 	public static void main(String args[]) throws IOException{
 
 		Indexer index = new Indexer();
-		index.index("src/main/resources/java_ebook_search/files", "src/main/resources/java_ebook_search/index");
+		index.index("src/main/resources/java_ebook_search/indexed_files",
+					"src/main/resources/java_ebook_search/index");
 	}
 
 	public void index(String documentsSrc, String indexDest) throws IOException {
