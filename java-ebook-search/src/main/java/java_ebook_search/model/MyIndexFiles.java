@@ -210,13 +210,22 @@ public class MyIndexFiles {
       doc.add(new StringField("title", titleField, Field.Store.YES));
 
       String name = file.getFileName().toString();
+      String chapter = "";
       String section = "";
-      if(name.startsWith("ch")){
-        section = name.replace("ch","");
-        section = section.replace("_", ".");
-        section = section.replace(".htm", "");
+      if (name.startsWith("ch")) {
+        name = name.replace("ch","");
+        name = name.replace(".htm", "");
+        chapter = "Chapter " + name.split("_")[0];
+        section = "Section " + name.split("_")[1];
+      } else if (name.startsWith("app")) {
+        name = name.replace("app","");
+        name = name.replace(".htm", "");
+        chapter = "Appendix " + name.split("_")[0].toUpperCase();
+        section = "Section " + name.split("_")[1];
+      } else if (name.startsWith("index")) {
 
       }
+      doc.add(new StringField("chapter", chapter, Field.Store.YES));
       doc.add(new StringField("section", section, Field.Store.YES));
 
       if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
