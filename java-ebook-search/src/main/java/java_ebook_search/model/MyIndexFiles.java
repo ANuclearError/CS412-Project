@@ -209,6 +209,16 @@ public class MyIndexFiles {
       }
       doc.add(new StringField("title", titleField, Field.Store.YES));
 
+      String name = file.getFileName().toString();
+      String section = "";
+      if(name.startsWith("ch")){
+        section = name.replace("ch","");
+        section = section.replace("_", ".");
+        section = section.replace(".htm", "");
+
+      }
+      doc.add(new StringField("section", section, Field.Store.YES));
+
       if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
         // New index, so we just add the document (no old document can be there):
         System.out.println("adding " + file);
