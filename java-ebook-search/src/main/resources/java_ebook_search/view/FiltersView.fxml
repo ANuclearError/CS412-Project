@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="360" prefWidth="640" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="java_ebook_search.controller.FiltersController">
+    <children>
+        <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+                  AnchorPane.topAnchor="10.0">
+            <children>
+                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+                    <children>
+                        <Label text="Books" styleClass="filterHeading"
+                               GridPane.columnIndex="0" GridPane.rowIndex="0"/>
+                        <Label text="Java in a Nutshell"
+                               GridPane.columnIndex="0" GridPane.rowIndex="1"/>
+                        <Label text="Java Language Reference"
+                               GridPane.columnIndex="0" GridPane.rowIndex="2"/>
+                        <Label text="Java AWT Reference"
+                               GridPane.columnIndex="0" GridPane.rowIndex="3"/>
+                        <Label text="Java Fundamental Classes Reference"
+                               GridPane.columnIndex="0" GridPane.rowIndex="4"/>
+                        <Label text="Exploring Java"
+                               GridPane.columnIndex="0" GridPane.rowIndex="5"/>
+
+                        <CheckBox GridPane.columnIndex="1"
+                                  GridPane.rowIndex="1"/>
+                        <CheckBox GridPane.columnIndex="1"
+                                  GridPane.rowIndex="2"/>
+                        <CheckBox GridPane.columnIndex="1"
+                                  GridPane.rowIndex="3"/>
+                        <CheckBox GridPane.columnIndex="1"
+                                  GridPane.rowIndex="4"/>
+                        <CheckBox GridPane.columnIndex="1"
+                                  GridPane.rowIndex="5"/>
+                    </children>
+                </GridPane>
+            </children>
+            <columnConstraints>
+                <ColumnConstraints fillWidth="true" hgrow="SOMETIMES"/>
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints fillHeight="true" vgrow="SOMETIMES"/>
+            </rowConstraints>
+        </GridPane>
+        <HBox id="HBox" alignment="CENTER" minWidth="-1.0" spacing="5.0"
+              AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
+            <children>
+                <Button onAction="#confirm" prefWidth="80.0" text="Confirm"/>
+                <Button onAction="#cancel" prefWidth="80.0" text="Cancel"/>
+            </children>
+        </HBox>
+    </children>
+</AnchorPane>

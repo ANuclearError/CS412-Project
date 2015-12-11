@@ -6,6 +6,14 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.apache.lucene.queryparser.classic.ParseException;
 
 import java_ebook_search.model.MyFile;
@@ -27,6 +35,9 @@ import javafx.scene.web.WebView;
  * @since 0.1
  */
 public class SearchController implements Initializable {
+
+	@FXML
+	private VBox searchView;
 
 	@FXML
 	private ListView<File> results;
@@ -96,7 +107,6 @@ public class SearchController implements Initializable {
 		path = path.replace("src/main/resources", "");
 		path = path.replace("indexed_files", "files");
 		System.out.println(path);
-		
 		webEngine.load(getClass().getResource(path).toString());
 	}
 
@@ -106,6 +116,22 @@ public class SearchController implements Initializable {
 	 * TODO: Create filters window.
 	 */
 	public void filters() {
+		try {
+			String filters = "/java_ebook_search/view/FiltersView.fxml";
+			AnchorPane page = FXMLLoader.load(getClass().getResource(filters));
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Filters");
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initOwner(searchView.getParent().getScene().getWindow());
+			Scene scene = new Scene(page);
+			dialogStage.setScene(scene);
+
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		System.out.println("Filters");
 	}
 
@@ -113,13 +139,10 @@ public class SearchController implements Initializable {
 	 * Executes search.
 	 */
 	public void search() throws IOException, ParseException {
-
 		// clear old list
 		listItems.clear();
-
 		String term = query.getText();
 		System.out.println("Search Term = " + term);
-
 		// Get file paths
 		List<MyFile> files = search.search(term);
 		int i = 1;

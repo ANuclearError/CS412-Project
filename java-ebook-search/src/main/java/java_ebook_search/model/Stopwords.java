@@ -8,6 +8,10 @@ import java.util.List;
 
 /**
  * Class: Stopwords.java
+ *
+ * The default Lucene stopwords included boolean operators "and", "or" and "not"
+ * which are words that seemed necessary for searching for when querying the
+ * search engine.
  * 
  * @Author Kevin Paton
  * @Since 27 Nov 2015

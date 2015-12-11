@@ -4,7 +4,9 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<VBox fx:id="searchView" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8" fx:controller="java_ebook_search.controller.SearchController">
+<VBox fx:id="searchView" xmlns:fx="http://javafx.com/fxml/1"
+      xmlns="http://javafx.com/javafx/8"
+      fx:controller="java_ebook_search.controller.SearchController">
     <children>
         <HBox>
            <children>
