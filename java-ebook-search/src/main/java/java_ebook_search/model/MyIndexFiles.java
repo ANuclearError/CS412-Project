@@ -1,10 +1,7 @@
 package java_ebook_search.model;
 
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileVisitResult;
 import java.nio.file.Files;
@@ -13,6 +10,7 @@ import java.nio.file.Paths;
 import java.nio.file.SimpleFileVisitor;
 import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Date;
+import java.util.Scanner;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
@@ -187,27 +185,27 @@ public class MyIndexFiles {
       String path = "src/main/resources/java_ebook_search/indexed_files/";
       String title = file.toString().replace(path, "");
       title = title.split("/")[0];
-      String titleField = "";
+      String book = "";
 
       // This horrible if you're required to add/remove books.
       switch(title) {
         case "awt":
-          titleField = "Java AWT Reference";
+          book = "Java AWT Reference";
           break;
         case "exp":
-          titleField = "Exploring Java";
+          book = "Exploring Java";
           break;
         case "fclass":
-          titleField = "Java Fundamental Classes Reference";
+          book = "Java Fundamental Classes Reference";
           break;
         case "javanut":
-          titleField = "Java in a Nutshell";
+          book = "Java in a Nutshell";
           break;
         case "langref":
-          titleField = "Java Language Reference";
+          book = "Java Language Reference";
           break;
       }
-      doc.add(new StringField("title", titleField, Field.Store.YES));
+      doc.add(new StringField("book", book, Field.Store.YES));
 
       String name = file.getFileName().toString();
       String chapter = "";
@@ -227,6 +225,7 @@ public class MyIndexFiles {
       }
       doc.add(new StringField("chapter", chapter, Field.Store.YES));
       doc.add(new StringField("section", section, Field.Store.YES));
+      doc.add(new StringField("title", getTitle(file), Field.Store.YES));
 
       if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
         // New index, so we just add the document (no old document can be there):
@@ -240,5 +239,23 @@ public class MyIndexFiles {
         writer.updateDocument(new Term("path", file.toString()), doc);
       }
     }
+  }
+
+  private static String getTitle(Path file) {
+    String title = "";
+    try {
+      BufferedReader br = new BufferedReader(new FileReader(file.toFile()));
+      title = br.readLine();
+      if (title.equals(""))
+        title = br.readLine();
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+    title = title.substring(title.indexOf("]") + 1);
+    title = title.trim();
+    if(Character.isDigit(title.charAt(0))) {
+      title = title.split(" ", 2)[1];
+    }
+    return title;
   }
 }

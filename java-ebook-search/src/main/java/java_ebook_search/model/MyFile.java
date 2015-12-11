@@ -37,8 +37,8 @@ public class MyFile extends File {
 	public String toString(){
 		String string = "";
 		//Stick a number infront of it, if not 0
-		string =  data == 0 ? this.getName(): (data + ": " + this.getName());
-		string  += "\n" + doc.get("title")  + "\n";
+		string = data == 0 ? doc.get("title"): (data + ": " + doc.get("title"));
+		string  += "\n" + doc.get("book")  + "\n";
 		string += doc.get("chapter") + ", " + doc.get("section");
 		return string;
 	}
