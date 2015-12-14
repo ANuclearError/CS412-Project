@@ -71,6 +71,8 @@ public class Search {
 	public List<MyFile> search(String term) throws ParseException, IOException {
 
 		List<MyFile> toReturn = new ArrayList<MyFile>();
+		
+		SpellCheck sc = new SpellCheck();
 
 		Query query = queryParser.parse(term);
 
@@ -82,11 +84,21 @@ public class Search {
 		int numTotalHits = results.totalHits;
 		int hitsPerPage = 25;
 		ScoreDoc[] hits = results.scoreDocs;
-
+		
+		if(numTotalHits == 0){
+			//re-search the query using one of the suggestions
+			List<String> suggestions = sc.getSuggestions(query.toString(field));
+			search((suggestions.get(0)));
+			
+		}
+		
+		
 		int start = 0;
 		int end = Math.min(numTotalHits, hitsPerPage);
 
 		while (true) {
+			
+
 			if (end > hits.length) {
 
 				hits = indexSearcher.search(query, numTotalHits).scoreDocs;

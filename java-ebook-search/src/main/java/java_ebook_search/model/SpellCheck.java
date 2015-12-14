@@ -21,7 +21,7 @@ public class SpellCheck {
 	/**
 	 * LanguageTool that handles the spell checking.
 	 */
-	private JLanguageTool tool;
+	private static JLanguageTool tool;
 
 	/**
 	 * Constructor.
@@ -41,7 +41,7 @@ public class SpellCheck {
 	 *
 	 *             TODO: Implement a better system.
 	 */
-	public List<String> getSuggestions(String term) throws IOException {
+	public static List<String> getSuggestions(String term) throws IOException {
 		List<String> list = new ArrayList<String>();
 
 		List<RuleMatch> matches = tool.check(term);
