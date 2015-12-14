@@ -3,29 +3,30 @@ package java_ebook_search.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
-import javafx.stage.Stage;
+import org.apache.commons.collections4.CollectionUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 
+import java_ebook_search.model.Filter;
 import java_ebook_search.model.MyFile;
 import java_ebook_search.model.Search;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 
 /**
  * The SearchController class acts as the controller for actions perofrmed in
@@ -35,6 +36,11 @@ import javafx.scene.web.WebView;
  * @since 0.1
  */
 public class SearchController implements Initializable {
+
+	/**
+	 * Filters to include in search.
+	 */
+	private Filter filter;
 
 	@FXML
 	private VBox searchView;
@@ -80,9 +86,8 @@ public class SearchController implements Initializable {
 			webEngine = webView.getEngine();
 			webEngine.load(getClass().getResource(home).toString());
 
-			results.getSelectionModel().selectedItemProperty().addListener(
-					(observable, oldValue, newValue) -> loadResult(newValue)
-			);
+			results.getSelectionModel().selectedItemProperty()
+					.addListener((observable, oldValue, newValue) -> loadResult(newValue));
 
 		} catch (NullPointerException e) {
 			System.out.println("It's happened again, ignore it");
@@ -95,7 +100,9 @@ public class SearchController implements Initializable {
 
 	/**
 	 * Given a file, it loads the web page into the web engine.
-	 * @param result - the file loaded.
+	 * 
+	 * @param result
+	 *            - the file loaded.
 	 */
 	private void loadResult(File result) {
 		String path = result.getPath();
@@ -130,10 +137,13 @@ public class SearchController implements Initializable {
 			// Set the person into the controller.
 			FiltersController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-
-
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
+
+			// Set Filters
+			this.filter = new Filter();
+			this.filter.setBooks(controller.getBooks());
+
 			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -142,15 +152,54 @@ public class SearchController implements Initializable {
 	}
 
 	/**
+	 * Filter files
+	 * 
+	 * @param files
+	 * @return
+	 */
+	private List<MyFile> filterResults(List<MyFile> files) {
+
+		// No filter, do nothing
+		if (null == filter) {
+			return files;
+		}
+
+		// New filtered List to return
+		List<MyFile> toReturn = new ArrayList<MyFile>();
+
+		// If passed in a null list of files, do nothing
+		if (!CollectionUtils.isEmpty(files)) {
+
+			// Loop through each file
+			for (MyFile file : files) {
+
+				// If is in filtered list add to filtered results
+				// "toReturn"
+				System.out.println("Books to Filter: " + filter.toString());
+				if (filter.getBooks().contains(file.getBook())) {
+					toReturn.add(file);
+				}
+
+			}
+
+		}
+
+		return toReturn;
+	}
+
+	/**
 	 * Executes search.
 	 */
 	public void search() throws IOException, ParseException {
+
 		// clear old list
 		listItems.clear();
 		String term = query.getText();
 		System.out.println("Search Term = " + term);
 		// Get file paths
 		List<MyFile> files = search.search(term);
+		files = filterResults(files);
+
 		int i = 1;
 		for (MyFile file : files) {
 			file.setData(i);

@@ -18,55 +18,55 @@ import javafx.stage.Stage;
  */
 public class Driver extends Application {
 
-    /**
-     * The primary stage of the GUI, containing everything.
-     */
-    private Stage primaryStage;
+	/**
+	 * The primary stage of the GUI, containing everything.
+	 */
+	private Stage primaryStage;
 
-    /**
-     * The rootLayout which acts as the skeleton of the GUI.
-     */
-    private BorderPane rootLayout;
+	/**
+	 * The rootLayout which acts as the skeleton of the GUI.
+	 */
+	private BorderPane rootLayout;
 
-    public static void main(String[] args) {
-        launch(args);
-    }
+	public static void main(String[] args) {
+		launch(args);
+	}
 
-    @Override
-    public void start(Stage primaryStage) throws Exception {
-        this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("Java eBook Search");
+	@Override
+	public void start(Stage primaryStage) throws Exception {
+		this.primaryStage = primaryStage;
+		this.primaryStage.setTitle("Java eBook Search");
 
-        initRootLayout();
-        showSearchView();
-    }
+		initRootLayout();
+		showSearchView();
+	}
 
-    /**
-     * Loads the root layout containing the menu bar and the general structure.
-     */
-    private void initRootLayout() {
-        String fxml = "/java_ebook_search/view/RootLayout.fxml";
-        try {
-            rootLayout = FXMLLoader.load(getClass().getResource(fxml));
-            Scene scene = new Scene(rootLayout);
-            primaryStage.setScene(scene);
-            primaryStage.show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * Loads the root layout containing the menu bar and the general structure.
+	 */
+	private void initRootLayout() {
+		String fxml = "/java_ebook_search/view/RootLayout.fxml";
+		try {
+			rootLayout = FXMLLoader.load(getClass().getResource(fxml));
+			Scene scene = new Scene(rootLayout);
+			primaryStage.setScene(scene);
+			primaryStage.show();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-    /**
-     * Loads the search view and injects it into the root layout.
-     */
-    private void showSearchView() {
-        String fxml = "/java_ebook_search/view/SearchView.fxml";
-        try {
-            VBox searchView;
-            searchView = FXMLLoader.load(getClass().getResource(fxml));
-            rootLayout.setCenter(searchView);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * Loads the search view and injects it into the root layout.
+	 */
+	private void showSearchView() {
+		String fxml = "/java_ebook_search/view/SearchView.fxml";
+		try {
+			VBox searchView;
+			searchView = FXMLLoader.load(getClass().getResource(fxml));
+			rootLayout.setCenter(searchView);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 }

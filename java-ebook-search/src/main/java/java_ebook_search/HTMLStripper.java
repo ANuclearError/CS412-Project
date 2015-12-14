@@ -12,11 +12,11 @@ import java.nio.file.Path;
  * Created by Aidan O'Grady on 14/10/15.
  */
 public class HTMLStripper {
-	
-    public static void main(String[] args) throws Exception {
-        allFiles(new File ("/Users/kp_one/Desktop/java"));
-    }
-	
+
+	public static void main(String[] args) throws Exception {
+		allFiles(new File("/Users/kp_one/Desktop/java"));
+	}
+
 	public HTMLStripper() throws Exception {
 		File parent = new File("files/");
 		allFiles(parent);
