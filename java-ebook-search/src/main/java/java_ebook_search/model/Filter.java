@@ -16,6 +16,10 @@ public class Filter {
 	 */
 	private Set<String> books;
 
+	private boolean searchContent;
+
+	private boolean searchTitle;
+
 	/**
 	 * Get the filtered book set.
 	 * 
@@ -32,6 +36,22 @@ public class Filter {
 	 */
 	public void setBooks(Set<String> books) {
 		this.books = books;
+	}
+
+	public boolean isSearchContent() {
+		return searchContent;
+	}
+
+	public void setSearchContent(boolean searchContent) {
+		this.searchContent = searchContent;
+	}
+
+	public boolean isSearchTitle() {
+		return searchTitle;
+	}
+
+	public void setSearchTitle(boolean searchTitle) {
+		this.searchTitle = searchTitle;
 	}
 
 	@Override

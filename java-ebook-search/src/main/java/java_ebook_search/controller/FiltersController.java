@@ -6,6 +6,8 @@ import java.util.Set;
 import java_ebook_search.model.Book;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 /**
@@ -15,6 +17,9 @@ public class FiltersController {
 
 	@FXML
 	private CheckBox javanut, langref, awt, fclass, exp;
+
+	@FXML
+	private RadioButton both, content, title;
 
 	private Stage dialogStage;
 	private boolean okClicked = false;
@@ -52,6 +57,12 @@ public class FiltersController {
 		okClicked = true;
 		dialogStage.close();
 
+		if(both.isSelected() || content.isSelected()) {
+			System.out.println("Searching content");
+		}
+		if(both.isSelected() || title.isSelected()) {
+			System.out.println("Searching title");
+		}
 		this.books = books;
 	}
 
