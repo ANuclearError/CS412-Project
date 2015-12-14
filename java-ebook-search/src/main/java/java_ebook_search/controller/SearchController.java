@@ -74,14 +74,11 @@ public class SearchController implements Initializable {
 
 		String index = "java_ebook_search/index";
 		String home = "/java_ebook_search/view/index.html";
-		String css = "/java_ebook_search/style/style.css";
 
 		try {
 			search = new Search(index);
 			webEngine = webView.getEngine();
 			webEngine.load(getClass().getResource(home).toString());
-			String cssLoc = getClass().getResource(css).toString();
-			webEngine.setUserStyleSheetLocation(cssLoc);
 
 			results.getSelectionModel().selectedItemProperty().addListener(
 					(observable, oldValue, newValue) -> loadResult(newValue)
@@ -108,6 +105,7 @@ public class SearchController implements Initializable {
 		path = path.replace("indexed_files", "files");
 		System.out.println(path);
 		webEngine.load(getClass().getResource(path).toString());
+		webEngine.setUserStyleSheetLocation(null);
 	}
 
 	/**
