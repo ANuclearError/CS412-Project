@@ -48,6 +48,7 @@ public class FiltersController {
 
 	/**
 	 * Returns whether or not user confirmed changes to filters.
+	 * 
 	 * @return okClicked
 	 */
 	public boolean isOkClicked() {
@@ -90,7 +91,8 @@ public class FiltersController {
 		dialogStage.close();
 	}
 
-	 /** Return the filter
+	/**
+	 * Return the filter
 	 *
 	 * @return
 	 */
@@ -111,7 +113,8 @@ public class FiltersController {
 	/**
 	 * Set Selected on all checkboxes
 	 *
-	 * @param b - setting for all
+	 * @param b
+	 *            - setting for all
 	 */
 	private void checkAll(boolean b) {
 		javanut.setSelected(b);

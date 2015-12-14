@@ -58,7 +58,6 @@ public class Driver extends Application {
 		}
 	}
 
-
 	/**
 	 * Loads the search view and injects it into the root layout.
 	 */
@@ -67,7 +66,7 @@ public class Driver extends Application {
 		try {
 			VBox searchView;
 			searchView = FXMLLoader.load(getClass().getResource(fxml));
-			
+
 			rootLayout.setCenter(searchView);
 		} catch (IOException e) {
 			e.printStackTrace();
