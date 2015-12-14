@@ -57,7 +57,7 @@ public class Search {
 		List<Result> toReturn = new ArrayList<Result>();
 
 		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
-		QueryParser content = new QueryParser("content", analyzer);
+		QueryParser content = new QueryParser("contents", analyzer);
 		QueryParser title = new QueryParser("title", analyzer);
 
 		BooleanQuery.Builder builder = new BooleanQuery.Builder();
