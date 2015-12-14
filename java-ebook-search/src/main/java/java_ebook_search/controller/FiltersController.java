@@ -1,8 +1,9 @@
 package java_ebook_search.controller;
 
 import java.util.HashSet;
-import java.util.Set;
 
+import java.util.Set;
+import java_ebook_search.model.Filter;
 import java_ebook_search.model.Book;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
@@ -30,10 +31,11 @@ public class FiltersController {
 	 */
 	private boolean okClicked = false;
 
-	/**
-	 * Set of books
-	 */
-	private Set<String> books;
+	private Filter filter;
+
+	public FiltersController() {
+		filter = new Filter();
+	}
 
 	/**
 	 * Sets the stage of this dialog.
@@ -69,15 +71,15 @@ public class FiltersController {
 		if (exp.isSelected())
 			books.add(Book.EXP.toString());
 
-		if(both.isSelected() || content.isSelected()) {
+		if (both.isSelected() || content.isSelected()) {
 			System.out.println("Searching content");
 		}
-		if(both.isSelected() || title.isSelected()) {
+		if (both.isSelected() || title.isSelected()) {
 			System.out.println("Searching title");
 		}
 
 		okClicked = true;
-		this.books = books;
+		filter.setBooks(books);
 		dialogStage.close();
 	}
 
@@ -88,20 +90,21 @@ public class FiltersController {
 		dialogStage.close();
 	}
 
-	/**
-	 * Returns the books the user wishes to filter.
-	 * @return books
+	 /** Return the filter
+	 *
+	 * @return
 	 */
-	public Set<String> getBooks() {
-		return books;
+	public Filter getFilter() {
+		return filter;
 	}
 
 	/**
-	 * Sets the books to those currently filtered
-	 * @param books - current filter.
+	 * Set the filter and update the checkboxes
+	 *
+	 * @param filter
 	 */
-	public void setBooks(Set<String> books) {
-		this.books = books;
+	public void setFilter(Filter filter) {
+		this.filter = filter;
 		updateCheckBoxes();
 	}
 
@@ -123,7 +126,9 @@ public class FiltersController {
 	 */
 	private void updateCheckBoxes() {
 		checkAll(false);
-		for (String book : books) {
+
+		for (String book : filter.getBooks()) {
+
 			if (book.equals(Book.JAVANUT.toString())) {
 				javanut.setSelected(true);
 			}
