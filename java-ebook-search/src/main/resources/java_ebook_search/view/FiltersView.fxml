@@ -3,15 +3,18 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
+<?import javafx.scene.text.Text?>
+<?import java.net.URL?>
 <AnchorPane prefHeight="360" prefWidth="640" xmlns:fx="http://javafx.com/fxml"
             fx:controller="java_ebook_search.controller.FiltersController">
     <children>
         <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
                   AnchorPane.topAnchor="10.0">
             <children>
-                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <GridPane GridPane.columnIndex="0" GridPane.rowIndex="0"
+                        styleClass="grid">
                     <children>
-                        <Label text="Books" styleClass="filterHeading"
+                        <Text text="Books" id="filterHeading"
                                GridPane.columnIndex="0" GridPane.rowIndex="0"/>
                         <Label text="Java in a Nutshell"
                                GridPane.columnIndex="0" GridPane.rowIndex="1"/>
@@ -52,4 +55,8 @@
             </children>
         </HBox>
     </children>
+
+    <stylesheets>
+        <URL value="@../style/filters.css"/>
+    </stylesheets>
 </AnchorPane>

@@ -1,5 +1,6 @@
 package java_ebook_search.controller;
 
+import javafx.fxml.FXML;
 import javafx.stage.Stage;
 
 /**
@@ -8,18 +9,28 @@ import javafx.stage.Stage;
 public class FiltersController {
 
     private Stage dialogStage;
+    private boolean okClicked = false;
+
 
     /**
      * Sets the stage of this dialog.
+     *
      * @param dialogStage
      */
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
 
+    public boolean isOkClicked() {
+        return okClicked;
+    }
+
     public void confirm() {
+        okClicked = true;
+        dialogStage.close();
     }
 
     public void cancel() {
+        dialogStage.close();
     }
 }

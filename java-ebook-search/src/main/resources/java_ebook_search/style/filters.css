@@ -1,0 +1,8 @@
+#filterHeading {
+    -fx-font-size: 18pt;
+}
+
+.grid {
+    -fx-padding: 10;
+    -fx-hgap: 10;
+}

@@ -113,24 +113,32 @@ public class SearchController implements Initializable {
 	 *
 	 * TODO: Create filters window.
 	 */
-	public void filters() {
+	public boolean filters() {
 		try {
 			String filters = "/java_ebook_search/view/FiltersView.fxml";
-			AnchorPane page = FXMLLoader.load(getClass().getResource(filters));
+			FXMLLoader loader = new FXMLLoader();
+			loader.setLocation(getClass().getResource(filters));
+			AnchorPane page = (AnchorPane) loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Filters");
-			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.initModality(Modality.APPLICATION_MODAL);
+			dialogStage.setResizable(false);
 			dialogStage.initOwner(searchView.getParent().getScene().getWindow());
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
+			// Set the person into the controller.
+			FiltersController controller = loader.getController();
+			controller.setDialogStage(dialogStage);
+
+
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-
+			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
+			return false;
 		}
-		System.out.println("Filters");
 	}
 
 	/**
