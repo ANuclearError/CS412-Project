@@ -38,182 +38,183 @@ import javafx.stage.Stage;
  */
 public class SearchController implements Initializable {
 
-	@FXML
-	private VBox searchView;
+    @FXML
+    private VBox searchView;
 
-	@FXML
-	private ListView<File> results;
+    @FXML
+    private ListView<File> results;
 
-	@FXML
-	private TextField query;
+    @FXML
+    private TextField query;
 
-	@FXML
-	private WebView webView;
+    @FXML
+    private WebView webView;
 
-	/**
-	 * Web Engine that renders the web pages.
-	 */
-	private WebEngine webEngine;
+    /**
+     * Web Engine that renders the web pages.
+     */
+    private WebEngine webEngine;
 
-	/**
-	 * The search engine the user interacts with.
-	 */
-	private Search search;
+    /**
+     * The search engine the user interacts with.
+     */
+    private Search search;
 
-	/**
-	 * The results obtained from the search.
-	 */
-	final ObservableList<File> listItems = FXCollections.observableArrayList();
+    /**
+     * The results obtained from the search.
+     */
+    final ObservableList<File> listItems = FXCollections.observableArrayList();
 
-	/**
-	 * Spell checker for offering suggestions to user.
-	 */
-	private SpellCheck sc;
+    /**
+     * Spell checker for offering suggestions to user.
+     */
+    private SpellCheck sc;
 
-	/**
-	 * Filters to include in search.
-	 */
-	private Filter filter;
+    /**
+     * Filters to include in search.
+     */
+    private Filter filter;
 
-	/**
-	 * Sets up the GUI, ensuring that everything is loaded nicely.
-	 *
-	 * @param location
-	 * @param resources
-	 */
-	public void initialize(URL location, ResourceBundle resources) {
-		results.setItems(listItems);
-		String index = "java_ebook_search/index";
-		String home = "/java_ebook_search/view/index.html";
+    /**
+     * Sets up the GUI, ensuring that everything is loaded nicely.
+     *
+     * @param location
+     * @param resources
+     */
+    public void initialize(URL location, ResourceBundle resources) {
+        results.setItems(listItems);
+        String index = "java_ebook_search/index";
+        String home = "/java_ebook_search/view/index.html";
 
-		try {
-			search = new Search(index);
-			sc = new SpellCheck();
-			webEngine = webView.getEngine();
-			webEngine.load(getClass().getResource(home).toString());
-			results.getSelectionModel().selectedItemProperty()
-					.addListener((observable, oldValue, newValue) -> loadResult(newValue));
-		} catch (NullPointerException e) {
-			System.out.println("It's happened again, ignore it");
-			e.printStackTrace();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
+        try {
+            search = new Search(index);
+            sc = new SpellCheck();
+            webEngine = webView.getEngine();
+            webEngine.load(getClass().getResource(home).toString());
+            results.getSelectionModel().selectedItemProperty()
+                    .addListener((observable, oldValue, newValue) -> loadResult(newValue));
+        } catch (NullPointerException e) {
+            System.out.println("It's happened again, ignore it");
+            e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	/**
-	 * Given a file, it loads the web page into the web engine.
-	 * 
-	 * @param result
-	 *            - the file loaded.
-	 */
-	private void loadResult(File result) {
-		String path = result.getPath();
-		// Need to deal with difference between indexed files without HTML tags
-		// and files with HTML tags.
-		path = path.replace("src/main/resources", "");
-		path = path.replace("indexed_files", "files");
-		System.out.println(path);
-		webEngine.load(getClass().getResource(path).toString());
-		webEngine.setUserStyleSheetLocation(null);
-	}
+    /**
+     * Given a file, it loads the web page into the web engine.
+     *
+     * @param result - the file loaded.
+     */
+    private void loadResult(File result) {
+        String path = result.getPath();
+        // Need to deal with difference between indexed files without HTML tags
+        // and files with HTML tags.
+        path = path.replace("src/main/resources", "");
+        path = path.replace("indexed_files", "files");
+        System.out.println(path);
+        webEngine.load(getClass().getResource(path).toString());
+        webEngine.setUserStyleSheetLocation(null);
+    }
 
-	/**
-	 * Opens the filter window to enable filters.
-	 *
-	 * TODO: Create filters window.
-	 */
-	public boolean filters() {
-		try {
-			String filters = "/java_ebook_search/view/FiltersView.fxml";
-			FXMLLoader loader = new FXMLLoader();
-			loader.setLocation(getClass().getResource(filters));
-			AnchorPane page = loader.load();
-			Stage dialogStage = new Stage();
-			dialogStage.setTitle("Filters");
-			dialogStage.initModality(Modality.APPLICATION_MODAL);
-			dialogStage.setResizable(false);
-			dialogStage.initOwner(searchView.getParent().getScene().getWindow());
-			Scene scene = new Scene(page);
-			dialogStage.setScene(scene);
+    /**
+     * Opens the filter window to enable filters.
+     * <p>
+     * TODO: Create filters window.
+     */
+    public boolean filters() {
+        try {
+            String filters = "/java_ebook_search/view/FiltersView.fxml";
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(filters));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Filters");
+            dialogStage.initModality(Modality.APPLICATION_MODAL);
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(searchView.getParent().getScene().getWindow());
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
 
-			// Set the person into the controller.
-			FiltersController controller = loader.getController();
-			controller.setDialogStage(dialogStage);
+            // Set the person into the controller.
+            FiltersController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
 
-			if (null != filter) {
-				if (null != filter.getBooks()) {
-					controller.setBooks(filter.getBooks());
-				}
-			}
-			// Show the dialog and wait until the user closes it
-			dialogStage.showAndWait();
+            if (null != filter) {
+                if (null != filter.getBooks()) {
+                    controller.setBooks(filter.getBooks());
+                }
+            }
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
 
-			// Set Filters
-			this.filter = new Filter();
-			this.filter.setBooks(controller.getBooks());
+            // Set Filters
+            this.filter = new Filter();
+            this.filter.setBooks(controller.getBooks());
 
-			return controller.isOkClicked();
-		} catch (IOException e) {
-			e.printStackTrace();
-			return false;
-		}
-	}
+            return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-	/**
-	 * Filter files
-	 * 
-	 * @param files
-	 * @return
-	 */
-	private List<Result> filterResults(List<Result> files) {
-		// No filter, do nothing
-		if (null == filter) {
-			return files;
-		}
+    /**
+     * Filter files
+     *
+     * @param files
+     * @return
+     */
+    private List<Result> filterResults(List<Result> files) {
+        // No filter, do nothing
+        if (null == filter) {
+            return files;
+        }
 
-		// New filtered List to return
-		List<Result> toReturn = new ArrayList<Result>();
+        // New filtered List to return
+        List<Result> toReturn = new ArrayList<Result>();
 
-		// If passed in a null list of files, do nothing
-		if (!CollectionUtils.isEmpty(files)) {
-			// Loop through each file
-			for (Result file : files) {
-				// If is in filtered list add to filtered results
-				// "toReturn"
-				if (filter.getBooks().contains(file.getBook())) {
-					toReturn.add(file);
-				}
-			}
-		}
-		return toReturn;
-	}
+        // If passed in a null list of files, do nothing
+        if (!CollectionUtils.isEmpty(files)) {
+            // Loop through each file
+            for (Result file : files) {
+                // If is in filtered list add to filtered results
+                // "toReturn"
+                if (filter.getBooks().contains(file.getBook())) {
+                    toReturn.add(file);
+                }
+            }
+        }
+        return toReturn;
+    }
 
-	/**
-	 * Executes search.
-	 */
-	public void search() throws IOException, ParseException {
-		// clear old list
-		listItems.clear();
-		String term = query.getText();
-		System.out.println("Search Term = " + term);
+    /**
+     * Executes search.
+     */
+    public void search() throws IOException, ParseException {
+        // clear old list
+        listItems.clear();
+        String term = query.getText();
+        System.out.println("Search Term = " + term);
 
-		// Get file paths
-		List<Result> files = search.search(term);
-		files = filterResults(files);
-		if(files.size() == 0){
-			//re-search the query using one of the suggestions
-			List<String> suggestions = sc.getSuggestions(term);
-			files = search.search((suggestions.get(0)));
-			System.out.println(suggestions);
-		}
+        // Get file paths
+        List<Result> files = search.search(term);
+        files = filterResults(files);
+        if (files.size() == 0) {
+            //re-search the query using one of the suggestions
+            List<String> suggestions = sc.getSuggestions(term);
+            if (suggestions.size() != 0) {
+                files = search.search((suggestions.get(0)));
+                System.out.println(suggestions);
+            }
 
-		// Add results to list, displaying on GUI.
-		int i = 1;
-		for (Result file : files) {
-			file.setData(i);
-			listItems.add(file);
-			i++;
-		}
-	}
+            // Add results to list, displaying on GUI.
+            int i = 1;
+            for (Result file : files) {
+                file.setData(i);
+                listItems.add(file);
+                i++;
+            }
+        }
+    }
 }
