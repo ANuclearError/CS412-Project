@@ -1,7 +1,13 @@
 package java_ebook_search;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
+import java_ebook_search.model.CommonSearchTerms;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,7 +34,8 @@ public class Driver extends Application {
 	 */
 	private BorderPane rootLayout;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		CommonSearchTerms.createDefault();
 		launch(args);
 	}
 

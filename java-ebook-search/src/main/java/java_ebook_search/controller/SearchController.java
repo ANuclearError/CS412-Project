@@ -191,6 +191,7 @@ public class SearchController implements Initializable {
      * Executes search.
      */
     public void search() throws IOException, ParseException {
+    	
         // clear old list
         listItems.clear();
         String term = query.getText();

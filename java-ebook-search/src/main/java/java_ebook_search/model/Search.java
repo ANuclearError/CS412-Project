@@ -68,8 +68,8 @@ public class Search {
 
 		TopDocs results = indexSearcher.search(query, 50);
 
-		System.out.println("Searching for: " + term);
-		System.out.println("Results: " + results.totalHits);
+		//System.out.println("Searching for: " + term);
+		//System.out.println("Results: " + results.totalHits);
 
 		int numTotalHits = results.totalHits;
 		int hitsPerPage = 25;
@@ -96,7 +96,7 @@ public class Search {
 					// System.out.println((i + 1) + ". " + path);
 					toReturn.add(new Result(path, doc));
 				} else {
-					System.out.println((i + 1) + ". " + "No path for this document");
+					//System.out.println((i + 1) + ". " + "No path for this document");
 				}
 
 			}
