@@ -175,7 +175,6 @@ public class SearchController implements Initializable {
 
 				// If is in filtered list add to filtered results
 				// "toReturn"
-				System.out.println("Books to Filter: " + filter.toString());
 				if (filter.getBooks().contains(file.getBook())) {
 					toReturn.add(file);
 				}
