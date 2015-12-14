@@ -28,15 +28,20 @@
                                GridPane.columnIndex="0" GridPane.rowIndex="5"/>
 
                         <CheckBox GridPane.columnIndex="1"
-                                  GridPane.rowIndex="1"/>
+                                  GridPane.rowIndex="1"
+                                  fx:id="javanut"/>
                         <CheckBox GridPane.columnIndex="1"
-                                  GridPane.rowIndex="2"/>
+                                  GridPane.rowIndex="2"
+                                  fx:id="langef"/>
                         <CheckBox GridPane.columnIndex="1"
-                                  GridPane.rowIndex="3"/>
+                                  GridPane.rowIndex="3"
+                                  fx:id="awt"/>
                         <CheckBox GridPane.columnIndex="1"
-                                  GridPane.rowIndex="4"/>
+                                  GridPane.rowIndex="4"
+                                  fx:id="fclass"/>
                         <CheckBox GridPane.columnIndex="1"
-                                  GridPane.rowIndex="5"/>
+                                  GridPane.rowIndex="5"
+                                  fx:id="exp"/>
                     </children>
                 </GridPane>
             </children>

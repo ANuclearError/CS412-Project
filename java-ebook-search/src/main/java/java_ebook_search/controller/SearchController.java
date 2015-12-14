@@ -118,7 +118,7 @@ public class SearchController implements Initializable {
 			String filters = "/java_ebook_search/view/FiltersView.fxml";
 			FXMLLoader loader = new FXMLLoader();
 			loader.setLocation(getClass().getResource(filters));
-			AnchorPane page = (AnchorPane) loader.load();
+			AnchorPane page = loader.load();
 			Stage dialogStage = new Stage();
 			dialogStage.setTitle("Filters");
 			dialogStage.initModality(Modality.APPLICATION_MODAL);

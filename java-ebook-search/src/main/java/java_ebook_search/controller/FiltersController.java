@@ -26,6 +26,7 @@ public class FiltersController {
     }
 
     public void confirm() {
+
         okClicked = true;
         dialogStage.close();
     }
