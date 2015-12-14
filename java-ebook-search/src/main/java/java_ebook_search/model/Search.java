@@ -13,10 +13,7 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -34,16 +31,6 @@ public class Search {
 	 */
 	private IndexSearcher indexSearcher;
 
-	/**
-	 * The query parser that handles the queries.
-	 */
-	private QueryParser queryParser;
-
-	/**
-	 * The field that is to be searched.
-	 */
-	String field = "contents";
-
 	public Search(String index) throws IOException {
 
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -52,9 +39,6 @@ public class Search {
 		Directory dir = FSDirectory.open(Paths.get(file.getAbsolutePath()));
 		IndexReader reader = DirectoryReader.open(dir);
 		indexSearcher = new IndexSearcher(reader);
-
-		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
-		queryParser = new QueryParser(field, analyzer);
 	}
 
 	/**
@@ -70,13 +54,21 @@ public class Search {
 	 */
 	public List<MyFile> search(String term) throws ParseException, IOException {
 
-		List<MyFile> toReturn = new ArrayList<MyFile>();
+		List<MyFile> toReturn = new ArrayList<>();
 
-		Query query = queryParser.parse(term);
+		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
+		QueryParser content = new QueryParser("content", analyzer);
+		QueryParser title = new QueryParser("title", analyzer);
+
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+
+		builder.add(content.parse(term), BooleanClause.Occur.SHOULD);
+		builder.add(title.parse(term), BooleanClause.Occur.SHOULD);
+		Query query = builder.build();
 
 		TopDocs results = indexSearcher.search(query, 50);
 
-		System.out.println("Searching for: " + query.toString(field));
+		System.out.println("Searching for: " + term);
 		System.out.println("Results: " + results.totalHits);
 
 		int numTotalHits = results.totalHits;
