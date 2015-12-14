@@ -212,9 +212,10 @@ public class SearchController implements Initializable {
 		if(files.size() == 0){
 			//re-search the query using one of the suggestions
 			List<String> suggestions = sc.getSuggestions(term);
+			if(suggestions.size() != 0){
 			files = search.search((suggestions.get(0)));
 			System.out.println(suggestions);
-			
+			}
 			
 		}
 
