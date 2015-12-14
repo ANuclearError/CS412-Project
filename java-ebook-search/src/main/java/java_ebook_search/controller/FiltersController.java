@@ -2,9 +2,12 @@ package java_ebook_search.controller;
 
 import java.util.HashSet;
 import java.util.Set;
+
 import java_ebook_search.model.Book;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
+import javafx.scene.control.RadioButton;
+import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 /**
@@ -15,9 +18,15 @@ public class FiltersController {
 	@FXML
 	private CheckBox javanut, langref, awt, fclass, exp;
 
+	@FXML
+	private RadioButton both, content, title;
+
 	private Stage dialogStage;
 	private boolean okClicked = false;
 
+	/**
+	 * Set of books
+	 */
 	private Set<String> books;
 
 	/**
@@ -48,6 +57,12 @@ public class FiltersController {
 		okClicked = true;
 		dialogStage.close();
 
+		if(both.isSelected() || content.isSelected()) {
+			System.out.println("Searching content");
+		}
+		if(both.isSelected() || title.isSelected()) {
+			System.out.println("Searching title");
+		}
 		this.books = books;
 	}
 
@@ -59,4 +74,50 @@ public class FiltersController {
 		return books;
 	}
 
+	public void setBooks(Set<String> books) {
+		this.books = books;
+		updateCheckBoxes();
+
+	}
+
+	/**
+	 * Set Selected on all checkboxes
+	 *
+	 * @param b
+	 */
+	private void checkAll(boolean b) {
+		javanut.setSelected(b);
+		langref.setSelected(b);
+		exp.setSelected(b);
+		fclass.setSelected(b);
+		awt.setSelected(b);
+	}
+
+	/**
+	 * Update checkboxes
+	 */
+	private void updateCheckBoxes() {
+
+		checkAll(false);
+
+		for (String book : books) {
+
+			if (book.equals(Book.JAVANUT.toString())) {
+				javanut.setSelected(true);
+			}
+			if (book.equals(Book.LANGREF.toString())) {
+				langref.setSelected(true);
+			}
+			if (book.equals(Book.EXP.toString())) {
+				exp.setSelected(true);
+			}
+			if (book.equals(Book.FCLASS.toString())) {
+				fclass.setSelected(true);
+			}
+			if (book.equals(Book.AWT.toString())) {
+				awt.setSelected(true);
+			}
+
+		}
+	}
 }

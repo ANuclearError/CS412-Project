@@ -141,6 +141,12 @@ public class SearchController implements Initializable {
 			// Set the person into the controller.
 			FiltersController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
+
+			if (null != filter) {
+				if (null != filter.getBooks()) {
+					controller.setBooks(filter.getBooks());
+				}
+			}
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
 
