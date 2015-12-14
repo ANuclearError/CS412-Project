@@ -2,6 +2,7 @@ package java_ebook_search.model;
 
 import java.util.Arrays;
 import java.util.List;
+
 import org.apache.lucene.analysis.util.CharArraySet;
 
 /**

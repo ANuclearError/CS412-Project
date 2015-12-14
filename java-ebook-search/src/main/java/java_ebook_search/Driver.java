@@ -1,11 +1,6 @@
 package java_ebook_search;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import java_ebook_search.model.CommonSearchTerms;
 import javafx.application.Application;
@@ -63,6 +58,7 @@ public class Driver extends Application {
 		}
 	}
 
+
 	/**
 	 * Loads the search view and injects it into the root layout.
 	 */
@@ -71,6 +67,7 @@ public class Driver extends Application {
 		try {
 			VBox searchView;
 			searchView = FXMLLoader.load(getClass().getResource(fxml));
+			
 			rootLayout.setCenter(searchView);
 		} catch (IOException e) {
 			e.printStackTrace();

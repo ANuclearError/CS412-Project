@@ -1,17 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<VBox fx:id="searchView" xmlns:fx="http://javafx.com/fxml/1"
-      xmlns="http://javafx.com/javafx/8"
-      fx:controller="java_ebook_search.controller.SearchController">
+<VBox fx:id="searchView" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_ebook_search.controller.SearchController">
     <children>
         <HBox>
            <children>
                <TextField fx:id="query" promptText="Search here..." HBox.hgrow="ALWAYS" />
-               <Button defaultButton="true" onAction="#search" text="Search" />
+               <Button fx:id="searchButton" defaultButton="true" onAction="#search" text="Search" />
                <Button onAction="#filters" text="Filters" />
            </children>
         </HBox>

@@ -1,10 +1,10 @@
 package java_ebook_search.controller;
 
 import java.util.HashSet;
-
 import java.util.Set;
-import java_ebook_search.model.Filter;
+
 import java_ebook_search.model.Book;
+import java_ebook_search.model.Filter;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
