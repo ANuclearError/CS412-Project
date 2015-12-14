@@ -1,6 +1,8 @@
 package java_ebook_search.controller;
 
+import java.net.URL;
 import java.util.HashSet;
+import java.util.ResourceBundle;
 import java.util.Set;
 
 import java_ebook_search.model.Book;

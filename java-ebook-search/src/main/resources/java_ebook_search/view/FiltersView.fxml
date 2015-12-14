@@ -7,6 +7,10 @@
 <?import java.net.URL?>
 <AnchorPane prefHeight="360" prefWidth="640" xmlns:fx="http://javafx.com/fxml"
             fx:controller="java_ebook_search.controller.FiltersController">
+    <fx:define>
+        <ToggleGroup fx:id="fields"/>
+    </fx:define>
+
     <children>
         <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
                   AnchorPane.topAnchor="10.0">
@@ -29,28 +33,43 @@
 
                         <CheckBox GridPane.columnIndex="1"
                                   GridPane.rowIndex="1"
-                                  fx:id="javanut"/>
+                                  fx:id="javanut"
+                                  selected="true"/>
                         <CheckBox GridPane.columnIndex="1"
                                   GridPane.rowIndex="2"
-                                  fx:id="langref"/>
+                                  fx:id="langref"
+                                  selected="true"/>
                         <CheckBox GridPane.columnIndex="1"
                                   GridPane.rowIndex="3"
-                                  fx:id="awt"/>
+                                  fx:id="awt"
+                                  selected="true"/>
                         <CheckBox GridPane.columnIndex="1"
                                   GridPane.rowIndex="4"
-                                  fx:id="fclass"/>
+                                  fx:id="fclass"
+                                  selected="true"/>
                         <CheckBox GridPane.columnIndex="1"
                                   GridPane.rowIndex="5"
-                                  fx:id="exp"/>
+                                  fx:id="exp"
+                                  selected="true"/>
                     </children>
                 </GridPane>
+                <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
+                          styleClass="grid">
+                    <children>
+                        <Text text="Fields" id="filterHeading"/>
+                        <RadioButton text="Title and Content"
+                                     toggleGroup="$fields"
+                                     fx:id="titleContent"/>
+                        <RadioButton text="Title Only"
+                                     toggleGroup="$fields"
+                                     fx:id="title"/>
+                        <RadioButton text="Content Only"
+                                     toggleGroup="$fields"
+                                     fx:id="content"/>
+                    </children>
+                </VBox>
+
             </children>
-            <columnConstraints>
-                <ColumnConstraints fillWidth="true" hgrow="SOMETIMES"/>
-            </columnConstraints>
-            <rowConstraints>
-                <RowConstraints fillHeight="true" vgrow="SOMETIMES"/>
-            </rowConstraints>
         </GridPane>
         <HBox id="HBox" alignment="CENTER" minWidth="-1.0" spacing="5.0"
               AnchorPane.bottomAnchor="10.0" AnchorPane.rightAnchor="10.0">
