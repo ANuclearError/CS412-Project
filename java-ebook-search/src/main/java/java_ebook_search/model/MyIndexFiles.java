@@ -187,19 +187,19 @@ public class MyIndexFiles {
             // This horrible if you're required to add/remove books.
             switch (title) {
                 case "awt":
-                    book = "Java AWT Reference";
+                    book = Book.AWT.toString();
                     break;
                 case "exp":
-                    book = "Exploring Java";
+                    book = Book.EXP.toString();
                     break;
                 case "fclass":
-                    book = "Java Fundamental Classes Reference";
+                    book = Book.FCLASS.toString();
                     break;
                 case "javanut":
-                    book = "Java in a Nutshell";
+                    book = Book.JAVANUT.toString();
                     break;
                 case "langref":
-                    book = "Java Language Reference";
+                    book = Book.LANGREF.toString();
                     break;
             }
             doc.add(new StringField("book", book, Field.Store.YES));
