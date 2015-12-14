@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.stage.Stage;
 
+import org.apache.commons.collections4.CollectionUtils;
+
 /**
  * Controller class that handles the user actions on the Filter window.
  */
@@ -18,6 +20,9 @@ public class FiltersController {
 	private Stage dialogStage;
 	private boolean okClicked = false;
 
+	/**
+	 * Set of books
+	 */
 	private Set<String> books;
 
 	/**
@@ -59,4 +64,50 @@ public class FiltersController {
 		return books;
 	}
 
+	public void setBooks(Set<String> books) {
+		this.books = books;
+		updateCheckBoxes();
+
+	}
+
+	/**
+	 * Set Selected on all checkboxes
+	 *
+	 * @param b
+	 */
+	private void checkAll(boolean b) {
+		javanut.setSelected(b);
+		langref.setSelected(b);
+		exp.setSelected(b);
+		fclass.setSelected(b);
+		awt.setSelected(b);
+	}
+
+	/**
+	 * Update checkboxes
+	 */
+	private void updateCheckBoxes() {
+
+		checkAll(false);
+
+		for (String book : books) {
+
+			if (book.equals(Book.JAVANUT.toString())) {
+				javanut.setSelected(true);
+			}
+			if (book.equals(Book.LANGREF.toString())) {
+				langref.setSelected(true);
+			}
+			if (book.equals(Book.EXP.toString())) {
+				exp.setSelected(true);
+			}
+			if (book.equals(Book.FCLASS.toString())) {
+				fclass.setSelected(true);
+			}
+			if (book.equals(Book.AWT.toString())) {
+				awt.setSelected(true);
+			}
+
+		}
+	}
 }
