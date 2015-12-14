@@ -39,7 +39,7 @@ public class SpellCheck {
 	 * @return Suggested terms.
 	 * @throws IOException
 	 *
-	 *             TODO: Implement a better system.
+	 * TODO: Implement a better system.
 	 */
 	public static List<String> getSuggestions(String term) throws IOException {
 		List<String> list = new ArrayList<String>();

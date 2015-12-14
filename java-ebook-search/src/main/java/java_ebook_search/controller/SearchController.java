@@ -206,14 +206,14 @@ public class SearchController implements Initializable {
                 files = search.search((suggestions.get(0)));
                 System.out.println(suggestions);
             }
+        }
 
-            // Add results to list, displaying on GUI.
-            int i = 1;
-            for (Result file : files) {
-                file.setData(i);
-                listItems.add(file);
-                i++;
-            }
+        // Add results to list, displaying on GUI.
+        int i = 1;
+        for (Result file : files) {
+            file.setData(i);
+            listItems.add(file);
+            i++;
         }
     }
 }
