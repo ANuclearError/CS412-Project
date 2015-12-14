@@ -52,9 +52,9 @@ public class Search {
 	 * @throws IOException
 	 *             - there was a problem reading results.
 	 */
-	public List<MyFile> search(String term) throws ParseException, IOException {
+	public List<Result> search(String term) throws ParseException, IOException {
 
-		List<MyFile> toReturn = new ArrayList<MyFile>();
+		List<Result> toReturn = new ArrayList<Result>();
 
 		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
 		QueryParser content = new QueryParser("content", analyzer);
@@ -94,7 +94,7 @@ public class Search {
 				String path = doc.get("path");
 				if (path != null) {
 					// System.out.println((i + 1) + ". " + path);
-					toReturn.add(new MyFile(path, doc));
+					toReturn.add(new Result(path, doc));
 				} else {
 					System.out.println((i + 1) + ". " + "No path for this document");
 				}

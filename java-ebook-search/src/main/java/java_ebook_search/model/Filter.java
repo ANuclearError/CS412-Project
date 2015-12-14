@@ -8,7 +8,6 @@ import java.util.Set;
  * @Author Kevin Paton
  * @Since 14 Dec 2015
  */
-
 public class Filter {
 
 	/**

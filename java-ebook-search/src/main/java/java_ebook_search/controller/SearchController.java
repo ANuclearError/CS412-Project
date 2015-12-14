@@ -3,16 +3,15 @@ package java_ebook_search.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import java_ebook_search.model.Result;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 
 import java_ebook_search.model.Filter;
-import java_ebook_search.model.MyFile;
 import java_ebook_search.model.Search;
 import java_ebook_search.model.SpellCheck;
 import javafx.collections.FXCollections;
@@ -167,19 +166,19 @@ public class SearchController implements Initializable {
 	 * @param files
 	 * @return
 	 */
-	private List<MyFile> filterResults(List<MyFile> files) {
+	private List<Result> filterResults(List<Result> files) {
 		// No filter, do nothing
 		if (null == filter) {
 			return files;
 		}
 
 		// New filtered List to return
-		List<MyFile> toReturn = new ArrayList<MyFile>();
+		List<Result> toReturn = new ArrayList<Result>();
 
 		// If passed in a null list of files, do nothing
 		if (!CollectionUtils.isEmpty(files)) {
 			// Loop through each file
-			for (MyFile file : files) {
+			for (Result file : files) {
 				// If is in filtered list add to filtered results
 				// "toReturn"
 				if (filter.getBooks().contains(file.getBook())) {
@@ -200,7 +199,7 @@ public class SearchController implements Initializable {
 		System.out.println("Search Term = " + term);
 
 		// Get file paths
-		List<MyFile> files = search.search(term);
+		List<Result> files = search.search(term);
 		files = filterResults(files);
 		if(files.size() == 0){
 			//re-search the query using one of the suggestions
@@ -211,7 +210,7 @@ public class SearchController implements Initializable {
 
 		// Add results to list, displaying on GUI.
 		int i = 1;
-		for (MyFile file : files) {
+		for (Result file : files) {
 			file.setData(i);
 			listItems.add(file);
 			i++;

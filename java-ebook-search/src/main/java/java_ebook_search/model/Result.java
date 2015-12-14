@@ -5,15 +5,20 @@ import java.io.File;
 import org.apache.lucene.document.Document;
 
 /**
- * Class: MyFile.java
+ * Class: Result.java
  * 
  * @Author Kevin Paton
  * @Since 27 Nov 2015
  * 
  *        A class to extend File so I can overwrite the toString
  */
-public class MyFile extends File {
+public class Result extends File {
 
+	private static final long serialVersionUID = -7307250172058813456L;
+
+	/**
+	 * Position within results.
+	 */
 	private int data;
 
 	/**
@@ -22,33 +27,42 @@ public class MyFile extends File {
 	private Document doc;
 
 	/**
+	 * Constructor.
+	 * @param pathname - location of file
+	 * @param doc - document in index
+	 */
+	public Result(String pathname, Document doc) {
+		super(pathname);
+		this.doc = doc;
+	}
+
+	/**
 	 * Return the book this file belongs to.
 	 * 
-	 * @return
+	 * @return book
 	 */
 	public String getBook() {
-
 		String toReturn = "";
 		if (null != doc) {
 			toReturn = doc.get("book");
 		}
-
 		return toReturn;
 	}
 
+	/**
+	 * Returns position in result
+	 * @return data
+	 */
 	public int getData() {
 		return data;
 	}
 
+	/**
+	 * Sets the position result appears in.
+	 * @param data - position
+	 */
 	public void setData(int data) {
 		this.data = data;
-	}
-
-	private static final long serialVersionUID = -7307250172058813456L;
-
-	public MyFile(String pathname, Document doc) {
-		super(pathname);
-		this.doc = doc;
 	}
 
 	@Override
@@ -60,5 +74,4 @@ public class MyFile extends File {
 		string += doc.get("chapter") + ", " + doc.get("section");
 		return string;
 	}
-
 }
