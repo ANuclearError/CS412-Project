@@ -7,7 +7,6 @@ import java_ebook_search.model.Book;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
-import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 
 /**

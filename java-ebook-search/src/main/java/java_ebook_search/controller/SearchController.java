@@ -38,13 +38,6 @@ import javafx.stage.Stage;
  * @since 0.1
  */
 public class SearchController implements Initializable {
-	
-	SpellCheck sc = new SpellCheck();
-
-	/**
-	 * Filters to include in search.
-	 */
-	private Filter filter;
 
 	@FXML
 	private VBox searchView;
@@ -74,6 +67,16 @@ public class SearchController implements Initializable {
 	final ObservableList<File> listItems = FXCollections.observableArrayList();
 
 	/**
+	 * Spell checker for offering suggestions to user.
+	 */
+	private SpellCheck sc;
+
+	/**
+	 * Filters to include in search.
+	 */
+	private Filter filter;
+
+	/**
 	 * Sets up the GUI, ensuring that everything is loaded nicely.
 	 *
 	 * @param location
@@ -81,25 +84,22 @@ public class SearchController implements Initializable {
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
 		results.setItems(listItems);
-
 		String index = "java_ebook_search/index";
 		String home = "/java_ebook_search/view/index.html";
 
 		try {
 			search = new Search(index);
+			sc = new SpellCheck();
 			webEngine = webView.getEngine();
 			webEngine.load(getClass().getResource(home).toString());
-
 			results.getSelectionModel().selectedItemProperty()
 					.addListener((observable, oldValue, newValue) -> loadResult(newValue));
-
 		} catch (NullPointerException e) {
 			System.out.println("It's happened again, ignore it");
 			e.printStackTrace();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -168,7 +168,6 @@ public class SearchController implements Initializable {
 	 * @return
 	 */
 	private List<MyFile> filterResults(List<MyFile> files) {
-
 		// No filter, do nothing
 		if (null == filter) {
 			return files;
@@ -179,20 +178,15 @@ public class SearchController implements Initializable {
 
 		// If passed in a null list of files, do nothing
 		if (!CollectionUtils.isEmpty(files)) {
-
 			// Loop through each file
 			for (MyFile file : files) {
-
 				// If is in filtered list add to filtered results
 				// "toReturn"
 				if (filter.getBooks().contains(file.getBook())) {
 					toReturn.add(file);
 				}
-
 			}
-
 		}
-
 		return toReturn;
 	}
 
@@ -200,12 +194,11 @@ public class SearchController implements Initializable {
 	 * Executes search.
 	 */
 	public void search() throws IOException, ParseException {
-	
-
 		// clear old list
 		listItems.clear();
 		String term = query.getText();
 		System.out.println("Search Term = " + term);
+
 		// Get file paths
 		List<MyFile> files = search.search(term);
 		files = filterResults(files);
@@ -214,10 +207,9 @@ public class SearchController implements Initializable {
 			List<String> suggestions = sc.getSuggestions(term);
 			files = search.search((suggestions.get(0)));
 			System.out.println(suggestions);
-			
-			
 		}
 
+		// Add results to list, displaying on GUI.
 		int i = 1;
 		for (MyFile file : files) {
 			file.setData(i);
