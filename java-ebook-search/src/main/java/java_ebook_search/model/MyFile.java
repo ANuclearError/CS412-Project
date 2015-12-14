@@ -11,11 +11,13 @@ import java.io.File;
 * 
 * A class to extend File so I can overwrite the toString
 */
-
 public class MyFile extends File {
 	
 	private int data;
 
+	/**
+	 * The document stored in Lucene's index.
+	 */
 	private Document doc;
 
 	public int getData() {
