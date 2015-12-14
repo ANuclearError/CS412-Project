@@ -54,7 +54,7 @@ public class Search {
 	 */
 	public List<MyFile> search(String term) throws ParseException, IOException {
 
-		List<MyFile> toReturn = new ArrayList<>();
+		List<MyFile> toReturn = new ArrayList<MyFile>();
 
 		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
 		QueryParser content = new QueryParser("content", analyzer);
@@ -79,6 +79,8 @@ public class Search {
 		int end = Math.min(numTotalHits, hitsPerPage);
 
 		while (true) {
+			
+
 			if (end > hits.length) {
 
 				hits = indexSearcher.search(query, numTotalHits).scoreDocs;

@@ -3,6 +3,7 @@ package java_ebook_search.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
@@ -13,6 +14,7 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import java_ebook_search.model.Filter;
 import java_ebook_search.model.MyFile;
 import java_ebook_search.model.Search;
+import java_ebook_search.model.SpellCheck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -36,6 +38,8 @@ import javafx.stage.Stage;
  * @since 0.1
  */
 public class SearchController implements Initializable {
+	
+	SpellCheck sc = new SpellCheck();
 
 	/**
 	 * Filters to include in search.
@@ -196,6 +200,7 @@ public class SearchController implements Initializable {
 	 * Executes search.
 	 */
 	public void search() throws IOException, ParseException {
+	
 
 		// clear old list
 		listItems.clear();
@@ -204,6 +209,14 @@ public class SearchController implements Initializable {
 		// Get file paths
 		List<MyFile> files = search.search(term);
 		files = filterResults(files);
+		if(files.size() == 0){
+			//re-search the query using one of the suggestions
+			List<String> suggestions = sc.getSuggestions(term);
+			files = search.search((suggestions.get(0)));
+			System.out.println(suggestions);
+			
+			
+		}
 
 		int i = 1;
 		for (MyFile file : files) {
