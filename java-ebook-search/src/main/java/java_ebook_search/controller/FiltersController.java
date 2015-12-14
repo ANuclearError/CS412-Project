@@ -21,7 +21,14 @@ public class FiltersController {
 	@FXML
 	private RadioButton both, content, title;
 
+	/**
+	 * Window of filters.
+	 */
 	private Stage dialogStage;
+
+	/**
+	 * User has confirmed changes to filters.
+	 */
 	private boolean okClicked = false;
 
 	/**
@@ -38,10 +45,18 @@ public class FiltersController {
 		this.dialogStage = dialogStage;
 	}
 
+	/**
+	 * Returns whether or not user confirmed changes to filters.
+	 * @return okClicked
+	 */
 	public boolean isOkClicked() {
 		return okClicked;
 	}
 
+	/**
+	 * The user wishes to update the filters, so we must change the filters to
+	 * reflect that.
+	 */
 	public void confirm() {
 		Set<String> books = new HashSet<String>();
 		if (javanut.isSelected())
@@ -54,8 +69,6 @@ public class FiltersController {
 			books.add(Book.FCLASS.toString());
 		if (exp.isSelected())
 			books.add(Book.EXP.toString());
-		okClicked = true;
-		dialogStage.close();
 
 		if(both.isSelected() || content.isSelected()) {
 			System.out.println("Searching content");
@@ -63,27 +76,40 @@ public class FiltersController {
 		if(both.isSelected() || title.isSelected()) {
 			System.out.println("Searching title");
 		}
+
+		okClicked = true;
 		this.books = books;
+		dialogStage.close();
 	}
 
+	/**
+	 * The user does not wish to confirm changes.
+	 */
 	public void cancel() {
 		dialogStage.close();
 	}
 
+	/**
+	 * Returns the books the user wishes to filter.
+	 * @return books
+	 */
 	public Set<String> getBooks() {
 		return books;
 	}
 
+	/**
+	 * Sets the books to those currently filtered
+	 * @param books - current filter.
+	 */
 	public void setBooks(Set<String> books) {
 		this.books = books;
 		updateCheckBoxes();
-
 	}
 
 	/**
 	 * Set Selected on all checkboxes
 	 *
-	 * @param b
+	 * @param b - setting for all
 	 */
 	private void checkAll(boolean b) {
 		javanut.setSelected(b);
@@ -97,11 +123,8 @@ public class FiltersController {
 	 * Update checkboxes
 	 */
 	private void updateCheckBoxes() {
-
 		checkAll(false);
-
 		for (String book : books) {
-
 			if (book.equals(Book.JAVANUT.toString())) {
 				javanut.setSelected(true);
 			}
@@ -117,7 +140,6 @@ public class FiltersController {
 			if (book.equals(Book.AWT.toString())) {
 				awt.setSelected(true);
 			}
-
 		}
 	}
 }
