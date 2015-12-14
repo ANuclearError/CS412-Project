@@ -140,17 +140,16 @@ public class SearchController implements Initializable {
             FiltersController controller = loader.getController();
             controller.setDialogStage(dialogStage);
 
-            if (null != filter) {
-                if (null != filter.getBooks()) {
-                    controller.setBooks(filter.getBooks());
-                }
-            }
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
+			if (null != filter) {
+				controller.setFilter(filter);
 
-            // Set Filters
-            this.filter = new Filter();
-            this.filter.setBooks(controller.getBooks());
+			}
+			// Show the dialog and wait until the user closes it
+			dialogStage.showAndWait();
+
+			// Set Filters
+			this.filter = controller.getFilter();
+
 
             return controller.isOkClicked();
         } catch (IOException e) {
