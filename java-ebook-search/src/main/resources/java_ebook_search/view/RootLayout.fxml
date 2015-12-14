@@ -14,11 +14,6 @@
                         <MenuItem onAction="#exit" text="Exit" />
                     </items>
                 </Menu>
-                <Menu text="Help">
-                    <items>
-                        <MenuItem onAction="#about" text="About" />
-                    </items>
-                </Menu>
             </menus>
         </MenuBar>
     </top>

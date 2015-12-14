@@ -31,7 +31,6 @@ public class HTMLStripper {
 				strip(file);
 			}
 		}
-
 	}
 
 	private static void strip(File file) throws Exception {

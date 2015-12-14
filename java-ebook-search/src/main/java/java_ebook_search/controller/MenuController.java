@@ -10,15 +10,6 @@ package java_ebook_search.controller;
 public class MenuController {
 
     /**
-     * Displays about info.
-     *
-     * TODO: Create about window.
-     */
-    public void about() {
-        System.out.println("About");
-    }
-
-    /**
      * Quits the system.
      */
     public void exit() {

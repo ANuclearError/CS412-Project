@@ -1,6 +1,5 @@
 package java_ebook_search.controller;
 
-import javafx.event.ActionEvent;
 import javafx.stage.Stage;
 
 /**
