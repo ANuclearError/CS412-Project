@@ -9,19 +9,34 @@ import java.nio.file.Path;
  * This is just a simple program that replaces all instances of HTML in our
  * dataset for the purposes of indexing. It is not likely to be used elsewhere.
  *
- * Created by Aidan O'Grady on 14/10/15.
+ * @author Aidan O'Grady
+ * @version 0.1
  */
 public class HTMLStripper {
 
+	/**
+	 * Main method for doing stripping.
+	 * @param args - program args
+	 * @throws Exception
+	 */
 	public static void main(String[] args) throws Exception {
 		allFiles(new File("/Users/kp_one/Desktop/java"));
 	}
 
+	/**
+	 * Constructor
+	 * @throws Exception
+	 */
 	public HTMLStripper() throws Exception {
 		File parent = new File("files/");
 		allFiles(parent);
 	}
 
+	/**
+	 * Recursively goes through every subdirectory and file.
+	 * @param parent - parent directory
+	 * @throws Exception
+	 */
 	private static void allFiles(File parent) throws Exception {
 		File[] files = parent.listFiles();
 		for (File file : files) {
@@ -33,6 +48,11 @@ public class HTMLStripper {
 		}
 	}
 
+	/**
+	 * Removes all HTML tags from the given file.
+	 * @param file - file to be stripped.
+	 * @throws Exception
+	 */
 	private static void strip(File file) throws Exception {
 		Path path = file.toPath();
 		Charset charset = Charset.defaultCharset();
