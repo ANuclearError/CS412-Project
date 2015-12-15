@@ -31,6 +31,9 @@ public class FiltersController {
 	 */
 	private boolean okClicked = false;
 
+	/**
+	 * The filter that is to be used for searches.
+	 */
 	private Filter filter;
 
 	public FiltersController() {
@@ -72,10 +75,10 @@ public class FiltersController {
 			books.add(Book.EXP.toString());
 
 		if (both.isSelected() || content.isSelected()) {
-			System.out.println("Searching content");
+			filter.setSearchContent(true);
 		}
 		if (both.isSelected() || title.isSelected()) {
-			System.out.println("Searching title");
+			filter.setSearchTitle(true);
 		}
 
 		okClicked = true;
@@ -144,6 +147,14 @@ public class FiltersController {
 			if (book.equals(Book.AWT.toString())) {
 				awt.setSelected(true);
 			}
+		}
+
+		if (filter.isSearchContent() && filter.isSearchTitle()) {
+			both.setSelected(true);
+		} else if (filter.isSearchContent()) {
+			content.setSelected(true);
+		} else if (filter.isSearchTitle()) {
+			title.setSelected(true);
 		}
 	}
 }

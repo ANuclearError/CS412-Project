@@ -15,8 +15,14 @@ public class Filter {
 	 */
 	private Set<String> books;
 
+	/**
+	 * Should the content of files be searched?
+	 */
 	private boolean searchContent;
 
+	/**
+	 * Should the title of pages be searched?
+	 */
 	private boolean searchTitle;
 
 	/**
@@ -37,18 +43,34 @@ public class Filter {
 		this.books = books;
 	}
 
+	/**
+	 * Returns whether to search content or not.
+	 * @return searchContent
+	 */
 	public boolean isSearchContent() {
 		return searchContent;
 	}
 
+	/**
+	 * Sets whether or not to search content.
+	 * @param searchContent - do we?
+	 */
 	public void setSearchContent(boolean searchContent) {
 		this.searchContent = searchContent;
 	}
 
+	/**
+	 * Returns whether to search titles or not.
+	 * @return searchTitles
+	 */
 	public boolean isSearchTitle() {
 		return searchTitle;
 	}
 
+	/**
+	 * Sets whether or not to search titles.
+	 * @param searchTitle - do we?
+	 */
 	public void setSearchTitle(boolean searchTitle) {
 		this.searchTitle = searchTitle;
 	}
