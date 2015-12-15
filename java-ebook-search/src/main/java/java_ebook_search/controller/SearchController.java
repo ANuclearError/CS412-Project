@@ -89,52 +89,6 @@ public class SearchController implements Initializable {
 	private AutoCompletionBinding<String> autoCompletionBinding;
 
 	/**
-	 * Adds string to our common search terms
-	 * @param newWord
-	 */
-	private void autoCompletionLearnWord(String newWord) {
-		CommonSearchTerms.TERMS.add(newWord);
-
-		// we dispose the old binding and recreate a new binding
-		if (autoCompletionBinding != null) {
-			autoCompletionBinding.dispose();
-		}
-
-		autoCompletionBinding = TextFields.bindAutoCompletion(query, CommonSearchTerms.TERMS);
-
-	}
-
-	/**
-	 * Changes The query text field to an autocomplete one. Bit hacky.
-	 * 
-	 * Adds query to our common search terms once a search occurs.
-	 * 
-	 */
-	private void createAutoCompleteTextField() {
-
-		autoCompletionBinding = TextFields.bindAutoCompletion(query, CommonSearchTerms.TERMS);
-
-		// TODO hardcoded
-		autoCompletionBinding.setVisibleRowCount(5);
-
-		searchButton.setOnAction(new EventHandler<ActionEvent>() {
-			@Override
-			public void handle(ActionEvent event) {
-				autoCompletionLearnWord(query.getText().trim());
-				try {
-					search();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (ParseException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-
-	/**
 	 * Sets up the GUI, ensuring that everything is loaded nicely.
 	 *
 	 * @param location
@@ -159,6 +113,32 @@ public class SearchController implements Initializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Adds string to our common search terms
+	 * @param newWord
+	 */
+	private void autoCompletionLearnWord(String newWord) {
+		CommonSearchTerms.TERMS.add(newWord);
+
+		// we dispose the old binding and recreate a new binding
+		if (autoCompletionBinding != null) {
+			autoCompletionBinding.dispose();
+		}
+
+		autoCompletionBinding = TextFields.bindAutoCompletion(query, CommonSearchTerms.TERMS);
+	}
+
+	/**
+	 * Changes The query text field to an autocomplete one. Bit hacky.
+	 *
+	 * Adds query to our common search terms once a search occurs.
+	 *
+	 */
+	private void createAutoCompleteTextField() {
+		autoCompletionBinding = TextFields.bindAutoCompletion(query, CommonSearchTerms.TERMS);
+		autoCompletionBinding.setVisibleRowCount(5);
 	}
 
 	/**
@@ -253,6 +233,7 @@ public class SearchController implements Initializable {
 		// clear old list
 		listItems.clear();
 		String term = query.getText();
+		autoCompletionLearnWord(query.getText().trim());
 		System.out.println("Search Term = " + term);
 
 		// Get file paths
