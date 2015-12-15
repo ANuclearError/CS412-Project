@@ -2,6 +2,7 @@ package java_ebook_search;
 
 import java.io.IOException;
 
+import java_ebook_search.model.CommonSearchTerms;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -28,7 +29,8 @@ public class Driver extends Application {
 	 */
 	private BorderPane rootLayout;
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws IOException {
+		CommonSearchTerms.createDefault();
 		launch(args);
 	}
 
@@ -64,6 +66,7 @@ public class Driver extends Application {
 		try {
 			VBox searchView;
 			searchView = FXMLLoader.load(getClass().getResource(fxml));
+
 			rootLayout.setCenter(searchView);
 		} catch (IOException e) {
 			e.printStackTrace();

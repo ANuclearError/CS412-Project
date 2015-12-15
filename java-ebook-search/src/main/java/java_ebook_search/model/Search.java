@@ -13,7 +13,12 @@ import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.*;
+import org.apache.lucene.search.BooleanClause;
+import org.apache.lucene.search.BooleanQuery;
+import org.apache.lucene.search.IndexSearcher;
+import org.apache.lucene.search.Query;
+import org.apache.lucene.search.ScoreDoc;
+import org.apache.lucene.search.TopDocs;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -68,8 +73,8 @@ public class Search {
 
 		TopDocs results = indexSearcher.search(query, 50);
 
-		System.out.println("Searching for: " + term);
-		System.out.println("Results: " + results.totalHits);
+		// System.out.println("Searching for: " + term);
+		// System.out.println("Results: " + results.totalHits);
 
 		int numTotalHits = results.totalHits;
 		int hitsPerPage = 25;
@@ -79,7 +84,6 @@ public class Search {
 		int end = Math.min(numTotalHits, hitsPerPage);
 
 		while (true) {
-			
 
 			if (end > hits.length) {
 
@@ -96,7 +100,8 @@ public class Search {
 					// System.out.println((i + 1) + ". " + path);
 					toReturn.add(new Result(path, doc));
 				} else {
-					System.out.println((i + 1) + ". " + "No path for this document");
+					// System.out.println((i + 1) + ". " + "No path for this
+					// document");
 				}
 
 			}

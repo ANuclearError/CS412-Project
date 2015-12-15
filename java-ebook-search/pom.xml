@@ -12,10 +12,25 @@
 		<javaVersion>1.8</javaVersion>
 		<mavenCompilerVersion>3.3</mavenCompilerVersion>
 		<apacheCommonsVersion>4.1</apacheCommonsVersion>
+		<AutoCompleteTextFieldVersion>8.40.10</AutoCompleteTextFieldVersion>
 	</properties>
 
 	<dependencies>
+	
+<dependency>
+	<groupId>org.controlsfx</groupId>
+	<artifactId>controlsfx-samples</artifactId>
+	<version>8.40.10</version>
+</dependency>
 
+
+		<!-- JFX auto complete text field -->
+		<dependency>
+			<groupId>org.controlsfx</groupId>
+			<artifactId>controlsfx</artifactId>
+			<version>${AutoCompleteTextFieldVersion}</version>
+		</dependency>
+		
 		<!-- Apache Commons -->
 
 		<dependency>
