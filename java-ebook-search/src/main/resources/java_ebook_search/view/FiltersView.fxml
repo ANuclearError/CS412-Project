@@ -59,7 +59,8 @@
                         <Text text="Fields" id="filterHeading"/>
                         <RadioButton text="Title and Content"
                                      toggleGroup="$fields"
-                                     fx:id="both"/>
+                                     fx:id="both"
+                                     selected="true"/>
                         <RadioButton text="Title Only"
                                      toggleGroup="$fields"
                                      fx:id="title"/>

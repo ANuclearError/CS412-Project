@@ -5,12 +5,17 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<VBox fx:id="searchView" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="java_ebook_search.controller.SearchController">
+<VBox fx:id="searchView"
+      xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="java_ebook_search.controller.SearchController">
     <children>
         <HBox>
            <children>
-               <TextField fx:id="query" promptText="Search here..." HBox.hgrow="ALWAYS" />
-               <Button fx:id="searchButton" defaultButton="true" onAction="#search" text="Search" />
+               <TextField fx:id="query" promptText="Search here..."
+                          HBox.hgrow="ALWAYS" />
+               <Button fx:id="searchButton" defaultButton="true"
+                       onAction="#search" text="Search" />
                <Button onAction="#filters" text="Filters" />
            </children>
         </HBox>

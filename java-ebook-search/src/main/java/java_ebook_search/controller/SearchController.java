@@ -43,9 +43,6 @@ import javafx.stage.Stage;
  * @since 0.1
  */
 public class SearchController implements Initializable {
-
-	private AutoCompletionBinding<String> autoCompletionBinding;
-
 	@FXML
 	private Button searchButton;
 
@@ -87,6 +84,11 @@ public class SearchController implements Initializable {
 	private Filter filter;
 
 	/**
+	 * List of words for auto-completion.
+	 */
+	private AutoCompletionBinding<String> autoCompletionBinding;
+
+	/**
 	 * Adds string to our common search terms
 	 * @param newWord
 	 */
@@ -116,7 +118,6 @@ public class SearchController implements Initializable {
 		autoCompletionBinding.setVisibleRowCount(5);
 
 		searchButton.setOnAction(new EventHandler<ActionEvent>() {
-
 			@Override
 			public void handle(ActionEvent event) {
 				autoCompletionLearnWord(query.getText().trim());
@@ -130,7 +131,6 @@ public class SearchController implements Initializable {
 					e.printStackTrace();
 				}
 			}
-
 		});
 	}
 
@@ -168,13 +168,10 @@ public class SearchController implements Initializable {
 	 *            - the file loaded.
 	 */
 	private void loadResult(File result) {
-
 		if (null != result) {
-
 			String path = result.getPath();
 			// Need to deal with difference between indexed files without HTML
-			// tags
-			// and files with HTML tags.
+			// tags and files with HTML tags.
 			path = path.replace("src/main/resources", "");
 			path = path.replace("indexed_files", "files");
 			System.out.println(path);
@@ -202,20 +199,17 @@ public class SearchController implements Initializable {
 			Scene scene = new Scene(page);
 			dialogStage.setScene(scene);
 
-			// Set the person into the controller.
+			// Set the Filter into the controller.
 			FiltersController controller = loader.getController();
 			controller.setDialogStage(dialogStage);
-
 			if (null != filter) {
 				controller.setFilter(filter);
-
 			}
+
 			// Show the dialog and wait until the user closes it
 			dialogStage.showAndWait();
-
 			// Set Filters
 			this.filter = controller.getFilter();
-
 			return controller.isOkClicked();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -256,7 +250,6 @@ public class SearchController implements Initializable {
 	 * Executes search.
 	 */
 	public void search() throws IOException, ParseException {
-
 		// clear old list
 		listItems.clear();
 		String term = query.getText();

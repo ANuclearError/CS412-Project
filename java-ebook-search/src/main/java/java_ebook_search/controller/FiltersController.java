@@ -125,6 +125,9 @@ public class FiltersController {
 		exp.setSelected(b);
 		fclass.setSelected(b);
 		awt.setSelected(b);
+		both.setSelected(b);
+		title.setSelected(b);
+		content.setSelected(b);
 	}
 
 	/**
@@ -151,7 +154,6 @@ public class FiltersController {
 				awt.setSelected(true);
 			}
 		}
-
 		if (filter.isSearchContent() && filter.isSearchTitle()) {
 			both.setSelected(true);
 		} else if (filter.isSearchContent()) {
