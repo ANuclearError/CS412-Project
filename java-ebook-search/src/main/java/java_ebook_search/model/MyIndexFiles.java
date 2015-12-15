@@ -215,7 +215,6 @@ public class MyIndexFiles {
 				book = Book.LANGREF.toString();
 				break;
 			}
-			doc.add(new StringField("book", book, Field.Store.YES));
 
 			String name = file.getFileName().toString();
 			String chapter = "";
@@ -233,9 +232,11 @@ public class MyIndexFiles {
 			} else if (name.startsWith("index")) {
 
 			}
+
+			doc.add(new StringField("book", book, Field.Store.YES));
 			doc.add(new StringField("chapter", chapter, Field.Store.YES));
 			doc.add(new StringField("section", section, Field.Store.YES));
-			doc.add(new StringField("title", getTitle(file), Field.Store.YES));
+			doc.add(new TextField("title", getTitle(file), Field.Store.YES));
 
 			if (writer.getConfig().getOpenMode() == OpenMode.CREATE) {
 				// New index, so we just add the document (no old document can

@@ -57,7 +57,8 @@ public class Search {
 	 * @throws IOException
 	 *             - there was a problem reading results.
 	 */
-	public List<Result> search(String term) throws ParseException, IOException {
+	public List<Result> search(String term, Filter filter)
+			throws ParseException, IOException {
 
 		List<Result> toReturn = new ArrayList<Result>();
 
@@ -67,8 +68,10 @@ public class Search {
 
 		BooleanQuery.Builder builder = new BooleanQuery.Builder();
 
-		builder.add(content.parse(term), BooleanClause.Occur.SHOULD);
-		builder.add(title.parse(term), BooleanClause.Occur.SHOULD);
+		if(filter.isSearchContent())
+			builder.add(content.parse(term), BooleanClause.Occur.SHOULD);
+		if(filter.isSearchTitle())
+			builder.add(title.parse(term), BooleanClause.Occur.SHOULD);
 		Query query = builder.build();
 
 		TopDocs results = indexSearcher.search(query, 50);
@@ -86,14 +89,10 @@ public class Search {
 		while (true) {
 
 			if (end > hits.length) {
-
 				hits = indexSearcher.search(query, numTotalHits).scoreDocs;
 			}
-
 			end = Math.min(hits.length, start + hitsPerPage);
-
 			for (int i = start; i < end; i++) {
-
 				Document doc = indexSearcher.doc(hits[i].doc);
 				String path = doc.get("path");
 				if (path != null) {
@@ -103,9 +102,7 @@ public class Search {
 					// System.out.println((i + 1) + ". " + "No path for this
 					// document");
 				}
-
 			}
-
 			return toReturn;
 		}
 	}

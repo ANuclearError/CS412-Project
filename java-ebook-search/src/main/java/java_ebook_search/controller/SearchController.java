@@ -3,20 +3,14 @@ package java_ebook_search.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.ResourceBundle;
+import java.util.*;
 
+import java_ebook_search.model.*;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
-import java_ebook_search.model.CommonSearchTerms;
-import java_ebook_search.model.Filter;
-import java_ebook_search.model.Result;
-import java_ebook_search.model.Search;
-import java_ebook_search.model.SpellCheck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -95,6 +89,12 @@ public class SearchController implements Initializable {
 	 * @param resources
 	 */
 	public void initialize(URL location, ResourceBundle resources) {
+		filter = new Filter();
+		Set<String> books = new HashSet<>();
+		for(Book book : Book.values()) {
+			books.add(book.toString());
+		}
+		filter.setBooks(books);
 		results.setItems(listItems);
 		String index = "java_ebook_search/index";
 		String home = "/java_ebook_search/view/index.html";
@@ -237,13 +237,13 @@ public class SearchController implements Initializable {
 		System.out.println("Search Term = " + term);
 
 		// Get file paths
-		List<Result> files = search.search(term);
+		List<Result> files = search.search(term, filter);
 		files = filterResults(files);
 		if (files.size() == 0) {
 			// re-search the query using one of the suggestions
 			List<String> suggestions = sc.getSuggestions(term);
 			if (suggestions.size() != 0) {
-				files = search.search((suggestions.get(0)));
+				files = search.search((suggestions.get(0)), filter);
 				System.out.println(suggestions);
 			}
 		}

@@ -7,10 +7,6 @@
 <?import java.net.URL?>
 <AnchorPane prefHeight="360" prefWidth="640" xmlns:fx="http://javafx.com/fxml"
             fx:controller="java_ebook_search.controller.FiltersController">
-    <fx:define>
-        <ToggleGroup fx:id="fields"/>
-    </fx:define>
-
     <children>
         <GridPane AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
                   AnchorPane.topAnchor="10.0">
@@ -56,17 +52,15 @@
                 <VBox GridPane.columnIndex="1" GridPane.rowIndex="0"
                           styleClass="grid">
                     <children>
-                        <Text text="Fields" id="filterHeading"/>
-                        <RadioButton text="Title and Content"
-                                     toggleGroup="$fields"
-                                     fx:id="both"
-                                     selected="true"/>
-                        <RadioButton text="Title Only"
-                                     toggleGroup="$fields"
-                                     fx:id="title"/>
-                        <RadioButton text="Content Only"
-                                     toggleGroup="$fields"
-                                     fx:id="content"/>
+                        <Text text="Fields" fx:id="filterHeading"/>
+                        <CheckBox text="Title Only"
+                                  fx:id="title"
+                                  selected="true"/>
+
+                        <CheckBox text="Content Only"
+                                  fx:id="content"
+                                  selected="true"/>
+
                     </children>
                 </VBox>
 

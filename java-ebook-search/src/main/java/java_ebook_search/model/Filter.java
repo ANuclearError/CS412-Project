@@ -18,12 +18,12 @@ public class Filter {
 	/**
 	 * Should the content of files be searched?
 	 */
-	private boolean searchContent;
+	private boolean searchContent = true;
 
 	/**
 	 * Should the title of pages be searched?
 	 */
-	private boolean searchTitle;
+	private boolean searchTitle = true;
 
 	/**
 	 * Get the filtered book set.
@@ -77,7 +77,8 @@ public class Filter {
 
 	@Override
 	public String toString() {
-		return "Filter [books=" + books + "]";
+		return "Filter [books=" + books + "]\n" +
+				"title: " + searchTitle + " content: " + searchContent;
 	}
 
 }

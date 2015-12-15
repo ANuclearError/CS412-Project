@@ -16,10 +16,7 @@ import javafx.stage.Stage;
 public class FiltersController {
 
 	@FXML
-	private CheckBox javanut, langref, awt, fclass, exp;
-
-	@FXML
-	private RadioButton both, content, title;
+	private CheckBox javanut, langref, awt, fclass, exp, content, title;
 
 	/**
 	 * Window of filters.
@@ -63,7 +60,7 @@ public class FiltersController {
 	 * reflect that.
 	 */
 	public void confirm() {
-		Set<String> books = new HashSet<String>();
+		Set<String> books = new HashSet<>();
 		if (javanut.isSelected())
 			books.add(Book.JAVANUT.toString());
 		if (langref.isSelected())
@@ -75,12 +72,8 @@ public class FiltersController {
 		if (exp.isSelected())
 			books.add(Book.EXP.toString());
 
-		if (both.isSelected() || content.isSelected()) {
-			filter.setSearchContent(true);
-		}
-		if (both.isSelected() || title.isSelected()) {
-			filter.setSearchTitle(true);
-		}
+		filter.setSearchContent(content.isSelected());
+		filter.setSearchTitle(title.isSelected());
 
 		okClicked = true;
 		filter.setBooks(books);
@@ -125,7 +118,6 @@ public class FiltersController {
 		exp.setSelected(b);
 		fclass.setSelected(b);
 		awt.setSelected(b);
-		both.setSelected(b);
 		title.setSelected(b);
 		content.setSelected(b);
 	}
@@ -154,12 +146,8 @@ public class FiltersController {
 				awt.setSelected(true);
 			}
 		}
-		if (filter.isSearchContent() && filter.isSearchTitle()) {
-			both.setSelected(true);
-		} else if (filter.isSearchContent()) {
-			content.setSelected(true);
-		} else if (filter.isSearchTitle()) {
-			title.setSelected(true);
-		}
+
+		content.setSelected(filter.isSearchContent());
+		title.setSelected(filter.isSearchTitle());
 	}
 }
