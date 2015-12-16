@@ -225,38 +225,40 @@ public class SearchController implements Initializable {
 		autoCompletionLearnWord(query.getText().trim());
 
 		// Get file paths
-		List<Result> files = search.search(term, filter);
-		files = filterResults(files);
-		if (files.size() == 0) {
-			// re-search the query using one of the suggestions
-			List<String> suggestions = sc.getSuggestions(term);
-			if (suggestions.size() != 0) {
-				String suggestion = suggestions.get(0);
-				Alert alert = new Alert(Alert.AlertType.WARNING);
-				alert.setTitle("No results found");
-				alert.setHeaderText("0 Results found for " + term + ".");
-				alert.setContentText("Trying " + suggestion + " instead.");
-				alert.showAndWait();
+		if(!(query.getText().equals("") || query.getText() == null)) {
+			List<Result> files = search.search(term, filter);
+			files = filterResults(files);
+			if (files.size() == 0) {
+				// re-search the query using one of the suggestions
+				List<String> suggestions = sc.getSuggestions(term);
+				if (suggestions.size() != 0) {
+					String suggestion = suggestions.get(0);
+					Alert alert = new Alert(Alert.AlertType.WARNING);
+					alert.setTitle("No results found");
+					alert.setHeaderText("0 Results found for " + term + ".");
+					alert.setContentText("Trying " + suggestion + " instead.");
+					alert.showAndWait();
 
-				files = search.search(suggestion, filter);
-				System.out.println(suggestions);
-			} else {
-				Alert alert = new Alert(Alert.AlertType.ERROR);
-				alert.setTitle("No results found");
-				alert.setHeaderText("0 Results found for " + term + ".");
-				alert.setContentText("Try a different spelling or something.");
-				alert.showAndWait();
+					files = search.search(suggestion, filter);
+					System.out.println(suggestions);
+				} else {
+					Alert alert = new Alert(Alert.AlertType.ERROR);
+					alert.setTitle("No results found");
+					alert.setHeaderText("0 Results found for " + term + ".");
+					alert.setContentText("Try a different spelling or something.");
+					alert.showAndWait();
+				}
 			}
-		}
 
-		status.setText("Number of results: " + search.getResults());
+			status.setText("Number of results: " + search.getResults());
 
-		// Add results to list, displaying on GUI.
-		int i = 1;
-		for (Result file : files) {
-			file.setData(i);
-			listItems.add(file);
-			i++;
+			// Add results to list, displaying on GUI.
+			int i = 1;
+			for (Result file : files) {
+				file.setData(i);
+				listItems.add(file);
+				i++;
+			}
 		}
 	}
 }
