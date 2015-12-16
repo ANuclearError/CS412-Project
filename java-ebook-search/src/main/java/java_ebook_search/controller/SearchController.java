@@ -225,40 +225,66 @@ public class SearchController implements Initializable {
 		autoCompletionLearnWord(query.getText().trim());
 
 		// Get file paths
-		if(!(query.getText().equals("") || query.getText() == null)) {
-			List<Result> files = search.search(term, filter);
-			files = filterResults(files);
-			if (files.size() == 0) {
-				// re-search the query using one of the suggestions
-				List<String> suggestions = sc.getSuggestions(term);
-				if (suggestions.size() != 0) {
-					String suggestion = suggestions.get(0);
-					Alert alert = new Alert(Alert.AlertType.WARNING);
-					alert.setTitle("No results found");
-					alert.setHeaderText("0 Results found for " + term + ".");
-					alert.setContentText("Trying " + suggestion + " instead.");
-					alert.showAndWait();
+		try {
+			if(!(query.getText().equals("") || query.getText() == null)) {
+				List<Result> files = search.search(term, filter);
+				files = filterResults(files);
+				if (files.size() == 0) {
+					// re-search the query using one of the suggestions
+					List<String> suggestions = sc.getSuggestions(term);
+					if (suggestions.size() != 0) {
+						String suggestion = suggestions.get(0);
+						spellCheckAlert(term, suggestion);
+						files = search.search(suggestion, filter);
+						System.out.println(suggestions);
+					} else {
+						noResultError(term);
+					}
+				}
 
-					files = search.search(suggestion, filter);
-					System.out.println(suggestions);
-				} else {
-					Alert alert = new Alert(Alert.AlertType.ERROR);
-					alert.setTitle("No results found");
-					alert.setHeaderText("0 Results found for " + term + ".");
-					alert.setContentText("Try a different spelling or something.");
-					alert.showAndWait();
+				status.setText("Number of results: " + search.getResults());
+
+				// Add results to list, displaying on GUI.
+				int i = 1;
+				for (Result file : files) {
+					file.setData(i);
+					listItems.add(file);
+					i++;
 				}
 			}
-
-			status.setText("Number of results: " + search.getResults());
-
-			// Add results to list, displaying on GUI.
-			int i = 1;
-			for (Result file : files) {
-				file.setData(i);
-				listItems.add(file);
-				i++;
-			}
+		} catch (ParseException e) {
+			Alert alert = new Alert(Alert.AlertType.ERROR);
+			alert.setTitle("Parse Exception");
+			alert.setHeaderText("Cannot parse query.");
+			alert.setContentText("Your query seems to be an invalid boolean query.");
+			alert.showAndWait();
 		}
+	}
+
+	/**
+	 * Displays alert that the user's temr is being changed to suggestion.
+	 *
+	 * @param term - original query.
+	 * @param suggestion - suggested query.
+	 */
+	private void spellCheckAlert(String term, String suggestion) {
+		Alert alert = new Alert(Alert.AlertType.WARNING);
+		alert.setTitle("No results found");
+		alert.setHeaderText("0 Results found for " + term + ".");
+		alert.setContentText("Trying " + suggestion + " instead.");
+		alert.showAndWait();
+	}
+
+	/**
+	 * Displays alert when there are no possible results.
+	 *
+	 * @param term - term that had no results.
+	 */
+	private void noResultError(String term) {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("No results found");
+		alert.setHeaderText("0 Results found for " + term + ".");
+		alert.setContentText("Try a different spelling or something.");
+		alert.showAndWait();
 	}
 }
