@@ -6,6 +6,7 @@ import java.util.Set;
 import java_ebook_search.model.Book;
 import java_ebook_search.model.Filter;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.RadioButton;
 import javafx.stage.Stage;
@@ -75,9 +76,26 @@ public class FiltersController {
 		filter.setSearchContent(content.isSelected());
 		filter.setSearchTitle(title.isSelected());
 
-		okClicked = true;
-		filter.setBooks(books);
-		dialogStage.close();
+		if (books.isEmpty() || !(content.isSelected() || title.isSelected())) {
+			filterError();
+		} else {
+			okClicked = true;
+			filter.setBooks(books);
+			dialogStage.close();
+		}
+	}
+
+	/**
+	 * Displays an error alert if the user submits a filter that will not
+	 * retrieve any results.
+	 */
+	private void filterError() {
+		Alert alert = new Alert(Alert.AlertType.ERROR);
+		alert.setTitle("Filter Error");
+		alert.setHeaderText("Filter is invalid");
+		alert.setContentText("This filter will retrieve 0 results. Please fix!");
+
+		alert.showAndWait();
 	}
 
 	/**
