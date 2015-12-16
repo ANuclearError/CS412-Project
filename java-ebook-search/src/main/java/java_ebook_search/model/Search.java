@@ -49,6 +49,7 @@ public class Search {
 	 * List of frequent words taken from Lucene, plus terms searched by user.
 	 */
 	private Set<String> commonTerms;
+	private int numTotalHits;
 
 	public Search(String index) throws IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
@@ -109,7 +110,7 @@ public class Search {
 		// System.out.println("Searching for: " + term);
 		// System.out.println("Results: " + results.totalHits);
 
-		int numTotalHits = results.totalHits;
+		numTotalHits = results.totalHits;
 		int hitsPerPage = 25;
 		ScoreDoc[] hits = results.scoreDocs;
 
@@ -135,6 +136,10 @@ public class Search {
 			}
 			return toReturn;
 		}
+	}
+
+	public int getResults() {
+		return numTotalHits;
 	}
 
 	public Set<String> getAutocomplete() {

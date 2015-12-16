@@ -6,8 +6,10 @@ import java.net.URL;
 import java.util.*;
 
 import java_ebook_search.model.*;
+import javafx.scene.control.Alert;
 import org.apache.commons.collections4.CollectionUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
+import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
@@ -51,6 +53,9 @@ public class SearchController implements Initializable {
 
 	@FXML
 	private WebView webView;
+
+	@FXML
+	private StatusBar status;
 
 	/**
 	 * Web Engine that renders the web pages.
@@ -229,10 +234,25 @@ public class SearchController implements Initializable {
 			// re-search the query using one of the suggestions
 			List<String> suggestions = sc.getSuggestions(term);
 			if (suggestions.size() != 0) {
-				files = search.search((suggestions.get(0)), filter);
+				String suggestion = suggestions.get(0);
+				Alert alert = new Alert(Alert.AlertType.WARNING);
+				alert.setTitle("No results found");
+				alert.setHeaderText("0 Results found for " + term + ".");
+				alert.setContentText("Trying " + suggestion + " instead.");
+				alert.showAndWait();
+
+				files = search.search(suggestion, filter);
 				System.out.println(suggestions);
+			} else {
+				Alert alert = new Alert(Alert.AlertType.ERROR);
+				alert.setTitle("No results found");
+				alert.setHeaderText("0 Results found for " + term + ".");
+				alert.setContentText("Try a different spelling or something.");
+				alert.showAndWait();
 			}
 		}
+
+		status.setText("Number of results: " + search.getResults());
 
 		// Add results to list, displaying on GUI.
 		int i = 1;
