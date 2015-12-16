@@ -154,7 +154,6 @@ public class SearchController implements Initializable {
 			// tags and files with HTML tags.
 			path = path.replace("src/main/resources", "");
 			path = path.replace("indexed_files", "files");
-			System.out.println(path);
 			webEngine.load(getClass().getResource(path).toString());
 			webEngine.setUserStyleSheetLocation(null);
 		}
@@ -162,8 +161,7 @@ public class SearchController implements Initializable {
 
 	/**
 	 * Opens the filter window to enable filters.
-	 * <p>
-	 * TODO: Create filters window.
+	 *
 	 */
 	public boolean filters() {
 		try {
@@ -234,7 +232,6 @@ public class SearchController implements Initializable {
 		listItems.clear();
 		String term = query.getText();
 		autoCompletionLearnWord(query.getText().trim());
-		System.out.println("Search Term = " + term);
 
 		// Get file paths
 		List<Result> files = search.search(term, filter);
