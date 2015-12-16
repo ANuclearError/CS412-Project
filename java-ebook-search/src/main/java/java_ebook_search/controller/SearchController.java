@@ -40,9 +40,6 @@ import javafx.stage.Stage;
  */
 public class SearchController implements Initializable {
 	@FXML
-	private Button searchButton;
-
-	@FXML
 	private VBox searchView;
 
 	@FXML
