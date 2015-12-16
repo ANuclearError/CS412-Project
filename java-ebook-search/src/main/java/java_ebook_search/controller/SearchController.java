@@ -80,7 +80,7 @@ public class SearchController implements Initializable {
 	/**
 	 * List of words for auto-completion.
 	 */
-	private AutoCompletionBinding<String> autoCompletionBinding;
+	private AutoCompletionBinding<String> commonTerms;
 
 	/**
 	 * Sets up the GUI, ensuring that everything is loaded nicely.
@@ -100,8 +100,9 @@ public class SearchController implements Initializable {
 		String home = "/java_ebook_search/view/index.html";
 
 		try {
-			createAutoCompleteTextField();
 			search = new Search(index);
+			commonTerms = TextFields.bindAutoCompletion(query, search.getAutocomplete());
+			commonTerms.setVisibleRowCount(10);
 			sc = new SpellCheck();
 			webEngine = webView.getEngine();
 			webEngine.load(getClass().getResource(home).toString());
@@ -120,25 +121,13 @@ public class SearchController implements Initializable {
 	 * @param newWord
 	 */
 	private void autoCompletionLearnWord(String newWord) {
-		CommonSearchTerms.TERMS.add(newWord);
+		search.addTerm(newWord);
 
 		// we dispose the old binding and recreate a new binding
-		if (autoCompletionBinding != null) {
-			autoCompletionBinding.dispose();
+		if (commonTerms != null) {
+			commonTerms.dispose();
 		}
-
-		autoCompletionBinding = TextFields.bindAutoCompletion(query, CommonSearchTerms.TERMS);
-	}
-
-	/**
-	 * Changes The query text field to an autocomplete one. Bit hacky.
-	 *
-	 * Adds query to our common search terms once a search occurs.
-	 *
-	 */
-	private void createAutoCompleteTextField() {
-		autoCompletionBinding = TextFields.bindAutoCompletion(query, CommonSearchTerms.TERMS);
-		autoCompletionBinding.setVisibleRowCount(5);
+		commonTerms = TextFields.bindAutoCompletion(query, search.getAutocomplete());
 	}
 
 	/**

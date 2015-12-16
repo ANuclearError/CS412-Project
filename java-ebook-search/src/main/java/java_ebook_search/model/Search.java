@@ -4,13 +4,17 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.misc.HighFreqTerms;
+import org.apache.lucene.misc.TermStats;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.BooleanClause;
@@ -36,14 +40,40 @@ public class Search {
 	 */
 	private IndexSearcher indexSearcher;
 
-	public Search(String index) throws IOException {
+	/**
+	 * Index reader that reads through index.
+	 */
+	private IndexReader reader;
 
+	/**
+	 * List of frequent words taken from Lucene, plus terms searched by user.
+	 */
+	private Set<String> commonTerms;
+
+	public Search(String index) throws IOException {
 		ClassLoader classLoader = getClass().getClassLoader();
 		File file = new File(classLoader.getResource(index).getFile());
-
 		Directory dir = FSDirectory.open(Paths.get(file.getAbsolutePath()));
-		IndexReader reader = DirectoryReader.open(dir);
+		reader = DirectoryReader.open(dir);
 		indexSearcher = new IndexSearcher(reader);
+		generateCommonTerms();
+	}
+
+	private void generateCommonTerms() {
+		commonTerms = new HashSet<>();
+		try {
+			TermStats[] stats = HighFreqTerms.getHighFreqTerms(
+					reader,
+					1000,
+					"contents",
+					new HighFreqTerms.TotalTermFreqComparator());
+
+			for(TermStats stat : stats) {
+				commonTerms.add(stat.termtext.utf8ToString());
+			}
+		} catch (Exception e) {
+			commonTerms = null;
+		}
 	}
 
 	/**
@@ -105,5 +135,13 @@ public class Search {
 			}
 			return toReturn;
 		}
+	}
+
+	public Set<String> getAutocomplete() {
+		return commonTerms;
+	}
+
+	public boolean addTerm(String term) {
+		return commonTerms.add(term);
 	}
 }

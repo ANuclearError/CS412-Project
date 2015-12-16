@@ -80,6 +80,13 @@
 		</dependency>
 
 		<dependency>
+			<groupId>org.apache.lucene</groupId>
+			<artifactId>lucene-misc</artifactId>
+			<version>${luceneVersion}</version>
+		</dependency>
+
+
+		<dependency>
 			<groupId>org.languagetool</groupId>
 			<artifactId>language-en</artifactId>
 			<version>3.1</version>
