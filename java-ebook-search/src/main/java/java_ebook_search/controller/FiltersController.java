@@ -73,14 +73,13 @@ public class FiltersController {
 		if (exp.isSelected())
 			books.add(Book.EXP.toString());
 
-		filter.setSearchContent(content.isSelected());
-		filter.setSearchTitle(title.isSelected());
-
 		if (books.isEmpty() || !(content.isSelected() || title.isSelected())) {
 			filterError();
 		} else {
 			okClicked = true;
 			filter.setBooks(books);
+			filter.setSearchContent(content.isSelected());
+			filter.setSearchTitle(title.isSelected());
 			dialogStage.close();
 		}
 	}
