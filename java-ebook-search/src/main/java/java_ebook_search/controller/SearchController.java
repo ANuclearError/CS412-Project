@@ -187,35 +187,6 @@ public class SearchController implements Initializable {
 	}
 
 	/**
-	 * Filter files
-	 *
-	 * @param files
-	 * @return
-	 */
-	private List<Result> filterResults(List<Result> files) {
-		// No filter, do nothing
-		if (null == filter) {
-			return files;
-		}
-
-		// New filtered List to return
-		List<Result> toReturn = new ArrayList<Result>();
-
-		// If passed in a null list of files, do nothing
-		if (!CollectionUtils.isEmpty(files)) {
-			// Loop through each file
-			for (Result file : files) {
-				// If is in filtered list add to filtered results
-				// "toReturn"
-				if (filter.getBooks().contains(file.getBook())) {
-					toReturn.add(file);
-				}
-			}
-		}
-		return toReturn;
-	}
-
-	/**
 	 * Executes search.
 	 */
 	public void search() throws IOException, ParseException {
@@ -228,7 +199,6 @@ public class SearchController implements Initializable {
 		try {
 			if(!(query.getText().equals("") || query.getText() == null)) {
 				List<Result> files = search.search(term, filter);
-				files = filterResults(files);
 				if (files.size() == 0) {
 					// re-search the query using one of the suggestions
 					List<String> suggestions = sc.getSuggestions(term);

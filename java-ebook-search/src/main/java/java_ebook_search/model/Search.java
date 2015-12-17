@@ -63,18 +63,33 @@ public class Search {
 	private void generateCommonTerms() {
 		commonTerms = new HashSet<>();
 		try {
-			TermStats[] stats = HighFreqTerms.getHighFreqTerms(
-					reader,
-					1000,
-					"contents",
+			TermStats[] stats = HighFreqTerms.getHighFreqTerms(reader, 1000, "contents",
 					new HighFreqTerms.TotalTermFreqComparator());
 
-			for(TermStats stat : stats) {
+			for (TermStats stat : stats) {
 				commonTerms.add(stat.termtext.utf8ToString());
 			}
 		} catch (Exception e) {
 			commonTerms = null;
 		}
+	}
+
+	private Query buildQuery(String term, Filter filter) throws ParseException {
+
+		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
+		QueryParser content = new QueryParser("contents", analyzer);
+		QueryParser title = new QueryParser("title", analyzer);
+
+		BooleanQuery.Builder builder = new BooleanQuery.Builder();
+
+		if (filter.isSearchContent()) {
+			builder.add(content.parse(term), BooleanClause.Occur.SHOULD);
+		}
+		if (filter.isSearchTitle()) {
+			builder.add(title.parse(term), BooleanClause.Occur.SHOULD);
+		}
+
+		return builder.build();
 	}
 
 	/**
@@ -88,27 +103,13 @@ public class Search {
 	 * @throws IOException
 	 *             - there was a problem reading results.
 	 */
-	public List<Result> search(String term, Filter filter)
-			throws ParseException, IOException {
+	public List<Result> search(String term, Filter filter) throws ParseException, IOException {
 
 		List<Result> toReturn = new ArrayList<Result>();
 
-		Analyzer analyzer = new StandardAnalyzer(Stopwords.getWords());
-		QueryParser content = new QueryParser("contents", analyzer);
-		QueryParser title = new QueryParser("title", analyzer);
-
-		BooleanQuery.Builder builder = new BooleanQuery.Builder();
-
-		if(filter.isSearchContent())
-			builder.add(content.parse(term), BooleanClause.Occur.SHOULD);
-		if(filter.isSearchTitle())
-			builder.add(title.parse(term), BooleanClause.Occur.SHOULD);
-		Query query = builder.build();
+		Query query = buildQuery(term, filter);
 
 		TopDocs results = indexSearcher.search(query, 50);
-
-		// System.out.println("Searching for: " + term);
-		// System.out.println("Results: " + results.totalHits);
 
 		numTotalHits = results.totalHits;
 		int hitsPerPage = 25;
@@ -126,12 +127,17 @@ public class Search {
 			for (int i = start; i < end; i++) {
 				Document doc = indexSearcher.doc(hits[i].doc);
 				String path = doc.get("path");
-				if (path != null) {
-					// System.out.println((i + 1) + ". " + path);
-					toReturn.add(new Result(path, doc));
-				} else {
-					// System.out.println((i + 1) + ". " + "No path for this
-					// document");
+
+				//Apply filter
+				if (filter.getBooks().contains(doc.get("book"))) {
+
+					if (path != null) {
+						// System.out.println((i + 1) + ". " + path);
+						toReturn.add(new Result(path, doc));
+					} else {
+						// System.out.println((i + 1) + ". " + "No path for this
+						// document");
+					}
 				}
 			}
 			return toReturn;
