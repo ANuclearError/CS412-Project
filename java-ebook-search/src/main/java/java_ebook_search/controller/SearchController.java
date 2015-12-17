@@ -179,8 +179,11 @@ public class SearchController implements Initializable {
 			dialogStage.showAndWait();
 			// Set Filters
 			this.filter = controller.getFilter();
+			
+			//Trigger search
+			search();
 			return controller.isOkClicked();
-		} catch (IOException e) {
+		} catch (IOException | ParseException e) {
 			e.printStackTrace();
 			return false;
 		}
