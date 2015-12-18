@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//ORA//DTD CD HTML 3.2//EN">
 <html>
  <head> 
-  <title>[Chapter 10] String</title> 
+  <title>[Chapter 10] Integer</title> 
   <meta name="author" content="Mark Grand"> 
-  <meta name="date" content="Fri Aug  8 15:27:19 1997"> 
+  <meta name="date" content="Fri Aug  8 15:24:51 1997"> 
   <meta name="form" content="html"> 
   <meta name="metadata" content="dublincore.0.1"> 
   <meta name="objecttype" content="book part"> 
@@ -20,27 +20,27 @@
    <table width="515" border="0" cellpadding="0" cellspacing="0"> 
     <tbody>
      <tr> 
-      <td width="172" align="left" valign="top"><a href="ch10_19.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
+      <td width="172" align="left" valign="top"><a href="ch10_09.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
       <td width="171" align="center" valign="top"><b><font face="ARIEL,HELVETICA,HELV,SANSERIF" size="-1">Chapter 10<br>The java.lang Package</font></b></td> 
-      <td width="172" align="right" valign="top"><a href="ch10_21.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
+      <td width="172" align="right" valign="top"><a href="ch10_11.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
      </tr> 
     </tbody>
    </table> &nbsp; 
    <hr align="left" width="515"> 
   </div> 
   <div class="refnamediv"> 
-   <h1><mark>String</mark></h1> 
-   <h2>Name</h2><mark>String</mark>
+   <h1><mark>Integer</mark></h1> 
+   <h2>Name</h2><mark>Integer</mark>
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.147">Synopsis</a></h2> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.72">Synopsis</a></h2> 
    <dl class="variablelist"> 
     <dt class="varlistentry">
      Class Name:
      <br> 
     </dt>
     <dd> 
-     <p class="para"> <tt class="literal">java.lang.<mark>String</mark></tt> </p>
+     <p class="para"> <tt class="literal">java.lang.<mark>Integer</mark></tt> </p>
      <p> </p>
     </dd>
     <dt class="varlistentry">
@@ -48,7 +48,7 @@
      <br> 
     </dt>
     <dd> 
-     <p class="para"> <tt class="literal">java.lang.Object</tt> </p>
+     <p class="para"> <tt class="literal">java.lang.Number</tt> </p>
      <p> </p>
     </dd>
     <dt class="varlistentry">
@@ -64,7 +64,7 @@
      <br> 
     </dt>
     <dd> 
-     <p class="para"> <tt class="literal">java.io.Serializable</tt> </p>
+     <p class="para"> None </p>
      <p> </p>
     </dd>
     <dt class="varlistentry">
@@ -77,111 +77,85 @@
    </dl> 
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.148">Description</a></h2> 
-   <p class="para"> <a name="MAN.STRING.1"></a>The <tt class="literal"><mark>String</mark></tt> class represents sequences of characters. Once a <tt class="literal"><mark>String</mark></tt> object is created, it is immutable. In other words, the sequence of characters that a <tt class="literal"><mark>String</mark></tt> represents cannot be changed after it is created. The <tt class="literal">StringBuffer</tt> class, on the other hand, represents a sequence of characters that can be changed. <tt class="literal">StringBuffer</tt> objects are used to perform computations on <tt class="literal"><mark>String</mark></tt> objects. </p>
-   <p class="para"> The <tt class="literal"><mark>String</mark></tt> class includes a number of utility methods, such as methods for fetching individual characters or ranges of contiguous characters, for translating characters to upper- or lowercase, for searching strings, and for parsing numeric values in strings. </p>
-   <p class="para"> <tt class="literal"><mark>String</mark></tt> literals are compiled into <tt class="literal"><mark>String</mark></tt> objects. Where a <tt class="literal"><mark>String</mark></tt> literal appears in an expression, the compiled code contains a <tt class="literal"><mark>String</mark></tt> object. If <tt class="literal">s</tt> is declared as <tt class="literal"><mark>String</mark></tt>, the following two expressions are identical: </p>
-   <div class="screen"> 
-    <p> </p>
-    <pre>
-s.equals("ABC")
-"ABC".equals(s)
-</pre> 
-   </div> 
-   <p class="para">The <mark>string</mark> concatenation operator implicitly creates<tt class="literal"><mark>String</mark></tt> objects. </p>
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.73">Description</a></h2> 
+   <p class="para"> <a name="MAN.INTEGER.1"></a>The <tt class="literal"><mark>Integer</mark></tt> class provides an object wrapper for an <tt class="literal">int</tt> value. This is useful when you need to treat an <tt class="literal">int</tt> value as an object. For example, there are a number of utility methods that take a reference to an <tt class="literal">Object</tt> as one of their arguments. You cannot specify an <tt class="literal">int</tt> value for one of these arguments, but you can provide a reference to an <tt class="literal"><mark>Integer</mark></tt> object that encapsulates the <tt class="literal">int</tt> value. Also, as of JDK 1.1, the <tt class="literal"><mark>Integer</mark></tt> class is necessary to support the Reflection API and class literals. </p>
+   <p class="para"> The <tt class="literal"><mark>Integer</mark></tt> class also provides a number of utility methods for converting <tt class="literal">int</tt> values to other primitive types and for converting <tt class="literal">int</tt> values to strings and vice versa. </p>
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.149">Class Summary</a></h2> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.74">Class Summary</a></h2> 
    <div class="screen"> 
     <p> </p>
-    <pre>public final class java.lang.<mark>String</mark> extends java.lang.Object {
+    <pre>public final class java.lang.<mark>Integer</mark> extends java.lang.Number {
+    // Constants
+    public static final int MAX_VALUE;
+    public static final int MIN_VALUE;
+    public final static Class TYPE;                    // New in 1.1
     // Constructors
-    public <mark>String</mark>();
-    public <mark>String</mark>(byte[] bytes);                          // New in 1.1
-    public <mark>String</mark>(byte[] bytes, <mark>String</mark> enc);              // New in 1.1
-    public <mark>String</mark>(byte[] bytes, int offset, int length);  // New in 1.1
-    public <mark>String</mark>(byte[] bytes, int offset, 
-                  int length, <mark>String</mark> enc);                // New in 1.1
-    public <mark>String</mark>(byte[] lowbytes, int hibyte);        // Deprecated in 1.1
-    public <mark>String</mark>(byte[] lowbytes, int hibyte, 
-                  int offset, int count);              // Deprecated in 1.1
-    public <mark>String</mark>(char[] value);
-    public <mark>String</mark>(char[] value, int offset, int;
-    public <mark>String</mark>(<mark>String</mark> value);
-    public <mark>String</mark>(StringBuffer buffer);
+    public <mark>Integer</mark>(int value);
+    public <mark>Integer</mark>(String s);
     // Class Methods
-    public static <mark>String</mark> copyValueOf(char data[]);
-    public static <mark>String</mark> copyValueOf(char data[], int offset, int count);
-    public static <mark>String</mark> valueOf(boolean b);
-    public static <mark>String</mark> valueOf(char c);
-    public static <mark>String</mark> valueOf(char[] data);
-    public static <mark>String</mark> valueOf(char[] data, int offset, int count);
-    public static <mark>String</mark> valueOf(double d);
-    public static <mark>String</mark> valueOf(float f);
-    public static <mark>String</mark> valueOf(int i);
-    public static <mark>String</mark> valueOf(long l);
-    public static <mark>String</mark> valueOf(Object obj);
+    public static <mark>Integer</mark> decode(String nm)            // New in 1.1
+    public static <mark>Integer</mark> getInteger(String nm);
+    public static <mark>Integer</mark> getInteger(String nm, int val);
+    public static <mark>Integer</mark> getInteger(String nm, <mark>Integer</mark> val);
+    public static int parseInt(String s);
+    public static int parseInt(String s, int radix;
+    public static String toBinaryString(long i);
+    public static String toHexString(long i);
+    public static String toOctalString(long i);
+    public static String toString(int i);
+    public static String toString(int i, int radix);
+    public static <mark>Integer</mark> valueOf(String s);
+    public static <mark>Integer</mark> valueOf(String s, int radix);
     // Instance Methods
-    public char charAt(int index);
-    public int compareTo(<mark>String</mark> anotherString);
-    public <mark>String</mark> concat(<mark>String</mark> str);
-    public boolean endsWith(<mark>String</mark> suffix);
-    public boolean equals(Object anObject);
-    public boolean equalsIgnoreCase(<mark>String</mark> anotherString);
-    public byte[] getBytes();                             // New in 1.1
-    public byte[] getBytes(<mark>String</mark> enc);                   // New in 1.1
-    public void getBytes(int srcBegin, int srcEnd, 
-                         byte[] dst, int dstBegin);     // Deprecated in 1.1
-    public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin);
+    public byte byteValue();                           // New in 1.1
+    public double doubleValue();
+    public boolean equals(Object obj);
+    public float floatValue();
     public int hashCode();
-    public int indexOf(int ch);
-    public int indexOf(int ch, int fromIndex);
-    public int indexOf(<mark>String</mark> str);
-    public int indexOf(<mark>String</mark> str, int fromIndex);
-    public native <mark>String</mark> intern();
-    public int lastIndexOf(int ch);
-    public int lastIndexOf(int ch, int fromIndex);
-    public int lastIndexOf(<mark>String</mark> str);
-    public int lastIndexOf(<mark>String</mark> str, int fromIndex;
-    public int length();
-    public boolean regionMatches(boolean ignoreCase, int toffset,
-                                 <mark>String</mark> other, int ooffset, int len);
-    public boolean regionMatches(int toffset, <mark>String</mark> other,
-                                 int ooffset, int len);
-    public <mark>String</mark> replace(char oldChar, char newChar);
-    public boolean startsWith(<mark>String</mark> prefix);
-    public boolean startsWith(<mark>String</mark> prefix, int toffset);
-    public <mark>String</mark> substring(int beginIndex);
-    public <mark>String</mark> substring(int beginIndex, int endIndex);
-    public char[] toCharArray();
-    public <mark>String</mark> toLowerCase();
-    public <mark>String</mark> toLowerCase(Locale locale);             // New in 1.1
-    public <mark>String</mark> toString();
-    public <mark>String</mark> toUpperCase();
-    public <mark>String</mark> toUpperCase(Locale locale);             // New in 1.1
-    public <mark>String</mark> trim();
+    public int intValue();
+    public long longValue();
+    public short shortValue();                         // New in 1.1
+    public String toString();
 }</pre> 
    </div> 
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.150">Constructors</a></h2> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.75">Constants</a></h2> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.341"><mark>String</mark></a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.188">MAX_VALUE</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.385"><tt class="literal">public <mark>String</mark>()</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.196"><tt class="literal">public static final int MAX_VALUE = 0x7fffffff // 2147483647</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Description
        <br> 
       </dt>
       <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt>object that represents
-the empty <mark>string</mark> (i.e., a <mark>string</mark> with zero characters).<a name="STRING.3"></a></p>
+       <p class="para"> The largest value that can be represented by an <tt class="literal">int</tt>.</p>
       </dd>
      </dl> 
     </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.189">MIN_VALUE</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.386"><tt class="literal">public <mark>String</mark>(byte[] bytes)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.197"><tt class="literal">public static final int MIN_VALUE = 0x80000000 // -2147483648</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> The smallest value that can be represented by an <tt class="literal">int</tt>.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.190">TYPE</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.198"><tt class="literal">public static final Class TYPE </tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Availability
@@ -192,556 +166,22 @@ the empty <mark>string</mark> (i.e., a <mark>string</mark> with zero characters)
        <p> </p>
       </dd>
       <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">bytes</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">byte</tt> values.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
        Description
        <br> 
       </dt>
       <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the given <tt class="literal">bytes</tt> array. The bytes in the array are converted to characters using the system's default character encoding scheme.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.387"><tt class="literal">public <mark>String</mark>(byte[] bytes, <mark>String</mark> enc)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> New as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">bytes</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">byte</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">enc</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The name of an encoding scheme.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">UnsupportedEncodingException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">enc</tt> is not a supported encoding scheme.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the given <tt class="literal">bytes</tt> array. The bytes in the array are converted to characters using the specified character encoding scheme.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.388"><tt class="literal">public <mark>String</mark>(byte[] bytes, int offset, int length)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> New as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">bytes</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">byte</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">offset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">length</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The number of bytes to be included.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">offset</tt> or <tt class="literal">length</tt> indexes an element that is outside the bounds of the <tt class="literal">bytes</tt> array.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the specified portion of the given <tt class="literal">bytes</tt> array. The bytes in the array are converted to characters using the system's default character encoding scheme.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.389">
-       <div class="screen"> 
-        <p> </p>
-        <pre>public <mark>String</mark>(byte[] bytes, int offset, int length, <mark>String</mark> enc)</pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> New as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">bytes</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">byte</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">offset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">length</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The number of bytes to be included. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">enc</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The name of an encoding scheme.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">offset</tt> or <tt class="literal">length</tt> indexes an element that is outside the bounds of the <tt class="literal">bytes</tt> array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">UnsupportedEncodingException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">enc</tt> is not a supported encoding scheme.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the specified portion of the given <tt class="literal">bytes</tt> array. The bytes in the array are converted to characters using the specified character encoding scheme.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.390"><tt class="literal">public <mark>String</mark>(byte[] lowbytes, int hibyte)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Deprecated as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">lowbytes</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">byte</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">hibyte</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The value to be put in the high-order byte of each 16-bit character.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the given <tt class="literal">lowbytes</tt> array. The type of the array elements is <tt class="literal">byte</tt>, which is an 8-bit data type, so each element must be converted to a <tt class="literal">char</tt>, which is a 16-bit data type. The value of the <tt class="literal">hibyte</tt> argument is used to provide the value of the high-order byte when the <tt class="literal">byte</tt> values in the array are converted to <tt class="literal">char</tt> values. </p>
-       <p class="para"> More specifically, for each element <tt class="literal">i</tt> in the array <tt class="literal">lowbytes</tt>, the character at position <tt class="literal">i</tt> in the created <tt class="literal"><mark>String</mark></tt> object is: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-((hibyte &amp; 0xff)&lt;&lt;8) | lowbytes[i]
-</pre> 
-       </div> 
-       <p class="para"> This method is deprecated as of JDK 1.1 because it does not convert bytes into characters properly. You should instead use one of the constructors that takes a specific character encoding argument or that uses the default encoding.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.391">
-       <div class="screen"> 
-        <p> </p>
-        <pre>public <mark>String</mark>(byte[] lowbytes, int hibyte, int offset, int count)</pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Deprecated as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">lowbytes</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">byte</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">hibyte</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The value to be put in the high-order byte of each 16-bit character. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">offset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">count</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The number of bytes from the array to be included
-in the <mark>string</mark>.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">offset</tt> or <tt class="literal">count</tt> indexes an element that is outside the bounds of the <tt class="literal">lowbytes</tt> array.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the specified portion of the <tt class="literal">lowbytes</tt> array. That is, the portion of the array that starts at <tt class="literal">offset</tt> elements from the beginning of the array and is <tt class="literal">count</tt> elements long. </p>
-       <p class="para"> The type of the array elements is <tt class="literal">byte</tt>, which is an 8-bit data type, so each element must be converted to a <tt class="literal">char</tt>, which is a 16-bit data type. The value of the <tt class="literal">hibyte</tt> argument is used to provide the value of the high-order byte when the <tt class="literal">byte</tt> values in the array are converted to <tt class="literal">char</tt> values. </p>
-       <p class="para"> More specifically, for each element <tt class="literal">i</tt> in the array <tt class="literal">lowbytes</tt> that is included in the <tt class="literal"><mark>String</mark></tt> object, the character at position <tt class="literal">i</tt> in the created <tt class="literal"><mark>String</mark></tt> is: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
- ((hibyte &amp; 0xff)&lt;&lt;8) | lowbytes[I]
-</pre> 
-       </div> 
-       <p class="para"> This method is deprecated as of JDK 1.1 because it does not convert bytes into characters properly. You should instead use one of the constructors that takes a specific character encoding argument or that uses the default encoding.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.392"><tt class="literal">public <mark>String</mark>(char[] value)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">value</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">char</tt> values.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the given array.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.393"><tt class="literal">public <mark>String</mark>(char[] value, int offset, int count)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">value</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An array of <tt class="literal">char</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">offset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">count</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The number of characters from the array to be included
-in the <mark>string</mark>.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">offset</tt> or <tt class="literal">count</tt> indexes an element that is outside the bounds of the <tt class="literal">value</tt> array.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the specified portion of the given array. That is, the portion of the given array that starts at <tt class="literal">offset</tt> elements from the beginning of the array and is <tt class="literal">count</tt> elements long.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.394"><tt class="literal">public <mark>String</mark>(<mark>String</mark> value)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">value</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal"><mark>String</mark></tt> object.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the same sequence of characters as the given <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.395"><tt class="literal">public <mark>String</mark>(StringBuffer value)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">value</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal">StringBuffer</tt> object.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Creates a new <tt class="literal"><mark>String</mark></tt> object that represents the same sequence of characters as the given object.</p>
+       <p class="para"> The <tt class="literal">Class</tt> object that represents the type <tt class="literal">int</tt>. It is always true that <tt class="literal"><mark>Integer</mark>.TYPE</tt> <tt class="literal">==</tt> <tt class="literal">int.class</tt>.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.151">Class Methods</a></h2> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.76">Constructors</a></h2> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.342">copyValueOf</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.191"><mark>Integer</mark></a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.396"><tt class="literal">public static <mark>String</mark> copyValueOf(char data[])</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.199"><tt class="literal">public <mark>Integer</mark>(int value)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -751,21 +191,13 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">data</tt>
+         <tt class="literal">value</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> An array of <tt class="literal">char</tt> values.</p>
+         <p class="para"> The <tt class="literal">int</tt> value to be encapsulated by this object.</p>
         </dd>
        </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the given array. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -773,17 +205,12 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> object that represents the character sequence contained in the given array. The <tt class="literal"><mark>String</mark></tt> object produced by this method is guaranteed not to refer to the given array, but instead to use a copy. Because the <tt class="literal"><mark>String</mark></tt> object uses a copy of the array, subsequent changes to the array do not change the contents of this <tt class="literal"><mark>String</mark></tt> object. </p>
-       <p class="para"> This method is now obsolete. The same result can be obtained using the <tt class="literal">valueOf()</tt> method that takes an array of <tt class="literal">char</tt> values.</p>
+       <p class="para"> Creates an <tt class="literal"><mark>Integer</mark></tt> object with the specified <tt class="literal">int</tt> value.</p>
       </dd>
      </dl> 
     </div> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.397">
-       <div class="screen"> 
-        <p> </p>
-        <pre>public static <mark>String</mark> copyValueOf(char data[], int offset, int count)</pre> 
-       </div></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.200"><tt class="literal">public <mark>Integer</mark>(String s) throws NumberFormatException</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -793,38 +220,13 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">data</tt>
+         <tt class="literal">s</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> An array of <tt class="literal">char</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">offset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">count</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The number of characters from the array to be included
-in the <mark>string</mark>.</p>
+         <p class="para"> The string to be made into an <tt class="literal"><mark>Integer</mark></tt> object.</p>
         </dd>
        </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that represents the sequence of characters stored in the specified portion of the given array. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -835,11 +237,11 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
+         <tt class="literal">NumberFormatException</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> If <tt class="literal">offset</tt> or <tt class="literal">count</tt> indexes an element that is outside the bounds of the <tt class="literal">data</tt> array.</p>
+         <p class="para"> If the sequence of characters in the given <tt class="literal">String</tt> does not form a valid <tt class="literal">int</tt> literal.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -849,16 +251,83 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> object that represents the character sequence contained in the specified portion of the given array. That is, the portion of the given array that starts at <tt class="literal">offset</tt> elements from the beginning of the array and is <tt class="literal">count</tt> elements long. The <tt class="literal"><mark>String</mark></tt> object produced by this method is guaranteed not to refer to the given array, but instead to use a copy. Because the <tt class="literal"><mark>String</mark></tt> object uses a copy of the array, subsequent changes to the array do not change the contents of this <tt class="literal"><mark>String</mark></tt> object. </p>
-       <p class="para"> This method is obsolete. The same result can be obtained by using the <tt class="literal">valueOf()</tt> method that takes an array of <tt class="literal">char</tt> values, an offset, and a count.</p>
+       <p class="para"> Constructs an <tt class="literal"><mark>Integer</mark></tt> object with the value specified by the given string. The string should consist of one or more digit characters. The digit characters can be preceded by a single `<tt class="literal">-</tt>' character. If the string contains any other characters, the constructor throws a <tt class="literal">NumberFormatException</tt>.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="refsect1"> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.77">Class Methods</a></h2> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.192">decode</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.201"><tt class="literal">public static <mark>Integer</mark> decode(String nm)</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Availability
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> New as of JDK 1.1 </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Parameters
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">nm</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> A <tt class="literal">String</tt> representation of the value to be encapsulated by an <tt class="literal"><mark>Integer</mark></tt> object. If the string begins with <tt class="literal">#</tt> or <tt class="literal">0x</tt>, it is a radix 16 representation of the value. If the string begins with <tt class="literal">0</tt>, it is a radix 8 representation of the value. Otherwise, it is assumed to be a radix 10 representation of the value.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> An <tt class="literal"><mark>Integer</mark></tt> object that encapsulates the given value. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Throws
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">NumberFormatException</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> If the <tt class="literal">String</tt> contains any nondigit characters other than a leading minus sign or the value represented by the <tt class="literal">String</tt> is less than <tt class="literal"><mark>Integer</mark>.MIN_VALUE</tt> or greater than <tt class="literal"><mark>Integer</mark>.MAX_VALUE</tt>.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> This method returns an <tt class="literal"><mark>Integer</mark></tt> object that encapsulates the given value.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.343">valueOf</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.193">getInteger</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.398"><tt class="literal">public static <mark>String</mark> valueOf(boolean b)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.202"><tt class="literal">public static <mark>Integer</mark> getInteger(String nm)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -868,11 +337,11 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">b</tt>
+         <tt class="literal">nm</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> A <tt class="literal">boolean</tt> value.<a name="STRING.4"></a></p>
+         <p class="para"> The name of a system property.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -882,7 +351,7 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that contains <tt class="literal">'true'</tt> if <tt class="literal">b</tt> is <tt class="literal">true</tt> or <tt class="literal">'false'</tt> if <tt class="literal">b</tt> is <tt class="literal">false</tt>. </p>
+       <p class="para"> The value of the system property as an <tt class="literal"><mark>Integer</mark></tt> object, or an <tt class="literal"><mark>Integer</mark></tt> object with the value 0 if the named property does not exist or cannot be parsed. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -890,12 +359,16 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of a<tt class="literal">boolean</tt> value. In other words, it returns <tt class="literal">'true'</tt> if <tt class="literal">b</tt> is <tt class="literal">true</tt> or <tt class="literal">'false'</tt> if <tt class="literal">b</tt> is <tt class="literal">false</tt>. </p>
+       <p class="para"> This method retrieves the value of the named system property and returns it as an <tt class="literal"><mark>Integer</mark></tt> object. The method obtains the value of the system property as a <tt class="literal">String</tt> using <tt class="literal">System.getProperty()</tt>. </p>
+       <p class="para"> If the value of the property begins with <tt class="literal">0x</tt> or <tt class="literal">#</tt>and is not followed by a minus sign, the
+rest of the value is parsed as a hexadecimal <mark>integer</mark>. If the value
+begins with<tt class="literal">0</tt>, it's parsed as an octal <mark>integer</mark>;
+otherwise it's parsed as a decimal <mark>integer</mark>.</p>
       </dd>
      </dl> 
     </div> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.399"><tt class="literal">public static <mark>String</mark> valueOf(char c)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.203"><tt class="literal">public static <mark>Integer</mark> getInteger(String nm, int val)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -905,11 +378,19 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">c</tt>
+         <tt class="literal">nm</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> A <tt class="literal">char</tt> value.</p>
+         <p class="para"> The name of a system property. </p>
+         <p> </p>
+        </dd>
+        <dt class="varlistentry">
+         <tt class="literal">val</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> A default <tt class="literal">int</tt> value for the property.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -919,7 +400,7 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that contains just the given character. </p>
+       <p class="para"> The value of the system property as an <tt class="literal"><mark>Integer</mark></tt> object, or an <tt class="literal"><mark>Integer</mark></tt> object with the value <tt class="literal">val</tt> if the named property does not exist or cannot be parsed. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -927,12 +408,16 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of a<tt class="literal">char</tt> value. In other words, it returns a <tt class="literal"><mark>String</mark></tt> object that contains just the given character.</p>
+       <p class="para"> This method retrieves the value of the named system property and returns it as an <tt class="literal"><mark>Integer</mark></tt> object. The method obtains the value of the system property as a <tt class="literal">String</tt> using <tt class="literal">System.getProperty()</tt>. </p>
+       <p class="para"> If the value of the property begins with <tt class="literal">0x</tt> or <tt class="literal">#</tt>and is not followed by a minus sign, the
+rest of the value is parsed as a hexadecimal <mark>integer</mark>. If the value
+begins with<tt class="literal">0</tt>, it's parsed as an octal <mark>integer</mark>;
+otherwise it's parsed as a decimal <mark>integer</mark>.</p>
       </dd>
      </dl> 
     </div> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.400"><tt class="literal">public static <mark>String</mark> valueOf(char[] data)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.204"><tt class="literal">public static <mark>Integer</mark> getInteger(String nm, <mark>Integer</mark> val)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -942,11 +427,19 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">data</tt>
+         <tt class="literal">nm</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> An array of <tt class="literal">char</tt> values.</p>
+         <p class="para"> The name of a system property. </p>
+         <p> </p>
+        </dd>
+        <dt class="varlistentry">
+         <tt class="literal">val</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> A default <tt class="literal"><mark>Integer</mark></tt> value for the property.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -956,7 +449,7 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that contains the sequence of characters stored in the given array. </p>
+       <p class="para"> The value of the system property as an <tt class="literal"><mark>Integer</mark></tt> object, or the <tt class="literal"><mark>Integer</mark></tt> object <tt class="literal">val</tt> if the named property does not exist or cannot be parsed. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -964,15 +457,22 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of an array of<tt class="literal">char</tt> values. In other words, it returns a <tt class="literal"><mark>String</mark></tt> object that contains the sequence of characters stored in the given array.</p>
+       <p class="para"> This method retrieves the value of the named system property and returns it as an <tt class="literal"><mark>Integer</mark></tt> object. The method obtains the value of the system property as a <tt class="literal">String</tt> using <tt class="literal">System.getProperty()</tt>. </p>
+       <p class="para"> If the value of the property begins with <tt class="literal">0x</tt> or <tt class="literal">#</tt>and is not followed by a minus sign, the
+rest of the value is parsed as a hexadecimal <mark>integer</mark>. If the value
+begins with<tt class="literal">0</tt>, it's parsed as an octal <mark>integer</mark>;
+otherwise it's as a decimal <mark>integer</mark>.</p>
       </dd>
      </dl> 
     </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.194">parseInt</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.401">
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.205">
        <div class="screen"> 
         <p> </p>
-        <pre>public static <mark>String</mark> valueOf(char[] data, int offset, int count)</pre> 
+        <pre> public static int parseInt(String s) throws NumberFormatException </pre> 
        </div></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
@@ -983,28 +483,11 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">data</tt>
+         <tt class="literal">s</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> An array of <tt class="literal">char</tt> values. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">offset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">count</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The number of characters from the array to be included
-in the <mark>string</mark>.</p>
+         <p class="para"> The <tt class="literal">String</tt> to be converted to an <tt class="literal">int</tt> value.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1014,7 +497,7 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that contains the sequence of characters stored in the specified portion of the given array. </p>
+       <p class="para">The numeric value of the <mark>integer</mark> represented by the<tt class="literal">String</tt> object. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1025,11 +508,12 @@ in the <mark>string</mark>.</p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
+         <tt class="literal">NumberFormatException</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> If <tt class="literal">offset</tt> or <tt class="literal">count</tt> indexes an element that is outside the bounds of the <tt class="literal">data</tt> array.</p>
+         <p class="para"> If the <tt class="literal">String</tt>does not contain
+a valid representation of an <mark>integer</mark>.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1039,13 +523,17 @@ in the <mark>string</mark>.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of the specified
-portion of an array of char values. In other words, it returns a<tt class="literal"><mark>String</mark></tt> object that contains the sequence of characters in the given array that starts <tt class="literal">offset</tt> elements from the beginning of the array and is <tt class="literal">count</tt> elements long.</p>
+       <p class="para">This method returns the numeric value of the <mark>integer</mark> represented
+by the contents of the given<tt class="literal">String</tt> object. The <tt class="literal">String</tt> must contain only decimal digits, except that the first character may be a minus sign.</p>
       </dd>
      </dl> 
     </div> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.402"><tt class="literal">public static <mark>String</mark> valueOf(double d)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.206">
+       <div class="screen"> 
+        <p> </p>
+        <pre> public static int parseInt(String s, int radix) throws NumberFormatException </pre> 
+       </div></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -1055,11 +543,19 @@ portion of an array of char values. In other words, it returns a<tt class="liter
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">d</tt>
+         <tt class="literal">s</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> A <tt class="literal">double</tt> value.</p>
+         <p class="para"> The <tt class="literal">String</tt> to be converted to an <tt class="literal">int</tt> value. </p>
+         <p> </p>
+        </dd>
+        <dt class="varlistentry">
+         <tt class="literal">radix</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The radix used in interpreting the characters in the <tt class="literal">String</tt> as digits. This value must be in the range <tt class="literal">Character.MIN_RADIX</tt> to <tt class="literal">Character.MAX_RADIX</tt>. If <tt class="literal">radix</tt> is in the range 2 through 10, only characters for which the <tt class="literal">Character.isDigit()</tt> method returns <tt class="literal">true</tt> are considered to be valid digits. If <tt class="literal">radix</tt> is in the range 11 through 36, characters in the ranges `A' through `Z' and `a' through `z' may be considered valid digits.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1069,8 +565,25 @@ portion of an array of char values. In other words, it returns a<tt class="liter
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains a <mark>string</mark>
-representation of the given<tt class="literal">double</tt> value. </p>
+       <p class="para">The numeric value of the <mark>integer</mark> represented by the<tt class="literal">String</tt> object in the specified radix. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Throws
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">NumberFormatException</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> If the <tt class="literal">String</tt>does not contain
+a valid representation of an <mark>integer</mark>, or<tt class="literal">radix</tt> is not in the appropriate range.</p>
+        </dd>
+       </dl> 
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1078,12 +591,16 @@ representation of the given<tt class="literal">double</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of a<tt class="literal">double</tt> value. In other words, it returns the <tt class="literal"><mark>String</mark></tt> object returned by <tt class="literal">Double.toString(d)</tt>.</p>
+       <p class="para">This method returns the numeric value of the <mark>integer</mark> represented
+by the contents of the given<tt class="literal">String</tt> object in the specified radix. The <tt class="literal">String</tt> must contain only valid digits of the specified radix, except that the first character may be a minus sign. The digits are parsed in the specified radix to produce the numeric value.</p>
       </dd>
      </dl> 
     </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.195">toBinaryString</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.403"><tt class="literal">public static <mark>String</mark> valueOf(float f)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.207"><tt class="literal">public static String toBinaryString(int value)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -1093,11 +610,11 @@ representation of the given<tt class="literal">double</tt> value. </p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">f</tt>
+         <tt class="literal">value</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> A <tt class="literal">float</tt> value.</p>
+         <p class="para"> The <tt class="literal">int</tt> value to be converted to a string.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1107,8 +624,7 @@ representation of the given<tt class="literal">double</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains a <mark>string</mark>
-representation of the given<tt class="literal">float</tt> value. </p>
+       <p class="para"> A string that contains the binary representation of the given value. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1116,12 +632,99 @@ representation of the given<tt class="literal">float</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of a<tt class="literal">float</tt> value. In other words, it returns the <tt class="literal"><mark>String</mark></tt> object returned by <tt class="literal">Float.toString(f)</tt>.</p>
+       <p class="para"> This method returns a <tt class="literal">String</tt> object that contains the representation of the given value as an unsigned binary number. To convert the given value to an unsigned quantity, the method simply uses the value as if it were not negative. In other words, if the given value is negative, the method adds 2^32 to it. Otherwise the value is used as it is. </p>
+       <p class="para"> The string returned by this method contains a sequence of one or more `0' and `1' characters. The method returns "0" if its argument is <tt class="literal">0</tt>. Otherwise, the string returned by this method begins with `1'.</p>
       </dd>
      </dl> 
     </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.196">toHexString</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.404"><tt class="literal">public static <mark>String</mark> valueOf(int i)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.208"><tt class="literal">public static String toHexString(int value)</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Parameters
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">value</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The <tt class="literal">int</tt> value to be converted to a string.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> A string that contains the hexadecimal representation of the given value. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> This method returns a <tt class="literal">String</tt> object that contains the representation of the given value as an unsigned hexadecimal number. To convert the given value to an unsigned quantity, the method simply uses the value as if it were not negative. In other words, if the given value is negative, the method adds 2^32 to it. Otherwise the value is used as it is. </p>
+       <p class="para"> The string returned by this method contains a sequence of one or more of the characters `0', `1', `2', `3', `4', `5', `6', `7', `8', `9', `a', `b', `c', `d', `e', and `f'. The method returns "0" if its argument is <tt class="literal">0</tt>. Otherwise, the string returned by this method does not begin with `0'. </p>
+       <p class="para"> To produce a string that contains upper- instead of lowercase letters, use the <tt class="literal">String.toUpperCase()</tt> method.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.197">toOctalString</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.209"><tt class="literal">public static String toOctalString(int value)</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Parameters
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">value</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The <tt class="literal">int</tt> value to be converted to a string.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> A string that contains the octal representation of the given value. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> This method returns a <tt class="literal">String</tt> object that contains a representation of the given value as an unsigned octal number. To convert the given value to an unsigned quantity, the method simply uses the value as if it were not negative. In other words, if the given value is negative, the method adds 2^32 to it. Otherwise the value is used as it is. </p>
+       <p class="para"> The string returned by this method contains a sequence of one or more of the characters `0', `1', `2', `3', `4', `5', `6', and `7'. The method returns "0" if its argument is <tt class="literal">0</tt>. Otherwise, the string returned by this method does not begin with `0'.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.198">toString</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.210"><tt class="literal">public static String toString(int i)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -1135,7 +738,7 @@ representation of the given<tt class="literal">float</tt> value. </p>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> An <tt class="literal">int</tt> value.</p>
+         <p class="para"> The <tt class="literal">int</tt> value to be converted to a string.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1145,8 +748,7 @@ representation of the given<tt class="literal">float</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains a <mark>string</mark>
-representation of the given<tt class="literal">int</tt> value. </p>
+       <p class="para"> The string representation of the given value. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1154,12 +756,13 @@ representation of the given<tt class="literal">int</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of an<tt class="literal">int</tt> value. In other words, it returns the <tt class="literal"><mark>String</mark></tt> object returned by <tt class="literal"><mark>Integer</mark>.toString(i)</tt>.</p>
+       <p class="para"> This method returns a <tt class="literal">String</tt> object that contains the decimal representation of the given value. </p>
+       <p class="para"> This method returns a string that begins with `<tt class="literal">-</tt>' if the given value is negative. The rest of the string is a sequence of one or more of the characters `0', `1', `2', `3', `4', `5', `6', `7', `8', and `9'. This method returns "0" if its argument is <tt class="literal">0</tt>. Otherwise, the string returned by this method does not begin with "0" or "<tt class="literal">-</tt>0".</p>
       </dd>
      </dl> 
     </div> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.405"><tt class="literal">public static <mark>String</mark> valueOf(long l)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.211"><tt class="literal">public static String toString(int i, int radix)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -1169,11 +772,19 @@ representation of the given<tt class="literal">int</tt> value. </p>
        <p> </p>
        <dl class="variablelist"> 
         <dt class="varlistentry">
-         <tt class="literal">l</tt>
+         <tt class="literal">i</tt>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> A <tt class="literal">long</tt> value.</p>
+         <p class="para"> The <tt class="literal">int</tt> value to be converted to a string. </p>
+         <p> </p>
+        </dd>
+        <dt class="varlistentry">
+         <tt class="literal">radix</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The radix used in converting the value to a string. This value must be in the range <tt class="literal">Character.MIN_RADIX</tt> to <tt class="literal">Character.MAX_RADIX</tt>.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1183,8 +794,7 @@ representation of the given<tt class="literal">int</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains a <mark>string</mark>
-representation of the given<tt class="literal">long</tt> value. </p>
+       <p class="para"> The string representation of the given value in the specified radix. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1192,12 +802,226 @@ representation of the given<tt class="literal">long</tt> value. </p>
        <br> 
       </dt>
       <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of a<tt class="literal">long</tt> value. In other words, it returns the <tt class="literal"><mark>String</mark></tt> object returned by <tt class="literal">Long.toString(l)</tt>.</p>
+       <p class="para"> This method returns a <tt class="literal">String</tt> object that contains the representation of the given value in the specified radix. </p>
+       <p class="para"> This method returns a string that begins with `<tt class="literal">-</tt>' if the given value is negative. The rest of the string is a sequence of one or more characters that represent the magnitude of the given value. The characters that can appear in the sequence are determined by the value of <tt class="literal">radix</tt>. If <i class="emphasis">N</i> is the value of <tt class="literal">radix</tt>, the first <i class="emphasis">N</i> characters on the following line can appear in the sequence: </p>
+       <div class="screen"> 
+        <p> </p>
+        <pre>
+0123456789abcdefghijklmnopqrstuvwxyz
+</pre> 
+       </div> 
+       <p class="para"> The method does not verify that <tt class="literal">radix</tt> is in the proper range. If <tt class="literal">radix</tt> is less than <tt class="literal">Character.MIN_RADIX</tt> or greater than <tt class="literal">Character.MAX_RADIX</tt>, the value 10 is used instead of the given value. </p>
+       <p class="para"> This method returns "0" if its argument is <tt class="literal">0</tt>. Otherwise, the string returned by this method does not begin with "0" or "<tt class="literal">-</tt>0".</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.199">valueOf</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.212">
+       <div class="screen"> 
+        <p> </p>
+        <pre>public static <mark>Integer</mark> valueOf(String s) throws NumberFormatException</pre> 
+       </div></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Parameters
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">s</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The string to be made into an <tt class="literal"><mark>Integer</mark></tt> object.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> The <tt class="literal"><mark>Integer</mark></tt> object constructed from the string. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Throws
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">NumberFormatException</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> If the <tt class="literal">String</tt>does not contain
+a valid representation of an <mark>integer</mark>.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> Constructs an <tt class="literal"><mark>Integer</mark></tt> object with the value specified by the given string. The string should consist of one or more digit characters. The digit characters can be preceded by a single `<tt class="literal">-</tt>' character. If the string contains any other characters, the method throws a <tt class="literal">NumberFormatException</tt>.</p>
       </dd>
      </dl> 
     </div> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.406"><tt class="literal">public static <mark>String</mark> valueOf (Object obj)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.213">
+       <div class="screen"> 
+        <p> </p>
+        <pre>public static <mark>Integer</mark> valueOf(String s, int radix) throws NumberFormatException</pre> 
+       </div></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Parameters
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">s</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The string to be made into an <tt class="literal"><mark>Integer</mark></tt> object. </p>
+         <p> </p>
+        </dd>
+        <dt class="varlistentry">
+         <tt class="literal">radix</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> The radix used in converting the string to a value. This value must be in the range <tt class="literal">Character.MIN_RADIX</tt> to <tt class="literal">Character.MAX_RADIX</tt>.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> The <tt class="literal"><mark>Integer</mark></tt> object constructed from the string. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Throws
+       <br> 
+      </dt>
+      <dd> 
+       <p> </p>
+       <dl class="variablelist"> 
+        <dt class="varlistentry">
+         <tt class="literal">NumberFormatException</tt>
+         <br> 
+        </dt>
+        <dd> 
+         <p class="para"> If the <tt class="literal">String</tt>does not contain
+a valid representation of an <mark>integer</mark> or<tt class="literal">radix</tt> is not in the appropriate range.</p>
+        </dd>
+       </dl> 
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> Constructs an <tt class="literal"><mark>Integer</mark></tt> object with the value specified by the given string in the specified radix. The string should consist of one or more digit characters or characters in the range `A' to `Z' or `a' to `z' that are considered digits in the given radix. The digit characters can be preceded by a single `<tt class="literal">-</tt>' character. If the string contains any other characters, the method throws a <tt class="literal">NumberFormatException</tt>.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+  </div> 
+  <div class="refsect1"> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.78">Instance Methods</a></h2> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.200">byteValue</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.214"><tt class="literal">public byte byteValue()</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Availability
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> New as of JDK 1.1 </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> The value of this object as a <tt class="literal">byte</tt>. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Overrides
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> <tt class="literal">Number.byteValue()</tt> </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> This method returns the value of this object as a <tt class="literal">byte</tt>. The high order bits of the value are discarded.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.201">doubleValue</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.215"><tt class="literal">public double doubleValue()</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> The value of this object as a <tt class="literal">double</tt>. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Overrides
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> <tt class="literal">Number.doubleValue()</tt> </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> This method returns the value of this object as a <tt class="literal">double</tt>.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.202">equals</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.216"><tt class="literal">public boolean equals(Object obj)</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Parameters
@@ -1211,251 +1035,7 @@ representation of the given<tt class="literal">long</tt> value. </p>
          <br> 
         </dt>
         <dd> 
-         <p class="para"> A reference to an object.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>that contains a <mark>string</mark> representation
-of the given object.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">This method returns a <mark>string</mark> representation of the given object.
-If<tt class="literal">obj</tt> is <tt class="literal">null</tt>, the method returns<tt class="literal">'null'</tt>. Otherwise, the method returns the <tt class="literal"><mark>String</mark></tt> object returned by the <tt class="literal">toString()</tt> method of the object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.152">Instance Methods</a></h2> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.344">charAt</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.407"><tt class="literal">public char charAt(int index)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">index</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">An index into the <mark>string</mark>.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">The character at the specified position in this <mark>string</mark>.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">index</tt>is less than zero or
-greater than or equal to the length of the <mark>string</mark>.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the character at the specified position in the <tt class="literal"><mark>String</mark></tt>object; the first character in
-the <mark>string</mark> is at position<tt class="literal">0</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.345">compareTo</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.408"><tt class="literal">public int compareTo(<mark>String</mark> anotherString)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">anotherString</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object to be compared.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">A positive value if this <mark>string</mark> is greater than<tt class="literal">anotherString</tt>, <tt class="literal">0</tt>if the two strings are the same, or a negative
-value if this <mark>string</mark> is less than<tt class="literal">anotherString</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method lexicographically compares this <tt class="literal"><mark>String</mark></tt> object to <tt class="literal">anotherString</tt>. </p>
-       <p class="para"> Here is how the comparison works: the two <tt class="literal"><mark>String</mark></tt> objects are compared character-by-character, starting at index <tt class="literal">0</tt>and continuing until a position is found in which the two strings
-contain different characters or until all of the characters in the
-shorter <mark>string</mark> have been compared. If the characters at<tt class="literal">k</tt> are different, the method returns: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-this.charAt(k)-anotherString.charAt(k)
-</pre> 
-       </div> 
-       <p class="para"> Otherwise, the comparison is based on the lengths of the strings and the method returns: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-this.length()-anotherString.length()
-</pre> 
-       </div> 
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.346">concat</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.409"><tt class="literal">public <mark>String</mark> concat(<mark>String</mark> str)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">str</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object to be concatenated.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the character
-sequences of this <mark>string</mark> and<tt class="literal">str</tt> concatenated together. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt>object
-that concatenates the characters from the argument <mark>string</mark><tt class="literal">str</tt> onto the characters from this <tt class="literal"><mark>String</mark></tt> object. Although this is a good way to concatenate two strings, concatenating more than two strings can be done more efficiently using a <tt class="literal">StringBuffer</tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.347">endsWith</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.410"><tt class="literal">public boolean endsWith(<mark>String</mark> suffix)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">suffix</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object suffix to be tested.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt>if this <mark>string</mark> ends with the sequence
-of characters specified by<tt class="literal">suffix</tt>; otherwise <tt class="literal">false</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method determines whether or not this <tt class="literal"><mark>String</mark></tt> object ends with the specified <tt class="literal">suffix</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.348">equals</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.411"><tt class="literal">public boolean equals(Object anObject)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">anObject</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal">Object</tt> to be compared.</p>
+         <p class="para"> The object to be compared with this object.</p>
         </dd>
        </dl> 
        <p> </p>
@@ -1481,346 +1061,53 @@ of characters specified by<tt class="literal">suffix</tt>; otherwise <tt class="
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns <tt class="literal">true</tt> if <tt class="literal">anObject</tt> is an instance of <tt class="literal"><mark>String</mark></tt> and it contains the same sequence of characters as this <tt class="literal"><mark>String</mark></tt> object. </p>
-       <p class="para"> Note the difference between this method and the <tt class="literal">==</tt> operator, which only returns <tt class="literal">true</tt> if both of its arguments are references to the same object.</p>
+       <p class="para"> This method returns <tt class="literal">true</tt> if <tt class="literal">obj</tt> is an instance of <tt class="literal"><mark>Integer</mark></tt> and it contains the same value as the object this method is associated with.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.349">equalsIgnoreCase</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.203">floatValue</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.412"><tt class="literal">public boolean equalsIgnoreCase(<mark>String</mark> anotherString)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">anotherString</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object to be compared.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt> if the strings are equal, ignoring case; otherwise <tt class="literal">false</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method determines whether or not this <tt class="literal"><mark>String</mark></tt> object contains the same sequence of characters, ignoring case, as <tt class="literal">anotherString</tt>. More specifically, corresponding characters in the two strings are considered equal if any of the following conditions are true: </p>
-       <p> </p>
-       <ul class="itemizedlist"> 
-        <li class="listitem">The two characters compare as equal using the <tt class="literal">==</tt> operator. <p> </p></li>
-        <li class="listitem">The <tt class="literal">Character.toUppercase()</tt> method returns the same result for both characters. <p> </p></li>
-        <li class="listitem">The <tt class="literal">Character.toLowercase()</tt> method returns the same result for both characters. <p> </p></li>
-       </ul> 
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.350">getBytes</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.413">
-       <div class="screen"> 
-        <p> </p>
-        <pre> public byte[] getBytes() </pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> New as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A <tt class="literal">byte</tt> array that contains the characters of this <tt class="literal"><mark>String</mark></tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method converts the characters in this <tt class="literal"><mark>String</mark></tt> object to an array of <tt class="literal">byte</tt>values.  The characters
-in the <mark>string</mark> are converted to bytes using the system's default character
-encoding scheme.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.414">
-       <div class="screen"> 
-        <p> </p>
-        <pre>public byte[] getBytes(<mark>String</mark> enc)</pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> New as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">enc</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The name of an encoding scheme.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A <tt class="literal">byte</tt> array that contains the characters of this <tt class="literal"><mark>String</mark></tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">UnsupportedEncodingException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">enc</tt> is not a supported encoding scheme.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method converts the characters in this <tt class="literal"><mark>String</mark></tt> object to an array of <tt class="literal">byte</tt>values.  The characters
-in the <mark>string</mark> are converted to bytes using the specified character 
-encoding scheme.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.415">
-       <div class="screen"> 
-        <p> </p>
-        <pre> public void getBytes(int srcBegin, int srcEnd, byte[] dst, int dstBegin) </pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Deprecated as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">srcBegin</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index of the first character to be copied. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">srcEnd</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index after the last character to be copied. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">dst</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The destination <tt class="literal">byte</tt> array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">dstBegin</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the destination array.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">srcBegin</tt>, <tt class="literal">srcEnd</tt>, or <tt class="literal">dstBegin</tt> is out of range.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method copies the low-order byte of each character in the specified range of this <tt class="literal"><mark>String</mark></tt> object to the given array of <tt class="literal">byte</tt> values. More specifically, the first character to be copied is at index <tt class="literal">srcBegin</tt>; the last character to be copied is at index <tt class="literal">srcEnd-1</tt>. The low-order bytes of these characters are copied into <tt class="literal">dst</tt>, starting at index <tt class="literal">dstBegin</tt> and ending at index: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-dstBegin + (srcEnd-srcBegin) - 1
-</pre> 
-       </div> 
-       <p class="para"> This method is deprecated as of JDK 1.1 because it does not convert characters into bytes properly. You should instead use the <tt class="literal">getBytes()</tt> method that takes a specific character encoding argument or the one that uses the default encoding.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.351">getChars</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.416">
-       <div class="screen"> 
-        <p> </p>
-        <pre> public void getChars(int srcBegin, int srcEnd, char[] dst, int dstBegin) </pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">srcBegin</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index of the first character to be copied. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">srcEnd</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index after the last character to be copied. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">dst</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The destination <tt class="literal">char</tt> array. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">dstBegin</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> An offset into the destination array.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">srcBegin</tt>, <tt class="literal">srcEnd</tt>, or <tt class="literal">dstBegin</tt> is out of range.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method copies each character in the specified range of this <tt class="literal"><mark>String</mark></tt> object to the given array of <tt class="literal">char</tt> values. More specifically, the first character to be copied is at index <tt class="literal">srcBegin</tt>; the last character to be copied is at index <tt class="literal">srcEnd-1</tt>. These characters are copied into <tt class="literal">dst</tt>, starting at index <tt class="literal">dstBegin</tt> and ending at index: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-dstBegin + (srcEnd-srcBegin) - 1
-</pre> 
-       </div> 
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.352">hashCode</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.417"><tt class="literal">public int hashCode()</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.217"><tt class="literal">public float floatValue()</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Returns
        <br> 
       </dt>
       <dd> 
-       <p class="para">A hashcode based on the sequence of characters in this <mark>string</mark>.</p>
+       <p class="para"> The value of this object as a <tt class="literal">float</tt>. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Overrides
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> <tt class="literal">Number.floatValue()</tt> </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Description
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> This method returns the value of this object as a <tt class="literal">float</tt>. Rounding may occur.</p>
+      </dd>
+     </dl> 
+    </div> 
+   </div> 
+   <div class="refsect2"> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.204">hashCode</a></h3> 
+    <div class="refsect3"> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.218"><tt class="literal">public int hashCode()</tt></a></h4> 
+     <dl class="variablelist"> 
+      <dt class="varlistentry">
+       Returns
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> A hashcode based on the <tt class="literal">int</tt> value of the object. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1836,55 +1123,30 @@ dstBegin + (srcEnd-srcBegin) - 1
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns a hashcode based on the sequence of characters this <tt class="literal"><mark>String</mark></tt> object represents. </p>
-       <p class="para">More specifically, one of two algorithms is used to compute a hash
-code for the <mark>string</mark>, depending on its length. If<i class="emphasis">n</i>is the length of the <mark>string</mark> and<i class="emphasis">S_i</i> is the character at position <i class="emphasis">i</i>in the <mark>string</mark>, then if<i class="emphasis">n</i> = 15 the method returns: </p>
-       <p class="blockquote"></p>
-       <blockquote>
-        <p> </p>
-        <p class="para"> <img src="figs/eq10_1.gif" border="0"> </p>
-       </blockquote>
-       <p> </p>
-       <p class="para"> If <i class="emphasis">n</i> &gt; 15, the method returns: </p>
-       <p class="blockquote"></p>
-       <blockquote>
-        <p> </p>
-        <p class="para"> <img src="figs/eq10_2.gif" border="0"> </p>
-       </blockquote>
-       <p> </p>
+       <p class="para"> This method returns a hashcode computed from the value of this object.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.353">indexOf</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.205">intValue</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.418"><tt class="literal">public int indexOf(int ch)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.219"><tt class="literal">public int intValue()</tt></a></h4> 
      <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">ch</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal">char</tt> value.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
       <dt class="varlistentry">
        Returns
        <br> 
       </dt>
       <dd> 
-       <p class="para">The index of the first occurrence of the given character in
-this <mark>string</mark> or<tt class="literal">-1</tt> if the character does not occur. </p>
+       <p class="para"> The value of this object as an <tt class="literal">int</tt>. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Overrides
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> <tt class="literal">Number.intValue()</tt> </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -1892,150 +1154,30 @@ this <mark>string</mark> or<tt class="literal">-1</tt> if the character does not
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns the index of the first occurrence of the given character in this <tt class="literal"><mark>String</mark></tt> object. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.419"><tt class="literal">public int indexOf(int ch, int fromIndex)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">ch</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal">char</tt> value. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">fromIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index where the search is to begin.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">The index of the first occurrence of the given character in
-this <mark>string</mark> after<tt class="literal">fromIndex</tt> or <tt class="literal">-1</tt> if the character does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the first occurrence of the given character in this <tt class="literal"><mark>String</mark></tt> object after ignoring the first <tt class="literal">fromIndex</tt> characters. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.420"><tt class="literal">public int indexOf(<mark>String</mark> str)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">str</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal"><mark>String</mark></tt> object.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> The index of the first occurrence of <tt class="literal">str</tt>in this <mark>string</mark> or<tt class="literal">-1</tt> if the substring does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the first character of the first occurrence of the substring <tt class="literal">str</tt> in this <tt class="literal"><mark>String</mark></tt> object. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.421"><tt class="literal">public int indexOf(<mark>String</mark> str, int fromIndex)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">str</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal"><mark>String</mark></tt> object. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">fromIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index where the search is to begin.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> The index of the first occurrence of <tt class="literal">str</tt>in this <mark>string</mark> after<tt class="literal">fromIndex</tt> or <tt class="literal">-1</tt> if the substring does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the first character of the first occurrence of the substring <tt class="literal">str</tt> in this <tt class="literal"><mark>String</mark></tt> object after ignoring the first <tt class="literal">fromIndex</tt> characters. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
+       <p class="para"> This method returns the value of this object as an <tt class="literal">int</tt>.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.354">intern</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.206">longValue</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.422"><tt class="literal">public native <mark>String</mark> intern()</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.220"><tt class="literal">public long longValue()</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Returns
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A <tt class="literal"><mark>String</mark></tt> object that is guaranteed to be the same object for every <tt class="literal"><mark>String</mark></tt> that contains the same character sequence. </p>
+       <p class="para"> The value of this object as a <tt class="literal">long</tt>. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Overrides
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> <tt class="literal">Number.longValue()</tt> </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -2043,697 +1185,15 @@ this <mark>string</mark> after<tt class="literal">fromIndex</tt> or <tt class="l
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns a canonical representation for this <tt class="literal"><mark>String</mark></tt> object. The returned <tt class="literal"><mark>String</mark></tt> object is guaranteed to be the same <tt class="literal"><mark>String</mark></tt> object for every <tt class="literal"><mark>String</mark></tt> object that contains the same character sequence. In other words, if: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-s1.equals(s2)
-</pre> 
-       </div> 
-       <p class="para"> then: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-s1.intern() == s2.intern()
-</pre> 
-       </div> 
-       <p class="para"> The <tt class="literal">intern</tt>() method is used by the Java environment to ensure that <tt class="literal"><mark>String</mark></tt> literals and constant-value <tt class="literal"><mark>String</mark></tt> expressions that contain the same sequence of characters are all represented by a single <tt class="literal"><mark>String</mark></tt> object.</p>
+       <p class="para"> This method returns the value of this object as a <tt class="literal">long</tt>.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.355">lastIndexOf</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.207">shortValue</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.423"><tt class="literal">public int lastIndexOf(int ch)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">ch</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal">char</tt> value.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">The index of the last occurrence of the given character in
-this <mark>string</mark> or<tt class="literal">-1</tt> if the character does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the last occurrence of the given character in this <tt class="literal"><mark>String</mark></tt> object. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.424"><tt class="literal">public int lastIndexOf(int ch, int fromIndex)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">ch</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal">char</tt> value. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">fromIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index where the search is to begin.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">The index of the last occurrence of the given character in
-this <mark>string</mark> after<tt class="literal">fromIndex</tt> or <tt class="literal">-1</tt> if the character does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the last occurrence of the given character in this <tt class="literal"><mark>String</mark></tt> object after ignoring the first <tt class="literal">fromIndex</tt> characters. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.425"><tt class="literal">public int lastIndexOf(<mark>String</mark> str)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">str</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal"><mark>String</mark></tt> object.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> The index of the last occurrence of <tt class="literal">str</tt>in this <mark>string</mark> or<tt class="literal">-1</tt> if the substring does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the first character of the last occurrence of the substring <tt class="literal">str</tt> in this <tt class="literal"><mark>String</mark></tt> object. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.426"><tt class="literal">public int lastIndexOf(<mark>String</mark> str, int fromIndex)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">str</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal"><mark>String</mark></tt> object. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">fromIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index where the search is to begin.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> The index of the last occurrence of <tt class="literal">str</tt>in this <mark>string</mark> after<tt class="literal">fromIndex</tt> or <tt class="literal">-1</tt> if the substring does not occur. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the index of the first character of the last occurrence of the substring <tt class="literal">str</tt> in this <tt class="literal"><mark>String</mark></tt> object after ignoring the first <tt class="literal">fromIndex</tt> characters. If there is no such occurrence, the method returns the value <tt class="literal">-1</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.356">length</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.427"><tt class="literal">public int length()</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">The length of the character sequence represented by this <mark>string</mark>.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns the number of characters in the character sequence represented by this <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.357">regionMatches</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.428">
-       <div class="screen"> 
-        <p> </p>
-        <pre>public boolean regionMatches(int toffset, <mark>String</mark> other, int ooffset, int len)</pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">toffset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The index of the first character in this <mark>string</mark>.</p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">other</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object to be used in the comparison. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">ooffset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index of the first character in <tt class="literal">other</tt>. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">len</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The length of the sub-sequences to be compared.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt> if the sub-sequences are identical; otherwise <tt class="literal">false</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method determines whether or not the specified sub-sequences in this <tt class="literal"><mark>String</mark></tt> object and <tt class="literal">other</tt> are identical. The method returns false if <tt class="literal">toffset</tt> is negative, if <tt class="literal">ooffset</tt> is negative, if <tt class="literal">toffset+len</tt>is greater than the length of this <mark>string</mark>, or if<tt class="literal">ooffset+len</tt> is greater than the length of <tt class="literal">other</tt>. Otherwise, the method returns <tt class="literal">true</tt>if for all nonnegative <mark>integers</mark><tt class="literal">k</tt> less than <tt class="literal">len</tt> it is true that: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-this.charAt(toffset+k) == other.charAt(ooffset+k)
-</pre> 
-       </div> 
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.429">
-       <div class="screen"> 
-        <p> </p>
-        <pre>public boolean regionMatches(boolean ignoreCase, int toffset, <mark>String</mark> other, int ooffset, int len)</pre> 
-       </div></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">ignoreCase</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A <tt class="literal">boolean</tt> value that indicates whether case should be ignored. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">toffset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The index of the first character in this <mark>string</mark>.</p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">other</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object to be used in the comparison. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">ooffset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index of the first character in <tt class="literal">other</tt>. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">len</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The length of the sub-sequences to be compared.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt> if the sub-sequences are identical; otherwise <tt class="literal">false</tt>. The <tt class="literal">ignoreCase</tt> argument controls whether or not case is ignored in the comparison. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method determines whether or not the specified sub-sequences in this <tt class="literal"><mark>String</mark></tt> object and <tt class="literal">other</tt> are identical. The method returns false if <tt class="literal">toffset</tt> is negative, if <tt class="literal">ooffset</tt> is negative, if <tt class="literal">toffset+len</tt>is greater than the length of this <mark>string</mark>, or if<tt class="literal">ooffset+len</tt> is greater than the length of <tt class="literal">other</tt>. Otherwise, if <tt class="literal">ignoreCase</tt> is <tt class="literal">false</tt>, the method returns <tt class="literal">true</tt>if for all nonnegative <mark>integers</mark><tt class="literal">k</tt> less than <tt class="literal">len</tt> it is true that: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-this.charAt(toffset+k) == other.charAt(ooffset+k)
-</pre> 
-       </div> 
-       <p class="para"> If <tt class="literal">ignoreCase</tt> is <tt class="literal">true</tt>, the method returns <tt class="literal">true</tt>if for all nonnegative
-<mark>integers</mark><tt class="literal">k</tt> less than <tt class="literal">len</tt> it is true that: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-Character.toLowerCase(this.charAt(toffset+k))
-== Character.toLowerCase(other.charAt(ooffset+k))
-</pre> 
-       </div> 
-       <p class="para"> or: </p>
-       <div class="screen"> 
-        <p> </p>
-        <pre>
-Character.toUpperCase(this.charAt(toffset+k))
-== Character.toUpperCase(other.charAt(ooffset+k))
-</pre> 
-       </div> 
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.358">replace</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.430"><tt class="literal">public <mark>String</mark> replace(char oldChar, char newChar)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">oldChar</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The character to be replaced. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">newChar</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The replacement character.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt> object that results from replacing every occurrence of <tt class="literal">oldChar</tt>in the <mark>string</mark> with<tt class="literal">newChar</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> object that results from replacing every occurrence of <tt class="literal">oldChar</tt> in this <tt class="literal"><mark>String</mark></tt> object with <tt class="literal">newChar</tt>. If there are no occurrences of <tt class="literal">oldChar</tt>, the method simply returns this <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.359">startsWith</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.431"><tt class="literal">public boolean startsWith(<mark>String</mark> prefix)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">prefix</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object prefix to be tested.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt>if this <mark>string</mark> begins with the sequence
-of characters specified by<tt class="literal">prefix</tt>; otherwise <tt class="literal">false</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method determines whether or not this <tt class="literal"><mark>String</mark></tt> object begins with the specified <tt class="literal">prefix</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.432"><tt class="literal">public boolean startsWith(<mark>String</mark> prefix, int toffset)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">prefix</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal"><mark>String</mark></tt> object prefix to be tested. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">toffset</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index where the search is to begin.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt>if this <mark>string</mark> contains the sequence
-of characters specified by<tt class="literal">prefix</tt> starting at the index <tt class="literal">toffset</tt>; otherwise <tt class="literal">false</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method determines whether or not this <tt class="literal"><mark>String</mark></tt> object contains the specified <tt class="literal">prefix</tt> at the index specified by <tt class="literal">toffset</tt>.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.360">substring</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.433"><tt class="literal">public <mark>String</mark> substring(int beginIndex)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">beginIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index of the first character in the substring.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the sub-sequence
-of this <mark>string</mark> that starts at<tt class="literal">beginIndex</tt>and
-extends to the end of the <mark>string</mark>.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">beginIndex</tt>is less than zero
-or greater than or equal to the length of the <mark>string</mark>.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> object that represents a sub-sequence of this <tt class="literal"><mark>String</mark></tt> object. The sub-sequence consists of the characters starting at <tt class="literal">beginIndex</tt> and extending through the end of this <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.434"><tt class="literal">public <mark>String</mark> substring(int beginIndex, int endIndex)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">beginIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index of the first character in the substring. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <tt class="literal">endIndex</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The index after the last character in the substring.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the sub-sequence
-of this <mark>string</mark> that starts at<tt class="literal">beginIndex</tt> and extends to the character at <tt class="literal">endindex-1</tt>. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Throws
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">StringIndexOutOfBoundsException</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> If <tt class="literal">beginIndex</tt> or <tt class="literal">endIndex</tt>is less than zero or greater than or equal to the length of the
-<mark>string</mark>.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> object that represents a sub-sequence of this <tt class="literal"><mark>String</mark></tt> object. The sub-sequence consists of the characters starting at <tt class="literal">beginIndex</tt> and extending through <tt class="literal">endIndex-1</tt> of this <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.361">toCharArray</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.435"><tt class="literal">public char[] toCharArray()</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal">char</tt>array that contains the same
-sequence of characters as this <mark>string</mark>.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal">char</tt> array that contains the same sequence of characters as this <tt class="literal"><mark>String</mark></tt>object. The length of the array is the same as the length of this <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.362">toLowerCase</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.436"><tt class="literal">public <mark>String</mark> toLowerCase()</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the characters
-of this <mark>string</mark> converted to lowercase.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> that represents a character sequence of the same length as this <tt class="literal"><mark>String</mark></tt>object, but with each character replaced by its lowercase equivalent
-if it has one. If no character in the <mark>string</mark> has a lowercase equivalent,
-the method returns this<tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.437"><tt class="literal">public <mark>String</mark> toLowerCase(Locale locale)</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.221"><tt class="literal">public short shortValue()</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Availability
@@ -2744,30 +1204,19 @@ the method returns this<tt class="literal"><mark>String</mark></tt> object.</p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">locale</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal">Locale</tt> to use.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
        Returns
        <br> 
       </dt>
       <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the characters
-of this <mark>string</mark> converted to lowercase using the rules of the
-specified locale.</p>
+       <p class="para"> The value of this object as a <tt class="literal">short</tt>. </p>
+       <p> </p>
+      </dd>
+      <dt class="varlistentry">
+       Overrides
+       <br> 
+      </dt>
+      <dd> 
+       <p class="para"> <tt class="literal">Number.shortValue()</tt> </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -2775,25 +1224,22 @@ specified locale.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> that represents a character sequence of the same length as this <tt class="literal"><mark>String</mark></tt>object, but with each character replaced by its lowercase equivalent
-if it has one according to the rules of the specified locale.
-If no character in the <mark>string</mark> has a lowercase equivalent,
-the method returns this<tt class="literal"><mark>String</mark></tt> object.</p>
+       <p class="para"> This method returns the value of this object as a <tt class="literal">short</tt>. The high order bits of the value are discarded.</p>
       </dd>
      </dl> 
     </div> 
    </div> 
    <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.363">toString</a></h3> 
+    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.208">toString</a></h3> 
     <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.438"><tt class="literal">public <mark>String</mark> toString()</tt></a></h4> 
+     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.222"><tt class="literal">public String toString()</tt></a></h4> 
      <dl class="variablelist"> 
       <dt class="varlistentry">
        Returns
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This <tt class="literal"><mark>String</mark></tt> object. </p>
+       <p class="para"> The string representation of the value of this object. </p>
        <p> </p>
       </dd>
       <dt class="varlistentry">
@@ -2809,115 +1255,15 @@ the method returns this<tt class="literal"><mark>String</mark></tt> object.</p>
        <br> 
       </dt>
       <dd> 
-       <p class="para"> This method returns this <tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.364">toUpperCase</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.439"><tt class="literal">public <mark>String</mark> toUpperCase()</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the characters
-of this <mark>string</mark> converted to uppercase.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> that represents a character sequence of the same length as this <tt class="literal"><mark>String</mark></tt>object, but with each character replaced by its uppercase equivalent
-if it has one. If no character in the <mark>string</mark> has an uppercase equivalent,
-the method returns this<tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.440"><tt class="literal">public <mark>String</mark> toUpperCase(Locale locale)</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Availability
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> New as of JDK 1.1 </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <tt class="literal">locale</tt>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The <tt class="literal">Locale</tt> to use.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that contains the characters
-of this <mark>string</mark> converted to uppercase using the rules of the
-specified locale.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> This method returns a new <tt class="literal"><mark>String</mark></tt> that represents a character sequence of the same length as this <tt class="literal"><mark>String</mark></tt>object, but with each character replaced by its uppercase equivalent
-if it has one according to the rules of the specified locale. 
-If no character in the <mark>string</mark> has an uppercase equivalent,
-the method returns this<tt class="literal"><mark>String</mark></tt> object.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch10-REFSECT2-AUTOID.365">trim</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch10-REFSECT3-AUTOID.441"><tt class="literal">public <mark>String</mark> trim()</tt></a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> A new <tt class="literal"><mark>String</mark></tt>object that represents the
-same character sequence as this <mark>string</mark>, but with leading and trailing
-whitespace and control characters removed.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> If the first and last character in this <tt class="literal"><mark>String</mark></tt> object are greater than <tt class="literal">'\u0020'</tt> (the space character), the method returns this <tt class="literal"><mark>String</mark></tt> object. Otherwise, the method returns a new <tt class="literal"><mark>String</mark></tt> object that contains the same character sequence as this <tt class="literal"><mark>String</mark></tt> object, but with leading and trailing characters that are less than <tt class="literal">'\u0020'</tt>' removed.</p>
+       <p class="para"> This method returns a <tt class="literal">String</tt> object that contains the decimal representation of the value of this object. </p>
+       <p class="para"> This method returns a string that begins with `<tt class="literal">-</tt>' if the value is negative. The rest of the string is a sequence of one or more of the characters `0', `1', `2', `3', `4', `5', `6', `7', `8', and `9'. This method returns "0" if the value of the object is <tt class="literal">0</tt>. Otherwise, the string returned by this method does not begin with "0" or "<tt class="literal">-</tt>0".</p>
       </dd>
      </dl> 
     </div> 
    </div> 
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.153">Inherited Methods</a></h2> 
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.79">Inherited Methods</a></h2> 
    <div class="informaltable"> 
     <p> </p>
     <table class="INFORMALTABLE"> 
@@ -2958,8 +1304,8 @@ whitespace and control characters removed.</p>
    </div> 
   </div> 
   <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.154">See Also</a></h2> 
-   <p class="para"> <a href="ch10_03.htm">Character</a>; <a href="ch10_04.htm">Class</a>; <a href="ch10_08.htm">Double</a>; <a href="ch09_04.htm#JLR2-CH-9-SECT-4.1">Exceptions</a>; <a href="ch10_09.htm">Float</a>; <a href="ch10_10.htm"><mark>Integer</mark></a>; <a href="ch10_11.htm">Long</a>; <a href="ch10_14.htm">Object</a>; <a href="ch10_21.htm">StringBuffer</a>; <a href="ch04_06.htm#JLR2-CH-4-SECT-6.3"><mark>String</mark> Concatenation Operator +</a>; <a href="ch02_02.htm#JLR2-CH-2-SECT-2.3.5"><mark>String</mark> literals</a> </p>
+   <h2 class="refsect1"><a class="TITLE" name="ch10-REFSECT1-AUTOID.80">See Also</a></h2> 
+   <p class="para"> <a href="ch10_03.htm">Character</a>; <a href="ch10_04.htm">Class</a>; <a href="ch09_04.htm#JLR2-CH-9-SECT-4.1">Exceptions</a>; <a href="ch02_02.htm#JLR2-CH-2-SECT-2.3.1"><mark>Integer</mark> literals</a>; <a href="ch03_01.htm#JLR2-CH-3-SECT-1.1.1"><mark>Integer</mark> types</a>; <a href="ch10_11.htm">Long</a>; <a href="ch10_13.htm">Number</a>; <a href="ch10_20.htm">String</a>; <a href="ch10_22.htm">System</a> </p>
   </div> 
   <div class="htmlnav"> 
    <p> </p>
@@ -2967,14 +1313,14 @@ whitespace and control characters removed.</p>
    <table width="515" border="0" cellpadding="0" cellspacing="0"> 
     <tbody>
      <tr> 
-      <td width="172" align="left" valign="top"><a href="ch10_19.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
+      <td width="172" align="left" valign="top"><a href="ch10_09.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
       <td width="171" align="center" valign="top"><a href="index.htm"><img src="gifs/txthome.gif" border="0" alt="Home"></a></td> 
-      <td width="172" align="right" valign="top"><a href="ch10_21.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
+      <td width="172" align="right" valign="top"><a href="ch10_11.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
      </tr> 
      <tr> 
-      <td width="172" align="left" valign="top">Short</td> 
+      <td width="172" align="left" valign="top">Float</td> 
       <td width="171" align="center" valign="top"><a href="index/idx_0.htm"><img src="gifs/index.gif" alt="Book Index" border="0"></a></td> 
-      <td width="172" align="right" valign="top">StringBuffer</td> 
+      <td width="172" align="right" valign="top">Long</td> 
      </tr> 
     </tbody>
    </table> 

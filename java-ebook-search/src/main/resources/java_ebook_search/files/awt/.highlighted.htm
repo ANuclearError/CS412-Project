@@ -1,8 +1,8 @@
 <html>
  <head> 
-  <title>[Chapter 20] DataFlavor </title> 
+  <title>[Preface] About Java</title> 
   <meta name="author" content="John Zukowski"> 
-  <meta name="date" content="Thu Jul 31 15:18:59 1997"> 
+  <meta name="date" content="Thu Jul 31 14:20:07 1997"> 
   <meta name="form" content="html"> 
   <meta name="metadata" content="dublincore.0.1"> 
   <meta name="objecttype" content="book part"> 
@@ -19,450 +19,32 @@
    <table width="515" border="0" cellpadding="0" cellspacing="0"> 
     <tbody>
      <tr> 
-      <td width="172" align="left" valign="top"><a href="ch20_02.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
-      <td width="171" align="center" valign="top"><b><font face="ARIEL,HELVETICA,HELV,SANSERIF" size="-1">Chapter 20<br>java.awt.datatransfer Reference</font></b></td> 
-      <td width="172" align="right" valign="top"><a href="ch20_04.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
+      <td width="172" align="left" valign="top"><a href="ch00_04.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
+      <td width="171" align="center" valign="top"><b><font face="ARIEL,HELVETICA,HELV,SANSERIF" size="-1">Preface</font></b></td> 
+      <td width="172" align="right" valign="top"><a href="ch00_06.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
      </tr> 
     </tbody>
    </table> &nbsp; 
    <hr align="left" width="515"> 
   </div> 
-  <div class="refnamediv"> 
-   <h1>DataFlavor <img src="gifs/bstar.gif" alt="(New)" border="0"></h1> 
-   <h2>Name</h2> DataFlavor 
-   <img src="gifs/bstar.gif" alt="(New)" border="0"> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.13"></a></h2> 
-  </div> 
-  <p> <img align="middle" src="./figs/datafla.gif" alt="[Graphic: Figure from the text]" width="502" height="52" border="0">  </p>
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.14">Description</a></h2> 
-   <p class="para"> The <tt class="literal">DataFlavor</tt> class encapsulates information about data formats. </p>
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.15">Class Definition</a></h2> 
-   <div class="screen"> 
-    <p> </p>
-    <pre>public class java.awt.datatransfer.DataFlavor
-   extends java.lang.Object {
-  // Class Variables
-  public static DataFlavor plainTextFlavor;
-  public static DataFlavor stringFlavor;
-  // Constructors
-  public DataFlavor (Class representationClass, 
-    <mark>String</mark> humanPresentableName);
-  public DataFlavor (<mark>String</mark> MIMEType, <mark>String</mark> humanPresentableName);
-  // Instance Methods
-  public boolean equals (DataFlavor dataFlavor);
-  public <mark>String</mark> getHumanPresentableName();
-  public <mark>String</mark> getMIMEType();
-  public Class getRepresentationClass();
-  public boolean isMIMETypeEqual (<mark>String</mark> MIMEType);
-  public final boolean isMIMETypeEqual (DataFlavor dataFlavor);
-  public void setHumanPresentableName (<mark>String</mark> humanPresentableName);
-  // Protected Instance Methods
-  protected <mark>String</mark> normalizeMIMEType (<mark>String</mark> MIMEType);
-  protected <mark>String</mark> normalizeMIMETypeParameter (<mark>String</mark> parameterName, 
-    <mark>String</mark> parameterValue);
-}</pre> 
+  <div class="sect1"> 
+   <h2 class="sect1"><a class="TITLE" name="JAWT-PREF-SECT-5">About <mark>Java</mark></a></h2> 
+   <p class="para"><mark>Java</mark> is one of 13,000 islands that makes up Indonesia, whose capital is 
+Jakarta (see<a href="ch00_05.htm#JAWT-PREF-FIG-1">Figure 0.1</a>). It is home to about 120 million people with an area about 50,000 
+square miles. While on the island, you can hear traditional music such 
+as gamelan or angklung. The island also has a dangerous volcano named Merapi, 
+which makes up part of the Pacific "Ring of Fire." In 1891, fossils 
+from Pithecanthropus erectus, better known as "<mark>Java</mark> man" (<i class="emphasis">homo 
+<mark>javanensis</mark></i>) were discovered on the island by Eugene Dubois. </p>
+   <div class="figure"> 
+    <h4 class="figure"><a class="TITLE" name="JAWT-PREF-FIG-1">Figure 0.1: Map of <mark>Java</mark>, Indonesia</a></h4> 
+    <p> <img align="middle" src="./figs/jawtp01.gif" alt="[Graphic: Figure 0-1]" width="453" height="295" border="0"> </p>
    </div> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.16">Class Variables</a></h2> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.8">plainTextFlavor</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.8">public static DataFlavor plainTextFlavor</a></h4> 
-     <p class="para"> A preset <tt class="literal">DataFlavor</tt> object representing plain text. </p>
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.9">stringFlavor</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.9">public static DataFlavor stringFlavor</a></h4> 
-     <p class="para"> A preset <tt class="literal">DataFlavor</tt> object representing a Java <tt class="literal"><mark>String</mark></tt>. </p>
-    </div> 
-   </div> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.17">Constructors</a></h2> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.10">DataFlavor</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.10">public DataFlavor (Class representationClass, <mark>String</mark> humanPresentableName)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">representationClass</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The Java class that represents data in this flavor. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <i class="emphasis">humanPresentableName</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A name for this flavor that humans will recognize. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Constructs a <tt class="literal">DataFlavor</tt> object with the given characteristics. The MIME type for this <tt class="literal">DataFlavor</tt> is <tt class="literal">application/x-java-serialized-object &lt;Java ClassName&gt;</tt>.[1] </p>
-       <blockquote class="footnote"> 
-        <p class="para">[1] The type name changed to <tt class="literal">x-java-serialized-object</tt> in the 1.1.1 release. </p>
-       </blockquote> 
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.11">public DataFlavor (<mark>String</mark> MIMEType, <mark>String</mark> humanPresentableName)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">MIMEType</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The MIME type <mark>string</mark> this<tt class="literal">DataFlavor</tt> represents. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <i class="emphasis">humanPresentableName</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A name for this flavor that humans will recognize. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Constructs a <tt class="literal">DataFlavor</tt> object with the given characteristics. The representation class used for this <tt class="literal">DataFlavor</tt> is <tt class="literal">java.io.InputStream</tt>. </p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.18">Instance Methods</a></h2> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.11">equals</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.12">public boolean equals (DataFlavor dataFlavor)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">dataFlavor</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The flavor to compare. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt> if <tt class="literal">dataFlavor</tt> is equivalent to this <tt class="literal">DataFlavor</tt>, <tt class="literal">false</tt> otherwise. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Compares two different <tt class="literal">DataFlavor</tt> instances for equivalence. </p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.12">getHumanPresentableName</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.13">public <mark>String</mark> getHumanPresentableName()</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> The name of this flavor. </p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.13">getMIMEType</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.14">public <mark>String</mark> getMIMEType()</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">The MIME type <mark>string</mark> for this flavor.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.14">getRepresentationClass</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.15">public Class getRepresentationClass()</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> The Java class that will be used to represent data in this flavor. </p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.15">isMIMETypeEqual</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.16">public boolean isMIMETypeEqual (<mark>String</mark> MIMEType)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">MIMEType</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The type to compare. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt> if the given MIME type is the same as this <tt class="literal">DataFlavor</tt>'s MIME type; <tt class="literal">false</tt> otherwise. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Compares two different <tt class="literal">DataFlavor</tt> MIME types for equivalence. </p>
-      </dd>
-     </dl> 
-    </div> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.17">public final boolean isMIMETypeEqual (DataFlavor dataFlavor)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">dataFlavor</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The flavor to compare. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> <tt class="literal">true</tt> if <tt class="literal">DataFlavor</tt>'s MIME type is the same as this <tt class="literal">DataFlavor</tt>'s MIME type; <tt class="literal">false</tt> otherwise. </p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Compares two different <tt class="literal">DataFlavor</tt> MIME types for equivalence. </p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.16">setHumanPresentableName</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.18">public void setHumanPresentableName (<mark>String</mark> humanPresentableName)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">humanPresentableName</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> A name for this flavor that humans will recognize. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para"> Changes the name of the <tt class="literal">DataFlavor</tt>. </p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.19">Protected Instance Methods</a></h2> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.17">normalizeMIMEType</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.19">protected <mark>String</mark> normalizeMIMEType (<mark>String</mark> MIMEType)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">MIMEType</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para">The 
-MIME type <mark>string</mark> to normalize.</p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">Normalized MIME type <mark>string</mark>.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">This method is called for each MIME type <mark>string</mark>. Subclasses can override 
-this method to add default parameter/value pairs to MIME strings.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-   <div class="refsect2"> 
-    <h3 class="refsect2"><a class="TITLE" name="ch20-REFSECT2-AUTOID.18">normalizeMIMETypeParameter</a></h3> 
-    <div class="refsect3"> 
-     <h4 class="refsect3"><a class="TITLE" name="ch20-REFSECT3-AUTOID.20">protected <mark>String</mark> normalizeMIMETypeParameter (<mark>String</mark> parameterName, <mark>String</mark> parameterValue)</a></h4> 
-     <dl class="variablelist"> 
-      <dt class="varlistentry">
-       Parameters
-       <br> 
-      </dt>
-      <dd> 
-       <p> </p>
-       <dl class="variablelist"> 
-        <dt class="varlistentry">
-         <i class="emphasis">parameterName</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The MIME type parameter to normalize. </p>
-         <p> </p>
-        </dd>
-        <dt class="varlistentry">
-         <i class="emphasis">parameterValue</i>
-         <br> 
-        </dt>
-        <dd> 
-         <p class="para"> The corresponding value. </p>
-        </dd>
-       </dl> 
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Returns
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">Normalized MIME type parameter <mark>string</mark>.</p>
-       <p> </p>
-      </dd>
-      <dt class="varlistentry">
-       Description
-       <br> 
-      </dt>
-      <dd> 
-       <p class="para">This method is called for each MIME type parameter <mark>string</mark>. Subclasses can 
-override this method to handle special parameters, such as those that are 
-case-insensitive.</p>
-      </dd>
-     </dl> 
-    </div> 
-   </div> 
-  </div> 
-  <div class="refsect1"> 
-   <h2 class="refsect1"><a class="TITLE" name="ch20-REFSECT1-AUTOID.20">See Also</a></h2> 
-   <p class="para"> <tt class="literal">Class</tt>, <tt class="literal"><mark>String</mark></tt> </p>
+   <p class="para"><mark>Java</mark>'s main export is a coffee that is considered spicy and full bodied, with 
+a strong, slightly acidic flavor. O'Reilly has shown good taste in 
+staying away from the pervasive coffee theme in its book titles and cover 
+designs. (However, if you're ever in Sebastopol, check out the coffee 
+at AromaRoasters in Santa Rosa.)</p>
   </div> 
   <div class="htmlnav"> 
    <p> </p>
@@ -470,14 +52,14 @@ case-insensitive.</p>
    <table width="515" border="0" cellpadding="0" cellspacing="0"> 
     <tbody>
      <tr> 
-      <td width="172" align="left" valign="top"><a href="ch20_02.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
+      <td width="172" align="left" valign="top"><a href="ch00_04.htm"><img src="gifs/txtpreva.gif" alt="Previous" border="0"></a></td> 
       <td width="171" align="center" valign="top"><a href="index.htm"><img src="gifs/txthome.gif" border="0" alt="Home"></a></td> 
-      <td width="172" align="right" valign="top"><a href="ch20_04.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
+      <td width="172" align="right" valign="top"><a href="ch00_06.htm"><img src="gifs/txtnexta.gif" alt="Next" border="0"></a></td> 
      </tr> 
      <tr> 
-      <td width="172" align="left" valign="top">ClipboardOwner <img src="gifs/bstar.gif" alt="(New)" border="0"></td> 
+      <td width="172" align="left" valign="top">Other <mark>Java</mark> Books and Resources</td> 
       <td width="171" align="center" valign="top"><a href="index/idx_a.htm"><img src="gifs/index.gif" alt="Book Index" border="0"></a></td> 
-      <td width="172" align="right" valign="top">StringSelection <img src="gifs/bstar.gif" alt="(New)" border="0"></td> 
+      <td width="172" align="right" valign="top">Conventions Used in This Book</td> 
      </tr> 
     </tbody>
    </table> 

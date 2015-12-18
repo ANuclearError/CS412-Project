@@ -17,12 +17,7 @@ import org.apache.lucene.misc.HighFreqTerms;
 import org.apache.lucene.misc.TermStats;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.BooleanClause;
-import org.apache.lucene.search.BooleanQuery;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.Query;
-import org.apache.lucene.search.ScoreDoc;
-import org.apache.lucene.search.TopDocs;
+import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
@@ -109,39 +104,28 @@ public class Search {
 
 		Query query = buildQuery(term, filter);
 
-		TopDocs results = indexSearcher.search(query, 50);
+		TopDocs results = indexSearcher.search(query, Integer.MAX_VALUE, Sort.RELEVANCE);
 
 		numTotalHits = results.totalHits;
-		int hitsPerPage = 25;
 		ScoreDoc[] hits = results.scoreDocs;
 
-		int start = 0;
-		int end = Math.min(numTotalHits, hitsPerPage);
+		for (ScoreDoc scoreDoc : hits) {
+			Document doc = indexSearcher.doc(scoreDoc.doc);
+			String path = doc.get("path");
 
-		while (true) {
+			//Apply filter
+			if (filter.getBooks().contains(doc.get("book"))) {
 
-			if (end > hits.length) {
-				hits = indexSearcher.search(query, numTotalHits).scoreDocs;
-			}
-			end = Math.min(hits.length, start + hitsPerPage);
-			for (int i = start; i < end; i++) {
-				Document doc = indexSearcher.doc(hits[i].doc);
-				String path = doc.get("path");
-
-				//Apply filter
-				if (filter.getBooks().contains(doc.get("book"))) {
-
-					if (path != null) {
-						// System.out.println((i + 1) + ". " + path);
-						toReturn.add(new Result(path, doc));
-					} else {
-						// System.out.println((i + 1) + ". " + "No path for this
-						// document");
-					}
+				if (path != null) {
+					// System.out.println((i + 1) + ". " + path);
+					toReturn.add(new Result(path, doc));
+				} else {
+					// System.out.println((i + 1) + ". " + "No path for this
+					// document");
 				}
 			}
-			return toReturn;
 		}
+		return toReturn;
 	}
 
 	public int getResults() {
