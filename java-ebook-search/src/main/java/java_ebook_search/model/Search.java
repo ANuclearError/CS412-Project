@@ -104,7 +104,7 @@ public class Search {
 
 		Query query = buildQuery(term, filter);
 
-		TopDocs results = indexSearcher.search(query, Integer.MAX_VALUE, Sort.RELEVANCE);
+		TopDocs results = indexSearcher.search(query, Integer.MAX_VALUE);
 
 		numTotalHits = results.totalHits;
 		ScoreDoc[] hits = results.scoreDocs;

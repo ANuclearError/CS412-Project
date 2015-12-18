@@ -35,6 +35,6 @@ public class Indexer {
 	 */
 	public void index(String documentsSrc, String indexDest) throws IOException {
 		String indexArgs[] = { "-index", indexDest, "-docs", documentsSrc };
-		MyIndexFiles.main(indexArgs, Stopwords.getWords());
+		Index.main(indexArgs, Stopwords.getWords());
 	}
 }

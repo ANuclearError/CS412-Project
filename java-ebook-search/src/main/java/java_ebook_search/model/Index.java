@@ -30,7 +30,7 @@ import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
 
 /**
- * Class: MyIndexFiles.java
+ * Class: Index.java
  * 
  * @author Kevin Paton
  * @since 27 Nov 2015
@@ -40,7 +40,7 @@ import org.apache.lucene.store.FSDirectory;
  *        This is a command-line application demonstrating simple Lucene
  *        indexing. Run it with no command-line arguments for usage information.
  */
-public class MyIndexFiles {
+public class Index {
 
 	/** Index all text files under a directory. */
 	public static void main(String[] args, CharArraySet stopWords) {
@@ -192,29 +192,7 @@ public class MyIndexFiles {
 			doc.add(new TextField("contents",
 					new BufferedReader(new InputStreamReader(stream, StandardCharsets.UTF_8))));
 
-			String path = "src/main/resources/java_ebook_search/indexed_files/";
-			String title = file.toString().replace(path, "");
-			title = title.split("/")[0];
-			String book = "";
-
-			// This horrible if you're required to add/remove books.
-			switch (title) {
-			case "awt":
-				book = Book.AWT.toString();
-				break;
-			case "exp":
-				book = Book.EXP.toString();
-				break;
-			case "fclass":
-				book = Book.FCLASS.toString();
-				break;
-			case "javanut":
-				book = Book.JAVANUT.toString();
-				break;
-			case "langref":
-				book = Book.LANGREF.toString();
-				break;
-			}
+			String book = getBook(file.toString());
 
 			String name = file.getFileName().toString();
 			String chapter = "";
@@ -255,6 +233,43 @@ public class MyIndexFiles {
 		}
 	}
 
+	/**
+	 * Returns the book title extracted from the file path.
+	 * @param file - the location of the file
+	 * @return the book title
+     */
+	private static String getBook(String file) {
+		String path = "src/main/resources/java_ebook_search/indexed_files/";
+		String title = file.replace(path, "");
+		title = title.split("/")[0];
+		String book = "";
+
+		// This horrible if you're required to add/remove books.
+		switch (title) {
+			case "awt":
+				book = Book.AWT.toString();
+				break;
+			case "exp":
+				book = Book.EXP.toString();
+				break;
+			case "fclass":
+				book = Book.FCLASS.toString();
+				break;
+			case "javanut":
+				book = Book.JAVANUT.toString();
+				break;
+			case "langref":
+				book = Book.LANGREF.toString();
+				break;
+		}
+		return book;
+	}
+
+	/**
+	 * Returns the title of the section, extracted from the file.
+	 * @param file - the location of the file
+	 * @return the title of the file
+     */
 	private static String getTitle(Path file) {
 		String title = "";
 		try {
