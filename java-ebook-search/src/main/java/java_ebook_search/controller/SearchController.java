@@ -175,6 +175,13 @@ public class SearchController implements Initializable {
 		File toLoad = null;
 		String searchTerm = query.getText().trim();
 
+		// Don't wanna highlight boolean terms
+		// TOOD wildcards? Suppose you wouldn't see that syntax in the file
+		// anyway...?
+		searchTerm = searchTerm.replace(" AND ", " ");
+		searchTerm = searchTerm.replace(" OR ", " ");
+		searchTerm = searchTerm.replace(" NOT ", " ");
+
 		// If not an empty search
 		if (!StringUtils.isEmpty(searchTerm)) {
 
@@ -183,7 +190,8 @@ public class SearchController implements Initializable {
 			String newhtmlString = hl.getHighlightedHtml();
 			termFrequency = hl.getTermFrequency();
 
-			status.setText(statusResultsText + noOfResults + ", "+ statusFrequencyText + termFrequency);;
+			status.setText(statusResultsText + noOfResults + ", " + statusFrequencyText + termFrequency);
+			;
 			// Write to a hidden temp file.
 			String tempFilePath = file.getParent() + "/" + ".highlighted.htm";
 
