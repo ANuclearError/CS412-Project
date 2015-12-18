@@ -13,16 +13,18 @@
 		<mavenCompilerVersion>3.3</mavenCompilerVersion>
 		<apacheCommonsVersion>4.1</apacheCommonsVersion>
 		<AutoCompleteTextFieldVersion>8.40.10</AutoCompleteTextFieldVersion>
+		<JsoupVersion>1.8.3</JsoupVersion>
+		<apacheCommonsIOVersion>2.4</apacheCommonsIOVersion>
 	</properties>
 
 	<dependencies>
-	
-<dependency>
-	<groupId>org.controlsfx</groupId>
-	<artifactId>controlsfx-samples</artifactId>
-	<version>8.40.10</version>
-</dependency>
 
+		<!-- Jsoup -->
+		<dependency>
+			<groupId>org.jsoup</groupId>
+			<artifactId>jsoup</artifactId>
+			<version>${JsoupVersion}</version>
+		</dependency>
 
 		<!-- JFX auto complete text field -->
 		<dependency>
@@ -30,7 +32,15 @@
 			<artifactId>controlsfx</artifactId>
 			<version>${AutoCompleteTextFieldVersion}</version>
 		</dependency>
-		
+
+		<!-- Apache commons IO -->
+
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>${apacheCommonsIOVersion}</version>
+		</dependency>
+
 		<!-- Apache Commons -->
 
 		<dependency>

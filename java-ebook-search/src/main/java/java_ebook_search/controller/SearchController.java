@@ -3,25 +3,34 @@ package java_ebook_search.controller;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
-import java.util.*;
+import java.nio.charset.Charset;
+import java.util.HashSet;
+import java.util.List;
+import java.util.ResourceBundle;
+import java.util.Set;
 
-import java_ebook_search.model.*;
-import javafx.scene.control.Alert;
-import org.apache.commons.collections4.CollectionUtils;
+import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang.StringUtils;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.controlsfx.control.StatusBar;
 import org.controlsfx.control.textfield.AutoCompletionBinding;
 import org.controlsfx.control.textfield.TextFields;
 
+import com.google.common.io.Files;
+
+import java_ebook_search.model.Book;
+import java_ebook_search.model.Filter;
+import java_ebook_search.model.Highlighter;
+import java_ebook_search.model.Result;
+import java_ebook_search.model.Search;
+import java_ebook_search.model.SpellCheck;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
@@ -80,6 +89,25 @@ public class SearchController implements Initializable {
 	private Filter filter;
 
 	/**
+	 * Number of results for the current search.
+	 */
+	private int noOfResults = 0;
+
+	/**
+	 * The frequency of terms in the currently selected document.
+	 */
+	private int termFrequency = 0;
+
+	/**
+	 * Status message for number of results.
+	 */
+	private final String statusResultsText = "Number of results: ";
+
+	/**
+	 * Status message for term frequency.
+	 */
+	private final String statusFrequencyText = "Term frequency: ";
+	/**
 	 * List of words for auto-completion.
 	 */
 	private AutoCompletionBinding<String> commonTerms;
@@ -93,7 +121,7 @@ public class SearchController implements Initializable {
 	public void initialize(URL location, ResourceBundle resources) {
 		filter = new Filter();
 		Set<String> books = new HashSet<>();
-		for(Book book : Book.values()) {
+		for (Book book : Book.values()) {
 			books.add(book.toString());
 		}
 		filter.setBooks(books);
@@ -120,6 +148,7 @@ public class SearchController implements Initializable {
 
 	/**
 	 * Adds string to our common search terms
+	 * 
 	 * @param newWord
 	 */
 	private void autoCompletionLearnWord(String newWord) {
@@ -133,20 +162,80 @@ public class SearchController implements Initializable {
 	}
 
 	/**
+	 * Highlights a word in an html file an returns the new file. The word comes
+	 * from the GUI's query text field. Also updates the term frequency field.
+	 * (Cheeky).
+	 * 
+	 * @param file
+	 * @return
+	 * @throws IOException
+	 */
+	private File highlight(File file) throws IOException {
+
+		File toLoad = null;
+		String searchTerm = query.getText().trim();
+
+		// If not an empty search
+		if (!StringUtils.isEmpty(searchTerm)) {
+
+			String htmlString = Files.toString(file, Charset.defaultCharset());
+			Highlighter hl = new Highlighter(searchTerm, htmlString);
+			String newhtmlString = hl.getHighlightedHtml();
+			termFrequency = hl.getTermFrequency();
+
+			status.setText(statusResultsText + noOfResults + ", "+ statusFrequencyText + termFrequency);;
+			// Write to a hidden temp file.
+			String tempFilePath = file.getParent() + "/" + ".highlighted.htm";
+
+			toLoad = new File(tempFilePath);
+
+			FileUtils.writeStringToFile(toLoad, newhtmlString, Charset.defaultCharset());
+
+		} else {
+			System.out.println("[ERROR] Empty Search");
+		}
+
+		return toLoad;
+	}
+
+	/**
 	 * Given a file, it loads the web page into the web engine.
 	 *
 	 * @param result
 	 *            - the file loaded.
 	 */
 	private void loadResult(File result) {
+
 		if (null != result) {
 			String path = result.getPath();
 			// Need to deal with difference between indexed files without HTML
 			// tags and files with HTML tags.
-			path = path.replace("src/main/resources", "");
+			// path = path.replace("src/main/resources", "");
 			path = path.replace("indexed_files", "files");
-			webEngine.load(getClass().getResource(path).toString());
+
+			// Get the HTML file & not the parsed index file
+			File htmlFile = new File(path);
+
+			System.out.println("LOADED");
+
+			// Lets highlight it
+			try {
+				htmlFile = highlight(htmlFile);
+			} catch (IOException e) {
+				System.out.println("[ERROR] Failed to highlight.");
+			}
+
+			path = "file:///" + htmlFile.getAbsolutePath();
+
+			// N.B. MUST USE file:/// and NOT get Resource ***
+			// otherwise file is loaded from /target/... and because the
+			// filename is still .highlighted.htm...
+			// it will NOT be updated.
+			webEngine.load(path);
+			// webEngine.load(getClass().getResource(path).toString());
 			webEngine.setUserStyleSheetLocation(null);
+
+			System.out.println("Reached");
 		}
 	}
 
@@ -179,8 +268,8 @@ public class SearchController implements Initializable {
 			dialogStage.showAndWait();
 			// Set Filters
 			this.filter = controller.getFilter();
-			
-			//Trigger search
+
+			// Trigger search
 			search();
 			return controller.isOkClicked();
 		} catch (IOException | ParseException e) {
@@ -200,7 +289,7 @@ public class SearchController implements Initializable {
 
 		// Get file paths
 		try {
-			if(!(query.getText().equals("") || query.getText() == null)) {
+			if (!(query.getText().equals("") || query.getText() == null)) {
 				List<Result> files = search.search(term, filter);
 				if (files.size() == 0) {
 					// re-search the query using one of the suggestions
@@ -214,8 +303,8 @@ public class SearchController implements Initializable {
 						noResultError(term);
 					}
 				}
-
-				status.setText("Number of results: " + search.getResults());
+				noOfResults = search.getResults();
+				status.setText(statusResultsText + noOfResults);
 
 				// Add results to list, displaying on GUI.
 				int i = 1;
@@ -237,8 +326,10 @@ public class SearchController implements Initializable {
 	/**
 	 * Displays alert that the user's temr is being changed to suggestion.
 	 *
-	 * @param term - original query.
-	 * @param suggestion - suggested query.
+	 * @param term
+	 *            - original query.
+	 * @param suggestion
+	 *            - suggested query.
 	 */
 	private void spellCheckAlert(String term, String suggestion) {
 		Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -251,7 +342,8 @@ public class SearchController implements Initializable {
 	/**
 	 * Displays alert when there are no possible results.
 	 *
-	 * @param term - term that had no results.
+	 * @param term
+	 *            - term that had no results.
 	 */
 	private void noResultError(String term) {
 		Alert alert = new Alert(Alert.AlertType.ERROR);
