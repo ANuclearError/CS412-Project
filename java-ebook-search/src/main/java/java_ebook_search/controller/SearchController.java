@@ -224,8 +224,6 @@ public class SearchController implements Initializable {
 			// Get the HTML file & not the parsed index file
 			File htmlFile = new File(path);
 
-			System.out.println("LOADED");
-
 			// Lets highlight it
 			try {
 				htmlFile = highlight(htmlFile);
@@ -242,8 +240,6 @@ public class SearchController implements Initializable {
 			webEngine.load(path);
 			// webEngine.load(getClass().getResource(path).toString());
 			webEngine.setUserStyleSheetLocation(null);
-
-			System.out.println("Reached");
 		}
 	}
 

@@ -22,3 +22,7 @@ hs_err_pid*
 
 target/
 
+
+java-ebook-search/src/main/resources/java_ebook_search/files/fclass/.highlighted.htm
+
+java-ebook-search/src/main/resources/java_ebook_search/files/javanut/.highlighted.htm
