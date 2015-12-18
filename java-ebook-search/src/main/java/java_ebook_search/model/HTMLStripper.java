@@ -1,4 +1,4 @@
-package java_ebook_search;
+package java_ebook_search.model;
 
 import java.io.File;
 import java.nio.charset.Charset;
