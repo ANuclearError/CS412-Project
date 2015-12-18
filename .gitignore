@@ -3,7 +3,7 @@
 *.class
 
 #Ignore our hidden highlighted files
-.highlighted.htm
+*.highlighted.htm
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/
@@ -21,4 +21,4 @@ hs_err_pid*
 *.iml
 
 target/
-java-ebook-search/src/main/resources/java_ebook_search/files/exp/.highlighted.htm
+
